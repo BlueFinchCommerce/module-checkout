@@ -1,5 +1,4 @@
 module.exports = {
-  root: true,
   env: {
     jest: true,
   },
@@ -10,10 +9,12 @@ module.exports = {
   plugins: [
     'jest',
   ],
+  root: true,
   rules: {
     'import/no-cycle': [0],
     'max-len': ['error', { code: 120, ignorePattern: 'd="([\\s\\S]*?)"' }],
     'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
+    'no-underscore-dangle': [0],
     'vue/multi-word-component-names': [0],
   },
 };
