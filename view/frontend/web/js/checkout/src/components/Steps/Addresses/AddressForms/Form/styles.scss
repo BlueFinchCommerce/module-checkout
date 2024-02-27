@@ -1,0 +1,28 @@
+@import '@/styles/global/_breakpoints';
+
+.address-form {
+  margin-top: var(--indent__base);
+  .select-address-btn {
+    margin-top: var(--indent__base);
+  }
+
+  .save-address-field {
+    margin-top: var(--indent__base);
+
+    p {
+      display: inline-block;
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .select-address-btn {
+    margin-top: calc(var(--indent__base) * 2);
+  }
+
+  .address-form + .proceed-to-shipping-btn {
+    display: none;
+  }
+}

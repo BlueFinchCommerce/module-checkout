@@ -1,0 +1,16 @@
+.divider {
+  display: var(--divider-display);
+  align-items: center;
+  margin-top: var(--indent__m);
+
+  &-line {
+    border-bottom: 1px solid var(--border__gray-color2);
+    width: 100%;
+  }
+
+  p {
+    font-weight: var(--font-weight__bold) !important; //override inline styles
+    font-family: var(--font-family-copy);
+    margin: 0 var(--indent__s);
+  }
+}

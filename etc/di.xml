@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Gene\BetterCheckout\Api\GetCustomerAddressesInterface"
+                type="Gene\BetterCheckout\Model\GetCustomerAddresses"/>
+    <preference for="Gene\BetterCheckout\Api\GetCheckoutDataInterface"
+                type="Gene\BetterCheckout\Model\GetCheckoutData"/>
+    <preference for="Gene\BetterCheckout\Api\GetGuestCheckoutDataInterface"
+                type="Gene\BetterCheckout\Model\GetGuestCheckoutData"/>
+    <preference for="Gene\BetterCheckout\Model\CompositeDataProviderInterface"
+                type="Gene\BetterCheckout\Model\CompositeDataProvider"/>
+    <preference for="Gene\BetterCheckout\Model\ConfigurationInterface"
+                type="Gene\BetterCheckout\Model\Configuration"/>
+    <type name="Gene\BetterCheckout\Model\CompositeDataProvider">
+        <arguments>
+            <argument name="dataProviders" xsi:type="array">
+                <item name="10" xsi:type="object">Gene\BetterCheckout\Model\AgreementsDataProvider</item>
+                <item name="20" xsi:type="object">Gene\BetterCheckout\Model\ImageDataProvider</item>
+                <item name="30" xsi:type="object">Gene\BetterCheckout\Model\GiftMessageDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\CustomerData\Cart">
+        <plugin name="geneAddAdditionalDataCart" type="Gene\BetterCheckout\Plugin\CustomerData\Cart" />
+    </type>
+</config>

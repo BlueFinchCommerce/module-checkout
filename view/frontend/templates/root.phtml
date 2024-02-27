@@ -1,0 +1,16 @@
+<?php
+/**
+ * Default root.phtml that has no requirejs/header additional.
+ */
+?>
+<!doctype html>
+<html <?= /* @noEscape */ $htmlAttributes ?>>
+    <head <?= /* @noEscape */ $headAttributes ?>>
+        <?= /* @noEscape */ $headContent ?>
+    </head>
+    <body data-container="body"
+          data-mage-init='{"loaderAjax": {}, "loader": { "icon": "<?= /* @noEscape */ $loaderIcon ?>"}}'
+        <?= /* @noEscape */ $bodyAttributes ?>>
+        <?= /* @noEscape */ $layoutContent ?>
+    </body>
+</html>

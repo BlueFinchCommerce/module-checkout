@@ -1,0 +1,49 @@
+@import '@/styles/global/_breakpoints';
+
+// --payment-title-border, 1px solid #D9DADB
+
+.payment-page {
+  padding: 0 var(--payment-page-mobile-padding, var(--mobile-indent__base));
+  font-family: var(--payment-page-font-family, unset);
+
+  .payment-form {
+    background: var(--container-background__color);
+    margin-top: var(--indent__base);
+    min-height: var(--payment-form-min-height, 600px);
+
+    .address-block {
+      &__edit {
+        cursor: pointer;
+        position: absolute;
+        bottom: var(--indent__base);
+        right: var(--indent__base);
+      }
+    }
+
+    .billing-address {
+      padding: var(--indent__base);
+      background: var(--white__color);
+
+      .details-title-section {
+        display: flex;
+
+        svg {
+          margin-right: var(--indent__base);
+        }
+      }
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .payment-page {
+    padding: 0;
+
+    .payment-form {
+      background: var(--payment-form-background, var(--white__color));
+      padding: var(--form-details-padding-desktop, 40px 40px 70px);
+    }
+  }
+}
