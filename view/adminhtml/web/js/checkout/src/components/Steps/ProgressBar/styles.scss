@@ -1,0 +1,217 @@
+@import '@/styles/global/_breakpoints';
+
+// --progress-bar-border-radius
+
+.progress-bar {
+  &-divider {
+    border: 1px solid var(--inactive__gray-color);
+    margin-bottom: var(--indent__base);
+    width: 100%;
+
+    &.active {
+      border-color: var(--primary__color);
+    }
+  }
+
+  &-container {
+    padding: var(--indent__s) var(--indent__base);
+    background: var(--white__color);
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    min-height: 69px;
+    display: var(--progess-bar-display-mobile, none);
+    justify-content: space-between;
+    align-items: center;
+
+    .details-text {
+      position: relative;
+      left: -10px;
+    }
+
+    p {
+      font-size: var(--font__s);
+    }
+
+    .details,
+    .shipping,
+    .payment {
+      text-align: center;
+      cursor: pointer;
+      min-width: 45px;
+      text-decoration: none;
+
+      .details-icon,
+      .shipping-icon,
+      .payment-icon {
+        padding: 12px;
+        border: 2px solid var(--inactive__gray-color);
+        border-radius: var(--progress-bar-border-radius, 50%);
+        max-width: 25px;
+        height: 20px;
+        margin: 0 auto;
+        position: relative;
+
+        img {
+          filter: var(--inactive__gray-filter, invert(99%) sepia(0%) saturate(64%) hue-rotate(136deg) brightness(88%) contrast(86%));
+          top: 6px;
+          left: 5px;
+          width: 15px;
+          position: absolute;
+        }
+      }
+
+      p {
+        color: var(--inactive__gray-color);
+        white-space: pre;
+      }
+
+      &.active {
+        .details-icon,
+        .shipping-icon,
+        .payment-icon {
+          border: 2px solid var(--primary__color);
+
+          img {
+            filter: var(--active__gray-filter, invert(0%) sepia(4%) saturate(0%) hue-rotate(309deg) brightness(93%) contrast(107%));
+          }
+        }
+
+        p {
+          color: var(--primary__color);
+        }
+      }
+    }
+
+    &.shipping-active {
+      .shipping {
+        .shipping-icon {
+          border: 2px solid var(--primary__color);
+
+          svg {
+            fill: var(--primary__color);
+          }
+        }
+
+        p {
+          color: var(--primary__color);
+        }
+      }
+
+      .shipping-divider {
+        border-color: var(--primary__color);
+      }
+    }
+
+    &.payment-active {
+      .payment {
+        .payment-icon {
+          border: 2px solid var(--primary__color);
+
+          svg {
+            fill: var(--primary__color);
+          }
+        }
+
+        p {
+          color: var(--primary__color);
+        }
+      }
+
+      .payment-divider {
+        border-color: var(--primary__color);
+      }
+    }
+  }
+}
+
+//Desktop design
+
+@mixin largeWidth() {
+  .progress-bar {
+    &-container {
+      max-width: 650px;
+      margin: 0 auto;
+      position: relative;
+      display: var(--progess-bar-display-desktop, none);
+
+      .details,
+      .shipping,
+      .payment {
+        .details-icon,
+        .shipping-icon,
+        .payment-icon {
+          padding: var(--indent__base);
+
+          img {
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 22px;
+          }
+        }
+      }
+
+      p {
+        font-size: var(--font__m);
+        margin-top: 15px;
+        left: -10px;
+
+        &.progress-bar-divider {
+          margin-top: -15px;
+          left: auto;
+        }
+
+        &.details-text {
+          left: -20px;
+        }
+      }
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}
+
+//Styles for storybook
+
+#root {
+  .progress-bar {
+    &-divider {
+      margin-bottom: 50px;
+    }
+
+    &-container {
+      max-width: 500px;
+      margin: 0 auto;
+
+      a {
+        div {
+          padding: var(--indent__xs);
+        }
+      }
+
+      .details,
+      .shipping,
+      .payment {
+        .details-icon,
+        .shipping-icon,
+        .payment-icon {
+          padding: var(--indent__xs);
+
+          img {
+            top: 2px;
+          }
+        }
+      }
+    }
+  }
+}

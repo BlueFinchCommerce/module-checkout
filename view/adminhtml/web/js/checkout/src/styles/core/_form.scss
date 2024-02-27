@@ -1,0 +1,453 @@
+@import '@/styles/global/_breakpoints';
+
+// --radio__input-width
+// --radio__input-height
+// --radio__input-bg
+// --radio__input-border-color
+// --radio__input-checked-bg
+// --placeholder__input-color
+// --checkbox__input-height
+// --checkbox__input-width
+// --error_color - #E22222
+// --error_message-background - #FDE9E9
+// --error_message-border-color - #CF302A
+// --inputs-height - 55px
+// --inputs-border-radius
+
+//Styles for amasty click&collect OKA
+
+#vue-checkout-display {
+  .amasty-click-collect {
+    .select-input {
+      svg {
+        top: var(--click-collect-select-icon-top, 45px);
+      }
+    }
+  }
+
+  .amlocator-wrapper {
+    .text-input {
+      input {
+        padding: var(--indent__s) 13px;
+      }
+    }
+  }
+
+  label {
+    position: relative;
+    cursor: pointer;
+    display: var(--label-display, flex);
+    align-items: center;
+
+    input[type="checkbox"],
+    input[type="radio"] {
+      margin-right: var(--checkbox-right-margin, var(--indent__s));
+    }
+
+    &[for="radio-input"] {
+      display: var(--inline-label-display, flex);
+    }
+
+    span {
+      font-weight: var(--font-weight__light);
+      font-size: var(--font__m);
+    }
+
+    & + p {
+      font-size: var(--font__s);
+      margin: 0;
+    }
+
+    &.error {
+      input,
+      select {
+        border: var(--input-error-border, 2.5px solid var(--error__color));
+
+        &:focus {
+          border: var(--input-error-border, 2.5px solid var(--error__color));
+        }
+      }
+
+      span {
+        color: var(--error-label__color);
+      }
+    }
+  }
+
+  .shipping-method {
+    label {
+      display: var(--shipping-label-display, flex);
+    }
+  }
+
+  input[type="radio"] {
+    width: var(--radio__input-width);
+    height: var(--radio__input-height);
+    box-shadow: var(--radio__input-box-shadow);
+    border: var(--radio__input-border);
+    border-radius: var(--radio__input-border-radius);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:checked {
+      border: var(--radio__input-checked-border);
+      box-shadow: var(--radio__input-checked-box-shadow);
+    }
+
+    &:disabled {
+      opacity: var(--opacity-light);
+    }
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    border: 1px solid var(--border__gray-color);
+    border-radius: var(--checkbox__input-border-radius);
+    color: var(--text__color);
+    cursor: pointer;
+    flex-shrink: 0;
+    height: var(--checkbox__input-height);
+    min-width: auto;
+    top: 0;
+    width: var(--checkbox__input-width);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &:disabled {
+      opacity: var(--opacity-light);
+    }
+
+    &:hover {
+      border-width: var(--hovered-checkbox-border-width, 1px);
+    }
+
+    &::before {
+      border-color: var(--checkbox-checked-tick-border-color, var(--white__color));
+      position: absolute;
+      content: '';
+      display: block;
+      top: var(--checkbox__input-tick-top);
+      left: var(--checkbox__input-tick-left);
+      width: var(--checkbox__input-tick-width);
+      height: var(--checkbox__input-tick-height);
+      border-style: solid;
+      border-width: var(--checkbox__input-tick-thickness);
+      transform: rotate(45deg);
+      opacity: 0;
+    }
+
+    &:checked {
+      color: var(--checkbox-checked-color, var(--text__color));
+      border-color: var(--checkbox-checked-border-color);
+      background: var(--checkbox-checked-background);
+      border-width: var(--hovered-checkbox-border-width, 1px);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  input[type="checkbox"] + span {
+    width: 90%;
+    font-size: var(--form-input-checkbox_font-size, 14px);
+    font-weight: 400;
+    font-family: var(--font-family-copy);
+    top: var(--checkbox-text-position, auto);
+  }
+
+  input[type="text"] {
+    background: var(--white__color);
+
+    &:disabled {
+      opacity: var(--opacity-heavy);
+    }
+  }
+
+  .text-input,
+  .select-input {
+    margin-bottom: var(--text-input-margin-bottom, var(--indent__m));
+    span {
+      background: var(--input-span__background-colour, var(--white__color));
+      font-size: var(--input-span-font-size, var(--font__s));
+      padding-right: var(--input-label-padding);
+      padding-left: var(--input-label-padding);
+      margin-left: var(--input-label-margin, var(--indent__s));
+      margin-top: var(--input-label-margin-top, 0);
+      font-weight: var(--input-span-font-weight, var(--font-weight__light));
+      font-family: var(--font-family-copy);
+      position: var(--input-span-position, absolute);
+      top: var(--input-span-top-value, var(--indent__s));
+      min-height: var(--input-label-min-height, 25px);
+      z-index: 1;
+    }
+  }
+
+  .text-input {
+    input {
+      color: var(--text__color);
+      padding: var(--indent__s);
+      margin-top: var(--input-margin-top, var(--indent__base));
+      height: var(--input-height);
+      font-size: var(--input-font-size);
+      font-family: var(--font-family-copy);
+      border-radius: var(--input-border-radius);
+      width: 100%;
+      outline: none;
+      border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
+      font-weight: var(--font-weight__regular);
+      background-color: var(--transparent-color) !important; // Important to override autofill backgrounds.
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+
+      &:focus-visible,
+      &:focus,
+      &:active {
+        border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+        outline: none;
+        box-shadow: none;
+      }
+
+      &:hover {
+        border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+      }
+    }
+
+    input::placeholder {
+      color: var(--input-placeholder-color);
+      font-size: var(--input-font-size);
+      font-weight: var(--font-weight__regular);
+    }
+  }
+
+  .text-input-has-value {
+    display: var(--text-input-has-value-display, block);
+  }
+
+  .text-input-no-value {
+    display: var(--text-input-no-value-display, none);
+  }
+
+  .logged-in-email {
+    .text-input {
+      span {
+        display: var(--logged-in-email-label-visibility, none);
+        font-family: var(--input-label-logged-in-font-family, var(--font-family-copy));
+        font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
+        padding-left: var(--input-label-logged-in-padding, var(--input-label-padding));
+        margin-left: var(--input-label-logged-in-margin, var(--input-label-margin));
+        font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__regular));
+      }
+
+      input {
+        border: var(--logged-in-email-border-width, var(--input-border-weight) solid var(--input-border-color));
+        padding: var(--logged-in-email-padding, var(--indent__s));
+        margin-top: var(--logged-in-email-margin-top, 0);
+
+        ::placeholder {
+          font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
+        }
+
+        &:hover {
+          border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+        }
+        
+        &:focus-visible,
+        &:focus,
+        &:active {
+          border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+        }
+      }
+    }
+  }
+
+  .field-valid {
+    .text-input {
+      input {
+        border-color: var(--valid-field-border, #135D1D);
+        border-width: 1.5px;
+      }
+    }
+
+    svg {
+      position: absolute;
+      right: 16px;
+      top: 50px;
+    }
+  }
+
+  .afd-postcode__input {
+    margin-bottom: 0;
+  }
+
+  .click-and-collect-input,
+  .loqate__input {
+    margin-bottom: 0;
+
+    input {
+      margin-top: 0;
+    }
+
+    span {
+      top: -8px;
+    }
+  }
+
+  .dropdown {
+    input {
+      margin: 0;
+      border-radius: var(--input-rounded-left-radius);
+    }
+  }
+
+  .phone-field {
+    position: relative;
+
+    .text-input {
+      margin-bottom: var(--phone-field-text-input__margin-bottom, var(--text-input-margin-bottom));
+
+      input {
+        padding-right: var(--phone-field-padding, var(--indent__s));
+      }
+    }
+
+    > p {
+      font-family: var(--phone-field-text__font-family, unset);
+      font-weight: var(--phone-field-text__font-weight, 300);
+      padding-top: var(--phone-field-text__padding-top, 0);
+    }
+
+    .error-message {
+      p {
+        bottom: auto;
+      }
+    }
+  }
+
+  .phone-field + div {
+    margin-top: var(--delivery-section-title-margin, 0);
+  }
+
+  .select-input {
+    position: relative;
+
+    select {
+      background: var(--input-span__background-colour, var(--white__color));
+      border-radius: var(--input-border-radius);
+      margin-top: var(--select-margin-top, var(--indent__base));
+      font-size: var(--font__m);
+      font-family: var(--font-family-copy);
+      color: var(--text__color);
+      border: 1px solid var(--text__color);
+      appearance: none;
+      cursor: pointer;
+      padding: var(--select-input-padding, 0 15px 0);
+      height: var(--input-height);
+      width: 100%;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      &:focus-visible,
+      &:focus,
+      &:active {
+        border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+        box-shadow: none;
+        outline: 0;
+      }
+
+      &::marker {
+        display: none;
+      }
+    }
+
+    svg {
+      position: absolute;
+      right: var(--select-icon-right, 10px);
+      top: var(--select-icon-top, 45px);
+      width: var(--select-icon-width, 19px);
+      stroke: var(--primary__color);
+    }
+
+    .select-input-label {
+      font-size: var(--font__base);
+      font-family: var(--font-family-copy);
+    }
+  }
+
+  .adyen-checkout__dropin .adyen-checkout__error-text {
+    display: none;
+  }
+
+  .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text,
+  .error-message {
+    align-items: center;
+    background: var(--error__background-color);
+    border: 1px solid var(--error__border-color);
+    border-radius: var(--messages-border-radius, var(--input-border-radius));
+    color: var(--error-text__color);
+    display: flex;
+    font-family: var(--font-family-copy);
+    font-size: var(--error-message-font-size, var(--font__s));
+    font-weight: var(--error-message-font-weight, var(--font-weight__regular));
+    margin: var(--message-margin);
+    min-height: var(--messages-min-height, auto);
+    padding: var(--message-padding, var(--indent__xs));
+    width: 100%;
+    word-break: break-word;
+
+    svg {
+      fill: var(--error__color);
+      margin-right: var(--indent__s);
+      display: var(--message-icon-visibility, block);
+    }
+  }
+
+  .success-message {
+    background: var(--success__background-color);
+    padding: var(--message-padding, var(--indent__xs));
+    border: 1px solid var(--success__border-color);
+    width: 100%;
+    border-radius: var(--messages-border-radius, var(--input-border-radius));
+    display: flex;
+    align-items: center;
+    margin: var(--message-margin);
+    min-height: var(--messages-min-height, auto);
+    word-break: break-word;
+
+    svg {
+      fill: var(--success__border-color, #ACD765);
+      margin-right: var(--indent__s);
+      display: var(--message-icon-visibility, block);
+    }
+
+    p {
+      color: var(--success__color, var(--primary__color));
+      font-family: var(--font-family-copy);
+      font-size: var(--message-font-size, var(--font__s));
+      font-weight: var(--message-font-weight, var(--font-weight__regular));
+      margin-bottom: 0;
+    }
+  }
+
+  .item-qty-container {
+    button {
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  //Styles for desktop
+
+  .mock-laptop,
+  .mock-desktop {
+    .text-input {
+      span {
+        background-color: var(--input-span__background-colour, var(--white__color));
+      }
+    }
+  }
+}
