@@ -1,0 +1,45 @@
+{
+  "name": "gene/template-module",
+  "description": "",
+  "type": "magento2-module",
+  "version": "1.0.0",
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Gene\\TemplateModule\\": ""
+    }
+  },
+  "require": {
+    "magento/framework": "*"
+  },
+  "require-dev": {
+      "bitexpert/phpstan-magento": "^0.27",
+      "magento/magento-coding-standard": "^29.0",
+      "phpstan/phpstan": "*",
+      "phpcompatibility/php-compatibility": "^9.3",
+      "phpunit/phpunit": "^9.5"
+  },
+  "repositories": [
+      {
+          "type": "composer",
+          "url": "https://repo.magento.com/"
+      },
+      {
+          "type": "composer",
+          "url": "https://repo.packagist.com/gene/"
+      }
+  ],
+  "authors": [
+    {
+      "name": "",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "allow-plugins": {
+      "magento/composer-dependency-version-audit-plugin": true
+    }
+  }
+}

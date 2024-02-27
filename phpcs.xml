@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <description>Blog module ruleset</description>
+    <rule ref="Magento2">
+        <!-- @TODO Gradually remove these during code cleanup. Priority is the "whitespace" tests -->
+        <exclude name="Magento2.Annotation.MethodAnnotationStructure.MethodAnnotation"/>
+        <exclude name="Magento2.Less.Indentation.Incorrect"/>
+        <exclude name="Magento2.Annotation.MethodAnnotationStructure.MethodArguments"/>
+        <exclude name="Magento2.Commenting.ClassPropertyPHPDocFormatting.Missing"/>
+        <exclude name="Magento2.Annotation.MethodArguments.MethodArguments"/>
+        <exclude name="Magento2.Legacy"/>
+        <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
+        <exclude name="Magento2.Methods.DeprecatedModelMethod"/>
+
+        <!-- WHITESPACE -->
+        <exclude name="PSR2.Files.EndFileNewline.NoneFound"/>
+        <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+        <exclude name="Generic.Files.LineLength.TooLong"/>
+        <exclude name="quiz.Functions.MultiLineFunctionDeclaration.SpaceBeforeOpenBrace"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.SpaceBeforeOpenBrace"/>
+        <exclude name="PEAR.ControlStructures.ControlSignature.Found"/>
+        <exclude name="Magento2.Whitespace.MultipleEmptyLines.MultipleEmptyLines"/>
+        <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
+        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword"/>
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket"/>
+        <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
+        <exclude name="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.MultipleArguments"/>
+        <exclude name="PSR2.Files.EndFileNewline.TooMany"/>
+        <exclude name="PSR2.Methods.FunctionCallSignature.Indent"/>
+        <exclude name="PSR2.Methods.FunctionClosingBrace.SpacingBeforeClose"/>
+        <exclude name="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma"/>
+    </rule>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>*\.phtml</exclude-pattern>
+    </rule>
+    <arg name="encoding" value="UTF-8"/>
+    <arg value="sp"/>
+    <file>.</file>
+    <exclude-pattern>*\.phtml</exclude-pattern>
+    <exclude-pattern>*\.html</exclude-pattern>
+    <exclude-pattern>*\.less</exclude-pattern>
+    <exclude-pattern>vendor</exclude-pattern>
+</ruleset>

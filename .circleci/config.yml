@@ -1,0 +1,94 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.0.3
+  gh: circleci/github-cli@2.2.0
+  jq: circleci/jq@2.2.0
+jobs:
+  build:
+    docker:
+      - image: cimg/php:8.1
+    working_directory: ~/magento2
+    executor: node/default
+    steps:
+      - checkout
+      - gh/install
+      - jq/install
+      - run:
+          name: Install System Packages
+          command: |
+            sudo apt-get update -y && sudo apt-get install -y \
+            libbz2-dev \
+            libfreetype6-dev \
+            libicu-dev \
+            libjpeg-dev \
+            libmcrypt-dev \
+            libonig-dev \
+            libpng-dev \
+            libsodium-dev \
+            libssh2-1-dev \
+            libxslt1-dev \
+            libzip-dev
+      - run:
+          name: Install PHP Packages
+          command: |
+            sudo docker-php-ext-install \
+            sysvshm \
+            xsl
+      - run:
+          name: Update composer
+          command: |
+            sudo composer self-update --2
+      - restore_cache:
+          keys:
+            - composer-v2-{{ checksum "composer.json" }}
+      - run:
+          name: Add composer config
+          command: |
+            composer config -g http-basic.repo.magento.com $MAGENTO_REPO_KEY $MAGENTO_REPO_SECRET
+            composer config -g http-basic.repo.packagist.com "token" $GENE_PACKAGIST_TOKEN
+      - run:
+          name: Composer install
+          command: |
+            composer install --prefer-source --no-interaction
+      - save_cache:
+          key: composer-v2-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - node/install
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Get GitHub PR base name
+          command: |
+            echo 'export ESLINT_PLUGIN_DIFF_COMMIT=$(gh pr view --jq .baseRefName --json baseRefName)' >> "$BASH_ENV"
+      - run:
+          name: Run ESLint if on PR
+          command: |
+              if [[ $ESLINT_PLUGIN_DIFF_COMMIT ]]; then
+                npx eslint .
+              else
+                echo "Skip - not triggered from PR."
+              fi
+      - run:
+          name: Run PHPCS
+          command: >-
+            ./vendor/bin/phpcs --config-set installed_paths vendor/magento/magento-coding-standard,vendor/phpcompatibility/php-compatibility &&
+            ./vendor/bin/phpcs . --standard=Magento2 --ignore=vendor,*.css,Test,node_modules --extensions=php,phtml
+      - run:
+          name: Run PHPStan
+          command: |
+            ./vendor/bin/phpstan analyse
+      - run:
+          name: Configure PHPUnit
+          command: >-
+            mkdir -p ~/phpunit &&
+            ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+workflows:
+  build-test:
+    jobs:
+      - build:
+          context: magento2 module
