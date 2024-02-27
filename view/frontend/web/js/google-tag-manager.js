@@ -1,5 +1,7 @@
 // Taken direct from Mage cookie helper.
 function getCookie(name) {
+    'use strict';
+
     var arg = name + '=',
         aLength = arg.length,
         cookie = document.cookie,
@@ -24,7 +26,9 @@ function getCookie(name) {
 }
 
 function geneInitGtm(config) {
-    var allowServices = false,
+    'use strict';
+
+    let allowServices = false,
         allowedCookies,
         allowedWebsites,
         f,
@@ -37,9 +41,7 @@ function geneInitGtm(config) {
         if (allowedCookies !== null) {
             allowedWebsites = JSON.parse(allowedCookies);
 
-            if (allowedWebsites[config.currentWebsite] === 1) {
-                allowServices = true;
-            }
+            allowServices = allowedWebsites[config.currentWebsite] === 1;
         }
     } else {
         allowServices = true;
@@ -57,13 +59,13 @@ function geneInitGtm(config) {
             });
             f = d.getElementsByTagName(s)[0];
             j = d.createElement(s);
-            dl = l != 'dataLayer' ? '&l=' + l : '';
+            dl = l !== 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', config.gtmAccountId);
 
-        var gaEvent = new Event('ga:inited');
+        let gaEvent = new Event('ga:inited');
 
         document.dispatchEvent(gaEvent);
     }
@@ -71,6 +73,6 @@ function geneInitGtm(config) {
 
 window.geneInitGtm = geneInitGtm;
 
-var initEvent = new Event('geneGa:inited');
+let initEvent = new Event('geneGa:inited');
 
 document.dispatchEvent(initEvent);
