@@ -1,5 +1,5 @@
 {
-  "name": "gene/better-checkout",
+  "name": "gene/module-better-checkout",
   "description": "",
   "type": "magento2-module",
   "version": "0.0.1",
@@ -14,8 +14,23 @@
   "require": {
     "php": "~8.1.0||~8.2.0",
     "magento/framework": "*",
-    "magento/module-checkout": "*",
-    "paypal/module-braintree-core": "*",
-    "phpcompatibility/php-compatibility": "*"
+    "magento/module-checkout": "*"
+  },
+  "require-dev": {
+    "magento/magento-coding-standard": "*",
+    "phpcompatibility/php-compatibility": "*",
+    "phpunit/phpunit": "*"
+  },
+  "repositories": [
+      {
+          "type": "composer",
+          "url": "https://repo.magento.com/"
+      }
+  ],
+  "config": {
+    "allow-plugins": {
+      "magento/composer-dependency-version-audit-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

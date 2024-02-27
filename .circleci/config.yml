@@ -75,13 +75,15 @@ jobs:
           command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
       - run:
           name: Composer Install
+          environment:
+            COMPOSER_ALLOW_SUPERUSER: 1
           command: |
             composer install --prefer-source --no-interaction --dev
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
             composer config repositories.gene-packages '{"type": "composer", "url": "https://repo.packagist.com/gene/", "canonical": false}'
-            composer require paypal/module-better-checkout:dev-${CIRCLE_BRANCH}#${CIRCLE_SHA1} --no-interaction
+            composer require gene/module-better-checkout:dev-${CIRCLE_BRANCH}#${CIRCLE_SHA1} --no-interaction
       - run:
           name: Install Magento
           command: |
@@ -116,31 +118,31 @@ jobs:
           root: .
           paths:
             - ./*
- static_tests:
-   docker:
-     - image: cimg/php:8.2.15-browsers
-   working_directory: ~/static-tests
-   steps:
-     - attach_workspace:
-           at: .
-     - run:
-         name: PHPCS
-         command: |
-           ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/phpcompatibility/php-compatibility
-     - run:
-         name: PHPStan
-         command: ./vendor/bin/phpstan analyse
-     - run:
-         name: Configure PHPunit
-         command: |
-           mkdir -p ~/phpunit
-     - run:
-         name: PHPUnit
-         command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml
-     - store_test_results:
-         path: ~/phpunit
-     - store_artifacts:
-         path: ~/phpunit
+  static_tests:
+    docker:
+      - image: cimg/php:8.2.15-browsers
+    working_directory: ~/static-tests
+    steps:
+      - attach_workspace:
+            at: .
+      - run:
+          name: PHPCS
+          command: |
+            ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
+      - run:
+          name: PHPStan
+          command: ./vendor/bin/phpstan analyse vendor/gene/module-better-checkout
+      - run:
+          name: Configure PHPunit
+          command: |
+            mkdir -p ~/phpunit
+      - run:
+          name: PHPUnit
+          command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml vendor/gene/module-better-checkout
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
   eslint:
     docker:
       - image: cimg/node:21.6.1
@@ -158,10 +160,10 @@ workflows:
     jobs:
       - build:
           context: magento2 module
-     - static_tests:
-         context: magento2 module
-         requires:
-           - build
+      - static_tests:
+          context: magento2 module
+          requires:
+            - build
       - eslint:
           context: magento2 module
           requires:
