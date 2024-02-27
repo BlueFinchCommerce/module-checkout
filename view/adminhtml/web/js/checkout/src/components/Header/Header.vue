@@ -36,14 +36,14 @@ export default {
   data() {
     return {
       headerText: '',
-      headerTextId: 'gene-bettercheckout-header-text'
+      headerTextId: 'gene-bettercheckout-header-text',
     };
   },
   async created() {
     await this.getStoreConfig();
-    this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text')
+    this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
 
-    document.addEventListener(this.headerTextId, this.setHeaderText)
+    document.addEventListener(this.headerTextId, this.setHeaderText);
   },
   unmounted() {
     document.removeEventListener(this.headerTextId, this.setHeaderText);
@@ -53,7 +53,7 @@ export default {
 
     setHeaderText(event) {
       this.headerText = event?.detail || this.$t('header.text');
-    }
+    },
   },
 };
 </script>

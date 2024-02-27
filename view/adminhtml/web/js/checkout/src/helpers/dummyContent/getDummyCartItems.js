@@ -30,7 +30,11 @@ export default () => {
       product_sku: 'MJ12-M-Blue',
       product_url: 'https://braintree-checkout.test/proteus-fitness-jackshirt.html',
       product_has_url: true,
-      product_price: '\n\n    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">\n            <span class="minicart-price">\n            <span class="price">$45.00</span>        </span>\n\n        </span>\n',
+      product_price: `<span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+        <span class="minicart-price">
+          <span class="price">$45.00</span>
+        </span>
+      </span>`,
       product_price_value: 45,
       product_image: {
         src: jackshirt,
@@ -69,7 +73,11 @@ export default () => {
       product_sku: '243-MB09',
       product_url: 'https://braintree-checkout.test/luma-virtual-gift-card.html',
       product_has_url: true,
-      product_price: '\n\n    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">\n            <span class="minicart-price">\n            <span class="price">$30.00</span>        </span>\n\n        </span>\n',
+      product_price: `<span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+        <span class="minicart-price">
+          <span class="price">$30.00</span>
+        </span>
+      </span>`,
       product_price_value: 30,
       product_image: {
         src: giftCard,
@@ -93,7 +101,11 @@ export default () => {
       product_sku: '24-MB04',
       product_url: 'https://braintree-checkout.test/strive-shoulder-pack.html',
       product_has_url: true,
-      product_price: '\n\n    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">\n            <span class="minicart-price">\n            <span class="price">$32.00</span>        </span>\n\n        </span>\n',
+      product_price: `<span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+        <span class="minicart-price">
+          <span class="price">$32.00</span>
+        </span>
+      </span>`,
       product_price_value: 32,
       product_image: {
         src: shoulder,
@@ -116,7 +128,11 @@ export default () => {
       product_sku: '24-MB01',
       product_url: 'https://braintree-checkout.test/joust-duffle-bag.html',
       product_has_url: true,
-      product_price: '\n\n    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">\n            <span class="minicart-price">\n            <span class="price">$20.00</span>        </span>\n\n        </span>\n',
+      product_price: `<span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+        <span class="minicart-price">
+          <span class="price">$20.00</span>
+        </span>
+      </span>`,
       product_price_value: 20,
       product_image: {
         src: duffle,

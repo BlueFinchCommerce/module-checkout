@@ -6,6 +6,7 @@
       aria-label="proceed-to-details-link"
       to="/"
       @click="setDetailsStepActive();"
+      @keydown="setDetailsStepActive()"
     >
       <div class="details-title-section">
         <div class="details-title-section-image">
@@ -57,8 +58,8 @@ export default {
   data() {
     return {
       detailStepText: '',
-      detailStepTextId: 'gene-bettercheckout-detailstep-text'
-    }
+      detailStepTextId: 'gene-bettercheckout-detailstep-text',
+    };
   },
   computed: {
     ...mapState(useCartStore, ['isItemRequiringDelivery']),
@@ -66,9 +67,9 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title')
+    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
 
-    document.addEventListener(this.detailStepTextId, this.setDetailStepText)
+    document.addEventListener(this.detailStepTextId, this.setDetailStepText);
   },
   unmounted() {
     document.removeEventListener(this.detailStepTextId, this.setDetailStepText);

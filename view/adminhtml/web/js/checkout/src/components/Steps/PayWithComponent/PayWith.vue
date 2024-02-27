@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       payWithText: '',
-      payWithTextId: 'gene-bettercheckout-paywith-text'
-    }
+      payWithTextId: 'gene-bettercheckout-paywith-text',
+    };
   },
   props: {
     width: {
@@ -71,9 +71,9 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle')
+    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
 
-    document.addEventListener(this.payWithTextId, this.setPayWithText)
+    document.addEventListener(this.payWithTextId, this.setPayWithText);
   },
   unmounted() {
     document.removeEventListener(this.payWithTextId, this.setPayWithText);
@@ -83,7 +83,7 @@ export default {
 
     setPayWithText(event) {
       this.payWithText = event?.detail || this.$t('payWithBlockTitle');
-    }
+    },
   },
 };
 </script>

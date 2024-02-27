@@ -15,7 +15,7 @@ export default {
     request = null;
   },
   getSuggestions(containerQuery, query, addressType) {
-    const { countryCode, loqate } = useConfigStore();
+    const { countryCode, addressFinder: { loqate } } = useConfigStore();
     const { selected } = useCustomerStore();
     // If there's request still awaiting a response then kill it:
     if (request) this.cancel();
@@ -23,7 +23,7 @@ export default {
     const axiosSource = axios.CancelToken.source();
     request = { cancel: axiosSource.cancel, msg: 'Loading...' };
     // Create url for get request
-    const container = containerQuery ? `&Container=${containerQuery}` : '';
+    const container = typeof containerQuery === 'string' ? `&Container=${containerQuery}` : '';
     const loqateCountry = selected[addressType]?.country_id || countryCode;
     const requestUrl = `${findUrl
     }?key=${
@@ -46,7 +46,7 @@ export default {
     if (axios.isCancel(error)) console.log('Loqate request cancelled');
   },
   getAndUseAddress(id) {
-    const { loqate } = useConfigStore();
+    const { addressFinder: { loqate } } = useConfigStore();
     return axios
       .get(`${retrieveUrl}?key=${loqate.apiKey}&Id=${id}`)
       .then((response) => {

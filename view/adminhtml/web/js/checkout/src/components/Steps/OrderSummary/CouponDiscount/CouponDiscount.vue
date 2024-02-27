@@ -120,21 +120,23 @@ export default {
       couponDiscountTextId: 'gene-bettercheckout-coupondiscount-text',
       couponDiscountPlaceholderText: '',
       couponDiscountPlaceholderTextId: 'gene-bettercheckout-coupondiscountplaceholder-text',
-      discountErrorMessageOverride: "The code isn't valid. Verify the code and try again." // Only for UI designer to show with added code
-
+      // Only for UI designer to show with added code
+      discountErrorMessageOverride: "The code isn't valid. Verify the code and try again.",
     };
   },
   async created() {
     await this.getStoreConfig();
-    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn')
-    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn')
-    this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId] || this.$t('orderSummary.couponDiscountTitle')
-    this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountTextId] || this.$t('orderSummary.couponDiscount.placeholder')
+    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
+    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId]
+      || this.$t('orderSummary.couponDiscountTitle');
+    this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountTextId]
+      || this.$t('orderSummary.couponDiscount.placeholder');
 
-    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText)
-    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText)
-    document.addEventListener(this.couponDiscountTextId, this.setcouponDiscountText)
-    document.addEventListener(this.couponDiscountPlaceholderTextId, this.setCouponDiscountPlaceholderText)
+    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.addEventListener(this.couponDiscountTextId, this.setcouponDiscountText);
+    document.addEventListener(this.couponDiscountPlaceholderTextId, this.setCouponDiscountPlaceholderText);
   },
   unmounted() {
     document.removeEventListener(this.applyButtonTextId, this.setApplyButtonText);
@@ -166,7 +168,7 @@ export default {
       this.couponDiscountPlaceholderText = event?.detail || this.$t('orderSummary.couponDiscount.placeholder');
     },
 
-    async dispatchDiscountCode(discountCode) {
+    async dispatchDiscountCode() {
       // Commented out to prevent functionality only for UI designer
       // this.loadingDiscountCode = true;
       // await this.addDiscountCode(discountCode);

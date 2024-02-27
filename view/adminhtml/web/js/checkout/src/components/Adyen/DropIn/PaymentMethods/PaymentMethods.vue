@@ -74,16 +74,12 @@ import PrivacyPolicy from '@/components/Core/PrivacyPolicy/PrivacyPolicy.vue';
 import RadioButton from '@/components/Core/Inputs/RadioButton/RadioButton.vue';
 
 // Services
-import createPayment from '@/services/createPayment';
-import getAdyenPaymentStatus from '@/services/getAdyenPaymentStatus';
 import getAdyenPaymentDetails from '@/services/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
 import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
-import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 export default {

@@ -259,7 +259,7 @@ export default {
       instantCheckoutText: '',
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text'
+      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
     };
   },
   computed: {
@@ -276,8 +276,8 @@ export default {
   },
   async mounted() {
     await this.getStoreConfig();
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout')
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay')
+    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
@@ -336,7 +336,7 @@ export default {
     },
     setProceedToPayText(event) {
       this.proceedToPayText = event?.detail || this.$t('shippingStep.proceedToPay');
-    }
+    },
   },
 };
 </script>

@@ -52,14 +52,16 @@
           :label="applyButtonText"
           @click="dispatchDiscountCode(discountCode)"
         />
-        <!-- dicountApplied replaced with discountAppliedOverride and removed @click="removeGiftCardCode" only for ui designer -->
+        <!-- dicountApplied replaced with discountAppliedOverride
+          and removed @click="removeGiftCardCode" only for ui designer -->
         <MyButton
           v-if="discountAppliedOverride"
           secondary
           :label="removeButtonText"
         />
         <div class="success">
-          <!-- dicountApplied replaced with discountAppliedOverride and discountCode replaced with discountCodeOverride only for ui designer -->
+          <!-- dicountApplied replaced with discountAppliedOverride and
+            discountCode replaced with discountCodeOverride only for ui designer -->
           <SuccessMessage
             v-if="discountAppliedOverride"
             :message="$t('orderSummary.giftCardDiscount.successMessage', { code: discountCodeOverride })"
@@ -122,21 +124,21 @@ export default {
       giftCardPlaceholderText: '',
       giftCardPlaceholderTextId: 'gene-bettercheckout-giftcardplaceholder-text',
       discountAppliedOverride: true, // Only for UI designer to show with added code
-      discountCodeOverride: 'TestCode123' // Only for UI designer to show with added code
+      discountCodeOverride: 'TestCode123', // Only for UI designer to show with added code
     };
   },
   async created() {
     await this.getStoreConfig();
-    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn')
-    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn')
-    this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle')
-    this.giftCardPlaceholderText = window.geneCheckout?.[this.giftCardPlaceholderTextId] || this.$t('orderSummary.giftCardDiscount.placeholder')
+    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
+    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
+    this.giftCardPlaceholderText = window.geneCheckout?.[this.giftCardPlaceholderTextId]
+      || this.$t('orderSummary.giftCardDiscount.placeholder');
 
-    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText)
-    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText)
-    document.addEventListener(this.giftCardTextId, this.setGiftCardText)
-    document.addEventListener(this.giftCardPlaceholderTextId, this.setGiftCardPlaceholderText)
-
+    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.addEventListener(this.giftCardTextId, this.setGiftCardText);
+    document.addEventListener(this.giftCardPlaceholderTextId, this.setGiftCardPlaceholderText);
   },
   unmounted() {
     document.removeEventListener(this.applyButtonTextId, this.setApplyButtonText);

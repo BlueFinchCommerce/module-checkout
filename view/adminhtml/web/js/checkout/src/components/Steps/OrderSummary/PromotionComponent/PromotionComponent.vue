@@ -135,14 +135,15 @@ export default {
     return {
       isDropDownVisible: false,
       freeShippingText: '',
-      freeShippingTextId: 'gene-bettercheckout-freeshipping-text'
+      freeShippingTextId: 'gene-bettercheckout-freeshipping-text',
     };
   },
   async created() {
     await this.getStoreConfig();
-    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId] || this.$t('orderSummary.freeShippingAvailable')
+    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+      || this.$t('orderSummary.freeShippingAvailable');
 
-    document.addEventListener(this.freeShippingTextId, this.setFreeShippingText)
+    document.addEventListener(this.freeShippingTextId, this.setFreeShippingText);
   },
   unmounted() {
     document.removeEventListener(this.freeShippingTextId, this.setFreeShippingText);

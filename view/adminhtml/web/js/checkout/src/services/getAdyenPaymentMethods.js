@@ -15,8 +15,5 @@ export default () => {
     ? getAdyenAuthenticatedRequest('post', guestUrl)
     : authenticatedRequest().post(authUrl, { formKey: '' });
 
-  return request.then((response) => {
-    const { paymentMethodsResponse } = JSON.parse(response.data);
-    return paymentMethodsResponse;
-  });
+  return request.then((response) => JSON.parse(response.data));
 };

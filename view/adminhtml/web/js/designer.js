@@ -12,14 +12,16 @@ define([
             this.config = config;
             this.designerModal = $('#gene-bettercheckout-designer');
             this.designerValues = $('#gene_better_checkout_general_designer_values');
-            this.designerValuesSystem = $('#gene_better_checkout_general_designer_values_inherit, #gene_better_checkout_general_gene_better_checkout_logo_inherit');
+            this.designerValuesSystem = $(`#gene_better_checkout_general_designer_values_inherit,
+                #gene_better_checkout_general_gene_better_checkout_logo_inherit`);
             this.designerLogo = $('#gene_better_checkout_general_gene_better_checkout_logo');
             this.designerLogoImgPreview = $('#gene_better_checkout_general_gene_better_checkout_logo_image');
             this.designerLogoDelete = $('#gene_better_checkout_general_gene_better_checkout_logo_delete');
 
             // Remove the 'disabled' attribute from the designerLogo input
             this.designerLogo.prop('disabled', false);
-            this.designerLogo.insertAfter('#gene-bettercheckout-designer label[for="gene_better_checkout_general_gene_better_checkout_logo"]');
+            this.designerLogo.insertAfter(`#gene-bettercheckout-designer
+                label[for="gene_better_checkout_general_gene_better_checkout_logo"]`);
 
             this.designerModal.modal({
                 buttons: [
@@ -41,7 +43,7 @@ define([
                 modalClass: 'gene-bettercheckout-designer-modal'
             });
 
-            this.designerModal.find('input').on('change keyup', this.triggerChange.bind(this))
+            this.designerModal.find('input').on('change keyup', this.triggerChange.bind(this));
             this.designerModal.find('.toggle').on('click', this.toggleSidebar.bind(this));
             this.designerValues.on('change', this.setSystemValue.bind(this));
 
@@ -55,7 +57,8 @@ define([
             // If the input is an image field we need to do something a little different to get the value.
             if (event.target.type === 'file') {
                 if (event.target.files?.length) {
-                    var reader = new FileReader();
+                    let reader = new FileReader();
+
                     reader.onload = function (e) {
                         this.dispatchLogoChangeEvent(e.target.result);
                     }.bind(this);
@@ -63,19 +66,21 @@ define([
                 } else {
                     this.dispatchLogoChangeEvent();
                 }
-                return;
+
             } else if (event.target.dataset.type === 'checkout-wording') {
-                this.dispatchTextChangeEvent(event.target.value, event.target.id)
+                this.dispatchTextChangeEvent(event.target.value, event.target.id);
             } else {
                 const { dataset, value } = event.target;
+
                 document.documentElement.style.setProperty(dataset.cssVariable, value);
             }
         },
 
         dispatchTextChangeEvent: function (value, customEventId) {
             const event = new CustomEvent(customEventId, {
-                detail: value,
+                detail: value
             });
+
             document.dispatchEvent(event);
             window.geneCheckout = window.geneCheckout || {};
             window.geneCheckout[customEventId] = value;
@@ -83,8 +88,9 @@ define([
 
         dispatchLogoChangeEvent: function (src) {
             const event = new CustomEvent('gene:checkout-image-update', {
-                detail: src,
+                detail: src
             });
+
             document.dispatchEvent(event);
             window.geneCheckout = window.geneCheckout || {};
             window.geneCheckout.logo = src;
@@ -95,51 +101,52 @@ define([
         },
 
         handleSwitchDeviceType: function (event) {
-            var deviceType = event.detail;
+            var deviceType = event.detail,
 
-            // Define mappings for device types to specific fields
-            var deviceToFieldMap = {
-              'MockMobile': '.mobile-specific-field',
-              'MockTablet': '.mobile-specific-field',
-              'MockLaptop': '.desktop-specific-field',
-              'MockDesktop': '.desktop-specific-field'
-            };
+                // Define mappings for device types to specific fields
+                deviceToFieldMap = {
+                    'MockMobile': '.mobile-specific-field',
+                    'MockTablet': '.mobile-specific-field',
+                    'MockLaptop': '.desktop-specific-field',
+                    'MockDesktop': '.desktop-specific-field'
+                };
 
             // Hide all specific fields by default
             $('.mobile-specific-field, .desktop-specific-field').hide();
 
             // Show specific field based on the device type
             $(deviceToFieldMap[deviceType]).show();
-          },
+        },
 
-          handleSwitchDisplayedStep: function (event) {
-            var checkoutStep = event.detail;
+        handleSwitchDisplayedStep: function (event) {
+            let checkoutStep = event.detail,
 
-            // Define mappings for step to specific fields
-            var stepToFieldMap = {
-              'YourDetails': '.details-specific-field',
-              'Shipping': '.shipping-specific-field',
-              'Payment': '.payment-specific-field'
-            };
+                // Define mappings for step to specific fields
+                stepToFieldMap = {
+                    'YourDetails': '.details-specific-field',
+                    'Shipping': '.shipping-specific-field',
+                    'Payment': '.payment-specific-field'
+                };
 
             // Hide all specific fields by default
             $('.details-specific-field, .shipping-specific-field, .payment-specific-field').hide();
 
             // Show specific field based on the checkout step
             $(stepToFieldMap[checkoutStep]).show();
-          },
+        },
 
         openDesigner: function (event) {
             event.preventDefault();
 
-            var scriptId = "personalisation-editor-js-app";
-            var existingScript = document.getElementById(scriptId);
+            let scriptId = 'personalisation-editor-js-app',
+                existingScript = document.getElementById(scriptId);
 
             if (!existingScript) {
-                var scriptSrc = this.config.jsAssets[0];
-                var scriptEl = document.createElement("script");
-                scriptEl.type = "text/javascript";
-                scriptEl.async = true
+                let scriptSrc = this.config.jsAssets[0],
+                    scriptEl = document.createElement('script');
+
+                scriptEl.type = 'text/javascript';
+                scriptEl.async = true;
                 scriptEl.src = scriptSrc;
                 scriptEl.id = scriptId;
                 document.head.appendChild(scriptEl);
@@ -149,6 +156,7 @@ define([
 
             values.forEach(function (value) {
                 const [name, cssValue] = value.split(':');
+
                 this.triggerChange({
                     target: {
                         dataset: {
@@ -180,14 +188,14 @@ define([
                 });
             });
 
-            this.designerModal.find('.pixel-input').each(function(index, element) {
+            this.designerModal.find('.pixel-input').each(function (index, element) {
                 // Find the related hidden text input for each number input
                 var hiddenTextInput = $('#' + element.id + '_hidden');
 
-                $(element).on('change', function() {
-                    var inputValue = $(this).val();
+                $(element).on('change', function () {
+                    var inputValue = $(this).val(),
 
-                    var valueWithPx = inputValue + 'px';
+                        valueWithPx = inputValue + 'px';
 
                     // Set the value of the hidden text input to valueWithPx
                     hiddenTextInput.val(valueWithPx).trigger('change');
@@ -198,7 +206,8 @@ define([
 
         resetDesigner: function () {
             confirm({
-                content: $t('Clicking OK will reset all values back to their default values. This action cannot be undone.'),
+                content:
+                    $t('Clicking OK will reset all values back to their default values. This action cannot be undone.'),
                 actions: {
                     confirm: function () {
                         this.designerModal.find('input').each(function (index, input) {
@@ -225,12 +234,12 @@ define([
         },
 
         setSystemValue: function (event) {
-            const value = $(event.target).val();
-            const systemValue = this.designerValuesSystem.prop('checked');
+            const value = $(event.target).val(),
+                systemValue = this.designerValuesSystem.prop('checked');
 
-            if ((value && systemValue) || (!value && !systemValue)) {
+            if (value && systemValue || !value && !systemValue) {
                 this.designerValuesSystem.trigger('click');
             }
-        },
+        }
     });
 });

@@ -210,7 +210,7 @@ export default {
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
-      continueButtonTextId: 'gene-bettercheckout-continuebutton-text'
+      continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
     };
   },
   computed: {
@@ -226,9 +226,9 @@ export default {
   },
   async mounted() {
     await this.getStoreConfig();
-    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton')
+    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
 
-    document.addEventListener(this.continueButtonTextId, this.setContinueButtonText)
+    document.addEventListener(this.continueButtonTextId, this.setContinueButtonText);
   },
   unmounted() {
     document.removeEventListener(this.continueButtonTextId, this.setContinueButtonText);

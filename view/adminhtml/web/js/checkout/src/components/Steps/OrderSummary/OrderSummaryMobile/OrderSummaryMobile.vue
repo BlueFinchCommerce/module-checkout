@@ -135,7 +135,7 @@ export default {
       orderSummaryText: '',
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       orderSummaryDescriptionText: '',
-      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text'
+      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
     };
   },
   computed: {
@@ -143,16 +143,16 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader')
-    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId] || this.$t('orderSummary.mobileDiscountText')
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
+      || this.$t('orderSummary.mobileDiscountText');
 
-    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText)
-    document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText)
+    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
+    document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.removeEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
-
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

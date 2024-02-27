@@ -144,7 +144,7 @@ export default {
       shippingStepText: '',
       shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text'
+      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
     };
   },
   computed: {
@@ -161,8 +161,8 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle')
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay')
+    this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     document.addEventListener(this.shippingStepTextId, this.setShippingStepText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
@@ -197,7 +197,7 @@ export default {
       return formatPrice(price);
     },
 
-    async handleChange(item) {
+    async handleChange() {
       // Commented out to prevent functionality only for UI designer
       // this.selectShippingMethod(item);
       // await this.submitShippingInfo();

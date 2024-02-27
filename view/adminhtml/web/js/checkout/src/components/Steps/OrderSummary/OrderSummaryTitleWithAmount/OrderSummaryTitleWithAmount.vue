@@ -23,14 +23,14 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text'
-    }
+      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+    };
   },
   async created() {
     await this.getStoreConfig();
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader')
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
 
-    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText)
+    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
@@ -40,8 +40,8 @@ export default {
 
     setOrderSummaryText(event) {
       this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

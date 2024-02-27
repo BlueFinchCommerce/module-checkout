@@ -1,11 +1,11 @@
 import axios from 'axios';
-import useConfigStore from '@/stores/ConfigStore';
+import useAdyenStore from '@/stores/AdyenStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import tokenTypes from '@/helpers/getTokenTypes';
 
 const getAccessToken = () => {
-  const configStore = useConfigStore();
-  const { adyenAuthToken } = configStore;
+  const adyenStore = useAdyenStore();
+  const { adyenAuthToken } = adyenStore;
 
   if (adyenAuthToken) {
     return adyenAuthToken;

@@ -12,14 +12,9 @@ import useConfigStore from '@/stores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
-import Loader from '@/components/Core/Loader/Loader.vue';
-
 export default {
   name: 'AdyenGooglePay',
   components: {
-    ErrorMessage,
-    Loader,
   },
   data() {
     return {

@@ -6,6 +6,7 @@
       aria-label="proceed-to-shipping-link"
       to="/shipping"
       @click="setDetailsStepActive();"
+      @keydown="setDetailsStepActive()"
     >
       <div class="saved-shipping__title">
         <div class="order-total">
@@ -40,7 +41,7 @@
 </template>
 <script>
 // stores
-import { mapState, mapActions} from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
@@ -64,14 +65,15 @@ export default {
   data() {
     return {
       shippingStepCompletedText: '',
-      shippingStepCompletedTextId: 'gene-bettercheckout-shippingstepcompleted-text'
-    }
+      shippingStepCompletedTextId: 'gene-bettercheckout-shippingstepcompleted-text',
+    };
   },
   async created() {
     await this.getStoreConfig();
-    this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId] || this.$t('shippingStep.stepCompleteTitle')
+    this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
+      || this.$t('shippingStep.stepCompleteTitle');
 
-    document.addEventListener(this.shippingStepCompletedTextId, this.setShippingStepText)
+    document.addEventListener(this.shippingStepCompletedTextId, this.setShippingStepText);
   },
   unmounted() {
     document.removeEventListener(this.shippingStepCompletedTextId, this.setShippingStepText);

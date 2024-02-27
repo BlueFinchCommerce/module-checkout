@@ -39,16 +39,16 @@ export default {
     },
   },
   data() {
-      return {
-        removeItemText: '',
-        removeItemTextId: 'gene-bettercheckout-removeitem-text'
-      };
+    return {
+      removeItemText: '',
+      removeItemTextId: 'gene-bettercheckout-removeitem-text',
+    };
   },
   async created() {
     await this.getStoreConfig();
-    this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton')
+    this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
 
-    document.addEventListener(this.removeItemTextId, this.setRemoveItemText)
+    document.addEventListener(this.removeItemTextId, this.setRemoveItemText);
   },
   unmounted() {
     document.removeEventListener(this.removeItemTextId, this.setRemoveItemText);
@@ -59,7 +59,7 @@ export default {
 
     setRemoveItemText(event) {
       this.removeItemText = event?.detail || this.$t('orderSummary.removeItemButton');
-    }
+    },
   },
 };
 </script>

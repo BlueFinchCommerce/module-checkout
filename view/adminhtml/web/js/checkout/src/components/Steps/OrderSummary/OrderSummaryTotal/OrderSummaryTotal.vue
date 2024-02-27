@@ -157,8 +157,8 @@ export default {
       grandTotalText: '',
       grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
       subtotalText: '',
-      subtotalTextId: 'gene-bettercheckout-subtotal-text'
-    }
+      subtotalTextId: 'gene-bettercheckout-subtotal-text',
+    };
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'totalSegments', 'shippingPrice', 'cartItemsQty']),
@@ -167,13 +167,13 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader')
-    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle')
-    this.subtotalText = window.geneCheckout?.[this.subtotalTextId] || this.$t('orderSummary.subtotalTitle')
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
+    this.subtotalText = window.geneCheckout?.[this.subtotalTextId] || this.$t('orderSummary.subtotalTitle');
 
-    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText)
-    document.addEventListener(this.grandTotalTextId, this.setGrandTotalText)
-    document.addEventListener(this.subtotalTextId, this.setSubtotalText)
+    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
+    document.addEventListener(this.grandTotalTextId, this.setGrandTotalText);
+    document.addEventListener(this.subtotalTextId, this.setSubtotalText);
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
@@ -191,7 +191,7 @@ export default {
     },
     setSubtotalText(event) {
       this.subtotalText = event?.detail || this.$t('orderSummary.subtotalTitle');
-    }
+    },
   },
 };
 </script>
