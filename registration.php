@@ -1,6 +1,6 @@
 <?php
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Gene_[Name]',
+    'Gene_BetterCheckout',
     __DIR__
 );

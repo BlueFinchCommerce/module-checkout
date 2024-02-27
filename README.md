@@ -1,4 +1,4 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/genecommerce/template-module/tree/master.svg?style=svg&circle-token=1df10ade4cc4081e7811aa16430d10dd288cb969)](https://dl.circleci.com/status-badge/redirect/gh/genecommerce/template-module/tree/master)
+![CircleCI](https://dl.circleci.com/status-badge/img/gh/genecommerce/module-better-checkout/tree/main.svg?style=svg&circle-token=244e88ea8c8c2c317e9fbe475efabdce9b01281e)
 
 # Template Repo for Magento 2 Modules
 
