@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
+        <arguments>
+            <argument name="extendedConfigData" xsi:type="array">
+                <item name="gene_better_checkout_afd_enable" xsi:type="string">gene_better_checkout/general/enable_afd_checkout</item>
+                <item name="gene_better_checkout_enabled" xsi:type="string">gene_better_checkout/general/enabled</item>
+                <item name="gene_better_checkout_loqate_enabled" xsi:type="string">gene_better_checkout/general/loqate/loqate_enabled</item>
+                <item name="gene_better_checkout_loqate_api_key" xsi:type="string">gene_better_checkout/general/loqate/loqate_api_key</item>
+                <item name="gene_better_checkout_adyen_auth_token" xsi:type="string">gene_better_checkout/general/adyen/adyen_auth_token</item>
+                <item name="gene_better_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
+                <item name="gene_better_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
+                <item name="gene_better_checkout_country_state_required" xsi:type="string">general/region/state_required</item>
+                <item name="gene_better_checkout_country_display_state" xsi:type="string">general/region/display_all</item>
+                <item name="gene_better_checkout_google_map_key" xsi:type="string">carriers/collect/google_map_key</item>
+                <item name="gene_better_checkout_clickandcollect_enabled" xsi:type="string">carriers/collect/active</item>
+                <item name="gene_better_checkout_clickandcollect_sms" xsi:type="string">carriers/collect/sms_alert</item>
+                <item name="gene_better_checkout_clickandcollect_max_order_value" xsi:type="string">carriers/collect/max_order_value</item>
+                <item name="gene_better_checkout_clickandcollect_min_order_value" xsi:type="string">carriers/collect/min_order_value</item>
+                <item name="optional_zip_countries" xsi:type="string">general/country/optional_zip_countries</item>
+                <item name="tax_cart_display_price" xsi:type="string">tax/cart_display/price</item>
+                <item name="tax_cart_display_subtotal" xsi:type="string">tax/cart_display/subtotal</item>
+                <item name="tax_cart_display_shipping" xsi:type="string">tax/cart_display/shipping</item>
+                <item name="tax_cart_display_grandtotal" xsi:type="string">tax/cart_display/grandtotal</item>
+                <item name="tax_cart_display_full_summary" xsi:type="string">tax/cart_display/full_summary</item>
+                <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
+                <item name="gene_better_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

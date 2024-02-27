@@ -1,0 +1,12 @@
+.adyen-checkout__payment-method-tick {
+  align-self: self-start;
+  display: flex;
+  fill: var(--adyen-saved-card-tick-color, var(--primary__color));
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: flex-end;
+}
+
+.adyen-checkout__payment-stored-methods .adyen-checkout__payment-method__image__wrapper {
+  margin-right: var(--indent__s);
+}

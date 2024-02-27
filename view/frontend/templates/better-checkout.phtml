@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var \Magento\Catalog\Block\Product\View $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
+ */
+$assetViewModel = $block->getAssetViewModel();
+$jsAssets = $assetViewModel->getAssetsByType('js');
+$cssAssets = $assetViewModel->getAssetsByType('css');
+
+?>
+
+<link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
+
+<?php foreach ($cssAssets as $cssAsset): ?>
+    <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+<?php endforeach; ?>
+
+<?php foreach ($jsAssets['main'] as $jsAsset): ?>
+    <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
+<?php endforeach; ?>
+
+<?php if (array_key_exists('imports', $jsAssets)): ?>
+    <?php foreach ($jsAssets['imports'] as $jsAsset): ?>
+        <link rel="modulepreload" href="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>">
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<div id="gene-better-checkout-root"
+     class="full-width container"
+     data-static-path="<?= $escaper->escapeUrl($block->getViewFileUrl('')) ?>"
+     style="min-height: 100%;">
+    <div class="loading-mask">
+        <div class="loader">
+            <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
+                 alt="<?= $escaper->escapeHtmlAttr(__('Loading...')) ?>"
+                 style="width: 50px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        </div>
+    </div>
+</div>

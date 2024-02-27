@@ -1,0 +1,31 @@
+.address-block__address {
+  font-size: var(--font__s);
+  font-family: var(--font-family-copy);
+
+  p {
+    font-size: var(--short-info-size, var(--font__s));
+    color: var(--text__color);
+  }
+}
+
+.shipping-billing-steps {
+  margin-right: var(--indent__xl);
+  max-height: var(--short-info-height, 55px);
+  padding-left: var(--section-left-space, 44px);
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+
+  strong {
+    display: block;
+    width: 100%;
+  }
+
+  div {
+    display: var(--shipping-address-bisplay, -webkit-box);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: var(--shipping-address-width, none);
+  }
+}

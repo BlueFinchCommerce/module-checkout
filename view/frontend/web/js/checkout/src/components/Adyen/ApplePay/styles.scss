@@ -1,0 +1,10 @@
+#adyen-apple-pay {
+  line-height: var(--button-line-height);
+
+  > button {
+    border-radius: var(--button-border-radius);
+    height: var(--adyen-express-button-height, 48px);
+    overflow: hidden;
+    width: 100%;
+  }
+}

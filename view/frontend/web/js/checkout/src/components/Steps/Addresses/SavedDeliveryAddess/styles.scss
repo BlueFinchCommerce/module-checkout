@@ -1,0 +1,78 @@
+@import '@/styles/global/_breakpoints';
+
+.delivery-address {
+  background: var(--delivery-address-section-background, #f2f3f3);
+  position: relative;
+  border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
+  min-height: var(--details-section-min-height, 103px); //prevent jumping on page load
+
+  &-link {
+    color: var(--details-title-color, var(--text__color));
+    display: block;
+    text-decoration: none;
+    padding: var(--your-details-padding-desktop, 16px 20px);
+  }
+
+  .details-title-section {
+    display: flex;
+
+    &-image {
+      width: var(--shipping-address-icon-width, 24px);
+      display: var(--section-title-visible, flex);
+
+      img {
+        width: 100%;
+      }
+    }
+
+    p {
+      font-weight: var(--font-weight__bold);
+      font-family: var(--font-family-copy);
+      font-size: var(--font-size-delivery-section, 16px);
+      line-height: var(--your-details-title-line-height, inherit);
+      margin-left: var(--section-left-space, 20px);
+      margin-bottom: var(--details-title-margin-bottom, 0);
+      color: var(--text__color);
+      text-transform: var(--details-title-text-transform, unset);
+    }
+  }
+}
+
+.edit-details-button {
+  color: var(--text__color);
+  line-height: var(--remove-item-action-line-height, 6px);
+  background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.address-block {
+  &__edit {
+    cursor: pointer;
+    position: absolute;
+    top: var(--details-edit-button-top, 50%);
+    bottom: var(--details-edit-button-bottom, auto);
+    right: var(--details-edit-button-right, 20px);
+    transform: translateY(-50%);
+
+    svg {
+      display: var(--edit-button-icon-visibility, block);
+    }
+
+    p {
+      font-size: var(--edit-button-font-size, var(--font__s));
+      display: var(--edit-button-title-visibility, none);
+      text-decoration: underline;
+      font-family: var(--font-family-copy);
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .delivery-address {
+    margin-top: var(--delivery-address-desktop-margin, 0);
+  }
+}

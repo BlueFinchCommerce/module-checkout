@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Add new head block -->
+    <type name="Magento\Framework\View\Page\Config\Renderer">
+        <plugin name="genebettercheckout_add_head_layout" type="Gene\BetterCheckout\Plugin\AddNewHeadLayout"/>
+    </type>
+
+    <!-- Gene Checkout Router -->
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="gene_better_checkout_route" xsi:type="array">
+                    <item name="class" xsi:type="string">Gene\BetterCheckout\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,33 @@
+.payment-method {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    line-height: var(--button-line-height);
+    min-height: var(--button-height);
+    background: transparent;
+
+    &-radio {
+        flex-shrink: 0;
+        box-shadow: var(--radio__input-box-shadow);
+        border: var(--radio__input-border);
+        display: block;
+        width: var(--radio__input-width);
+        height: var(--radio__input-height);
+        border-radius: 50%;
+        margin-right: var(--indent__s);
+
+        &.selected {
+            border: var(--radio__input-checked-border);
+            box-shadow: var(--radio__input-checked-box-shadow);
+        }
+    }
+
+    &-name {
+        font-size: var(--adyen-font-size, var(--font__m));
+        font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
+        color: var(--adyen-font-color, #00112C);
+        font-family: var(--font-family-base);
+    }
+}

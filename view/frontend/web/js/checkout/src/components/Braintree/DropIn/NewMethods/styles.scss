@@ -1,0 +1,115 @@
+.braintree-drop-in {
+  .braintree-dropin {
+    font-family: var(--font-family-copy);
+  }
+
+  .braintree-heading,
+  .braintree-placeholder,
+  .braintree-toggle {
+    display: none;
+  }
+
+  .braintree-sheet {
+    border: none;
+    display: block;
+    grid-row: var(--braintree-method-position);
+
+    &__header,
+    &__content {
+      display: none;
+    }
+
+    &__container {
+      display: grid;
+    }
+
+    &__content--button {
+      padding: 0;
+      text-align: left;
+    }
+
+    &__button--paypal,
+    [data-braintree-id="google-pay-button"] {
+      display: flex;
+      flex-direction: column;
+
+      .braintree-store-method {
+        margin: 0 0 var(--indent__m);
+        order: -1;
+      }
+    }
+
+    &.braintre-hidden {
+      display: none;
+    }
+  }
+
+  .braintree-store-method {
+    margin: var(--indent__m) 0 0;
+    width: 100%;
+  }
+
+  .braintree-upper-container:before {
+    background-color: transparent;
+  }
+
+  .braintree-options {
+    display: block;
+    height: auto;
+    visibility: visible;
+
+    &.braintree-hidden {
+      display: none;
+    }
+  }
+
+  .braintree-option {
+    background-color: transparent;
+    border: none;
+    flex-wrap: wrap;
+    line-height: 3em;
+    margin-bottom: var(--indent__base);
+    padding: 4px 4px 4px 0;
+
+    &:hover .braintree-option__label {
+      font-weight: var(--font-weight__regular);
+    }
+
+    &:before {
+      box-shadow: var(--radio__input-box-shadow);
+      border: var(--radio__input-border);
+      content: '';
+      display: block;
+      width: var(--radio__input-width);
+      height: var(--radio__input-height);
+      border-radius: 50%;
+      position: absolute;
+      top: 15px;
+    }
+
+    &__selected {
+      &:before {
+        border: var(--radio__input-checked-border);
+        box-shadow: var(--radio__input-checked-box-shadow);
+      }
+
+      ~.braintree-sheet__content {
+        display: block;
+      }
+    }
+
+    &__logo {
+      max-width: 74px;
+      padding-left: 34px;
+    }
+
+    &__label {
+      margin-left: 10px;
+      width: auto;
+    }
+  }
+
+  .braintree-delete-confirmation {
+    display: none;
+  }
+}

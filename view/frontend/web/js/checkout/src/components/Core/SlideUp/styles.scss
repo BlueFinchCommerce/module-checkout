@@ -1,0 +1,59 @@
+.slideup-backdrop {
+  background-color: var(--modal-overlay, rgba(0, 0, 0, 0.3));
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150; // High to be in front of Google Pay
+}
+
+.slideup-container {
+  background: var(--side-up-background-color, white);
+  border-radius: var(--slide-up-border-radius);
+  border-top: var(--slide-up-border, var(--indent__m) solid var(--side-up-background-color, white));
+  bottom: 0;
+  max-height: var(--slide-up-container-height, 75vh);
+  height: var(--slide-up-container-height, auto);
+  overflow: auto;
+  position: fixed;
+  width: 100%;
+  z-index: 160; // High to be in front of Google Pay
+}
+
+.slideup-header {
+  background-color: var(--side-up-background-color, white);
+  display: grid;
+  grid-template-columns: auto min-content;
+  padding: var(--slide-up-header-padding, var(--indent__m));
+  margin: var(--slide-up-header-margin, 0);
+  position: var(--slide-up-header-position, sticky);
+  top: 0;
+  z-index: 1;
+  border-bottom: var(--slide-up-header-border-bottom, none);
+}
+
+.slideUp-body {
+  background: var(--side-up-background-color, white);
+  display: grid;
+  padding: var(--slide-up-body-padding, 20px 20px 80px);
+}
+
+.slideup-leave-active,
+.slideup-enter-active {
+  transition: 0.5s;
+  transform: translateY(100%);
+}
+.slideup-enter-to {
+  transform: translateY(0);
+}
+.slideup-leave-to {
+  transform: translate(0, 100%);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
