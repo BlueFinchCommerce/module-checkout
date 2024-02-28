@@ -79,9 +79,6 @@ export default {
       type: String,
       default: '',
     },
-    customValidation: {
-      type: Function,
-    },
     identifier: {
       type: String,
     },
