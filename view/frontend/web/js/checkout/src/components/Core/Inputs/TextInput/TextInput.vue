@@ -17,6 +17,7 @@
         :disabled="disabled"
         :required="required"
         :aria-label="ariaLabel"
+        :data-cy="dataCy ? dataCy : 'input'"
         :value="modelValue"
         @blur="onBlur"
         @keyup="customValidation"
@@ -26,7 +27,6 @@
       <slot name="icon" />
     </label>
     <ErrorMessage v-if="errorMessage !== ''" :message="errorMessage"/>
-    <ErrorMessage v-if="validationErrorMessage !== ''" :message="validationErrorMessage"/>
   </div>
 </template>
 <script>
@@ -45,6 +45,9 @@ export default {
     modelValue: {
       type: String,
       default: '',
+    },
+    dataCy: {
+      type: String,
     },
     placeholder: {
       type: String,
@@ -75,6 +78,9 @@ export default {
     errorMessage: {
       type: String,
       default: '',
+    },
+    customValidation: {
+      type: Function,
     },
     identifier: {
       type: String,
