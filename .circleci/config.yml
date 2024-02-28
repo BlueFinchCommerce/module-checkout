@@ -156,11 +156,17 @@ jobs:
           name: NPM install to checkout app
           command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout i
       - run:
+          name: NPM install to admin app
+          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout i
+      - run:
           name: ESLint run against root module
           command: npm --prefix vendor/gene/module-better-checkout run lint
       - run:
           name: ESLint run against checkout app
           command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout run lint
+      - run:
+          name: ESLint run against admin app
+          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout run lint
 workflows:
   build-test:
     jobs:

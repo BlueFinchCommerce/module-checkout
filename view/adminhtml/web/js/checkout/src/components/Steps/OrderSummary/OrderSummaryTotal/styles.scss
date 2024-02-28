@@ -1,0 +1,110 @@
+@import '@/styles/global/_breakpoints';
+
+// --order-summary-total-header-border - 1px solid #D9DADB;
+
+.order-total {
+  &-container {
+    order: var(--order-total-container-order, 1);
+  }
+
+  &-wrapper {
+    padding: var(--order-total-padding, 20px 0 10px);;
+    min-height: 91px;
+
+    .total__row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--order-total-item-padding, 0);
+
+      .total__text {
+        max-width: 350px;
+        text-align: left;
+      }
+
+      p {
+        margin-bottom: var(--indent__xs);
+        min-width: 110px;
+        text-align: right;
+        font-size: var(--totals-row-text__font-size, var(--font__m));
+        font-weight: var(--totals-row-text__font-weight, var(--font-weight__light));
+      }
+    }
+  }
+
+  &-title {
+    p {
+      font-size: var(--font__heading--mobile);
+      font-weight: var(--font-weight__semibold);
+      color: var(--text__color--heading);
+    }
+  }
+  &-grand {
+    p {
+      font-size: var(--font__l);
+      font-weight: var(--font-weight__semibold);
+      color: var(--text__color);
+    }
+  }
+
+  &-title {
+    border-bottom: var(--order-summary-total-header-border, 1px solid #D9DADB);
+    font-family: var(--font-family-header);
+    display: var(--order-summary-title-mobile-display, flex);
+    order: var(--order-summary-title-order, 0);
+
+    &-amount {
+      display: var(--order-summary-title-amount-display, none);
+      margin-left: var(--indent__xs);
+    }
+  }
+
+  &-grand {
+    border-top: var(--order-summary-grand-total-header-border, 1px solid #D9DADB);
+    display: flex;
+    justify-content: space-between;
+    padding: var(--grand-total-padding, 20px 0);
+
+    p {
+      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__semibold));
+    }
+  }
+}
+
+//Styles for desktop
+
+@mixin largeWidth() {
+  .order-total {
+    &-wrapper {
+      padding: var(--order-total-wrapper, 15px 0);
+    }
+
+    &-title {
+      display: var(--order-summary-title-desktop-display, flex);
+      padding-bottom: var(--indent__s);
+      padding-top: 0;
+
+      p {
+        font-size: var(--font__heading--desktop);
+      }
+    }
+
+    &-grand {
+      padding: var(--grand-total-padding, 20px 0 10px);
+
+      p {
+        font-size: var(--font__l);
+      }
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

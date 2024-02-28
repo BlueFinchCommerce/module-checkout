@@ -1,0 +1,37 @@
+{
+  "main.js": {
+    "file": "main.min.js",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "main.css"
+    ],
+    "assets": [
+      "icon-apple.svg",
+      "icon-google.svg",
+      "icon-express.svg",
+      "icon-paypal.svg",
+      "icon-klarna.svg",
+      "icon-maestro.svg",
+      "icon-mastercard.svg",
+      "icon-visa.svg",
+      "icon-clearpay.svg",
+      "logo.svg",
+      "lockIcon.svg",
+      "loader.gif",
+      "bin.svg",
+      "promo-icon.svg",
+      "gift-icon.svg",
+      "detailsIcon.svg",
+      "shippingIcon.svg",
+      "paymentIcon.svg",
+      "delivery.svg",
+      "AmericanExpress.svg",
+      "ClearPay.svg",
+      "Klarna.svg",
+      "MasterCard.svg",
+      "Visa.svg",
+      "rvvup-payment.svg"
+    ]
+  }
+}

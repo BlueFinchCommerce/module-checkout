@@ -1,2 +1,3 @@
 # Ignore the Checkout app.
+view/adminhtml/web/js/checkout/*
 view/frontend/web/js/checkout/*

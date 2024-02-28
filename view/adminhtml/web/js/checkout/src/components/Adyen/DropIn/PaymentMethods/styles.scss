@@ -1,0 +1,238 @@
+@import '@/styles/global/_breakpoints';
+
+#adyen-dropin-container-stored {
+  max-height: 0;
+  overflow: hidden;
+  transition-duration: 0.5s;
+  transition-property: max-height;
+  transition-timing-function: ease;
+
+  .adyen-checkout__payment-methods-list-styled {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 75%;
+    grid-gap: var(--indent__s);
+    grid-template-columns: unset;
+    overflow-x: auto;
+
+    &-1 {
+      grid-auto-columns: 100%;
+    }
+
+    .adyen-checkout__payment-method {
+      border: none;
+    }
+
+    .adyen-checkout__payment-method__header__title {
+      background: var(--adyen-saved-card-background-color);
+      border: var(--adyen-saved-card-border-active);
+      border-radius: var(--base-border-radius);
+      box-shadow: none;
+      color: var(--adyen-saved-card-color);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, auto);
+      margin: 0;
+      padding: var(--indent__base);
+
+      &.adyen-checkout__payment-method-disabled {
+        border: var(--adyen-saved-card-border);
+      }
+    }
+
+    .adyen-checkout__payment-method__card-number,
+    .adyen-checkout__payment-method__name {
+      font-size: var(--font__s);
+      grid-column: 1;
+      line-height: 1.5em;
+      text-align: left;
+    }
+
+    .adyen-checkout__payment-method__expiry-label,
+    .adyen-checkout__payment-method__expiry {
+      font-size: var(--font__s);
+      grid-column: 2;
+      line-height: 1.5em;
+      text-align: right;
+    }
+
+    .adyen-checkout__payment-method__expiry-label {
+      grid-row: 2;
+    }
+
+    .adyen-checkout__payment-method__image__wrapper {
+      grid-column: 1;
+      grid-row: 1;
+      height: auto;
+      margin: 0 0 var(--indent__base);
+      width: 50%;
+
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+
+    .adyen-checkout__card__exp-date__input--oneclick {
+      background-color: transparent;
+      border: none;
+      color: var(--white__color);
+      grid-column: 2;
+      height: auto;
+      line-height: 1em;
+      padding: 0;
+      text-align: right;
+
+      &:active {
+        box-shadow: none
+      }
+    }
+
+    .adyen-checkout__payment-method__radio {
+      display: none;
+    }
+  }
+
+  .adyen-checkout__payment-methods-list {
+    margin: var(--indent__base) 0 0;
+
+    .adyen-checkout__payment-method {
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition-duration: 0.5s;
+      transition-property: max-height;
+      transition-timing-function: ease;
+    }
+
+    .adyen-checkout__payment-method--selected {
+      max-height: 300px;
+      transition-delay: 0.5s;
+    }
+
+    .adyen-checkout__payment-method__header,
+    .adyen-checkout__field {
+      display: none;
+    }
+
+    .adyen-checkout__payment-method__details {
+      display: block;
+      padding: 0;
+    }
+
+    .adyen-checkout__field--securityCode {
+      display: block;
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+.adyen-dropin-stored-payments {
+  label span {
+    color: var(--adyen-font-color,#00112c);
+    font-size: var(--adyen-font-size,var(--font__m));
+    font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
+  }
+
+  &-active + #adyen-dropin-container-stored {
+    max-height: 500px;
+    transition-delay: 0.5s;
+  }
+}
+
+.rvvup-error {
+  .adyen-payment__title {
+    margin-bottom: var(--indent__base);
+  }
+}
+
+.adyen-payment {
+  &__title {
+    border-bottom: var(--payment-title-border, 1px solid rgba(39, 48, 58, 0.2));
+    display: flex;
+    grid-gap: var(--indent__m);
+    padding-bottom: var(--indent__s);
+    margin-bottom: var(--adyen-payment-title-margin, 0);
+  }
+
+  &__icon {
+    display: var(--adyen-payment-icon-display);
+
+    img {
+      width: 24px;
+    }
+  }
+
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__m));
+    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
+    font-family: var(--payment-page-header-font-family, var(--font-family-copy));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__base));
+  }
+}
+
+.gene-checkout-threeds-opened {
+  overflow: hidden;
+
+  &:after {
+    background: var(--modal-overlay, rgba(0, 0, 0, 0.3));
+    bottom: 0;
+    content: ' ';
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 200;
+  }
+
+  .adyen-checkout__threeds2__challenge {
+    bottom: var(--indent__m);
+    height: auto;
+    left: var(--indent__m);
+    position: fixed;
+    right: var(--indent__m);
+    top: var(--indent__m);
+    width: auto;
+    z-index: 210;
+  }
+
+  .adyen-checkout__iframe--threeDSIframe {
+    align-items: center;
+    background: var(--white__color);
+    display: flex;
+    left: 50%;
+    justify-content: center;
+    max-height: var(--adyen-payment-threeds-max-height);
+    max-width: var(--adyen-payment-threeds-max-width);
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
+}
+
+@mixin xLargeWidth() {
+  #adyen-dropin-container-stored {
+    .adyen-checkout__payment-methods-list-styled {
+      grid-auto-columns: 40%;
+
+      &-1,
+      &-2 {
+        grid-auto-columns: calc(50% - var(--indent__xs));
+      }
+    }
+  }
+}
+
+.mock-desktop {
+  @include xLargeWidth;
+}
+
+@media screen and (min-width: $screen__l) {
+  .mock-full {
+    @include xLargeWidth;
+  }
+}
