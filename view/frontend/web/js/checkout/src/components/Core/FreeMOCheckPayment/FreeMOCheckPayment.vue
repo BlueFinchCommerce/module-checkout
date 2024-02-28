@@ -10,6 +10,7 @@
       class="free-payment-button"
       :label="$t('paymentStep.payNow')"
       primary
+      v-if="isMethodSelected"
       :disabled="buttonDisabled"
       @click="createPayment()"
     />

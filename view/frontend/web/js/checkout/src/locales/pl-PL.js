@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Edytuj szczegóły wysyłki',
   },
   errorMessages: {
+    sanitiseError: 'Wprowadzono nieprawidłowy znak.',
     firstNameErrorMessage: 'Wprowadź prawidłowe imię',
     lastNameErrorMessage: 'Wprowadź prawidłowe nazwisko',
     emailErrorMessage: 'Wprowadź prawidłowy adres e-mail',

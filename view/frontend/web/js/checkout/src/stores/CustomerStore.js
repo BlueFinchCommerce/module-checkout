@@ -57,7 +57,6 @@ export default defineStore('customerStore', {
     },
     amastySubs: {},
     amastyConsentStatus: {},
-    isEmailAvailableController: undefined,
     loadingCustomerInformation: false,
     postCodeValid: false,
     cache: {},
@@ -220,18 +219,7 @@ export default defineStore('customerStore', {
       });
     },
     isEmailAvailable(email) {
-      // Cancel the previous request if it exists.
-      if (this.$state.isEmailAvailableController) {
-        this.$state.isEmailAvailableController.abort();
-      }
-
-      const controller = new AbortController();
-
-      this.setData({
-        isEmailAvailableController: controller,
-      });
-
-      return isEmailAvailable(email, controller);
+      return isEmailAvailable(email);
     },
     setEmailAddress(email) {
       this.setData({
@@ -313,12 +301,12 @@ export default defineStore('customerStore', {
           // Update the newsletter subscription status.
           this.setData({
             newsletter: {
-              isSubscribed: data.extension_attributes?.is_subscribed || false,
+              isSubscribed: data.is_subscribed || false,
             },
           });
         }
         if (this.customer.tokenType !== tokenTypes.authKey) {
-          const tokenType = data && data.id ? tokenTypes.phpSessionId : tokenTypes.guestUser;
+          const tokenType = data ? tokenTypes.phpSessionId : tokenTypes.guestUser;
           this.setData({
             customer: {
               tokenType,

@@ -1,4 +1,4 @@
-/*Gene Better Checkout App*/
+/*Gene Vue Checkout App*/
 /*---------------------------------------------*/
 
 /*Core Checkout Styles*/
@@ -19,8 +19,8 @@
 
 html,
 body,
-#gene-better-checkout-container,
-#gene-better-checkout-root {
+#vue-checkout-container,
+#vue-checkout-root {
   height: 100%;
 }
 
@@ -86,7 +86,7 @@ body {
   }
 }
 
-#gene-better-checkout-root {
+#vue-checkout-root {
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base);

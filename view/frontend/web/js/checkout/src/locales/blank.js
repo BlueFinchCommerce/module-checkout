@@ -102,6 +102,7 @@ export default {
     editButton: ' ',
   },
   errorMessages: {
+    sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
     emailErrorMessage: ' ',

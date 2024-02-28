@@ -1,9 +1,9 @@
 <template>
   <div class="text-input">
-    <label :for="identifier" :class="classes">
+    <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
       <span
         v-if="label"
-        :class="sanitizedModelValue.length > 0 ? 'text-input-has-value' : 'text-input-no-value'"
+        :class="modelValue.length > 0 ? 'text-input-has-value' : 'text-input-no-value'"
       >
         {{ required ? label + ' *' : label }}
       </span>
@@ -26,6 +26,7 @@
       <slot name="icon" />
     </label>
     <ErrorMessage v-if="errorMessage !== ''" :message="errorMessage"/>
+    <ErrorMessage v-if="validationErrorMessage !== ''" :message="validationErrorMessage"/>
   </div>
 </template>
 <script>
@@ -75,9 +76,6 @@ export default {
       type: String,
       default: '',
     },
-    customValidation: {
-      type: Function,
-    },
     identifier: {
       type: String,
     },
@@ -108,22 +106,24 @@ export default {
   data() {
     return {
       inputVal: '',
+      validationErrorMessage: '',
     };
   },
-  watch: {
-    modelValue: {
-      handler(newValue) {
-        this.$emit('update:modelValue', sanitiseInputValue(newValue));
-      },
-      immediate: true, // This triggers the handler immediately upon component creation
-    },
-  },
-  computed: {
-    sanitizedModelValue() {
-      return sanitiseInputValue(this.modelValue);
-    },
-  },
   methods: {
+    customValidation() {
+      const inputValue = this.modelValue;
+      const isValid = sanitiseInputValue(inputValue);
+
+      if (this.type !== 'password') {
+        if (isValid) {
+          this.$emit('update:modelValue', inputValue);
+          this.validationErrorMessage = '';
+        } else {
+          this.$emit('update:modelValue', inputValue);
+          this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+        }
+      }
+    },
     moveIntoViewport(event) {
       const breakpoint = parseInt(breakpoints.screenM, 10);
 

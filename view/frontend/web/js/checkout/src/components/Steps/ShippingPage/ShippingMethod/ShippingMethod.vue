@@ -65,11 +65,11 @@
             </label>
             <TextField
               v-if="taxCartDisplayShipping"
-              :text="formatPrice(item.price_incl_tax)"
+              :text="formatPrice(item.price_incl_tax.value)"
             />
             <TextField
               v-else
-              :text="formatPrice(item.price_excl_tax)"
+              :text="formatPrice(item.price_excl_tax.value)"
             />
             <NominatedDay
               v-if="item.carrier_code === nominatedId
@@ -77,6 +77,11 @@
               :item="item"
             />
           </li>
+          <component
+            :is="additionalShippingMethod"
+            v-for="additionalShippingMethod in additionalShippingMethods"
+            :key="additionalShippingMethod"
+          />
         </ul>
         <TextField
           v-else-if="!shippingMethods.length"
@@ -122,6 +127,9 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
+// Extensions
+import shippingMethods from '@/extensions/shippingMethods';
+
 export default {
   name: 'ShippingMethod',
   components: {
@@ -130,6 +138,7 @@ export default {
     Shipping,
     NominatedDay,
     MyButton,
+    ...shippingMethods(),
   },
   props: {
     buttonText: {
@@ -139,6 +148,7 @@ export default {
   },
   data() {
     return {
+      additionalShippingMethods: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
     };
@@ -154,6 +164,9 @@ export default {
       'shippingMethods',
       'selectedMethod',
     ]),
+  },
+  created() {
+    this.additionalShippingMethods = Object.keys(shippingMethods());
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

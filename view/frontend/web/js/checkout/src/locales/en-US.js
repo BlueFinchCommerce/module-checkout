@@ -118,6 +118,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
+    sanitiseError: 'Invalid character entered.',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',
     emailErrorMessage: 'Please enter a valid email address',
