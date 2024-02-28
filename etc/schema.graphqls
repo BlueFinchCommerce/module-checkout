@@ -21,6 +21,12 @@ type StoreConfig {
     tax_cart_display_full_summary: String @doc(description: "Tax Display Full summary")
     tax_cart_display_zero_tax: String @doc(description: "Tax Display Zero tax")
     gene_better_checkout_copyright_text: String @doc(description: "Checkout copyright text")
+    adyen_merchant_account: String @doc(description: "Adyen merchant account")
+    adyen_client_key_test: String @doc(description: "Adyen client key test")
+    adyen_client_key_live: String @doc(description: "Adyen client key live")
+    gtm_container_id: String @doc(description: "GTM Container ID")
+    gtm_active: String @doc(description: "GTM Active")
+    gene_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
 }
 type Query {
     storecode(
