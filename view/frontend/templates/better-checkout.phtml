@@ -10,6 +10,10 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 
 ?>
 
+<script>
+    window.geneCheckout = window.geneCheckout || {};
+</script>
+
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
 
 <?php foreach ($cssAssets as $cssAsset): ?>
@@ -17,6 +21,9 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 <?php endforeach; ?>
 
 <?php foreach ($jsAssets['main'] as $jsAsset): ?>
+    <script>
+        window.geneCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
+    </script>
     <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
 <?php endforeach; ?>
 
