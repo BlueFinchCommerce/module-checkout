@@ -41,7 +41,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useBraintreeStore, ['clientToken']),
+    ...mapState(useBraintreeStore, ['environment', 'clientToken', 'google']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
@@ -55,6 +55,7 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
+    await this.getBraintreeConfig();
     await this.getCartData();
     await this.getCart();
     await this.getCartTotals();
@@ -72,7 +73,7 @@ export default {
     await this.createClientToken();
 
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
-      environment: 'TEST',
+      environment: this.environment === 'sandbox' ? 'TEST' : 'LIVE',
       paymentDataCallbacks: {
         onPaymentDataChanged: this.onPaymentDataChanged,
         onPaymentAuthorized: this.onPaymentAuthorized,
@@ -86,7 +87,6 @@ export default {
     braintree.googlePayment.create({
       client: this.instance,
       googlePayVersion: 2,
-      // googleMerchantId: 'testmode',
     }, (error, googlePaymentInstance) => {
       this.googlePaymentInstance = markRaw(googlePaymentInstance);
 
@@ -99,7 +99,7 @@ export default {
         }).then((isReadyToPay) => {
           if (isReadyToPay) {
             const button = this.googleClient.createButton({
-              buttonColor: 'black',
+              buttonColor: this.google.buttonColor,
               buttonType: 'buy',
               buttonSizeMode: 'fill',
               onClick: () => this.onClick(),
@@ -175,14 +175,14 @@ export default {
         const address = {
           country_id: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
-          street: [''],
+          street: ['0'],
         };
 
         getShippingMethods(address).then(async (response) => {
           const shippingMethods = response.map((shippingMethod) => {
             const description = shippingMethod.carrier_title
-              ? `${formatPrice(shippingMethod.price_incl_tax)} ${shippingMethod.carrier_title}`
-              : formatPrice(shippingMethod.price_incl_tax);
+              ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
+              : formatPrice(shippingMethod.price_incl_tax.value);
 
             return {
               id: shippingMethod.method_code,
@@ -290,7 +290,23 @@ export default {
     },
 
     async handleThreeDs(response) {
-      // TODO: Add in threshold and enabled/disabled config.
+      const billingAddress = this.mapAddress(
+        response.paymentMethodData.info.billingAddress,
+        response.email,
+        response.paymentMethodData.info.billingAddress.phoneNumber,
+      );
+      const { email } = response;
+      const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
+
+      // If 3DS is disabled then skip over this step.
+      if (!this.threeDSEnabled) {
+        return Promise.resolve({
+          nonce: androidPayCards[0].nonce,
+          billingAddress,
+          email,
+        });
+      }
+
       const threeDSecureInstance = await braintree.threeDSecure
         .create({
           version: 2,
@@ -298,13 +314,7 @@ export default {
         });
 
       return new Promise((resolve, reject) => {
-        const billingAddress = this.mapAddress(
-          response.paymentMethodData.info.billingAddress,
-          response.email,
-          response.paymentMethodData.info.billingAddress.phoneNumber,
-        );
-        const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
-        const { email } = response;
+        billingAddress.countryCodeAlpha2 = billingAddress.country_id;
 
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
@@ -341,6 +351,8 @@ export default {
           };
 
           if (liability.shifted || (!liability.shifted && !liability.shiftPossible)) {
+            delete billingAddress.countryCodeAlpha2;
+
             resolve({
               nonce: threeDSResponse.nonce,
               billingAddress,

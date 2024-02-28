@@ -211,8 +211,8 @@ export default {
         getShippingMethods(address).then(async (response) => {
           const shippingMethods = response.map((shippingMethod) => {
             const description = shippingMethod.carrier_title
-              ? `${formatPrice(shippingMethod.price_incl_tax)} ${shippingMethod.carrier_title}`
-              : formatPrice(shippingMethod.price_incl_tax);
+              ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
+              : formatPrice(shippingMethod.price_incl_tax.value);
 
             return {
               id: shippingMethod.method_code,
