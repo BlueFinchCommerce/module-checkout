@@ -19,8 +19,8 @@
 
 html,
 body,
-#vue-checkout-container,
-#vue-checkout-root {
+#gene-better-checkout-container,
+#gene-better-checkout-root {
   height: 100%;
 }
 
@@ -86,7 +86,7 @@ body {
   }
 }
 
-#vue-checkout-root {
+#gene-better-checkout-root {
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base);

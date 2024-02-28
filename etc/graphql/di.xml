@@ -31,7 +31,8 @@
                 <item name="adyen_client_key_live" xsi:type="string">payment/adyen_abstract/client_key_live</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
-                <item name="gene_checkout_afd_enable" xsi:type="string">gene_checkout/general/enable_afd_checkout</item>
+                <item name="adyen_environment_mode" xsi:type="string">payment/adyen_abstract/demo_mode</item>
+                <item name="adyen_vault_enabled" xsi:type="string">payment/adyen_oneclick/active</item>
             </argument>
         </arguments>
     </type>

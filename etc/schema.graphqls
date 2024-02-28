@@ -26,7 +26,8 @@ type StoreConfig {
     adyen_client_key_live: String @doc(description: "Adyen client key live")
     gtm_container_id: String @doc(description: "GTM Container ID")
     gtm_active: String @doc(description: "GTM Active")
-    gene_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
+    adyen_environment_mode: String @doc(description: "Adyen environment mode")
+    adyen_vault_enabled: Boolean @doc(description: "Adyen vault enabled")
 }
 type Query {
     storecode(

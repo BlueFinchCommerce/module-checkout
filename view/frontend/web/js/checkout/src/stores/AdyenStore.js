@@ -37,7 +37,7 @@ export default defineStore('adyenStore', {
 
     async getAdyenConfig() {
       const configs = [
-        'gene_checkout_adyen_auth_token',
+        'gene_better_checkout_adyen_auth_token',
         'adyen_environment_mode',
         'adyen_vault_enabled',
       ];
@@ -45,7 +45,7 @@ export default defineStore('adyenStore', {
 
       if (data) {
         this.setData({
-          adyenAuthToken: data.gene_checkout_adyen_auth_token,
+          adyenAuthToken: data.gene_better_checkout_adyen_auth_token,
           // Adyen's modes are '0' = live, '1' = test.
           adyenEnvironmentMode: data.adyen_environment_mode === '0' ? 'live' : 'test',
           adyenVaultEnabled: data.adyen_vault_enabled,
