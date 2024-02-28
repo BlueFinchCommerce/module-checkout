@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Modificar sus datos de envío',
   },
   errorMessages: {
+    sanitiseError: 'Se ha introducido un carácter no válido.',
     firstNameErrorMessage: 'Introduzca un nombre válido',
     lastNameErrorMessage: 'Introduzca un apellido válido',
     emailErrorMessage: 'Introduzca una dirección de correo electrónico válida',

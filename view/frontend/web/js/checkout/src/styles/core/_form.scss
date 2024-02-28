@@ -57,7 +57,8 @@ label {
     margin: 0;
   }
 
-  &.error {
+  &.error,
+  &.sanitise-error {
     input,
     select {
       border: var(--input-error-border, 2.5px solid var(--error__color));

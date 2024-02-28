@@ -88,18 +88,18 @@ export default defineStore('configStore', {
         'secure_base_url',
         'use_store_in_url',
         'website_name',
-        'gene_better_checkout_newsletter_enabled',
-        'gene_better_checkout_newsletter_allow_guest',
-        'gene_better_checkout_country_state_required',
-        'gene_better_checkout_country_display_state',
+        'gene_checkout_newsletter_enabled',
+        'gene_checkout_newsletter_allow_guest',
+        'gene_checkout_country_state_required',
+        'gene_checkout_country_display_state',
         'magento_reward_general_is_enabled',
         'magento_reward_general_is_enabled_on_front',
         'optional_zip_countries',
         'tax_cart_display_price',
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
-        'gene_better_checkout_copyright_text',
-        'gene_better_checkout_afd_enable',
+        'gene_checkout_copyright_text',
+        'gene_checkout_afd_enable',
       ];
 
       if (this.locale) {
@@ -124,19 +124,19 @@ export default defineStore('configStore', {
           useStoreInUrl: data.use_store_in_url,
           websiteName: data.website_name || '',
           secureBaseUrl: data.secure_base_url,
-          newsletterEnabled: data.gene_better_checkout_newsletter_enabled === '1',
-          newsletterAllowGuests: data.gene_better_checkout_newsletter_allow_guest === '1',
-          stateRequired: data.gene_better_checkout_country_state_required
-            ? data.gene_better_checkout_country_state_required.split(',') : [],
-          displayState: data.gene_better_checkout_country_display_state === '1',
+          newsletterEnabled: data.gene_checkout_newsletter_enabled === '1',
+          newsletterAllowGuests: data.gene_checkout_newsletter_allow_guest === '1',
+          stateRequired: data.gene_checkout_country_state_required
+            ? data.gene_checkout_country_state_required.split(',') : [],
+          displayState: data.gene_checkout_country_display_state === '1',
           rewardsEnabled: data.magento_reward_general_is_enabled === '1'
             && data.magento_reward_general_is_enabled_on_front === '1',
           optionalZipCountries: data.optional_zip_countries || '',
           taxCartDisplayPrice: data.tax_cart_display_price === '2',
           taxCartDisplayShipping: data.tax_cart_display_shipping === '2',
           taxCartDisplayFullSummary: data.tax_cart_display_full_summary === '1',
-          copyrightText: data.gene_better_checkout_copyright_text,
-          afdStatus: data.gene_better_checkout_afd_enable,
+          copyrightText: data.gene_checkout_copyright_text,
+          afdStatus: data.gene_checkout_afd_enable,
         });
 
         if (data.locale) {
@@ -245,15 +245,15 @@ export default defineStore('configStore', {
     },
 
     async getLoqateConfiguration() {
-      const configApi = await this.getConfig(['gene_better_checkout_loqate_api_key']);
-      const configStatus = await this.getConfig(['gene_better_checkout_loqate_enabled']);
+      const configApi = await this.getConfig(['gene_checkout_loqate_api_key']);
+      const configStatus = await this.getConfig(['gene_checkout_loqate_enabled']);
 
       this.setData({
         addressFinder: {
-          enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
+          enabled: !!+configStatus.gene_checkout_loqate_enabled,
           loqate: {
-            enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
-            apiKey: configApi.gene_better_checkout_loqate_api_key,
+            enabled: !!+configStatus.gene_checkout_loqate_enabled,
+            apiKey: configApi.gene_checkout_loqate_api_key,
           },
         },
       });
@@ -282,12 +282,12 @@ export default defineStore('configStore', {
     },
 
     async getAfdStatus() {
-      const configStatus = await this.getConfig(['gene_better_checkout_afd_enable']);
+      const configStatus = await this.getConfig(['gene_checkout_afd_enable']);
 
       this.setData({
         addressFinder: {
           afd: {
-            enabled: configStatus.gene_better_checkout_afd_enable,
+            enabled: configStatus.gene_checkout_afd_enable,
           },
         },
       });

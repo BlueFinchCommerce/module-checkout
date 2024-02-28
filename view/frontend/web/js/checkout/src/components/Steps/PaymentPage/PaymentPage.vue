@@ -20,6 +20,11 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
         </template>
         <FreeMOCheckPayment
           v-else
@@ -39,7 +44,7 @@ import useCartStore from '@/stores/CartStore';
 import usePaymentStore from '@/stores/PaymentStore';
 import useGtmStore from '@/stores/GtmStore';
 
-// components
+// Components
 import SavedDeliveryAddress from
   '@/components/Steps/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
 import AdyenDropIn from '@/components/Adyen/DropIn/DropIn.vue';
@@ -51,6 +56,9 @@ import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
 import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+
+// Extensions
+import paymentMethods from '@/extensions/paymentMethods';
 
 export default {
   name: 'PaymentPage',
@@ -64,6 +72,12 @@ export default {
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
+    ...paymentMethods(),
+  },
+  data() {
+    return {
+      additionalPaymentMethods: [],
+    };
   },
   computed: {
     ...mapState(useConfigStore, [
@@ -91,6 +105,8 @@ export default {
 
     await this.getIsAdyenAvailable();
     await this.getRvvupConfig();
+
+    this.additionalPaymentMethods = Object.keys(paymentMethods());
 
     this.trackStep({
       step: 3,

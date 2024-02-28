@@ -47,7 +47,7 @@ export default defineStore('paymentStore', {
     },
 
     async getPaymentMethods() {
-      const { payment_methods: paymentMethods } = await this.getCachedResponse(
+      const paymentMethods = await this.getCachedResponse(
         getPaymentInformation,
         'getPaymentInformation',
       );

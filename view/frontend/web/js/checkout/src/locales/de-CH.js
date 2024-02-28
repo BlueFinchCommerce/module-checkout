@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Redigera leveransinformation',
   },
   errorMessages: {
+    sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Vänligen ange giltigt förnamn',
     lastNameErrorMessage: 'Vänligen ange giltigt efternamn',
     emailErrorMessage: 'Ange giltig e-postadress',

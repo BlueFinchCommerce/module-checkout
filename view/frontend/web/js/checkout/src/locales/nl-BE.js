@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Verzendgegevens wijzigen',
   },
   errorMessages: {
+    sanitiseError: 'Ugyldig tegn angitt.',
     firstNameErrorMessage: 'Voer een geldige voornaam in',
     lastNameErrorMessage: 'Voer een geldige achternaam in',
     emailErrorMessage: 'Voer een geldig e-mailadres in',

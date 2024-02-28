@@ -117,6 +117,7 @@ export default {
   editDetailsButtonLabel: 'Informationen bearbeiten',
   editShippingButtonLabel: 'Versandinformationen bearbeiten',
   errorMessages: {
+    sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Bitte gültigen Vornamen eingeben',
     lastNameErrorMessage: 'Bitte gültigen Nachnamen eingeben',
     emailErrorMessage: 'Bitte gültige E-Mailadresse eingeben',

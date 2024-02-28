@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Modifier votre adresse d\'expédition',
   },
   errorMessages: {
+    sanitiseError: 'Caractère saisi non valide.',
     firstNameErrorMessage: 'Veuillez saisir un prénom valide',
     lastNameErrorMessage: 'Veuillez saisir un nom valide',
     emailErrorMessage: 'Veuillez saisir une adresse e-mail valide',

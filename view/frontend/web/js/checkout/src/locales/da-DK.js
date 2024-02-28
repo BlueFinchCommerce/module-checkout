@@ -117,6 +117,7 @@ export default {
   editDetailsButtonLabel: 'Ændre oplysninger',
   editShippingButtonLabel: 'Ændre forsendelsesoplysninger',
   errorMessages: {
+    sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Indtast venligst et gyldigt fornavn',
     lastNameErrorMessage: 'Indtast venligst et gyldigt efternavn',
     emailErrorMessage: 'Indtast venligst en gyldig e-mailadresse',

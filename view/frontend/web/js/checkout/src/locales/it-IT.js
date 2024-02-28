@@ -117,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Modifica informazioni di spedizione',
   },
   errorMessages: {
+    sanitiseError: 'È stato immesso un carattere non valido.',
     firstNameErrorMessage: 'Inserisci un nome valido',
     lastNameErrorMessage: 'Inserisci un cognome valido',
     emailErrorMessage: 'Inserisci un indirizzo e-mail valido',
