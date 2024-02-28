@@ -8,6 +8,7 @@
         :checked="checked"
         :aria-checked="ariaChecked"
         :role="role"
+        :data-cy="dataCy ? dataCy : 'radio-button'"
         @change="changeHandler"
       >
       <slot name="icon" />
@@ -25,6 +26,9 @@ export default {
   name: 'RadioButton',
   props: {
     text: {
+      type: String,
+    },
+    dataCy: {
       type: String,
     },
     subtext: {

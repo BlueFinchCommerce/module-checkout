@@ -11,6 +11,7 @@
               :disabled="disabled"
               :required="required"
               :value="modelValue"
+              :data-cy="dataCy ? dataCy : 'select'"
               @change="$emit('update:modelValue', $event.target.value)">
         <option value="" disabled selected>{{selectedOption}}</option>
         <option v-for="(option, index) in options"
@@ -35,6 +36,9 @@ export default {
   props: {
     error: {
       type: Boolean,
+    },
+    dataCy: {
+      type: String,
     },
     label: {
       type: String,

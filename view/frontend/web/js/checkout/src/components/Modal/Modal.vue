@@ -14,6 +14,7 @@
     <div
       v-show="visible"
       :class="getModalClasses"
+      :data-cy="dataCy ? dataCy : 'modal'"
       role="dialog"
       aria-labelledby="modalTitle"
       aria-describedby="modalDescription"
@@ -57,6 +58,9 @@ export default {
     classes: {
       type: String,
       default: '',
+    },
+    dataCy: {
+      type: String,
     },
     header: {
       type: Boolean,

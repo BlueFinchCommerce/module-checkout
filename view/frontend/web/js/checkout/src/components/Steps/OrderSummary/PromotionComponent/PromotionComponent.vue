@@ -2,6 +2,7 @@
   <div
     class="promotion-trigger dropdown-button"
     :class="{opened: isDropDownVisible}"
+    data-cy="dropdown-trigger"
     @click="openDropDown"
     @keydown="openDropDown"
   >

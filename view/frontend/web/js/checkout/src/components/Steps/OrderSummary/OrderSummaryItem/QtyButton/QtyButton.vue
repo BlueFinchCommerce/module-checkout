@@ -6,6 +6,7 @@
     <MyButton
       :primary="false"
       :aria-label="$t('orderSummary.minusOneItem')"
+      data-cy="qty-decrease"
       label=" - "
       @click="product.qty === 1 ? false : updateQuantity(product, -1)"
     />
@@ -14,6 +15,7 @@
       <input
         v-model="product.qty"
         :name="`input-qty-${product.item_id}`"
+        data-cy="qty-input-"
         type="text"
         disabled
         :placeholder="product.qty"
@@ -22,6 +24,7 @@
     <MyButton
       :primary="false"
       :aria-label="$t('orderSummary.plusOneItem')"
+      data-cy="qty-increase"
       label=" + "
       @click="updateQuantity(product, 1)"
     />

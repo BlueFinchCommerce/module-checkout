@@ -10,6 +10,7 @@
       <template v-if="emailRegistered !== undefined && !isLoggedIn">
         <TextField
           class="welcome-message-title"
+          data-cy="email"
           :text="emailRegistered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
@@ -25,6 +26,7 @@
           ref="email"
           v-model="customer.email"
           :error="emailError"
+          data-cy="email"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -43,6 +45,7 @@
           @keydown.enter="changeEmail()"
         >
           <button class="edit-button"
+                  data-cy="button"
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
@@ -71,6 +74,7 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
+            data-cy="password"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -111,6 +115,7 @@
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
+            data-cy="forgot-pass-button"
           >
             <span style="display: none">forgotPass link</span>
             <TextField

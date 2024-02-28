@@ -33,6 +33,7 @@
                 <input
                   :id="item.method_code"
                   :checked="item.method_code === selectedMethod.method_code"
+                  data-cy="radio-button"
                   type="radio"
                   name="shipping-option"
                   @change="handleChange(item)"
@@ -54,6 +55,7 @@
                   :id="nominatedId"
                   :checked="item.method_code === selectedMethod.method_code"
                   type="radio"
+                  radio-button
                   name="shipping-option"
                   @change="handleChange(item)"
                 >
