@@ -15,6 +15,16 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
                 </field>
+                <field id="newsletter_signup" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Newsletter Signup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable newsletter signup within the checkout.]]></comment>
+                </field>
+                <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable AFD Postcode Lookup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
+                </field>
                 <field id="designer_trigger" translate="label comment" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Designer</label>
                     <depends>
