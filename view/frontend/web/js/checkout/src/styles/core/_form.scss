@@ -191,33 +191,33 @@ input[type="text"] {
     padding: var(--indent__s);
     margin-top: var(--input-margin-top, var(--indent__base));
     height: var(--input-height);
-    font-size: var(--font__m);
+    font-size: var(--input-font-size);
     font-family: var(--font-family-copy);
     border-radius: var(--input-border-radius);
     width: 100%;
     outline: none;
-    border: var(--input-border, 1px solid var(--input-border-color));
-    border-width: 1px;
+    border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
     font-weight: var(--font-weight__regular);
     background-color: var(--transparent-color) !important; // Important to override autofill backgrounds.
     -webkit-background-clip: text !important;
     background-clip: text !important;
 
     &:focus-visible,
-    &:focus {
-      border: var(--input-border-focus, 2.5px solid var(--input-border-color-focus));
+    &:focus,
+    &:active {
+      border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
       outline: none;
       box-shadow: none;
     }
 
     &:hover {
-      border: var(--input-border, 1.5px solid var(--input-border-color));
+      border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
     }
   }
 
   input::placeholder {
     color: var(--input-placeholder-color);
-    font-size: var(--font__m);
+    font-size: var(--input-font-size);
     font-weight: var(--font-weight__regular);
   }
 }
@@ -235,16 +235,30 @@ input[type="text"] {
     span {
       display: var(--logged-in-email-label-visibility, none);
       font-family: var(--input-label-logged-in-font-family, var(--font-family-copy));
-      font-size: var(--input-label-logged-in-font-size, var(--font__m));
+      font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
       padding-left: var(--input-label-logged-in-padding, var(--input-label-padding));
       margin-left: var(--input-label-logged-in-margin, var(--input-label-margin));
       font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__regular));
     }
 
     input {
-      border: var(--logged-in-email-border-width, none);
+      border: var(--logged-in-email-border-width, var(--input-border-weight) solid var(--input-border-color));
       padding: var(--logged-in-email-padding, 0);
       margin-top: var(--logged-in-email-margin-top, 0);
+
+      ::placeholder {
+        font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
+      }
+
+      &:hover {
+        border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+      }
+
+      &:focus-visible,
+      &:focus,
+      &:active {
+        border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+      }
     }
   }
 }
@@ -337,9 +351,9 @@ input[type="text"] {
     appearance: none;
 
     &:focus-visible,
-    &:focus {
-      border: var(--input-border-focus, 2.5px solid var(--input-border-color-focus));
-      box-shadow: none;
+    &:focus,
+    &:active {
+      border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
       outline: 0;
     }
 
@@ -414,6 +428,14 @@ input[type="text"] {
     font-size: var(--message-font-size, var(--font__s));
     font-weight: var(--message-font-weight, var(--font-weight__regular));
     margin-bottom: 0;
+  }
+}
+
+.item-qty-container {
+  button {
+    p {
+      margin: 0;
+    }
   }
 }
 

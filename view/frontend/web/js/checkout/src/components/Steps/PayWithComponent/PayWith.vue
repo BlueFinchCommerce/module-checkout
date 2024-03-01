@@ -6,7 +6,7 @@
     <TextField
       v-if="isExpressPaymentsVisible"
       class="pay-with__message"
-      :text="$t('payWithBlockTitle')"
+      :text="payWithText"
     />
     <TextField
       v-else
@@ -65,8 +65,18 @@ export default {
       })),
     };
   },
+  data() {
+    return {
+      payWithText: '',
+      payWithTextId: 'gene-bettercheckout-paywith-text',
+    };
+  },
   computed: {
     ...mapState(usePaymentStore, ['paymentTypes']),
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
   },
 };
 </script>

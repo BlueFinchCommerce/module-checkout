@@ -1,5 +1,5 @@
 <template>
-  <template v-if="(!storedPayments || storedPaymentMethods.length)">
+  <template v-if="!storedPayments || storedPaymentMethods.length">
     <Loader v-if="loadingPaymentMethods" />
     <div
       v-if="storedPayments"
@@ -124,12 +124,12 @@ export default {
       isErrorDisplayed: false,
       hideStoredPaymentRadio: false,
       paymentLoading: false,
-      paymentVisible: true,
+      loadingPaymentMethods: true,
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
-    ...mapState(usePaymentStore, ['paymentEmitter']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled']),
+    ...mapState(usePaymentStore, ['loadingPaymentMethods', 'paymentEmitter']),
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [
       'customer',
@@ -316,6 +316,7 @@ export default {
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals', 'validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
+    ...mapActions(usePaymentStore, ['getPaymentMethodsResponse', 'getAdyenClientKey', 'clearPaymentReponseCache']),
     setOrderId(orderId) {
       this.orderId = orderId;
       return orderId;
