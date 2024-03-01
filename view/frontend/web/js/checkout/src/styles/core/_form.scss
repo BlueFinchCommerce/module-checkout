@@ -242,23 +242,9 @@ input[type="text"] {
     }
 
     input {
-      border: var(--logged-in-email-border-width, var(--input-border-weight) solid var(--input-border-color));
+      border: var(--logged-in-email-border-width, none);
       padding: var(--logged-in-email-padding, 0);
       margin-top: var(--logged-in-email-margin-top, 0);
-
-      ::placeholder {
-        font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
-      }
-
-      &:hover {
-        border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
-      }
-
-      &:focus-visible,
-      &:focus,
-      &:active {
-        border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
-      }
     }
   }
 }
