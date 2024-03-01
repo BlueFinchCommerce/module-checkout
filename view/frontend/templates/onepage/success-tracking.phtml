@@ -1,0 +1,21 @@
+<?php
+/**
+ * Order success page tracking
+ * @var \Magento\Checkout\Block\Onepage\Success $block
+ * @var Magento\Framework\Escaper $escaper
+ */
+
+/** @var \Gene\BetterCheckout\ViewModel\CheckoutSuccess $orderViewViewModel */
+$orderViewViewModel = $block->getData('order_view_view_model');
+
+if ($orderViewViewModel) {
+  /** @var \Magento\Sales\Model\Order $order */
+  $order = $orderViewViewModel->getLastOrder();
+}
+?>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    dataLayer.push({'pdTrackingEmail': '<?= /* @noEscape */ $order->getCustomerEmail(); ?>'});
+    dataLayer.push({'pdTrackingPhone': '<?= /* @noEscape */ $order->getBillingAddress()->getTelephone(); ?>'});
+</script>

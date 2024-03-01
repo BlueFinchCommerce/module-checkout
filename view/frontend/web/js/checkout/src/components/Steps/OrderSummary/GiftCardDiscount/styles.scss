@@ -118,7 +118,7 @@ div.dropdown.gift-dropdown {
       }
 
       svg {
-        display: var(--gift-discount-icon-desktop-display, none);
+        display: var(--gift-discount-icon-desktop-display, block);
       }
     }
   }

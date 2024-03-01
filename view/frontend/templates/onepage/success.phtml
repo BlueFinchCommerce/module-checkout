@@ -1,0 +1,35 @@
+<?php
+/**
+ * Restyle order success page
+ * @var \Magento\Checkout\Block\Onepage\Success $block
+ * @var Magento\Framework\Escaper $escaper
+ */
+
+/** @var \Gene\BetterCheckout\ViewModel\CheckoutSuccess $orderViewViewModel */
+$orderViewViewModel = $block->getData('order_view_view_model');
+
+if ($orderViewViewModel) {
+    /** @var \Magento\Sales\Model\Order $order */
+    $order = $orderViewViewModel->getLastOrder();
+}
+
+?>
+<div class="checkout-success-header">
+    <div class="checkout-success-header__title">
+        <p><?= $escaper->escapeHtml(__('Thank you for your purchase')) ?></p>
+        <p><?= $escaper->escapeHtml(__('%1!', $order->getCustomerName())) ?></p>
+    </div>
+    <hr>
+    <div class="checkout-success-header__order-number">
+        <p class="checkout-success-grey"><?= $escaper->escapeHtml(__('Your order number is')) ?></p>
+        <h2 class="checkout-success-order-number"><?= $escaper->escapeHtml(__('#%1', $order->getRealOrderId())) ?></h2>
+    </div>
+    <div class="checkout-success-header__actions">
+        <p class="checkout-success-order-message"><?= $escaper->escapeHtml(__('We’ll email you an order confirmation shortly with details and tracking info.')) ?></p>
+        <?php if (!$order->getCustomerIsGuest()): ?>
+            <button type="button" class="actions primary">
+                <a href="<?php echo $block->getBaseUrl(); ?>"><?= $escaper->escapeHtml(__('Continue Shopping')) ?></a>
+            </button>
+        <?php endif; ?>
+    </div>
+</div>
