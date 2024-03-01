@@ -124,12 +124,12 @@ export default {
       isErrorDisplayed: false,
       hideStoredPaymentRadio: false,
       paymentLoading: false,
-      loadingPaymentMethods: true,
+      paymentVisible: true,
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled']),
-    ...mapState(usePaymentStore, ['loadingPaymentMethods', 'paymentEmitter']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
+    ...mapState(usePaymentStore, ['paymentEmitter']),
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [
       'customer',
@@ -316,7 +316,6 @@ export default {
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals', 'validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
-    ...mapActions(usePaymentStore, ['getPaymentMethodsResponse', 'getAdyenClientKey', 'clearPaymentReponseCache']),
     setOrderId(orderId) {
       this.orderId = orderId;
       return orderId;

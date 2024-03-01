@@ -32,7 +32,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/GtmStore';
-import usePaymentStore from '@/stores/PaymentStore';
 
 // Components
 import AdyenPaymentMethods from '@/components/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
@@ -58,8 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled']),
-    ...mapState(usePaymentStore, ['loadingPaymentMethods']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
     ...mapState(useCartStore, ['cartEmitter']),
     ...mapState(useCustomerStore, [
       'customer',
