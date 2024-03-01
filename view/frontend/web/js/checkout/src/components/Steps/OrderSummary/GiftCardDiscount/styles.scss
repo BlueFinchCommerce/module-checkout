@@ -64,9 +64,13 @@ div.dropdown.gift-dropdown {
       max-height: var(--drop-down-max-height, 55px);
       margin-left: var(--drop-button-down-left-margin, 0);
       text-transform: var(--drop-button-down-text-transform, uppercase);
-      border-radius: var(--inputs-border-radius, 0 4px 4px 0);
+      border-radius: var(--inputs-border-radius, 0 var(--input-border-radius) var(--input-border-radius) 0);
       padding: var(--drop-button-padding, 12px);
       width: initial;
+
+      p {
+        margin: 0 !important;
+      }
     }
 
     .error,

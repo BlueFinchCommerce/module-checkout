@@ -6084,7 +6084,7 @@ body.no-scrollable {
   font-family: var(--font-family-copy);
   font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
   line-height: var(--your-details-title-line-height, inherit);
-  margin-left: var(--section-left-space, 20px);
+  margin-left: var(--section-left-space, 0);
   margin-bottom: var(--details-title-margin-bottom, 0);
   color: var(--text__color--heading);
   text-transform: var(--details-title-text-transform, unset);

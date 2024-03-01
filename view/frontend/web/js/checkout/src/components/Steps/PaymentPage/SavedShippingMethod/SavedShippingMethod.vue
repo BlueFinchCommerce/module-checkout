@@ -11,10 +11,10 @@
           <div class="total__row">
             <div class="saved-shipping__icon">
               <div class="saved-shipping__icon-image">
-                <Shipping fill="black"/>
+                <Shipping fill="black" />
               </div>
               <div class="title">
-                <TextField :text="$t('shippingStep.stepCompleteTitle')"/>
+                <TextField :text="shippingStepCompletedText" />
               </div>
             </div>
             <div class="shipping-method-title">
@@ -25,10 +25,15 @@
               />
             </div>
             <div class="proceed-to-shipping">
-              <button class="button--blank edit-shipping-button"
-                      :aria-label="$t('yourDetailsSection.editShippingButtonLabel')">
-                <TextField class="edit-button-title" :text="$t('yourDetailsSection.editButton')"/>
-                <Edit/>
+              <button
+                class="button--blank edit-shipping-button"
+                :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+              >
+                <TextField
+                  class="edit-button-title"
+                  :text="$t('yourDetailsSection.editButton')"
+                />
+                <Edit />
               </button>
             </div>
           </div>
@@ -39,7 +44,8 @@
 </template>
 <script>
 // stores
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
@@ -59,11 +65,24 @@ export default {
     Price,
     Edit,
   },
+  data() {
+    return {
+      shippingStepCompletedText: '',
+      shippingStepCompletedTextId: 'gene-bettercheckout-shippingstepcompleted-text',
+    };
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
+      || this.$t('shippingStep.stepCompleteTitle');
+  },
   computed: {
     ...mapState(useCartStore, ['totalSegments', 'shippingPrice']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
+
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('shipping-active');

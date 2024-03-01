@@ -20,7 +20,7 @@
         />
         <TextField
           class="secure-text"
-          :text="$t('header.text')"
+          :text="headerText"
         />
       </div>
     </div>
@@ -28,14 +28,11 @@
 </template>
 
 <script>
-import { computed, reactive } from 'vue';
-import { mapState } from 'pinia';
+import { mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
-
-// components
+import Logo from '@/components/Core/Logo/Logo.vue';
 import Lock from '@/components/Core/Icons/Lock/Lock.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
-import Logo from '@/components/Core/Logo/Logo.vue';
 
 export default {
   name: 'AppHeader',
@@ -44,16 +41,18 @@ export default {
     Lock,
     TextField,
   },
-  setup(props) {
-    const reactiveProps = reactive(props);
+  data() {
     return {
-      style: computed(() => ({
-        background: reactiveProps.background,
-      })),
+      headerText: '',
+      headerTextId: 'gene-bettercheckout-header-text',
     };
   },
-  computed: {
-    ...mapState(useConfigStore, ['custom', 'secureBaseUrl']),
+  async created() {
+    await this.getStoreConfig();
+    this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['custom', 'getStoreConfig', 'secureBaseUrl']),
   },
 };
 </script>

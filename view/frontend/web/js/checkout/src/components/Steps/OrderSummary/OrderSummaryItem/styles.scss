@@ -40,7 +40,7 @@
 
   &-price {
     p {
-      font-size: var(--order-item-price-size, 22px);
+      font-size: var(--order-item-price-size), var(--font__xl);
       font-weight: var(--order-item-price-weight, 400);
       font-family: var(--font-family-copy);
     }
@@ -54,17 +54,15 @@
   }
 
   .product-options-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--indent__s);
     margin: var(--indent__s) 0 var(--indent__xs);
     cursor: pointer;
     text-decoration: underline;
-    position: relative;
-    max-width: 145px;
 
     svg {
       width: 12px;
-      position: absolute;
-      right: 10px;
-      top: 5px;
     }
   }
 
@@ -108,12 +106,12 @@
   }
 
   &-icon {
-    border: var(--remove-icon-border, 1px solid);
     border-radius: var(--border-radius, 100%);
     display: var(--remove-icon-display, block);
     max-width: 23px;
     max-height: 23px;
     margin: 0 auto;
+    line-height: 1rem;
 
     svg {
       margin-top: 4px;
@@ -121,8 +119,18 @@
   }
 
   &-copy {
-    font-size: var(--remove-icon-copy-font-size, var(--font__s));
+    font-size: var(--remove-icon-copy-font-size, var(--button-remove-item-font-size));
     font-weight: var(--remove-icon-copy-font-weight, var(--font-weight__regular));
+    color: var(--button-remove-item-font-color);
+
+    &:hover {
+      color: var(--button-remove-item-font-color-hover);
+    }
+
+    &:focus,
+    &:focus-visible {
+      color: var(--button-remove-item-font-color-focus);
+    }
   }
 }
 
@@ -139,7 +147,7 @@
     border: var(--qty-button-border);
     border-radius: var(--qty-button-border-radius);
     font-family: var(--font-family-copy);
-    font-size: var(--font__xl);
+    font-size: var(--qty-button-font-size);
     height: var(--qty-button-height);
     min-height: var(--qty-button-height);
     min-width: var(--qty-button__min-width, 30px);
@@ -157,7 +165,7 @@
     border-top: var(--qty-input-border-top);
     border-radius: var(--qty-input-border-radius);
     color: var(--text__color);
-    font-size: var(--font__m);
+    font-size: var(--qty-font-size);
     height: var(--qty-button-height);
     max-width: var(--qty-button-width, 40px);
     text-align: center;

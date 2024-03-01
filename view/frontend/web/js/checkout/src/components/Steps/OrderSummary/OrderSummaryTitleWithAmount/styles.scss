@@ -4,7 +4,8 @@
   display: flex;
 
   p {
-    font-size: var(--font__xl);
+    font-size: var(--font__heading--mobile);
+    color: var(--text__color--heading);
     font-weight: var(--order-summary-title-amount-font-weight, var(--font-weight__bold));
     font-family: var(--font-family-header);
     margin-bottom: 0;
@@ -20,7 +21,7 @@
   .order-summary-title-amount {
     p {
       font-family: var(--font-family-copy);
-      font-size: var(--font__l);
+      font-size: var(--font__heading--desktop);
     }
   }
 }

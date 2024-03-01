@@ -1,12 +1,17 @@
 <template>
   <div class="order-summary-title-amount">
-    <TextField :text="$t('orderSummary.modalHeader')"/>
+    <TextField :text="orderSummaryText"/>
     <TextField text="("/>
     <TextField :text="orderItemsAmount"/>
     <TextField text=")"/>
   </div>
 </template>
 <script>
+// stores
+import { mapActions } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
+
+// components
 import TextField from '@/components/Core/TextField/TextField.vue';
 
 export default {
@@ -14,6 +19,19 @@ export default {
   props: ['orderItemsAmount'],
   components: {
     TextField,
+  },
+  data() {
+    return {
+      orderSummaryText: '',
+      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+    };
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

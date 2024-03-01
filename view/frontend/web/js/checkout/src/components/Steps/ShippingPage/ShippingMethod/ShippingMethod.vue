@@ -13,7 +13,7 @@
           <div class="title">
             <TextField
               class="main-text"
-              :text="$t('shippingStep.stepTitle')"
+              :text="shippingStepText"
             />
           </div>
         </div>
@@ -98,7 +98,7 @@
       <MyButton
         type="submit"
         primary
-        :label="$t('shippingStep.proceedToPay')"
+        :label="proceedToPayText"
         :disabled="!shippingMethods.length || !selectedMethod.method_code || loadingShippingMethods"
         @click="checkChangedAddress();"
       />
@@ -153,6 +153,10 @@ export default {
       additionalShippingMethods: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
+      shippingStepText: '',
+      shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
+      proceedToPayText: '',
+      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
     };
   },
   computed: {
@@ -167,8 +171,11 @@ export default {
       'selectedMethod',
     ]),
   },
-  created() {
+  async created() {
     this.additionalShippingMethods = Object.keys(shippingMethods());
+    await this.getStoreConfig();
+    this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [
@@ -180,6 +187,7 @@ export default {
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useCartStore, ['getCartTotals']),
     ...mapActions(useStepsStore, ['goToPayment']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
 
     formatPrice(price) {
       if (price === 0) {

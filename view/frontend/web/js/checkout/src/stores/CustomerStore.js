@@ -57,6 +57,7 @@ export default defineStore('customerStore', {
     },
     amastySubs: {},
     amastyConsentStatus: {},
+    isEmailAvailableController: undefined,
     loadingCustomerInformation: false,
     postCodeValid: false,
     cache: {},
@@ -219,7 +220,18 @@ export default defineStore('customerStore', {
       });
     },
     isEmailAvailable(email) {
-      return isEmailAvailable(email);
+      // Cancel the previous request if it exists.
+      if (this.$state.isEmailAvailableController) {
+        this.$state.isEmailAvailableController.abort();
+      }
+
+      const controller = new AbortController();
+
+      this.setData({
+        isEmailAvailableController: controller,
+      });
+
+      return isEmailAvailable(email, controller);
     },
     setEmailAddress(email) {
       this.setData({

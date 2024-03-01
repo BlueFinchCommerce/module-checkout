@@ -33,7 +33,7 @@
     --error__background-color: #FDE9E9;
     --available__color: #76CA39;
     --available__color2: #50BA32;
-    --page-background__color-desktop: var(--primary-gray__color);
+    --page-background__color-desktop: var(--white__color);
     --page-background__color-mobile: var(--white__color);
     --container-background__color: var(--primary-gray__color);
 
@@ -62,11 +62,11 @@
     //  Fonts
     //  ---------------------------------------------
     --font__base: 14px;
-    --font__s: 12px;
-    --font__m: 16px;
-    --font__l: 18px;
-    --font__xl: 22px;
-    --font__xxl: 26px;
+    --font__s: calc(var(--font__base) * 0.8571);  /* ~12px */
+    --font__m: calc(var(--font__base) * 1.1429);  /* ~16px */
+    --font__l: calc(var(--font__base) * 1.2857);  /* ~18px */
+    --font__xl: calc(var(--font__base) * 1.5714); /* ~22px */
+    --font__xxl: calc(var(--font__base) * 1.8571); /* ~26px */
 
     --font-weight__light: 300;
     --font-weight__regular: 400;
@@ -77,6 +77,9 @@
     --font-family-base: 'Gotham', sans-serif;
     --font-family-header: var(--font-family-base);
     --font-family-copy: var(--font-family-base);
+
+    --font__heading--desktop: var(--font__xl);
+    --font__heading--mobile: var(--font__l);
 
     //
     // Header
@@ -92,6 +95,12 @@
     --footer-display: block;
     --footer-background: var(--primary__color);
     --footer-border-top: none;
+
+    //
+    // Steps
+    //  ---------------------------------------------
+    --steps-background: var(--active__gray-color);
+    --steps-radius: 0px;
 
     //
     // Summary
@@ -123,6 +132,10 @@
     --button-width: 100%;
     --button-text-transform: none;
     --text-placeholder-bg-button-radius: var(--button-border-radius);
+    --button-remove-item-font-color: var(--text__color);
+    --button-remove-item-font-color-hover: var(--text__color);
+    --button-remove-item-font-color-focus: var(--text__color);
+    --button-remove-item-font-size: var(--font__s);
 
     //
     // Small Buttons
@@ -148,7 +161,7 @@
     --button-adyen-pay-background-color: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
     --button-adyen-pay-background-color-hover: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
     --button-adyen-pay-border-color-hover: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
-    --button-adyen-pay-border-radius: 4px;
+    --button-adyen-pay-border-radius: var(--button-border-radius);
 
     //
     // Adyen Buttons
@@ -182,16 +195,19 @@
     --button-primary-text-color: var(--white__color);
     --button-primary-background-color: var(--primary__color);
     --button-primary-border-color: var(--primary__color);
+    --button-primary-border-weight: var(--button-border);
     --button-primary-border-box-shadow: 0;
     --text-placeholder-bg-primary: var(--button-primary-background-color);
 
     --button-primary-text-color-hover: var(--focus-color);
     --button-primary-background-color-hover: var(--white__color);
     --button-primary-border-color-hover: var(--primary__color);
+    --button-primary-border-weight-hover: var(--button-border);
 
     --button-primary-text-color-focus: var(--primary__color);
     --button-primary-background-color-focus: var(--white__color);
     --button-primary-border-color-focus: var(--primary__color);
+    --button-primary-border-weight-focus: var(--button-border);
 
     //
     // Secondary Buttons
@@ -199,12 +215,18 @@
     --button-secondary-text-color: var(--primary__color);
     --button-secondary-background-color: var(--transparent-color);
     --button-secondary-border-color: var(--primary__color);
+    --button-secondary-border-weight: var(--button-border);
     --button-secondary-border-box-shadow: var(--button-box-shadow);
 
     --button-secondary-text-color-hover: var(--focus-color);
     --button-secondary-background-color-hover: var(--transparent-color);
-    --button-secondary-background-color-focus: var(--transparent-color);
     --button-secondary-border-color-hover: var(--primary__color);
+    --button-secondary-border-weight-hover: var(--button-border);
+
+    --button-secondary-text-color-focus: var(--focus-color);
+    --button-secondary-background-color-focus: var(--transparent-color);
+    --button-secondary-border-color-focus: var(--primary__color);
+    --button-secondary-border-weight-focus: var(--button-border);
 
     --text-placeholder-bg-secondary: var(--button-secondary-background-color);
     --text-placeholder-bg-secondary-gradient: var(--button-secondary-border-color-hover);
@@ -243,9 +265,14 @@
     //
     // Inputs
     //  ---------------------------------------------
+    --input-font-size: var(--font__base);
     --input-border-color: var(--primary__color);
+    --input-border-color-hover: var(--primary__color);
     --input-border-color-focus: var(--focus-color);
     --input-border-radius: var(--base-border-radius);
+    --input-border-weight: 1px;
+    --input-border-weight-hover: 1px;
+    --input-border-weight-focus: 2px;
     --input-height: 55px;
     --input-label-padding: var(--indent__s);
     --input-placeholder-color: var(--gray-color1);
@@ -257,15 +284,17 @@
     //  ---------------------------------------------
     --qty-box-shadow: 0;
     --qty-button-height: 30px;
-    --qty-border: 1px solid var(--input-border-color);
+    --qty-border: var(--input-border-weight) solid var(--input-border-color);
     --qty-border-radius: var(--input-border-radius);
     --qty-input-background-color: var(--active__gray-color);
-    --qty-input-border: 1px solid var(--input-border-color);
+    --qty-input-border: var(--input-border-weight) solid var(--input-border-color);
     --qty-input-border-bottom: none;
     --qty-input-border-top: none;
     --qty-input-border-radius: 0;
     --qty-button-border: none;
     --qty-button-border-radius: 0;
+    --qty-font-size: var(--input-font-size);
+    --qty-button-font-size: 22px;
 
     //
     // Radio Inputs
@@ -275,7 +304,7 @@
     --radio__input-border: solid 1px var(--radio__input-border-color, var(--border__gray-color));
     --radio__input-border-radius: 50%;
     --radio__input-box-shadow: inset 0 0 0 5px var(--white__color), inset 0 0 0 40px #E0E0E0;
-    --radio__input-checked-box-shadow: inset 0px 0px 0px 5px var(--focus-color), inset 0px 0px 0px 40px var(--primary__color);
+    --radio__input-checked-box-shadow: inset 0px 0px 0px 5px var(--white__color), inset 0px 0px 0px 40px var(--primary__color);
     --radio__input-checked-border: 1px solid var(--focus-color);
 
     //
@@ -291,6 +320,12 @@
     --checkbox__input-tick-thickness: 0 2px 2px 0;
     --checkbox-checked-background: var(--focus-color);
     --checkbox-checked-border-color: var(--checkbox-checked-background);
+
+    //
+    // Dropdowns
+    //  ---------------------------------------------
+    --dropdown-border-color: var(--border__gray-color2);
+    --dropdown-border-radius: var(--base-border-radius);
 
     //
     // Messages
@@ -317,6 +352,7 @@
     // Divider
     //  ---------------------------------------------
     --divider-display: flex;
+    --divider-color: var(--border__gray-color2);
 
     //
     // Google Maps

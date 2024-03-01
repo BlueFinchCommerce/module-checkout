@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .delivery-address {
-  background: var(--delivery-address-section-background, #f2f3f3);
+  background: var(--delivery-address-section-background, var(--steps-background));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   min-height: var(--details-section-min-height, 103px); //prevent jumping on page load
@@ -15,6 +15,7 @@
 
   .details-title-section {
     display: flex;
+    gap: var(--indent__m);
 
     &-image {
       width: var(--shipping-address-icon-width, 24px);
@@ -28,11 +29,11 @@
     p {
       font-weight: var(--font-weight__bold);
       font-family: var(--font-family-copy);
-      font-size: var(--font-size-delivery-section, 16px);
+      font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
       line-height: var(--your-details-title-line-height, inherit);
-      margin-left: var(--section-left-space, 20px);
+      margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
-      color: var(--text__color);
+      color: var(--text__color--heading);
       text-transform: var(--details-title-text-transform, unset);
     }
   }
@@ -53,7 +54,7 @@
     position: absolute;
     top: var(--details-edit-button-top, 50%);
     bottom: var(--details-edit-button-bottom, auto);
-    right: var(--details-edit-button-right, 20px);
+    right: var(--details-edit-button-right, var(--indent__base));
     transform: translateY(-50%);
 
     svg {
@@ -74,5 +75,12 @@
 @media screen and (min-width: $screen__m) {
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
+    border-radius: var(--steps-radius);
+  }
+
+  .details-title-section {
+    p {
+      font-size: var(--font__heading--desktop);
+    }
   }
 }

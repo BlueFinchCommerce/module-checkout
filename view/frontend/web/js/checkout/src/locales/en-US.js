@@ -21,14 +21,14 @@ export default {
     removeItemButtonLabel: 'remove item',
     minusOneItem: 'minus one item',
     plusOneItem: 'plus one item',
-    couponDiscountTitle: 'Apply Promotional Code',
+    couponDiscountTitle: 'Apply Coupon Code',
     couponDiscount: {
-      placeholder: 'Enter promotional code',
+      placeholder: 'Enter coupon code',
       successMessage: 'Successfully applied code "{code}".',
     },
-    giftDiscountTitle: 'Apply Promotional Code',
+    giftDiscountTitle: 'Apply Gift Card Code',
     giftCardDiscount: {
-      placeholder: 'Enter promotional code',
+      placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
     },
     freeShippingAvailable: 'Good news: your order will be delivered for Free.',
