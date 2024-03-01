@@ -62,7 +62,7 @@
           v-if="emailRegistered === undefined && !emailEntered"
           class="continue-btn"
           primary
-          :label="$t('continueButton')"
+          :label="continueButtonText"
           @click="emailAddressChange()"
         />
       </div>
@@ -214,6 +214,8 @@ export default {
       loadingLogin: false,
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
+      continueButtonText: '',
+      continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
     };
   },
   computed: {
@@ -235,6 +237,7 @@ export default {
       step: 1,
       description: 'login',
     });
+    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

@@ -10,9 +10,9 @@
   min-height: var(--instantCheckout-block-min-height, 40px);
 
   p {
-    font-size: var(--font__l);
+    font-size: var(--font__heading--mobile);
     font-weight: var(--font-weight__semibold);
-    color: var(--text__color);
+    color: var(--text__color--heading);
     font-family: var(--font-family-header);
     text-align: var(--instant-checkout-text-align);
   }
@@ -154,7 +154,7 @@
 @media screen and (min-width: $screen__m) {
   .instantCheckout-block {
     p {
-      font-size: var(--font__xl);
+      font-size: var(--font__heading--desktop);
     }
   }
 

@@ -7,7 +7,7 @@
   font-family: var(--payment-page-font-family, unset);
 
   .payment-form {
-    background: var(--container-background__color);
+    background: var(--page-background__color-mobile);
     margin-top: var(--indent__base);
     min-height: var(--payment-form-min-height, 600px);
 
@@ -42,7 +42,7 @@
     padding: 0;
 
     .payment-form {
-      background: var(--payment-form-background, var(--white__color));
+      background: var(--payment-form-background, var(--page-background__color-mobile));
       padding: var(--form-details-padding-desktop, 40px 40px 70px);
     }
   }

@@ -37,7 +37,7 @@
       <div class="order-summary-title">
         <TextField
           class="order-summary-title-text"
-          :text="$t('orderSummary.modalHeader')"
+          :text="orderSummaryText"
         />
         <Price
           v-if="cartGrandTotal !== null"
@@ -60,9 +60,7 @@
       </div>
       <div class="order-summary-description">
         <TextField
-          :text="$t('orderSummary.mobileDiscountText')"
-          font-size="12px"
-          font-weight="300"
+          :text="orderSummaryDescriptionText"
         />
       </div>
     </div>
@@ -134,6 +132,10 @@ export default {
   data() {
     return {
       isModalVisible: false,
+      orderSummaryText: '',
+      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryDescriptionText: '',
+      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
     };
   },
   computed: {
@@ -146,6 +148,9 @@ export default {
     await this.getCart();
     await this.getCustomerInformation();
     this.getCartTotals();
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
+      || this.$t('orderSummary.mobileDiscountText');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

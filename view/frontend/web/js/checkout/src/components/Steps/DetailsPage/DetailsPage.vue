@@ -5,7 +5,7 @@
       class="details-form-header"
     >
       <div class="instantCheckout-block" v-show="isExpressPaymentsVisible">
-        <TextField :text="$t('instantCheckout')" />
+        <TextField :text="instantCheckoutText" />
       </div>
       <div class="instant-payment-buttons">
         <ErrorMessage
@@ -180,7 +180,7 @@
       v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !isItemRequiringDelivery"
       type="submit"
       primary
-      :label="$t('shippingStep.proceedToPay')"
+      :label="proceedToPayText"
       :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
       @click="goToPayment();"
     />
@@ -271,6 +271,10 @@ export default {
       addressFormErrorMessage: false,
       storedKey: 0,
       isExpressPaymentsVisible: true,
+      instantCheckoutText: '',
+      instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      proceedToPayText: '',
+      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
     };
   },
   computed: {
@@ -302,6 +306,9 @@ export default {
       shipping: 'customerInfoValidation',
       billing: 'billingInfoValidation',
     };
+
+    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     Object.keys(types).forEach((type) => {
       const first = this.validateNameField(type, 'First name', this.selected[type].firstname);

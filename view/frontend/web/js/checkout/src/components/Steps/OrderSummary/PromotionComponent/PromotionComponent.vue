@@ -39,7 +39,7 @@
     >
       <div>
         <TextField
-          :text="$t('orderSummary.freeShippingAvailable')"
+          :text="freeShippingText"
         />
       </div>
     </div>
@@ -135,6 +135,8 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
+      freeShippingText: '',
+      freeShippingTextId: 'gene-bettercheckout-freeshipping-text',
     };
   },
   computed: {
@@ -151,6 +153,9 @@ export default {
     // @todo - work out how to only call this function if the module is enabled
     // await this.getAmastyShippingData();
     await this.getCrosssells();
+
+    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+     || this.$t('orderSummary.freeShippingAvailable');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

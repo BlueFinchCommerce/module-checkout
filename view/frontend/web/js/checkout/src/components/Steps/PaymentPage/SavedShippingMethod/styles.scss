@@ -1,3 +1,5 @@
+@import '@/styles/global/_breakpoints';
+
 .edit-shipping-button {
   color: var(--edit-shipping-button-color, var(--primary__color));
   line-height: var(--remove-item-action-line-height, 6px);
@@ -8,7 +10,7 @@
 }
 
 .saved-shipping {
-  background: var(--saved-shipping-section-background, #f2f3f3);
+  background: var(--saved-shipping-section-background, var(--steps-background));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   border-top: var(--details-section-border-top, none);
@@ -23,6 +25,7 @@
 
   &__icon {
     display: flex;
+    gap: var(--indent__m);
 
     &-image {
       width: var(--shipping-address-icon-width, 24px);
@@ -36,17 +39,17 @@
     p {
       font-weight: var(--font-weight__bold);
       font-family: var(--font-family-copy);
-      font-size: var(--font-size-delivery-section, 16px);
+      font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
       margin-left: var(--section-left-space, 20px);
       margin-bottom: var(--details-title-margin-bottom, 0);
-      color: var(--text__color);
+      color: var(--text__color--heading);
     }
   }
 
   .shipping-method-title {
     color: var(--text__color);
     font-size: var(--short-info-size, var(--font__s));
-    margin-left: var(--section-left-space, 44px);
+    margin-left: var(--section-left-space, var(--indent__xl));
     margin-right: var(--indent__xl);
     font-family: var(--shipping-method-address-title__font-family, unset);
 
@@ -59,7 +62,7 @@
     position: absolute;
     top: var(--details-edit-button-top, 50%);
     bottom: var(--shipping-edit-button-bottom, auto);
-    right: var(--shipping-edit-button-right, 0);
+    right: var(--shipping-edit-button-right, var(--indent__base));
     transform: translateY(-50%);
 
     svg {

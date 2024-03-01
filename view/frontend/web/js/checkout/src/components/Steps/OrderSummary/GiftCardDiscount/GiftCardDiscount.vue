@@ -16,7 +16,7 @@
       >
     </div>
     <TextField
-      :text="$t('orderSummary.giftDiscountTitle')"
+      :text="giftCardText"
       class="gift-discount-title"
     />
     <ArrowDown
@@ -41,14 +41,14 @@
           v-model="discountCode"
           :error="giftCardErrorMessage"
           name="coupon-code"
-          :placeholder="$t('orderSummary.giftCardDiscount.placeholder')"
+          :placeholder="giftCardPlaceholderText"
           :disabled="discountApplied"
           autocomplete="off"
         />
         <MyButton
           v-if="!discountApplied"
           primary
-          :label="$t('orderSummary.applyBtn')"
+          :label="applyButtonText"
           @click="dispatchDiscountCode(discountCode)"
         />
 
@@ -92,6 +92,7 @@ import Loader from '@/components/Core/Loader/Loader.vue';
 // stores
 import { mapWritableState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStore';
 import GiftIcon from '@/icons/gift-icon.svg';
 
 export default {
@@ -111,7 +112,23 @@ export default {
     return {
       isDropDownVisible: true,
       loadingDiscountCode: false,
+      applyButtonText: '',
+      applyButtonTextId: 'gene-bettercheckout-applybutton-text',
+      removeButtonText: '',
+      removeButtonTextId: 'gene-bettercheckout-removebutton-text',
+      giftCardText: '',
+      giftCardTextId: 'gene-bettercheckout-giftcard-text',
+      giftCardPlaceholderText: '',
+      giftCardPlaceholderTextId: 'gene-bettercheckout-giftcardplaceholder-text',
     };
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
+    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
+    this.giftCardPlaceholderText = window.geneCheckout?.[this.giftCardPlaceholderTextId]
+      || this.$t('orderSummary.giftCardDiscount.placeholder');
   },
   computed: {
     ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
@@ -122,6 +139,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
 
     async dispatchDiscountCode(discountCode) {
       this.loadingDiscountCode = true;

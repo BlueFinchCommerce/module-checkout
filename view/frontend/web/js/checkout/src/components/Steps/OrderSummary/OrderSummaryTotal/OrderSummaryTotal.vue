@@ -1,6 +1,6 @@
 <template>
   <div class="order-total-title">
-    <TextField :text="$t('orderSummary.modalHeader')" />
+    <TextField :text="orderSummaryText" />
     <TextField
       v-if="cartItemsQty > 0"
       class="order-total-title-amount"
@@ -21,13 +21,10 @@
           <TextField
             class="total__text"
             :text="total.title"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
+            class="total__text"
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -37,20 +34,16 @@
           <TextField
             class="total__text"
             :text="$t('progressBar.shippingStepTitle')"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
             v-if="selectedMethod.method_code"
+            class="total__text"
             :value="shippingPrice"
-            font-size="16px"
-            font-weight="300"
           />
           <TextField
             v-else
+            class="total__text"
             :text="$t('shippingStep.tbc')"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -60,13 +53,10 @@
           <TextField
             class="total__text"
             :text="total.title"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
+            class="total__text"
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -76,13 +66,10 @@
           <TextField
             class="total__text"
             :text="total.title"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
+            class="total__text"
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -92,13 +79,9 @@
           <TextField
             class="total__text"
             :text="$t('orderSummary.rewardsTitle')"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -119,14 +102,11 @@
         >
           <TextField
             class="total__text"
-            :text="$t('orderSummary.subtotalTitle')"
-            font-size="16px"
-            font-weight="300"
+            :text="subtotalText"
           />
           <Price
+            class="total__text"
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -137,13 +117,10 @@
           <TextField
             class="total__text"
             :text="$t('orderSummary.discountTitle')"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
+            class="total__text"
             :value="total.extension_attributes.gw_base_price"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
         <div
@@ -153,19 +130,16 @@
           <TextField
             class="total__text"
             :text="$t('orderSummary.inclTaxTitle')"
-            font-size="16px"
-            font-weight="300"
           />
           <Price
+            class="total__text"
             :value="total.value"
-            font-size="16px"
-            font-weight="300"
           />
         </div>
       </div>
     </div>
     <div class="order-total-grand">
-      <TextField :text="$t('orderSummary.grandTotalTitle')" />
+      <TextField :text="grandTotalText" />
       <Price :value="cartGrandTotal / 100" />
     </div>
   </div>
@@ -176,7 +150,7 @@ import TextField from '@/components/Core/TextField/TextField.vue';
 import Price from '@/components/Core/Price/Price.vue';
 
 // stores
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
@@ -187,10 +161,29 @@ export default {
     Price,
     TextField,
   },
+  data() {
+    return {
+      orderSummaryText: '',
+      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      grandTotalText: '',
+      grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
+      subtotalText: '',
+      subtotalTextId: 'gene-bettercheckout-subtotal-text',
+    };
+  },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'totalSegments', 'shippingPrice', 'cartItemsQty']),
     ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
+    this.subtotalText = window.geneCheckout?.[this.subtotalTextId] || this.$t('orderSummary.subtotalTitle');
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

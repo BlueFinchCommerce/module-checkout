@@ -36,15 +36,25 @@
     display: grid;
     grid-auto-flow: column;
     grid-gap: 5px;
+    align-items: center;
 
     &-text {
-      font-size: var(--font__m);
+      font-size: var(--font__heading--mobile);
       font-weight: var(--font-weight__semibold);
+      color: var(--text__color--heading);
     }
 
     .price {
+      font-size: var(--font__heading--mobile);
       font-weight: var(--font-weight__bold, 500);
+      color: var(--text__color--heading);
     }
+  }
+
+  &-description {
+    font-size: var(--font__s);
+    font-weight: var(--font-weight__light);
+    color: var(--text__color);
   }
 
   &-icon {

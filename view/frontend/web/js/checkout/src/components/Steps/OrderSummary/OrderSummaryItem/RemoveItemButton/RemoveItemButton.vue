@@ -12,7 +12,7 @@
     >
       <TextField
         class="remove-item-copy"
-        :text="$t('orderSummary.removeItemButton')"
+        :text="removeItemText"
       />
     </button>
   </div>
@@ -24,6 +24,7 @@ import TextField from '@/components/Core/TextField/TextField.vue';
 // stores
 import { mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStore';
 
 // icons
 import Remove from '@/components/Core/Icons/Remove/Remove.vue';
@@ -39,8 +40,19 @@ export default {
       type: Object,
     },
   },
+  data() {
+    return {
+      removeItemText: '',
+      removeItemTextId: 'gene-bettercheckout-removeitem-text',
+    };
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
+  },
   methods: {
     ...mapActions(useCartStore, ['removeItem']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

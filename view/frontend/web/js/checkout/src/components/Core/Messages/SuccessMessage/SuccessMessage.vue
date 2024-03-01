@@ -1,7 +1,7 @@
 <template>
   <div class="success-message" :style="style">
     <SuccessIcon />
-    <TextField :text="message" font-size="12px" />
+    <TextField :text="message" />
   </div>
 </template>
 <script>
