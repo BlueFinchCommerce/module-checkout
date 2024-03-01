@@ -30,7 +30,8 @@
 
 <script>
 // Stores
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStore';
 
 import { computed, reactive } from 'vue';
@@ -77,6 +78,9 @@ export default {
   async created() {
     await this.getStoreConfig();
     this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

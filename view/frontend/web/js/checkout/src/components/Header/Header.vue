@@ -52,7 +52,7 @@ export default {
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['custom', 'getStoreConfig', 'secureBaseUrl']),
   },
 };
 </script>
