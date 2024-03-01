@@ -2,25 +2,31 @@
 
 .adyen-checkout__input {
   background: var(--adyen-checkout-input__background-color, var(--white__color));
-  border-radius: 4px;
-  border: var(--input-border, 1px solid var(--input-border-color));
+  border-radius: var(--input-border-radius);
+  border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
   height: 50px;
   outline: none;
   transition: none;
 
-  &:hover {
-    border: var(--input-border, 1px solid var(--input-border-color));
-  }
-
-  &--active,
-  &--focus {
-    border: var(--input-border-focus, 2.5px solid var(--input-border-color-focus));
+  &:focus-visible,
+  &:focus,
+  &:active {
+    border: var(--input-border, var(--input-border-weight-focus) solid var(--input-border-color-focus));
     box-shadow: none;
 
     &:hover {
-      border: var(--input-border-focus, 2.5px solid var(--input-border-color-focus));
+      border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
       box-shadow: none;
     }
+  }
+
+  &:hover {
+    border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+    box-shadow: none;
+  }
+
+  &-wrapper {
+    width: 100%;
   }
 }
 
@@ -200,6 +206,27 @@
 
 .adyen-checkout-form-instruction {
   display: none;
+}
+
+.adyen-payment {
+  &__title {
+    display: flex;
+    gap: var(--indent__m);
+  }
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--text__color--heading);
+  }
+
+}
+
+
+@media screen and (min-width: $screen__m) {
+  .adyen-payment {
+    &__header {
+      font-size: var(--payment-page-title-desktop-font, var(--font__heading--desktop));
+    }
+  }
 }
 
 @media screen and (max-width: $screen__m) {

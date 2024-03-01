@@ -22,7 +22,8 @@
       .main-text {
         font-weight: var(--font-weight__semibold, 500);
         font-family: var(--shipping-page-main-text-font-family, var(--font-family-copy));
-        font-size: var(--font__m);
+        font-size: var(--font__heading--mobile);
+        color: var(--text__color--heading);
       }
     }
 
@@ -113,7 +114,7 @@ a {
     &__title {
       .title {
         .main-text {
-          font-size: var(--shipping-page-title-desktop-size, var(--font__xl));
+          font-size: var(--shipping-page-title-desktop-size, var(--font__heading--desktop));
         }
 
         .sub-text {

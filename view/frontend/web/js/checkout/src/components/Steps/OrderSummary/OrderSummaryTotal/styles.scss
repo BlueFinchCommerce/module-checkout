@@ -31,11 +31,18 @@
     }
   }
 
-  &-title,
+  &-title {
+    p {
+      font-size: var(--font__heading--mobile);
+      font-weight: var(--font-weight__semibold);
+      color: var(--text__color--heading);
+    }
+  }
   &-grand {
     p {
       font-size: var(--font__l);
       font-weight: var(--font-weight__semibold);
+      color: var(--text__color);
     }
   }
 
