@@ -2,13 +2,16 @@
   <img
     :src="logo"
     :alt="alt"
-    :style="styleObject"
-    :role="role"
+    :style="params"
   >
 </template>
 
 <script>
+import { mapActions } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
+
 import getStaticUrl from '@/helpers/getStaticPath';
+import { computed, reactive } from 'vue';
 import logoSvg from '@/icons/logo.svg';
 
 export default {
@@ -36,19 +39,28 @@ export default {
       type: String,
     },
   },
-  computed: {
-    logo() {
-      return `${getStaticUrl(logoSvg)}`;
-    },
-    // Use a computed property for style to ensure reactivity
-    styleObject() {
-      return {
-        width: this.width,
-        height: this.height,
-        fill: this.fill,
-        stroke: this.stroke,
-      };
-    },
+  setup(props) {
+    const reactiveProps = reactive(props);
+    return {
+      style: computed(() => ({
+        width: reactiveProps.width,
+        height: reactiveProps.height,
+        fill: reactiveProps.fill,
+        stroke: reactiveProps.stroke,
+      })),
+    };
+  },
+  data() {
+    return {
+      logo: '',
+    };
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.logo = window.geneCheckout?.logo || getStaticUrl(logoSvg);
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

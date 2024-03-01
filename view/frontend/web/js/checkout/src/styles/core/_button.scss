@@ -40,24 +40,28 @@
     color: var(--button-primary-text-color);
     background-color: var(--button-primary-background-color);
     border-color: var(--button-primary-border-color);
+    border-width: var(--button-primary-border-weight);
     box-shadow: var(--button-primary-border-box-shadow);
 
     &:hover {
       color: var(--button-primary-text-color-hover);
       background-color: var(--button-primary-background-color-hover);
       border-color: var(--button-primary-border-color-hover);
+      border-width: var(--button-primary-border-weight-hover);
     }
 
     &:focus {
       color: var(--button-primary-text-color-focus);
       background-color: var(--button-primary-background-color-focus);
       border-color: var(--button-primary-border-color-focus);
+      border-width: var(--button-primary-border-weight-focus);
     }
 
     &:disabled {
       background-color: var(--button-primary-background-color-disabled, var(--button-primary-background-color));
       border-color: var(--button-primary-border-color-disabled, var(--button-primary-background-color-disabled));
       color: var(--button-primary-color-disabled, var(--button-primary-text-color));
+      border-width: var(--button-primary-border-weight);
     }
   }
 
@@ -65,20 +69,26 @@
     color: var(--button-secondary-text-color);
     background-color: var(--button-secondary-background-color);
     border-color: var(--button-secondary-border-color);
+    border-width: var(--button-secondary-border-weight);
     box-shadow: var(--button-secondary-border-box-shadow);
 
     &:hover {
       color: var(--button-secondary-text-color-hover);
       background-color: var(--button-secondary-background-color-hover);
       border-color: var(--button-secondary-border-color-hover);
+      border-width: var(--button-secondary-border-weight-hover);
     }
 
     &:focus {
+      color: var(--button-secondary-text-color-focus);
       background-color: var(--button-secondary-background-color-focus);
+      border-color: var(--button-secondary-border-color-focus);
+      border-width: var(--button-secondary-border-weight-focus);
     }
 
     &:disabled {
       background-color: var(--button-secondary-background-color-disabled, var(--button-secondary-background-color));
+      border-width: var(--button-secondary-border-weight);
     }
   }
 

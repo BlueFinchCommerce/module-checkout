@@ -35,8 +35,8 @@
   },
   "main.js": {
     "assets": [
-      "lockIcon.svg",
       "logo.svg",
+      "lockIcon.svg",
       "icon-apple.svg",
       "icon-google.svg",
       "icon-express.svg",

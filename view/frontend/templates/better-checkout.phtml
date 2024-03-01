@@ -7,6 +7,7 @@
 $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
+$designerStyles = $assetViewModel->getStyles();
 
 ?>
 
@@ -36,7 +37,7 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 <div id="gene-better-checkout-root"
      class="full-width container"
      data-static-path="<?= $escaper->escapeUrl($block->getViewFileUrl('')) ?>"
-     style="min-height: 100%;">
+     style="min-height: 100%; <?= $designerStyles ?>">
     <div class="loading-mask">
         <div class="loader">
             <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"

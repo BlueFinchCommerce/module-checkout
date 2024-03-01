@@ -176,7 +176,7 @@ div.dropdown.promo-dropdown {
       .promo-title{
         div {
           p {
-            font-size: var(--promo-roducts-title-font-size, 16px);
+            font-size: var(--promo-roducts-title-font-size, var(--font__m));
           }
         }
       }

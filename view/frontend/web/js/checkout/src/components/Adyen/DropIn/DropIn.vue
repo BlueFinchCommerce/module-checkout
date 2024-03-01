@@ -32,6 +32,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStore';
 
 // Components
 import AdyenPaymentMethods from '@/components/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
@@ -52,10 +53,13 @@ export default {
       storedPaymentsId: 'adyen-dropin-container-stored',
       adyenKey: 0,
       storedKey: 0,
+      paymentStepText: '',
+      paymentStepTextId: 'gene-bettercheckout-paymentstep-text',
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled']),
+    ...mapState(usePaymentStore, ['loadingPaymentMethods']),
     ...mapState(useCartStore, ['cartEmitter']),
     ...mapState(useCustomerStore, [
       'customer',
@@ -65,7 +69,10 @@ export default {
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'locale']),
   },
-  created() {
+  async created() {
+    await this.getStoreConfig();
+    this.paymentStepText = window.geneCheckout?.[this.paymentStepTextId] || this.$t('paymentStep.title');
+
     this.cartEmitter.on('cartUpdated', () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
@@ -87,6 +94,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

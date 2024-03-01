@@ -6,7 +6,7 @@
     <TextField
       v-if="isExpressPaymentsVisible"
       class="pay-with__message"
-      :text="$t('payWithBlockTitle')"
+      :text="payWithText"
     />
     <TextField
       v-else
@@ -30,7 +30,8 @@
 
 <script>
 // Stores
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStore';
 
 import { computed, reactive } from 'vue';
@@ -65,8 +66,21 @@ export default {
       })),
     };
   },
+  data() {
+    return {
+      payWithText: '',
+      payWithTextId: 'gene-bettercheckout-paywith-text',
+    };
+  },
   computed: {
     ...mapState(usePaymentStore, ['paymentTypes']),
+  },
+  async created() {
+    await this.getStoreConfig();
+    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
+  },
+  methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
   },
 };
 </script>

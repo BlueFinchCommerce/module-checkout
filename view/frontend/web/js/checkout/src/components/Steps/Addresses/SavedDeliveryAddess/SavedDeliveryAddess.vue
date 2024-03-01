@@ -11,7 +11,7 @@
           <YourDetails fill="black" />
         </div>
         <div class="details-title-section-title">
-          <TextField :text="$t('yourDetailsSection.title')" />
+          <TextField :text="detailStepText" />
         </div>
       </div>
       <AddressBlockShort
@@ -20,9 +20,14 @@
         :address="isItemRequiringDelivery ? selected.shipping : selected.billing"
       />
       <div class="address-block__edit proceed-to-details">
-        <button class="button--blank edit-details-button"
-                :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
-          <TextField class="edit-button-title" :text="$t('yourDetailsSection.editButton')" />
+        <button
+          class="button--blank edit-details-button"
+          :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+        >
+          <TextField
+            class="edit-button-title"
+            :text="$t('yourDetailsSection.editButton')"
+          />
           <Edit />
         </button>
       </div>
@@ -31,7 +36,8 @@
 </template>
 <script>
 // stores
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
+import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
@@ -52,11 +58,23 @@ export default {
     YourDetails,
     Edit,
   },
+  data() {
+    return {
+      detailStepText: '',
+      detailStepTextId: 'gene-bettercheckout-detailstep-text',
+    };
+  },
   computed: {
     ...mapState(useCartStore, ['isItemRequiringDelivery']),
     ...mapState(useCustomerStore, ['selected']),
   },
+  async created() {
+    await this.getStoreConfig();
+    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+  },
   methods: {
+    ...mapActions(useConfigStore, ['getStoreConfig']),
+
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('details-active');

@@ -7,13 +7,13 @@
     flex-direction: var(--pay-with-flex-direction);
     flex-wrap: wrap;
     margin-top: var(--pay-with-container-margin-top, var(--indent__base));
-    min-height: var(--pay-with-container-min-height, 90px);
+    min-height: var(--pay-with-container-min-height, 170px);
   }
 
   &__message {
-    font-size: var(--font__l);
+    font-size: var(--font__heading--mobile);
     font-weight: var(--font-weight__semibold);
-    color: var(--text__color);
+    color: var(--text__color--heading);
     font-family: var(--font-family-header);
     position: relative;
     display: flex;
@@ -27,13 +27,24 @@
 
   &__column {
     align-items: center;
-    column-gap: 8px;
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     list-style: none;
-    margin: var(--pay-with-column-margin, unset);
-    min-height: 55px;
     padding-left: 0;
+    min-height: 55px;
+    margin: var(--pay-with-column-margin, unset);
+  }
+
+  &__content {
+    padding: 0 0 0 8px;
+    margin: 0;
+    height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  &__content:last-of-type{
+    padding-right: 0;
   }
 }
 
@@ -50,7 +61,7 @@
     }
 
     &__message {
-      font-size: var(--font__xl);
+      font-size: var(--font__heading--desktop);
     }
   }
 }
