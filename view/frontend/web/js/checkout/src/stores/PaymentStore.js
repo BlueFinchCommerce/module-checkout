@@ -60,6 +60,11 @@ export default defineStore('paymentStore', {
       });
     },
 
+    refreshPaymentMethods() {
+      this.clearCaches(['getPaymentInformation']);
+      return this.getPaymentMethods();
+    },
+
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];
