@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 
@@ -587,6 +588,9 @@ export default defineStore('cartStore', {
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
 
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
+
       this.emitUpdate();
     },
     async removeRewardPoints() {
@@ -594,6 +598,9 @@ export default defineStore('cartStore', {
 
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
+
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
 
       this.emitUpdate();
     },
@@ -608,6 +615,9 @@ export default defineStore('cartStore', {
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
 
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
+
       this.emitUpdate();
     },
     async removeStoreCredit() {
@@ -619,6 +629,9 @@ export default defineStore('cartStore', {
 
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
+
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
 
       this.emitUpdate();
     },
