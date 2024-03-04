@@ -1,9 +1,8 @@
 <template>
   <div
-    v-if="applePayInstance"
+    v-if="applePayAvailable"
     id="braintree-apple-pay"
-    class="braintree-apple-pay"
-    :class="!applePayLoaded ? 'text-loading' : ''"
+    :class="!applePayLoaded ? 'text-loading' : 'braintree-apple-pay'"
     @keydown.enter="click"
     @click="click"
   />
@@ -34,6 +33,7 @@ export default {
 
   data() {
     return {
+      applePayAvailable: false,
       instance: null,
       applePayInstance: null,
       dataCollectorInstance: null,
@@ -52,6 +52,7 @@ export default {
   async created() {
     // If the browser doesn't support Apple Pay then return early.
     if (window.ApplePaySession && window.ApplePaySession.canMakePayments) {
+      this.applePayAvailable = true;
       this.applePayLoaded = false;
     } else {
       return;
@@ -85,6 +86,8 @@ export default {
         applePayInstance.merchantIdentifier,
       ).then(() => {
         this.applePayInstance = markRaw(applePayInstance);
+
+        this.expressPaymentsLoad();
       });
     });
 
@@ -126,8 +129,6 @@ export default {
         session.onpaymentauthorized = (data) => this.onAuthorized(data, session);
 
         session.begin();
-
-        this.expressPaymentsLoad();
       } catch (err) {
         this.setApplePayError();
       }
@@ -282,7 +283,7 @@ export default {
           {
             type: 'final',
             label: 'Shipping',
-            amount: selectedShipping.amount.toString(),
+            amount: selectedShipping.amount.value.toString(),
           },
         ],
       };
@@ -320,7 +321,7 @@ export default {
           {
             type: 'final',
             label: this.applePayShippingStepTitle,
-            amount: selectedShipping.amount.toString(),
+            amount: selectedShipping.amount.value.toString(),
           },
         ],
       };
@@ -332,7 +333,7 @@ export default {
         {
           label: shippingMethod.method_title,
           detail: shippingMethod.carrier_title || '',
-          amount: shippingMethod.amount.toString(),
+          amount: shippingMethod.amount.value.toString(),
           identifier: shippingMethod.method_code,
           carrierCode: shippingMethod.carrier_code,
         }
