@@ -1,0 +1,96 @@
+<?php
+/**
+ * Order success footer
+ * @var \Magento\Checkout\Block\Onepage\Success $block
+ * @var Magento\Framework\Escaper $escaper
+ */
+
+/** @var \Gene\BetterCheckout\ViewModel\CheckoutSuccess $orderViewViewModel */
+$orderViewViewModel = $block->getData('order_view_view_model');
+
+if ($orderViewViewModel) {
+  /** @var \Magento\Sales\Model\Order $order */
+  $order = $orderViewViewModel->getLastOrder();
+}
+?>
+
+<div class="checkout-success-container">
+    <p class="summary-title"><?= $escaper->escapeHtml(__('Order Summary')) ?></p>
+    <hr>
+    <div class="checkout-success-totals">
+        <div class="checkout-success-summary-columns">
+            <span><?= $escaper->escapeHtml(__('Subtotal')) ?></span>
+
+            <?php if ($orderViewViewModel->displayCartPricesInclTax()): ?>
+                <span><?= $order->formatPrice($order->getSubtotalInclTax()) ?></span>
+            <?php endif; ?>
+
+            <?php if ($orderViewViewModel->displayCartPricesExclTax()): ?>
+                <span><?= $order->formatPrice($order->getSubtotal()) ?></span>
+            <?php endif; ?>
+        </div>
+        <div class="checkout-success-summary-columns">
+            <span><?= $order->getShippingDescription() ?></span>
+            <?php if ($orderViewViewModel->displayShippingPricesInclTax()): ?>
+                <span><?= $order->formatPrice($order->getShippingInclTax()) ?></span>
+            <?php endif; ?>
+            <?php if ($orderViewViewModel->displayShippingPricesExclTax()): ?>
+                <span><?= $order->formatPrice($order->getShippingAmount()) ?></span>
+            <?php endif; ?>
+        </div>
+      <?php if ((float)$order->getDiscountAmount()): ?>
+          <div class="checkout-success-summary-columns">
+              <span><?= $escaper->escapeHtml(__('Discount')) ?></span>
+              <span><?= $order->formatPrice($order->getDiscountAmount()) ?></span>
+          </div>
+      <?php endif; ?>
+        <div class="checkout-success-summary-columns total-container">
+            <span><strong><?= $escaper->escapeHtml(__('Total to Pay')) ?></strong></span>
+            <span><strong><?= $order->formatPrice($order->getGrandTotal()) ?></strong></span>
+        </div>
+        <hr>
+    </div>
+
+    <div class="checkout-success-items">
+      <?php foreach ($order->getItems() as $item): ?>
+        <?php
+        if ($item->getParentItemId()) {
+          continue;
+        }
+        ?>
+        <?php
+        $image = $orderViewViewModel === null
+          ? null
+          : $orderViewViewModel->getOrderItemProductImageUrl($item);
+        ?>
+
+          <div class="checkout-success-summary-columns">
+              <img class="single-order__item-image" src="<?= $image; ?>"
+                   alt="<?= $escaper->escapeHtmlAttr($item->getName()) ?>">
+              <div>
+                  <p><?= $item->getName() ?></p>
+                <?= $order->formatPrice($item->getPriceInclTax()) ?>
+                  <p class="qty">
+                    <?= $escaper->escapeHtml(__('Quantity: ')) ?>
+                    <?= (int)$item->getQtyOrdered() ?>
+                  </p>
+              </div>
+          </div>
+          <hr>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="checkout-success-summary-columns checkout-success-delivery-container">
+        <div>
+            <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Address')) ?></p>
+          <?= $orderViewViewModel->getFormattedAddress($order->getShippingAddress()); ?>
+        </div>
+    </div>
+
+    <div class="checkout-success-summary-columns checkout-success-shipping-container">
+        <div>
+            <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Method')) ?></p>
+            <p><?= $order->getShippingDescription() ?></p>
+        </div>
+    </div>
+</div>
