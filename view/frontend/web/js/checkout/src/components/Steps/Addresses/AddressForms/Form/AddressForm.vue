@@ -132,6 +132,7 @@
         </div>
         <div>
           <MyButton
+            v-if="address_type !== 'shipping'"
             class="select-address-btn"
             type="submit"
             primary
