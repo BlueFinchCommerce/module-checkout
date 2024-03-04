@@ -164,7 +164,6 @@ export default {
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
-      console.log('done');
       this.applePayLoaded = true;
     },
 
