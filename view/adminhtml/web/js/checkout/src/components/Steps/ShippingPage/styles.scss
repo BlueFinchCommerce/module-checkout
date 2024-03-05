@@ -1,4 +1,7 @@
 @import '@/styles/global/_breakpoints';
+.shipping-step {
+  padding-bottom: 55px; // only for checkout ui designer
+}
 
 .shipping-form {
   background: var(--page-background__color-mobile);

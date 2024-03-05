@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .delivery-address {
-  background: var(--delivery-address-section-background, var(--steps-background));
+  background: var(--delivery-address-section-background, var(--steps-completed-background));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   min-height: var(--details-section-min-height, 103px); //prevent jumping on page load
@@ -75,7 +75,7 @@
 @media screen and (min-width: $screen__m) {
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
-    border-radius: var(--steps-radius);
+    border-radius: var(--steps-completed-radius);
   }
 
   .details-title-section {

@@ -33,7 +33,7 @@
     --error__background-color: #FDE9E9;
     --available__color: #76CA39;
     --available__color2: #50BA32;
-    --page-background__color-desktop: var(--white__color);
+    --page-background__color-desktop: var(--primary-gray__color);
     --page-background__color-mobile: var(--white__color);
     --container-background__color: var(--primary-gray__color);
 
@@ -54,6 +54,7 @@
     --indent__xs: 5px;
     --indent__l: 30px;
     --indent__xl: 40px;
+    --indent__xxl: 70px;
 
     --column-gap: var(--indent__l);
 
@@ -98,8 +99,10 @@
     //
     // Steps
     //  ---------------------------------------------
-    --steps-background: var(--active__gray-color);
-    --steps-radius: 0px;
+    --steps-background-desktop: var(--white__color);
+    --steps-border-radius-desktop: 0px;
+    --steps-completed-background: var(--active__gray-color);
+    --steps-completed-radius: 0px;
 
     //
     // Summary
@@ -264,7 +267,9 @@
     //
     // Inputs
     //  ---------------------------------------------
+    --input-font-color: var(--primary__color);
     --input-font-size: var(--font__base);
+    --input-background-color: var(--white__color);
     --input-border-color: var(--primary__color);
     --input-border-color-hover: var(--primary__color);
     --input-border-color-focus: var(--focus-color);
@@ -285,7 +290,8 @@
     --qty-button-height: 30px;
     --qty-border: var(--input-border-weight) solid var(--input-border-color);
     --qty-border-radius: var(--input-border-radius);
-    --qty-input-background-color: var(--active__gray-color);
+    --qty-input-background-color: var(--white__color);
+    --qty-input-font-color: var(--primary__color);
     --qty-input-border: var(--input-border-weight) solid var(--input-border-color);
     --qty-input-border-bottom: none;
     --qty-input-border-top: none;
@@ -323,6 +329,7 @@
     //
     // Dropdowns
     //  ---------------------------------------------
+    --dropdown-background-color: var(--white__color);
     --dropdown-border-color: var(--border__gray-color2);
     --dropdown-border-radius: var(--base-border-radius);
 
@@ -335,6 +342,7 @@
     // Slide Up
     //  ---------------------------------------------
     --slide-up-border-radius: 10px;
+    --slide-up-background-color-open: var(--white__color);
 
     //
     // Instant Checkout

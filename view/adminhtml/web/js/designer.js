@@ -108,7 +108,8 @@ define([
                     'MockMobile': '.mobile-specific-field',
                     'MockTablet': '.mobile-specific-field',
                     'MockLaptop': '.desktop-specific-field',
-                    'MockDesktop': '.desktop-specific-field'
+                    'MockDesktop': '.desktop-specific-field',
+                    'MockFull': '.mobile-specific-field, .desktop-specific-field'
                 };
 
             // Hide all specific fields by default
