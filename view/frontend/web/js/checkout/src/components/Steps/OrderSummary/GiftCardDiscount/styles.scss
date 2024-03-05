@@ -14,6 +14,7 @@
     justify-content: normal;
     position: relative;
     min-height: 60px;
+    order: var(--gift-discount-trigger-order, 2);
     cursor: pointer;
 
     .gift-discount-icon-container {
@@ -42,6 +43,7 @@
 div.dropdown.gift-dropdown {
   background: var(--gift-discount__background, var(--white__color));
   padding: var(--drop-down-padding, var(--indent__base));
+  order: var(--gift-dropdown-order, 3);
   max-width: none;
   border-top: 0;
   margin: 0 auto;

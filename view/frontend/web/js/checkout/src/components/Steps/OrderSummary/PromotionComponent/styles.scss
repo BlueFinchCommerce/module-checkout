@@ -9,6 +9,7 @@
     max-width: none;
     justify-content: normal;
     position: relative;
+    order: var(--promo-triggers-order, 6);
 
     img {
       display: var(--promo-products-icon-visibility, block);

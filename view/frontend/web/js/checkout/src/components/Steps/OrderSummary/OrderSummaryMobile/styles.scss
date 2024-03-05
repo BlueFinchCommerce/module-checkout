@@ -93,6 +93,7 @@
 
 .product-items {
   margin-top: var(--indent__m);
+  order: var(--order-summary-order, 4);
 }
 
 //Styles for empty StoryBook data

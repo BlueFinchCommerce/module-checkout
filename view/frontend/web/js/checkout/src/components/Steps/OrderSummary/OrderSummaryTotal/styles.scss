@@ -3,6 +3,10 @@
 // --order-summary-total-header-border - 1px solid #D9DADB;
 
 .order-total {
+  &-container {
+    order: var(--order-total-container-order, 5);
+  }
+
   &-wrapper {
     padding: var(--order-total-padding, 20px 0 10px);;
     min-height: 91px;

@@ -13,5 +13,6 @@
     margin-top: var(--indent__m);
     min-height: 180px;
     overflow-y: auto;
+    order: var(--order-summary-order, 4);
   }
 }
