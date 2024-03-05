@@ -103,3 +103,16 @@ div.dropdown.gift-dropdown {
     }
   }
 }
+
+//Styles for desktop
+@media screen and (min-width: $screen__m) {
+  .dropdown-button {
+    &.gift-discount-trigger {
+      order: var(--coupon-discount-trigger-order, 11);
+    }
+  }
+
+  div.dropdown.gift-dropdown {
+    order: var(--coupon-discount-trigger-order, 12);
+  }
+}

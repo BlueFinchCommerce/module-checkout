@@ -100,3 +100,15 @@ div.dropdown.coupon-dropdown {
   }
 }
 
+//Styles for desktop
+@media screen and (min-width: $screen__m) {
+  .dropdown-button {
+    &.coupon-discount-trigger {
+      order: var(--coupon-discount-trigger-order, 9);
+    }
+  }
+
+  div.dropdown.coupon-dropdown {
+    order: var(--coupon-discount-trigger-order, 10);
+  }
+}
