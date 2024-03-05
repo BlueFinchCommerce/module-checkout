@@ -40,7 +40,7 @@
       font-weight: var(--font-weight__bold);
       font-family: var(--font-family-copy);
       font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
-      margin-left: var(--section-left-space, 20px);
+      margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
       color: var(--text__color--heading);
     }
@@ -74,6 +74,19 @@
       font-size: var(--proceed-to-shipping-text-font-size, var(--font__s));
       display: var(--edit-button-title-visibility, none);
       text-decoration: underline;
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .saved-shipping {
+    border-radius: var(--steps-completed-radius);
+    &__icon {
+      p {
+        font-size: var(--font__heading--desktop);
+      }
     }
   }
 }
