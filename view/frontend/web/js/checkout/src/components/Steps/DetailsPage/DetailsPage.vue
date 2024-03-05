@@ -19,7 +19,7 @@
         <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
       </div>
       <DividerComponent />
-      <PayWith :is-express-payments-visible="isExpressPaymentsVisible" v-if="!emailEntered" />
+      <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
     </div>
 
     <EmailAddress />

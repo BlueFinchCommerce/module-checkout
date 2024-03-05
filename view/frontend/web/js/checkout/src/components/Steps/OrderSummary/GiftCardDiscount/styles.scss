@@ -14,7 +14,7 @@
     justify-content: normal;
     position: relative;
     min-height: 60px;
-    order: var(--gift-discount-trigger-order, 4);
+    cursor: pointer;
 
     .gift-discount-icon-container {
       display: flex;
@@ -46,7 +46,6 @@ div.dropdown.gift-dropdown {
   border-top: 0;
   margin: 0 auto;
   min-height: 90px;
-  order: var(--gift-dropdown-order, 5);
 
   .field {
     display: flex;
@@ -99,43 +98,6 @@ div.dropdown.gift-dropdown {
 
     button {
       max-height: var(--drop-down-max-height, 60px);
-    }
-  }
-}
-
-//Styles for desktop
-@media screen and (min-width: $screen__m) {
-  .dropdown-button {
-    border: none !important; //override dropdown global styles
-
-    &.gift-discount-trigger {
-      padding: var(--gift-discount-paddings, 15px 20px);
-
-      .gift-discount-title {
-        font-size: var(--font__m);
-        font-family: var(--font-family-copy);
-      }
-
-      img {
-        width: var(--lock-icon-width, 50px);
-        height: var(--lock-icon-height, 30px);
-      }
-
-      svg {
-        display: var(--gift-discount-icon-desktop-display, block);
-      }
-    }
-  }
-
-  div.dropdown.gift-dropdown {
-    padding: var(--gift-discount-paddings, 0 20px 20px);
-    display: block;
-
-    .field {
-      &:first-child {
-        padding-top: var(--gift-dropdown-first-child-padding-top, var(--indent__base));
-        border-top: var(--giftcard-header-border-bottom, 1px solid #D9DADB);
-      }
     }
   }
 }

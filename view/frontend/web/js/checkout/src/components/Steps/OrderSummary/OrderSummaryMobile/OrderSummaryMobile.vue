@@ -15,13 +15,13 @@
       </button>
     </template>
     <template #body>
-      <PromotionComponent />
-      <GiftCardDiscount />
       <CouponDiscount />
+      <GiftCardDiscount />
       <div class="product-items">
         <OrderSummaryItem />
       </div>
       <OrderSummaryTotal />
+      <PromotionComponent />
     </template>
   </SlideUp>
   <div

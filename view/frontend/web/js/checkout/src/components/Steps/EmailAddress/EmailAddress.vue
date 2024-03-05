@@ -7,7 +7,7 @@
     </template>
 
     <div class="checkout-section checkout-email">
-      <template v-if="emailRegistered !== undefined && !isLoggedIn">
+      <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
         <TextField
           class="welcome-message-title"
           data-cy="email"
