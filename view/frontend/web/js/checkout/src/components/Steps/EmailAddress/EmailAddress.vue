@@ -74,6 +74,7 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
+            @keyup="passwordKeyTrigger"
             data-cy="password"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
@@ -327,6 +328,15 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
+      }
+    },
+
+    passwordKeyTrigger(event) {
+      // Check if the Enter key was pressed
+      const pressedKey = event.key || event.keyCode;
+
+      if (pressedKey === 'Enter' || pressedKey === 13) {
+        this.submitForm();
       }
     },
 
