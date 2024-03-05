@@ -45,7 +45,7 @@ export default {
     ...mapState(useBraintreeStore, ['clientToken']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
-    ...mapState(useConfigStore, ['currencyCode', 'locale', 'countryCode', 'stateRequired', 'websiteName', 'countries']),
+    ...mapState(useConfigStore, ['currencyCode', 'locale', 'countryCode', 'websiteName', 'countries', 'getRegionId']),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
 
@@ -226,8 +226,10 @@ export default {
       const address = {
         city: data.shippingContact.locality,
         region: data.shippingContact.administrativeArea,
+        region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
         country_id: data.shippingContact.countryCode.toUpperCase(),
         postcode: data.shippingContact.postalCode,
+        street: ['0'],
       };
 
       this.address = address;
@@ -342,17 +344,6 @@ export default {
 
     // Map the address provided by ApplePay into something useable.
     mapAddress(address, email, telephone) {
-      const statesRequired = this.stateRequired;
-      let region;
-      if (statesRequired.indexOf(address.countryCode) !== -1) {
-        const country = this.countries.find((cty) => cty.id === address.countryCode);
-        if (country.available_regions && country.available_regions.length) {
-          region = country.available_regions.find((rgin) => (
-            rgin.name === address.administrativeArea
-          ));
-        }
-      }
-
       return {
         email,
         telephone,
@@ -361,7 +352,7 @@ export default {
         street: address.addressLines,
         city: address.locality,
         region: address.administrativeArea,
-        region_id: region ? region.id : 0,
+        region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
         country_id: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
         same_as_billing: 0,
