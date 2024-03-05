@@ -86,7 +86,7 @@
           />
         </ul>
         <TextField
-          v-else-if="!shippingMethods.length"
+          v-else-if="!shippingMethods.length && !loadingShippingMethods"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
         />

@@ -48,8 +48,8 @@ export default {
       'currencyCode',
       'locale',
       'countryCode',
-      'stateRequired',
       'countries',
+      'getRegionId',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
@@ -116,7 +116,9 @@ export default {
             const address = {
               country_id: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
-              street: [''],
+              region: data.shipping_address.state,
+              region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
+              street: ['0'],
             };
             const shippingMethods = await getShippingMethods(address);
 
@@ -137,7 +139,7 @@ export default {
                 type: 'SHIPPING',
                 selected: selectedShipping.method_code === method.method_code,
                 amount: {
-                  value: method.amount,
+                  value: method.amount.value.toString(),
                   currency: this.currencyCode,
                 },
               }
@@ -147,7 +149,7 @@ export default {
 
             return paypalInstance.updatePayment({
               paymentId: data.paymentId,
-              amount: amount.toFixed(2),
+              amount,
               currency: this.currencyCode,
               shippingOptions,
               lineItems: this.getPayPalLineItems(false),
@@ -224,15 +226,6 @@ export default {
     },
 
     mapAddress(address, email, telephone, billingFirstname, billingLastname) {
-      const statesRequired = this.stateRequired;
-      let region;
-      if (statesRequired.indexOf(address.countryCode) !== -1) {
-        const country = this.countries.find((cty) => cty.id === address.countryCode);
-        if (country.available_regions && country.available_regions.length) {
-          region = country.available_regions.find((rgin) => rgin.name === address.administrativeArea);
-        }
-      }
-
       const [firstname, ...lastname] = address.recipientName ? address.recipientName.split(' ') : [];
       return {
         street: [
@@ -247,8 +240,8 @@ export default {
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
         telephone,
-        region: address.administrativeArea,
-        region_id: region ? region.id : 0,
+        region: address.state,
+        region_id: this.getRegionId(address.countryCode, address.state),
       };
     },
 

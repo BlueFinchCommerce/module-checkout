@@ -53,6 +53,17 @@ export default defineStore('configStore', {
     postcodeRequired: (state) => (
       (countryId) => !state.optionalZipCountries.includes(countryId)
     ),
+    getCountryByCode: (state) => (
+      (countryCode) => state.countries.find(({ id }) => id === countryCode)
+    ),
+    getRegionId: (state) => (
+      (countryCode, regionCode) => {
+        const country = state.getCountryByCode(countryCode);
+        return country && country.available_regions
+          ? country.available_regions.find(({ code }) => code === regionCode)?.id
+          : 0;
+      }
+    ),
   },
   actions: {
     setData(data) {
