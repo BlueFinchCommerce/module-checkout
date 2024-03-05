@@ -182,7 +182,6 @@ export default {
       'submitShippingInfo',
       'selectShippingMethod',
       'setShippingMethodTitle',
-      'clearSubmitShippingInfoCache',
     ]),
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useCartStore, ['getCartTotals']),

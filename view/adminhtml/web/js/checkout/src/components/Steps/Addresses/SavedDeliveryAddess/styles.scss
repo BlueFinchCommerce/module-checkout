@@ -76,10 +76,11 @@
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
     border-radius: var(--steps-completed-radius);
-  }
-  .details-title-section {
-    p {
-      font-size: var(--font__heading--desktop);
+
+    .details-title-section {
+      p {
+        font-size: var(--font__heading--desktop);
+      }
     }
   }
 }
