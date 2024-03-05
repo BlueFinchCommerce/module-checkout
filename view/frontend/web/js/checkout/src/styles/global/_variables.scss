@@ -304,8 +304,9 @@
     --radio__input-height: 24px;
     --radio__input-border: solid 1px var(--radio__input-border-color, var(--border__gray-color));
     --radio__input-border-radius: 50%;
+    --radio__input-selected-color: #063967;
     --radio__input-box-shadow: inset 0 0 0 5px var(--white__color), inset 0 0 0 40px #E0E0E0;
-    --radio__input-checked-box-shadow: inset 0px 0px 0px 5px var(--white__color), inset 0px 0px 0px 40px var(--primary__color);
+    --radio__input-checked-box-shadow: inset 0px 0px 0px 5px var(--white__color), inset 0px 0px 0px 40px var(--radio__input-selected-color);
     --radio__input-checked-border: 1px solid var(--focus-color);
 
     //
