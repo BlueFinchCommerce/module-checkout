@@ -27,10 +27,13 @@
       <slot name="icon" />
     </label>
     <ErrorMessage v-if="errorMessage !== ''" :message="errorMessage"/>
+    <ErrorMessage v-if="validationErrorMessage !== ''" :message="validationErrorMessage"/>
   </div>
 </template>
 <script>
 import { computed, reactive } from 'vue';
+import { mapWritableState } from 'pinia';
+import useCustomerStore from '@/stores/CustomerStore';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 import sanitiseInputValue from '@/helpers/sanitiseInputValue';
 import debounce from 'lodash.debounce';
@@ -112,6 +115,9 @@ export default {
       validationErrorMessage: '',
     };
   },
+  computed: {
+    ...mapWritableState(useCustomerStore, ['inputsSanitiseError']),
+  },
   methods: {
     customValidation() {
       const inputValue = this.modelValue;
@@ -125,6 +131,12 @@ export default {
           this.$emit('update:modelValue', inputValue);
           this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
         }
+
+        // Use $nextTick to check for errors after the DOM is updated
+        this.$nextTick(() => {
+          const hasInputErrors = document.querySelectorAll('.sanitise-error').length > 0;
+          this.inputsSanitiseError = hasInputErrors;
+        });
       }
     },
     moveIntoViewport(event) {

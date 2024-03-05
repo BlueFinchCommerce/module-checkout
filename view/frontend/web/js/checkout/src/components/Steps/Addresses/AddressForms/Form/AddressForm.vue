@@ -192,7 +192,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn']),
+    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'inputsSanitiseError']),
     ...mapState(useConfigStore, ['countries', 'stateRequired', 'displayState',
       'countryCode', 'optionalZipCountries', 'postcodeRequired']),
     selectOptions() {
@@ -345,7 +345,7 @@ export default {
       const validAddress = this.validateAddress(addressType);
       const validPostcode = this.validatePostcode(this.address_type);
 
-      this.buttonEnabled = validAddress && validPostcode && areNamesValid;
+      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
     },
   },
 };

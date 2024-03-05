@@ -282,6 +282,7 @@ export default {
     ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
     ...mapState(useConfigStore, ['addressFinder', 'custom']),
     ...mapState(useCustomerStore, [
+      'inputsSanitiseError',
       'customer',
       'isLoggedIn',
       'emailEntered',
@@ -371,7 +372,7 @@ export default {
       const validAddress = this.validateAddress(addressType);
       const validPostcode = this.validatePostcode(this.address_type);
 
-      this.buttonEnabled = validAddress && validPostcode && areNamesValid;
+      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
     },
     async validateAndSave() {
       this.requiredErrorMessage = '';
