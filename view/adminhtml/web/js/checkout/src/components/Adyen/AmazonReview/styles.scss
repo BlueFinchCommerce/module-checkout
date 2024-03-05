@@ -14,7 +14,8 @@
     padding: 0;
 
     .payment-form {
-      background: var(--white__color);
+      background: var(--steps-background-desktop);
+      border-radius: var(--steps-border-radius-desktop);
       padding: var(--form-details-padding-desktop, 40px 40px 70px);
     }
   }

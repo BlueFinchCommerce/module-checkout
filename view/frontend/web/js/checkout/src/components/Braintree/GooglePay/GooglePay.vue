@@ -48,8 +48,8 @@ export default {
       'currencyCode',
       'locale',
       'countryCode',
-      'stateRequired',
       'countries',
+      'getRegionId',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
@@ -175,6 +175,8 @@ export default {
         const address = {
           country_id: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
+          region: data.shippingAddress.administrativeArea,
+          region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
           street: ['0'],
         };
 
@@ -384,14 +386,6 @@ export default {
     },
 
     mapAddress(address, email, telephone) {
-      const statesRequired = this.stateRequired;
-      let region;
-      if (statesRequired.indexOf(address.countryCode) !== -1) {
-        const country = this.countries.find((cty) => cty.id === address.countryCode);
-        if (country.available_regions && country.available_regions.length) {
-          region = country.available_regions.find((rgin) => rgin.name === address.administrativeArea);
-        }
-      }
       const [firstname, ...lastname] = address.name.split(' ');
       return {
         street: [
@@ -407,7 +401,7 @@ export default {
         city: address.locality,
         telephone,
         region: address.administrativeArea,
-        region_id: region ? region.id : 0,
+        region_id: this.getRegionId(address.countryCode, address.administrativeArea),
       };
     },
   },

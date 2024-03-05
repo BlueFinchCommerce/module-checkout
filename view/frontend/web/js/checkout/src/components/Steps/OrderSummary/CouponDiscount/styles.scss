@@ -8,7 +8,7 @@
 .dropdown-button {
   &.coupon-discount-trigger {
     padding: var(--drop-down-trigger-padding, var(--indent__m) var(--indent__base));
-    background: var(--coupon-discount__background, var(--white__color));
+    background: var(--coupon-discount__background, var(--dropdown-background-color));
     margin-top: var(--drop-down-trigger-margin-top, var(--indent__base));
     order: var(--coupon-discount-trigger-order, 0);
     max-width: none;
@@ -41,7 +41,7 @@
 }
 
 div.dropdown.coupon-dropdown {
-  background: var(--coupon-discount__background, var(--white__color));
+  background: var(--coupon-discount__background, var(--dropdown-background-color));
   padding: var(--drop-down-padding, var(--indent__base));
   order: var(--coupon-dropdown-order, 1);
   max-width: none;

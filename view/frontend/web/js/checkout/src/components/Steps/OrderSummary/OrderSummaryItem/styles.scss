@@ -143,8 +143,16 @@
   margin: 0;
   overflow: hidden;
 
+  label {
+    input {
+      &:disabled {
+        opacity: 1;
+      }
+    }
+  }
+
   button {
-    background: var(--item-qty-button__background, var(--white__color));
+    background: var(--item-qty-button__background, var(--qty-input-background-color));
     border: var(--qty-button-border);
     border-radius: var(--qty-button-border-radius);
     font-family: var(--font-family-copy);
@@ -156,7 +164,7 @@
     padding: 0;
     box-shadow: none;
     font-weight: var(--qty-button__font-weight, var(--font-weight__regular));
-    color: var(--item-qty-button-colour, unset);
+    color: var(--item-qty-button-colour, var(--qty-input-font-color));
   }
 
   input {
@@ -165,14 +173,14 @@
     border-bottom: var(--qty-input-border-bottom);
     border-top: var(--qty-input-border-top);
     border-radius: var(--qty-input-border-radius);
-    color: var(--text__color);
+    color: var(--qty-input-font-color);
     font-size: var(--qty-font-size);
     height: var(--qty-button-height);
     max-width: var(--qty-button-width, 40px);
     text-align: center;
 
     &:disabled {
-      color: var(--text__color);
+      color: var(--qty-input-font-color);
     }
   }
 }

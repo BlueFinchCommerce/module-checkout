@@ -25,13 +25,7 @@ body,
 }
 
 body {
-  color: var(--text__color);
   margin: 0;
-  line-height: 1.6;
-  font-size: var(--font__base);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 //Styles for OKA footer blocks that come from admin
@@ -87,9 +81,15 @@ body {
 }
 
 #gene-better-checkout-root {
+  color: var(--text__color);
+  font-size: var(--font__base);
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .root {

@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .adyen-checkout__input {
-  background: var(--adyen-checkout-input__background-color, var(--white__color));
+  background: var(--adyen-checkout-input__background-color, var(--input-background-color));
   border-radius: var(--input-border-radius);
   border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
   height: 50px;
@@ -39,7 +39,7 @@
     padding: 0 10px;
     position: var(--adyen-label-position, absolute);
     top: -5px;
-    background: var(--adyen-checkout-field-label__background-color, var(--white__color));
+    background: var(--adyen-checkout-field-label__background-color, var(--input-background-color));
     line-height: 1em;
     z-index: 1;
     left: var(--adyen-label-left-value, 10px);
@@ -47,6 +47,7 @@
     font-size: var(--adyen-font-size, var(--font__s));
     margin-bottom: var(--adyen-label-margin-bottom, 0);
     transition: none;
+    border-radius: var(--base-border-radius);
 
     .adyen-checkout__label--focused & {
       color: var(--text__color);
@@ -168,7 +169,7 @@
     }
 
     &__payment-method--selected {
-      background: var(--adyen-drop-in-selected__background, var(--white__color));
+      background: var(--adyen-drop-in-selected__background, transparent);
 
       &:before {
         border: var(--radio__input-checked-border);

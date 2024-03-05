@@ -3,8 +3,8 @@
 .dropdown-button {
   &.promotion-trigger {
     padding: var(--promo-products-paddings, 15px var(--indent__base));
-    background: var(--white__color);
-    margin: 0 0 var(--indent__base);
+    background: var(--dropdown-background-color);
+    margin-top: var(--indent__base);
     display: var(--promotion-visibility, flex);
     max-width: none;
     justify-content: normal;
@@ -55,19 +55,19 @@
 }
 
 div.dropdown.promo-dropdown {
-  background: var(--white__color);
+  background: var(--dropdown-background-color);
   padding: var(--promo-products-paddings, var(--indent__base) var(--indent__s));
   border-top: 0;
   margin: 0;
   max-width: none;
+  order: 4;
+  display: grid;
 
   .promo-title {
     margin-bottom: 15px;
   }
 
   &.active {
-    margin-bottom: var(--indent__base);
-
     p {
       padding: 0;
     }
@@ -162,8 +162,6 @@ div.dropdown.promo-dropdown {
   }
 
   div.dropdown.promo-dropdown {
-    display: block;
-
     .promo-title {
       padding-top: var(--indent__base);
     }
