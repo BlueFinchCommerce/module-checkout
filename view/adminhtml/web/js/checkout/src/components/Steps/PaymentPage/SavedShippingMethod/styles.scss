@@ -40,7 +40,7 @@
       font-weight: var(--font-weight__bold);
       font-family: var(--font-family-copy);
       font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
-      margin-left: var(--section-left-space, 20px);
+      margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
       color: var(--text__color--heading);
     }
