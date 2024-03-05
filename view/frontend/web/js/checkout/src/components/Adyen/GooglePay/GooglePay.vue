@@ -124,7 +124,6 @@ export default {
       'getAdyenConfig',
       'getIsAdyenAvailable',
       'getPaymentMethodsResponse',
-      'getAdyenClientKey',
     ]),
     ...mapActions(usePaymentStore, [
       'getPaymentMethods',

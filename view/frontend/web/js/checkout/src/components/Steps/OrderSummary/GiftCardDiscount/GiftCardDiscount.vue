@@ -36,32 +36,32 @@
     :class="{active: isDropDownVisible}"
   >
     <template #content>
-      <div class="field coupon-code-field">
+      <div class="field gift-code-field">
         <TextInput
-          v-model="discountCode"
+          v-model="giftCardCode"
           :error="giftCardErrorMessage"
-          name="coupon-code"
+          name="gift-code"
           :placeholder="giftCardPlaceholderText"
-          :disabled="discountApplied"
+          :disabled="giftCardApplied"
           autocomplete="off"
         />
         <MyButton
-          v-if="!discountApplied"
+          v-if="!giftCardApplied"
           primary
           :label="applyButtonText"
-          @click="dispatchDiscountCode(discountCode)"
+          @click="dispatchDiscountCode(giftCardCode)"
         />
 
         <MyButton
-          v-if="discountApplied"
+          v-if="giftCardApplied"
           secondary
           :label="$t('orderSummary.removeBtn')"
-          @click="removeGiftCardCode"
+          @click="removeGiftCardCode(giftCardCode)"
         />
         <div class="success">
           <SuccessMessage
-            v-if="discountApplied"
-            :message="$t('orderSummary.giftCardDiscount.successMessage', { code: discountCode })"
+            v-if="giftCardApplied"
+            :message="$t('orderSummary.giftCardDiscount.successMessage', { code: giftCardCode })"
           />
         </div>
         <div class="error">
@@ -131,7 +131,7 @@ export default {
       || this.$t('orderSummary.giftCardDiscount.placeholder');
   },
   computed: {
-    ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
+    ...mapWritableState(useCartStore, ['giftCardCode', 'giftCardApplied',
       'giftCardErrorMessage']),
     GiftIcon() {
       return `${getStaticUrl(GiftIcon)}`;
@@ -141,9 +141,9 @@ export default {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
 
-    async dispatchDiscountCode(discountCode) {
+    async dispatchDiscountCode(giftCardCode) {
       this.loadingDiscountCode = true;
-      await this.addGiftCardCode(discountCode);
+      await this.addGiftCardCode(giftCardCode);
       this.loadingDiscountCode = false;
     },
     openDropDown() {

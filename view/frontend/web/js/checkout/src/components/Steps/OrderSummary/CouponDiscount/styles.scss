@@ -118,7 +118,7 @@ div.dropdown.coupon-dropdown {
       }
 
       svg {
-        display: var(--coupon-discount-icon-desktop-display, none);
+        display: var(--coupon-discount-icon-desktop-display, block);
       }
     }
   }

@@ -118,7 +118,7 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'getAdyenClientKey', 'setErrorMessage']),
+    ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getAdyenConfig']),
     ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddress']),
