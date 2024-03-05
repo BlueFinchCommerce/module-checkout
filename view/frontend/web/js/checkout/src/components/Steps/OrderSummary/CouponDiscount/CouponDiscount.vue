@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      isDropDownVisible: true,
+      isDropDownVisible: false,
       loadingDiscountCode: false,
       applyButtonText: '',
       applyButtonTextId: 'gene-bettercheckout-applybutton-text',

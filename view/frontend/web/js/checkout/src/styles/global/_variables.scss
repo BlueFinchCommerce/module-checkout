@@ -36,7 +36,8 @@
     --page-background__color-desktop: var(--white__color);
     --page-background__color-mobile: var(--white__color);
     --container-background__color: var(--primary-gray__color);
-    --header-footer-background: #063967;
+    --header-background: #063967;
+    --footer-background: #063967;
 
     //
     // States
@@ -85,7 +86,7 @@
     //
     // Header
     //  ---------------------------------------------
-    --header-background-color: var(--header-footer-background);
+    --header-background-color: var(--header-background);
     --header-logo__width-mobile: 130px;
     --header-logo__width-desktop: 150px;
     --header__border-bottom: none;
@@ -94,7 +95,6 @@
     // Footer
     //  ---------------------------------------------
     --footer-display: block;
-    --footer-background: var(--header-footer-background);
     --footer-border-top: none;
 
     //
