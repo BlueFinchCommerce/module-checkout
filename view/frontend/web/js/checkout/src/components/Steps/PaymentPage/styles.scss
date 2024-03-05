@@ -42,7 +42,7 @@
     padding: 0;
 
     .payment-form {
-      background: var(--payment-form-background, var(--page-background__color-mobile));
+      background: var(--payment-form-background, var(--white__color));
       padding: var(--form-details-padding-desktop, 40px 40px 70px);
     }
   }

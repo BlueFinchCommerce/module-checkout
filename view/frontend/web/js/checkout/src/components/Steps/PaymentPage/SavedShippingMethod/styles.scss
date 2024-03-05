@@ -10,7 +10,7 @@
 }
 
 .saved-shipping {
-  background: var(--saved-shipping-section-background, var(--steps-background));
+  background: var(--saved-shipping-section-background, var(--steps-completed-background));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   border-top: var(--details-section-border-top, none);

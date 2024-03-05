@@ -105,7 +105,8 @@ a {
 
 @media screen and (min-width: $screen__m) {
   .checkout-shipping {
-    background: var(--checkout-shipping-section-background, var(--white__color));
+    background: var(--checkout-shipping-section-background, var(--steps-background-desktop));
+    border-radius: var(--steps-border-radius-desktop);
     padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
     margin-top: var(--indent__base);
   }

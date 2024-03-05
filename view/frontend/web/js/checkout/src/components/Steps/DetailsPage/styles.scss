@@ -167,7 +167,8 @@
   }
 
   .details-form {
-    background: var(--details-form_background__color-mobile, var(--white__color));
+    background: var(--details-form_background__color-mobile, var(--steps-background-desktop));
+    border-radius: var(--steps-border-radius-desktop);
     padding: var(--form-details-padding-desktop, 40px);
 
     &-header {
