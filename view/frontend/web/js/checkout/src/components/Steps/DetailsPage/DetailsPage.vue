@@ -127,6 +127,7 @@
 
     <div
       v-if="emailEntered && !selected[address_type].editing
+        && selected[address_type].id
         && selected[address_type].postcode
         && !isUsingSavedShippingAddress
         && !isClickAndCollect
