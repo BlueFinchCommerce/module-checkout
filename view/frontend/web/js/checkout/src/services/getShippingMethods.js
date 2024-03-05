@@ -62,8 +62,11 @@ mutation {
   }
 }`;
 
-const mapShippingMethods = (response) => response.data.setShippingAddressesOnCart.cart
-  .shipping_addresses[0].available_shipping_methods;
+const mapShippingMethods = (response) => (
+  response.data.setShippingAddressesOnCart
+    ? response.data.setShippingAddressesOnCart.cart.shipping_addresses[0].available_shipping_methods
+    : []
+);
 
 export default async (shippingAddress) => {
   const { maskedId } = useCartStore();
