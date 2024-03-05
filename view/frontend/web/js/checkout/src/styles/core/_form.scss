@@ -63,7 +63,8 @@ label {
     select {
       border: var(--input-error-border, 2.5px solid var(--error__color));
 
-      &:focus {
+      &:focus,
+      &:hover {
         border: var(--input-error-border, 2.5px solid var(--error__color));
       }
     }

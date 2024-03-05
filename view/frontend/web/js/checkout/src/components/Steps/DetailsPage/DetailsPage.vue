@@ -127,6 +127,7 @@
 
     <div
       v-if="emailEntered && !selected[address_type].editing
+        && selected[address_type].id
         && selected[address_type].postcode
         && !isUsingSavedShippingAddress
         && !isClickAndCollect
@@ -168,12 +169,11 @@
     />
 
     <MyButton
-      v-if="emailEntered && !selected[address_type].editing
-        && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
+      v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
       type="submit"
       primary
       :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-      :disabled="!selected.shipping.id || (!customer.id && !customerInfoValidation) || !selected.billing.id"
+      :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
       @click="submitShippingOption();"
     />
     <MyButton
@@ -275,12 +275,14 @@ export default {
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      buttonEnabled: false,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
     ...mapState(useConfigStore, ['addressFinder', 'custom']),
     ...mapState(useCustomerStore, [
+      'inputsSanitiseError',
       'customer',
       'isLoggedIn',
       'emailEntered',
@@ -296,6 +298,16 @@ export default {
       await this.getPaymentMethodsResponse();
       this.storedKey += 1;
     });
+
+    const customerStore = useCustomerStore();
+    customerStore.$subscribe((mutation) => {
+      if (mutation.type === 'direct' || (mutation.type === 'patch object'
+        && mutation.payload.selected
+        && mutation.payload.selected[this.address_type])) {
+        this.updateButtonState();
+      }
+    }, { flush: 'sync' });
+    this.updateButtonState();
   },
   async mounted() {
     await this.getStoreConfig();
@@ -336,7 +348,54 @@ export default {
     expressPaymentsVisible(value) {
       this.isExpressPaymentsVisible = value;
     },
-    submitShippingOption() {
+    updateButtonState() {
+      const addressType = this.address_type;
+
+      // If we're on shipping then names are valid in this scenario.
+      // If we're on billing then validate the name fields.
+      const areNamesValid = addressType !== 'billing'
+        || (
+          this.validateNameField(
+            addressType,
+            'First name',
+            this.selected[addressType].firstname,
+          ) && this.validateNameField(
+            addressType,
+            'Last name',
+            this.selected[addressType].firstname,
+          ) && this.validatePhone(
+            addressType,
+            this.selected[addressType].telephone,
+          )
+        );
+
+      const validAddress = this.validateAddress(addressType);
+      const validPostcode = this.validatePostcode(this.address_type);
+
+      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
+    },
+    async validateAndSave() {
+      this.requiredErrorMessage = '';
+      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      if (isValid) {
+        this.setAddressAsCustom(this.address_type);
+        this.setEditing(this.address_type, false);
+
+        // If the address type is shipping and the billing is set to use the same then update billing too.
+        if (this.address_type === 'shipping' && this.selected.billing.same_as_shipping) {
+          const clonedShipping = deepClone(this.selected.shipping);
+          this.setAddress(clonedShipping, 'billing');
+        }
+      } else {
+        const fieldErrors = this.selected.formErrors[this.address_type];
+        Object.entries(fieldErrors).forEach(([value]) => {
+          this.addAddressError(this.address_type, value);
+        });
+        this.requiredErrorMessage = this.selected.formErrors.message[this.address_type];
+      }
+    },
+    async submitShippingOption() {
+      await this.validateAndSave();
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
       if (isValid) {
         if (this.selected.billing.same_as_shipping) {
