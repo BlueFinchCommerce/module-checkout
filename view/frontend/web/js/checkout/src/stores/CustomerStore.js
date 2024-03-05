@@ -61,6 +61,7 @@ export default defineStore('customerStore', {
     loadingCustomerInformation: false,
     postCodeValid: false,
     cache: {},
+    inputsSanitiseError: false,
   }),
   getters: {
     isLoggedIn: (state) => state.customer.tokenType === tokenTypes.authKey

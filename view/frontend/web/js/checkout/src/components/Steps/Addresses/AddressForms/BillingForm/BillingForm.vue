@@ -157,6 +157,7 @@ export default {
       if (!event.target.checked) {
         this.createNewAddress(this.address_type);
         this.selected[this.address_type].same_as_shipping = false;
+        this.setEditing(this.address_type, true);
       } else {
         this.selected[this.address_type] = deepClone(this.selected.shipping);
         this.selected[this.address_type].same_as_shipping = true;
