@@ -148,6 +148,7 @@ export default {
   async created() {
     await this.getStoreConfig();
     await this.getCartData();
+    await this.getCart();
     await this.getCartTotals();
     // Commented out as none of our clients are currently using amasty shipping module
     // @todo - work out how to only call this function if the module is enabled
@@ -160,7 +161,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
-      'getCartData', 'getCartTotals', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
+      'getCartData', 'getCart', 'getCartTotals', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

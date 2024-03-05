@@ -54,21 +54,3 @@
     }
   }
 }
-
-@media screen and (min-width: $screen__m) {
-  .dropdown {
-    &-button {
-      cursor: default;
-    }
-    &.active{
-      cursor: default;
-      border: none;
-
-      p {
-        padding: 0;
-      }
-    }
-
-  }
-}
-

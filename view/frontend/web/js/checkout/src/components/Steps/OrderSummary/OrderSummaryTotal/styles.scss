@@ -4,7 +4,7 @@
 
 .order-total {
   &-container {
-    order: var(--order-total-container-order, 1);
+    order: var(--order-total-container-order, 5);
   }
 
   &-wrapper {
@@ -49,11 +49,10 @@
   &-title {
     border-bottom: var(--order-summary-total-header-border, 1px solid #D9DADB);
     font-family: var(--font-family-header);
-    display: var(--order-summary-title-mobile-display, flex);
-    order: var(--order-summary-title-order, 0);
+    display: var(--order-summary-title-mobile-display, none);
+    order: var(--order-summary-title-order, -1);
 
     &-amount {
-      display: var(--order-summary-title-amount-display, none);
       margin-left: var(--indent__xs);
     }
   }

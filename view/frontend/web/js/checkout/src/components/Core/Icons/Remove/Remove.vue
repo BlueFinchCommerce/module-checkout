@@ -1,5 +1,5 @@
 <template>
-  <img :src="bin" width="20" height="20" :alt="bin" />
+  <img :src="bin" width="23" height="20" :alt="bin" />
 </template>
 
 <script>

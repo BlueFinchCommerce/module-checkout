@@ -92,6 +92,7 @@
   cursor: pointer;
 
   &-action {
+    display: var(--remove-button-text-display, none);
     color: var(--text__color);
     cursor: pointer;
     line-height: var(--remove-item-action-line-height, 6px);

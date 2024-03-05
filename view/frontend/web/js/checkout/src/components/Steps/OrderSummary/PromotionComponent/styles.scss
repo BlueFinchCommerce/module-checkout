@@ -2,6 +2,7 @@
 
 .dropdown-button {
   &.promotion-trigger {
+    border: var(--drop-down-border, 1px solid var(--dropdown-border-color));
     padding: var(--promo-products-paddings, 15px var(--indent__base));
     background: var(--dropdown-background-color);
     margin-top: var(--indent__base);
@@ -9,7 +10,7 @@
     max-width: none;
     justify-content: normal;
     position: relative;
-    order: var(--promo-triggers-order, 3);
+    order: var(--promo-triggers-order, 6);
 
     img {
       display: var(--promo-products-icon-visibility, block);
@@ -60,7 +61,7 @@ div.dropdown.promo-dropdown {
   border-top: 0;
   margin: 0;
   max-width: none;
-  order: 4;
+  order: var(--promo-dropdown-order, 7);
   display: grid;
 
   .promo-title {
@@ -169,7 +170,6 @@ div.dropdown.promo-dropdown {
   .dropdown-button {
     &.promotion-trigger {
       margin-bottom: 0;
-      border: none;
 
       .promo-title{
         div {
