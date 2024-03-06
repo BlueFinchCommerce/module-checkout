@@ -21,10 +21,10 @@
 
     <!-- Calendar Start -->
     <Transition
-      v-show="showCalender"
       name="fade"
     >
       <button
+        v-show="showCalender"
         class="nominated-overlay"
         @click.prevent="closeCalendar"
       />

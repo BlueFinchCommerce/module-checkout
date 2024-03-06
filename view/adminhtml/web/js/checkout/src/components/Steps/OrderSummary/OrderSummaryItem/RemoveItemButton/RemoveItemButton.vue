@@ -1,5 +1,7 @@
 <template>
-  <div v-if="product" class="remove-item" @click="removeItem(product)"
+  <div v-if="product" class="remove-item"
+       data-cy="remove-item-button"
+       @click="removeItem(product)"
        @keydown.enter="removeItem(product)">
     <div class="remove-item-icon">
       <Remove/>

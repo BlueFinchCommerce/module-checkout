@@ -22,9 +22,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    adyenAuthToken: undefined,
-    adyenEnvironmentMode: 'live',
-    adyenVaultEnabled: false,
     rvvupPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
@@ -41,8 +38,11 @@ export default defineStore('configStore', {
     clickandcollectSms: false,
     custom: {},
     optionalZipCountries: '',
-    loqate: {},
-    afd: {},
+    addressFinder: {
+      enabled: true,
+      loqate: {},
+      afd: {},
+    },
     websiteName: '',
     taxCartDisplayPrice: false,
     taxCartDisplayShipping: false,
@@ -52,6 +52,17 @@ export default defineStore('configStore', {
   getters: {
     postcodeRequired: (state) => (
       (countryId) => !state.optionalZipCountries.includes(countryId)
+    ),
+    getCountryByCode: (state) => (
+      (countryCode) => state.countries.find(({ id }) => id === countryCode)
+    ),
+    getRegionId: (state) => (
+      (countryCode, regionCode) => {
+        const country = state.getCountryByCode(countryCode);
+        return country && country.available_regions
+          ? country.available_regions.find(({ code }) => code === regionCode)?.id
+          : 0;
+      }
     ),
   },
   actions: {
@@ -99,6 +110,7 @@ export default defineStore('configStore', {
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
         'gene_better_checkout_copyright_text',
+        'gene_better_checkout_afd_enable',
       ];
 
       if (this.locale) {
@@ -135,6 +147,7 @@ export default defineStore('configStore', {
           taxCartDisplayShipping: data.tax_cart_display_shipping === '2',
           taxCartDisplayFullSummary: data.tax_cart_display_full_summary === '1',
           copyrightText: data.gene_better_checkout_copyright_text,
+          afdStatus: data.gene_better_checkout_afd_enable,
         });
 
         if (data.locale) {
@@ -162,20 +175,6 @@ export default defineStore('configStore', {
       });
     },
 
-    async getAdyenConfig() {
-      const configs = [
-        'gene_better_checkout_adyen_auth_token',
-        'adyen_environment_mode',
-        'adyen_vault_enabled',
-      ];
-      const data = await this.getCachedResponse(this.getConfig, 'getAdyenConfig', configs);
-      this.setData({
-        adyenAuthToken: data.gene_better_checkout_adyen_auth_token,
-        // Adyen's modes are '0' = live, '1' = test.
-        adyenEnvironmentMode: data.adyen_environment_mode === '0' ? 'live' : 'test',
-        adyenVaultEnabled: data.adyen_vault_enabled,
-      });
-    },
     async getRvvupConfig() {
       const configs = [
         'rvvup_payments_active',
@@ -257,11 +256,16 @@ export default defineStore('configStore', {
     },
 
     async getLoqateConfiguration() {
-      const config = await this.getConfig(['gene_better_checkout_loqate_api_key']);
+      const configApi = await this.getConfig(['gene_better_checkout_loqate_api_key']);
+      const configStatus = await this.getConfig(['gene_better_checkout_loqate_enabled']);
 
       this.setData({
-        loqate: {
-          apiKey: config.gene_better_checkout_loqate_api_key,
+        addressFinder: {
+          enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
+          loqate: {
+            enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
+            apiKey: configApi.gene_better_checkout_loqate_api_key,
+          },
         },
       });
     },
@@ -273,15 +277,29 @@ export default defineStore('configStore', {
       );
 
       this.setData({
-        afd: {
-          type: config.afd_general_account_type,
-          serialUrl: config.afd_general_account_serial_url,
-          serial: config.afd_general_account_serial,
-          password: config.afd_general_account_password,
-          idUrl: config.afd_general_account_id_url,
-          id: config.afd_general_account_id,
-          token: config.afd_general_account_token,
-          maxQuantity: config.afd_response_max_quantity || '5',
+        addressFinder: {
+          afd: {
+            type: config.afd_general_account_type,
+            serialUrl: config.afd_general_account_serial_url,
+            serial: config.afd_general_account_serial,
+            password: config.afd_general_account_password,
+            idUrl: config.afd_general_account_id_url,
+            id: config.afd_general_account_id,
+            token: config.afd_general_account_token,
+            maxQuantity: config.afd_response_max_quantity || '5',
+          },
+        },
+      });
+    },
+
+    async getAfdStatus() {
+      const configStatus = await this.getConfig(['gene_better_checkout_afd_enable']);
+
+      this.setData({
+        addressFinder: {
+          afd: {
+            enabled: configStatus.gene_better_checkout_afd_enable,
+          },
         },
       });
     },

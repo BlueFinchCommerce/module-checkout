@@ -38,6 +38,7 @@ export default {
     heliumItem: 'Se envía lleno',
     skuNumber: 'Nº SKU',
     supplierStockNumber: 'Proveedor Nº de stock:',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Su información',
@@ -116,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Modificar sus datos de envío',
   },
   errorMessages: {
+    sanitiseError: 'Se ha introducido un carácter no válido.',
     firstNameErrorMessage: 'Introduzca un nombre válido',
     lastNameErrorMessage: 'Introduzca un apellido válido',
     emailErrorMessage: 'Introduzca una dirección de correo electrónico válida',
@@ -166,7 +168,7 @@ export default {
   paymentStep: {
     title: 'Seleccione el método de pago',
     freePayment: 'No se requieren datos de pago',
-    freeButton: 'Pagar ahora',
+    payNow: 'Pagar ahora',
     storedPayments: 'Sus pagos guardados',
     creditDebitCard: 'Tarjeta de crédito o débito',
   },
@@ -179,6 +181,23 @@ export default {
     cardNumber: 'Número de tarjeta',
     expiry: 'Fecha de caducidad',
     storedPaymentLabel: '{name} Tarjeta guardada caduca el {lastFour}',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   agreements: {
     label: 'Acepto la',
@@ -196,6 +215,20 @@ export default {
   },
   newsletter: {
     label: 'Inscribirse en el boletín',
+  },
+  rewards: {
+    applied: 'Reward points have been applied.',
+    applyButton: 'Apply Points',
+    available: ' available ',
+    removeButton: 'Remove Points',
+    rewardPoints: '{points} Reward Points',
+    youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   donation: {
     donateText: 'Donar',

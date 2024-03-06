@@ -1,6 +1,7 @@
 <template>
   <div class="product-options" v-if="product.options && product.options.length">
       <div class="product-options-trigger"
+           data-cy="product-options-trigger"
               @click="showProductOptions" @keydown="showProductOptions">
           <TextField :text="$t('productOptionsTrigger')"/>
           <ArrowUp stroke="black" v-if="productOptionsVisible"/>

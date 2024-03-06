@@ -24,11 +24,12 @@ import updateCartItemQuantity from '@/services/updateCartItemQuantity';
 import removeDiscountCode from '@/services/removeDiscountCode';
 import removeRewardPoints from '@/services/removeRewardPoints';
 import useRewardPoints from '@/services/useRewardPoints';
+import useStoreCredit from '@/services/storeCredit/useStoreCredit';
 import refreshCustomerData from '@/services/refreshCustomerData';
+import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
 import pennies from '@/services/penniesCharityBox';
 
-import getDummyCartItems from '@/helpers/dummyContent/getDummyCartItems';
-import getDummyCartTotals from '@/helpers/dummyContent/getDummyCartTotals';
+import getCartItems from '@/helpers/getCartItems';
 import getCartItemsQuantity from '@/helpers/getCartItemsQuantity';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getMaskedId from '@/helpers/getMaskedId';
@@ -85,6 +86,12 @@ export default defineStore('cartStore', {
           productType !== 'giftcard' && productType !== 'virtual'
         ))
     ),
+    getTotalSegment: (state) => (
+      (segment) => state.totalSegments.find(({ code }) => code === segment)
+    ),
+    getTotalSegmentValue: (state) => (
+      (segment) => state.getTotalSegment(segment)?.value
+    ),
   },
   actions: {
     setData(data) {
@@ -108,10 +115,13 @@ export default defineStore('cartStore', {
       }
       if (data.items && data.items.length) {
         const items = {};
+        const localItems = getCartItems();
+
         data.items.forEach((item) => {
-          items[item.item_id] = item;
+          items[item.item_id] = { ...localItems[item.item_id], ...this.$state.cartItems[item.item_id], ...item };
         });
-        this.setData({ cartItems: { ...this.$state.cartItems, ...items } });
+
+        this.setData({ cartItems: items });
       } else {
         redirectToBasketPage();
       }
@@ -520,10 +530,10 @@ export default defineStore('cartStore', {
       this.clearCaches(['getCartData', 'getCart', 'getCartTotals', 'getCrosssells']);
     },
     async emitUpdate() {
-      const paymentStore = usePaymentStore();
       const shippingMethodsStore = useShippingMethodsStore();
 
-      paymentStore.clearPaymentReponseCache();
+      this.clearCaches(['getPaymentInformation']);
+
       shippingMethodsStore.clearShippingMethodCache();
 
       await shippingMethodsStore.getShippingMethods();
@@ -571,27 +581,57 @@ export default defineStore('cartStore', {
         },
       });
     },
+
     async useRewardPoints() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
       await useRewardPoints();
 
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
 
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
+
       this.emitUpdate();
     },
     async removeRewardPoints() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
       await removeRewardPoints();
 
       this.clearCaches(['getCartTotals']);
       await this.getCartTotals();
+
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
+
+      this.emitUpdate();
+    },
+
+    async useStoreCredit() {
+      if (!this.maskedId) {
+        const maskedId = await getMaskedIdFromGraphQl();
+        this.setData({ maskedId });
+      }
+      await useStoreCredit();
+
+      this.clearCaches(['getCartTotals']);
+      await this.getCartTotals();
+
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
+
+      this.emitUpdate();
+    },
+    async removeStoreCredit() {
+      if (!this.maskedId) {
+        const maskedId = await getMaskedIdFromGraphQl();
+        this.setData({ maskedId });
+      }
+      await removeStoreCredit();
+
+      this.clearCaches(['getCartTotals']);
+      await this.getCartTotals();
+
+      const paymentStore = usePaymentStore();
+      await paymentStore.refreshPaymentMethods();
 
       this.emitUpdate();
     },
