@@ -116,7 +116,7 @@ export default defineStore('cartStore', {
       }
       if (data.items && data.items.length) {
         const items = {};
-        const localItems = getCartItems();
+        const localItems = getDummyCartItems();
 
         data.items.forEach((item) => {
           items[item.item_id] = { ...localItems[item.item_id], ...this.$state.cartItems[item.item_id], ...item };

@@ -4,14 +4,12 @@ import afdPostcode from '@/services/afdPostcode';
 import getStoreConfig from '@/services/getStoreConfig';
 import getBlock from '@/services/getBlock';
 import getCountries from '@/services/getCountries';
-import getStoreCode from '@/services/getStoreCode';
 import getCustomConfigs from '@/helpers/getCustomConfigs';
 import getPrivacyPolicyId from '@/helpers/getPrivacyPolicyId';
 import getGeneralTermsServicesId from '@/helpers/getGeneralTermsServicesId';
 import getWithdrawTermsServicesId from '@/helpers/getWithdrawTermsServicesId';
 import mapCustomConfigs from '@/helpers/mapCustomConfigs';
 import getFallBackStaticPath from '@/helpers/getFallBackStaticPath';
-import getStoreCodeFromLocalStorage from '@/helpers/getStoreCode';
 import getLocale from '@/helpers/getLocale';
 import getCurrencyCode from '@/helpers/getCurrencyCode';
 

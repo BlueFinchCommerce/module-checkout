@@ -200,9 +200,6 @@ import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock
 import EmailAddress from '@/components/Steps/EmailAddress/EmailAddress.vue';
 import LinkComponent from '@/components/Core/Link/Link.vue';
 import AddressList from '@/components/Steps/Addresses/AddressList/AddressList.vue';
-import BraintreeGooglePay from '@/components/Braintree/GooglePay/GooglePay.vue';
-import BraintreeApplePay from '@/components/Braintree/ApplePay/ApplePay.vue';
-import BraintreePayPal from '@/components/Braintree/PayPal/PayPal.vue';
 import AdyenGooglePay from '@/components/Adyen/GooglePay/GooglePay.vue';
 import AdyenApplePay from '@/components/Adyen/ApplePay/ApplePay.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
@@ -214,7 +211,6 @@ import Loader from '@/components/Core/Loader/Loader.vue';
 
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -242,9 +238,6 @@ export default {
     EmailAddress,
     LinkComponent,
     AddressList,
-    BraintreeGooglePay,
-    BraintreeApplePay,
-    BraintreePayPal,
     AdyenGooglePay,
     AdyenApplePay,
     ErrorMessage,

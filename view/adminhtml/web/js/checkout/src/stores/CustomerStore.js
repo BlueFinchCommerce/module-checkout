@@ -6,6 +6,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import getCustomerInformation from '@/services/getCustomerInformation';
 import getDummyCustomerDetails from '@/helpers/dummyContent/getDummyCustomerDetails';
 import getCustomerRewardPoints from '@/services/getCustomerRewardPoints';
+import getCustomerStoreCredit from '@/services/storeCredit/getCustomerStoreCredit';
 import isEmailAvailable from '@/services/isEmailAvailable';
 import login from '@/services/login';
 import refreshCustomerData from '@/services/refreshCustomerData';
