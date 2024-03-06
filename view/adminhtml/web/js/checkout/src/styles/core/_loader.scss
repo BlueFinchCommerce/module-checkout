@@ -33,14 +33,6 @@
   }
 }
 
-#adyen-google-pay,
-#adyen-apple-pay {
-  &.text-loading {
-    border-radius: var(--text-placeholder-bg-button-radius);
-    height: var(--adyen-express-button-height, 48px);
-  }
-}
-
 .button {
 
   .text-loading {

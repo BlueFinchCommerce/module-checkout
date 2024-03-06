@@ -33,6 +33,7 @@
                 <input
                   :id="item.method_code"
                   :checked="item.method_code === selectedMethod.method_code"
+                  data-cy="radio-button"
                   type="radio"
                   name="shipping-option"
                   @change="handleChange(item)"
@@ -54,6 +55,7 @@
                   :id="nominatedId"
                   :checked="item.method_code === selectedMethod.method_code"
                   type="radio"
+                  radio-button
                   name="shipping-option"
                   @change="handleChange(item)"
                 >
@@ -65,11 +67,11 @@
             </label>
             <TextField
               v-if="taxCartDisplayShipping"
-              :text="formatPrice(item.price_incl_tax)"
+              :text="formatPrice(item.price_incl_tax.value)"
             />
             <TextField
               v-else
-              :text="formatPrice(item.price_excl_tax)"
+              :text="formatPrice(item.price_excl_tax.value)"
             />
             <NominatedDay
               v-if="item.carrier_code === nominatedId
@@ -79,7 +81,7 @@
           </li>
         </ul>
         <TextField
-          v-else-if="!shippingMethods.length"
+          v-else-if="!shippingMethods.length && !loadingShippingMethods"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
         />

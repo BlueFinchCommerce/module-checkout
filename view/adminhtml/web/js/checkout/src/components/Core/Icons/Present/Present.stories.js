@@ -22,8 +22,8 @@ const Template = (args) => ({
 export const PresentIcon = Template.bind({});
 
 PresentIcon.args = {
-  width: '',
-  height: '',
+  width: '30',
+  height: '30',
   fill: '',
   stroke: 'black',
   role: 'img',

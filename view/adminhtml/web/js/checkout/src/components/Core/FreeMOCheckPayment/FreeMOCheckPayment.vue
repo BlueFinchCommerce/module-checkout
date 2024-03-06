@@ -1,13 +1,16 @@
 <template>
   <div class="free-payment">
     <RadioButton
-      :checked="true"
-      :text="$t('paymentStep.freePayment')"
+      :text="title"
+      :checked="isMethodSelected"
+      @click="selectPaymentMethod"
+      @keydown="selectPaymentMethod"
     />
     <MyButton
       class="free-payment-button"
-      :label="$t('paymentStep.freeButton')"
+      :label="$t('paymentStep.payNow')"
       primary
+      v-if="isMethodSelected"
       :disabled="buttonDisabled"
       @click="createPayment()"
     />
@@ -19,6 +22,7 @@
 import { mapActions, mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import usePaymentStore from '@/stores/PaymentStore';
 
 // Components
 import MyButton from '@/components/Core/Button/Button.vue';
@@ -34,20 +38,49 @@ import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 export default {
   name: 'FreePayment',
   components: { MyButton, RadioButton },
+  props: {
+    paymentType: String,
+    title: String,
+  },
   data() {
     return {
       buttonDisabled: false,
+      isMethodSelected: false,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cartEmitter']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
     ...mapState(useCustomerStore, [
       'customer',
       'getSelectedBillingAddress',
     ]),
   },
+  created() {
+    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
+      if (id !== this.paymentType) {
+        this.isMethodSelected = false;
+      }
+    });
+
+    this.cartEmitter.on('cartUpdated', async () => {
+      await this.getCartData();
+      await this.getCart();
+      await this.getCartTotals();
+      await this.getPaymentMethods();
+    });
+  },
   methods: {
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(usePaymentStore, ['getPaymentMethods']),
+    async selectPaymentMethod() {
+      this.isMethodSelected = true;
+
+      this.paymentEmitter.emit('paymentMethodSelected', {
+        id: this.paymentType,
+        type: this.paymentType,
+      });
+    },
     createPayment() {
       const data = {
         billingAddress: this.getSelectedBillingAddress,
@@ -66,9 +99,10 @@ export default {
           throw Error(error);
         });
     },
+
     getPaymentMethod() {
       return {
-        method: 'free',
+        method: this.paymentType,
         additional_data: {},
         extension_attributes: getPaymentExtensionAttributes(),
       };

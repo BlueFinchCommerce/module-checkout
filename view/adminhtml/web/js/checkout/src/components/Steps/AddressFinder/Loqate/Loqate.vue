@@ -114,22 +114,21 @@ export default {
       arrowCounter: -1,
       address: false,
       request: null,
+      displayResults: false,
     };
   },
   computed: {
     ...mapWritableState(useCustomerStore, ['selected']),
     ...mapState(useConfigStore, ['countryCode', 'stateRequired', 'countries']),
   },
-  async mounted() {
-    await this.getLoqateConfiguration();
-  },
   methods: {
-    ...mapActions(useConfigStore, ['getLoqateConfiguration', 'getRegionsByCountry']),
+    ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddress',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
+      'setEditing',
     ]),
     editAddress() {
       this.address = false;

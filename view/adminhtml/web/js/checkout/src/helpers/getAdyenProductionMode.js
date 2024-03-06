@@ -1,6 +1,6 @@
-import useConfigStore from '@/stores/ConfigStore';
+import useAdyenStore from '@/stores/AdyenStore';
 
 export default () => {
-  const { adyenEnvironmentMode } = useConfigStore();
+  const { adyenEnvironmentMode } = useAdyenStore();
   return adyenEnvironmentMode === 'live';
 };

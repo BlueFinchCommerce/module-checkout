@@ -3,25 +3,20 @@ declare(strict_types=1);
 
 namespace Gene\BetterCheckout\ViewModel;
 
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Asset\File;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Assets implements ArgumentInterface
 {
     const ASSETS_DEF_FILE = 'manifest.json';
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/designer_values';
-
-    /** @var Registry  */
-    private $registry;
-
-    /** @var ProductRepositoryInterface  */
-    private $productRepository;
+    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/custom_wording';
+    const LOGO_PATH = 'gene_better_checkout/general/gene_better_checkout_logo';
 
     /** @var ScopeConfigInterface  */
     private $scopeConfig;
@@ -32,24 +27,24 @@ class Assets implements ArgumentInterface
     /** @var array */
     private $assetFilesByType = [];
 
+    /** @var StoreManagerInterface */
+    private $storeManager;
+
     /**
      * Assets constructor.
      *
-     * @param Registry $registry
-     * @param ProductRepositoryInterface $productRepository
-     * @param ScopeConfigInterface $scopeConfig
      * @param AssetRepository $assetRepository
+     * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        Registry $registry,
-        ProductRepositoryInterface $productRepository,
+        AssetRepository $assetRepository,
         ScopeConfigInterface $scopeConfig,
-        AssetRepository $assetRepository
+        StoreManagerInterface $storeManager,
     ) {
-        $this->productRepository = $productRepository;
-        $this->registry = $registry;
         $this->scopeConfig = $scopeConfig;
         $this->assetRepository = $assetRepository;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -133,5 +128,50 @@ class Assets implements ArgumentInterface
         );
 
         return $designerValues ?? '';
+    }
+
+    /**
+     * Returns an object containing the customer wording values set in admin designer.
+     *
+     * @param string $scopeType
+     * @param int|string|null $scopeCode
+     */
+    public function getCustomWording(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        $scopeCode = null
+    ): string
+    {
+        $customWording = $this->scopeConfig->getValue(
+            self::CUSTOM_WORDING_VALUES_PATH,
+            $scopeType,
+            $scopeCode
+        );
+
+        return $customWording ?? '';
+    }
+
+    /**
+     * Returns the media URL for the custom logo is it exists in configuration.
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     */
+    public function getLogo(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        $scopeCode = null
+    ): string
+    {
+        $logoValue = $this->scopeConfig->getValue(
+            self::LOGO_PATH,
+            $scopeType,
+            $scopeCode
+        );
+
+        if ($logoValue) {
+            $imageBaseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            return $imageBaseUrl . 'gene_better_checkout/' . $logoValue;
+        }
+
+        return '';
     }
 }

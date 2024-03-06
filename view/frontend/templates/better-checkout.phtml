@@ -8,11 +8,18 @@ $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
+$logo = $assetViewModel->getLogo();
+$customWordings = $assetViewModel->getCustomWording();
 
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {};
+    window.geneCheckout = window.geneCheckout || {
+        logo: "<?= $escaper->escapeJs($logo); ?>",
+        <?php if ($customWordings): ?>
+            ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'),
+        <?php endif; ?>
+    };
 </script>
 
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />

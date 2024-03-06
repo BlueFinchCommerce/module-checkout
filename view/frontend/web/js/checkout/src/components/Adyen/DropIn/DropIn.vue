@@ -7,7 +7,7 @@
     <TextField
       v-if="!storedPayments"
       class="adyen-payment__header"
-      :text="$t('paymentStep.title')"
+      :text="paymentStepText"
     />
     <div class="divider-line"></div>
   </div>

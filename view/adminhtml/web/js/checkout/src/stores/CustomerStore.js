@@ -6,6 +6,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import getCustomerInformation from '@/services/getCustomerInformation';
 import getDummyCustomerDetails from '@/helpers/dummyContent/getDummyCustomerDetails';
 import getCustomerRewardPoints from '@/services/getCustomerRewardPoints';
+import getCustomerStoreCredit from '@/services/storeCredit/getCustomerStoreCredit';
 import isEmailAvailable from '@/services/isEmailAvailable';
 import login from '@/services/login';
 import refreshCustomerData from '@/services/refreshCustomerData';
@@ -15,6 +16,7 @@ import amastyConsentLogic from '@/services/amastyConsentLogic';
 import cleanAddress from '@/helpers/cleanAddress';
 import doAddressesMatch from '@/helpers/doAddressesMatch';
 import formatAddress from '@/helpers/formatAddress';
+import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getEmptyAddress from '@/helpers/getEmptyAddress';
 import getMaskedId from '@/helpers/getMaskedId';
 import getPhoneValidation from '@/helpers/getPhoneValidation';
@@ -60,6 +62,7 @@ export default defineStore('customerStore', {
     loadingCustomerInformation: false,
     postCodeValid: false,
     cache: {},
+    inputsSanitiseError: false,
   }),
   getters: {
     isLoggedIn: (state) => state.customer.tokenType === tokenTypes.authKey
@@ -241,6 +244,7 @@ export default defineStore('customerStore', {
     },
     async login(email, pass) {
       const data = await login(email, pass);
+      await refreshCustomerData(['customer'].concat(getCartSectionNames()));
       refreshCustomerData(['customer']);
       const cartStore = useCartStore();
       this.setData({
@@ -311,12 +315,12 @@ export default defineStore('customerStore', {
           // Update the newsletter subscription status.
           this.setData({
             newsletter: {
-              isSubscribed: data.extension_attributes?.is_subscribed || false,
+              isSubscribed: data.is_subscribed || false,
             },
           });
         }
         if (this.customer.tokenType !== tokenTypes.authKey) {
-          const tokenType = data && data.id ? tokenTypes.phpSessionId : tokenTypes.guestUser;
+          const tokenType = data ? tokenTypes.phpSessionId : tokenTypes.guestUser;
           this.setData({
             customer: {
               tokenType,
@@ -519,6 +523,14 @@ export default defineStore('customerStore', {
 
     async getAvailableRewardPoints() {
       const response = await getCustomerRewardPoints();
+
+      if (response.customer) {
+        this.setData(response);
+      }
+    },
+
+    async getAvailableStoreCredit() {
+      const response = await getCustomerStoreCredit();
 
       if (response.customer) {
         this.setData(response);

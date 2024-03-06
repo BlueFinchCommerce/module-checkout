@@ -1,18 +1,54 @@
 import useCustomerStore from '@/stores/CustomerStore';
-import authenticatedRequest from '@/services/authenticatedRequest';
-import getBaseRestUrl from '@/helpers/getBaseRestUrl';
 import tokenTypes from '@/helpers/getTokenTypes';
+import graphQlRequest from './graphQlRequest';
 
-export default () => (
-  authenticatedRequest().get(`${getBaseRestUrl()}/customers/me`)
-    .then((response) => response.data)
-    .catch(() => {
-      // If this request fails we must be a guest User.
-      const customerStore = useCustomerStore();
-      customerStore.setData({
-        customer: {
-          tokenType: tokenTypes.guestUser,
-        },
-      });
-    })
-);
+export default async () => {
+  const request = `{
+    customer {
+      default_billing
+      default_shipping
+      email
+      firstname
+      lastname
+      addresses {
+        city
+        country_code
+        default_billing
+        default_shipping
+        firstname
+        id
+        lastname
+        postcode
+        region {
+          region_code
+          region
+          region_id
+        }
+        region_id
+        street
+        telephone
+      }
+      created_at
+      reward_points {
+        subscription_status {
+          balance_updates
+        }
+      }
+      is_subscribed
+    }
+  }`;
+
+  try {
+    const response = await graphQlRequest(request);
+    return response.data.customer;
+  } catch (error) {
+    // If there is an error, assume the user is a guest.
+    const customerStore = useCustomerStore();
+    customerStore.setData({
+      customer: {
+        tokenType: tokenTypes.guestUser,
+      },
+    });
+    throw error; // Re-throw the error after handling it
+  }
+};
