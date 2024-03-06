@@ -260,27 +260,27 @@ define([
             this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
 
             const cssValues = this.designerModal.find('.section-config input[data-css-variable]').map(function () {
-                return this.value
-                    ? `${this.dataset.cssVariable}:${this.value}`
-                    : '';
-            }).toArray().filter(value => value).join(';'),
+                    return this.value
+                        ? `${this.dataset.cssVariable}:${this.value}`
+                        : '';
+                }).toArray().filter(value => value).join(';'),
 
-            wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray()
-                .reduce(function (prev, curr) {
+                wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray()
+                    .reduce(function (prev, curr) {
                     // Early return if the input has no value.
-                    if (!curr.value) {
-                        return prev;
-                    }
+                        if (!curr.value) {
+                            return prev;
+                        }
 
-                    return {
-                        ...prev,
-                        [curr.id]: curr.value
-                    };
-                }, {}),
+                        return {
+                            ...prev,
+                            [curr.id]: curr.value
+                        };
+                    }, {}),
 
-            storedWordingValue = Object.keys(wordingValues).length
-                ? JSON.stringify(wordingValues)
-                : '';
+                storedWordingValue = Object.keys(wordingValues).length
+                    ? JSON.stringify(wordingValues)
+                    : '';
 
             this.designerValues.val(cssValues).trigger('change');
             this.customWording.val(storedWordingValue).trigger('change');
