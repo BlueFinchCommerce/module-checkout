@@ -4,7 +4,7 @@ export default {
     text: 'Pagamento sicuro',
   },
   dividerText: 'Oppure inserisci il tuo indirizzo e-mail per pagare con carta di credito/debito',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Inserisci il tuo indirizzo e-mail per pagare con carta di credito/debito',
   orderSummary: {
     applyBtn: 'Utilizza',

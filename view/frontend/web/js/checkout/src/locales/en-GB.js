@@ -4,7 +4,7 @@ export default {
     text: 'Secure Checkout',
   },
   dividerText: 'Or checkout below with credit/debit card',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Pay With',
   orderSummary: {

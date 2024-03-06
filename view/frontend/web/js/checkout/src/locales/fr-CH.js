@@ -4,7 +4,7 @@ export default {
     text: 'Paiement sécurisé',
   },
   dividerText: 'Ou saisissez votre adresse e-mail pour payer par carte de crédit/débit',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Saisissez votre adresse e-mail pour payer par carte de crédit/débit',
   orderSummary: {
     applyBtn: 'Appliquer',

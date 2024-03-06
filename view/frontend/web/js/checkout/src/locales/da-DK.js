@@ -4,7 +4,7 @@ export default {
     text: 'Sikker bestilling',
   },
   dividerText: 'Eller indtast din e-mailadresse for betaling med kredit- eller betalingskort',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Indtast din e-mailadresse for betaling med kredit- eller betalingskort',
   orderSummary: {
     applyBtn: 'Anvend',

@@ -4,7 +4,7 @@ export default {
     text: 'Veilig betalen',
   },
   dividerText: 'Of voer je e-mailadres in om met een creditcard/debetkaart te betalen',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Voer je e-mailadres in om met een creditcard/debetkaart te betalen',
   orderSummary: {
     applyBtn: 'Gebruiken',

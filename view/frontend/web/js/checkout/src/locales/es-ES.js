@@ -4,7 +4,7 @@ export default {
     text: 'Pago seguro',
   },
   dividerText: 'O introduzca su dirección de correo electrónico para pagar con tarjeta de crédito/débito',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Introduzca su dirección de correo electrónico para pagar con tarjeta de crédito/débito',
   orderSummary: {
     applyBtn: 'Solicitar',

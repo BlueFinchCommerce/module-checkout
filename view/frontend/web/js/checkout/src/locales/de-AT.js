@@ -4,7 +4,7 @@ export default {
     text: 'Sichere Bestellung',
   },
   dividerText: 'Oder gib deine E-Mailadresse ein für eine Zahlung per Kredit- oder Bankkarte',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Gib deine E-Mailadresse ein für eine Zahlung per Kredit- oder Bankkarte',
   orderSummary: {
     applyBtn: 'Anwenden',

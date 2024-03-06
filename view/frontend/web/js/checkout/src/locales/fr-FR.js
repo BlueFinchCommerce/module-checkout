@@ -4,7 +4,7 @@ export default {
     text: 'Paiement sécurisé',
   },
   dividerText: 'ou',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Payer avec',
   orderSummary: {

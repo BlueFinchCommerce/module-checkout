@@ -4,7 +4,7 @@ export default {
     text: 'Bezpieczne zamówienie',
   },
   dividerText: 'Lub wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
-  singInDividerText: 'or',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
   orderSummary: {
     applyBtn: 'Zastosuj',

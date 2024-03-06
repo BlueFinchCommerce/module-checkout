@@ -140,7 +140,7 @@
           />
           <div class="divider">
             <div class="divider-line"></div>
-            <TextField :text="$t('singInDividerText')"/>
+            <TextField :text="$t('signInDividerText')"/>
             <div class="divider-line"></div>
           </div>
           <MyButton
