@@ -29,7 +29,8 @@ import refreshCustomerData from '@/services/refreshCustomerData';
 import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
 import pennies from '@/services/penniesCharityBox';
 
-import getCartItems from '@/helpers/getCartItems';
+import getDummyCartItems from '@/helpers/dummyContent/getDummyCartItems';
+import getDummyCartTotals from '@/helpers/dummyContent/getDummyCartTotals';
 import getCartItemsQuantity from '@/helpers/getCartItemsQuantity';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getMaskedId from '@/helpers/getMaskedId';

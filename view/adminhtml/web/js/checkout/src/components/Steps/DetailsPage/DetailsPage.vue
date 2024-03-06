@@ -12,9 +12,6 @@
           v-if="errorMessage !== ''"
           :message="errorMessage"
         />
-        <BraintreeGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeGooglePay-${storedKey}`" />
-        <BraintreeApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeApplePay-${storedKey}`" />
-        <BraintreePayPal @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreePayPal-${storedKey}`" />
         <AdyenGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenGooglePay-${storedKey}`" />
         <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
       </div>
@@ -358,5 +355,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-+@import "@/components/Steps/DetailsPage/styles.scss";
+@import "@/components/Steps/DetailsPage/styles.scss";
 </style>

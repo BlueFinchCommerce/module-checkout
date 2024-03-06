@@ -11,10 +11,26 @@
             v-if="rvvupErrorMessage !== ''"
             :message="rvvupErrorMessage"
           />
-          <AdyenDropIn />
+          <AdyenDropIn v-if="isAdyenAvailable" />
+          <BraintreeDropIn />
           <RvvupPayByBank v-if="rvvupPaymentsActive" />
+          <div v-if="isPaymentMethodAvailable('checkmo')">
+            <FreeMOCheckPayment
+              :payment-type="'checkmo'"
+              :title="getPaymentMethodTitle('checkmo')"
+            />
+          </div>
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
         </template>
-        <FreePayment v-else />
+        <FreeMOCheckPayment
+          v-else
+          :payment-type="'free'"
+          :title="getPaymentMethodTitle('free')"
+        />
       </div>
     </div>
   </div>
@@ -34,8 +50,8 @@ import AdyenDropIn from '@/components/Adyen/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
 import Rewards from '@/components/Core/Rewards/Rewards.vue';
-import FreePayment from '@/components/Core/FreePayment/FreePayment.vue';
 import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
+import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 
@@ -46,7 +62,7 @@ export default {
     SavedShippingMethod,
     AdyenDropIn,
     Rewards,
-    FreePayment,
+    FreeMOCheckPayment,
     RvvupPayByBank,
     ErrorMessage,
     StoreCredit,
