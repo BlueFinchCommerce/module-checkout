@@ -1,70 +1,91 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="gene" translate="label" sortOrder="130">
-            <label>Gene Commerce</label>
+            <label>Gene</label>
         </tab>
-        <section id="gene_better_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>Checkout</label>
+        <section id="gene_better_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
+            <label>Better Checkout</label>
             <tab>gene</tab>
             <resource>Gene_BetterCheckout::config</resource>
-            <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>General</label>
-                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Enable Module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
                 </field>
-                <field id="newsletter_signup" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="newsletter_signup" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Newsletter Signup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable newsletter signup within the checkout.]]></comment>
                 </field>
-                <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Enable AFD Postcode Lookup</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
-                </field>
-                <field id="designer_trigger" translate="label comment" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="designer_trigger" translate="label comment" type="button" sortOrder="20"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Designer</label>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
                     <frontend_model>Gene\BetterCheckout\Block\Adminhtml\System\Config\Designer</frontend_model>
                 </field>
-                <field id="designer_values" translate="label comment" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="designer_values" translate="label comment" type="textarea" sortOrder="25"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Designer Values</label>
                 </field>
-                <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="30"
+                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Checkout Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
                     <upload_dir config="system" scope_info="1">gene_better_checkout</upload_dir>
                     <base_url type="media" scope_info="1">gene_better_checkout</base_url>
                     <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
                 </field>
-                <group id="adyen" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="adyen" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Adyen</label>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
-                    <field id="adyen_auth_token" translate="label comment" sortOrder="10" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <field id="adyen_auth_token" translate="label comment" sortOrder="10" type="text" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
                         <label>Adyen Auth Token</label>
                         <comment><![CDATA[The Auth Token allowing access to the Adyen endpoints.]]></comment>
                     </field>
                 </group>
-                <group id="loqate" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="loqate" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Loqate</label>
                     <depends>
                         <field id="enabled">1</field>
                     </depends>
-                    <field id="loqate_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <field id="loqate_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                           showInWebsite="1" showInStore="1">
                         <label>Enable Loqate</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[Enable or disable Loqate in the Checkout.]]></comment>
                     </field>
-                    <field id="loqate_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <field id="loqate_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1"
+                           showInWebsite="1" showInStore="0">
                         <label>Loqate API Key</label>
                         <comment><![CDATA[Your Loqate API key if using Loqate.]]></comment>
+                    </field>
+                </group>
+                <group id="afd" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Afd Post-Lookup</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12"
+                           showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Enable AFD Postcode Lookup</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
                     </field>
                 </group>
             </group>
