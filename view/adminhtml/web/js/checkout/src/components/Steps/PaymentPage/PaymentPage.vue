@@ -3,6 +3,7 @@
     <SavedDeliveryAddress />
     <SavedShippingMethod v-if="isItemRequiringDelivery" />
     <Rewards v-if="rewardsEnabled" />
+    <StoreCredit v-if="getTotalSegment('customerbalance')" />
     <div class="payment-page">
       <div class="payment-form">
         <template v-if="cartGrandTotal">
@@ -34,6 +35,7 @@ import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
 import Rewards from '@/components/Core/Rewards/Rewards.vue';
 import FreePayment from '@/components/Core/FreePayment/FreePayment.vue';
+import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 
@@ -47,6 +49,7 @@ export default {
     FreePayment,
     RvvupPayByBank,
     ErrorMessage,
+    StoreCredit,
   },
   computed: {
     ...mapState(useConfigStore, ['storeCode', 'rewardsEnabled', 'rvvupPaymentsActive']),

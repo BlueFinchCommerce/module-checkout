@@ -103,37 +103,13 @@ div.dropdown.coupon-dropdown {
 
 @mixin largeWidth() {
   .dropdown-button {
-    border: none !important; //override dropdown global styles
-
     &.coupon-discount-trigger {
-      padding: var(--coupon-discount-paddings, 15px 20px);
-
-      .coupon-discount-title {
-        font-size: var(--font__m);
-        font-family: var(--font-family-copy);
-      }
-
-      img {
-        width: var(--lock-icon-width, 50px);
-        height: var(--lock-icon-height, 30px);
-      }
-
-      svg {
-        display: var(--coupon-discount-icon-desktop-display, none);
-      }
+      order: var(--coupon-discount-trigger-order, 9);
     }
   }
 
   div.dropdown.coupon-dropdown {
-    padding: var(--coupon-discount-paddings, 0 20px 20px);
-    display: block;
-
-    .field {
-      &:first-child {
-        padding-top: var(--coupon-dropdown-first-child-padding-top, var(--indent__base));
-        border-top: var(--coupon-header-border-bottom, 1px solid #D9DADB);
-      }
-    }
+    order: var(--coupon-discount-trigger-order, 10);
   }
 }
 

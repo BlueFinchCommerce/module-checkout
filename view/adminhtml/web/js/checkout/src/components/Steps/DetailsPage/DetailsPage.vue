@@ -341,5 +341,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "./styles";
++@import "@/components/Steps/DetailsPage/styles.scss";
 </style>
