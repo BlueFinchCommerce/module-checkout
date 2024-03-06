@@ -46,7 +46,7 @@
         font-size: var(--dropdown-input-font-size, var(--input-font-size));
         max-height: var(--dropdown-input-height, 55px);
         border-radius: var(--dropdown-input-radius, var(--input-rounded-left-radius));
-        
+
         ::placeholder {
           font-size: var(--dropdown-input-font-size, var(--input-font-size));
         }
@@ -54,31 +54,3 @@
     }
   }
 }
-
-@mixin largeWidth() {
-  .dropdown {
-    &-button {
-      cursor: default;
-    }
-    &.active{
-      cursor: default;
-      border: none;
-
-      p {
-        padding: 0;
-      }
-    }
-  }
-}
-
-.mock-laptop,
-.mock-desktop {
-  @include largeWidth;
-}
-
-@media screen and (min-width: $screen__m) {
-  .mock-full {
-      @include largeWidth;
-  }
-}
-

@@ -3,6 +3,7 @@
       type="button"
       class="button--link"
       :style="style"
+      :data-cy="dataCy ? dataCy : 'button'"
   >
     {{ label }}
   </button>
@@ -18,6 +19,9 @@ export default {
     label: {
       type: String,
       required: true,
+    },
+    dataCy: {
+      type: String,
     },
     color: {
       type: String,

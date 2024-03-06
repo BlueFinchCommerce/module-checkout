@@ -36,6 +36,7 @@ export default {
     addToCart: 'Ajouter au panier',
     promoTitle: 'Produits fréquemment achetés ensemble',
     rewardsTitle: 'Points de fidélité',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Vos coordonnées',
@@ -112,6 +113,7 @@ export default {
     editShippingButtonLabel: 'Modifier votre adresse de livraison',
   },
   errorMessages: {
+    sanitiseError: 'Caractère saisi non valide.',
     firstNameErrorMessage: 'Veuillez entrer votre prénom',
     lastNameErrorMessage: 'Veuillez entrer votre nom',
     emailErrorMessage: 'Veuillez entrer votre e-mail',
@@ -170,7 +172,7 @@ export default {
   paymentStep: {
     title: 'Sélectionnez un mode de paiement',
     freePayment: 'Aucune information de paiement requise',
-    freeButton: 'Payez maintenant',
+    payNow: 'Payez maintenant',
     storedPayments: 'Vos paiements enregistrés',
     creditDebitCard: 'Carte de crédit ou de débit',
   },
@@ -183,6 +185,23 @@ export default {
     expiry: 'D\'expiration',
     storedPaymentLabel: '{name} La carte enregistrée se termine par {lastFour}',
     paymentSuccessful: 'Payment Successful',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   rvvup: {
     payByBankLabel: 'Pay by Bank',
@@ -214,6 +233,12 @@ export default {
     removeButton: 'Supprimer des points',
     rewardPoints: '{points} Points de récompense',
     youHave: 'Vous avez ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   payWith: {
     masterCard: 'payer avec mastercard',

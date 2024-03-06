@@ -4,6 +4,7 @@
   </div>
   <div
     class="gift-discount-trigger dropdown-button"
+    data-cy="dropdown-trigger-gift"
     :class="{opened: isDropDownVisible}"
     @click="openDropDown"
     @keydown="openDropDown"
@@ -113,7 +114,7 @@ export default {
   },
   data() {
     return {
-      isDropDownVisible: true,
+      isDropDownVisible: false,
       loadingDiscountCode: false,
       applyButtonText: '',
       applyButtonTextId: 'gene-bettercheckout-applybutton-text',

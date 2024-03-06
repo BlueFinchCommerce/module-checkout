@@ -65,7 +65,7 @@
 
       <div class="billing-form-address">
         <div :class="!customerInfoValidation ? 'disabled' : ''">
-          <Loqate
+          <AddressFinder
             v-if="!selected[address_type].id
               || (selected[address_type].id === 'custom' && selected[address_type].editing)"
             :address_type="address_type"
@@ -73,15 +73,14 @@
         </div>
 
         <LinkComponent
-          v-if="selected[address_type].id !== 'custom'"
+          v-if="selected[address_type].id !== 'custom' && addressFinder.enabled"
           class="manually-button"
           :class="!customerInfoValidation ? 'disabled' : ''"
           :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
           @click.prevent="editBillingAddress"
         />
-
         <AddressForm
-          v-if="selected[address_type].editing"
+          v-if="selected[address_type].editing || !addressFinder.enabled"
           :address_type="address_type"
         />
       </div>
@@ -93,6 +92,7 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
@@ -102,7 +102,7 @@ import AddressForm from '@/components/Steps/Addresses/AddressForms/Form/AddressF
 import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock.vue';
 import NameFields from '@/components/Steps/Addresses/AddressForms/Form/Name/Name.vue';
 import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
-import Loqate from '@/components/Steps/AddressDetails/Loqate/Loqate.vue';
+import AddressFinder from '@/components/Steps/AddressFinder/AddressFinder.vue';
 import LinkComponent from '@/components/Core/Link/Link.vue';
 import AddressList from '@/components/Steps/Addresses/AddressList/AddressList.vue';
 
@@ -121,7 +121,7 @@ export default {
     Edit,
     NameFields,
     CheckboxComponent,
-    Loqate,
+    AddressFinder,
     LinkComponent,
     AddressList,
   },
@@ -141,8 +141,9 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useCartStore, ['isLoggedIn', 'isItemRequiringDelivery']),
+    ...mapState(useConfigStore, ['addressFinder']),
+    ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
   },
   methods: {
@@ -156,6 +157,7 @@ export default {
       if (!event.target.checked) {
         this.createNewAddress(this.address_type);
         this.selected[this.address_type].same_as_shipping = false;
+        this.setEditing(this.address_type, true);
       } else {
         this.selected[this.address_type] = deepClone(this.selected.shipping);
         this.selected[this.address_type].same_as_shipping = true;

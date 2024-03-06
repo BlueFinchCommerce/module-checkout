@@ -9,8 +9,12 @@ export default () => (
       base_amount: 0,
       available: true,
       error_message: '',
-      price_excl_tax: 0,
-      price_incl_tax: 0,
+      price_excl_tax: {
+        value: 0,
+      },
+      price_incl_tax: {
+        value: 0,
+      },
     },
     {
       carrier_code: 'flatrate',
@@ -21,8 +25,12 @@ export default () => (
       base_amount: 15,
       available: true,
       error_message: '',
-      price_excl_tax: 15,
-      price_incl_tax: 15,
+      price_excl_tax: {
+        value: 15,
+      },
+      price_incl_tax: {
+        value: 15,
+      },
     },
   ]
 );

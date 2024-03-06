@@ -38,6 +38,7 @@ export default {
     heliumItem: 'Opgeblazen geleverd',
     skuNumber: 'SKU-nr.:',
     supplierStockNumber: 'Leverancier Voorraadnr.',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Jouw informatie',
@@ -116,6 +117,7 @@ export default {
     editShippingButtonLabel: 'Verzendgegevens wijzigen',
   },
   errorMessages: {
+    sanitiseError: 'Ugyldig tegn angitt.',
     firstNameErrorMessage: 'Voer een geldige voornaam in',
     lastNameErrorMessage: 'Voer een geldige achternaam in',
     emailErrorMessage: 'Voer een geldig e-mailadres in',
@@ -166,7 +168,7 @@ export default {
   paymentStep: {
     title: 'Selecteer betaalmethode',
     freePayment: 'Geen betalingsgegevens nodig',
-    freeButton: 'Nu betalen',
+    payNow: 'Nu betalen',
     storedPayments: 'Je opgeslagen betalingen',
     creditDebitCard: 'Creditcard of bankpas',
   },
@@ -179,6 +181,23 @@ export default {
     cardNumber: 'Kaartnummer',
     expiry: 'Vervaldatum',
     storedPaymentLabel: '{name} Opgeslagen kaart verloopt op {lastFour}',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   agreements: {
     label: 'Ik accepteer de',
@@ -196,6 +215,20 @@ export default {
   },
   newsletter: {
     label: 'Aanmelden voor nieuwsbrief',
+  },
+  rewards: {
+    applied: 'Reward points have been applied.',
+    applyButton: 'Apply Points',
+    available: ' available ',
+    removeButton: 'Remove Points',
+    rewardPoints: '{points} Reward Points',
+    youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   donation: {
     donateText: 'Doneer',

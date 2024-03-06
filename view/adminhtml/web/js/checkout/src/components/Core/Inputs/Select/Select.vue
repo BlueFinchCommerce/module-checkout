@@ -3,13 +3,15 @@
     <label :for="identifier"
            :class="classes">
       <span>
-        {{ label }}
+        {{ required ? label + ' *' : label }}
       </span>
       <select :id="identifier"
               :name="name"
               :data-role="dataRole"
               :disabled="disabled"
+              :required="required"
               :value="modelValue"
+              :data-cy="dataCy ? dataCy : 'select'"
               @change="$emit('update:modelValue', $event.target.value)">
         <option value="" disabled selected>{{selectedOption}}</option>
         <option v-for="(option, index) in options"
@@ -35,6 +37,9 @@ export default {
     error: {
       type: Boolean,
     },
+    dataCy: {
+      type: String,
+    },
     label: {
       type: String,
     },
@@ -50,6 +55,10 @@ export default {
     },
     identifier: {
       type: String,
+    },
+    required: {
+      type: Boolean,
+      default: false,
     },
     options: {
       type: Array,

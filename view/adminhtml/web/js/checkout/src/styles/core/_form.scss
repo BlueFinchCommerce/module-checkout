@@ -58,13 +58,15 @@
       margin: 0;
     }
 
-    &.error {
-      input,
+    &.error,
+    &.sanitise-error {
+    input,
       select {
         border: var(--input-error-border, 2.5px solid var(--error__color));
 
-        &:focus {
-          border: var(--input-error-border, 2.5px solid var(--error__color));
+        &:focus,
+        &:hover {
+        border: var(--input-error-border, 2.5px solid var(--error__color));
         }
       }
 
@@ -159,6 +161,8 @@
   }
 
   input[type="text"] {
+    background: var(--white__color);
+
     &:disabled {
       opacity: var(--opacity-heavy);
     }
@@ -251,7 +255,7 @@
         &:hover {
           border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
         }
-        
+
         &:focus-visible,
         &:focus,
         &:active {

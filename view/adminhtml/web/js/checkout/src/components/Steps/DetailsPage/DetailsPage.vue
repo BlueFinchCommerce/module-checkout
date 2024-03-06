@@ -8,11 +8,15 @@
         <TextField :text="instantCheckoutText" />
       </div>
       <div class="instant-payment-buttons">
+        <ErrorMessage
+          v-if="errorMessage !== ''"
+          :message="errorMessage"
+        />
         <AdyenGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenGooglePay-${storedKey}`" />
         <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
       </div>
       <DividerComponent />
-      <PayWith :is-express-payments-visible="isExpressPaymentsVisible" v-if="!emailEntered" />
+      <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
     </div>
 
     <EmailAddress />
@@ -97,18 +101,19 @@
 
         <div>
           <div :class="!customerInfoValidation ? 'disabled' : ''">
-            <Loqate
+            <AddressFinder
               v-if="!selected[address_type].id
                 || (selected[address_type].id === 'custom' && selected[address_type].editing)"
             />
           </div>
         </div>
 
-        <ShippingForm v-if="selected[address_type].editing" />
+        <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
 
         <LinkComponent
           v-if="!selected[address_type].id
-            && !selected[address_type].editing && address_type === 'shipping'"
+            && !selected[address_type].editing && address_type === 'shipping'
+            && addressFinder.enabled"
           class="manually-button"
           :class="!customerInfoValidation ? 'disabled' : ''"
           :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
@@ -119,6 +124,7 @@
 
     <div
       v-if="emailEntered && !selected[address_type].editing
+        && selected[address_type].id
         && selected[address_type].postcode
         && !isUsingSavedShippingAddress
         && !isClickAndCollect
@@ -160,12 +166,11 @@
     />
 
     <MyButton
-      v-if="emailEntered && !selected[address_type].editing
-        && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
+      v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
       type="submit"
       primary
       :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-      :disabled="!selected.shipping.id || (!customer.id && !customerInfoValidation) || !selected.billing.id"
+      :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
       @click="submitShippingOption();"
     />
     <MyButton
@@ -188,7 +193,7 @@ import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 import PayWith from '@/components/Steps/PayWithComponent/PayWith.vue';
 import DividerComponent from '@/components/Steps/DividerComponent/DividerComponent.vue';
-import Loqate from '@/components/Steps/AddressDetails/Loqate/Loqate.vue';
+import AddressFinder from '@/components/Steps/AddressFinder/AddressFinder.vue';
 import NameFields from '@/components/Steps/Addresses/AddressForms/Form/Name/Name.vue';
 import ShippingForm from '@/components/Steps/Addresses/AddressForms/ShippingForm/ShippingForm.vue';
 import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock.vue';
@@ -225,7 +230,7 @@ export default {
     YourDetails,
     DividerComponent,
     Locate,
-    Loqate,
+    AddressFinder,
     NameFields,
     ShippingForm,
     AddressBlock,
@@ -260,12 +265,14 @@ export default {
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      buttonEnabled: false,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
-    ...mapState(useConfigStore, ['custom']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom']),
     ...mapState(useCustomerStore, [
+      'inputsSanitiseError',
       'customer',
       'isLoggedIn',
       'emailEntered',
@@ -273,6 +280,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect', 'loadingShippingMethods']),
+    ...mapState(usePaymentStore, ['errorMessage']),
   },
   async mounted() {
     await this.getStoreConfig();
@@ -341,5 +349,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "./styles";
+@import "@/components/Steps/DetailsPage/styles.scss";
 </style>

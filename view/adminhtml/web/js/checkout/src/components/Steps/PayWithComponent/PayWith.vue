@@ -1,38 +1,46 @@
 <template>
-<div :style="style" class="pay-with__container">
-  <TextField class="pay-with__message" v-if="isExpressPaymentsVisible" :text="payWithText" />
-  <TextField class="pay-with__message" v-else :text="$t('payNoExpressWithBlockTitle')" />
-  <ul class="pay-with__column">
-    <li class="pay-with__content" v-for="(icon, index) in icons" :key="index">
-      <img :src="icon.icon" :alt="icon.icon"/>
-    </li>
-  </ul>
-</div>
+  <div
+    :style="style"
+    class="pay-with__container"
+  >
+    <TextField
+      v-if="isExpressPaymentsVisible"
+      class="pay-with__message"
+      :text="payWithText"
+    />
+    <TextField
+      v-else
+      class="pay-with__message"
+      :text="$t('payNoExpressWithBlockTitle')"
+    />
+    <ul class="pay-with__column">
+      <li
+        v-for="(paymentType, index) in paymentTypes"
+        :key="index"
+        class="pay-with__content"
+      >
+        <img
+          :src="paymentType.icon"
+          :alt="paymentType.name"
+        >
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-
-import { mapActions } from 'pinia';
+// Stores
+import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
-import getStaticUrl from '@/helpers/getStaticPath';
+import usePaymentStore from '@/stores/PaymentStore';
+
 import { computed, reactive } from 'vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
-import AmericanExpress from './icons/AmericanExpress.svg';
-import ClearPay from './icons/ClearPay.svg';
-import Klarna from './icons/Klarna.svg';
-import MasterCard from './icons/MasterCard.svg';
-import Visa from './icons/Visa.svg';
 
 export default {
   name: 'PayWith',
   components: {
     TextField,
-  },
-  data() {
-    return {
-      payWithText: '',
-      payWithTextId: 'gene-bettercheckout-paywith-text',
-    };
   },
   props: {
     width: {
@@ -48,17 +56,6 @@ export default {
       type: Boolean,
     },
   },
-  computed: {
-    icons() {
-      return [
-        { icon: `${getStaticUrl(MasterCard)}` },
-        { icon: `${getStaticUrl(Visa)}` },
-        { icon: `${getStaticUrl(AmericanExpress)}` },
-        { icon: `${getStaticUrl(Klarna)}` },
-        { icon: `${getStaticUrl(ClearPay)}` },
-      ];
-    },
-  },
   setup(props) {
     const reactiveProps = reactive(props);
     return {
@@ -68,6 +65,15 @@ export default {
         height: reactiveProps.height,
       })),
     };
+  },
+  data() {
+    return {
+      payWithText: '',
+      payWithTextId: 'gene-bettercheckout-paywith-text',
+    };
+  },
+  computed: {
+    ...mapState(usePaymentStore, ['paymentTypes']),
   },
   async created() {
     await this.getStoreConfig();

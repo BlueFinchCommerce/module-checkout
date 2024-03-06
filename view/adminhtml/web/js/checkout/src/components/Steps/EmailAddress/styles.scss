@@ -27,11 +27,11 @@
       .button_show_password {
         background: transparent;
         border: none;
-        bottom: calc(var(--input-height) / 2);
+        bottom: var(--indent__l);
         height: 30px;
         padding: 0;
         position: absolute;
-        right: var(--indent__base);
+        right: var(--indent__xxl);
         transform: translateY(50%);
         width: auto;
       }

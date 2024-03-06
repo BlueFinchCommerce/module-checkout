@@ -1,19 +1,77 @@
-import buildCartUrl from '@/helpers/buildCartUrl';
-import getBaseRestUrl from '@/helpers/getBaseRestUrl';
-import tokenTypes from '@/helpers/getTokenTypes';
-import authenticatedRequest from '@/services/authenticatedRequest';
-import getAdyenAuthenticatedRequest from '@/services/getAdyenAuthenticatedRequest';
-import useCustomerStore from '@/stores/CustomerStore';
+import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStore';
+import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
+import graphQlRequest from './graphQlRequest';
 
-export default () => {
-  const { customer: { tokenType } } = useCustomerStore();
+function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
+  const transformedData = paymentMethodsExtraDetails.map((item) => ({
+    [item.type]: {
+      icon: item.icon,
+      isOpenInvoice: item.isOpenInvoice,
+      configuration: item.configuration,
+    },
+  }));
 
-  const guestUrl = buildCartUrl('retrieve-adyen-payment-methods');
-  const authUrl = `${getBaseRestUrl()}/internal/carts/mine/retrieve-adyen-payment-methods`;
+  return Object.assign({}, ...transformedData);
+}
 
-  const request = tokenType === tokenTypes.guestUser
-    ? getAdyenAuthenticatedRequest('post', guestUrl)
-    : authenticatedRequest().post(authUrl, { formKey: '' });
+export default async () => {
+  const { maskedId } = useCartStore();
+  const { storeCode } = useConfigStore();
 
-  return request.then((response) => JSON.parse(response.data));
+  let cartId;
+  if (!maskedId) {
+    cartId = await getMaskedIdFromGraphQl();
+  } else {
+    cartId = maskedId;
+  }
+
+  const request = ` {
+    adyenPaymentMethods(cart_id: "${cartId}", shopper_locale: "${storeCode}") {
+        paymentMethodsExtraDetails {
+            type
+            icon {
+                url
+                width
+                height
+            }
+            isOpenInvoice
+            configuration {
+                amount {
+                    value
+                    currency
+                }
+                currency
+            }
+        }
+        paymentMethodsResponse {
+            paymentMethods {
+                name
+                type
+                brand
+                brands
+                configuration {
+                    merchantId
+                    merchantName
+                }
+                details {
+                    key
+                    type
+                    items {
+                        id
+                        name
+                    }
+                    optional
+                }
+            }
+        }
+    }
+}`;
+
+  return graphQlRequest(request)
+    .then((response) => ({
+      paymentMethodsExtraDetails:
+        transformGraphqlExtraDetails(response.data.adyenPaymentMethods.paymentMethodsExtraDetails),
+      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse,
+    }));
 };

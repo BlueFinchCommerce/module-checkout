@@ -1,10 +1,12 @@
-import axios from 'axios';
-import getBaseRestUrl from '@/helpers/getBaseRestUrl';
+import graphQlRequest from './graphQlRequest';
 
-export default (customerEmail, controller) => (
-  axios.post(`${getBaseRestUrl()}/customers/isEmailAvailable`, {
-    customerEmail,
-  }, {
-    signal: controller.signal,
-  }).then((response) => response.data)
-);
+export default async (email) => {
+  const request = ` {
+  isEmailAvailable(email: "${email}") {
+    is_email_available
+  }
+} `;
+
+  return graphQlRequest(request)
+    .then((response) => response.data.isEmailAvailable.is_email_available);
+};

@@ -1,5 +1,6 @@
 <template>
   <div class="pennies-trigger dropdown-button"
+       data-cy="dropdown-trigger-pennies"
        :class="{opened: true}"
        v-if="penniesDonation.enabled && (penniesDonation.amount > 0 || hasPenniesDonation)">
     <TextField

@@ -243,11 +243,23 @@ input[type="text"] {
     }
 
     input {
-      background-color: transparent;
-      border: var(--logged-in-email-border-width, none);
-      padding: var(--logged-in-email-padding, 0);
+      border: var(--logged-in-email-border-width, var(--input-border-weight) solid var(--input-border-color));
+      padding: var(--logged-in-email-padding, var(--indent__s));
       margin-top: var(--logged-in-email-margin-top, 0);
-      color: var(--text__color);
+
+      ::placeholder {
+        font-size: var(--input-label-logged-in-font-size, var(--input-font-size));
+      }
+
+      &:hover {
+        border: var(--input-border, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+      }
+
+      &:focus-visible,
+      &:focus,
+      &:active {
+        border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+      }
     }
   }
 }
@@ -343,6 +355,7 @@ input[type="text"] {
     &:focus,
     &:active {
       border: var(--input-border-focus, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+      box-shadow: none;
       outline: 0;
     }
 

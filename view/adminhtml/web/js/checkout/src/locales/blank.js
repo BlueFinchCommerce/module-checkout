@@ -33,6 +33,7 @@ export default {
     addToCart: ' ',
     promoTitle: ' ',
     rewardsTitle: ' ',
+    storeCreditTitle: ' ',
   },
   progressBar: {
     detailStepTitle: ' ',
@@ -101,6 +102,7 @@ export default {
     editButton: ' ',
   },
   errorMessages: {
+    sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
     emailErrorMessage: ' ',
@@ -146,7 +148,7 @@ export default {
   paymentStep: {
     title: ' ',
     freePayment: ' ',
-    freeButton: ' ',
+    payNow: ' ',
   },
   productOptionsTrigger: ' ',
   instantCheckout: ' ',
@@ -154,6 +156,23 @@ export default {
     applePayTotal: ' ',
     applePayNoShippingMethods: ' ',
     cardNumber: ' ',
+  },
+  braintree: {
+    payingWith: ' ',
+    ach: {
+      accountNumber: ' ',
+      accountType: ' ',
+      businessName: ' ',
+      firstname: ' ',
+      lastname: ' ',
+      ownershipType: ' ',
+      payment: ' ',
+      proof: ' ',
+      routingNumber: ' ',
+      terms: ' ',
+    },
+    localPayment: ' ',
+    storePayment: ' ',
   },
   agreements: {
     label: ' ',
@@ -174,6 +193,12 @@ export default {
     removeButton: ' ',
     rewardPoints: ' ',
     youHave: ' ',
+  },
+  storeCredit: {
+    applyStoreCredit: ' ',
+    applyButton: ' ',
+    removeStoreCredit: ' ',
+    removeButton: ' ',
   },
   days: {
     monday: ' ',

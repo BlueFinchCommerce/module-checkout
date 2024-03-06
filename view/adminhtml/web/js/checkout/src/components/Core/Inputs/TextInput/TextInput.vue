@@ -1,6 +1,6 @@
 <template>
   <div class="text-input">
-    <label :for="identifier" :class="classes">
+    <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
       <span
         v-if="label"
         :class="modelValue.length > 0 ? 'text-input-has-value' : 'text-input-no-value'"
@@ -17,6 +17,7 @@
         :disabled="disabled"
         :required="required"
         :aria-label="ariaLabel"
+        :data-cy="dataCy ? dataCy : 'input'"
         :value="modelValue"
         @blur="onBlur"
         @keyup="customValidation"
@@ -26,12 +27,15 @@
       <slot name="icon" />
     </label>
     <ErrorMessage v-if="errorMessage !== ''" :message="errorMessage"/>
+    <ErrorMessage v-if="validationErrorMessage !== ''" :message="validationErrorMessage"/>
   </div>
 </template>
 <script>
 import { computed, reactive } from 'vue';
+import { mapWritableState } from 'pinia';
+import useCustomerStore from '@/stores/CustomerStore';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
-
+import sanitiseInputValue from '@/helpers/sanitiseInputValue';
 import debounce from 'lodash.debounce';
 import breakpoints from './style.module.scss';
 
@@ -44,6 +48,9 @@ export default {
     modelValue: {
       type: String,
       default: '',
+    },
+    dataCy: {
+      type: String,
     },
     placeholder: {
       type: String,
@@ -75,9 +82,6 @@ export default {
       type: String,
       default: '',
     },
-    customValidation: {
-      type: Function,
-    },
     identifier: {
       type: String,
     },
@@ -108,9 +112,33 @@ export default {
   data() {
     return {
       inputVal: '',
+      validationErrorMessage: '',
     };
   },
+  computed: {
+    ...mapWritableState(useCustomerStore, ['inputsSanitiseError']),
+  },
   methods: {
+    customValidation() {
+      const inputValue = this.modelValue;
+      const isValid = sanitiseInputValue(inputValue);
+
+      if (this.type !== 'password') {
+        if (isValid) {
+          this.$emit('update:modelValue', inputValue);
+          this.validationErrorMessage = '';
+        } else {
+          this.$emit('update:modelValue', inputValue);
+          this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+        }
+
+        // Use $nextTick to check for errors after the DOM is updated
+        this.$nextTick(() => {
+          const hasInputErrors = document.querySelectorAll('.sanitise-error').length > 0;
+          this.inputsSanitiseError = hasInputErrors;
+        });
+      }
+    },
     moveIntoViewport(event) {
       const breakpoint = parseInt(breakpoints.screenM, 10);
 

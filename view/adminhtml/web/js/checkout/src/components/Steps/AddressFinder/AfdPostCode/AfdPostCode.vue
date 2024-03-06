@@ -1,68 +1,70 @@
 <template>
-  <div class="afd-postcode__container">
-    <div class="afd-postcode__field">
-      <TextInput type="text"
-                 id="afd-postcode"
-                 v-model="query"
-                 :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-                 :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
-                 class="afd-postcode__input"
-                 autocomplete="postal-code"
-                 @blur="onBlur"
-                 @focus="onFocus"
-                 @input="getSuggestions"
-                 @keydown.down="onArrowDown"
-                 @keydown.up="onArrowUp"
-                 @keydown.enter="onEnter"/>
-      <Search stroke="black"/>
-    </div>
+  <div v-if="addressFinder.afd.serial && addressFinder.afd.id">
+    <div class="afd-postcode__container">
+      <div class="afd-postcode__field">
+        <TextInput type="text"
+                   id="afd-postcode"
+                   v-model="query"
+                   :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
+                   :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+                   class="afd-postcode__input"
+                   autocomplete="postal-code"
+                   @blur="onBlur"
+                   @focus="onFocus"
+                   @input="getSuggestions"
+                   @keydown.down="onArrowDown"
+                   @keydown.up="onArrowUp"
+                   @keydown.enter="onEnter"/>
+        <Search stroke="black"/>
+      </div>
 
-    <ul
-      v-if="getResultsCount() > 0 && displayResults"
-      class="afd-postcode__results"
-    >
-      <li
-        v-for="(item, i) in addressList"
-        :key="i"
-        :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
-        tabindex="-1"
-        class="afd-postcode__result"
+      <ul
+        v-if="getResultsCount() > 0 && displayResults"
+        class="afd-postcode__results"
       >
-        <button
+        <li
+          v-for="(item, i) in addressList"
+          :key="i"
+          :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
           tabindex="-1"
-          type="button"
-          class="afd-postcode__action"
-          @click="selectSuggestion(item);"
+          class="afd-postcode__result"
         >
-          {{ item.List }}
-        </button>
-      </li>
-    </ul>
-  </div>
-
-  <template v-if="address">
-    <div class="address-block">
-      <div class="address-block__item">
-        <article>
-          <AddressBlock
-            :address_type="address_type"
-            :address="address"
-          />
-        </article>
-      </div>
-      <div
-        class="address-block__edit"
-        @click.prevent="editAddress"
-        @keydown.enter.prevent="editAddress"
-      >
-        <Edit />
-        <MyButton
-          secondary
-          :label="$t('yourDetailsSection.editButton')"
-        />
-      </div>
+          <button
+            tabindex="-1"
+            type="button"
+            class="afd-postcode__action"
+            @click="selectSuggestion(item);"
+          >
+            {{ item.List }}
+          </button>
+        </li>
+      </ul>
     </div>
-  </template>
+
+    <template v-if="address">
+      <div class="address-block">
+        <div class="address-block__item">
+          <article>
+            <AddressBlock
+              :address_type="address_type"
+              :address="address"
+            />
+          </article>
+        </div>
+        <div
+          class="address-block__edit"
+          @click.prevent="editAddress"
+          @keydown.enter.prevent="editAddress"
+        >
+          <Edit />
+          <MyButton
+            secondary
+            :label="$t('yourDetailsSection.editButton')"
+          />
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -114,7 +116,7 @@ export default {
       'countryCode',
       'stateRequired',
       'countries',
-      'getAfdConfiguration',
+      'addressFinder',
     ]),
   },
   async mounted() {
@@ -128,6 +130,7 @@ export default {
       'setEditing',
       'getRegionOptions',
       'updateRegionRequired',
+      'getAfdConfiguration',
     ]),
 
     editAddress() {

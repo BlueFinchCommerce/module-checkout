@@ -9,5 +9,5 @@ export default (file) => {
       ? file
       : staticUrl + file;
   }
-  return '';
+  return file;
 };
