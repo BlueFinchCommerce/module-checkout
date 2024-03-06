@@ -9,6 +9,7 @@
       class="adyen-payment__header"
       :text="$t('paymentStep.title')"
     />
+    <div class="divider-line"></div>
   </div>
   <div :class="loadingPaymentMethods ? 'text-loading' : ''">
     <AdyenPaymentMethods

@@ -3,7 +3,8 @@ export default {
   header: {
     text: 'Secure Checkout',
   },
-  dividerText: 'or',
+  dividerText: 'Or checkout below with credit/debit card',
+  singInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Pay With',
   orderSummary: {
@@ -21,12 +22,12 @@ export default {
     removeItemButtonLabel: 'remove item',
     minusOneItem: 'minus one item',
     plusOneItem: 'plus one item',
-    couponDiscountTitle: 'Apply Coupon Code',
+    couponDiscountTitle: 'Add promo code',
     couponDiscount: {
-      placeholder: 'Enter coupon code',
+      placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
-    giftDiscountTitle: 'Apply Gift Card Code',
+    giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',

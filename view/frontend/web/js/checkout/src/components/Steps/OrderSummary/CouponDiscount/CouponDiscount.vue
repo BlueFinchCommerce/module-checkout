@@ -11,7 +11,7 @@
   >
     <div class="coupon-discount-icon-container">
       <img
-        :src="GiftIcon"
+        :src="CouponCodeIcon"
         alt="coupon-dropdown-icon"
       >
     </div>
@@ -22,12 +22,10 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown
@@ -93,7 +91,7 @@ import Loader from '@/components/Core/Loader/Loader.vue';
 import { mapWritableState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
-import GiftIcon from '@/icons/gift-icon.svg';
+import CouponCode from '@/icons/coupon-icon.svg';
 
 export default {
   name: 'CouponDiscount',
@@ -134,8 +132,8 @@ export default {
   computed: {
     ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
       'discountErrorMessage']),
-    GiftIcon() {
-      return `${getStaticUrl(GiftIcon)}`;
+    CouponCodeIcon() {
+      return `${getStaticUrl(CouponCode)}`;
     },
   },
   methods: {

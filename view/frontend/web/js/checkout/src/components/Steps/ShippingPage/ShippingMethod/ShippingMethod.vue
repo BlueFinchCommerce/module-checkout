@@ -16,6 +16,7 @@
               :text="shippingStepText"
             />
           </div>
+          <div class="divider-line"></div>
         </div>
 
         <ul v-if="shippingMethods.length">

@@ -152,11 +152,18 @@
 
 .adyen-payment {
   &__title {
-    border-bottom: var(--payment-title-border, 1px solid rgba(39, 48, 58, 0.2));
     display: flex;
     grid-gap: var(--indent__m);
     padding-bottom: var(--indent__s);
     margin-bottom: var(--adyen-payment-title-margin, 0);
+    align-items: center;
+
+    .divider-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      margin-left: var(--indent__base);
+      width: 40%;
+      display: var(--divider-line-display, block);
+    }
   }
 
   &__icon {

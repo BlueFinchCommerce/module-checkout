@@ -4,6 +4,7 @@ export default {
     text: 'Paiement sécurisé',
   },
   dividerText: 'ou',
+  singInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Payer avec',
   orderSummary: {
@@ -21,6 +22,11 @@ export default {
     removeItemButtonLabel: 'Supprimer l\'article',
     minusOneItem: 'Moins un article',
     plusOneItem: 'Plus un article',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Entrez votre code to réduction',
     giftCardDiscount: {
       placeholder: 'Entrez le code',

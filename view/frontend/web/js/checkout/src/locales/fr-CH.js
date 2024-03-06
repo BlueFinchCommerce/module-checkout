@@ -4,6 +4,7 @@ export default {
     text: 'Paiement sécurisé',
   },
   dividerText: 'Ou saisissez votre adresse e-mail pour payer par carte de crédit/débit',
+  singInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Saisissez votre adresse e-mail pour payer par carte de crédit/débit',
   orderSummary: {
     applyBtn: 'Appliquer',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'Supprimer l\'article',
     minusOneItem: 'Un article en moins',
     plusOneItem: 'Un article en plus',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Ajouter un code promotionnel',
     giftCardDiscount: {
       placeholder: 'Saisir le code ici',

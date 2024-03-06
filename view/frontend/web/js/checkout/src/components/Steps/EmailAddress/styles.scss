@@ -1,12 +1,31 @@
 @import '@/styles/global/_breakpoints';
 
 .customer-form {
+  .divider {
+    display: flex;
+    align-items: center;
+
+    &-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      width: 100%;
+    }
+
+    p {
+      font-weight: var(--font-weight__bold);
+      font-family: var(--font-family-copy);
+      font-size: var(--font__m);
+      margin: 0 var(--indent__s);
+      text-align: center;
+    }
+  }
+
   .welcome-message {
-    padding-top: var(--welcome-message-padding, var(--indent__base));
+    padding-top: var(--welcome-message-padding, 0);
     font-size: var(--welcome-message-font-size, 14px);
     font-weight: var(--welcome-message-font-weight, var(--font-weight__regular));
     font-family: var(--font-family-copy);
-    margin-bottom: var(--welcome-message-margin-bottom, 14px);
+    margin-bottom: var(--welcome-message-margin-bottom, var(--indent__s));
+    text-align: var(--welcome-message-text-align, center);
 
     &:empty {
       padding-top: 0;
@@ -45,8 +64,8 @@
 
   .forgot-pass {
     p {
-      text-align: center;
-      margin: 20px 0 30px;
+      text-align: left;
+      margin: var(--indent__s) 0 var(--indent__xs);
       font-family: var(--font-family-copy);
     }
   }

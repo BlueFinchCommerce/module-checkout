@@ -4,6 +4,7 @@ export default {
     text: 'Säker beställning',
   },
   dividerText: 'Eller ange din e-postadress för att betala med kredit-/betalkort',
+  singInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Ange din e-postadress för att betala med kredit-/betalkort',
   orderSummary: {
     applyBtn: 'Tillämpa',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'Ta bort artikel',
     minusOneItem: 'minus ett artikel',
     plusOneItem: 'plus en artikel',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
       placeholder: 'Ange koden här',
