@@ -287,6 +287,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect', 'loadingShippingMethods']),
+    ...mapState(usePaymentStore, ['errorMessage']),
   },
   async mounted() {
     await this.getStoreConfig();

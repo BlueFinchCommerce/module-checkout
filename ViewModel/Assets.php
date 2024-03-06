@@ -15,6 +15,7 @@ class Assets implements ArgumentInterface
     const ASSETS_DEF_FILE = 'manifest.json';
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/designer_values';
+    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/custom_wording';
     const LOGO_PATH = 'gene_better_checkout/general/gene_better_checkout_logo';
 
     /** @var ScopeConfigInterface  */
@@ -127,6 +128,26 @@ class Assets implements ArgumentInterface
         );
 
         return $designerValues ?? '';
+    }
+
+    /**
+     * Returns an object containing the customer wording values set in admin designer.
+     *
+     * @param string $scopeType
+     * @param int|string|null $scopeCode
+     */
+    public function getCustomWording(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        $scopeCode = null
+    ): string
+    {
+        $customWording = $this->scopeConfig->getValue(
+            self::CUSTOM_WORDING_VALUES_PATH,
+            $scopeType,
+            $scopeCode
+        );
+
+        return $customWording ?? '';
     }
 
     /**

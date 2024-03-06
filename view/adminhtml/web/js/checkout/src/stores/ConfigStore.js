@@ -19,7 +19,7 @@ export default defineStore('configStore', {
   state: () => ({
     staticUrl: getFallBackStaticPath(),
     currencyCode: getCurrencyCode(),
-    storeCode: getStoreCodeFromLocalStorage(),
+    storeCode: 'default', // TODO: Get this from backend php and add to window variable.
     locale: getLocale(),
     countryCode: undefined,
     rvvupPaymentsActive: false,
@@ -82,10 +82,10 @@ export default defineStore('configStore', {
       return data;
     },
     async getStoreCode() {
-      const storeCode = await getStoreCode();
-      this.setData({
-        storeCode,
-      });
+      // const storeCode = await getStoreCode();
+      // this.setData({
+      //   storeCode,
+      // });
     },
     async getStoreConfig() {
       if (!this.storeCode) {

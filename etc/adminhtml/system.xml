@@ -35,6 +35,9 @@
                 <field id="designer_values" translate="label comment" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Designer Values</label>
                 </field>
+                <field id="custom_wording" translate="label comment" type="textarea" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Custom Wording</label>
+                </field>
                 <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Checkout Logo</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>

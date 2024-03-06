@@ -11,9 +11,15 @@ define([
         initialize: function (config, element) {
             this.config = config;
             this.designerModal = $('#gene-bettercheckout-designer');
+            this.designerRoot = $('#gene-better-checkout-root');
+
             this.designerValues = $('#gene_better_checkout_general_designer_values');
             this.designerValuesSystem = $(`#gene_better_checkout_general_designer_values_inherit,
+                #gene_better_checkout_general_custom_wording_inherit,
                 #gene_better_checkout_general_gene_better_checkout_logo_inherit`);
+
+            this.customWording = $('#gene_better_checkout_general_custom_wording');
+
             this.designerLogo = $('#gene_better_checkout_general_gene_better_checkout_logo');
             this.designerLogoImgPreview = $('#gene_better_checkout_general_gene_better_checkout_logo_image');
             this.designerLogoDelete = $('#gene_better_checkout_general_gene_better_checkout_logo_delete');
@@ -46,6 +52,7 @@ define([
             this.designerModal.find('input').on('change keyup', this.triggerChange.bind(this));
             this.designerModal.find('.toggle').on('click', this.toggleSidebar.bind(this));
             this.designerValues.on('change', this.setSystemValue.bind(this));
+            this.customWording.on('change', this.setSystemValue.bind(this));
 
             $(element).on('click', this.openDesigner.bind(this));
 
@@ -72,7 +79,7 @@ define([
             } else {
                 const { dataset, value } = event.target;
 
-                document.documentElement.style.setProperty(dataset.cssVariable, value);
+                this.designerRoot.get(0).style.setProperty(dataset.cssVariable, value);
             }
         },
 
@@ -153,9 +160,37 @@ define([
                 document.head.appendChild(scriptEl);
             }
 
-            const values = this.designerValues.val().split(';');
+            this.designerModal.find('.pixel-input').each(function (index, element) {
+                // Find the related hidden text input for each number input
+                var hiddenTextInput = $('#' + element.id + '_hidden');
 
-            values.forEach(function (value) {
+                $(element).on('change', function () {
+                    var inputValue = $(this).val(),
+
+                        valueWithPx = inputValue + 'px';
+
+                    // Set the value of the hidden text input to valueWithPx
+                    hiddenTextInput.val(valueWithPx).trigger('change');
+                });
+            });
+
+            this.designerModal.find('.pixel-input + input').each(function (index, element) {
+                // Get the visible part and remove 'px'.
+                var visibleTextInput = $(`#${element.id.replace('_hidden', '')}`);
+
+                $(element).on('change', function () {
+                    var inputValue = $(this).val(),
+
+                        valueWithoutPx = inputValue.replace('px', '');
+
+                    // Set the value of the hidden text input to valueWithoutPx
+                    visibleTextInput.val(valueWithoutPx);
+                });
+            });
+
+            const cssValues = this.designerValues.val().split(';');
+
+            cssValues.forEach(function (value) {
                 const [name, cssValue] = value.split(':');
 
                 this.triggerChange({
@@ -167,7 +202,24 @@ define([
                     }
                 });
 
-                $(`[data-css-variable="${name}"]`).val(cssValue);
+                $(`[data-css-variable="${name}"]`).val(cssValue).trigger('change');
+            }.bind(this));
+
+            const wordingValues = this.customWording.val();
+            const parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
+
+            Object.keys(parsedWordingValues).forEach(function (key) {
+                this.triggerChange({
+                    target: {
+                        dataset: {
+                            type: 'checkout-wording'
+                        },
+                        value: wordingValues[key],
+                        id: key,
+                    }
+                });
+
+                $(`#${key}`).val(parsedWordingValues[key]).trigger('change');
             }.bind(this));
 
             if (this.designerLogoImgPreview.attr('src')) {
@@ -188,21 +240,6 @@ define([
                     }
                 });
             });
-
-            this.designerModal.find('.pixel-input').each(function (index, element) {
-                // Find the related hidden text input for each number input
-                var hiddenTextInput = $('#' + element.id + '_hidden');
-
-                $(element).on('change', function () {
-                    var inputValue = $(this).val(),
-
-                        valueWithPx = inputValue + 'px';
-
-                    // Set the value of the hidden text input to valueWithPx
-                    hiddenTextInput.val(valueWithPx).trigger('change');
-                });
-            });
-
         },
 
         resetDesigner: function () {
@@ -223,13 +260,31 @@ define([
         saveDesigner: function () {
             this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
 
-            const values = this.designerModal.find('.section-config input').map(function () {
+            const cssValues = this.designerModal.find('.section-config input[data-css-variable]').map(function () {
                 return this.value
                     ? `${this.dataset.cssVariable}:${this.value}`
                     : '';
             }).toArray().filter(value => value).join(';');
 
-            this.designerValues.val(values).trigger('change');
+            this.designerValues.val(cssValues).trigger('change');
+
+            const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray().reduce(function (prev, curr) {
+                // Early return if the input has no value.
+                if (!curr.value) {
+                    return prev;
+                }
+
+                return {
+                    ...prev,
+                    [curr.id]: curr.value
+                };
+            }, {});
+
+            const storedWordingValue = Object.keys(wordingValues).length
+                ? JSON.stringify(wordingValues)
+                : '';
+
+            this.customWording.val(storedWordingValue).trigger('change');
 
             this.designerModal.modal('closeModal');
         },
