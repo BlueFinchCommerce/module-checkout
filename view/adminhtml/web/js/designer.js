@@ -188,7 +188,9 @@ define([
                 });
             });
 
-            const cssValues = this.designerValues.val().split(';');
+            const cssValues = this.designerValues.val().split(';'),
+                wordingValues = this.customWording.val(),
+                parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
 
             cssValues.forEach(function (value) {
                 const [name, cssValue] = value.split(':');
@@ -205,9 +207,6 @@ define([
                 $(`[data-css-variable="${name}"]`).val(cssValue).trigger('change');
             }.bind(this));
 
-            const wordingValues = this.customWording.val();
-            const parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
-
             Object.keys(parsedWordingValues).forEach(function (key) {
                 this.triggerChange({
                     target: {
@@ -215,7 +214,7 @@ define([
                             type: 'checkout-wording'
                         },
                         value: wordingValues[key],
-                        id: key,
+                        id: key
                     }
                 });
 
@@ -264,28 +263,27 @@ define([
                 return this.value
                     ? `${this.dataset.cssVariable}:${this.value}`
                     : '';
-            }).toArray().filter(value => value).join(';');
+            }).toArray().filter(value => value).join(';'),
 
-            this.designerValues.val(cssValues).trigger('change');
+            wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray()
+                .reduce(function (prev, curr) {
+                    // Early return if the input has no value.
+                    if (!curr.value) {
+                        return prev;
+                    }
 
-            const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray().reduce(function (prev, curr) {
-                // Early return if the input has no value.
-                if (!curr.value) {
-                    return prev;
-                }
+                    return {
+                        ...prev,
+                        [curr.id]: curr.value
+                    };
+                }, {}),
 
-                return {
-                    ...prev,
-                    [curr.id]: curr.value
-                };
-            }, {});
-
-            const storedWordingValue = Object.keys(wordingValues).length
+            storedWordingValue = Object.keys(wordingValues).length
                 ? JSON.stringify(wordingValues)
                 : '';
 
+            this.designerValues.val(cssValues).trigger('change');
             this.customWording.val(storedWordingValue).trigger('change');
-
             this.designerModal.modal('closeModal');
         },
 
