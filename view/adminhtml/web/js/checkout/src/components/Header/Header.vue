@@ -4,7 +4,9 @@
     :style="style"
   >
     <div class="header-content">
-      <Logo alt="logo" />
+      <div class="header-logo">
+        <Logo alt="logo" />
+      </div>
       <div class="header-title">
         <Lock
           stroke="white"
