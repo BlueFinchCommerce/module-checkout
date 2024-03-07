@@ -22,12 +22,10 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown

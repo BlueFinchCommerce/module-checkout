@@ -11,7 +11,7 @@
       {{ device.displayName }}
     </button>
   </div>
-  <div id="vue-checkout-display">
+  <div id="gene-better-checkout-root">
     <component :is="currentDevice">
       <AppHeader />
       <Steps />
@@ -121,7 +121,7 @@ export default {
     dispatchStep(stepName) {
       document.dispatchEvent(new CustomEvent('switchDisplayedStep', { detail: stepName }));
     }
-    
+
   },
 };
 </script>
@@ -137,7 +137,7 @@ export default {
     justify-content: center;
   }
 
-  #vue-checkout-display {
+  #gene-better-checkout-root {
     margin: 20px 0;
   }
 </style>

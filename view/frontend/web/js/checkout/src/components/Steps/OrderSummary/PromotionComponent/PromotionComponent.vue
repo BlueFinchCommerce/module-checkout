@@ -46,12 +46,10 @@
     <ArrowDown
       v-if="!isDropDownVisible && crosssells.length"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-if="isDropDownVisible && crosssells.length"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
 
@@ -140,7 +138,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['crosssells', 'freeShipping']),
+    ...mapState(useCartStore, ['crosssells', 'freeShipping', 'amastyEnabled']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
@@ -150,9 +148,9 @@ export default {
     await this.getCartData();
     await this.getCart();
     await this.getCartTotals();
-    // Commented out as none of our clients are currently using amasty shipping module
-    // @todo - work out how to only call this function if the module is enabled
-    // await this.getAmastyShippingData();
+    if (this.amastyEnabled) {
+      await this.getAmastyShippingData();
+    }
     await this.getCrosssells();
 
     this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]

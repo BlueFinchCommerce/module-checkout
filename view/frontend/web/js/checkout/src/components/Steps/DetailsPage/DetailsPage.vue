@@ -84,6 +84,7 @@
           <TextField
             :text="$t('yourDetailsSection.title')"
           />
+          <div class="divider-line"></div>
         </div>
 
         <NameFields
@@ -100,10 +101,11 @@
               :text="$t('yourDetailsSection.deliverySection.title')"
             />
           </div>
+          <div class="divider-line"></div>
         </div>
 
         <div>
-          <div :class="!customerInfoValidation ? 'disabled' : ''">
+          <div>
             <AddressFinder
               v-if="!selected[address_type].id
                 || (selected[address_type].id === 'custom' && selected[address_type].editing)"
@@ -118,7 +120,6 @@
             && !selected[address_type].editing && address_type === 'shipping'
             && addressFinder.enabled"
           class="manually-button"
-          :class="!customerInfoValidation ? 'disabled' : ''"
           :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
           @click.prevent="editAddress"
         />

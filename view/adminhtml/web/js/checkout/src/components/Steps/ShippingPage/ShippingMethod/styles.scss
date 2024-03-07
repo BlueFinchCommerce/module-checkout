@@ -11,10 +11,17 @@
 
   &__title {
     padding-top: var(--padding-top, 30px);
-    border-bottom: var(--shipping-page-title-border, 1px solid var(--border-color, rgba(39, 48, 58, 0.2)));
     padding-bottom: var(--padding-bottom, 10px);
     margin-bottom: var(--shipping-page-title-margin, 30px);
     display: flex;
+    align-items: center;
+
+    .divider-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      margin-left: var(--indent__base);
+      width: 45%;
+      display: var(--divider-line-display, block);
+    }
 
     .title {
       margin-left: var(--shipping-address-text-margin, var(--indent__base));

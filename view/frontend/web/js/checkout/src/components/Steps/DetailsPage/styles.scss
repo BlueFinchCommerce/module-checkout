@@ -4,6 +4,12 @@
 // --padding-bottom;
 // --disabled-btn-bg, #d3d6d8;
 
+.divider-line {
+  border-bottom: 1px solid var(--border__gray-color2);
+  margin-left: var(--indent__base);
+  display: var(--divider-line-display, block);
+}
+
 .instantCheckout-block {
   padding-bottom: 0;
   margin-bottom: var(--indent__base);
@@ -32,13 +38,16 @@
   }
 
   &-title {
-    border-bottom: var(--details-form-title__border-bottom, 1px solid var(--border-color, rgba(39, 48, 58, 0.2)));
     border-top: var(--details-form-title__border-top, unset);
     padding-bottom: var(--padding-bottom, 10px);
     padding-top: var(--details-form-title__padding-top, unset);
     display: flex;
     align-items: center;
-    margin-top: var(--details-form-title__margin-top, var(--indent__xl));
+    margin-top: var(--details-form-title__margin-top, 25px);
+
+    .divider-line {
+      width: 75%;
+    }
 
     img {
       display: var(--your-details-icon-display, flex);
@@ -60,7 +69,7 @@
 
 .manually-button {
   padding-top: var(--manually-padding-top, 0);
-  margin-top: var(--manually-padding-top, var(--indent__base));
+  margin-top: var(--manually-padding-top, 0);
   color: var(--manually-button-color, var(--text__color));
   width: 100%;
   text-align: left;
@@ -77,12 +86,16 @@
 
 .delivery-section {
   &-title {
-    border-bottom: var(--delivery-section-title__border-bottom, 1px solid var(--border-color, rgba(39, 48, 58, 0.2)));
     border-top: var(--delivery-section-title__border-top, unset);
     padding-bottom: var(--indent__s);
     padding-top: var(--delivery-section-title__padding-top, unset);
-    margin-top: var(--delivery-section-title__margin-top, 55px);
+    margin-top: var(--delivery-section-title__margin-top, var(--indent__base));
+    align-items: center;
     display: flex;
+
+    .divider-line {
+      width: 50%;
+    }
 
     img {
       display: var(--delivery-section-icon-display, flex);
@@ -159,7 +172,7 @@
   }
 
   .address-block {
-    margin: var(--indent__xl) 0 30px;
+    margin: var(--indent__base) 0;
   }
 
   .manually-button {

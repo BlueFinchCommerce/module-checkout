@@ -4,13 +4,26 @@
   position: relative;
 
   &__checkbox {
-    margin: var(--indent__s) 0 var(--indent__base);
+    margin: var(--indent__l) 0 var(--indent__base);
   }
 
   &__title {
-    margin-bottom: var(--indent__base);
     font-weight: 500;
     font-size: var(--font__m);
+    margin-bottom: var(--indent__s);
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .divider-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      width: 75%;
+      margin-left: var(--indent__base);
+      display: var(--divider-line-display, block);
+    }
   }
 
   &__title--address {
@@ -33,7 +46,7 @@
 
 .manually-button {
   padding-top: var(--manually-padding-top, 0);
-  margin-top: var(--manually-padding-top, var(--indent__base));
+  margin: var(--manually-margin, var(--indent__s) 0);
   color: var(--manually-button-color, var(--text__color));
   width: 100%;
   text-align: left;
