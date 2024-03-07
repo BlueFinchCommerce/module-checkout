@@ -506,9 +506,6 @@ button .text-loading {
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
 }
-#vue-checkout-display input[type=text][data-v-018abdb3] {
-  background: var(--white__color);
-}
 #vue-checkout-display input[type=text][data-v-018abdb3]:disabled {
   opacity: var(--opacity-heavy);
 }
@@ -1871,9 +1868,6 @@ div.dropdown.promo-dropdown.active p[data-v-0c1e1256] {
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
 }
-#vue-checkout-display input[type=text][data-v-dfd56868] {
-  background: var(--white__color);
-}
 #vue-checkout-display input[type=text][data-v-dfd56868]:disabled {
   opacity: var(--opacity-heavy);
 }
@@ -2208,9 +2202,6 @@ div.dropdown.promo-dropdown.active p[data-v-0c1e1256] {
   font-weight: 400;
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
-}
-#vue-checkout-display input[type=text][data-v-1e41ddac] {
-  background: var(--white__color);
 }
 #vue-checkout-display input[type=text][data-v-1e41ddac]:disabled {
   opacity: var(--opacity-heavy);
@@ -3436,9 +3427,6 @@ div.dropdown.coupon-dropdown .field .success[data-v-9dcf1ed8] {
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
 }
-#vue-checkout-display input[type=text] {
-  background: var(--white__color);
-}
 #vue-checkout-display input[type=text]:disabled {
   opacity: var(--opacity-heavy);
 }
@@ -4317,9 +4305,6 @@ body.no-scrollable {
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
 }
-#vue-checkout-display input[type=text][data-v-2255aac0] {
-  background: var(--white__color);
-}
 #vue-checkout-display input[type=text][data-v-2255aac0]:disabled {
   opacity: var(--opacity-heavy);
 }
@@ -4682,9 +4667,6 @@ body.no-scrollable {
   font-weight: 400;
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
-}
-#vue-checkout-display input[type=text][data-v-692c458d] {
-  background: var(--white__color);
 }
 #vue-checkout-display input[type=text][data-v-692c458d]:disabled {
   opacity: var(--opacity-heavy);
@@ -5233,10 +5215,6 @@ body.no-scrollable {
 }#adyen-google-pay {
   line-height: var(--button-line-height);
 }
-#adyen-google-pay.text-loading {
-  border-radius: var(--text-placeholder-bg-button-radius);
-  height: var(--adyen-express-button-height, 48px);
-}
 #adyen-google-pay button {
   border-radius: var(--button-border-radius);
   height: var(--adyen-express-button-height, 48px);
@@ -5245,6 +5223,14 @@ body.no-scrollable {
 }
 #adyen-google-pay button .gpay-card-info-iframe {
   height: 40px;
+}
+#adyen-google-pay .gpay-card-info-animation-container {
+  animation-name: none;
+  position: relative;
+}
+#adyen-google-pay .gpay-card-info-animated-progress-bar-container,
+#adyen-google-pay iframe {
+  display: none;
 }.apple-pay-button {
   border-radius: var(--button-border-radius);
   height: var(--adyen-express-button-height, 48px);
@@ -5405,9 +5391,6 @@ body.no-scrollable {
   font-weight: 400;
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
-}
-#vue-checkout-display input[type=text][data-v-1327ac91] {
-  background: var(--white__color);
 }
 #vue-checkout-display input[type=text][data-v-1327ac91]:disabled {
   opacity: var(--opacity-heavy);
@@ -7038,9 +7021,6 @@ a[data-v-73d01245] {
   font-family: var(--font-family-copy);
   top: var(--checkbox-text-position, auto);
 }
-#vue-checkout-display input[type=text][data-v-b1c2c282] {
-  background: var(--white__color);
-}
 #vue-checkout-display input[type=text][data-v-b1c2c282]:disabled {
   opacity: var(--opacity-heavy);
 }
@@ -7431,46 +7411,46 @@ a[data-v-73d01245] {
 }
 .rvvup-button img[data-v-b6a95134] {
   max-width: 180px;
-}.payment-page[data-v-957d62e6] {
+}.payment-page[data-v-2ef1311d] {
   padding: 0 var(--payment-page-mobile-padding, var(--mobile-indent__base));
   font-family: var(--payment-page-font-family, unset);
 }
-.payment-page .payment-form[data-v-957d62e6] {
+.payment-page .payment-form[data-v-2ef1311d] {
   background: var(--page-background__color-mobile);
   margin-top: var(--indent__base);
   min-height: var(--payment-form-min-height, 600px);
 }
-.payment-page .payment-form .address-block__edit[data-v-957d62e6] {
+.payment-page .payment-form .address-block__edit[data-v-2ef1311d] {
   cursor: pointer;
   position: absolute;
   bottom: var(--indent__base);
   right: var(--indent__base);
 }
-.payment-page .payment-form .billing-address[data-v-957d62e6] {
+.payment-page .payment-form .billing-address[data-v-2ef1311d] {
   padding: var(--indent__base);
   background: var(--white__color);
 }
-.payment-page .payment-form .billing-address .details-title-section[data-v-957d62e6] {
+.payment-page .payment-form .billing-address .details-title-section[data-v-2ef1311d] {
   display: flex;
 }
-.payment-page .payment-form .billing-address .details-title-section svg[data-v-957d62e6] {
+.payment-page .payment-form .billing-address .details-title-section svg[data-v-2ef1311d] {
   margin-right: var(--indent__base);
 }
-.mock-laptop .payment-page[data-v-957d62e6],
-.mock-desktop .payment-page[data-v-957d62e6] {
+.mock-laptop .payment-page[data-v-2ef1311d],
+.mock-desktop .payment-page[data-v-2ef1311d] {
   padding: 0;
 }
-.mock-laptop .payment-page .payment-form[data-v-957d62e6],
-.mock-desktop .payment-page .payment-form[data-v-957d62e6] {
+.mock-laptop .payment-page .payment-form[data-v-2ef1311d],
+.mock-desktop .payment-page .payment-form[data-v-2ef1311d] {
   background: var(--payment-form-background, var(--steps-background-desktop));
   border-radius: var(--steps-border-radius-desktop);
   padding: var(--form-details-padding-desktop, 40px 40px 70px);
 }
 @media screen and (min-width: 768px) {
-.mock-full .payment-page[data-v-957d62e6] {
+.mock-full .payment-page[data-v-2ef1311d] {
     padding: 0;
 }
-.mock-full .payment-page .payment-form[data-v-957d62e6] {
+.mock-full .payment-page .payment-form[data-v-2ef1311d] {
     background: var(--payment-form-background, var(--steps-background-desktop));
     border-radius: var(--steps-border-radius-desktop);
     padding: var(--form-details-padding-desktop, 40px 40px 70px);

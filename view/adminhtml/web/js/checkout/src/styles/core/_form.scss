@@ -161,8 +161,6 @@
   }
 
   input[type="text"] {
-    background: var(--white__color);
-
     &:disabled {
       opacity: var(--opacity-heavy);
     }
