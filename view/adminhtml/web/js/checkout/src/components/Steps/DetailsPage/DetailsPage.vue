@@ -284,8 +284,6 @@ export default {
   },
   async mounted() {
     await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
 
     const types = {
       shipping: 'customerInfoValidation',
