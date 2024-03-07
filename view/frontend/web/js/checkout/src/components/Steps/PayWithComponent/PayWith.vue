@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       payWithText: '',
-      payWithTextId: 'gene-better=checkout-paywith-text',
+      payWithTextId: 'gene-bettercheckout-paywith-text',
       paymentIcons: [],
     };
   },

@@ -16,4 +16,14 @@
       height: 40px;
     }
   }
+
+  .gpay-card-info-animation-container {
+    animation-name: none;
+    position: relative;
+  }
+
+  .gpay-card-info-animated-progress-bar-container,
+  iframe {
+    display: none;
+  }
 }
