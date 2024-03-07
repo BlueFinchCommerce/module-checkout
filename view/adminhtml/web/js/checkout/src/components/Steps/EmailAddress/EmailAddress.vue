@@ -52,7 +52,7 @@
               font-weight="400"
               font-size="12px"
             />
-            <Edit />
+            <Edit/>
           </button>
         </div>
       </div>
@@ -88,10 +88,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon />
+                  <ShowIcon/>
                 </span>
                 <span v-else>
-                  <HideIcon />
+                  <HideIcon/>
                 </span>
               </button>
             </template>
@@ -138,6 +138,11 @@
             :label="$t('signInButton')"
             @click="submitForm"
           />
+          <div class="divider">
+            <div class="divider-line"></div>
+            <TextField :text="$t('signInDividerText')"/>
+            <div class="divider-line"></div>
+          </div>
           <MyButton
             class="guest-btn"
             secondary
@@ -331,6 +336,15 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
+      }
+    },
+
+    passwordKeyTrigger(event) {
+      // Check if the Enter key was pressed
+      const pressedKey = event.key || event.keyCode;
+
+      if (pressedKey === 'Enter' || pressedKey === 13) {
+        this.submitForm();
       }
     },
 

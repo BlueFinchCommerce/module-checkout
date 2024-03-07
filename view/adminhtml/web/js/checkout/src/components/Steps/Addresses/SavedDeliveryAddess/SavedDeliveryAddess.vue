@@ -22,9 +22,14 @@
         :address="isItemRequiringDelivery ? selected.shipping : selected.billing"
       />
       <div class="address-block__edit proceed-to-details">
-        <button class="button--blank edit-details-button"
-                :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
-          <TextField class="edit-button-title" :text="$t('yourDetailsSection.editButton')" />
+        <button
+          class="button--blank edit-details-button"
+          :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+        >
+          <TextField
+            class="edit-button-title"
+            :text="$t('yourDetailsSection.editButton')"
+          />
           <Edit />
         </button>
       </div>

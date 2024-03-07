@@ -22,12 +22,10 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown
@@ -36,36 +34,36 @@
     :class="{active: isDropDownVisible}"
   >
     <template #content>
-      <div class="field coupon-code-field">
-        <!-- dicountApplied replaced with discountAppliedOverride only for ui designer -->
+      <div class="field gift-code-field">
+        <!-- dicountApplied replaced with giftCardAppliedOverride only for ui designer -->
         <TextInput
-          v-model="discountCode"
+          v-model="giftCardCode"
           :error="giftCardErrorMessage"
-          name="coupon-code"
+          name="gift-code"
           :placeholder="giftCardPlaceholderText"
-          :disabled="discountAppliedOverride"
+          :disabled="giftCardAppliedOverride"
           autocomplete="off"
         />
-        <!-- dicountApplied replaced with discountAppliedOverride only for ui designer -->
+        <!-- dicountApplied replaced with giftCardAppliedOverride only for ui designer -->
         <MyButton
-          v-if="!discountAppliedOverride"
+          v-if="!giftCardAppliedOverride"
           primary
           :label="applyButtonText"
-          @click="dispatchDiscountCode(discountCode)"
+          @click="dispatchDiscountCode(giftCardCode)"
         />
-        <!-- dicountApplied replaced with discountAppliedOverride
+        <!-- dicountApplied replaced with giftCardAppliedOverride
           and removed @click="removeGiftCardCode" only for ui designer -->
         <MyButton
-          v-if="discountAppliedOverride"
+          v-if="giftCardAppliedOverride"
           secondary
           :label="removeButtonText"
         />
         <div class="success">
-          <!-- dicountApplied replaced with discountAppliedOverride and
+          <!-- dicountApplied replaced with giftCardAppliedOverride and
             discountCode replaced with discountCodeOverride only for ui designer -->
           <SuccessMessage
-            v-if="discountAppliedOverride"
-            :message="$t('orderSummary.giftCardDiscount.successMessage', { code: discountCodeOverride })"
+            v-if="giftCardAppliedOverride"
+            :message="$t('orderSummary.giftCardDiscount.successMessage', { code: giftCardCodeOverride })"
           />
         </div>
         <div class="error">
@@ -124,8 +122,8 @@ export default {
       giftCardTextId: 'gene-bettercheckout-giftcard-text',
       giftCardPlaceholderText: '',
       giftCardPlaceholderTextId: 'gene-bettercheckout-giftcardplaceholder-text',
-      discountAppliedOverride: true, // Only for UI designer to show with added code
-      discountCodeOverride: 'TestCode123', // Only for UI designer to show with added code
+      giftCardAppliedOverride: true, // Only for UI designer to show with added code
+      giftCardCodeOverride: 'TestCode123', // Only for UI designer to show with added code
     };
   },
   async created() {
@@ -148,7 +146,7 @@ export default {
     document.removeEventListener(this.giftCardPlaceholderTextId, this.setGiftCardPlaceholderText);
   },
   computed: {
-    ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
+    ...mapWritableState(useCartStore, ['giftCardCode', 'giftCardApplied',
       'giftCardErrorMessage']),
     GiftIcon() {
       return `${getStaticUrl(GiftIcon)}`;
@@ -171,9 +169,9 @@ export default {
       this.giftCardPlaceholderText = event?.detail || this.$t('orderSummary.giftCardDiscount.placeholder');
     },
 
-    async dispatchDiscountCode(discountCode) {
+    async dispatchDiscountCode(giftCardCode) {
       this.loadingDiscountCode = true;
-      await this.addGiftCardCode(discountCode);
+      await this.addGiftCardCode(giftCardCode);
       this.loadingDiscountCode = false;
     },
     openDropDown() {

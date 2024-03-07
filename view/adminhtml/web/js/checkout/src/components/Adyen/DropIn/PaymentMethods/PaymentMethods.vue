@@ -3,7 +3,7 @@
     <Loader v-if="loadingPaymentMethods" />
     <div
       v-if="storedPayments"
-      v-show="!isErrorDisplayed && !hideStoredPaymentRadio"
+      v-show="!isErrorDisplayed && !hideStoredPaymentRadio && paymentVisible"
       class="adyen-dropin-stored-payments"
       :class="{
         'adyen-dropin-stored-payments-active': storedPaymentSelected,
@@ -45,13 +45,13 @@
     >
       <AdyenPaymentCard
         v-for="storedPaymentMethod in storedPaymentMethods"
-        v-show="!isErrorDisplayed"
+        v-show="!isErrorDisplayed && paymentVisible"
         :key="storedPaymentMethod.id"
         :method="storedPaymentMethod"
       />
     </teleport>
     <div
-      v-show="!isErrorDisplayed"
+      v-show="!isErrorDisplayed && paymentVisible"
       :id="id"
       ref="adyenPayments"
     />
@@ -116,6 +116,7 @@ export default {
       isErrorDisplayed: false,
       hideStoredPaymentRadio: false,
       paymentLoading: false,
+      paymentVisible: true,
     };
   },
   computed: {

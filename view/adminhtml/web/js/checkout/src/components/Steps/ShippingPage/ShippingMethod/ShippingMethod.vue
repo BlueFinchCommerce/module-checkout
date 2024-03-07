@@ -16,6 +16,7 @@
               :text="shippingStepText"
             />
           </div>
+          <div class="divider-line"></div>
         </div>
 
         <ul v-if="shippingMethods.length">
@@ -79,6 +80,11 @@
               :item="item"
             />
           </li>
+          <component
+            :is="additionalShippingMethod"
+            v-for="additionalShippingMethod in additionalShippingMethods"
+            :key="additionalShippingMethod"
+          />
         </ul>
         <TextField
           v-else-if="!shippingMethods.length && !loadingShippingMethods"
@@ -124,6 +130,9 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
+// Extensions
+import shippingMethods from '@/extensions/shippingMethods';
+
 export default {
   name: 'ShippingMethod',
   components: {
@@ -132,6 +141,7 @@ export default {
     Shipping,
     NominatedDay,
     MyButton,
+    ...shippingMethods(),
   },
   props: {
     buttonText: {
@@ -141,6 +151,7 @@ export default {
   },
   data() {
     return {
+      additionalShippingMethods: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
@@ -162,6 +173,7 @@ export default {
     ]),
   },
   async created() {
+    this.additionalShippingMethods = Object.keys(shippingMethods());
     await this.getStoreConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
