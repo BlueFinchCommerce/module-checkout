@@ -264,19 +264,33 @@ input[type="text"] {
   }
 }
 
-.field-valid {
-  .text-input {
-    input {
-      border-color: var(--valid-field-border, #135D1D);
-      border-width: 1.5px;
+.text-input.field-valid {
+  input {
+    border-color: var(--valid-field-border, #135D1D);
+    border-width: 1.5px;
+  }
+}
+
+.text-input.field-valid + svg {
+  position: absolute;
+  right: 16px;
+  top: 50px;
+}
+
+//override valid class if custom validation shows error
+.custom-validation-error.field-valid {
+  input {
+    border: var(--input-error-border, 2.5px solid var(--error__color));
+
+    &:focus,
+    &:hover {
+      border: var(--input-error-border, 2.5px solid var(--error__color));
     }
   }
+}
 
-  svg {
-    position: absolute;
-    right: 16px;
-    top: 50px;
-  }
+.custom-validation-error.field-valid + svg {
+  display: none;
 }
 
 .afd-postcode__input {
