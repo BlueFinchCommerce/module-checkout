@@ -181,7 +181,7 @@
       font-weight: var(--input-span-font-weight, var(--font-weight__light));
       font-family: var(--font-family-copy);
       position: var(--input-span-position, absolute);
-      top: var(--input-span-top-value, var(--indent__s));
+      top: var(--input-span-top-value, var(--indent__xs));
       min-height: var(--input-label-min-height, 25px);
       z-index: 1;
       border-radius: var(--base-border-radius);
@@ -232,6 +232,13 @@
     display: var(--text-input-no-value-display, none);
   }
 
+  .coupon-code-field,
+  .gift-code-field {
+    .text-input {
+      margin-bottom: 0;
+    }
+  }
+
   .logged-in-email {
     .text-input {
       span {
@@ -265,34 +272,45 @@
     }
   }
 
-.text-input.field-valid {
-  input {
-    border-color: var(--valid-field-border, #135D1D);
-    border-width: 1.5px;
-  }
-}
-
-.text-input.field-valid + svg {
-  position: absolute;
-  right: 16px;
-  top: 50px;
-}
-
-//override valid class if custom validation shows error
-.custom-validation-error.field-valid {
-  input {
-    border: var(--input-error-border, 2.5px solid var(--error__color));
-
-    &:focus,
-    &:hover {
-      border: var(--input-error-border, 2.5px solid var(--error__color));
+  .text-input.field-valid {
+    input {
+      border-color: var(--valid-field-border, var(--dark-blue-color));
+      border-width: 2px;
     }
   }
-}
 
-.custom-validation-error.field-valid + svg {
-  display: none;
-}
+  .text-input.field-valid + svg {
+    position: absolute;
+    right: 16px;
+    top: 25px;
+  }
+
+  //override valid class if custom validation shows error
+  .custom-validation-error.field-valid {
+    input {
+      border: var(--input-error-border, 2px solid var(--error__color));
+
+      &:focus,
+      &:hover {
+        border: var(--input-error-border, 2px solid var(--error__color));
+      }
+    }
+  }
+
+  .custom-validation-error.field-valid + svg,
+  .error-icon-block {
+    display: none;
+  }
+
+  .custom-validation-error.field-valid ~ .error-icon-block,
+  .error + .error-icon-block,
+  .custom-validation-error + svg,
+  .error + svg {
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 25px;
+  }
 
   .afd-postcode__input {
     margin-bottom: 0;
@@ -419,6 +437,13 @@
       margin-right: var(--indent__s);
       display: var(--message-icon-visibility, block);
     }
+  }
+
+  .error-message {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-width: var(--error-message-border-width, 2px);
+    margin-top: -2px;
   }
 
   .success-message {

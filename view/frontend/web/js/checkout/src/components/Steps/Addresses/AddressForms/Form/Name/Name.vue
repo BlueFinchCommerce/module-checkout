@@ -17,6 +17,9 @@
       address_type, 'First name', selected[address_type].firstname, true)"
     />
     <ValidIcon v-if="nameValid && !getAddressFieldHasError(address_type, 'First name')"/>
+    <div class="error-icon-block">
+      <ErrorIcon/>
+    </div>
   </div>
   <div>
     <TextInput
@@ -35,6 +38,9 @@
       @focusout="validateNameField(address_type, 'Last name', selected[address_type].lastname, true)"
     />
     <ValidIcon v-if="lastNameValid && !getAddressFieldHasError(address_type, 'Last name')"/>
+    <div class="error-icon-block">
+      <ErrorIcon/>
+    </div>
   </div>
   <div>
     <div class="phone-field">
@@ -54,6 +60,9 @@
         @focusout="validatePhone(address_type, selected[address_type].telephone, true)"
       />
       <ValidIcon v-if="phoneValid && !getAddressFieldHasError(address_type, 'Telephone')"/>
+      <div class="error-icon-block">
+        <ErrorIcon/>
+      </div>
       <TextField
         v-if="!phoneErrorClass"
         :text="$t('yourDetailsSection.phoneField.infoMessage')"
@@ -72,6 +81,9 @@ import useConfigStore from '@/stores/ConfigStore';
 // Components
 import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
+
+// Icons
+import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 
 export default {
@@ -80,6 +92,7 @@ export default {
     TextInput,
     TextField,
     ValidIcon,
+    ErrorIcon,
   },
   props: {
     address_type: {

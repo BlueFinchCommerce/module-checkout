@@ -24,6 +24,9 @@
           />
           <ValidIcon v-if="streetAddress1Valid
           && !getAddressFieldHasError(address_type, 'Address Line 1')"/>
+          <div class="error-icon-block">
+            <ErrorIcon/>
+          </div>
         </div>
         <div>
           <TextInput
@@ -43,6 +46,9 @@
           />
           <ValidIcon v-if="streetAddress2Valid
           && !getAddressFieldHasError(address_type, 'Address Line 2')"/>
+          <div class="error-icon-block">
+            <ErrorIcon/>
+          </div>
         </div>
         <div>
           <TextInput
@@ -63,6 +69,9 @@
           />
           <ValidIcon v-if="cityValid
           && !getAddressFieldHasError(address_type, 'City')"/>
+          <div class="error-icon-block">
+            <ErrorIcon/>
+          </div>
         </div>
         <div>
           <TextInput
@@ -84,6 +93,9 @@
           />
           <ValidIcon v-if="regionValid
           && !getAddressFieldHasError(address_type, 'State/Region')"/>
+          <div class="error-icon-block">
+            <ErrorIcon/>
+          </div>
         </div>
         <SelectInput
           v-if="displayState && getRegionOptions(address_type).length"
@@ -112,6 +124,9 @@
             @focusout="validatePostcode(address_type, true)"
           />
           <ValidIcon v-if="postCodeValid && selected[address_type].postcode !== ''"/>
+          <div class="error-icon-block">
+            <ErrorIcon/>
+          </div>
           <ErrorMessage
             v-if="getAddressFieldHasError(address_type, 'Postcode')"
             :message="
@@ -179,6 +194,7 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
+import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // Stores
 import { mapActions, mapState, mapWritableState } from 'pinia';
@@ -197,6 +213,7 @@ export default {
     MyButton,
     ErrorMessage,
     ValidIcon,
+    ErrorIcon,
   },
   props: {
     address_type: {

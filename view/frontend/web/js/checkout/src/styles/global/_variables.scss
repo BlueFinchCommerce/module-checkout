@@ -20,13 +20,14 @@
     --active__gray-color: #F3F3F3;
     --focus-color: var(--primary__color);
     --blue-color: #326BAB;
+    --dark-blue-color: #063967;
     --color-theme__light-grey: rgba(39, 48, 58, 0.1);
     --color-theme__light-grey1: #A3A4A7;
     --transparent-color: transparent;
     --success__color: var(--primary__color);
     --success__border-color: #ACD765;
     --success__background-color: #E9F2C6;
-    --error__color: #E22222;
+    --error__color: #BD0005;
     --error-text__color: var(--error__color);
     --error-label__color: var(--error__color);
     --error__border-color: #CF302A;
@@ -36,8 +37,8 @@
     --page-background__color-desktop: var(--primary-gray__color);
     --page-background__color-mobile: var(--white__color);
     --container-background__color: var(--primary-gray__color);
-    --header-background: #063967;
-    --footer-background: #063967;
+    --header-background: var(--dark-blue-color);
+    --footer-background: var(--dark-blue-color);
 
     //
     // States

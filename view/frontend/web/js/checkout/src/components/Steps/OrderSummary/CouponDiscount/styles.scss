@@ -67,6 +67,7 @@ div.dropdown.coupon-dropdown {
       text-transform: var(--drop-button-down-text-transform, uppercase);
       border-radius: var(--inputs-border-radius, 0 var(--input-border-radius) var(--input-border-radius) 0);
       padding: var(--drop-button-padding, 12px);
+      margin-top: 0;
       width: initial;
     }
 

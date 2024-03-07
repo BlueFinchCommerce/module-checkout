@@ -1,5 +1,5 @@
 <template>
-  <div class="text-input" :class="{ 'custom-validation-error': validationErrorMessage !== '' }">
+  <div class="text-input" :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }">
     <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
       <span
         v-if="label"

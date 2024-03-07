@@ -40,6 +40,7 @@
           @keyup="emailAddressChange"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
+        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
@@ -191,6 +192,7 @@ import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
+import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // helpers
 import getBaseUrl from '@/helpers/getBaseUrl';
@@ -200,6 +202,7 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 export default {
   name: 'EmailAddress',
   components: {
+    ErrorIcon,
     TextInput,
     MyButton,
     HideIcon,
