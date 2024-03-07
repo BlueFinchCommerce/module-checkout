@@ -1,28 +1,17 @@
 <template>
-  <div
-    :style="style"
-    class="pay-with__container"
-  >
-    <TextField
-      v-if="isExpressPaymentsVisible"
-      class="pay-with__message"
-      :text="payWithText"
-    />
-    <TextField
-      v-else
-      class="pay-with__message"
-      :text="$t('payNoExpressWithBlockTitle')"
-    />
+  <div :style="style" class="pay-with__container">
+    <TextField v-if="isExpressPaymentsVisible" class="pay-with__message" :text="payWithText" />
+    <TextField v-else class="pay-with__message" :text="$t('payNoExpressWithBlockTitle')" />
     <ul class="pay-with__column">
-      <li
-        v-for="(paymentType, index) in paymentTypes"
-        :key="index"
-        class="pay-with__content"
-      >
-        <img
-          :src="paymentType.icon"
-          :alt="paymentType.name"
-        >
+      <li v-for="(paymentType, index) in paymentTypes" :key="index" class="pay-with__content">
+        <img v-if="!paymentType.icon.includes('klarna_account')" :src="paymentType.icon.includes('klarna') ? klarnaIcon
+          : paymentType.icon.includes('clearpay') ? clearPayIcon
+            : paymentType.icon.includes('paypal') ? paypalIcon
+              : paymentType.icon.includes('amex') ? amexIcon
+                : paymentType.icon.includes('mc') ? mastercardIcon
+                  : paymentType.icon.includes('visa') ? visaIcon
+                    : paymentType.icon.includes('paypal') ? paypalIcon
+                      : paymentType.icon" :alt="paymentType.name" :class="generateClass(paymentType.name)">
       </li>
     </ul>
   </div>
@@ -32,10 +21,19 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
-import usePaymentStore from '@/stores/PaymentStore';
+import useAdyenStore from '@/stores/AdyenStore';
+import getStaticUrl from '@/helpers/getStaticPath';
 
 import { computed, reactive } from 'vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
+
+// icons
+import visa from './icons/Visa.svg';
+import mastercard from './icons/MasterCard.svg';
+import amex from './icons/AmericanExpress.svg';
+import clearPay from './icons/ClearPay.svg';
+import klarna from './icons/Klarna.svg';
+import paypal from './icons/Paypal.svg';
 
 export default {
   name: 'PayWith',
@@ -70,10 +68,29 @@ export default {
     return {
       payWithText: '',
       payWithTextId: 'gene-bettercheckout-paywith-text',
+      paymentIcons: [],
     };
   },
   computed: {
-    ...mapState(usePaymentStore, ['paymentTypes']),
+    ...mapState(useAdyenStore, ['paymentTypes']),
+    visaIcon() {
+      return `${getStaticUrl(visa)}`;
+    },
+    mastercardIcon() {
+      return `${getStaticUrl(mastercard)}`;
+    },
+    amexIcon() {
+      return `${getStaticUrl(amex)}`;
+    },
+    clearPayIcon() {
+      return `${getStaticUrl(clearPay)}`;
+    },
+    klarnaIcon() {
+      return `${getStaticUrl(klarna)}`;
+    },
+    paypalIcon() {
+      return `${getStaticUrl(paypal)}`;
+    },
   },
   async created() {
     await this.getStoreConfig();
@@ -89,6 +106,11 @@ export default {
 
     setPayWithText(event) {
       this.payWithText = event?.detail || this.$t('payWithBlockTitle');
+    },
+
+    generateClass(paymentName) {
+      // Convert paymentType.name to lowercase and replace spaces with underscores
+      return paymentName.toLowerCase().replace(/\s+/g, '_');
     },
   },
 };

@@ -4,8 +4,8 @@
        :class="{opened: isVisible}">
     <Shipping fill="black" />
     <TextField class="dropdown-ext" text="Lorem ipsum dolor sit amet"/>
-    <ArrowDown class="dropdown-arrow__down" stroke="black" v-show="!isVisible"/>
-    <ArrowUp class="dropdown-arrow__up" stroke="black" v-show="isVisible"/>
+    <ArrowDown class="dropdown-arrow__down" v-show="!isVisible"/>
+    <ArrowUp class="dropdown-arrow__up" v-show="isVisible"/>
   </div>
   <DropDown v-show="isVisible" :class="{active: isVisible}">
     <template v-slot:content>

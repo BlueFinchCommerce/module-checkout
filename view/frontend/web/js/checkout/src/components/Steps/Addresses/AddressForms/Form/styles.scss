@@ -1,7 +1,6 @@
 @import '@/styles/global/_breakpoints';
 
 .address-form {
-  margin-top: var(--indent__base);
   .select-address-btn {
     margin-top: var(--indent__base);
   }
@@ -12,6 +11,12 @@
     p {
       display: inline-block;
     }
+  }
+}
+
+.phone-field {
+  p {
+    margin-bottom: var(--indent__base);
   }
 }
 

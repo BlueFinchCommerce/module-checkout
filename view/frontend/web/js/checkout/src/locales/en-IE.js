@@ -3,7 +3,8 @@ export default {
   header: {
     text: 'Secure Checkout',
   },
-  dividerText: 'or',
+  dividerText: 'Or checkout below with credit/debit card',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Pay With',
   orderSummary: {
@@ -21,9 +22,14 @@ export default {
     removeItemButtonLabel: 'remove item',
     minusOneItem: 'minus one item',
     plusOneItem: 'plus one item',
-    giftDiscountTitle: 'Apply Promotional Code',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
+    giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
-      placeholder: 'Enter promotional code',
+      placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
     },
     freeShippingAvailable: 'Good news: your order will be delivered for Free.',
@@ -157,7 +163,7 @@ export default {
   },
   signInButton: 'Sign In',
   noAccountGuestButton: 'Continue as a Guest',
-  accountGuestButton: 'Or Continue as a Guest',
+  accountGuestButton: 'Continue as a Guest',
   continueButton: 'Continue',
   forgotPass: 'Forgot your Password',
   updateButton: 'Update',

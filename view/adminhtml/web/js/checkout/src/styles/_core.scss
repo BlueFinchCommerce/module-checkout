@@ -14,76 +14,18 @@ body {
   }
 }
 
-#vue-checkout-display {
+#gene-better-checkout-root {
   color: var(--text__color);
-  margin: 0;
-  line-height: 1.6;
-  height: calc(100% - 110px);
-  font-size: var(--font__base);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
   font-family: var(--font-family-base);
-
-  button {
-    p {
-      margin: 0;
-    }
-  }
-
-  //Styles for OKA footer blocks that come from admin
-  .footer-messaging-blocks {
-    p,
-    span,
-    a,
-    li {
-      font-family: var(--font-family-copy);
-      color: var(--text__color);
-    }
-
-    h2, h2 span, h1, h1 span {
-      font-family: var(--font-family-base);
-    }
-
-    p {
-      margin-bottom: var(--indent__base);
-    }
-
-    strong {
-      font-weight: var(--font-weight__bold);
-    }
-
-    li {
-      margin: 0 0 var(--indent__base);
-      position: relative;
-      padding-left: var(--indent__l);
-      line-height: 1.5;
-      font-weight: 400;
-      list-style: none;
-
-      &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: var(--indent__s);
-        left: 0;
-        width: 12px;
-        height: 12px;
-        background-color: var(--primary__color);
-        border-radius: 6px;
-      }
-    }
-  }
-
-  .truevault-polaris-privacy-notice {
-    color: var(--text__color);
-
-    &:hover {
-      opacity: .7;
-    }
-  }
+  font-size: var(--font__base);
+  line-height: 1.6;
+  height: calc(100% - 110px);
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   .root {
     background: var(--page-background__color-mobile);

@@ -4,6 +4,7 @@ export default {
     text: 'Sichere Bestellung',
   },
   dividerText: 'Oder gib deine E-Mailadresse ein für eine Zahlung per Kredit- oder Bankkarte',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Gib deine E-Mailadresse ein für eine Zahlung per Kredit- oder Bankkarte',
   orderSummary: {
     applyBtn: 'Anwenden',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'Artikel entfernen',
     minusOneItem: 'Ein Artikel weniger',
     plusOneItem: 'Ein Artikel mehr',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Promo Code eingeben',
     giftCardDiscount: {
       placeholder: 'Code eingeben',
