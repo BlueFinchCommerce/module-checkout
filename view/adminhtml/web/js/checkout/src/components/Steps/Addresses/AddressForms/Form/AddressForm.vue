@@ -5,134 +5,93 @@
         autocomplete="on"
         @submit.prevent="validateAndSave()"
       >
-        <div>
-          <TextInput
-            v-model="selected[address_type].street[0]"
-            type="text"
-            :class="{'field-valid': streetAddress1Valid
-            && !getAddressFieldHasError(address_type, 'Address Line 1')}"
-            :error="getAddressFieldHasError(address_type, 'Address Line 1')"
-            :error-message="getAddressFieldHasError(address_type, 'Address Line 1')
+        <TextInput
+          v-model="selected[address_type].street[0]"
+          type="text"
+          :error="getAddressFieldHasError(address_type, 'Address Line 1')"
+          :error-message="getAddressFieldHasError(address_type, 'Address Line 1')
             ? $t('errorMessages.streetErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.' +
+          :placeholder="$t('yourDetailsSection.deliverySection.' +
             'addressForm.addressField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.label')"
-            required
-            @input="validateStreet(selected[address_type].street[0])"
-            @focusout="validateStreet(selected[address_type].street[0])"
-          />
-          <ValidIcon v-if="streetAddress1Valid
-          && !getAddressFieldHasError(address_type, 'Address Line 1')"/>
-          <div class="error-icon-block">
-            <ErrorIcon/>
-          </div>
-        </div>
-        <div>
-          <TextInput
-            v-model="selected[address_type].street[1]"
-            type="text"
-            :class="{'field-valid': streetAddress2Valid
-            && !getAddressFieldHasError(address_type, 'Address Line 2')}"
-            :error="getAddressFieldHasError(address_type, 'Address Line 2')"
-            :error-message="getAddressFieldHasError(address_type, 'Address Line 2')
+          required
+          @input="validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
+          @focusout="
+            validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
+        />
+
+        <TextInput
+          v-model="selected[address_type].street[1]"
+          type="text"
+          :error="getAddressFieldHasError(address_type, 'Address Line 2')"
+          :error-message="getAddressFieldHasError(address_type, 'Address Line 2')
             ? $t('errorMessages.streetErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.unrequired')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.unrequiredLabel')"
-            @input="validateStreet2(selected[address_type].street[1])"
-            @focusout="validateStreet2(selected[address_type].street[1])"
-          />
-          <ValidIcon v-if="streetAddress2Valid
-          && !getAddressFieldHasError(address_type, 'Address Line 2')"/>
-          <div class="error-icon-block">
-            <ErrorIcon/>
-          </div>
-        </div>
-        <div>
-          <TextInput
-            v-model="selected[address_type].city"
-            type="text"
-            :class="{'field-valid': cityValid
-            && !getAddressFieldHasError(address_type, 'City')}"
-            :error="getAddressFieldHasError(address_type, 'City')"
-            :error-message="getAddressFieldHasError(address_type, 'City')
+          @input="validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
+          @focusout="
+            validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
+        />
+
+        <TextInput
+          v-model="selected[address_type].city"
+          type="text"
+          :error="getAddressFieldHasError(address_type, 'City')"
+          :error-message="getAddressFieldHasError(address_type, 'City')
             ? $t('errorMessages.cityErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
             'cityField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'cityField.label')"
-            required
-            @input="validateCity(selected[address_type].city)"
-            @focusout="validateCity(selected[address_type].city)"
-          />
-          <ValidIcon v-if="cityValid
-          && !getAddressFieldHasError(address_type, 'City')"/>
-          <div class="error-icon-block">
-            <ErrorIcon/>
-          </div>
-        </div>
-        <div>
-          <TextInput
-            v-if="displayState && !getRegionOptions(address_type).length"
-            v-model="selected[address_type].region"
-            :class="{'field-valid': regionValid
-            && !getAddressFieldHasError(address_type, 'State/Region')}"
-            type="text"
-            :error="getAddressFieldHasError(address_type, 'State/Region')"
-            :error-message="getAddressFieldHasError(address_type, 'State/Region')
+          required
+          @input="validateCity(selected[address_type].city)"
+          @focusout="validateCity(selected[address_type].city)"
+        />
+        <TextInput
+          v-if="displayState && !getRegionOptions(address_type).length"
+          v-model="selected[address_type].region"
+          type="text"
+          :error="getAddressFieldHasError(address_type, 'State/Region')"
+          :error-message="getAddressFieldHasError(address_type, 'State/Region')
             ? $t('errorMessages.regionErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
             'regionField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'regionField.label')"
-            :required="getRegionRequired(address_type)"
-            @input="validateRegion(selected[address_type].region)"
-            @focusout="validateRegion(selected[address_type].region)"
-          />
-          <ValidIcon v-if="regionValid
-          && !getAddressFieldHasError(address_type, 'State/Region')"/>
-          <div class="error-icon-block">
-            <ErrorIcon/>
-          </div>
-        </div>
+          :required="getRegionRequired(address_type)"
+          @focusout="validateRegion(selected[address_type].region)"
+        />
         <SelectInput
           v-if="displayState && getRegionOptions(address_type).length"
           v-model="selected[address_type].region_id"
           :options="getRegionOptions(address_type)"
           :error="getAddressFieldHasError(address_type, 'State/Region')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-          'regionField.label')"
+            'regionField.label')"
           :required="getRegionRequired(address_type)"
           @change="setRegion($event)"
         />
-        <div>
-          <TextInput
-            v-model="selected[address_type].postcode"
-            :error="getAddressFieldHasError(address_type, 'Postcode')"
-            :class="{'field-valid': postCodeValid
-            && selected[address_type].postcode !== ''}"
-            type="text"
-            autocomplete="postal-code"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
+        <TextInput
+          v-model="selected[address_type].postcode"
+          :error="getAddressFieldHasError(address_type, 'Postcode')"
+          type="text"
+          autocomplete="postal-code"
+          :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.label')"
-            :required="postcodeRequired(selected[address_type].country_id)"
-            @input="validatePostcode(address_type, true)"
-            @focusout="validatePostcode(address_type, true)"
-          />
-          <ValidIcon v-if="postCodeValid && selected[address_type].postcode !== ''"/>
-          <div class="error-icon-block">
-            <ErrorIcon/>
-          </div>
-          <ErrorMessage
-            v-if="getAddressFieldHasError(address_type, 'Postcode')"
-            :message="
+          :required="postcodeRequired(selected[address_type].country_id)"
+          @input="validatePostcode(address_type, true)"
+          @focusout="validatePostcode(address_type, true)"
+        />
+        <ErrorMessage
+          v-if="getAddressFieldHasError(address_type, 'Postcode')"
+          :message="
             `${$t('errorMessages.postCodeErrorMessage')} ${selected[address_type].country_id}`"
-          />
-        </div>
+        />
         <SelectInput
           v-model="selected[address_type].country_id"
           :options="selectOptions"
@@ -173,7 +132,6 @@
         </div>
         <div>
           <MyButton
-            v-if="address_type !== 'shipping'"
             class="select-address-btn"
             type="submit"
             primary
@@ -193,8 +151,6 @@ import SelectInput from '@/components/Core/Inputs/Select/Select.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
-import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // Stores
 import { mapActions, mapState, mapWritableState } from 'pinia';
@@ -212,8 +168,6 @@ export default {
     SelectInput,
     MyButton,
     ErrorMessage,
-    ValidIcon,
-    ErrorIcon,
   },
   props: {
     address_type: {
@@ -234,14 +188,10 @@ export default {
     return {
       buttonEnabled: false,
       requiredErrorMessage: '',
-      streetAddress1Valid: false,
-      streetAddress2Valid: false,
-      cityValid: false,
-      regionValid: false,
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'postCodeValid', 'inputsSanitiseError']),
+    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn']),
     ...mapState(useConfigStore, ['countries', 'stateRequired', 'displayState',
       'countryCode', 'optionalZipCountries', 'postcodeRequired']),
     selectOptions() {
@@ -256,7 +206,7 @@ export default {
         ));
     },
   },
-  created() {
+  async created() {
     this.setupCountry();
     this.updateRegionRequired(this.address_type);
 
@@ -267,7 +217,7 @@ export default {
         && mutation.payload.selected[this.address_type])) {
         this.updateButtonState();
       }
-    }, { flush: 'sync' });
+    });
     this.updateButtonState();
   },
   methods: {
@@ -336,8 +286,6 @@ export default {
         const streetAddress1 = this.selected[this.address_type].street[0];
         const streetAddress2 = this.selected[this.address_type].street[1];
         hasError = ([streetAddress1, streetAddress2].join(' ').length > 75);
-
-        this.streetAddress1Valid = !hasError;
       }
 
       hasError
@@ -350,8 +298,6 @@ export default {
       const streetAddress2 = this.selected[this.address_type].street[1];
       const hasError = (text && [streetAddress1, streetAddress2].join(' ').length > 75);
 
-      this.streetAddress2Valid = !hasError;
-
       hasError
         ? this.addAddressError(this.address_type, 'Address Line 2')
         : this.removeAddressError(this.address_type, 'Address Line 2');
@@ -359,9 +305,6 @@ export default {
 
     validateCity(text) {
       const hasError = !text || (typeof text === 'string' && !text.trim());
-
-      this.cityValid = !hasError;
-
       hasError
         ? this.addAddressError(this.address_type, 'City')
         : this.removeAddressError(this.address_type, 'City');
@@ -371,9 +314,6 @@ export default {
       // First check to see if region is even required.
       if (this.getRegionRequired(this.address_type)) {
         const hasError = !text || (typeof text === 'string' && !text.trim());
-
-        this.regionValid = !hasError;
-
         hasError
           ? this.addAddressError(this.address_type, 'State/Region')
           : this.removeAddressError(this.address_type, 'State/Region');
@@ -393,7 +333,7 @@ export default {
             this.selected[addressType].firstname,
           ) && this.validateNameField(
             addressType,
-            'Last name',
+            'First name',
             this.selected[addressType].firstname,
           ) && this.validatePhone(
             addressType,
@@ -401,10 +341,8 @@ export default {
           )
         );
 
-      const validAddress = this.validateAddress(addressType);
-      const validPostcode = this.validatePostcode(this.address_type);
-
-      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
+      this.buttonEnabled = this.validateAddress(addressType) && this.validatePostcode(this.address_type)
+        && areNamesValid;
     },
   },
 };

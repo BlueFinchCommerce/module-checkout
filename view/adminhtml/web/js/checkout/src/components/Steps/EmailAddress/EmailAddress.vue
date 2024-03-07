@@ -7,10 +7,9 @@
     </template>
 
     <div class="checkout-section checkout-email">
-      <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
+      <template v-if="emailRegistered !== undefined && !isLoggedIn">
         <TextField
           class="welcome-message-title"
-          data-cy="email"
           :text="emailRegistered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
@@ -26,8 +25,6 @@
           ref="email"
           v-model="customer.email"
           :error="emailError"
-          :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
-          data-cy="email"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -39,8 +36,6 @@
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
         />
-        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
-        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
@@ -48,14 +43,13 @@
           @keydown.enter="changeEmail()"
         >
           <button class="edit-button"
-                  data-cy="button"
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
               font-weight="400"
               font-size="12px"
             />
-            <Edit/>
+            <Edit />
           </button>
         </div>
       </div>
@@ -77,8 +71,6 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            @keyup="passwordKeyTrigger"
-            data-cy="password"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -91,10 +83,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon/>
+                  <ShowIcon />
                 </span>
                 <span v-else>
-                  <HideIcon/>
+                  <HideIcon />
                 </span>
               </button>
             </template>
@@ -119,7 +111,6 @@
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
-            data-cy="forgot-pass-button"
           >
             <span style="display: none">forgotPass link</span>
             <TextField
@@ -141,11 +132,6 @@
             :label="$t('signInButton')"
             @click="submitForm"
           />
-          <div class="divider">
-            <div class="divider-line"></div>
-            <TextField :text="$t('signInDividerText')"/>
-            <div class="divider-line"></div>
-          </div>
           <MyButton
             class="guest-btn"
             secondary
@@ -191,8 +177,6 @@ import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
 import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
-import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // helpers
 import getBaseUrl from '@/helpers/getBaseUrl';
@@ -202,12 +186,10 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 export default {
   name: 'EmailAddress',
   components: {
-    ErrorIcon,
     TextInput,
     MyButton,
     HideIcon,
     ShowIcon,
-    ValidIcon,
     TextField,
     ErrorMessage,
     Loader,
@@ -219,7 +201,6 @@ export default {
       // emailRegistered has three states - Undefined, false, true. Undefined is for unknown state.
       emailRegistered: undefined,
       emailErrorMessage: '',
-      emailValid: false,
       passwordErrorMessage: '',
       passwordError: false,
       loginErrorMessage: null,
@@ -233,7 +214,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
+    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     proceedAsGuestInvalid() {
@@ -245,13 +226,12 @@ export default {
   },
   async mounted() {
     await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
-    this.trackStep({
-      step: 1,
-      description: 'login',
-    });
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+
+    document.addEventListener(this.continueButtonTextId, this.setContinueButtonText);
+  },
+  unmounted() {
+    document.removeEventListener(this.continueButtonTextId, this.setContinueButtonText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -263,6 +243,10 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
+
+    setContinueButtonText(event) {
+      this.continueButtonText = event?.detail || this.$t('continueButton');
+    },
 
     toggleShowPassword() {
       this.showPassword = !this.showPassword;
@@ -341,17 +325,6 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
-      } else {
-        this.emailValid = true;
-      }
-    },
-
-    passwordKeyTrigger(event) {
-      // Check if the Enter key was pressed
-      const pressedKey = event.key || event.keyCode;
-
-      if (pressedKey === 'Enter' || pressedKey === 13) {
-        this.submitForm();
       }
     },
 
