@@ -12,12 +12,18 @@ define([
         DESIGNER_MODAL: '#gene-bettercheckout-designer',
         DESIGNER_ROOT: '#gene-better-checkout-root',
         DESIGNER_VALUES: '#gene_better_checkout_general_designer_values',
-        DESIGNER_VALUES_SYSTEM: '#gene_better_checkout_general_designer_values_inherit, #gene_better_checkout_general_custom_wording_inherit, #gene_better_checkout_general_gene_better_checkout_logo_inherit',
+        DESIGNER_VALUES_SYSTEM: `
+            #gene_better_checkout_general_designer_values_inherit,
+            #gene_better_checkout_general_custom_wording_inherit,
+            #gene_better_checkout_general_gene_better_checkout_logo_inherit
+        `,
         CUSTOM_WORDING: '#gene_better_checkout_general_custom_wording',
         DESIGNER_LOGO: '#gene_better_checkout_general_gene_better_checkout_logo',
-        DESIGNER_LOGO_LABEL: '#gene-bettercheckout-designer label[for="gene_better_checkout_general_gene_better_checkout_logo"]',
+        DESIGNER_LOGO_LABEL: `
+            #gene-bettercheckout-designer label[for="gene_better_checkout_general_gene_better_checkout_logo"]
+        `,
         DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_gene_better_checkout_logo_image',
-        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_gene_better_checkout_logo_delete',
+        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_gene_better_checkout_logo_delete'
     };
 
     return Component.extend({
@@ -83,6 +89,7 @@ define([
         handleFileInputChange: function (input) {
             if (input.files && input.files.length) {
                 let reader = new FileReader();
+
                 reader.onload = () => this.dispatchLogoChangeEvent(reader.result);
                 reader.readAsDataURL(input.files[0]);
             } else {
@@ -92,6 +99,7 @@ define([
 
         dispatchLogoChangeEvent: function (src) {
             const event = new CustomEvent('gene:checkout-image-update', { detail: src });
+
             document.dispatchEvent(event);
             window.geneCheckout = window.geneCheckout || {};
             window.geneCheckout.logo = src;
@@ -99,6 +107,7 @@ define([
 
         dispatchTextChangeEvent: function (value, customEventId) {
             const event = new CustomEvent(customEventId, { detail: value });
+
             document.dispatchEvent(event);
             window.geneCheckout = window.geneCheckout || {};
             window.geneCheckout[customEventId] = value;
@@ -290,32 +299,34 @@ define([
             this.saveWording();
             this.closeModal();
         },
-        
+
         saveImages: function () {
             this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
         },
-        
+
         saveColors: function () {
             const cssValues = this.designerModal.find('.section-config input[data-css-variable]').map(function () {
                 return this.value ? `${this.dataset.cssVariable}:${this.value}` : '';
             }).toArray().filter(value => value).join(';');
-        
+
             this.designerValues.val(cssValues).trigger('change');
         },
-        
+
         saveWording: function () {
-            const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray().reduce((prev, curr) => {
-                if (!curr.value) return prev;
-                return { ...prev, [curr.id]: curr.value };
-            }, {});
-        
-            const storedWordingValue = Object.keys(wordingValues).length ? JSON.stringify(wordingValues) : '';
-        
+            const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]')
+                .toArray()
+                .reduce((prev, curr) => {
+                    if (!curr.value) {return prev;}
+                    return { ...prev, [curr.id]: curr.value };
+                }, {}),
+
+             storedWordingValue = Object.keys(wordingValues).length ? JSON.stringify(wordingValues) : '';
+
             this.customWording.val(storedWordingValue).trigger('change');
         },
 
         closeModal: function () {
             this.designerModal.modal('closeModal');
-        },
+        }
     });
 });
