@@ -1,10 +1,11 @@
 <template>
   <Loader v-if="loadingShippingMethods" />
   <div class="details-form">
-    <div
-      class="details-form-header"
-    >
-      <div class="instantCheckout-block" v-show="isExpressPaymentsVisible">
+    <div class="details-form-header">
+      <div
+        v-show="isExpressPaymentsVisible"
+        class="instantCheckout-block"
+      >
         <TextField :text="instantCheckoutText" />
       </div>
       <div class="instant-payment-buttons">
@@ -12,8 +13,14 @@
           v-if="errorMessage !== ''"
           :message="errorMessage"
         />
-        <AdyenGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
+        <AdyenGooglePay
+          :key="`adyenGooglePay-${storedKey}`"
+          @expressPaymentsLoad="expressPaymentsVisible"
+        />
+        <AdyenApplePay
+          :key="`adyenApplePay-${storedKey}`"
+          @expressPaymentsLoad="expressPaymentsVisible"
+        />
       </div>
       <DividerComponent />
       <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
@@ -71,16 +78,11 @@
         && !isClickAndCollect && isItemRequiringDelivery"
       class="additional-detail-form"
     >
-      <div
-        class="delivery-section"
-      >
-        <div
-          class="details-form-title"
-        >
+      <div class="delivery-section">
+        <div class="details-form-title">
           <YourDetails fill="black" />
-          <TextField
-            :text="$t('yourDetailsSection.title')"
-          />
+          <TextField :text="$t('yourDetailsSection.title')" />
+          <div class="divider-line" />
         </div>
 
         <NameFields
@@ -93,14 +95,13 @@
         >
           <Locate />
           <div class="delivery-section-title-text">
-            <TextField
-              :text="$t('yourDetailsSection.deliverySection.title')"
-            />
+            <TextField :text="$t('yourDetailsSection.deliverySection.title')" />
           </div>
+          <div class="divider-line" />
         </div>
 
         <div>
-          <div :class="!customerInfoValidation ? 'disabled' : ''">
+          <div>
             <AddressFinder
               v-if="!selected[address_type].id
                 || (selected[address_type].id === 'custom' && selected[address_type].editing)"
@@ -115,7 +116,6 @@
             && !selected[address_type].editing && address_type === 'shipping'
             && addressFinder.enabled"
           class="manually-button"
-          :class="!customerInfoValidation ? 'disabled' : ''"
           :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
           @click.prevent="editAddress"
         />
@@ -185,6 +185,7 @@
 </template>
 <script>
 // icons
+import { mapActions, mapState } from 'pinia';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
@@ -210,7 +211,6 @@ import ClickAndCollect from '@/components/Steps/Addresses/ClickAndCollect/ClickA
 import Loader from '@/components/Core/Loader/Loader.vue';
 
 // Stores
-import { mapActions, mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -284,8 +284,22 @@ export default {
   },
   async mounted() {
     await this.getStoreConfig();
+
+    const types = {
+      shipping: 'customerInfoValidation',
+      billing: 'billingInfoValidation',
+    };
+
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+
+    Object.keys(types).forEach((type) => {
+      const first = this.validateNameField(type, 'First name', this.selected[type].firstname);
+      const last = this.validateNameField(type, 'Last name', this.selected[type].lastname);
+      const phone = this.validatePhone(type, this.selected[type].telephone);
+
+      this[types[type]] = first && last && phone;
+    });
 
     document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
@@ -306,13 +320,59 @@ export default {
       'validatePostcode',
       'setAddress',
     ]),
-    ...mapActions(usePaymentStore, ['getPaymentMethodsResponse']),
     ...mapActions(useShippingMethodsStore, ['clearShippingMethodCache', 'setClickAndCollect', 'setNotClickAndCollect']),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
     expressPaymentsVisible(value) {
       this.isExpressPaymentsVisible = value;
     },
-    submitShippingOption() {
+    updateButtonState() {
+      const addressType = this.address_type;
+
+      // If we're on shipping then names are valid in this scenario.
+      // If we're on billing then validate the name fields.
+      const areNamesValid = addressType !== 'billing'
+        || (
+          this.validateNameField(
+            addressType,
+            'First name',
+            this.selected[addressType].firstname,
+          ) && this.validateNameField(
+            addressType,
+            'Last name',
+            this.selected[addressType].firstname,
+          ) && this.validatePhone(
+            addressType,
+            this.selected[addressType].telephone,
+          )
+        );
+
+      const validAddress = this.validateAddress(addressType);
+      const validPostcode = this.validatePostcode(this.address_type);
+
+      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
+    },
+    async validateAndSave() {
+      this.requiredErrorMessage = '';
+      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      if (isValid) {
+        this.setAddressAsCustom(this.address_type);
+        this.setEditing(this.address_type, false);
+
+        // If the address type is shipping and the billing is set to use the same then update billing too.
+        if (this.address_type === 'shipping' && this.selected.billing.same_as_shipping) {
+          const clonedShipping = deepClone(this.selected.shipping);
+          this.setAddress(clonedShipping, 'billing');
+        }
+      } else {
+        const fieldErrors = this.selected.formErrors[this.address_type];
+        Object.entries(fieldErrors).forEach(([value]) => {
+          this.addAddressError(this.address_type, value);
+        });
+        this.requiredErrorMessage = this.selected.formErrors.message[this.address_type];
+      }
+    },
+    async submitShippingOption() {
+      await this.validateAndSave();
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
       if (isValid) {
         if (this.selected.billing.same_as_shipping) {

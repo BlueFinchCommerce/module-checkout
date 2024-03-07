@@ -54,7 +54,7 @@
               font-weight="400"
               font-size="12px"
             />
-            <Edit />
+            <Edit/>
           </button>
         </div>
       </div>
@@ -90,10 +90,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon />
+                  <ShowIcon/>
                 </span>
                 <span v-else>
-                  <HideIcon />
+                  <HideIcon/>
                 </span>
               </button>
             </template>
@@ -140,6 +140,11 @@
             :label="$t('signInButton')"
             @click="submitForm"
           />
+          <div class="divider">
+            <div class="divider-line"></div>
+            <TextField :text="$t('signInDividerText')"/>
+            <div class="divider-line"></div>
+          </div>
           <MyButton
             class="guest-btn"
             secondary

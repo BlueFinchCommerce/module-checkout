@@ -11,6 +11,7 @@
       class="adyen-payment__header"
       :text="paymentStepText"
     />
+    <div class="divider-line"></div>
   </div>
   <div :class="loadingPaymentMethods ? 'text-loading' : ''">
     <AdyenPaymentMethods

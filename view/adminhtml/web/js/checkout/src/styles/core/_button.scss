@@ -42,6 +42,7 @@
     border-color: var(--button-primary-border-color);
     border-width: var(--button-primary-border-weight);
     box-shadow: var(--button-primary-border-box-shadow);
+    margin-top: var(--button-primary-margin-top, var(--indent__s));
 
     &:hover {
       color: var(--button-primary-text-color-hover);

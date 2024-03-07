@@ -179,7 +179,7 @@ export default {
         },
         emailRequired: true,
         shippingAddressRequired: true,
-        ShippingAddressParameters: {
+        shippingAddressParameters: {
           phoneNumberRequired: true,
         },
         billingAddressRequired: true,

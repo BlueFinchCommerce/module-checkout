@@ -11,8 +11,7 @@
             v-if="rvvupErrorMessage !== ''"
             :message="rvvupErrorMessage"
           />
-          <AdyenDropIn v-if="isAdyenAvailable" />
-          <BraintreeDropIn />
+          <AdyenDropIn />
           <RvvupPayByBank v-if="rvvupPaymentsActive" />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
@@ -69,8 +68,8 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, ['storeCode', 'rewardsEnabled', 'rvvupPaymentsActive']),
-    ...mapState(usePaymentStore, ['rvvupErrorMessage']),
-    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(usePaymentStore, ['rvvupErrorMessage', 'isPaymentMethodAvailable', 'getPaymentMethodTitle']),
+    ...mapState(useCartStore, ['cartGrandTotal', 'getTotalSegment', 'isItemRequiringDelivery']),
   },
   methods: {
     ...mapActions(useCartStore, ['getCart', 'getCartData']),

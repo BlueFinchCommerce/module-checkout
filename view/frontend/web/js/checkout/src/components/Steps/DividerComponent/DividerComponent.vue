@@ -1,12 +1,12 @@
 <template>
   <div class="divider">
     <div class="divider-line"></div>
-    <TextField :text="$t('dividerText')" font-size="18px" font-weight="400"/>
+    <TextField :text="$t('dividerText')" />
     <div class="divider-line"></div>
   </div>
 </template>
 <script>
-import TextField from '../../Core/TextField/TextField.vue';
+import TextField from '@/components/Core/TextField/TextField.vue';
 
 export default {
   name: 'DividerComponent',

@@ -46,12 +46,10 @@
     <ArrowDown
       v-if="!isDropDownVisible && crosssells.length"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-if="isDropDownVisible && crosssells.length"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
 

@@ -27,10 +27,15 @@
               />
             </div>
             <div class="proceed-to-shipping">
-              <button class="button--blank edit-shipping-button"
-                      :aria-label="$t('yourDetailsSection.editShippingButtonLabel')">
-                <TextField class="edit-button-title" :text="$t('yourDetailsSection.editButton')"/>
-                <Edit/>
+              <button
+                class="button--blank edit-shipping-button"
+                :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+              >
+                <TextField
+                  class="edit-button-title"
+                  :text="$t('yourDetailsSection.editButton')"
+                />
+                <Edit />
               </button>
             </div>
           </div>

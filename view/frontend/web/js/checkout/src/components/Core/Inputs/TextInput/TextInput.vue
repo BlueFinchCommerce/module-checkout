@@ -121,7 +121,8 @@ export default {
   methods: {
     customValidation() {
       const inputValue = this.modelValue;
-      const isValid = sanitiseInputValue(inputValue);
+      const inputType = this.type;
+      const isValid = sanitiseInputValue(inputValue, inputType);
 
       if (this.type !== 'password') {
         if (isValid) {

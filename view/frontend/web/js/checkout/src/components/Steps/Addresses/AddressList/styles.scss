@@ -5,8 +5,14 @@
 
 .address-list {
   .delivery-section {
+    .divider-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      width: 75%;
+      margin-left: var(--indent__base);
+      display: var(--divider-line-display, block);
+    }
+
     &-title {
-      border-bottom: (--delivery-section-border, 1px solid #7A8086);
       padding-bottom: var(--padding-bottom, 0);
       margin-bottom: var(--indent__base);
       display: flex;
