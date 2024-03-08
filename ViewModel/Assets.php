@@ -47,6 +47,14 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getCheckoutFont(): ?string
+    {
+        $fontPath = $this->scopeConfig->get
+    }
+
+    /**
      * @return array
      * @throws LocalizedException
      */
