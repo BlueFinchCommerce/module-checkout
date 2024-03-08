@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Gene\BetterCheckout\ViewModel;
 
+use Gene\BetterCheckout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Asset\File;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
@@ -12,46 +14,43 @@ use Magento\Store\Model\StoreManagerInterface;
 
 class Assets implements ArgumentInterface
 {
+    /** @var string */
     const ASSETS_DEF_FILE = 'manifest.json';
+    /** @var string */
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
+    /** @var string */
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/designer_values';
+    /** @var string */
     const LOGO_PATH = 'gene_better_checkout/general/gene_better_checkout_logo';
-
-    /** @var ScopeConfigInterface  */
-    private $scopeConfig;
-
-    /** @var AssetRepository  */
-    private $assetRepository;
 
     /** @var array */
     private $assetFilesByType = [];
 
-    /** @var StoreManagerInterface */
-    private $storeManager;
-
     /**
-     * Assets constructor.
-     *
      * @param AssetRepository $assetRepository
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
+     * @param ConfigurationInterface $configuration
      */
     public function __construct(
-        AssetRepository $assetRepository,
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager,
-    ) {
-        $this->scopeConfig = $scopeConfig;
-        $this->assetRepository = $assetRepository;
-        $this->storeManager = $storeManager;
-    }
+        private readonly AssetRepository $assetRepository,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly StoreManagerInterface $storeManager,
+        private readonly ConfigurationInterface $configuration
+    ) {}
 
     /**
      * @return string|null
      */
     public function getCheckoutFont(): ?string
     {
-        $fontPath = $this->scopeConfig->get
+        $fontPath = $this->configuration->getFontPath();
+        if (!$fontPath) {
+            return null;
+        }
+
+        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+        return $mediaUrl . ConfigurationInterface::VUE_CHECKOUT_FONT_MEDIA_DIR . '/' . $fontPath;
     }
 
     /**
@@ -155,7 +154,7 @@ class Assets implements ArgumentInterface
         );
 
         if ($logoValue) {
-            $imageBaseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $imageBaseUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
             return $imageBaseUrl . 'gene_better_checkout/' . $logoValue;
         }
 

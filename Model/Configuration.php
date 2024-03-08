@@ -41,4 +41,16 @@ class Configuration implements ConfigurationInterface
             $scopeCode
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
+    {
+        return $this->scopeConfig->getValue(
+            self::VUE_CHECKOUT_FONT_XML_PATH,
+            $scopeType,
+            $scopeCode
+        ) ?? '';
+    }
 }
