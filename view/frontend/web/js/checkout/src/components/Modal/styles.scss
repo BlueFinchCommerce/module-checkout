@@ -19,7 +19,7 @@
 }
 
 .modal {
-  background: var(--modal-background-color, var(--white__color));
+  background: var(--modal-background-color, var(--color__primary-white));
   bottom: 0;
   box-shadow: var(--modal-box-shadow, 0 0 12px 2px rgb(0 0 0 / 15%));
   display: flex;
@@ -36,7 +36,7 @@
   &-header {
     color: var(--primary__color);
     padding: var(--indent__s);
-    font-weight: var(--font-weight__bold);
+    font-weight: var(--font-weight__semibold);
     font-size: 20px;
     display: flex;
     position: relative;
@@ -64,7 +64,7 @@
 }
 
 .btn-close {
-  font-weight: var(--font-weight__bold);
+  font-weight: var(--font-weight__semibold);
   padding: var(--indent__s);
   color: var(--primary__color);
   font-size: var(--font__l);

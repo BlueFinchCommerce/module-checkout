@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .header-container {
-  background: var(--header-background-color);
+  background: var(--header__background-color);
   padding: var(--indent__base) var(--indent__s);
   border-bottom: var(--header__border-bottom);
 
@@ -17,7 +17,7 @@
       display: flex;
       flex-shrink: 0;
       justify-content: end;
-      width: var(--header-logo__width-mobile);
+      width: var(--header-logo__width--mobile);
 
       &.logo-no-width {
         width: auto;
@@ -42,11 +42,11 @@
 
       p {
         font-size: var(--font__base);
-        font-weight: var(--font-weight__semibold);
+        font-weight: var(--font-weight__medium);
         line-height: var(--font__base);
-        color: var(--secure-header-text-color, var(--white__color));
+        color: var(--secure-header-text-color, var(--color__primary-white));
         margin: 0 0 0 var(--indent__s);
-        font-family: var(--font-family-copy);
+        font-family: var(--font-family__copy);
       }
     }
   }
@@ -60,7 +60,7 @@
       padding: var(--header-container-paddings, 0);
 
       .header-logo {
-        width: var(--header-logo__width-desktop);
+        width: var(--header-logo__width--desktop);
       }
     }
   }

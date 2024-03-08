@@ -29,10 +29,10 @@ body {
 }
 
 #gene-better-checkout-root {
-  color: var(--text__color);
+  color: var(--font__color-base);
   display: flex;
   flex-direction: column;
-  font-family: var(--font-family-base);
+  font-family: var(--font-family__base);
   font-size: var(--font__base);
   line-height: 1.6;
   margin: 0;
@@ -41,7 +41,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   .root {
-    background: var(--page-background__color-mobile);
+    background: var(--page__background-color--mobile);
     flex: 1;
 
     p {
@@ -60,7 +60,7 @@ body {
 
   @media screen and (min-width: $screen__m) {
     .root {
-      background: var(--page-background__color-desktop);
+      background: var(--page__background-color--desktop);
     }
 
     .steps-container {

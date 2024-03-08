@@ -19,7 +19,7 @@
   }
 
   &-title {
-    font-family: var(--font-family-header);
+    font-family: var(--font-family__header);
     font-size: var(--font__l);
   }
 
@@ -30,7 +30,7 @@
   }
 
   &-semibold {
-    font-weight: var(--font-weight__semibold);
+    font-weight: var(--font-weight__medium);
   }
 
   &-use-location {
@@ -76,7 +76,7 @@
   &-select {
     color: var(--primary__color);
     cursor: pointer;
-    font-family: var(--font-family-header);
+    font-family: var(--font-family__header);
     font-size: var(--font__l);
     margin-top: var(--indent__s);
   }

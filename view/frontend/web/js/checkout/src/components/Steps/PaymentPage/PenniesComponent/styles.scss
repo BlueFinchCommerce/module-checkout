@@ -14,7 +14,7 @@
 
   p {
     font-size: var(--font__m);
-    font-weight: var(--font-weight__heavier);
+    font-weight: var(--font-weight__bold);
     line-height: 24px;
   }
 }
@@ -54,7 +54,7 @@
     span,
     p {
       font-size: var(--font__base);
-      font-weight: var(--font-weight__heavier);
+      font-weight: var(--font-weight__bold);
       line-height: 20px;
       word-break: break-word;
     }
@@ -97,8 +97,8 @@
 
     button {
       background: var(--available__color2);
-      color: var(--white__color);
-      font-weight: var(--font-weight__bold);
+      color: var(--color__primary-white);
+      font-weight: var(--font-weight__semibold);
       width: 70%;
     }
   }

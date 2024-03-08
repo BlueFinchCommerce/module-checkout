@@ -4,13 +4,13 @@
 .order-summary {
   &-container {
     align-items: center;
-    background: var(--summary-background);
+    background: var(--slide-up__background-color-closed);
     color: var(--mobile-text__color);
     border-top: 1px solid rgba(37, 48, 59, 0.4);
     box-shadow: var(--order-summary-box-shadow, 0px -1px 5px rgba(0, 0, 0, 0.4));
     bottom: 0;
     display: flex;
-    height: var(--summary-height);
+    height: var(--slide-up__height);
     justify-content: space-between;
     padding: var(--indent__base);
     position: fixed;
@@ -40,20 +40,20 @@
 
     &-text {
       font-size: var(--font__heading--mobile);
-      font-weight: var(--font-weight__semibold);
+      font-weight: var(--font-weight__medium);
       color: var(--text__color--heading);
     }
 
     .price {
       font-size: var(--font__heading--mobile);
-      font-weight: var(--font-weight__bold, 500);
+      font-weight: var(--font-weight__semibold, 500);
       color: var(--text__color--heading);
     }
   }
 
   &-description {
     font-size: var(--font__s);
-    font-weight: var(--font-weight__light);
+    font-weight: var(--font-weight__regular);
     color: var(--text__color);
   }
 

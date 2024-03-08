@@ -10,7 +10,7 @@
 }
 
 .saved-shipping {
-  background: var(--saved-shipping-section-background, var(--steps-completed-background));
+  background: var(--saved-shipping-section-background, var(--steps-complete__background-color));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   border-top: var(--details-section-border-top, none);
@@ -37,8 +37,8 @@
     }
 
     p {
-      font-weight: var(--font-weight__bold);
-      font-family: var(--font-family-copy);
+      font-weight: var(--font-weight__semibold);
+      font-family: var(--font-family__copy);
       font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
       margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
@@ -70,7 +70,7 @@
     }
 
     p {
-      font-family: var(--font-family-copy);
+      font-family: var(--font-family__copy);
       font-size: var(--proceed-to-shipping-text-font-size, var(--font__s));
       display: var(--edit-button-title-visibility, none);
       text-decoration: underline;
@@ -82,7 +82,7 @@
 
 @media screen and (min-width: $screen__m) {
   .saved-shipping {
-    border-radius: var(--steps-completed-radius);
+    border-radius: var(--steps-complete__radius);
     &__icon {
       p {
         font-size: var(--font__heading--desktop);

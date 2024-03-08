@@ -27,8 +27,8 @@
       margin-left: var(--shipping-address-text-margin, var(--indent__base));
 
       .main-text {
-        font-weight: var(--font-weight__semibold, 500);
-        font-family: var(--shipping-page-main-text-font-family, var(--font-family-copy));
+        font-weight: var(--font-weight__medium, 500);
+        font-family: var(--shipping-page-main-text-font-family, var(--font-family__copy));
         font-size: var(--font__heading--mobile);
         color: var(--text__color--heading);
       }
@@ -96,7 +96,7 @@
 
   p:first-child {
     font-size: var(--shipping-method-title-font-size, var(--font__m));
-    font-weight: var(--shipping-method-title-font-weight, var(--font-weight__semibold, 400));
+    font-weight: var(--shipping-method-title-font-weight, var(--font-weight__medium, 400));
   }
 
   p:nth-child(2) {
@@ -112,8 +112,8 @@ a {
 
 @media screen and (min-width: $screen__m) {
   .checkout-shipping {
-    background: var(--checkout-shipping-section-background, var(--steps-background-desktop));
-    border-radius: var(--steps-border-radius-desktop);
+    background: var(--checkout-shipping-section-background, var(--steps__background-color--desktop));
+    border-radius: var(--steps__border-radius--desktop);
     padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
     margin-top: var(--indent__base);
   }

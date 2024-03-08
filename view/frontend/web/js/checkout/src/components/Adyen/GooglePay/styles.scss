@@ -1,13 +1,13 @@
 #adyen-google-pay {
-  line-height: var(--button-line-height);
+  line-height: var(--button__line-height);
 
   &.text-loading {
-    border-radius: var(--text-placeholder-bg-button-radius);
+    border-radius: var(--button__text-placeholder-bg-radius);
     height: var(--adyen-express-button-height, 48px);
   }
 
   button {
-    border-radius: var(--button-border-radius);
+    border-radius: var(--button__border-radius);
     height: var(--adyen-express-button-height, 48px);
     overflow: hidden;
     width: 100%;

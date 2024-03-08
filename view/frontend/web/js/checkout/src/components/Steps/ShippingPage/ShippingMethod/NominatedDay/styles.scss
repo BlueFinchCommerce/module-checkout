@@ -59,7 +59,7 @@
   margin: 0;
 
   &-container {
-    background: var(--white__color);
+    background: var(--color__primary-white);
     border-radius: var(--indent__s) var(--indent__s) 0 0;
     z-index: var(--calendar-modal-z-index, 9999);
     overflow: scroll;
@@ -96,10 +96,10 @@
     &-close {
       border: var(--header-button-border, 1px solid #D3D5D8);
       right: var(--indent__base);
-      background: var(--white__color);
+      background: var(--color__primary-white);
       padding: var(--indent__s);
       position: absolute;
-      border-radius: var(--button-border-radius);
+      border-radius: var(--button__border-radius);
       width: 32px;
       height: 32px;
       text-align: center;
@@ -114,9 +114,9 @@
 
     &-button {
       border: var(--header-button-border, 1px solid #D3D5D8);
-      background: var(--white__color);
+      background: var(--color__primary-white);
       padding: 1px 8px var(--indent__xs);
-      border-radius: var(--button-border-radius);
+      border-radius: var(--button__border-radius);
       height: 32px;
 
       &:disabled {
@@ -129,7 +129,7 @@
 
   &-day {
     width: calc(100% / 7);
-    height: var(--input-height);
+    height: var(--input__height);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -151,7 +151,7 @@
 
     &.active {
       background-color: var(--primary__color);
-      color: var(--white__color);
+      color: var(--color__primary-white);
 
       .calendar-button-symbol {
         display: none;
@@ -184,8 +184,8 @@
     margin: 0;
 
     &-day {
-      font-weight: var(--font-weight__bold);
-      height: var(--input-height);
+      font-weight: var(--font-weight__semibold);
+      height: var(--input__height);
       width: calc(100% / 7);
       display: flex;
       justify-content: center;

@@ -1,9 +1,9 @@
 @import '@/styles/global/_breakpoints';
 
 .footer-container {
-  display: var(--footer-display);
-  background: var(--footer-background);
-  border-top: var(--footer-border-top);
+  display: var(--footer__display);
+  background: var(--footer__background-color);
+  border-top: var(--footer__border-top);
   padding: var(--footer-container-mobile-paddings, 20px 20px);
 
   .footer-block {
@@ -15,12 +15,12 @@
   }
 
   p {
-    color: var(--copyright-text-color, var(--white__color));
+    color: var(--copyright-text-color, var(--color__primary-white));
     max-width: var(--layout__max-width);
     padding: 5px var(--indent__base);
     margin: var(--footer-mobile-container-margin, 0 auto);
     font-size: var(--footer-copy-font-size, 15px);
-    font-family: var(--font-family-copy);
+    font-family: var(--font-family__copy);
   }
 }
 

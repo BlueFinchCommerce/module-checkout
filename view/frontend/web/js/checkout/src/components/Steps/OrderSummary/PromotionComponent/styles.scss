@@ -2,9 +2,9 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, 1px solid var(--dropdown-border-color));
+    border: var(--drop-down-border, var(--dropdown__border));
     padding: var(--promo-products-paddings, 15px var(--indent__base));
-    background: var(--dropdown-background-color);
+    background: var(--dropdown__background-color);
     margin-top: var(--indent__base);
     display: var(--promotion-visibility, flex);
     max-width: none;
@@ -38,7 +38,7 @@
         display: flex;
         p {
           font-size: var(--promo-roducts-title-font-size, var(--font__base));
-          font-weight: var(--promo-roducts-title-font-weight, var(--font-weight__semibold));
+          font-weight: var(--promo-roducts-title-font-weight, var(--font-weight__medium));
           color: var(--text__color);
           margin: 0;
         }
@@ -56,7 +56,7 @@
 }
 
 div.dropdown.promo-dropdown {
-  background: var(--dropdown-background-color);
+  background: var(--dropdown__background-color);
   padding: var(--promo-products-paddings, var(--indent__base) var(--indent__s));
   border-top: 0;
   margin: 0;
@@ -97,7 +97,7 @@ div.dropdown.promo-dropdown {
 
   &::-webkit-scrollbar {
     height: 4px;
-    background-color: var(--white__color);
+    background-color: var(--color__primary-white);
   }
 
   &::-webkit-scrollbar-thumb {

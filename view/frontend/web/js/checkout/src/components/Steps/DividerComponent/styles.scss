@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .divider {
-  display: var(--divider-display);
+  display: var(--divider__display);
   align-items: center;
   margin-top: var(--indent__m);
 
@@ -11,8 +11,8 @@
   }
 
   p {
-    font-weight: var(--font-weight__bold);
-    font-family: var(--font-family-copy);
+    font-weight: var(--font-weight__semibold);
+    font-family: var(--font-family__copy);
     font-size: var(--font__m);
     margin: 0 var(--indent__s);
     text-align: center;

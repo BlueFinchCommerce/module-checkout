@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .delivery-address {
-  background: var(--delivery-address-section-background, var(--steps-completed-background));
+  background: var(--delivery-address-section-background, var(--steps-complete__background-color));
   position: relative;
   border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
   min-height: var(--details-section-min-height, 103px); //prevent jumping on page load
@@ -27,8 +27,8 @@
     }
 
     p {
-      font-weight: var(--font-weight__bold);
-      font-family: var(--font-family-copy);
+      font-weight: var(--font-weight__semibold);
+      font-family: var(--font-family__copy);
       font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
       line-height: var(--your-details-title-line-height, inherit);
       margin-left: var(--section-left-space, 0);
@@ -65,7 +65,7 @@
       font-size: var(--edit-button-font-size, var(--font__s));
       display: var(--edit-button-title-visibility, none);
       text-decoration: underline;
-      font-family: var(--font-family-copy);
+      font-family: var(--font-family__copy);
     }
   }
 }
@@ -75,7 +75,7 @@
 @media screen and (min-width: $screen__m) {
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
-    border-radius: var(--steps-completed-radius);
+    border-radius: var(--steps-complete__radius);
     
     .details-title-section {
       p {

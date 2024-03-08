@@ -20,7 +20,7 @@
 
       p {
         font-weight: var(--saved-address-text-weight, var(--font-weight__regular));
-        font-family: var(--font-family-header);
+        font-family: var(--font-family__header);
         font-size: var(--saved-address-text-size, var(--font__l));
         margin-left: var(--saved-address-text-margin, var(--indent__s));
         text-transform: var(--saved-address-text-transform, none);
@@ -41,7 +41,7 @@
 
   &__item {
     border: 1.5px solid rgba(39, 48, 58, 0.25);
-    border-radius: var(--base-border-radius, 4px);
+    border-radius: var(--base__border-radius, 4px);
     padding: 15px var(--indent__base);
     font-size: var(--font__m);
     margin-bottom: var(--indent__base);
@@ -50,7 +50,7 @@
     list-style: none;
 
     &.active {
-      background: var(--address-list-selected-background, var(--white__color));
+      background: var(--address-list-selected-background, var(--color__primary-white));
       border: var(--selected-border, 1.5px solid #27303A);
       box-shadow: var(--selected-address-box-shadow, 0px 0px 10px rgba(0, 0, 0, 0.51));
 
