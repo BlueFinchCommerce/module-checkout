@@ -28,6 +28,11 @@ type StoreConfig {
     gtm_active: String @doc(description: "GTM Active")
     adyen_environment_mode: String @doc(description: "Adyen environment mode")
     adyen_vault_enabled: Boolean @doc(description: "Adyen vault enabled")
+    recaptcha_v2_checkbox_key: String @doc(description: "Recaptcha v2 checkbox key")
+    recaptcha_v2_invisible_key: String @doc(description: "Recaptcha v2 invisible key")
+    recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
+    recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
+    recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
 }
 type Query {
     storecode(

@@ -33,6 +33,13 @@
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
                 <item name="adyen_environment_mode" xsi:type="string">payment/adyen_abstract/demo_mode</item>
                 <item name="adyen_vault_enabled" xsi:type="string">payment/adyen_oneclick/active</item>
+
+                <!-- Recaptch config -->
+                <item name="recaptcha_v2_checkbox_key" xsi:type="string">recaptcha_frontend/type_recaptcha/public_key</item>
+                <item name="recaptcha_v2_invisible_key" xsi:type="string">recaptcha_frontend/type_invisible/public_key</item>
+                <item name="recaptcha_v3_invisible_key" xsi:type="string">recaptcha_frontend/type_recaptcha_v3/public_key</item>
+                <item name="recaptcha_customer_login" xsi:type="string">recaptcha_frontend/type_for/customer_login</item>
+                <item name="recaptcha_place_order" xsi:type="string">recaptcha_frontend/type_for/place_order</item>
             </argument>
         </arguments>
     </type>

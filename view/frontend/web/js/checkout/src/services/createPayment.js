@@ -1,4 +1,5 @@
 import useCustomerStore from '@/stores/CustomerStore';
+import useRecaptchaStore from '@/stores/RecaptchaStore';
 import authenticatedRequest from '@/services/authenticatedRequest';
 import buildCartUrl from '@/helpers/buildCartUrl';
 import beforePaymentRequest from '@/services/beforePaymentRequest';
@@ -7,6 +8,7 @@ import doAddressesMatch from '@/helpers/doAddressesMatch';
 
 export default (payment) => {
   const { selected: { shipping: shippingAddress } } = useCustomerStore();
+  const { tokens } = useRecaptchaStore();
 
   const clonedPayment = deepClone(payment);
   // We need to remove the same_as_shipping information.
@@ -16,6 +18,8 @@ export default (payment) => {
   if (doAddressesMatch(clonedPayment.billingAddress, shippingAddress)) {
     delete clonedPayment.billingAddress.save_in_address_book;
   }
+
+  clonedPayment['g-recaptcha-response'] = tokens.placeOrder;
 
   return beforePaymentRequest()
     .then(() => authenticatedRequest().post(buildCartUrl('payment-information'), clonedPayment))

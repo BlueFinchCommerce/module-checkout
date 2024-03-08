@@ -6,6 +6,7 @@
     <StoreCredit v-if="getTotalSegment('customerbalance')" />
     <div class="payment-page">
       <div class="payment-form">
+        <Recaptcha id="placeOrder" />
         <template v-if="cartGrandTotal">
           <ErrorMessage
             v-if="rvvupErrorMessage !== ''"
@@ -56,6 +57,7 @@ import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
 import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
@@ -72,6 +74,7 @@ export default {
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
+    Recaptcha,
     ...paymentMethods(),
   },
   data() {

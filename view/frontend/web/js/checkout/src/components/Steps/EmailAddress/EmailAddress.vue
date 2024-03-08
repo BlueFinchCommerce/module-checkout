@@ -131,6 +131,7 @@
           v-if="!emailEntered"
           class="actions"
         >
+          <Recaptcha id="customerLogin" />
           <MyButton
             type="submit"
             class="sign-in-btn"
@@ -182,6 +183,7 @@ import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 
 // icons
 import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
@@ -205,6 +207,7 @@ export default {
     ErrorMessage,
     Loader,
     Edit,
+    Recaptcha,
   },
   data() {
     return {
