@@ -7,11 +7,16 @@
 $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
 $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
-$fontUrl = $assetViewModel->getCheckoutFont();
+$fontUrl = $assetViewModel->getFontUrl();
 ?>
 
 <?php if ($fontUrl !== null) : ?>
-    <link rel="preload" as="font" crossorigin="anonymous" href="<?= $fontUrl ?>" />
+    <style>
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
+    </style>
 <?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>

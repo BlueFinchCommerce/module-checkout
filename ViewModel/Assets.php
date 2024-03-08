@@ -42,7 +42,7 @@ class Assets implements ArgumentInterface
     /**
      * @return string|null
      */
-    public function getCheckoutFont(): ?string
+    public function getFontUrl(): ?string
     {
         $fontPath = $this->configuration->getFontPath();
         if (!$fontPath) {
@@ -51,6 +51,15 @@ class Assets implements ArgumentInterface
 
         $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         return $mediaUrl . ConfigurationInterface::VUE_CHECKOUT_FONT_MEDIA_DIR . '/' . $fontPath;
+    }
+
+    /**
+     * @param string $fontUrl
+     * @return string
+     */
+    public function getFontFormat(string $fontUrl): string
+    {
+        return pathinfo($fontUrl, PATHINFO_EXTENSION);
     }
 
     /**
