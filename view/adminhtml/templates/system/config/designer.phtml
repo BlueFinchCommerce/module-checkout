@@ -7,8 +7,12 @@
 $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
 $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
-
+$fontUrl = $assetViewModel->getCheckoutFont();
 ?>
+
+<?php if ($fontUrl !== null) : ?>
+    <link rel="preload" as="font" crossorigin="anonymous" href="<?= $fontUrl ?>" />
+<?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>
     <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
