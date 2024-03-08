@@ -238,7 +238,7 @@ define([
 
         loadInitialWordingValues: function () {
             const wordingValues = this.customWording.val(),
-            parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
+                parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
 
             Object.keys(parsedWordingValues).forEach(function (key) {
                 this.triggerChange({
@@ -314,13 +314,13 @@ define([
 
         saveWording: function () {
             const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]')
-                .toArray()
-                .reduce((prev, curr) => {
-                    if (!curr.value) {return prev;}
-                    return { ...prev, [curr.id]: curr.value };
-                }, {}),
+                    .toArray()
+                    .reduce((prev, curr) => {
+                        if (!curr.value) {return prev;}
+                        return { ...prev, [curr.id]: curr.value };
+                    }, {}),
 
-             storedWordingValue = Object.keys(wordingValues).length ? JSON.stringify(wordingValues) : '';
+                storedWordingValue = Object.keys(wordingValues).length ? JSON.stringify(wordingValues) : '';
 
             this.customWording.val(storedWordingValue).trigger('change');
         },
