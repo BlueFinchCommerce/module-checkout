@@ -39,13 +39,13 @@
   }
 
   .more-info-button {
-    color: var(--blue-color);
-    font-size: var(--font__s);
-    font-weight: var(--font-weight__semibold);
-    text-decoration: underline;
+    color: var(--button__link-font-color);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    text-decoration: var(--button__link-text-decoration);
     cursor: pointer;
-    background: transparent;
-    border: none;
+    background: var(--button__link-background-color);
+    border: var(--button__link-border);
   }
 }
 

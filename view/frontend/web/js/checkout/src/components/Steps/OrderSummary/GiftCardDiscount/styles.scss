@@ -57,12 +57,13 @@ div.dropdown.gift-dropdown {
       flex: 1;
 
       input {
-        border-color: var(--primary__color);
+        border-color: var(--input__border-color);
       }
     }
 
     button {
       max-height: var(--drop-down-max-height, 55px);
+      margin-top: 0;
       margin-left: var(--drop-button-down-left-margin, 0);
       text-transform: var(--drop-button-down-text-transform, uppercase);
       border-radius: var(--inputs-border-radius, 0 var(--input__border-radius) var(--input__border-radius) 0);

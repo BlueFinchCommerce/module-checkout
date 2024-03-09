@@ -20,7 +20,7 @@
 
 .button {
   font-family: var(--button__font-family);
-  font-weight: var(--button__font-weight, 600);
+  font-weight: var(--button__font-weight);
   border-width: var(--button__border-weight);
   border-style: var(--button__border-style);
   border-radius: var(--button__border-radius);

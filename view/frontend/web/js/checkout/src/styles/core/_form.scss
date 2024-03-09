@@ -371,7 +371,7 @@
       right: var(--select-icon-right, 10px);
       top: var(--select-icon-top, 27px);
       width: var(--select-icon-width, 19px);
-      stroke: var(--primary__color);
+      stroke: var(----color__primary-blue);
     }
 
     .select-input-label {
@@ -427,7 +427,7 @@
     }
 
     p {
-      color: var(--success__color, var(--primary__color));
+      color: var(--success__color, var(--color__primary-navy));
       font-family: var(--font-family__copy);
       font-size: var(--message-font-size, var(--font__xs));
       font-weight: var(--message-font-weight, var(--font-weight__regular));

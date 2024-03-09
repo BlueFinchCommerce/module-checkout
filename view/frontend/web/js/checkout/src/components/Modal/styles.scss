@@ -34,7 +34,7 @@
   z-index: 400;
 
   &-header {
-    color: var(--primary__color);
+    color: var(--color__primary-dark-blue);
     padding: var(--indent__s);
     font-weight: var(--font-weight__semibold);
     font-size: 20px;
@@ -66,7 +66,7 @@
 .btn-close {
   font-weight: var(--font-weight__semibold);
   padding: var(--indent__s);
-  color: var(--primary__color);
+  color: var(--color__primary-grey1);
   font-size: var(--font__l);
   position: absolute;
   top: 0;

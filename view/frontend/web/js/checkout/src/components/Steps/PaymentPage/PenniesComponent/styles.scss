@@ -21,7 +21,7 @@
 
 .pennies-container {
   &__dropdown {
-    background: var(--active__gray-color);
+    background: var(--color__primary-grey6);
     margin-bottom: var(--indent__l);
     padding: var(--indent__m);
     text-align: center;
@@ -41,7 +41,7 @@
   }
 
   &__divider {
-    border: 0.5px solid var(--border__gray-color3);
+    border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
     margin: var(--indent__s) auto var(--indent__s);
     max-width: 130px;
   }
@@ -96,7 +96,7 @@
     margin: var(--indent__m) 0;
 
     button {
-      background: var(--available__color2);
+      background: var(--color__semantic-success);
       color: var(--color__primary-white);
       font-weight: var(--font-weight__semibold);
       width: 70%;

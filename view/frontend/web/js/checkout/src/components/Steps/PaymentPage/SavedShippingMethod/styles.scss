@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .edit-shipping-button {
-  color: var(--edit-shipping-button-color, var(--primary__color));
+  color: var(--edit-shipping-button-color, var(--color__primary-grey1));
   line-height: var(--remove-item-action-line-height, 6px);
   background: transparent;
   padding: 0;
@@ -14,10 +14,10 @@
   position: relative;
   border-bottom: var(--details-section-border, none);
   border-top: var(--details-section-border-top, none);
-  min-height: var(--saved-shipping-min-height, 85px); //prevent jumping on page load
+  min-height: var(--saved-shipping-min-height, 75px); //prevent jumping on page load
 
   &-link {
-    color: var(--details-title-color, var(--primary__color));
+    color: var(--details-title-color, var(--color__primary-dark-blue));
     display: block;
     text-decoration: none;
     padding: var(--your-details-padding-desktop, 16px 20px);
@@ -39,7 +39,7 @@
     p {
       font-weight: var(--font-weight__semibold);
       font-family: var(--font-family__copy);
-      font-size: var(--font-size-delivery-section, var(--font__s));
+      font-size: var(--font-size-delivery-section, var(--steps-complete__font-size-title--mobile));
       margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
       color: var(--font__color);
@@ -48,7 +48,7 @@
 
   .shipping-method-title {
     color: var(--font__color-light);
-    font-size: var(--short-info-size, var(--font__xs));
+    font-size: var(--short-info-size, var(--steps-complete__font-size-sub--mobile));
     font-weight: var(--font-weight__medium);
     margin-left: var(--section-left-space, var(--indent__xl));
     margin-right: var(--indent__xl);
@@ -84,9 +84,12 @@
 @media screen and (min-width: $screen__m) {
   .saved-shipping {
     border-radius: var(--steps-complete__radius--desktop);
+    .shipping-method-title {
+      font-size: var(--steps-complete__font-size-sub--desktop);
+    }
     &__icon {
       p {
-        font-size: var(--font__m);
+        font-size: var(--steps-complete__font-size-title--desktop);
       }
     }
   }

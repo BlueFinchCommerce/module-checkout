@@ -43,7 +43,7 @@
     }
 
     button {
-      color: var(--primary__color);
+      color: var(--color__primary-blue);
       font-size: var(--font__s);
       background: transparent;
       text-align: left;
@@ -53,7 +53,7 @@
       line-height: 25px;
 
       &:hover {
-        color: var(--primary__color);
+        color: var(--color__primary-blue);
       }
     }
   }

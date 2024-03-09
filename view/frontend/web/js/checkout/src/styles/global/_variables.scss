@@ -42,26 +42,6 @@
     --text-placeholder__bg-color-darker: var(--color__primary-grey4);
 
     //
-    //  Old Colors
-    //  ---------------------------------------------
-    --primary__color: #2b2b2b;
-
-
-    //
-    //  Pennies / Nominated day
-    //  ---------------------------------------------
-    --available__color: #76CA39;
-    --available__color2: #50BA32;
-    --border__gray-color: #6d7278;
-    --border__gray-color3: #CDCECF;
-    --active__gray-color: #F3F3F3;
-
-    //
-    //  Hokodo
-    //  ---------------------------------------------
-    --blue-color: #326BAB;
-
-    //
     // States
     //  ---------------------------------------------
     --opacity__light: 0.4;
@@ -126,6 +106,10 @@
     --steps__border-radius--desktop: 0px;
     --steps-complete__background-color: var(--color__primary-grey5);
     --steps-complete__radius--desktop: var(--base__border-radius-large);
+    --steps-complete__font-size-title--desktop: var(--font__m);
+    --steps-complete__font-size-title--mobile: var(--font__s);
+    --steps-complete__font-size-sub--desktop: var(--font__s);
+    --steps-complete__font-size-sub--mobile: var(--font__xs);
 
     //
     // Base Borders
@@ -135,6 +119,8 @@
     --base__border-weight: 1px;
     --base__border-weight-active: 2px;
     --base__border-style: solid;
+    --base__border-color: var(--color__primary-grey4);
+    --base__border-color-active: var(--color__primary-blue);
 
     //
     // Buttons
@@ -186,9 +172,9 @@
     // Adyen Cards
     //  ---------------------------------------------
     --adyen-saved-card__background-color: var(--color__transparent);
-    --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey4);
-    --adyen-saved-card__font-color: var(--primary__color);
-    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--color__primary-blue);
+    --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+    --adyen-saved-card__font-color: var(--color__primary-blue);
+    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
 
     //
     // Adyen Icons
@@ -305,7 +291,7 @@
     --input__border-color: var(--color__primary-grey2);
     --input__border-color-hover: var(--color__primary-grey2); // Remove
     --input__border-color-focus: var(--color__primary-grey2);
-    --input__border-color-active: var(--color__primary-blue);
+    --input__border-color-active: var(--base__border-color-active);
     --input__border-color-error: var(--color__semantic-error);
     --input__border-radius: var(--base__border-radius);
     --input__border-weight: var(--base__border-weight);
@@ -325,7 +311,7 @@
     --qty__box-shadow: 0;
     --qty__height: 30px;
     --qty__border-weight: var(--base__border-weight);
-    --qty__border-color: var(--color__primary-grey4);
+    --qty__border-color: var(--base__border-color);
     --qty__border: var(--qty__border-weight) var(--base__border-style) var(--qty__border-color);
     --qty__border-radius: var(--base__border-radius);
 
@@ -378,7 +364,7 @@
     //  ---------------------------------------------
     --dropdown__background-color: var(--color__primary-white);
     --dropdown__background-color-highlight: var(--color__accent-mint-light);
-    --dropdown__border-color: var(--color__primary-grey4);
+    --dropdown__border-color: var(--base__border-color);
     --dropdown__border-radius: var(--base__border-radius-large);
     --dropdown__border-weight: var(--base__border-weight);
     --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
@@ -411,7 +397,7 @@
     // Divider
     //  ---------------------------------------------
     --divider__display: flex;
-    --divider__color: var(--color__primary-grey4);
+    --divider__color: var(--base__border-color);
     --divider__weight: var(--base__border-weight);
     --divider__border: var(--divider__weight) var(--base__border-style) var(--divider__color);
 
