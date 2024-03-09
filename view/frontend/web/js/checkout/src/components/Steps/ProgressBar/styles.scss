@@ -4,7 +4,7 @@
 
 .progress-bar {
   &-divider {
-    border: 1px solid var(--inactive__gray-color);
+    border: var(--divider__border);
     margin-bottom: var(--indent__base);
     width: 100%;
 
@@ -30,7 +30,7 @@
     }
 
     p {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
     }
 
     .details,
@@ -45,7 +45,7 @@
       .shipping-icon,
       .payment-icon {
         padding: 12px;
-        border: 2px solid var(--inactive__gray-color);
+        border: 2px solid var(--color__primary-grey4);
         border-radius: var(--progress-bar-border-radius, 50%);
         max-width: 25px;
         height: 20px;
@@ -62,7 +62,7 @@
       }
 
       p {
-        color: var(--inactive__gray-color);
+        color: var(--color__primary-grey1);
         white-space: pre;
       }
 
@@ -78,7 +78,7 @@
         }
 
         p {
-          color: var(--primary__color);
+          color: var(--color__primary-dark-blue);
         }
       }
     }

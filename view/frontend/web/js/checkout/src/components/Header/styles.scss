@@ -41,9 +41,9 @@
       }
 
       p {
-        font-size: var(--font__base);
+        font-size: var(--font__s);
         font-weight: var(--font-weight__medium);
-        line-height: var(--font__base);
+        line-height: var(--font__s);
         color: var(--secure-header-text-color, var(--color__primary-white));
         margin: 0 0 0 var(--indent__s);
         font-family: var(--font-family__copy);

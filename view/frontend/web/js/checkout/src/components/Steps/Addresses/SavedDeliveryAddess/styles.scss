@@ -7,7 +7,7 @@
   min-height: var(--details-section-min-height, 103px); //prevent jumping on page load
 
   &-link {
-    color: var(--details-title-color, var(--text__color));
+    color: var(--details-title-color, var(--button__link-font-color));
     display: block;
     text-decoration: none;
     padding: var(--your-details-padding-desktop, 16px 20px);
@@ -33,14 +33,14 @@
       line-height: var(--your-details-title-line-height, inherit);
       margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
-      color: var(--text__color--heading);
+      color: var(--font__color);
       text-transform: var(--details-title-text-transform, unset);
     }
   }
 }
 
 .edit-details-button {
-  color: var(--text__color);
+  color: var(--button__link-font-color);
   line-height: var(--remove-item-action-line-height, 6px);
   background: transparent;
   padding: 0;
@@ -62,7 +62,7 @@
     }
 
     p {
-      font-size: var(--edit-button-font-size, var(--font__s));
+      font-size: var(--edit-button-font-size, var(--font__xs));
       display: var(--edit-button-title-visibility, none);
       text-decoration: underline;
       font-family: var(--font-family__copy);
@@ -75,7 +75,7 @@
 @media screen and (min-width: $screen__m) {
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
-    border-radius: var(--steps-complete__radius);
+    border-radius: var(--steps-complete__radius--desktop);
     
     .details-title-section {
       p {

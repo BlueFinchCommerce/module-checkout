@@ -23,11 +23,11 @@
     }
 
     .gift-discount-title {
-      color: var(--text__color);
+      color: var(--font__color);
       flex-grow: 1;
-      font-size: var(--drop-down-trigger-title-font-size, var(--font__base));
+      font-size: var(--drop-down-trigger-title-font-size, var(--font__s));
       font-family: var(--font-family__copy);
-      font-weight: 500;
+      font-weight: var(--font-weight__semibold);
       margin: 0;
       padding: var(--drop-down-trigger-title-padding, 0 var(--indent__base) 0 var(--indent__s));
     }

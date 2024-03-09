@@ -6,7 +6,7 @@
   margin-top: var(--indent__m);
 
   &-line {
-    border-bottom: 1px solid var(--border__gray-color2);
+    border-bottom: var(--divider__border);
     width: 25%;
   }
 

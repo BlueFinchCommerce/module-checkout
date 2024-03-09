@@ -34,7 +34,7 @@
   }
 
   &-use-location {
-    font-size: var(--font__base);
+    font-size: var(--font__s);
   }
 
   &-locations {
@@ -58,7 +58,7 @@
   }
 
   &-address.address-block__address {
-    font-size: var(--font__base);
+    font-size: var(--font__s);
 
     :deep(p) {
       font-weight: var(--font-weight__regular);
@@ -66,7 +66,7 @@
   }
 
   &-address :deep(.address-block__address) {
-    font-size: var(--font__base);
+    font-size: var(--font__s);
 
     p {
       font-weight: var(--font-weight__regular);

@@ -4,7 +4,7 @@
   &.promotion-trigger {
     border: var(--drop-down-border, var(--dropdown__border));
     padding: var(--promo-products-paddings, 15px var(--indent__base));
-    background: var(--dropdown__background-color);
+    background: var(--dropdown__background-color-highlight);
     margin-top: var(--indent__base);
     display: var(--promotion-visibility, flex);
     max-width: none;
@@ -27,6 +27,7 @@
 
     &.opened {
       margin-bottom: 0;
+      border-bottom: none;
     }
 
     .promo-title {
@@ -37,9 +38,9 @@
       div {
         display: flex;
         p {
-          font-size: var(--promo-roducts-title-font-size, var(--font__base));
+          font-size: var(--promo-roducts-title-font-size, var(--font__s));
           font-weight: var(--promo-roducts-title-font-weight, var(--font-weight__medium));
-          color: var(--text__color);
+          color: var(--font__color);
           margin: 0;
         }
       }
@@ -91,7 +92,7 @@ div.dropdown.promo-dropdown {
   }
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px var(--color-theme__light-grey);
+    -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
     border-radius: var(--border-radius, 6px);
   }
 
@@ -101,8 +102,8 @@ div.dropdown.promo-dropdown {
   }
 
   &::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px var(--color-theme__light-grey);
-    background-color: var(--primary__color);
+    -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+    background-color: var(--color__primary-grey2);
     border-radius: var(--border-radius, 6px);
   }
 }
@@ -131,7 +132,7 @@ div.dropdown.promo-dropdown {
 
   .product-actions {
     button {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
       padding: var(--indent__s) var(--indent__xs);
       text-transform: uppercase;
       word-break: break-word;
@@ -170,14 +171,6 @@ div.dropdown.promo-dropdown {
   .dropdown-button {
     &.promotion-trigger {
       margin-bottom: 0;
-
-      .promo-title{
-        div {
-          p {
-            font-size: var(--promo-roducts-title-font-size, var(--font__m));
-          }
-        }
-      }
 
       img {
         width: 50px;

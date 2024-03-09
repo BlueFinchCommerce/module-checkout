@@ -19,8 +19,8 @@
         margin-right: var(--indent__s);
 
         &.selected {
-            border: var(--radio-input__checked-border);
-            box-shadow: var(--radio-input__checked-box-shadow);
+            border: var(--radio-input__border-checked);
+            box-shadow: var(--radio-input__box-shadow-checked);
         }
     }
 

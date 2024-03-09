@@ -80,7 +80,7 @@
   }
 
   &-header {
-    background-color: var(--primary-gray__color);
+    background-color: var(--color__primary-grey6);
     padding: var(--indent__s) 40px;
     display: flex;
     position: relative;
@@ -144,7 +144,7 @@
   &-button {
     color: var(--primary__color);
     padding: var(--indent__s);
-    font-size: var(--font__base);
+    font-size: var(--font__s);
     background-color: transparent;
     border: 0;
     line-height: 1;

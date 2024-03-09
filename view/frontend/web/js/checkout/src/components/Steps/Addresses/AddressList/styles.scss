@@ -6,7 +6,7 @@
 .address-list {
   .delivery-section {
     .divider-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       width: 75%;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
@@ -86,7 +86,7 @@
 @media screen and (min-width: $screen__m) {
   .address-list {
     &__item {
-      background: var(--address-list-background, var(--primary-gray__color));
+      background: var(--address-list-background, var(--color__primary-grey6));
     }
 
     .delivery-section {

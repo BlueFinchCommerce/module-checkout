@@ -6,7 +6,7 @@
     align-items: center;
 
     &-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       width: 100%;
     }
 
@@ -97,7 +97,7 @@
   align-items: center;
   background: transparent;
   border: none;
-  color: var(--text__color);
+  color: var(--button__link-font-color);
   cursor: pointer;
   display: flex;
   grid-gap: var(--indent__s);
@@ -123,7 +123,7 @@
 
   &__footer {
     a {
-      color: var(--text__color);
+      color: var(--font__color-light);
     }
   }
 

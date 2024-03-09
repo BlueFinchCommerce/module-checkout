@@ -12,7 +12,7 @@
 .saved-shipping {
   background: var(--saved-shipping-section-background, var(--steps-complete__background-color));
   position: relative;
-  border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
+  border-bottom: var(--details-section-border, none);
   border-top: var(--details-section-border-top, none);
   min-height: var(--saved-shipping-min-height, 85px); //prevent jumping on page load
 
@@ -39,16 +39,17 @@
     p {
       font-weight: var(--font-weight__semibold);
       font-family: var(--font-family__copy);
-      font-size: var(--font-size-delivery-section, var(--font__heading--mobile));
+      font-size: var(--font-size-delivery-section, var(--font__s));
       margin-left: var(--section-left-space, 0);
       margin-bottom: var(--details-title-margin-bottom, 0);
-      color: var(--text__color--heading);
+      color: var(--font__color);
     }
   }
 
   .shipping-method-title {
-    color: var(--text__color);
-    font-size: var(--short-info-size, var(--font__s));
+    color: var(--font__color-light);
+    font-size: var(--short-info-size, var(--font__xs));
+    font-weight: var(--font-weight__medium);
     margin-left: var(--section-left-space, var(--indent__xl));
     margin-right: var(--indent__xl);
     font-family: var(--shipping-method-address-title__font-family, unset);
@@ -71,7 +72,7 @@
 
     p {
       font-family: var(--font-family__copy);
-      font-size: var(--proceed-to-shipping-text-font-size, var(--font__s));
+      font-size: var(--proceed-to-shipping-text-font-size, var(--font__xs));
       display: var(--edit-button-title-visibility, none);
       text-decoration: underline;
     }
@@ -82,10 +83,10 @@
 
 @media screen and (min-width: $screen__m) {
   .saved-shipping {
-    border-radius: var(--steps-complete__radius);
+    border-radius: var(--steps-complete__radius--desktop);
     &__icon {
       p {
-        font-size: var(--font__heading--desktop);
+        font-size: var(--font__m);
       }
     }
   }

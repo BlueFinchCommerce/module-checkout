@@ -42,7 +42,7 @@
 
     .adyen-checkout__payment-method__card-number,
     .adyen-checkout__payment-method__name {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
       grid-column: 1;
       line-height: 1.5em;
       text-align: left;
@@ -50,7 +50,7 @@
 
     .adyen-checkout__payment-method__expiry-label,
     .adyen-checkout__payment-method__expiry {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
       grid-column: 2;
       line-height: 1.5em;
       text-align: right;
@@ -159,7 +159,7 @@
     align-items: center;
 
     .divider-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
       width: 40%;
       display: var(--divider-line-display, block);

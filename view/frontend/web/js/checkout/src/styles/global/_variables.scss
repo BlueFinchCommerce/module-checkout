@@ -18,12 +18,12 @@
     --color__primary-white: #ffffff;
 
     --color__accent-mint: #00b2ad;
-    --color__accent-mint-10tint: #c1f2f1;
+    --color__accent-mint-light: #ecfffe;
 
     --color__semantic-error: #bd0005;
-    --color__semantic-error-10tint: #f8e6e6;
+    --color__semantic-error-light: #f8e6e6;
     --color__semantic-success: #24b53b;
-    --color__semantic-success-25tint: #e9f8eb;
+    --color__semantic-success-light: #e9f8eb;
 
     --color__transparent: transparent;
 
@@ -36,35 +36,30 @@
     --page__background-color--desktop: var(--color__primary-grey6);
 
     //
+    //  Skeleton Placeholder
+    //  ---------------------------------------------
+    --text-placeholder__bg-color: var(--color__primary-grey5);
+    --text-placeholder__bg-color-darker: var(--color__primary-grey4);
+
+    //
     //  Old Colors
     //  ---------------------------------------------
     --primary__color: #2b2b2b;
-    --text__color: var(--primary__color);
-    --mobile-text__color: var(--primary__color);
-    --primary-gray__color: #f8f8f8;
-    --border__gray-color: #6d7278;
-    --gray-color1: #7A8086;
-    --border__gray-color2: #B9BCBF;
-    --border__gray-color3: #CDCECF;
-    --text-placeholder-bg: var(--border__gray-color3);
-    --text-placeholder-bg-darker: var(--border__gray-color2);
-    --inactive__gray-color: #D0D0D0;
-    --active__gray-color: #F3F3F3;
-    --focus-color: var(--primary__color);
-    --blue-color: #326BAB;
-    --color-theme__light-grey: rgba(39, 48, 58, 0.1);
-    --color-theme__light-grey1: #A3A4A7;
-    --success__color: var(--primary__color);
-    --success__border-color: #ACD765;
-    --success__background-color: #E9F2C6;
-    --error__color: #E22222;
-    --error-text__color: var(--error__color);
-    --error-label__color: var(--error__color);
-    --error__border-color: #CF302A;
-    --error__background-color: #FDE9E9;
+
+
+    //
+    //  Pennies / Nominated day
+    //  ---------------------------------------------
     --available__color: #76CA39;
     --available__color2: #50BA32;
-    --container-background__color: var(--primary-gray__color);
+    --border__gray-color: #6d7278;
+    --border__gray-color3: #CDCECF;
+    --active__gray-color: #F3F3F3;
+
+    //
+    //  Hokodo
+    //  ---------------------------------------------
+    --blue-color: #326BAB;
 
     //
     // States
@@ -85,32 +80,29 @@
     --indent__xl: 40px;
     --indent__xxl: 70px;
 
-    --column-gap: var(--indent__l);
-
     //
     //  Fonts
     //  ---------------------------------------------
-    --font__base: 14px;
-    --font__s: calc(var(--font__base) * 0.8571);  /* ~12px */
-    --font__m: calc(var(--font__base) * 1.1429);  /* ~16px */
-    --font__l: calc(var(--font__base) * 1.2857);  /* ~18px */
-    --font__xl: calc(var(--font__base) * 1.5714); /* ~22px */
-    --font__xxl: calc(var(--font__base) * 1.8571); /* ~26px */
+    --font__s: 14px;
+    --font__xs: calc(var(--font__s) * 0.8571);  /* ~12px */
+    --font__m: calc(var(--font__s) * 1.1429);  /* ~16px */
+    --font__l: calc(var(--font__s) * 1.2857);  /* ~18px */
 
     --font-weight__regular: 400;
     --font-weight__medium: 500;
     --font-weight__semibold: 600;
     --font-weight__bold: 700;
 
-    --font-family__base: 'Gotham', sans-serif;
+    --font-family__base: 'Montserrat', sans-serif;
     --font-family__header: var(--font-family__base);
     --font-family__copy: var(--font-family__base);
 
-    --font__heading--desktop: var(--font__xl);
-    --font__heading--mobile: var(--font__l);
+    --font__heading--desktop: var(--font__l);
+    --font__heading--mobile: var(--font__m);
 
-    --font__color-base: var(--color__primary-blue);
-    --font__color-heading: var(--color__primary-dark-blue);
+    --font__color-light: var(--color__primary-blue);
+    --font__color: var(--color__primary-dark-blue);
+    --font__color-dark: var(--color__primary-navy);
 
     //
     // Header
@@ -133,12 +125,13 @@
     --steps__background-color--desktop: var(--color__primary-white);
     --steps__border-radius--desktop: 0px;
     --steps-complete__background-color: var(--color__primary-grey5);
-    --steps-complete__radius: 0px;
+    --steps-complete__radius--desktop: var(--base__border-radius-large);
 
     //
     // Base Borders
     //  ---------------------------------------------
     --base__border-radius: 4px;
+    --base__border-radius-large: 8px;
     --base__border-weight: 1px;
     --base__border-weight-active: 2px;
     --base__border-style: solid;
@@ -166,7 +159,7 @@
     //
     // Small Buttons
     //  ---------------------------------------------
-    --button__font-small: var(--font__s);
+    --button__font-small: var(--font__xs);
     --button__padding-small: var(--button__padding-s) var(--button__padding-base);
 
     //
@@ -267,18 +260,18 @@
     //
     // Tertiary Buttons
     //  ---------------------------------------------
-    --button-tertiary-text-color: var(--text__color);
-    --button-tertiary-background-color: var(--primary-gray__color);
-    --button-tertiary-border-color: var(--primary-gray__color);
-    --button-tertiary-border-box-shadow: var(--button__box-shadow);
+    // --button-tertiary-text-color: var(--text__color);
+    // --button-tertiary-background-color: var(--color__primary-grey6);
+    // --button-tertiary-border-color: var(--color__primary-grey6);
+    // --button-tertiary-border-box-shadow: var(--button__box-shadow);
 
-    --button-tertiary-text-color-hover: var(--text__color);
-    --button-tertiary-background-color-hover: var(--primary-gray__color);
-    --button-tertiary-background-color-focus: var(--primary-gray__color);
-    --button-tertiary-border-color-hover: var(--primary-gray__color);
+    // --button-tertiary-text-color-hover: var(--text__color);
+    // --button-tertiary-background-color-hover: var(--color__primary-grey6);
+    // --button-tertiary-background-color-focus: var(--color__primary-grey6);
+    // --button-tertiary-border-color-hover: var(--color__primary-grey6);
 
-    --text-placeholder-bg-tertiary: var(--button-tertiary-background-color);
-    --text-placeholder-bg-tertiary-gradient: var(--button-tertiary-background-color-hover);
+    // --text-placeholder__bg-color-tertiary: var(--button-tertiary-background-color);
+    // --text-placeholder__bg-color-tertiary-gradient: var(--button-tertiary-background-color-hover);
     
     //
     // Blank Buttons
@@ -288,7 +281,7 @@
     //
     // Link Buttons
     //  ---------------------------------------------
-    --button__link-font-size: var(--font__s);
+    --button__link-font-size: var(--font__xs);
     --button__link-font-weight: var(--font-weight__medium);
     --button__link-font-color: var(--color__primary-blue);
     --button__link-background-color: var(--color__transparent);
@@ -306,7 +299,7 @@
     // Inputs
     //  ---------------------------------------------
     --input__font-color: var(--color__primary-dark-blue);
-    --input__font-size: var(--font__base);
+    --input__font-size: var(--font__s);
     --input__font-weight: var(--font-weight__semibold);
     --input__background-color: var(--color__primary-white);
     --input__border-color: var(--color__primary-grey2);
@@ -337,7 +330,7 @@
     --qty__border-radius: var(--base__border-radius);
 
     --qty-input__font-weight: var(--font-weight__semibold);
-    --qty-input__font-size: var(--font__base);
+    --qty-input__font-size: var(--font__s);
     --qty-input__background-color: var(--color__primary-white);
     --qty-input__font-color: var(--color__primary-dark-blue);
     --qty-input__border: var(--qty__border-weight) var(--base__border-style) var(--qty__border-color);
@@ -358,33 +351,35 @@
     --radio-input__height: 24px;
     --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--color__primary-grey2);
     --radio-input__border-radius: 50%;
-    --radio-input__checked-color: var(--color__primary-blue);
+    --radio-input__color-checked: var(--color__primary-blue);
     --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
-    --radio-input__checked-box-shadow: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__checked-color);
-    --radio-input__checked-border: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__checked-color);
+    --radio-input__box-shadow-checked: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__color-checked);
+    --radio-input__border-checked: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__color-checked);
 
     //
     // Checkbox Inputs
     //  ---------------------------------------------
     --checkbox-input__height: 24px;
     --checkbox-input__width: 24px;
+    --checkbox-input__border-color: var(--color__primary-grey2);
     --checkbox-input__border-weight: var(--base__border-weight);
     --checkbox-input__border-radius: var(--base__border-radius);
     --checkbox-input__tick-height: 14px;
     --checkbox-input__tick-width: 8px;
-    --checkbox-input__tick-top: 1px;
+    --checkbox-input__tick-top: 2px;
     --checkbox-input__tick-left: 7px;
     --checkbox-input__tick-thickness: 0 2px 2px 0;
     --checkbox-input__border-weight-focus: var(--base__border-weight-active);
-    --checkbox-input__checked-background-color: var(--color__primary-blue);
-    --checkbox-input__checked-border-color: var(--checkbox-input__checked-background-color);
+    --checkbox-input__background-color-checked: var(--color__primary-blue);
+    --checkbox-input__border-color-checked: var(--checkbox-input__background-color-checked);
 
     //
     // Dropdowns
     //  ---------------------------------------------
     --dropdown__background-color: var(--color__primary-white);
+    --dropdown__background-color-highlight: var(--color__accent-mint-light);
     --dropdown__border-color: var(--color__primary-grey4);
-    --dropdown__border-radius: var(--base__border-radius);
+    --dropdown__border-radius: var(--base__border-radius-large);
     --dropdown__border-weight: var(--base__border-weight);
     --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
 
@@ -418,6 +413,7 @@
     --divider__display: flex;
     --divider__color: var(--color__primary-grey4);
     --divider__weight: var(--base__border-weight);
+    --divider__border: var(--divider__weight) var(--base__border-style) var(--divider__color);
 
     //
     // Google Maps

@@ -5,7 +5,7 @@
 // --disabled-btn-bg, #d3d6d8;
 
 .divider-line {
-  border-bottom: 1px solid var(--border__gray-color2);
+  border-bottom: var(--divider__border);
   margin-left: var(--indent__base);
   display: var(--divider-line-display, block);
 }
@@ -18,7 +18,7 @@
   p {
     font-size: var(--font__heading--mobile);
     font-weight: var(--font-weight__medium);
-    color: var(--text__color--heading);
+    color: var(--font__color);
     font-family: var(--font-family__header);
     text-align: var(--instant-checkout__text-align);
   }
@@ -70,7 +70,7 @@
 .manually-button {
   padding-top: var(--manually-padding-top, 0);
   margin-top: var(--manually-padding-top, 0);
-  color: var(--manually-button-color, var(--text__color));
+  color: var(--manually-button-color, var(--button__link-font-color));
   width: 100%;
   text-align: left;
   font-family: var(--manually-button__font-family, unset);

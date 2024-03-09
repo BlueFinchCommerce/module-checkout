@@ -11,7 +11,7 @@
   top: -5px;
 
   &__info {
-    font-size: var(--font__base);
+    font-size: var(--font__s);
     font-family: var(--font-family__copy);
     color: var(--adyen-font-color, #00112c);
     display: flex;
@@ -40,7 +40,7 @@
 
   .more-info-button {
     color: var(--blue-color);
-    font-size: var(--font__base);
+    font-size: var(--font__s);
     font-weight: var(--font-weight__semibold);
     text-decoration: underline;
     cursor: pointer;

@@ -43,14 +43,14 @@
     line-height: 1em;
     z-index: 1;
     left: var(--adyen-label-left-value, 10px);
-    color: var(--adyen-font-color, #00112C);
-    font-size: var(--adyen-font-size, var(--font__s));
+    color: var(--adyen-font-color, var(--font__color-dark));
+    font-size: var(--adyen-font-size, var(--font__xs));
     margin-bottom: var(--adyen-label-margin-bottom, 0);
     transition: none;
     border-radius: var(--base__border-radius);
 
     .adyen-checkout__label--focused & {
-      color: var(--text__color);
+      color: var(--font__color-dark);
     }
   }
 }
@@ -97,13 +97,13 @@
 
   &__header__title {
     &:hover {
-      color: var(--text__color);
+      color: var(--font__color);
       background: transparent;
       border: none;
     }
 
     &:focus {
-      color: var(--text__color);
+      color: var(--font__color);
       background: transparent;
       border: none;
     }
@@ -172,8 +172,8 @@
       background: var(--adyen-drop-in-selected__background, transparent);
 
       &:before {
-        border: var(--radio-input__checked-border);
-        box-shadow: var(--radio-input__checked-box-shadow);
+        border: var(--radio-input__border-checked);
+        box-shadow: var(--radio-input__box-shadow-checked);
       }
 
       .adyen-checkout__payment-method__details {
@@ -216,7 +216,7 @@
   }
   &__header {
     font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
-    color: var(--text__color--heading);
+    color: var(--font__color);
   }
 
 }

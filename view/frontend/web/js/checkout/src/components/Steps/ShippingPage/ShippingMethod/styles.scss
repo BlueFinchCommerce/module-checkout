@@ -17,7 +17,7 @@
     align-items: center;
 
     .divider-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
       width: 45%;
       display: var(--divider-line-display, block);
@@ -30,7 +30,7 @@
         font-weight: var(--font-weight__medium, 500);
         font-family: var(--shipping-page-main-text-font-family, var(--font-family__copy));
         font-size: var(--font__heading--mobile);
-        color: var(--text__color--heading);
+        color: var(--font__color);
       }
     }
 
@@ -100,7 +100,7 @@
   }
 
   p:nth-child(2) {
-    font-size: var(--shipping-methods-desciption-font-size, var(--font__s));
+    font-size: var(--shipping-methods-desciption-font-size, var(--font__xs));
   }
 }
 

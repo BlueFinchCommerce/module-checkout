@@ -54,7 +54,7 @@
     }
 
     & + p {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
       margin: 0;
     }
 
@@ -63,16 +63,16 @@
 
       input,
       select {
-        border: var(--input-error-border, 2.5px solid var(--error__color));
+        border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
 
         &:focus,
         &:hover {
-          border: var(--input-error-border, 2.5px solid var(--error__color));
+          border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
         }
       }
 
       span {
-        color: var(--error-label__color);
+        color: var(--color__semantic-error);
       }
     }
   }
@@ -94,8 +94,8 @@
     -moz-appearance: none;
 
     &:checked {
-      border: var(--radio-input__checked-border);
-      box-shadow: var(--radio-input__checked-box-shadow);
+      border: var(--radio-input__border-checked);
+      box-shadow: var(--radio-input__box-shadow-checked);
     }
 
     &:disabled {
@@ -105,9 +105,9 @@
 
   input[type="checkbox"] {
     appearance: none;
-    border: 1px solid var(--border__gray-color);
+    border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
     border-radius: var(--checkbox-input__border-radius);
-    color: var(--text__color);
+    color: var(--font__color-light);
     cursor: pointer;
     flex-shrink: 0;
     height: var(--checkbox-input__height);
@@ -142,10 +142,10 @@
     }
 
     &:checked {
-      color: var(--checkbox-checked-color, var(--text__color));
-      border-color: var(--checkbox-input__checked-border-color);
-      background: var(--checkbox-input__checked-background-color);
-      border-width: var(--hovered-checkbox-border-width, 1px);
+      color: var(--checkbox-checked-color, var(--font__color-light));
+      border-color: var(--checkbox-input__border-color-checked);
+      background: var(--checkbox-input__background-color-checked);
+      border-width: var(--hovered-checkbox-border-width, var(--base__border-weight));
 
       &::before {
         opacity: 1;
@@ -155,8 +155,9 @@
 
   input[type="checkbox"] + span {
     width: 90%;
-    font-size: var(--form-input-checkbox_font-size, 14px);
-    font-weight: 400;
+    font-size: var(--form-input-checkbox_font-size, var(--font__s));
+    color: var(--font__color-light);
+    font-weight: var(--font-weight__medium);
     font-family: var(--font-family__copy);
     top: var(--checkbox-text-position, auto);
   }
@@ -173,7 +174,7 @@
 
     span {
       background: var(--input-span__background-colour, var(--input__background-color));
-      font-size: var(--input-span-font-size, var(--font__s));
+      font-size: var(--input-span-font-size, var(--font__xs));
       padding-right: var(--input__label-padding);
       padding-left: var(--input__label-padding);
       margin-left: var(--input-label-margin, var(--indent__s));
@@ -374,7 +375,7 @@
     }
 
     .select-input-label {
-      font-size: var(--font__base);
+      font-size: var(--font__s);
       font-family: var(--font-family__copy);
     }
   }
@@ -386,13 +387,13 @@
   .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text,
   .error-message {
     align-items: center;
-    background: var(--error__background-color);
-    border: 1px solid var(--error__border-color);
+    background: var(--color__semantic-error-light);
+    border: 1px solid var(--color__semantic-error);
     border-radius: var(--messages-border-radius, var(--input__border-radius));
-    color: var(--error-text__color);
+    color: var(--color__semantic-error);
     display: flex;
     font-family: var(--font-family__copy);
-    font-size: var(--error-message-font-size, var(--font__s));
+    font-size: var(--error-message-font-size, var(--font__xs));
     font-weight: var(--error-message-font-weight, var(--font-weight__regular));
     margin: var(--message__margin);
     min-height: var(--messages-min-height, auto);
@@ -401,16 +402,16 @@
     word-break: break-word;
 
     svg {
-      fill: var(--error__color);
+      fill: var(--color__semantic-error);
       margin-right: var(--indent__s);
       display: var(--message-icon-visibility, block);
     }
   }
 
   .success-message {
-    background: var(--success__background-color);
+    background: var(--color__semantic-success-light);
     padding: var(--message-padding, var(--indent__xs));
-    border: 1px solid var(--success__border-color);
+    border: 1px solid var(--color__semantic-success);
     width: 100%;
     border-radius: var(--messages-border-radius, var(--input__border-radius));
     display: flex;
@@ -420,7 +421,7 @@
     word-break: break-word;
 
     svg {
-      fill: var(--success__border-color, #ACD765);
+      fill: var(--success__border-color, var(--color__semantic-success));
       margin-right: var(--indent__s);
       display: var(--message-icon-visibility, block);
     }
@@ -428,7 +429,7 @@
     p {
       color: var(--success__color, var(--primary__color));
       font-family: var(--font-family__copy);
-      font-size: var(--message-font-size, var(--font__s));
+      font-size: var(--message-font-size, var(--font__xs));
       font-weight: var(--message-font-weight, var(--font-weight__regular));
       margin-bottom: 0;
     }

@@ -47,8 +47,8 @@
     }
 
     button {
-      color: var(--text__color);
-      font-size: var(--font__base);
+      color: var(--button__link-font-color);
+      font-size: var(--font__s);
       background: transparent;
       text-align: left;
       border: none;
@@ -57,7 +57,8 @@
       line-height: 25px;
 
       &:hover {
-        color: var(--text__color);
+        color: var(--button__link-font-color-hover);
+        font-weight: var(--button__link-font-weight-hover);
       }
     }
   }

@@ -29,11 +29,11 @@ body {
 }
 
 #gene-better-checkout-root {
-  color: var(--font__color-base);
+  color: var(--font__color);
   display: flex;
   flex-direction: column;
   font-family: var(--font-family__base);
-  font-size: var(--font__base);
+  font-size: var(--font__s);
   line-height: 1.6;
   margin: 0;
   text-rendering: optimizeLegibility;
@@ -43,10 +43,6 @@ body {
   .root {
     background: var(--page__background-color--mobile);
     flex: 1;
-
-    p {
-      margin: 0;
-    }
 
     ul {
       margin-bottom: 0;
@@ -76,7 +72,7 @@ body {
         }
 
         .content {
-          margin-right: var(--column-gap);
+          margin-right: var(--indent__l);
           width: 60%;
         }
       }
