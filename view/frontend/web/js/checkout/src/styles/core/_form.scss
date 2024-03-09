@@ -142,6 +142,7 @@
     }
 
     &:checked {
+      position: relative;
       color: var(--checkbox-checked-color, var(--font__color-light));
       border-color: var(--checkbox-input__border-color-checked);
       background: var(--checkbox-input__background-color-checked);
