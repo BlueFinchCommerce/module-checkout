@@ -63,8 +63,8 @@ import SavedShippingMethod
 
 // Services
 import createPayment from '@/services/createPayment';
-import getAdyenPaymentStatus from '@/services/getAdyenPaymentStatus';
-import getAdyenPaymentDetails from '@/services/getAdyenPaymentDetails';
+import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
+import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers

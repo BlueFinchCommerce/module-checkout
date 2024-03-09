@@ -24,13 +24,12 @@ import Loader from '@/components/Core/Loader/Loader.vue';
 import formatPrice from '@/helpers/formatPrice';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 import handleServiceError from '@/helpers/handleServiceError';
 import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
 
 import createPayment from '@/services/createPayment';
-import getAdyenPaymentStatus from '@/services/getAdyenPaymentStatus';
+import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getShippingMethods from '@/services/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
@@ -293,7 +292,6 @@ export default {
         const { phoneNumber } = billingAddress;
         const mapShippingAddress = this.mapAddress(data.shippingAddress, email, phoneNumber);
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
-        const extensionAttributes = getPaymentExtensionAttributes();
 
         this.setEmailAddress(email);
         this.setAddress(mapShippingAddress, 'shipping');
@@ -308,22 +306,17 @@ export default {
             },
             browserInfo: this.browserInfo,
           });
-          const payload = {
-            email: data.email,
-            shippingAddress: mapShippingAddress,
-            billingAddress: mapBillingAddress,
-            paymentMethod: {
-              method: 'adyen_hpp',
-              additional_data: {
-                brand_code: 'googlepay',
-                stateData,
-              },
-              extension_attributes: extensionAttributes,
+
+          const paymentMethod = {
+            code: 'adyen_hpp',
+            adyen_additional_data_hpp: {
+              brand_code: 'googlepay',
+              stateData,
             },
           };
 
           try {
-            const orderId = await createPayment(payload).catch(handleServiceError);
+            const orderId = await createPayment(paymentMethod).catch(handleServiceError);
 
             this.setOrderId(orderId);
 
@@ -376,7 +369,6 @@ export default {
         street: [
           address.address1,
           address.address2,
-          address.address3,
         ],
         postcode: address.postalCode,
         country_id: address.countryCode,

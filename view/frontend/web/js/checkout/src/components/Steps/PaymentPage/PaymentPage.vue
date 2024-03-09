@@ -88,7 +88,6 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
-      'adyenAuthToken',
     ]),
     ...mapState(useAdyenStore, ['isAdyenAvailable']),
     ...mapState(usePaymentStore, [
