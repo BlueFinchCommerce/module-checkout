@@ -59,11 +59,19 @@
     gap: var(--indent__s);
     margin: var(--indent__s) 0 var(--indent__xs);
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: var(--button__link-text-decoration);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    color: var(--button__link-font-color);
 
     svg {
       width: 12px;
     }
+
+    &:hover {
+      font-weight: var(--button__link-font-weight-hover);
+    }
+
   }
 
   .product-option {
