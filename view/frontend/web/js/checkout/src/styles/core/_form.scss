@@ -144,13 +144,17 @@
 
     &:checked {
       position: relative;
-      color: var(--checkbox-checked-color, var(--font__color-light));
       border-color: var(--checkbox-input__border-color-checked);
       background: var(--checkbox-input__background-color-checked);
       border-width: var(--hovered-checkbox-border-width, var(--base__border-weight));
 
       &::before {
         opacity: 1;
+      }
+
+      + span {
+        color: var(--checkbox-checked-color, var(--font__color));
+        font-weight: var(--font-weight__semibold);
       }
     }
   }
@@ -256,20 +260,25 @@
         }
 
       input {
-        border: var(--logged-in-email-border-width, var(--input__border-weight) var(--base__border-style) var(--input__border-color));
+        border: var(--logged-in-email-border-width, none);
         padding: var(--logged-in-email-padding, var(--indent__s));
         margin-top: var(--logged-in-email-margin-top, 0);
+        text-align: center;
+        background-color: var(--color__primary-grey6);
+        font-weight: var(--font-weight__bold);
+        font-size: var(--font__m);
+        color: var(--font__color-light);
 
         ::placeholder {
 
         &:hover {
-          border: var(--input-border, var(--input__border-weight-hover) var(--base__border-style) var(--input__border-color-hover));
+          border: none;
         }
 
         &:focus-visible,
         &:focus,
         &:active {
-          border: var(--input-border-focus, var(--input__border-weight-focus) var(--base__border-style) var(--input__border-color-focus));
+          border: none;
         }
       }
     }

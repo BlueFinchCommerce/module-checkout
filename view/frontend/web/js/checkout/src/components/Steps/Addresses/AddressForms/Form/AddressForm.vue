@@ -154,22 +154,12 @@
           v-if="isLoggedIn"
           class="save-address-field"
         >
-          <label :for="`${address_type}-save-in-address-book`">
-            <input
-              :id="`${address_type}-save-in-address-book`"
-              v-model.number="selected[address_type].save_in_address_book"
-              type="checkbox"
-              class="field__checkbox"
-              value="1"
-              :true-value="1"
-              :false-value="0"
-            >
-            <TextField
-              :text="$t('saveNewAddress')"
-              font-size="15px"
-              font-weight="300"
-            />
-          </label>
+          <CheckboxComponent
+            :id="`${address_type}-save-in-address-book`"
+            :text="$t('saveNewAddress')"
+            :checked="selected[address_type].save_in_address_book === 1"
+            @change="handleSaveInAddressBookChange"
+          />
         </div>
         <div>
           <MyButton
@@ -192,9 +182,10 @@ import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
 import SelectInput from '@/components/Core/Inputs/Select/Select.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
+import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
+
 
 // Stores
 import { mapActions, mapState, mapWritableState } from 'pinia';
@@ -207,13 +198,13 @@ import deepClone from '@/helpers/deepClone';
 export default {
   name: 'AddressForm',
   components: {
-    TextField,
     TextInput,
     SelectInput,
     MyButton,
     ErrorMessage,
     ValidIcon,
     ErrorIcon,
+    CheckboxComponent,
   },
   props: {
     address_type: {
@@ -405,6 +396,10 @@ export default {
       const validPostcode = this.validatePostcode(this.address_type);
 
       this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
+    },
+
+    handleSaveInAddressBookChange(checked) {
+      this.selected[this.address_type].save_in_address_book = checked ? 1 : 0;
     },
   },
 };
