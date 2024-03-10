@@ -28,7 +28,7 @@
     @keyup="textChange('Last name')"
     @focusout="validateNameField(address_type, 'Last name', selected[address_type].lastname, true)"
   />
-  <div class="phone-field">
+  <div className="phone-field">
     <TextInput
       v-model="selected[address_type].telephone"
       :error="getAddressFieldHasError(address_type, 'Telephone')"
@@ -53,7 +53,7 @@
 
 <script>
 // Stores
-import { mapActions, mapWritableState } from 'pinia';
+import {mapActions, mapWritableState} from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 
 // Components
@@ -125,7 +125,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../styles.scss";
-</style>

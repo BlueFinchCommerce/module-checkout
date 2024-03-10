@@ -123,7 +123,8 @@
     }
 
     &:hover {
-      border-width: var(--hovered-checkbox-border-width, 1px);
+      border-width: var(--hovered-checkbox-border-width, var(--input__border-weight-hover));
+      border-color: var(--input__border-color-hover);
     }
 
     &::before {
@@ -135,7 +136,7 @@
       left: var(--checkbox-input__tick-left);
       width: var(--checkbox-input__tick-width);
       height: var(--checkbox-input__tick-height);
-      border-style: solid;
+      border-style: var(--base__border-style);
       border-width: var(--checkbox-input__tick-thickness);
       transform: rotate(45deg);
       opacity: 0;
@@ -183,7 +184,7 @@
       font-weight: var(--input-span-font-weight, var(--font-weight__regular));
       font-family: var(--font-family__copy);
       position: var(--input-span-position, absolute);
-      top: var(--input-span-top-value, var(--indent__s));
+      top: var(--input-span-top-value, var(--indent__xs));
       min-height: var(--input-label-min-height, 25px);
       z-index: 1;
       border-radius: var(--base__border-radius);
@@ -202,20 +203,20 @@
       border-radius: var(--input__border-radius);
       width: 100%;
       outline: none;
-      border: var(--input-border, var(--input__border-weight) solid var(--input__border-color));
+      border: var(--input-border, var(--input__border-weight) var(--base__border-style) var(--input__border-color));
       font-weight: var(--font-weight__regular);
       background-color: var(--input__background-color);
 
       &:focus-visible,
       &:focus,
       &:active {
-        border: var(--input-border-focus, var(--input__border-weight-focus) solid var(--input__border-color-focus));
+        border: var(--input-border-focus, var(--input__border-weight-focus) var(--base__border-style) var(--input__border-color-focus));
         outline: none;
         box-shadow: none;
       }
 
       &:hover {
-        border: var(--input-border, var(--input__border-weight-hover) solid var(--input__border-color-hover));
+        border: var(--input-border, var(--input__border-weight-hover) var(--base__border-style) var(--input__border-color-hover));
       }
     }
 
@@ -234,6 +235,13 @@
     display: var(--text-input-no-value-display, none);
   }
 
+  .coupon-code-field,
+  .gift-code-field {
+    .text-input {
+      margin-bottom: 0;
+    }
+  }
+
   .logged-in-email {
     .text-input {
       span {
@@ -244,42 +252,67 @@
         margin-left: var(--input-label-logged-in-margin, var(--input-label-margin));
         font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__regular));
       }
+          font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
+        }
 
       input {
-        border: var(--logged-in-email-border-width, var(--input__border-weight) solid var(--input__border-color));
+        border: var(--logged-in-email-border-width, var(--input__border-weight) var(--base__border-style) var(--input__border-color));
         padding: var(--logged-in-email-padding, var(--indent__s));
         margin-top: var(--logged-in-email-margin-top, 0);
 
         ::placeholder {
-          font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
-        }
 
         &:hover {
-          border: var(--input-border, var(--input__border-weight-hover) solid var(--input__border-color-hover));
+          border: var(--input-border, var(--input__border-weight-hover) var(--base__border-style) var(--input__border-color-hover));
         }
 
         &:focus-visible,
         &:focus,
         &:active {
-          border: var(--input-border-focus, var(--input__border-weight-focus) solid var(--input__border-color-focus));
+          border: var(--input-border-focus, var(--input__border-weight-focus) var(--base__border-style) var(--input__border-color-focus));
         }
       }
     }
   }
 
-  .field-valid {
-    .text-input {
-      input {
-        border-color: var(--valid-field-border, #135D1D);
-        border-width: 1.5px;
+  .text-input.field-valid {
+    input {
+      border-color: var(--valid-field-border, var(--color__primary-dark-blue));
+      border-width: var(--base__border-weight-active);
+    }
+  }
+
+  .text-input.field-valid + svg {
+    position: absolute;
+    right: 16px;
+    top: 25px;
+  }
+
+  //override valid class if custom validation shows error
+  .custom-validation-error.field-valid {
+    input {
+      border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+
+      &:focus,
+      &:hover {
+        border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
       }
     }
+  }
 
-    svg {
-      position: absolute;
-      right: 16px;
-      top: 50px;
-    }
+  .custom-validation-error.field-valid + svg,
+  .error-icon-block {
+    display: none;
+  }
+
+  .custom-validation-error.field-valid ~ .error-icon-block,
+  .error + .error-icon-block,
+  .custom-validation-error + svg,
+  .error + svg {
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 25px;
   }
 
   .afd-postcode__input {
@@ -344,7 +377,7 @@
       font-size: var(--font__m);
       font-family: var(--font-family__copy);
       color: var(--input__font-color);
-      border: var(--input__border-weight) solid var(--input__border-color);
+      border: var(--input__border-weight) var(--base__border-style) var(--input__border-color);
       appearance: none;
       cursor: pointer;
       padding: var(--select-input-padding, 0 15px 0);
@@ -357,7 +390,7 @@
       &:focus-visible,
       &:focus,
       &:active {
-        border: var(--input-border-focus, var(--input__border-weight-focus) solid var(--input__border-color-focus));
+        border: var(--input-border-focus, var(--input__border-weight-focus) var(--base__border-style) var(--input__border-color-focus));
         box-shadow: none;
         outline: 0;
       }
@@ -389,7 +422,7 @@
   .error-message {
     align-items: center;
     background: var(--color__semantic-error-light);
-    border: 1px solid var(--color__semantic-error);
+    border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
     border-radius: var(--messages-border-radius, var(--input__border-radius));
     color: var(--color__semantic-error);
     display: flex;
@@ -409,10 +442,17 @@
     }
   }
 
+  .error-message {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-width: var(--error-message-border-width, var(--base__border-weight-active));
+    margin-top: -2px;
+  }
+
   .success-message {
     background: var(--color__semantic-success-light);
     padding: var(--message-padding, var(--indent__xs));
-    border: 1px solid var(--color__semantic-success);
+    border: 1px var(--base__border-style) var(--color__semantic-success);
     width: 100%;
     border-radius: var(--messages-border-radius, var(--input__border-radius));
     display: flex;

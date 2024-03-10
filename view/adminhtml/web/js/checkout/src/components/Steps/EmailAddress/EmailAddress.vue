@@ -7,10 +7,9 @@
     </template>
 
     <div class="checkout-section checkout-email">
-      <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
+      <template v-if="emailRegistered !== undefined && !isLoggedIn">
         <TextField
           class="welcome-message-title"
-          data-cy="email"
           :text="emailRegistered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
@@ -26,7 +25,6 @@
           ref="email"
           v-model="customer.email"
           :error="emailError"
-          data-cy="email"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -45,14 +43,13 @@
           @keydown.enter="changeEmail()"
         >
           <button class="edit-button"
-                  data-cy="button"
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
               font-weight="400"
               font-size="12px"
             />
-            <Edit/>
+            <Edit />
           </button>
         </div>
       </div>
@@ -74,8 +71,6 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            @keyup="passwordKeyTrigger"
-            data-cy="password"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -88,10 +83,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon/>
+                  <ShowIcon />
                 </span>
                 <span v-else>
-                  <HideIcon/>
+                  <HideIcon />
                 </span>
               </button>
             </template>
@@ -116,7 +111,6 @@
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
-            data-cy="forgot-pass-button"
           >
             <span style="display: none">forgotPass link</span>
             <TextField
@@ -138,11 +132,6 @@
             :label="$t('signInButton')"
             @click="submitForm"
           />
-          <div class="divider">
-            <div class="divider-line"></div>
-            <TextField :text="$t('signInDividerText')"/>
-            <div class="divider-line"></div>
-          </div>
           <MyButton
             class="guest-btn"
             secondary
@@ -336,15 +325,6 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
-      }
-    },
-
-    passwordKeyTrigger(event) {
-      // Check if the Enter key was pressed
-      const pressedKey = event.key || event.keyCode;
-
-      if (pressedKey === 'Enter' || pressedKey === 13) {
-        this.submitForm();
       }
     },
 

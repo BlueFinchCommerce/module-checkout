@@ -63,11 +63,11 @@ div.dropdown.gift-dropdown {
 
     button {
       max-height: var(--drop-down-max-height, 55px);
-      margin-top: 0;
       margin-left: var(--drop-button-down-left-margin, 0);
       text-transform: var(--drop-button-down-text-transform, uppercase);
       border-radius: var(--inputs-border-radius, 0 var(--input__border-radius) var(--input__border-radius) 0);
       padding: var(--drop-button-padding, 12px);
+      margin-top: 0;
       width: initial;
 
       p {
