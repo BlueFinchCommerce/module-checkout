@@ -3,17 +3,17 @@
 .divider {
   display: var(--divider__display);
   align-items: center;
-  margin-top: var(--indent__m);
+  margin-top: var(--indent__s);
 
   &-line {
     border-bottom: var(--divider__border);
-    width: 25%;
+    width: 20%;
   }
 
   p {
     font-weight: var(--font-weight__semibold);
     font-family: var(--font-family__copy);
-    font-size: var(--font__m);
+    font-size: var(--font__heading--mobile);
     margin: 0 var(--indent__s);
     text-align: center;
   }
@@ -24,8 +24,8 @@
 
 @media screen and (min-width: $screen__m) {
   .divider {
-    &-line {
-      width: 50%;
+    p {
+      font-size: var(--font__heading--desktop);
     }
   }
 }
