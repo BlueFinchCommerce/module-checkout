@@ -7,44 +7,56 @@ define([
     'jquery/colorpicker/js/colorpicker'
 ], function (Component, $, $t, confirm) {
     'use strict';
+
+    const SELECTORS = {
+        DESIGNER_MODAL: '#gene-bettercheckout-designer',
+        DESIGNER_ROOT: '#gene-better-checkout-root',
+        DESIGNER_VALUES: '#gene_better_checkout_general_designer_values',
+        DESIGNER_VALUES_SYSTEM: `
+            #gene_better_checkout_general_designer_values_inherit,
+            #gene_better_checkout_general_custom_wording_inherit,
+            #gene_better_checkout_general_gene_better_checkout_logo_inherit
+        `,
+        CUSTOM_WORDING: '#gene_better_checkout_general_custom_wording',
+        DESIGNER_LOGO: '#gene_better_checkout_general_gene_better_checkout_logo',
+        DESIGNER_LOGO_LABEL: `
+            #gene-bettercheckout-designer label[for="gene_better_checkout_general_gene_better_checkout_logo"]
+        `,
+        DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_gene_better_checkout_logo_image',
+        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_gene_better_checkout_logo_delete'
+    };
+
     return Component.extend({
         initialize: function (config, element) {
             this.config = config;
-            this.designerModal = $('#gene-bettercheckout-designer');
-            this.designerRoot = $('#gene-better-checkout-root');
+            this.cacheElements();
+            this.enableLogo();
+            this.bindEvents(element);
+        },
 
-            this.designerValues = $('#gene_better_checkout_general_designer_values');
-            this.designerValuesSystem = $(`#gene_better_checkout_general_designer_values_inherit,
-                #gene_better_checkout_general_custom_wording_inherit,
-                #gene_better_checkout_general_gene_better_checkout_logo_inherit`);
+        cacheElements: function () {
+            this.designerModal = $(SELECTORS.DESIGNER_MODAL);
+            this.designerRoot = $(SELECTORS.DESIGNER_ROOT);
+            this.designerValues = $(SELECTORS.DESIGNER_VALUES);
+            this.designerValuesSystem = $(SELECTORS.DESIGNER_VALUES_SYSTEM);
+            this.customWording = $(SELECTORS.CUSTOM_WORDING);
+            this.designerLogo = $(SELECTORS.DESIGNER_LOGO);
+            this.designerLogoLabel = $(SELECTORS.DESIGNER_LOGO_LABEL);
+            this.designerLogoImgPreview = $(SELECTORS.DESIGNER_LOGO_IMG_PREVIEW);
+            this.designerLogoDelete = $(SELECTORS.DESIGNER_LOGO_DELETE);
+        },
 
-            this.customWording = $('#gene_better_checkout_general_custom_wording');
-
-            this.designerLogo = $('#gene_better_checkout_general_gene_better_checkout_logo');
-            this.designerLogoImgPreview = $('#gene_better_checkout_general_gene_better_checkout_logo_image');
-            this.designerLogoDelete = $('#gene_better_checkout_general_gene_better_checkout_logo_delete');
-
-            // Remove the 'disabled' attribute from the designerLogo input
+        enableLogo: function () {
             this.designerLogo.prop('disabled', false);
-            this.designerLogo.insertAfter(`#gene-bettercheckout-designer
-                label[for="gene_better_checkout_general_gene_better_checkout_logo"]`);
+            this.designerLogo.insertAfter(this.designerLogoLabel);
+        },
 
+        bindEvents: function (element) {
             this.designerModal.modal({
                 buttons: [
-                    {
-                        text: $t('Reset'),
-                        click: this.resetDesigner.bind(this)
-                    },
-                    {
-                        text: $t('Cancel'),
-                        click: function () {
-                            this.closeModal();
-                        }
-                    },
-                    {
-                        text: $t('Save'),
-                        click: this.saveDesigner.bind(this)
-                    }
+                    { text: $t('Reset'), click: this.resetDesigner.bind(this) },
+                    { text: $t('Cancel'), click: this.closeModal.bind(this) },
+                    { text: $t('Save'), click: this.saveDesigner.bind(this) }
                 ],
                 modalClass: 'gene-bettercheckout-designer-modal'
             });
@@ -54,61 +66,59 @@ define([
             this.designerValues.on('change', this.setSystemValue.bind(this));
             this.customWording.on('change', this.setSystemValue.bind(this));
 
-            $(element).on('click', this.openDesigner.bind(this));
-
             document.addEventListener('switchDeviceType', this.handleSwitchDeviceType.bind(this));
             document.addEventListener('switchDisplayedStep', this.handleSwitchDisplayedStep.bind(this));
-        },
 
-        triggerChange: function (event) {
-            // If the input is an image field we need to do something a little different to get the value.
-            if (event.target.type === 'file') {
-                if (event.target.files?.length) {
-                    let reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        this.dispatchLogoChangeEvent(e.target.result);
-                    }.bind(this);
-                    reader.readAsDataURL(event.target.files[0]);
-                } else {
-                    this.dispatchLogoChangeEvent();
-                }
-
-            } else if (event.target.dataset.type === 'checkout-wording') {
-                this.dispatchTextChangeEvent(event.target.value, event.target.id);
-            } else {
-                const { dataset, value } = event.target;
-
-                this.designerRoot.get(0).style.setProperty(dataset.cssVariable, value);
-            }
-        },
-
-        dispatchTextChangeEvent: function (value, customEventId) {
-            const event = new CustomEvent(customEventId, {
-                detail: value
-            });
-
-            document.dispatchEvent(event);
-            window.geneCheckout = window.geneCheckout || {};
-            window.geneCheckout[customEventId] = value;
-        },
-
-        dispatchLogoChangeEvent: function (src) {
-            const event = new CustomEvent('gene:checkout-image-update', {
-                detail: src
-            });
-
-            document.dispatchEvent(event);
-            window.geneCheckout = window.geneCheckout || {};
-            window.geneCheckout.logo = src;
+            $(element).on('click', this.openDesigner.bind(this));
         },
 
         toggleSidebar: function () {
             this.designerModal.toggleClass('open');
         },
 
+        triggerChange: function (event) {
+            if (event.target.type === 'file') {
+                this.handleFileInputChange(event.target);
+            } else if (event.target.dataset.type === 'checkout-wording') {
+                this.dispatchTextChangeEvent(event.target.value, event.target.id);
+            } else {
+                this.setCSSVariable(event.target.dataset.cssVariable, event.target.value);
+            }
+        },
+
+        handleFileInputChange: function (input) {
+            if (input.files && input.files.length) {
+                let reader = new FileReader();
+
+                reader.onload = () => this.dispatchLogoChangeEvent(reader.result);
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                this.dispatchLogoChangeEvent();
+            }
+        },
+
+        dispatchLogoChangeEvent: function (src) {
+            const event = new CustomEvent('gene:checkout-image-update', { detail: src });
+
+            document.dispatchEvent(event);
+            window.geneCheckout = window.geneCheckout || {};
+            window.geneCheckout.logo = src;
+        },
+
+        dispatchTextChangeEvent: function (value, customEventId) {
+            const event = new CustomEvent(customEventId, { detail: value });
+
+            document.dispatchEvent(event);
+            window.geneCheckout = window.geneCheckout || {};
+            window.geneCheckout[customEventId] = value;
+        },
+
+        setCSSVariable: function (name, value) {
+            this.designerRoot.get(0).style.setProperty(name, value);
+        },
+
         handleSwitchDeviceType: function (event) {
-            var deviceType = event.detail,
+            let deviceType = event.detail,
 
                 // Define mappings for device types to specific fields
                 deviceToFieldMap = {
@@ -145,7 +155,16 @@ define([
 
         openDesigner: function (event) {
             event.preventDefault();
+            this.loadScriptIfNeeded();
+            this.loadInitialLogo();
+            this.initializePixelInputs();
+            this.loadInitialCSSValues();
+            this.loadInitialWordingValues();
+            this.setupColorPickers();
+            this.designerModal.modal('openModal');
+        },
 
+        loadScriptIfNeeded: function () {
             let scriptId = 'personalisation-editor-js-app',
                 existingScript = document.getElementById(scriptId);
 
@@ -159,7 +178,16 @@ define([
                 scriptEl.id = scriptId;
                 document.head.appendChild(scriptEl);
             }
+        },
 
+        loadInitialLogo: function () {
+            if (this.designerLogoImgPreview.attr('src')) {
+                window.geneCheckout = window.geneCheckout || {};
+                window.geneCheckout.logo = this.designerLogoImgPreview.attr('src');
+            }
+        },
+
+        initializePixelInputs: function () {
             this.designerModal.find('.pixel-input').each(function (index, element) {
                 // Find the related hidden text input for each number input
                 var hiddenTextInput = $('#' + element.id + '_hidden');
@@ -187,10 +215,10 @@ define([
                     visibleTextInput.val(valueWithoutPx);
                 });
             });
+        },
 
-            const cssValues = this.designerValues.val().split(';'),
-                wordingValues = this.customWording.val(),
-                parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
+        loadInitialCSSValues: function () {
+            const cssValues = this.designerValues.val().split(';');
 
             cssValues.forEach(function (value) {
                 const [name, cssValue] = value.split(':');
@@ -206,6 +234,11 @@ define([
 
                 $(`[data-css-variable="${name}"]`).val(cssValue).trigger('change');
             }.bind(this));
+        },
+
+        loadInitialWordingValues: function () {
+            const wordingValues = this.customWording.val(),
+                parsedWordingValues = wordingValues ? JSON.parse(wordingValues) : {};
 
             Object.keys(parsedWordingValues).forEach(function (key) {
                 this.triggerChange({
@@ -220,14 +253,9 @@ define([
 
                 $(`#${key}`).val(parsedWordingValues[key]).trigger('change');
             }.bind(this));
+        },
 
-            if (this.designerLogoImgPreview.attr('src')) {
-                window.geneCheckout = window.geneCheckout || {};
-                window.geneCheckout.logo = this.designerLogoImgPreview.attr('src');
-            }
-
-            this.designerModal.modal('openModal');
-
+        setupColorPickers: function () {
             this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
                 $(element).ColorPicker({
                     onChange: function (hsb, hex) {
@@ -256,37 +284,6 @@ define([
             });
         },
 
-        saveDesigner: function () {
-            this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
-
-            const cssValues = this.designerModal.find('.section-config input[data-css-variable]').map(function () {
-                    return this.value
-                        ? `${this.dataset.cssVariable}:${this.value}`
-                        : '';
-                }).toArray().filter(value => value).join(';'),
-
-                wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]').toArray()
-                    .reduce(function (prev, curr) {
-                    // Early return if the input has no value.
-                        if (!curr.value) {
-                            return prev;
-                        }
-
-                        return {
-                            ...prev,
-                            [curr.id]: curr.value
-                        };
-                    }, {}),
-
-                storedWordingValue = Object.keys(wordingValues).length
-                    ? JSON.stringify(wordingValues)
-                    : '';
-
-            this.designerValues.val(cssValues).trigger('change');
-            this.customWording.val(storedWordingValue).trigger('change');
-            this.designerModal.modal('closeModal');
-        },
-
         setSystemValue: function (event) {
             const value = $(event.target).val(),
                 systemValue = this.designerValuesSystem.prop('checked');
@@ -294,6 +291,42 @@ define([
             if (value && systemValue || !value && !systemValue) {
                 this.designerValuesSystem.trigger('click');
             }
+        },
+
+        saveDesigner: function () {
+            this.saveImages();
+            this.saveColors();
+            this.saveWording();
+            this.closeModal();
+        },
+
+        saveImages: function () {
+            this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
+        },
+
+        saveColors: function () {
+            const cssValues = this.designerModal.find('.section-config input[data-css-variable]').map(function () {
+                return this.value ? `${this.dataset.cssVariable}:${this.value}` : '';
+            }).toArray().filter(value => value).join(';');
+
+            this.designerValues.val(cssValues).trigger('change');
+        },
+
+        saveWording: function () {
+            const wordingValues = this.designerModal.find('.section-config input[data-type="checkout-wording"]')
+                    .toArray()
+                    .reduce((prev, curr) => {
+                        if (!curr.value) {return prev;}
+                        return { ...prev, [curr.id]: curr.value };
+                    }, {}),
+
+                storedWordingValue = Object.keys(wordingValues).length ? JSON.stringify(wordingValues) : '';
+
+            this.customWording.val(storedWordingValue).trigger('change');
+        },
+
+        closeModal: function () {
+            this.designerModal.modal('closeModal');
         }
     });
 });

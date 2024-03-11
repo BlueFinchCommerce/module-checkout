@@ -26,6 +26,7 @@
           ref="email"
           v-model="customer.email"
           :error="emailError"
+          :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
           data-cy="email"
           :error-message="emailErrorMessage"
           identifier="email"
@@ -38,6 +39,8 @@
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
         />
+        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
+        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
@@ -190,6 +193,8 @@ import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
 import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
+import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
+import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // helpers
 import getBaseUrl from '@/helpers/getBaseUrl';
@@ -199,10 +204,12 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 export default {
   name: 'EmailAddress',
   components: {
+    ErrorIcon,
     TextInput,
     MyButton,
     HideIcon,
     ShowIcon,
+    ValidIcon,
     TextField,
     ErrorMessage,
     Loader,
@@ -215,6 +222,7 @@ export default {
       // emailRegistered has three states - Undefined, false, true. Undefined is for unknown state.
       emailRegistered: undefined,
       emailErrorMessage: '',
+      emailValid: false,
       passwordErrorMessage: '',
       passwordError: false,
       loginErrorMessage: null,
@@ -228,7 +236,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered']),
+    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     proceedAsGuestInvalid() {
@@ -338,6 +346,8 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
+      } else {
+        this.emailValid = true;
       }
     },
 

@@ -14,7 +14,6 @@
   box-sizing: border-box;
   margin: 0;
   position: relative;
-  font-weight: normal;
 }
 
 html,
@@ -29,11 +28,11 @@ body {
 }
 
 #gene-better-checkout-root {
-  color: var(--text__color);
+  color: var(--font__color);
   display: flex;
   flex-direction: column;
-  font-family: var(--font-family-base);
-  font-size: var(--font__base);
+  font-family: var(--font-family__base);
+  font-size: var(--font__s);
   line-height: 1.6;
   margin: 0;
   text-rendering: optimizeLegibility;
@@ -41,12 +40,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   .root {
-    background: var(--page-background__color-mobile);
+    background: var(--page__background-color--mobile);
     flex: 1;
-
-    p {
-      margin: 0;
-    }
 
     ul {
       margin-bottom: 0;
@@ -60,7 +55,7 @@ body {
 
   @media screen and (min-width: $screen__m) {
     .root {
-      background: var(--page-background__color-desktop);
+      background: var(--page__background-color--desktop);
     }
 
     .steps-container {
@@ -76,7 +71,7 @@ body {
         }
 
         .content {
-          margin-right: var(--column-gap);
+          margin-right: var(--indent__l);
           width: 60%;
         }
       }

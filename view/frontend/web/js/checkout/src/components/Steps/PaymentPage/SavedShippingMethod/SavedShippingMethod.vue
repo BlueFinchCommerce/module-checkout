@@ -24,20 +24,20 @@
                 :value="cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value"
               />
             </div>
-            <div class="proceed-to-shipping">
-              <button
-                class="button--blank edit-shipping-button"
-                :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
-              >
-                <TextField
-                  class="edit-button-title"
-                  :text="$t('yourDetailsSection.editButton')"
-                />
-                <Edit />
-              </button>
-            </div>
           </div>
         </div>
+      </div>
+      <div class="proceed-to-shipping">
+        <button
+          class="button--blank edit-shipping-button"
+          :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+        >
+          <TextField
+            class="edit-button-title"
+            :text="$t('yourDetailsSection.editButton')"
+          />
+          <Edit />
+        </button>
       </div>
     </router-link>
   </div>

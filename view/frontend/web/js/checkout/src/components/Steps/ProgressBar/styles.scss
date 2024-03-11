@@ -4,18 +4,18 @@
 
 .progress-bar {
   &-divider {
-    border: 1px solid var(--inactive__gray-color);
+    border: var(--divider__border);
     margin-bottom: var(--indent__base);
     width: 100%;
 
     &.active {
-      border-color: var(--primary__color);
+      border-color: var(--color__primary-grey1);
     }
   }
 
   &-container {
     padding: var(--indent__s) var(--indent__base);
-    background: var(--white__color);
+    background: var(--color__primary-white);
     z-index: 10;
     position: sticky;
     top: 0;
@@ -30,7 +30,7 @@
     }
 
     p {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
     }
 
     .details,
@@ -45,7 +45,7 @@
       .shipping-icon,
       .payment-icon {
         padding: 12px;
-        border: 2px solid var(--inactive__gray-color);
+        border: 2px solid var(--base__border-color);
         border-radius: var(--progress-bar-border-radius, 50%);
         max-width: 25px;
         height: 20px;
@@ -62,7 +62,7 @@
       }
 
       p {
-        color: var(--inactive__gray-color);
+        color: var(--color__primary-grey1);
         white-space: pre;
       }
 
@@ -70,7 +70,7 @@
         .details-icon,
         .shipping-icon,
         .payment-icon {
-          border: 2px solid var(--primary__color);
+          border: 2px solid var(--base__border-color-active);
 
           img {
             filter: var(--active__gray-filter, invert(0%) sepia(4%) saturate(0%) hue-rotate(309deg) brightness(93%) contrast(107%));
@@ -78,7 +78,7 @@
         }
 
         p {
-          color: var(--primary__color);
+          color: var(--color__primary-dark-blue);
         }
       }
     }
@@ -86,40 +86,40 @@
     &.shipping-active {
       .shipping {
         .shipping-icon {
-          border: 2px solid var(--primary__color);
+          border: 2px solid var(--base__border-color-active);
 
           svg {
-            fill: var(--primary__color);
+            fill: var(--color__primary-blue);
           }
         }
 
         p {
-          color: var(--primary__color);
+          color: var(--color__primary-dark-blue);
         }
       }
 
       .shipping-divider {
-        border-color: var(--primary__color);
+        border-color: var(--color__primary-grey1);
       }
     }
 
     &.payment-active {
       .payment {
         .payment-icon {
-          border: 2px solid var(--primary__color);
+          border: 2px solid var(--base__border-color-active);
 
           svg {
-            fill: var(--primary__color);
+            fill: var(--color__primary-blue);
           }
         }
 
         p {
-          color: var(--primary__color);
+          color: var(--color__primary-dark-blue);
         }
       }
 
       .payment-divider {
-        border-color: var(--primary__color);
+        border-color: var(--color__primary-grey1);
       }
     }
   }

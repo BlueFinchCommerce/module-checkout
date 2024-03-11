@@ -1,9 +1,9 @@
 @import '@/styles/global/_breakpoints';
 
 .adyen-checkout__input {
-  background: var(--adyen-checkout-input__background-color, var(--input-background-color));
-  border-radius: var(--input-border-radius);
-  border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
+  background: var(--adyen-checkout-input__background-color, var(--input__background-color));
+  border-radius: var(--input__border-radius);
+  border: var(--input-border, var(--input__border-weight) solid var(--input__border-color));
   height: 50px;
   outline: none;
   transition: none;
@@ -11,17 +11,17 @@
   &:focus-visible,
   &:focus,
   &:active {
-    border: var(--input-border, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+    border: var(--input-border, var(--input__border-weight-focus) solid var(--input__border-color-focus));
     box-shadow: none;
 
     &:hover {
-      border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+      border: var(--input-border-focus, var(--input__border-weight-hover) solid var(--input__border-color-hover));
       box-shadow: none;
     }
   }
 
   &:hover {
-    border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+    border: var(--input-border-focus, var(--input__border-weight-hover) solid var(--input__border-color-hover));
     box-shadow: none;
   }
 
@@ -39,49 +39,49 @@
     padding: 0 10px;
     position: var(--adyen-label-position, absolute);
     top: -5px;
-    background: var(--adyen-checkout-field-label__background-color, var(--input-background-color));
+    background: var(--adyen-checkout-field-label__background-color, var(--input__background-color));
     line-height: 1em;
     z-index: 1;
     left: var(--adyen-label-left-value, 10px);
-    color: var(--adyen-font-color, #00112C);
-    font-size: var(--adyen-font-size, var(--font__s));
+    color: var(--adyen-font-color, var(--font__color-dark));
+    font-size: var(--adyen-font-size, var(--font__xs));
     margin-bottom: var(--adyen-label-margin-bottom, 0);
     transition: none;
-    border-radius: var(--base-border-radius);
+    border-radius: var(--base__border-radius);
 
     .adyen-checkout__label--focused & {
-      color: var(--text__color);
+      color: var(--font__color-dark);
     }
   }
 }
 
 .adyen-checkout__button {
-  background: var(--button-adyen-pay-background-color);
-  border-radius: var(--button-adyen-pay-border-radius);
-  box-shadow: var(--button-primary-border-box-shadow);
-  font-size: var(--button-font-medium);
-  line-height: var(--button-line-height);
-  min-height: var(--button-height);
-  text-transform: var(--adyen-checkout-button-text-transform, var(--button-text-transform));
+  background: var(--button-adyen-pay__background-color);
+  border-radius: var(--button-adyen-pay__border-radius);
+  box-shadow: var(--button-primary__border-box-shadow);
+  font-size: var(--button__font-medium);
+  line-height: var(--button__line-height);
+  min-height: var(--button__height);
+  text-transform: var(--adyen-checkout-button-text-transform, var(--button__text-transform));
 
   &.adyen-checkout__button--pay {
     margin-top: 20px;
   }
 
   &:hover {
-    background: var(--button-adyen-pay-background-color-hover);
-    border-color: var(--button-adyen-pay-border-color-hover);
+    background: var(--button-adyen-pay__background-color-hover);
+    border-color: var(--button-adyen-pay__border-color-hover);
     box-shadow: none;
   }
 
   &__text {
-    font-family: var(--button-font-family);
-    font-size: var(--adyen-text-button-font-size, var(--button-font-medium));
-    font-weight: var(--adyen-text-button-font-weight, var(--button-font-weight));
+    font-family: var(--button__font-family);
+    font-size: var(--adyen-text-button-font-size, var(--button__font-medium));
+    font-weight: var(--adyen-text-button-font-weight, var(--button__font-weight));
   }
 
   &.adyen-checkout__button--loading {
-    background: var(--button-adyen-pay-background-color);
+    background: var(--button-adyen-pay__background-color);
   }
 }
 
@@ -97,13 +97,13 @@
 
   &__header__title {
     &:hover {
-      color: var(--text__color);
+      color: var(--font__color);
       background: transparent;
       border: none;
     }
 
     &:focus {
-      color: var(--text__color);
+      color: var(--font__color);
       background: transparent;
       border: none;
     }
@@ -124,7 +124,7 @@
   .adyen-checkout {
     &__payment-method__name {
       font-size: var(--adyen-font-size, var(--font__m));
-      font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
+      font-weight: var(--adyen-font-weight, var(--font-weight__medium));
       color: var(--adyen-font-color, #00112C);
     }
 
@@ -136,19 +136,19 @@
       max-height: initial;
 
       &:before {
-        box-shadow: var(--radio__input-box-shadow);
-        border: var(--radio__input-border);
+        box-shadow: var(--radio-input__box-shadow);
+        border: var(--radio-input__border);
         content: '';
         display: block;
-        width: var(--radio__input-width);
-        height: var(--radio__input-height);
+        width: var(--radio-input__width);
+        height: var(--radio-input__height);
         border-radius: 50%;
         position: absolute;
         top: 15px;
       }
 
       &__header__title {
-        font-family: var(--font-family-copy);
+        font-family: var(--font-family__copy);
         line-height: 3em;
         position: relative;
         text-transform: initial;
@@ -172,8 +172,8 @@
       background: var(--adyen-drop-in-selected__background, transparent);
 
       &:before {
-        border: var(--radio__input-checked-border);
-        box-shadow: var(--radio__input-checked-box-shadow);
+        border: var(--radio-input__border-checked);
+        box-shadow: var(--radio-input__box-shadow-checked);
       }
 
       .adyen-checkout__payment-method__details {
@@ -216,7 +216,7 @@
   }
   &__header {
     font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
-    color: var(--text__color--heading);
+    color: var(--font__color);
   }
 
 }
