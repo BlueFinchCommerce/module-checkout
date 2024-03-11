@@ -19,7 +19,6 @@ export default (uid) => {
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
-        return;
       }
 
       return response.data.removeItemFromCart.cart;

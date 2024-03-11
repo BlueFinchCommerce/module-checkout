@@ -1,12 +1,9 @@
 /* eslint-disable import/no-cycle */
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
-import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStore';
-import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
-import useStepsStore from '@/stores/StepsStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
@@ -14,7 +11,6 @@ import addDiscountCode from '@/services/discount/addDiscountCode';
 import getAmastyShippingInfo from '@/services/getAmastyShippingInfo';
 import getCart from '@/services/cart/getCart';
 import getCartData from '@/services/getCartData';
-import getCartTotals from '@/services/getCartTotals';
 import getCrosssells from '@/services/getCrosssells';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import mergeGuestCart from '@/services/mergeGuestCart';
@@ -90,11 +86,16 @@ export default defineStore('cartStore', {
       state.cart.items
     ),
     getCartItemsQty: (state) => (
-      Object.values(state.cartItems).reduce((prev, curr) => prev += curr.quantity, 0)
+      Object.values(state.cartItems).reduce((prev, curr) => {
+        const totalQuantity = prev + curr.quantity;
+        return totalQuantity;
+      }, 0)
     ),
     cartGrandTotal: (state) => (
-      Math.round(state.cart?.prices?.grand_total?.value * 100)
-    )
+      state.cart?.prices?.grand_total?.value
+        ? Math.round(state.cart.prices.grand_total.value * 100)
+        : 0
+    ),
   },
   actions: {
     setData(data) {
@@ -107,57 +108,46 @@ export default defineStore('cartStore', {
       this.handleCartData(cart);
     },
 
+    async getCartData() {
+      const data = await this.getCachedResponse(getCartData, 'getCartData');
+      const customerStore = useCustomerStore();
+      const { amastySubs } = customerStore;
+      if (!Object.keys(amastySubs).length && data.checkboxes) {
+        Object.keys(data.checkboxes).forEach((checkbox) => {
+          customerStore.updateAmastySubscription({
+            [checkbox]: data.checkboxes[checkbox].is_prechecked,
+          });
+        });
+      }
+      return data;
+    },
+
     // This handles storing the cart data in the correct store location.
     handleCartData(cart) {
-      if (cart.hasOwnProperty('items')) {
-        if (cart.items.length) {
-          const localItems = getCartItems();
-
-          cart.items.forEach((item) => {
-            item = { ...localItems[item.id], ...item };
-          });
-
-        } else {
-          redirectToBasketPage();
-          return;
-        }
+      if (cart && cart.items.length) {
+        const localItems = getCartItems();
+        const mappedCartItems = cart.items.map((item) => (
+          { ...localItems[item.id], ...item }
+        ));
+        this.setData({
+          cart: {
+            items: mappedCartItems,
+          },
+        });
+      } else {
+        redirectToBasketPage();
+        return;
       }
 
       this.setData({
         cart,
         discountCode: cart?.applied_coupons?.[0]?.code ?? '',
-        giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? ''
+        giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
       });
 
       const customerStore = useCustomerStore();
 
       customerStore.setEmailAddress(cart.email ?? '');
-    },
-
-    /* eslint-disable  consistent-return */
-    async getCartData() {
-      try {
-        const data = await this.getCachedResponse(getCartData, 'getCartData');
-
-        if (data.agreements) {
-          this.setData({ data: { ...this.$state.data, ...data } });
-        }
-        const customerStore = useCustomerStore();
-        const { amastySubs } = customerStore;
-        if (!Object.keys(amastySubs).length && data.checkboxes) {
-          Object.keys(data.checkboxes).forEach((checkbox) => {
-            customerStore.updateAmastySubscription({
-              [checkbox]: data.checkboxes[checkbox].is_prechecked,
-            });
-          });
-        }
-        if (data.quote.items.length === 0) {
-          redirectToBasketPage();
-        }
-        return data;
-      } catch {
-        redirectToBasketPage();
-      }
     },
 
     async updateQuantity(updateItem, change) {
@@ -168,12 +158,15 @@ export default defineStore('cartStore', {
         this.handleCartData(cart);
       } catch (error) {
         // Add the error message to the cart item.
-        const items = this.cart.items;
+        const { items } = this.cart;
         items.map((item) => {
           if (item.uid === updateItem.uid) {
-            item.errors = [{
-              message: error.message,
-            }];
+            return {
+              ...item,
+              errors: [{
+                message: error.message,
+              }],
+            };
           }
 
           return item;
@@ -206,7 +199,9 @@ export default defineStore('cartStore', {
       try {
         const cart = await removeCartItem(product.uid);
         this.handleCartData(cart);
-      } catch {}
+      } catch (error) {
+        console.warn('Unable to remove cart item', error.message);
+      }
 
       if (this.penniesDonation.enabled) {
         await this.calculateDonation();
@@ -222,37 +217,6 @@ export default defineStore('cartStore', {
       gtmStore.removeFromCartEvent(product, product.qty);
 
       this.cartLoading = 'false';
-    },
-
-    getCartTotals() {
-      return;
-    },
-
-    updateTotals(cart) {
-      const { taxCartDisplayShipping } = useConfigStore();
-
-      if (totals.items) {
-        const items = {};
-        totals.items.forEach((item) => {
-          items[item.item_id] = {
-            ...this.$state.cartItems[item.item_id],
-            ...item,
-            options: JSON.parse(item.options),
-          };
-        });
-        this.setData({ cartItems: items });
-      }
-      this.setData({
-        totalSegments: totals.total_segments,
-        subtotalInclTax: totals.subtotal_incl_tax,
-      });
-      this.setData({
-        rewards: {
-          used: totals.extension_attributes.reward_points_balance,
-        },
-      });
-      this.calculateFreeShipping();
-      return totals;
     },
 
     async addDiscountCode(code) {
@@ -424,7 +388,9 @@ export default defineStore('cartStore', {
       try {
         const cart = await addCartItem(product);
         this.setData({ cart });
-      } catch {}
+      } catch (error) {
+        console.warn('Unable to add cart item', error.message);
+      }
       if (this.penniesDonation.enabled) {
         await this.calculateDonation();
       }
@@ -478,12 +444,10 @@ export default defineStore('cartStore', {
     },
 
     clearAllCaches() {
-      this.clearCaches(['getCartData', 'getCart', 'getCartTotals', 'getCrosssells']);
+      this.clearCaches(['getCart', 'getCrosssells']);
     },
 
     async emitUpdate() {
-      const shippingMethodsStore = useShippingMethodsStore();
-
       this.clearCaches(['getPaymentInformation']);
 
       this.$state.cartEmitter.emit('cartUpdated');
@@ -497,8 +461,6 @@ export default defineStore('cartStore', {
       this.setData({
         penniesDonation: { isAvailable: false },
       });
-      this.clearCaches(['getCartTotals']);
-      this.getCartTotals();
       await this.calculateDonation();
       this.emitUpdate();
     },
@@ -508,8 +470,6 @@ export default defineStore('cartStore', {
       this.setData({
         penniesDonation: { isAvailable: true },
       });
-      this.clearCaches(['getCartTotals']);
-      this.getCartTotals();
       await this.calculateDonation();
       this.emitUpdate();
     },
@@ -537,9 +497,6 @@ export default defineStore('cartStore', {
     async useRewardPoints() {
       await useRewardPoints();
 
-      this.clearCaches(['getCartTotals']);
-      await this.getCartTotals();
-
       const paymentStore = usePaymentStore();
       await paymentStore.refreshPaymentMethods();
 
@@ -548,9 +505,6 @@ export default defineStore('cartStore', {
 
     async removeRewardPoints() {
       await removeRewardPoints();
-
-      this.clearCaches(['getCartTotals']);
-      await this.getCartTotals();
 
       const paymentStore = usePaymentStore();
       await paymentStore.refreshPaymentMethods();
@@ -565,9 +519,6 @@ export default defineStore('cartStore', {
       }
       await useStoreCredit();
 
-      this.clearCaches(['getCartTotals']);
-      await this.getCartTotals();
-
       const paymentStore = usePaymentStore();
       await paymentStore.refreshPaymentMethods();
 
@@ -580,9 +531,6 @@ export default defineStore('cartStore', {
         this.setData({ maskedId });
       }
       await removeStoreCredit();
-
-      this.clearCaches(['getCartTotals']);
-      await this.getCartTotals();
 
       const paymentStore = usePaymentStore();
       await paymentStore.refreshPaymentMethods();

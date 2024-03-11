@@ -140,14 +140,17 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
+    ...mapState(useConfigStore, ['storeCode']),
   },
   async created() {
     this.checkForGuestUser();
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getCustomerInformation();
-    this.getCartTotals();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
       || this.$t('orderSummary.mobileDiscountText');
@@ -155,7 +158,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['getCustomerInformation', 'checkForGuestUser']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     toggleSummary() {
       this.isModalVisible = !this.isModalVisible;
       if (this.isModalVisible) {

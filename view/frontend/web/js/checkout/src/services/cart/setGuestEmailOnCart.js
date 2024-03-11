@@ -1,6 +1,6 @@
 import useCartStore from '@/stores/CartStore';
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
+import getFullCart from '@/helpers/getFullCart';
 
 export default async (email) => {
   const { maskedId } = useCartStore();
@@ -14,11 +14,11 @@ export default async (email) => {
         }
       ) {
         cart {
-          email
+          ${getFullCart}
         }
       }
     }`;
 
   return graphQlRequest(request)
-    .then((response => response.data.setGuestEmailOnCart.cart));
+    .then(((response) => response.data.setGuestEmailOnCart.cart));
 };

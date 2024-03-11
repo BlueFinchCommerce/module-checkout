@@ -154,31 +154,12 @@
           v-if="isLoggedIn"
           class="save-address-field"
         >
-<<<<<<< HEAD
-          <label :for="`${address_type}-save-in-address-book`">
-            <input
-              :id="`${address_type}-save-in-address-book`"
-              v-model.boolean="selected[address_type].save_in_address_book"
-              type="checkbox"
-              class="field__checkbox"
-              value="1"
-              :true-value="1"
-              :false-value="0"
-            >
-            <TextField
-              :text="$t('saveNewAddress')"
-              font-size="15px"
-              font-weight="300"
-            />
-          </label>
-=======
           <CheckboxComponent
             :id="`${address_type}-save-in-address-book`"
             :text="$t('saveNewAddress')"
             :checked="selected[address_type].save_in_address_book === 1"
             @change="handleSaveInAddressBookChange"
           />
->>>>>>> 6463e25976cfabf6c15a15869893f5f56f335d92
         </div>
         <div>
           <MyButton

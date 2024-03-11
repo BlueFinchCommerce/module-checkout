@@ -33,7 +33,6 @@ import createPayment from '@/services/createPayment';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 export default {
@@ -65,14 +64,10 @@ export default {
     });
 
     this.cartEmitter.on('cartUpdated', async () => {
-      await this.getCartData();
-      await this.getCart();
-      await this.getCartTotals();
       await this.getPaymentMethods();
     });
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
     async selectPaymentMethod() {
       this.isMethodSelected = true;

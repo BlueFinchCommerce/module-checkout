@@ -25,13 +25,13 @@ import formatPrice from '@/helpers/formatPrice';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
-import handleServiceError from '@/helpers/handleServiceError';
 import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
 
 import createPayment from '@/services/createPayment';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
 
 export default {
   name: 'AdyenGooglePay',
@@ -49,10 +49,11 @@ export default {
   },
   computed: {
     ...mapState(useAdyenStore, ['isAdyenAvailable']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
       'currencyCode',
+      'storeCode',
       'locale',
       'countryCode',
       'countries',
@@ -61,7 +62,10 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
 
     await this.getIsAdyenAvailable();
 
@@ -72,9 +76,6 @@ export default {
     }
 
     await this.getAdyenConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
     if (!googlePayMethod) {
@@ -128,9 +129,9 @@ export default {
       'getPaymentMethods',
       'setErrorMessage',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
@@ -240,13 +241,7 @@ export default {
             ? response[0]
             : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
 
-          this.selectShippingMethod(selectedShipping);
-
-          // Set the billing address to the same as shipping for now. Magento doesn't use this
-          // yet and it is replaced with the correct billing in the onAuthorized.
-          this.setAddressToStore(address, 'shipping');
-          this.setAddressToStore(address, 'billing');
-          const totals = await this.submitShippingInfo();
+          await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
               defaultSelectedOptionId: selectedShipping.method_code,
@@ -257,13 +252,13 @@ export default {
                 {
                   label: 'Shipping',
                   type: 'LINE_ITEM',
-                  price: totals.shipping_incl_tax.toString(),
+                  price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
                   status: 'FINAL',
                 },
               ],
-              currencyCode: totals.quote_currency_code,
+              currencyCode: this.cart.prices.grand_total.currency,
               totalPriceStatus: 'FINAL',
-              totalPrice: totals.base_grand_total.toString(),
+              totalPrice: this.cart.prices.grand_total.value.toString(),
               totalPriceLabel: 'Total',
               countryCode: this.countryCode,
             },
@@ -276,7 +271,7 @@ export default {
     onPaymentAuthorized(data) {
       return new Promise((resolve) => {
         // If there is no select shipping method at this point display an error.
-        if (!this.selectedMethod.carrier_code) {
+        if (!this.cart.shipping_addresses[0].selected_shipping_method) {
           resolve({
             error: {
               reason: 'SHIPPING_OPTION_INVALID',
@@ -290,49 +285,46 @@ export default {
         const { email } = data;
         const { billingAddress } = data.paymentMethodData.info;
         const { phoneNumber } = billingAddress;
-        const mapShippingAddress = this.mapAddress(data.shippingAddress, email, phoneNumber);
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
-        this.setEmailAddress(email);
-        this.setAddressToStore(mapShippingAddress, 'shipping');
-        this.setAddressToStore(mapBillingAddress, 'billing');
+        try {
+          this.submitEmail(email)
+            .then(() => setBillingAddressOnCart(mapBillingAddress))
+            .then(() => {
+              const stateData = JSON.stringify({
+                paymentMethod: {
+                  googlePayCardNetwork: data.paymentMethodData.info.cardNetwork,
+                  googlePayToken: data.paymentMethodData.tokenizationData.token,
+                  type: 'googlepay',
+                },
+                browserInfo: this.browserInfo,
+              });
 
-        this.submitShippingInfo().then(async () => {
-          const stateData = JSON.stringify({
-            paymentMethod: {
-              googlePayCardNetwork: data.paymentMethodData.info.cardNetwork,
-              googlePayToken: data.paymentMethodData.tokenizationData.token,
-              type: 'googlepay',
+              const paymentMethod = {
+                code: 'adyen_hpp',
+                adyen_additional_data_hpp: {
+                  brand_code: 'googlepay',
+                  stateData,
+                },
+              };
+
+              createPayment(paymentMethod)
+                .then((orderNumber) => {
+                  this.setOrderId(orderNumber);
+                  resolve({
+                    transactionState: 'SUCCESS',
+                  });
+                });
+            });
+        } catch (error) {
+          resolve({
+            error: {
+              reason: 'PAYMENT_DATA_INVALID',
+              message: error.message,
+              intent: 'PAYMENT_AUTHORIZATION',
             },
-            browserInfo: this.browserInfo,
           });
-
-          const paymentMethod = {
-            code: 'adyen_hpp',
-            adyen_additional_data_hpp: {
-              brand_code: 'googlepay',
-              stateData,
-            },
-          };
-
-          try {
-            const orderId = await createPayment(paymentMethod).catch(handleServiceError);
-
-            this.setOrderId(orderId);
-
-            resolve({
-              transactionState: 'SUCCESS',
-            });
-          } catch (error) {
-            resolve({
-              error: {
-                reason: 'PAYMENT_DATA_INVALID',
-                message: error.message,
-                intent: 'PAYMENT_AUTHORIZATION',
-              },
-            });
-          }
-        });
+        }
       });
     },
 

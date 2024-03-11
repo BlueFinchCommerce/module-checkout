@@ -259,9 +259,7 @@ export default defineStore('customerStore', {
       });
       cartStore.clearAllCaches();
       cartStore.clearCartItems('all');
-      await cartStore.getCartData();
       await cartStore.getCart();
-      await cartStore.getCartTotals();
 
       this.clearCaches(['getCustomerInformation']);
       await this.getCustomerInformation();

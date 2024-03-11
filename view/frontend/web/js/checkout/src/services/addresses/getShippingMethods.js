@@ -4,6 +4,7 @@ import useConfigStore from '@/stores/ConfigStore';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 import formatAddress from '@/helpers/formatAddress';
+import getFullCart from '@/helpers/getFullCart';
 
 const convertBoolean = (value) => (value === 1);
 
@@ -24,40 +25,7 @@ mutation {
     }
   ) {
     cart {
-      shipping_addresses {
-        firstname
-        lastname
-        company
-        street
-        city
-        region {
-          code
-          label
-        }
-        postcode
-        telephone
-        country {
-          code
-          label
-        }
-        available_shipping_methods {
-          carrier_code
-          carrier_title
-          method_code
-          method_title
-          amount {
-            value
-          }
-          available
-          error_message
-          price_excl_tax {
-            value
-          }
-          price_incl_tax {
-            value
-          }
-        }
-      }
+      ${getFullCart}
     }
   }
 }`;

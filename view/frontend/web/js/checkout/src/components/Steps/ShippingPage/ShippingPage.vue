@@ -31,10 +31,9 @@ export default {
   async created() {
     if (!this.storeCode) {
       await this.getStoreConfig();
-      await this.getCartData();
       await this.getCart();
     }
-    this.$nextTick(this.setDefaultShippingMethod);
+    this.setDefaultShippingMethod();
 
     this.trackStep({
       step: 2,
@@ -42,7 +41,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useShippingMethodsStore, ['setDefaultShippingMethod']),
     ...mapActions(useGtmStore, ['trackStep']),

@@ -21,9 +21,7 @@ import usePaymentStore from '@/stores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import formatPrice from '@/helpers/formatPrice';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
-import handleServiceError from '@/helpers/handleServiceError';
 
 import createPayment from '@/services/createPayment';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
@@ -51,14 +49,17 @@ export default {
       'countryCode',
       'countries',
       'getRegionId',
+      'storeCode',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getBraintreeConfig();
-    await this.getCartData();
-    await this.getCart();
     await this.getPaymentMethods();
 
     const googlePayConfig = this.availableMethods.find((method) => (
@@ -119,7 +120,7 @@ export default {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
@@ -240,7 +241,7 @@ export default {
     },
 
     onPaymentAuthorized(data) {
-      return new Promise(async (resolve) => {
+      return new Promise((resolve) => {
         // If there is no select shipping method at this point display an error.
         if (!this.cart.shipping_addresses[0].selected_shipping_method) {
           resolve({
@@ -272,12 +273,13 @@ export default {
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
         try {
-          await this.submitEmail(email);
-          await setBillingAddressOnCart(mapBillingAddress);
-
-          resolve({
-            transactionState: 'SUCCESS',
-          });
+          this.submitEmail(email)
+            .then(() => setBillingAddressOnCart(mapBillingAddress))
+            .then(() => {
+              resolve({
+                transactionState: 'SUCCESS',
+              });
+            });
         } catch (error) {
           resolve({
             error: {

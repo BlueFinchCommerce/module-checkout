@@ -45,7 +45,15 @@ export default {
     ...mapState(useBraintreeStore, ['clientToken']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
-    ...mapState(useConfigStore, ['currencyCode', 'locale', 'countryCode', 'websiteName', 'countries', 'getRegionId']),
+    ...mapState(useConfigStore, [
+      'currencyCode',
+      'locale',
+      'countryCode',
+      'websiteName',
+      'countries',
+      'getRegionId',
+      'storeCode',
+    ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
 
@@ -58,10 +66,11 @@ export default {
       return;
     }
 
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getPaymentMethods();
 
     const applePayConfig = this.availableMethods.find((method) => (
@@ -104,7 +113,7 @@ export default {
       'getPaymentMethods',
       'setErrorMessage',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore', 'validatePostcode']),
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),

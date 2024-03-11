@@ -101,7 +101,6 @@ export default {
   async created() {
     if (!this.storeCode) {
       await this.getStoreConfig();
-      await this.getCartData();
       await this.getCart();
     }
 
@@ -117,7 +116,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['getIsAdyenAvailable']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
     setDetailsStepActive() {

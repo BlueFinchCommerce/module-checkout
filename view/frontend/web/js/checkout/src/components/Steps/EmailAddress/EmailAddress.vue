@@ -239,6 +239,7 @@ export default {
     ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
+    ...mapState(useConfigStore, ['storeCode']),
     proceedAsGuestInvalid() {
       return this.emailError;
     },
@@ -247,9 +248,11 @@ export default {
     },
   },
   async mounted() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     this.trackStep({
       step: 1,
       description: 'login',
@@ -265,7 +268,7 @@ export default {
       'isEmailAvailable',
       'editEmail',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'emitUpdate']),
+    ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
 
     toggleShowPassword() {

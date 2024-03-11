@@ -42,7 +42,15 @@ export default {
     ...mapState(useAdyenStore, ['isAdyenAvailable']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
-    ...mapState(useConfigStore, ['currencyCode', 'locale', 'countryCode', 'websiteName', 'countries', 'getRegionId']),
+    ...mapState(useConfigStore, [
+      'currencyCode',
+      'locale',
+      'countryCode',
+      'websiteName',
+      'countries',
+      'getRegionId',
+      'storeCode',
+    ]),
   },
 
   async created() {
@@ -51,7 +59,12 @@ export default {
     } else {
       return;
     }
-    await this.getStoreConfig();
+
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getIsAdyenAvailable();
 
     // Early return is Adyen isn't available.
@@ -61,9 +74,6 @@ export default {
     }
 
     await this.getAdyenConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
     const clientKey = await this.getAdyenClientKey();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -113,7 +123,7 @@ export default {
       'getAdyenClientKey',
       'getIsAdyenAvailable',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore', 'validatePostcode']),
 

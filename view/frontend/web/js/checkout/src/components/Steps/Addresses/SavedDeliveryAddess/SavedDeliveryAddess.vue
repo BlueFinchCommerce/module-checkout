@@ -39,11 +39,9 @@
 import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
-import useCustomerStore from '@/stores/CustomerStore';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
-// eslint-disable-next-line max-len
 import AddressBlockShort from '@/components/Steps/Addresses/AddressBlockShort/AddressBlockShort.vue';
 
 // icons

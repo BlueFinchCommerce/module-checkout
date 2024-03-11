@@ -1,14 +1,11 @@
-import useCustomerStore from '@/stores/CustomerStore';
 import useCartStore from '@/stores/CartStore';
 import useRecaptchaStore from '@/stores/RecaptchaStore';
 
 import beforePaymentRequest from '@/services/beforePaymentRequest';
 import graphQlRequest from './graphQlRequest';
-import tokenTypes from '@/helpers/getTokenTypes';
 
 export default (paymentMethod) => {
   const { maskedId } = useCartStore();
-  const { customer: { tokenType } } = useCustomerStore();
   const { tokens } = useRecaptchaStore();
 
   const request = `
@@ -47,9 +44,8 @@ export default (paymentMethod) => {
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
-        return;
       }
 
-      return response.data.placeOrder.order.order_number
+      return response.data.placeOrder.order.order_number;
     });
 };

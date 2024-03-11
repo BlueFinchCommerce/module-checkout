@@ -281,7 +281,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -311,9 +311,10 @@ export default {
     this.updateButtonState();
   },
   async mounted() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
 
     const types = {
       shipping: 'customerInfoValidation',
@@ -332,7 +333,7 @@ export default {
     });
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressAsCustom',

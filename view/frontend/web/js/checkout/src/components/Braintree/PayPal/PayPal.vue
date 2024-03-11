@@ -50,14 +50,16 @@ export default {
       'countryCode',
       'countries',
       'getRegionId',
+      'storeCode',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getPaymentMethods();
     await this.getBraintreeConfig();
 
@@ -183,7 +185,7 @@ export default {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getAdyenConfig']),
     ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore']),
 

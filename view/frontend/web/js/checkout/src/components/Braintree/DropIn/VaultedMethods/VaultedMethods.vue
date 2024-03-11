@@ -77,8 +77,6 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 // Services
@@ -277,7 +275,7 @@ export default {
       });
     },
 
-    getPaymentData(payload) {
+    getPaymentData() {
       const { publicHash } = this.selectedVaultMethod;
 
       return {

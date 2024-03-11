@@ -39,8 +39,6 @@ import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 // Services

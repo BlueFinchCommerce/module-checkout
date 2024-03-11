@@ -84,7 +84,6 @@ import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
@@ -136,15 +135,16 @@ export default {
       'getSelectedBillingAddress',
       'isLoggedIn',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'locale']),
+    ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
   },
 
   async created() {
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getAdyenConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -308,7 +308,7 @@ export default {
       'getPaymentMethodsResponse',
       'clearPaymentReponseCache',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals', 'validateAgreements']),
+    ...mapActions(useCartStore, ['getCart', 'validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     setOrderId(orderId) {

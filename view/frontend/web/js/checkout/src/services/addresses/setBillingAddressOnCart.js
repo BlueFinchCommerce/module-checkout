@@ -1,9 +1,7 @@
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
-
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
-import formatAddress from '@/helpers/formatAddress';
+import getFullCart from '@/helpers/getFullCart';
+import deepClone from '@/helpers/deepClone';
 
 const mapToGraphQLString = (obj) => Object.entries(obj)
   .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
@@ -12,17 +10,19 @@ const mapToGraphQLString = (obj) => Object.entries(obj)
 export default async (billingAddress) => {
   const { maskedId } = useCartStore();
 
-  delete billingAddress.id;
-  delete billingAddress.email;
-  delete billingAddress.editing;
-  delete billingAddress.country_id;
-  delete billingAddress.same_as_billing;
-  delete billingAddress.region_code;
-  billingAddress.region = billingAddress.region_id;
-  delete billingAddress.region_id;
-  delete billingAddress.same_as_shipping;
+  const tempBillingAddress = deepClone(billingAddress);
 
-  billingAddress.save_in_address_book = !!billingAddress.save_in_address_book;
+  delete tempBillingAddress.id;
+  delete tempBillingAddress.email;
+  delete tempBillingAddress.editing;
+  delete tempBillingAddress.country_id;
+  delete tempBillingAddress.same_as_billing;
+  delete tempBillingAddress.region_code;
+  tempBillingAddress.region = tempBillingAddress.region_id;
+  delete tempBillingAddress.region_id;
+  delete tempBillingAddress.same_as_shipping;
+
+  tempBillingAddress.save_in_address_book = !!tempBillingAddress.save_in_address_book;
 
   const request = `
     mutation {
@@ -30,27 +30,12 @@ export default async (billingAddress) => {
         input: {
           cart_id: "${maskedId}"
           billing_address: {
-            address: { ${mapToGraphQLString(billingAddress)} }
+            address: { ${mapToGraphQLString(tempBillingAddress)} }
           }
         }
       ) {
         cart {
-          billing_address {
-            city
-            country {
-              code
-              label
-            }
-            firstname
-            lastname
-            postcode
-            region {
-              code
-              label
-            }
-            street
-            telephone
-          }
+          ${getFullCart}
         }
       }
     }`;
@@ -59,7 +44,6 @@ export default async (billingAddress) => {
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
-        return;
       }
 
       return response.data.setBillingAddressOnCart;
