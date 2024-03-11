@@ -37,13 +37,14 @@
       </li>
       <li
         v-if="selected[addressType].id !== 'custom'"
-        value=""
-        class="address-list__item-new"
-        data-cy="add-address-new"
-        @click="newAddress"
-        @keydown="newAddress"
-        v-text="$t('addNewAddressBtn')"
-      />
+        class="address-list__item-new">
+        <MyButton
+          type="button"
+          secondary
+          :label="$t('addNewAddressBtn')"
+          @click="newAddress"
+        />
+      </li>
     </ul>
   </div>
 </template>
@@ -60,6 +61,7 @@ import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
+import MyButton from '@/components/Core/Button/Button.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
@@ -70,6 +72,7 @@ export default {
     Locate,
     TextField,
     Tick,
+    MyButton,
   },
   props: {
     addressType: {

@@ -77,10 +77,6 @@
   }
 
   &__item-new {
-    cursor: pointer;
-    font-size: var(--new-address-font-size, var(--font__m));
-    font-weight: var(--new-address-font-weight, var(--font-weight__regular));
-    margin: var(--indent__base) 0;
     list-style: none;
   }
 }
@@ -97,6 +93,10 @@
           font-size: var(--font__heading--desktop);
         }
       }
+    }
+
+    &__item-new {
+      max-width: var(--button__width-fixed-size);
     }
   }
 }

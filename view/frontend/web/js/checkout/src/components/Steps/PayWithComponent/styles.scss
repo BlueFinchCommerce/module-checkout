@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: var(--pay-with__flex-direction);
     flex-wrap: wrap;
-    margin-top: var(--pay-with-container-margin-top, var(--indent__s));
+    margin: var(--pay-with-container-margin-top, var(--indent__s));
     min-height: var(--pay-with-container-min-height, auto);
     justify-content: var(--pay-with-justify-content, center);
   }
