@@ -10,11 +10,16 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
+$customWordings = $assetViewModel->getCustomWording();
+
 ?>
 
 <script>
     window.geneCheckout = window.geneCheckout || {
         logo: "<?= $escaper->escapeJs($logo); ?>",
+        <?php if ($customWordings): ?>
+            ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'),
+        <?php endif; ?>
     };
 </script>
 

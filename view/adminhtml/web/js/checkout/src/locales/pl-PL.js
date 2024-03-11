@@ -4,6 +4,7 @@ export default {
     text: 'Bezpieczne zamówienie',
   },
   dividerText: 'Lub wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
   orderSummary: {
     applyBtn: 'Zastosuj',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'usuń przedmiot',
     minusOneItem: 'minus jedna pozycja',
     plusOneItem: 'plus jedna pozycja',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Dodaj kod promocyjny',
     giftCardDiscount: {
       placeholder: 'Wprowadź kod tutaj',
@@ -38,6 +44,7 @@ export default {
     heliumItem: 'Dostarczane nadmuchane',
     skuNumber: 'Nr SKU:',
     supplierStockNumber: 'Nr magazynowy dostawcy:',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Twoje dane',
@@ -116,6 +123,7 @@ export default {
     editShippingButtonLabel: 'Edytuj szczegóły wysyłki',
   },
   errorMessages: {
+    sanitiseError: 'Wprowadzono nieprawidłowy znak.',
     firstNameErrorMessage: 'Wprowadź prawidłowe imię',
     lastNameErrorMessage: 'Wprowadź prawidłowe nazwisko',
     emailErrorMessage: 'Wprowadź prawidłowy adres e-mail',
@@ -166,7 +174,7 @@ export default {
   paymentStep: {
     title: 'Wybierz metodę płatności',
     freePayment: 'Informacje o płatności nie są wymagane',
-    freeButton: 'Zapłać teraz',
+    payNow: 'Zapłać teraz',
     storedPayments: 'Zapisane płatności',
     creditDebitCard: 'Karta kredytowa lub debetowa',
   },
@@ -179,6 +187,23 @@ export default {
     cardNumber: 'Numer karty',
     expiry: 'Data ważności',
     storedPaymentLabel: '{name} Przechowywana karta kończy się na {lastFour}.',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   agreements: {
     label: 'Potwierdzam, że przeczytałem i akceptuję',
@@ -196,6 +221,20 @@ export default {
   },
   newsletter: {
     label: 'Zapisz się do newslettera',
+  },
+  rewards: {
+    applied: 'Reward points have been applied.',
+    applyButton: 'Apply Points',
+    available: ' available ',
+    removeButton: 'Remove Points',
+    rewardPoints: '{points} Reward Points',
+    youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   donation: {
     donateText: 'Darowizna',

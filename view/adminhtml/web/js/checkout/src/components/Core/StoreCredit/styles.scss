@@ -1,0 +1,19 @@
+@import '@/styles/global/_breakpoints';
+
+.store-credit {
+  align-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: var(--indent__s);
+  margin: var(--indent__base);
+
+  &-available {
+    color: var(--primary__color);
+  }
+}
+
+@media screen and (min-width: $screen__m) {
+  .store-credit {
+    margin: var(--indent__l) 0;
+  }
+}

@@ -4,6 +4,7 @@ export default {
     text: 'Pagamento sicuro',
   },
   dividerText: 'Oppure inserisci il tuo indirizzo e-mail per pagare con carta di credito/debito',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Inserisci il tuo indirizzo e-mail per pagare con carta di credito/debito',
   orderSummary: {
     applyBtn: 'Utilizza',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'Elimina articolo',
     minusOneItem: 'Un articolo in meno',
     plusOneItem: 'Un articolo in più',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Inserisci il codice promozionale',
     giftCardDiscount: {
       placeholder: 'Inserisci il codice',
@@ -38,6 +44,7 @@ export default {
     heliumItem: 'Spedito gonfiato',
     skuNumber: 'N. SKU',
     supplierStockNumber: 'N° di magazzino',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'I tuoi recapiti',
@@ -116,6 +123,7 @@ export default {
     editShippingButtonLabel: 'Modifica informazioni di spedizione',
   },
   errorMessages: {
+    sanitiseError: 'È stato immesso un carattere non valido.',
     firstNameErrorMessage: 'Inserisci un nome valido',
     lastNameErrorMessage: 'Inserisci un cognome valido',
     emailErrorMessage: 'Inserisci un indirizzo e-mail valido',
@@ -166,7 +174,7 @@ export default {
   paymentStep: {
     title: 'Scegli il metodo di pagamento',
     freePayment: 'Non sono richieste informazioni di pagamento',
-    freeButton: 'Paga ora',
+    payNow: 'Paga ora',
     storedPayments: 'I pagamenti effettuati',
     creditDebitCard: 'Carta di credito o di debito',
   },
@@ -179,6 +187,23 @@ export default {
     cardNumber: 'Numero di carta',
     expiry: 'Data di scadenza',
     storedPaymentLabel: '{name} La carta scade il {lastFour}',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   agreements: {
     label: 'Confermo di aver letto e accetto il/la',
@@ -196,6 +221,20 @@ export default {
   },
   newsletter: {
     label: 'Iscriviti alla newsletter',
+  },
+  rewards: {
+    applied: 'Reward points have been applied.',
+    applyButton: 'Apply Points',
+    available: ' available ',
+    removeButton: 'Remove Points',
+    rewardPoints: '{points} Reward Points',
+    youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   donation: {
     donateText: 'Dona',

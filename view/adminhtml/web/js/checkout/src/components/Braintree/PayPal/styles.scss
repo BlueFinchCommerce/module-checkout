@@ -1,0 +1,18 @@
+#braintree-paypal {
+  &.text-loading {
+    border-radius: var(--text-placeholder-bg-button-radius);
+    height: var(--adyen-express-button-height, 48px);
+  }
+
+  button {
+    border-radius: var(--button-border-radius);
+    height: var(--braintree-express-button-height, 48px);
+    overflow: hidden;
+    width: 100%;
+
+    .gpay-card-info-iframe {
+      height: 40px;
+      position: relative;
+    }
+  }
+}

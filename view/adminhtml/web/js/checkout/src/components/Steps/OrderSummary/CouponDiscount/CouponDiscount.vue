@@ -4,13 +4,14 @@
   </div>
   <div
     class="coupon-discount-trigger dropdown-button"
-    :class="{opened: isDropDownVisible}"
+    data-cy="dropdown-trigger-coupon"
+    :class="{ opened: isDropDownVisible }"
     @click="openDropDown"
     @keydown="openDropDown"
   >
     <div class="coupon-discount-icon-container">
       <img
-        :src="GiftIcon"
+        :src="CouponCodeIcon"
         alt="coupon-dropdown-icon"
       >
     </div>
@@ -21,18 +22,16 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown
     v-show="isDropDownVisible"
     class="coupon-dropdown"
-    :class="{active: isDropDownVisible}"
+    :class="{ active: isDropDownVisible }"
   >
     <template #content>
       <div class="field coupon-code-field">
@@ -64,10 +63,9 @@
           />
         </div>
         <div class="error">
-          <!-- discountErrorMessage replaced with discountErrorMessageOverride only for ui designer -->
           <ErrorMessage
-            v-if="discountErrorMessageOverride"
-            :message="discountErrorMessageOverride"
+            v-if="discountErrorMessage"
+            :message="discountErrorMessage"
           />
         </div>
       </div>
@@ -76,6 +74,7 @@
 </template>
 <script>
 // helpers
+import { mapWritableState, mapActions } from 'pinia';
 import getStaticUrl from '@/helpers/getStaticPath';
 
 // components
@@ -90,10 +89,9 @@ import SuccessMessage from '@/components/Core/Messages/SuccessMessage/SuccessMes
 import Loader from '@/components/Core/Loader/Loader.vue';
 
 // stores
-import { mapWritableState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
-import GiftIcon from '@/icons/gift-icon.svg';
+import CouponCode from '@/icons/coupon-icon.svg';
 
 export default {
   name: 'CouponDiscount',
@@ -110,7 +108,7 @@ export default {
   },
   data() {
     return {
-      isDropDownVisible: true,
+      isDropDownVisible: false,
       loadingDiscountCode: false,
       applyButtonText: '',
       applyButtonTextId: 'gene-bettercheckout-applybutton-text',
@@ -147,8 +145,8 @@ export default {
   computed: {
     ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
       'discountErrorMessage']),
-    GiftIcon() {
-      return `${getStaticUrl(GiftIcon)}`;
+    CouponCodeIcon() {
+      return `${getStaticUrl(CouponCode)}`;
     },
   },
   methods: {

@@ -9,8 +9,8 @@
 }
 
 .slideup-container {
-  background: var(--slide-up-background-color, var(--slide-up-background-color-open));
-  border-radius: var(--slide-up-border-radius);
+  background: var(--slide-up-background-color, var(--slide-up__background-color-open));
+  border-radius: var(--slide-up__border-radius);
   border-top: var(--slide-up-border, var(--indent__m) solid var(--slide-up-background-color, none));
   bottom: 0;
   max-height: var(--slide-up-container-height, 75vh);
@@ -22,7 +22,7 @@
 }
 
 .slideup-header {
-  background-color: var(--slide-up-background-color, var(--slide-up-background-color-open));
+  background-color: var(--slide-up-background-color, var(--slide-up__background-color-open));
   display: grid;
   grid-template-columns: auto min-content;
   padding: var(--slide-up-header-padding, var(--indent__m));
@@ -34,7 +34,7 @@
 }
 
 .slideUp-body {
-  background: var(--slide-up-background-color, var(--slide-up-background-color-open));
+  background: var(--slide-up-background-color, var(--slide-up__background-color-open));
   display: grid;
   padding: var(--slide-up-body-padding, 20px 20px 80px);
 }

@@ -3,7 +3,8 @@ export default {
   header: {
     text: 'Secure Checkout',
   },
-  dividerText: 'or',
+  dividerText: 'Or checkout below with credit/debit card',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: 'Pay With',
   orderSummary: {
@@ -21,12 +22,12 @@ export default {
     removeItemButtonLabel: 'remove item',
     minusOneItem: 'minus one item',
     plusOneItem: 'plus one item',
-    couponDiscountTitle: 'Apply Coupon Code',
+    couponDiscountTitle: 'Add promo code',
     couponDiscount: {
-      placeholder: 'Enter coupon code',
+      placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
-    giftDiscountTitle: 'Apply Gift Card Code',
+    giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
@@ -41,6 +42,7 @@ export default {
     addToCart: 'Add to Basket',
     promoTitle: 'Often bought together',
     rewardsTitle: 'Reward Points',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Your details',
@@ -117,6 +119,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
+    sanitiseError: 'Invalid character entered.',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',
     emailErrorMessage: 'Please enter a valid email address',
@@ -173,8 +176,7 @@ export default {
   saveNewAddress: 'Save in address book',
   paymentStep: {
     title: 'Select a payment method',
-    freePayment: 'No Payment Information Required',
-    freeButton: 'Pay Now',
+    payNow: 'Pay Now',
     storedPayments: 'Your Saved Payments',
     creditDebitCard: 'Credit or debit card',
   },
@@ -187,6 +189,23 @@ export default {
     expiry: 'Expiry',
     storedPaymentLabel: '{name} Stored card ends in {lastFour}',
     paymentSuccessful: 'Payment Successful',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   rvvup: {
     payByBankLabel: 'Pay by Bank',
@@ -218,6 +237,12 @@ export default {
     removeButton: 'Remove Points',
     rewardPoints: '{points} Reward Points',
     youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   payWith: {
     masterCard: 'pay with master card',

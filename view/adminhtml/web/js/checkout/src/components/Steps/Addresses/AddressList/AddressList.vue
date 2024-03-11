@@ -10,6 +10,7 @@
           :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
         />
       </div>
+      <div class="divider-line"></div>
     </div>
     <ul class="address-list__list">
       <li
@@ -18,6 +19,7 @@
         class="address-list__item"
         :class="{ active: item.id === selected[addressType].id }"
         @click="selectAddress(item)"
+        data-cy="ship-here"
         @keydown="selectAddress(item)"
       >
         <Tick v-if="item.id === selected[addressType].id" />
@@ -37,6 +39,7 @@
         v-if="selected[addressType].id !== 'custom'"
         value=""
         class="address-list__item-new"
+        data-cy="add-address-new"
         @click="newAddress"
         @keydown="newAddress"
         v-text="$t('addNewAddressBtn')"

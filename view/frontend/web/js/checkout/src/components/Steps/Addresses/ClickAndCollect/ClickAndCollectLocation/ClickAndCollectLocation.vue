@@ -28,7 +28,6 @@
       <ArrowDown
         v-else
         height="9"
-        stroke="black"
         width="12"
       />
     </div>

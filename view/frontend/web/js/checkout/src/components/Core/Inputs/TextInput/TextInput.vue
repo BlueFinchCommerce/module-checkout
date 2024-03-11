@@ -1,5 +1,5 @@
 <template>
-  <div class="text-input">
+  <div class="text-input" :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }">
     <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
       <span
         v-if="label"
@@ -121,7 +121,8 @@ export default {
   methods: {
     customValidation() {
       const inputValue = this.modelValue;
-      const isValid = sanitiseInputValue(inputValue);
+      const inputType = this.type;
+      const isValid = sanitiseInputValue(inputValue, inputType);
 
       if (this.type !== 'password') {
         if (isValid) {
@@ -134,8 +135,7 @@ export default {
 
         // Use $nextTick to check for errors after the DOM is updated
         this.$nextTick(() => {
-          const hasInputErrors = document.querySelectorAll('.sanitise-error').length > 0;
-          this.inputsSanitiseError = hasInputErrors;
+          this.inputsSanitiseError = document.querySelectorAll('.sanitise-error').length > 0;
         });
       }
     },

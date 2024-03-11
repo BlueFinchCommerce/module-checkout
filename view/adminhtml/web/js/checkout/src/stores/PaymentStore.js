@@ -2,15 +2,11 @@ import { defineStore } from 'pinia';
 
 import mitt from 'mitt';
 
-import getStoreConfig from '@/services/getStoreConfig';
-import getAdyenPaymentMethods from '@/services/getAdyenPaymentMethods';
 import getPaymentInformation from '@/services/getPaymentInformation';
-import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 
 export default defineStore('paymentStore', {
   state: () => ({
     methodsResponse: [],
-    loadingPaymentMethods: false,
     clientKey: '',
     cache: {},
     errorMessage: '',
@@ -24,37 +20,20 @@ export default defineStore('paymentStore', {
     isPaymentMethodAvailable: (state) => (
       (paymentMethod) => state.availableMethods.some(({ code }) => code === paymentMethod)
     ),
+    getPaymentMethodTitle: (state) => (
+      (paymentMethod) => {
+        const method = state.availableMethods.find(({ code }) => code === paymentMethod);
+        return method ? method.title : null;
+      }
+    ),
+    getPaymentPriority: (state) => (
+      (paymentMethod) => state.availableMethods.findIndex(({ code }) => code === paymentMethod)
+    ),
   },
   actions: {
     setData(data) {
       this.$patch(data);
     },
-    async getPaymentMethodsResponse() {
-      this.loadingPaymentMethods = true;
-      const request = async () => getAdyenPaymentMethods();
-      const getPaymentMethodsResponse = await this
-        .getCachedResponse(request, 'getAdyenPaymentMethods');
-      this.loadingPaymentMethods = false;
-      return getPaymentMethodsResponse;
-    },
-    async getAdyenClientKey() {
-      // Early return if we already have this information.
-      if (this.clientKey) {
-        return this.clientKey;
-      }
-
-      this.loadingPaymentMethods = true;
-      const config = getAdyenProductionMode() ? 'adyen_client_key_live' : 'adyen_client_key_test';
-      const getPaymentMethodsResponse = await this.getCachedResponse(
-        getStoreConfig,
-        'getAdyenClientKey',
-        [config],
-      );
-      this.$patch({ clientKey: getPaymentMethodsResponse[config] });
-      this.loadingPaymentMethods = false;
-      return getPaymentMethodsResponse[config];
-    },
-
     setErrorMessage(message) {
       this.setData({
         errorMessage: message,
@@ -68,7 +47,7 @@ export default defineStore('paymentStore', {
     },
 
     async getPaymentMethods() {
-      const { payment_methods: paymentMethods } = await this.getCachedResponse(
+      const paymentMethods = await this.getCachedResponse(
         getPaymentInformation,
         'getPaymentInformation',
       );
@@ -79,6 +58,11 @@ export default defineStore('paymentStore', {
       this.setData({
         availableMethods: paymentMethods,
       });
+    },
+
+    refreshPaymentMethods() {
+      this.clearCaches(['getPaymentInformation']);
+      return this.getPaymentMethods();
     },
 
     getCachedResponse(request, cacheKey, args = {}) {
@@ -93,9 +77,6 @@ export default defineStore('paymentStore', {
         },
       });
       return data;
-    },
-    clearPaymentReponseCache() {
-      this.clearCaches(['getAdyenPaymentMethods', 'getPaymentInformation']);
     },
     clearCaches(cacheKeys) {
       if (cacheKeys.length) {

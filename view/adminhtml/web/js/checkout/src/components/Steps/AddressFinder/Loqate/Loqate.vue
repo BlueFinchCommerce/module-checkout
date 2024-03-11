@@ -1,18 +1,12 @@
 <template>
   <div class="loqate__container">
-    <TextField
-      class="loqate__title"
-      :text="$t('yourDetailsSection.deliverySection.addressFinder.title')"
-      font-size="16px"
-      font-weight="500"
-    />
     <div class="loqate__field">
       <TextInput
         id="loqate"
         v-model="query"
         type="text"
         :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-        :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+        :label="$t('yourDetailsSection.deliverySection.addressFinder.title')"
         class="loqate__input"
         autocomplete="postal-code"
         @blur="onBlur"
@@ -84,7 +78,6 @@ import loqate from '@/services/loqate';
 // Components
 import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock.vue';
 import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 
 // Icons
@@ -96,7 +89,6 @@ export default {
   components: {
     AddressBlock,
     TextInput,
-    TextField,
     Search,
     Edit,
     MyButton,
@@ -114,22 +106,21 @@ export default {
       arrowCounter: -1,
       address: false,
       request: null,
+      displayResults: false,
     };
   },
   computed: {
     ...mapWritableState(useCustomerStore, ['selected']),
     ...mapState(useConfigStore, ['countryCode', 'stateRequired', 'countries']),
   },
-  async mounted() {
-    await this.getLoqateConfiguration();
-  },
   methods: {
-    ...mapActions(useConfigStore, ['getLoqateConfiguration', 'getRegionsByCountry']),
+    ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddress',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
+      'setEditing',
     ]),
     editAddress() {
       this.address = false;

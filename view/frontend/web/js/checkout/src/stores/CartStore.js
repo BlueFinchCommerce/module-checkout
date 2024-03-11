@@ -55,6 +55,7 @@ export default defineStore('cartStore', {
     data: {},
     crosssells: [],
     amastyData: {},
+    amastyEnabled: false,
     freeShipping: null,
     shippingPrice: null,
     cache: {},
@@ -462,9 +463,14 @@ export default defineStore('cartStore', {
     },
     async getAmastyShippingData() {
       const data = await this.getCachedResponse(getAmastyShippingInfo, 'getAmastyShippingInfo');
-      if (data) {
+      if (Object.keys(data).length > 0) {
         this.setData({
           amastyData: data,
+          amastyEnabled: true,
+        });
+      } else {
+        this.setData({
+          amastyEnabled: false,
         });
       }
       this.calculateFreeShipping();
