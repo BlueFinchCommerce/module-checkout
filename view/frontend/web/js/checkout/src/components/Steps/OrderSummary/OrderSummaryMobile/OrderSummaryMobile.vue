@@ -98,7 +98,7 @@ import { mapActions, mapState } from 'pinia';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
-import ArrowDown from "@/components/Core/Icons/ArrowDown/ArrowDown.vue";
+import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
 export default {
   name: 'OrderSummaryMobile',
