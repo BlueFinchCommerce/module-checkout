@@ -18,15 +18,25 @@
 
       .total__text {
         max-width: 350px;
-        text-align: left;
+
+        &.title {
+          text-align: left;
+          font-weight: var(--font-weight__regular);
+        }
       }
 
       p {
+        color: var(--color__primary-dark-blue);
         margin-bottom: var(--indent__xs);
         min-width: 110px;
         text-align: right;
         font-size: var(--totals-row-text__font-size, var(--font__m));
-        font-weight: var(--totals-row-text__font-weight, var(--font-weight__regular));
+        font-weight: var(--totals-row-text__font-weight, var(--font-weight__semibold));
+      }
+
+      .gift-card,
+      .discount {
+        color: var(--color__semantic-error);
       }
     }
   }

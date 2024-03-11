@@ -2,15 +2,15 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, var(--dropdown__border));
+    border: var(--drop-down-border, 1px solid var(--color__accent-mint));
     padding: var(--promo-products-paddings, 15px var(--indent__base));
     background: var(--dropdown__background-color-highlight);
-    margin-top: var(--indent__base);
+    margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
     display: var(--promotion-visibility, flex);
     max-width: none;
     justify-content: normal;
     position: relative;
-    order: var(--promo-triggers-order, 6);
+    order: var(--promo-triggers-order, 4);
 
     img {
       display: var(--promo-products-icon-visibility, block);
@@ -33,10 +33,11 @@
     .promo-title {
       display: var(--promo__title__visible, block);
       line-height: 1.5em;
-      padding: 0 20px 0 10px;
 
       div {
         display: flex;
+        margin-right: var(--indent__base);
+
         p {
           font-size: var(--promo-products-title-font-size, var(--font__s));
           font-weight: var(--promo-products-title-font-weight, var(--font-weight__medium));
@@ -62,7 +63,7 @@ div.dropdown.promo-dropdown {
   border-top: 0;
   margin: 0;
   max-width: none;
-  order: var(--promo-dropdown-order, 7);
+  order: var(--promo-dropdown-order, 4);
   display: grid;
 
   .promo-title {
@@ -70,6 +71,8 @@ div.dropdown.promo-dropdown {
   }
 
   &.active {
+    border: var(--drop-down-border, 1px solid var(--color__accent-mint));
+
     p {
       padding: 0;
     }
@@ -77,7 +80,6 @@ div.dropdown.promo-dropdown {
 }
 
 .product-item-carousel {
-  padding-bottom: var(--indent__base);
   grid-auto-flow: column;
   display: grid;
   grid-auto-columns: 44%;
@@ -140,13 +142,21 @@ div.dropdown.promo-dropdown {
   }
 
   &-info {
-    flex-grow: 1;
     margin-bottom: var(--indent__s);
   }
 
   &-name {
     margin: var(--indent__s) 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     word-break: break-word;
+    min-height: 44px;
+  }
+
+  &-price {
+    font-weight: var(--font-weight__semibold);
   }
 }
 
@@ -170,8 +180,6 @@ div.dropdown.promo-dropdown {
 
   .dropdown-button {
     &.promotion-trigger {
-      margin-bottom: 0;
-
       img {
         width: 50px;
         height: 23px;

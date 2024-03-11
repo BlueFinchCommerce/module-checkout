@@ -1,4 +1,6 @@
 .order-summary-desktop {
+  background: var(--color__primary-white);
+  padding: var(--indent__base) var(--indent__base--desktop);
   display: grid;
   min-height: 500px;
 
@@ -10,6 +12,7 @@
 
   &-items {
     max-height: var(--summary-desktop-items-max-height, 455px);
+    margin-top: var(--indent__base);
     min-height: 180px;
     overflow-y: auto;
     order: var(--order-summary-desktop-order, 4);

@@ -37,7 +37,7 @@
       <div class="order-summary-title">
         <TextField
           class="order-summary-title-text"
-          :text="orderSummaryText"
+          :text="orderSummaryText + ': '"
         />
         <Price
           v-if="cartGrandTotal !== null"
@@ -50,12 +50,11 @@
         />
       </div>
       <div class="order-summary-icon">
-        <Close
-          v-if="isModalVisible"
-        />
-        <ArrowUp
+        <div class="arrow-up-icon" v-if="isModalVisible">
+          <ArrowUp/>
+        </div>
+        <ArrowDown
           v-else
-          width="14px"
         />
       </div>
       <div class="order-summary-description">
@@ -99,10 +98,12 @@ import { mapActions, mapState } from 'pinia';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
+import ArrowDown from "@/components/Core/Icons/ArrowDown/ArrowDown.vue";
 
 export default {
   name: 'OrderSummaryMobile',
   components: {
+    ArrowDown,
     TextField,
     ArrowUp,
     OrderSummaryItem,

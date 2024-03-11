@@ -19,7 +19,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="total.title"
           />
           <Price
@@ -32,7 +32,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="$t('progressBar.shippingStepTitle')"
           />
           <Price
@@ -51,11 +51,11 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="total.title"
           />
           <Price
-            class="total__text"
+            class="total__text discount"
             :value="total.value"
           />
         </div>
@@ -64,11 +64,11 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="total.title"
           />
           <Price
-            class="total__text"
+            class="total__text gift-card"
             :value="total.value"
           />
         </div>
@@ -77,7 +77,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="$t('orderSummary.rewardsTitle')"
           />
           <Price
@@ -89,7 +89,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="$t('orderSummary.storeCreditTitle')"
           />
           <Price
@@ -101,7 +101,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="subtotalText"
           />
           <Price
@@ -115,7 +115,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="$t('orderSummary.discountTitle')"
           />
           <Price
@@ -128,7 +128,7 @@
           class="total__row"
         >
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="$t('orderSummary.inclTaxTitle')"
           />
           <Price

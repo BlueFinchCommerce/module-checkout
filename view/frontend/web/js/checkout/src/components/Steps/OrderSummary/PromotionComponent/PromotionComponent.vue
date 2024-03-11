@@ -78,17 +78,10 @@
             >
           </div>
           <div class="product-item-info">
-            <Price
-              :value="product.price_range.minimum_price.final_price.value"
-              font-size="18px"
-              font-weight="500"
-            />
             <TextField
               :text="product.name"
-              class="product-item-name"
-              font-weight="325"
-              font-size="14px"
-            />
+              class="product-item-name"/>
+            <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
           </div>
           <div class="product-actions">
             <MyButton
