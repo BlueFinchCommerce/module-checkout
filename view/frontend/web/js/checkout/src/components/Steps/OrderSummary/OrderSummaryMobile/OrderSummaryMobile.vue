@@ -4,7 +4,7 @@
     @close="closeSummary"
   >
     <template #header>
-      <OrderSummaryTitleWithAmount :order-items-amount="cartItemsQty" />
+      <OrderSummaryTitleWithAmount :order-items-amount="getCartItemsQty" />
       <button
         class="order-summary-close-button"
         :aria-label="$t('orderSummary.closeButton')"
@@ -31,7 +31,7 @@
     @keydown="toggleSummary"
   >
     <div
-      v-if="cartGrandTotal || cartItemsQty"
+      v-if="cartGrandTotal || getCartItemsQty"
       class="order-summary-header"
     >
       <div class="order-summary-title">
@@ -139,7 +139,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cartGrandTotal', 'cartItemsQty']),
+    ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
   },
   async created() {
     this.checkForGuestUser();

@@ -17,7 +17,7 @@
       <AddressBlockShort
         class="shipping-billing-steps"
         :address_type="isItemRequiringDelivery ? `shipping` : `billing`"
-        :address="isItemRequiringDelivery ? selected.shipping : selected.billing"
+        :address="isItemRequiringDelivery ? cart.shipping_addresses?.[0] : cart.billing_address"
       />
       <div class="address-block__edit proceed-to-details">
         <button
@@ -65,8 +65,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['isItemRequiringDelivery']),
-    ...mapState(useCustomerStore, ['selected']),
+    ...mapState(useCartStore, ['cart', 'isItemRequiringDelivery']),
   },
   async created() {
     await this.getStoreConfig();

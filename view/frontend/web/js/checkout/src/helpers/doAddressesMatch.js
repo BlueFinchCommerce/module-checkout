@@ -2,7 +2,7 @@ export default (address1, address2) => {
   // Go through the steps to determine if two addresses match.
   const properties = [
     'city',
-    'country_id',
+    'country_code',
     'firstname',
     'lastname',
     'postcode',

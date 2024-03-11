@@ -83,17 +83,17 @@
             'postCodeField.placeholder')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.label')"
-          :required="postcodeRequired(selected[address_type].country_id)"
+          :required="postcodeRequired(selected[address_type].country_code)"
           @input="validatePostcode(address_type, true)"
           @focusout="validatePostcode(address_type, true)"
         />
         <ErrorMessage
           v-if="getAddressFieldHasError(address_type, 'Postcode')"
           :message="
-            `${$t('errorMessages.postCodeErrorMessage')} ${selected[address_type].country_id}`"
+            `${$t('errorMessages.postCodeErrorMessage')} ${selected[address_type].country_code}`"
         />
         <SelectInput
-          v-model="selected[address_type].country_id"
+          v-model="selected[address_type].country_code"
           :options="selectOptions"
           :error="getAddressFieldHasError(address_type, 'Country')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
@@ -116,7 +116,7 @@
           <label :for="`${address_type}-save-in-address-book`">
             <input
               :id="`${address_type}-save-in-address-book`"
-              v-model.number="selected[address_type].save_in_address_book"
+              v-model.boolean="selected[address_type].save_in_address_book"
               type="checkbox"
               class="field__checkbox"
               value="1"
@@ -225,8 +225,8 @@ export default {
     ...mapActions(useCustomerStore, [
       'validateAddress',
       'setAddressAsCustom',
-      'setAddress',
-      'setEditing',
+      'setAddressToStore',
+      'setAddressAsEditing',
       'addAddressError',
       'removeAddressError',
       'updateRegionRequired',
@@ -239,12 +239,12 @@ export default {
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
       if (isValid) {
         this.setAddressAsCustom(this.address_type);
-        this.setEditing(this.address_type, false);
+        this.setAddressAsEditing(this.address_type, false);
 
         // If the address type is shipping and the billing is set to use the same then update billing too.
         if (this.address_type === 'shipping' && this.selected.billing.same_as_shipping) {
           const clonedShipping = deepClone(this.selected.shipping);
-          this.setAddress(clonedShipping, 'billing');
+          this.setAddressToStore(clonedShipping, 'billing');
         }
       } else {
         const fieldErrors = this.selected.formErrors[this.address_type];
@@ -256,8 +256,8 @@ export default {
     },
 
     setupCountry() {
-      if (!this.selected[this.address_type].country_id) {
-        this.selected[this.address_type].country_id = this.countryCode;
+      if (!this.selected[this.address_type].country_code) {
+        this.selected[this.address_type].country_code = this.countryCode;
       }
     },
 

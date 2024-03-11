@@ -89,19 +89,19 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, [
-      'setAddress',
+      'setAddressToStore',
       'createNewAddress',
-      'setEditing',
+      'setAddressAsEditing',
       'setAddressAsCustom',
     ]),
     selectAddress(address) {
       const clonedAddress = deepClone(address);
-      this.setAddress(clonedAddress, this.addressType);
-      this.setEditing(this.addressType, false);
+      this.setAddressToStore(clonedAddress, this.addressType);
+      this.setAddressAsEditing(this.addressType, false);
 
       // If the billing address is set to match then update this too.
       if (this.selected.billing.same_as_shipping) {
-        this.setAddress(clonedAddress, 'billing');
+        this.setAddressToStore(clonedAddress, 'billing');
       }
     },
     newAddress() {

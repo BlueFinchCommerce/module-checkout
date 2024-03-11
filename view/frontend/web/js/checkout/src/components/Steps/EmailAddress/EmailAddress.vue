@@ -253,6 +253,7 @@ export default {
     ...mapActions(useCustomerStore, [
       'login',
       'submitEmail',
+      'setEmailEntered',
       'isEmailAvailable',
       'editEmail',
     ]),
@@ -318,7 +319,8 @@ export default {
     },
 
     proceed() {
-      this.submitEmail();
+      this.setEmailEntered();
+      this.submitEmail(this.customer.email);
     },
 
     /**

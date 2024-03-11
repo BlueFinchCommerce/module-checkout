@@ -8,25 +8,11 @@ import tokenTypes from '@/helpers/getTokenTypes';
 
 export default (paymentMethod) => {
   const { maskedId } = useCartStore();
-  const { customer: { email, tokenType } } = useCustomerStore();
+  const { customer: { tokenType } } = useCustomerStore();
   const { tokens } = useRecaptchaStore();
 
-  // If we are a guest we need to set the email back to the quote first.
-  const setGuestEmailOnCart = tokenType === tokenTypes.guestUser
-    ? `setEmail: setGuestEmailOnCart(input: {
-        cart_id: $cartId
-        email: $email
-      }) {
-        cart {
-          id
-        }
-      }`
-    : '';
-
   const request = `
-    mutation PlaceOrder($cartId: String!, $email: String!, $paymentMethod: PaymentMethodInput!) {
-      ${setGuestEmailOnCart}
-
+    mutation PlaceOrder($cartId: String!, $paymentMethod: PaymentMethodInput!) {
       setPayment: setPaymentMethodOnCart(input: {
         cart_id: $cartId
         payment_method: $paymentMethod
@@ -47,7 +33,6 @@ export default (paymentMethod) => {
 
   const variables = {
     cartId: maskedId,
-    email,
     paymentMethod,
   };
 
@@ -59,5 +44,12 @@ export default (paymentMethod) => {
 
   return beforePaymentRequest()
     .then(() => graphQlRequest(request, variables, customHeaders))
-    .then(({ data }) => data.placeOrder.order.order_number);
+    .then((response) => {
+      if (response.errors) {
+        throw new Error(response.errors[0].message);
+        return;
+      }
+
+      return response.data.placeOrder.order.order_number
+    });
 };

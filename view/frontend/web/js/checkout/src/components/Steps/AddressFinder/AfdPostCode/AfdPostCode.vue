@@ -124,10 +124,10 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, [
-      'setAddress',
+      'setAddressToStore',
       'validateAddress',
       'validatePostcode',
-      'setEditing',
+      'setAddressAsEditing',
       'getRegionOptions',
       'updateRegionRequired',
       'getAfdConfiguration',
@@ -211,19 +211,19 @@ export default {
         company: address.Organisation,
         street: [line1, line2],
         city: address.Town,
-        country_id: countryCode,
+        country_code: countryCode,
         region: region ? region.option.name : address.PostalCounty,
         region_id: region ? region.option.value : 0,
         postcode: address.Postcode,
       };
-      this.setAddress(newAddress, this.address_type);
+      this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
 
       // If the address we get back from AFD is not valid then open the form
       // allowing User's the ability to edit.
       if (!isValid) {
-        this.setEditing(this.address_type, true);
+        this.setAddressAsEditing(this.address_type, true);
       }
     },
   },

@@ -18,10 +18,10 @@
               </div>
             </div>
             <div class="shipping-method-title">
-              <TextField :text="`${selectedMethod.method_title}, `" />
+              <TextField :text="`${cart.shipping_addresses?.[0]?.selected_shipping_method?.method_title}, `" />
               <Price
                 class="shipping-method-value"
-                :value="shippingPrice"
+                :value="cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value"
               />
             </div>
             <div class="proceed-to-shipping">
@@ -77,7 +77,7 @@ export default {
       || this.$t('shippingStep.stepCompleteTitle');
   },
   computed: {
-    ...mapState(useCartStore, ['totalSegments', 'shippingPrice']),
+    ...mapState(useCartStore, ['cart']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {

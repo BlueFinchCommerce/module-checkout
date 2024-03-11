@@ -239,7 +239,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useCustomerStore, ['setAddress', 'setEditing']),
+    ...mapActions(useCustomerStore, ['setAddressToStore', 'setAddressAsEditing']),
     ...mapActions(useShippingMethodsStore, ['clearShippingMethodCache', 'submitShippingInfo']),
     ...mapActions(useStepsStore, ['goToShipping']),
     async useMyLocation() {
@@ -266,7 +266,7 @@ export default {
         lastname: this.selected.shipping.lastname,
         telephone: this.selected.shipping.telephone,
       });
-      this.setAddress(newAddress, 'shipping');
+      this.setAddressToStore(newAddress, 'shipping');
     },
     getLocations() {
       // Clear the existing timeout if it exists.

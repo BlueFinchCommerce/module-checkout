@@ -30,7 +30,7 @@ import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
 
 import createPayment from '@/services/createPayment';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
-import getShippingMethods from '@/services/getShippingMethods';
+import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 export default {
@@ -130,7 +130,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddress']),
+    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
@@ -201,7 +201,7 @@ export default {
     onPaymentDataChanged(data) {
       return new Promise((resolve) => {
         const address = {
-          country_id: data.shippingAddress.countryCode,
+          country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
           region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
@@ -244,8 +244,8 @@ export default {
 
           // Set the billing address to the same as shipping for now. Magento doesn't use this
           // yet and it is replaced with the correct billing in the onAuthorized.
-          this.setAddress(address, 'shipping');
-          this.setAddress(address, 'billing');
+          this.setAddressToStore(address, 'shipping');
+          this.setAddressToStore(address, 'billing');
           const totals = await this.submitShippingInfo();
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
@@ -294,8 +294,8 @@ export default {
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
         this.setEmailAddress(email);
-        this.setAddress(mapShippingAddress, 'shipping');
-        this.setAddress(mapBillingAddress, 'billing');
+        this.setAddressToStore(mapShippingAddress, 'shipping');
+        this.setAddressToStore(mapBillingAddress, 'billing');
 
         this.submitShippingInfo().then(async () => {
           const stateData = JSON.stringify({
@@ -371,7 +371,7 @@ export default {
           address.address2,
         ],
         postcode: address.postalCode,
-        country_id: address.countryCode,
+        country_code: address.countryCode,
         email,
         firstname,
         lastname: lastname.length ? lastname.join(' ') : 'UNKNOWN',

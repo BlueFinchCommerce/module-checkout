@@ -9,11 +9,14 @@ import deepClone from '@/helpers/deepClone';
 import doAddressesMatch from '@/helpers/doAddressesMatch';
 import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippingInformation';
 
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
 import setShippingInformation from '@/services/setShippingInformation';
-import getShipping from '@/services/getShippingMethods';
+import getShipping from '@/services/addresses/getShippingMethods';
 import getNominatedDates from '@/services/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/updateAmastyClickCollectStores';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
@@ -132,6 +135,17 @@ export default defineStore('shippingMethodsStore', {
       this.loadingShippingMethods = false;
     },
 
+    async setDefaultShippingMethod() {
+      const cartStore = useCartStore();
+
+      // Check if we have shipping methods but not one selected.
+      if (!cartStore.cart.shipping_addresses[0].selected_shipping_method
+          && cartStore.cart.shipping_addresses[0].available_shipping_methods.length) {
+            const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+            this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
+          }
+    },
+
     /**
      * Get Nominated Delivery Methods
      */
@@ -185,10 +199,19 @@ export default defineStore('shippingMethodsStore', {
     },
 
     setShippingDataFromCartData(data) {
+      console.log(data);
+
+      this.setData({
+        shippingMethods: data.shipping_addresses?.[0].available_shipping_methods,
+        selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
+      });
+
+      return;
+
       if (!this.selectedMethod.carrier_code
         && data.extension_attributes.shipping_assignments.length) {
         const [{ shipping }] = data.extension_attributes.shipping_assignments;
-
+E
         // Set const for shipping method easier to pass around.
         const { method: shippingMethod, address } = shipping;
 
@@ -236,8 +259,8 @@ export default defineStore('shippingMethodsStore', {
         // Set the shipping address if nothing in store exists.
         if (address.firstname && address.lastname) {
           if (!customerStore.$state.selected.shipping.id) {
-            customerStore.setAddress(address, 'shipping');
-            customerStore.setEditing('shipping', false);
+            customerStore.setAddressToStore(address, 'shipping');
+            customerStore.setAddressAsEditing('shipping', false);
           }
         }
 
@@ -245,7 +268,7 @@ export default defineStore('shippingMethodsStore', {
         const { billing_address: billingAddress } = data;
         if (billingAddress.firstname && billingAddress.lastname) {
           if (!customerStore.$state.selected.billing.id) {
-            customerStore.setAddress(data.billing_address, 'billing');
+            customerStore.setAddressToStore(data.billing_address, 'billing');
           }
         }
 
@@ -272,41 +295,27 @@ export default defineStore('shippingMethodsStore', {
       }
     },
 
-    /**
-     * Submit shipping info to magento
-     * @returns
-     */
-    async submitShippingInfo() {
+    async setShippingAddressesOnCart() {
       const customerStore = useCustomerStore();
       const cartStore = useCartStore();
-      const clonedShipping = cleanAddress({ ...customerStore.selected.shipping });
-      const clonedBilling = cleanAddress({ ...customerStore.selected.billing });
 
+      await setBillingAddressOnCart(customerStore.selected.billing);
+      const response = await setShippingAddressesOnCart(customerStore.selected.shipping);
+
+      cartStore.handleCartData(response.data.setShippingAddressesOnCart.cart);
+    },
+
+    async submitShippingInfo(carrier_code, method_code) {
       this.loadingShippingMethods = true;
+      const cart = await setShippingMethodOnCart(carrier_code, method_code);
 
-      const { totals } = await this.getCachedResponse(
-        setShippingInformation,
-        'submitShippingInfo',
-        {
-          shippingAddress: clonedShipping,
-          billingAddress: clonedBilling,
-          carrierCode: this.selectedMethod.carrier_code,
-          methodCode: this.selectedMethod.method_code,
-        },
-      );
-      cartStore.updateTotals(totals);
-      cartStore.setData({
-        cache: {
-          getCartTotals: totals,
-        },
-      });
+      const cartStore = useCartStore();
+      cartStore.handleCartData(cart);
 
       // Allow custom behaviour after setting the shipping information.
       await afterSubmittingShippingInformation();
 
       this.loadingShippingMethods = false;
-
-      return totals;
     },
 
     async setAsClickAndCollect(agentId) {

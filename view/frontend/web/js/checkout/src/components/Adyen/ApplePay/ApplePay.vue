@@ -22,7 +22,7 @@ import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
 
 import createPayment from '@/services/createPayment';
-import getShippingMethods from '@/services/getShippingMethods';
+import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 export default {
@@ -115,7 +115,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddress', 'validatePostcode']),
+    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore', 'validatePostcode']),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
@@ -163,15 +163,15 @@ export default {
       const billingAddress = this.mapAddress(billingContact, email, telephone);
 
       if (!this.validatePostcode('shipping', false)) {
-        this.setAddress(shippingAddress, 'shipping');
+        this.setAddressToStore(shippingAddress, 'shipping');
         await this.submitShippingInfo();
       }
 
-      this.setAddress(shippingAddress, 'shipping');
-      this.setAddress(billingAddress, 'billing');
+      this.setAddressToStore(shippingAddress, 'shipping');
+      this.setAddressToStore(billingAddress, 'billing');
       await this.submitShippingInfo();
 
-      if (!this.countries.some(({ id }) => id === billingAddress.country_id)) {
+      if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {
         reject(window.ApplePaySession.STATUS_FAILURE);
         return;
       }
@@ -211,7 +211,7 @@ export default {
         city: data.shippingContact.locality,
         region: data.shippingContact.administrativeArea,
         region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
-        country_id: data.shippingContact.countryCode.toUpperCase(),
+        country_code: data.shippingContact.countryCode.toUpperCase(),
         postcode: data.shippingContact.postalCode,
         street: ['0'],
       };
@@ -250,8 +250,8 @@ export default {
 
       // Set the billing address to the same as shipping for now. Magento doesn't use this
       // yet and it is replaced with the correct billing in the onAuthorized.
-      this.setAddress(address, 'shipping');
-      this.setAddress(address, 'billing');
+      this.setAddressToStore(address, 'shipping');
+      this.setAddressToStore(address, 'billing');
       const totals = await this.submitShippingInfo();
       const newShippingMethods = this.mapShippingMethods(filteredMethods);
       const applePayShippingContactUpdate = {
@@ -337,11 +337,11 @@ export default {
         city: address.locality,
         region: address.administrativeArea,
         region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
-        country_id: address.countryCode.toUpperCase(),
+        country_code: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
         same_as_billing: 0,
         customer_address_id: 0,
-        save_in_address_book: 0,
+        save_in_address_book: false,
       };
     },
   },
