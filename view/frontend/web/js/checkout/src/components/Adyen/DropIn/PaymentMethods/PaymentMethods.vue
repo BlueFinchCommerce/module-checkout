@@ -61,13 +61,14 @@
 <script>
 // stores
 import { mapActions, mapState } from 'pinia';
+import AdyenCheckout from '@adyen/adyen-web';
 import useAdyenStore from '@/stores/AdyenStore';
+import useAgreementStore from '@/stores/AgreementStore';
 import usePaymentStore from '@/stores/PaymentStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 // Components
@@ -308,7 +309,7 @@ export default {
       'getPaymentMethodsResponse',
       'clearPaymentReponseCache',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'validateAgreements']),
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     setOrderId(orderId) {
@@ -422,6 +423,8 @@ export default {
         if (this.storedPayments && this.storedPaymentMethods.length) {
           setTimeout(() => this.modifyStoredPayments(), 0);
         }
+
+        this.updateAgreementLocation();
       }, 3000);
     },
 
@@ -431,14 +434,17 @@ export default {
         id: this.id,
         type: paymentMethod.type,
       });
-      setTimeout(() => {
-        this.agreementLocation = '';
-        setTimeout(() => {
-          this.agreementLocation = `.${this.methodSelectedClass}
-            .adyen-checkout__payment-method__details`;
-        }, 0);
-      }, 500);
+      setTimeout(this.updateAgreementLocation, 500);
     },
+
+    updateAgreementLocation() {
+      this.agreementLocation = '';
+      setTimeout(() => {
+        this.agreementLocation = `.${this.methodSelectedClass}
+            .adyen-checkout__payment-method__details`;
+      }, 0);
+    },
+
     modifyStoredPayments() {
       setTimeout(() => {
         // Reset the placement of the stored payment cards before working on them.

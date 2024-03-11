@@ -63,11 +63,6 @@ export default defineStore('cartStore', {
     },
   }),
   getters: {
-    agreementIds: (state) => {
-      const { agreements } = state.data;
-      const agreementValues = agreements ? Object.values(agreements) : [];
-      return agreementValues.map((agreementValue) => agreementValue.agreementId);
-    },
     hasPenniesDonation: (state) => (
       state.totalSegments.some((segment) => segment.code === 'penniesdonation' && segment.value > 0)
     ),
@@ -308,52 +303,6 @@ export default defineStore('cartStore', {
       if (maskedId) {
         await mergeGuestCart(maskedId, customerId, storeId);
       }
-    },
-
-    updateAgreementData(agreement, approved) {
-      this.setData({
-        data: {
-          agreements: {
-            [agreement.agreementId]: {
-              approved,
-            },
-          },
-        },
-      });
-    },
-
-    validateAgreements() {
-      const { agreements } = this.data;
-      const agreementValues = agreements ? Object.values(agreements) : [];
-      // If there are no agreements then it must be auto approved.
-      if (!agreementValues.length) {
-        return true;
-      }
-
-      const updatedAgreements = agreementValues.map((agreement) => (
-        {
-          ...agreement,
-          valid: agreement.mode !== '1' || agreement.approved === true,
-        }
-      ));
-
-      updatedAgreements.forEach((updatedAgreement) => {
-        this.setData({
-          data: {
-            agreements: {
-              [updatedAgreement.agreementId]: {
-                ...updatedAgreement,
-              },
-            },
-          },
-        });
-      });
-
-      const unaprovedAgreements = updatedAgreements.some((agreement) => (
-        agreement.mode === '1' && agreement.valid === false
-      ));
-
-      return !unaprovedAgreements;
     },
 
     async getCrosssells() {

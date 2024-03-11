@@ -1,20 +1,32 @@
 <template>
   <div class="agreement-container">
-    <div v-if="agreement.mode === '1'">
+    <div v-if="agreement.mode === 'MANUAL'">
       <CheckboxComponent
-        :id="agreement.agreementId"
+        :id="agreement.agreement_id"
         :checked="agreement.approved"
         :change-handler="changeAgreement"
-      />
+      >
+        {{ $t('agreements.label') }}&nbsp;
+        <a
+          href="#"
+          class="agreement-open-modal"
+          @click="showModal"
+          @keydown="showModal"
+          v-html="agreement.checkbox_text"
+        />
+      </CheckboxComponent>
     </div>
-    <span class="agreement-label">
+    <span
+      v-else
+      class="agreement-label"
+    >
       <span>{{ $t('agreements.label') }}</span>&nbsp;
       <a
         href="#"
         class="agreement-open-modal"
         @click="showModal"
         @keydown="showModal"
-        v-html="agreement.checkboxText"
+        v-html="agreement.checkbox_text"
       />
       <ErrorMessage
         v-if="typeof agreement.valid !== 'undefined' && !agreement.valid"
@@ -65,7 +77,7 @@ import Modal from '@/components/Modal/Modal.vue';
 
 // Stores
 import { mapActions } from 'pinia';
-import useCartStore from '@/stores/CartStore';
+import useAgreementStore from '@/stores/AgreementStore';
 
 export default {
   name: 'Agreement',
@@ -87,7 +99,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCartStore, ['updateAgreementData']),
+    ...mapActions(useAgreementStore, ['updateAgreementData']),
     changeAgreement(event) {
       const { currentTarget } = event;
       if (typeof currentTarget.checked !== 'undefined') {
