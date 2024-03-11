@@ -1,9 +1,7 @@
 <template>
   <Loader v-if="loadingShippingMethods" />
   <div class="details-form">
-    <div
-      class="details-form-header"
-    >
+    <div class="details-form-header">
       <div class="instantCheckout-block" v-show="isExpressPaymentsVisible">
         <TextField :text="instantCheckoutText" />
       </div>
@@ -18,173 +16,175 @@
         <AdyenGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenGooglePay-${storedKey}`" />
         <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
       </div>
+    </div>
+    <div class="details-form-body">
       <DividerComponent />
       <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
-    </div>
 
-    <EmailAddress />
+      <EmailAddress />
 
-    <Newsletter v-if="emailEntered && !customer.id" />
+      <Newsletter v-if="emailEntered && !customer.id" />
 
-    <div
-      v-if="custom.clickandcollectEnabled && emailEntered && isItemRequiringDelivery"
-      class="shipping-type-toggle"
-    >
-      <MyButton
-        :label="$t('yourDetailsSection.deliverySection.shippingButton')"
-        :primary="!isClickAndCollect"
-        :tertiary="isClickAndCollect"
-        @click="setNotClickAndCollect()"
-      />
-      <MyButton
-        :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
-        :tertiary="!isClickAndCollect"
-        :primary="isClickAndCollect"
-        @click="setClickAndCollect()"
-      />
-    </div>
-
-    <div v-if="emailEntered && isClickAndCollect">
-      <ClickAndCollect
-        v-if="subtotalInclTax >= custom.clickandcollectMin && subtotalInclTax <= custom.clickandcollectMax"
-      />
-      <TextField
-        v-else-if="subtotalInclTax < custom.clickandcollectMin"
-        class="click-and-collect-unavilable"
-        :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdLow',
-                  { price: formatPrice(custom.clickandcollectMin) })"
-      />
-      <TextField
-        v-else
-        class="click-and-collect-unavilable"
-        :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdHigh',
-                  { price: formatPrice(custom.clickandcollectMax) })"
-      />
-    </div>
-
-    <AddressList
-      v-if="emailEntered && customer.addresses.length && !isClickAndCollect && isItemRequiringDelivery"
-      address-type="shipping"
-      @showAddressBlock="showAddressBlock"
-    />
-
-    <div
-      v-if="emailEntered && (!selected[address_type].id
-        || (selected[address_type].id === 'custom' && selected[address_type].editing))
-        && !isClickAndCollect && isItemRequiringDelivery"
-      class="additional-detail-form"
-    >
       <div
-        class="delivery-section"
+        v-if="custom.clickandcollectEnabled && emailEntered && isItemRequiringDelivery"
+        class="shipping-type-toggle"
+      >
+        <MyButton
+          :label="$t('yourDetailsSection.deliverySection.shippingButton')"
+          :primary="!isClickAndCollect"
+          :tertiary="isClickAndCollect"
+          @click="setNotClickAndCollect()"
+        />
+        <MyButton
+          :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
+          :tertiary="!isClickAndCollect"
+          :primary="isClickAndCollect"
+          @click="setClickAndCollect()"
+        />
+      </div>
+
+      <div v-if="emailEntered && isClickAndCollect">
+        <ClickAndCollect
+          v-if="subtotalInclTax >= custom.clickandcollectMin && subtotalInclTax <= custom.clickandcollectMax"
+        />
+        <TextField
+          v-else-if="subtotalInclTax < custom.clickandcollectMin"
+          class="click-and-collect-unavilable"
+          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdLow',
+                    { price: formatPrice(custom.clickandcollectMin) })"
+        />
+        <TextField
+          v-else
+          class="click-and-collect-unavilable"
+          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdHigh',
+                    { price: formatPrice(custom.clickandcollectMax) })"
+        />
+      </div>
+
+      <AddressList
+        v-if="emailEntered && customer.addresses.length && !isClickAndCollect && isItemRequiringDelivery"
+        address-type="shipping"
+        @showAddressBlock="showAddressBlock"
+      />
+
+      <div
+        v-if="emailEntered && (!selected[address_type].id
+          || (selected[address_type].id === 'custom' && selected[address_type].editing))
+          && !isClickAndCollect && isItemRequiringDelivery"
+        class="additional-detail-form"
       >
         <div
-          class="details-form-title"
+          class="delivery-section"
         >
-          <YourDetails fill="black" />
-          <TextField
-            :text="$t('yourDetailsSection.title')"
-          />
-          <div class="divider-line"></div>
-        </div>
-
-        <NameFields
-          :address_type="address_type"
-          @isCustomerInfoFull="isCustomerInfoFull"
-        />
-        <div
-          v-if="isAddressBlockVisible"
-          class="delivery-section-title"
-        >
-          <Locate />
-          <div class="delivery-section-title-text">
+          <div
+            class="details-form-title"
+          >
+            <YourDetails fill="black" />
             <TextField
-              :text="$t('yourDetailsSection.deliverySection.title')"
+              :text="$t('yourDetailsSection.title')"
             />
+            <div class="divider-line"></div>
           </div>
-          <div class="divider-line"></div>
-        </div>
 
-        <div>
+          <NameFields
+            :address_type="address_type"
+            @isCustomerInfoFull="isCustomerInfoFull"
+          />
+          <div
+            v-if="isAddressBlockVisible"
+            class="delivery-section-title"
+          >
+            <Locate />
+            <div class="delivery-section-title-text">
+              <TextField
+                :text="$t('yourDetailsSection.deliverySection.title')"
+              />
+            </div>
+            <div class="divider-line"></div>
+          </div>
+
           <div>
-            <AddressFinder
-              v-if="!selected[address_type].id
-                || (selected[address_type].id === 'custom' && selected[address_type].editing)"
-            />
+            <div>
+              <AddressFinder
+                v-if="!selected[address_type].id
+                  || (selected[address_type].id === 'custom' && selected[address_type].editing)"
+              />
+            </div>
           </div>
+
+          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
+
+          <LinkComponent
+            v-if="!selected[address_type].id
+              && !selected[address_type].editing && address_type === 'shipping'
+              && addressFinder.enabled"
+            class="manually-button"
+            :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            @click.prevent="editAddress"
+          />
         </div>
+      </div>
 
-        <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
-
-        <LinkComponent
-          v-if="!selected[address_type].id
-            && !selected[address_type].editing && address_type === 'shipping'
-            && addressFinder.enabled"
-          class="manually-button"
-          :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+      <div
+        v-if="emailEntered && !selected[address_type].editing
+          && selected[address_type].id
+          && selected[address_type].postcode
+          && !isUsingSavedShippingAddress
+          && !isClickAndCollect
+          && isItemRequiringDelivery"
+        class="address-block"
+      >
+        <TextField
+          class="address-block__title"
+          :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
+        />
+        <div class="address-block__item">
+          <article>
+            <AddressBlock
+              :address_type="`shipping`"
+              :address="selected[address_type]"
+            />
+          </article>
+        </div>
+        <div
+          v-if="selected[address_type].id"
+          class="address-block__edit"
           @click.prevent="editAddress"
+          @keydown.enter.prevent="editAddress"
+        >
+          <Edit />
+        </div>
+      </div>
+
+      <div class="address-form-error-message">
+        <ErrorMessage
+          v-if="!customerInfoValidation && addressFormErrorMessage"
+          :message="$t('errorMessages.addressFormErrorMessage')"
         />
       </div>
-    </div>
 
-    <div
-      v-if="emailEntered && !selected[address_type].editing
-        && selected[address_type].id
-        && selected[address_type].postcode
-        && !isUsingSavedShippingAddress
-        && !isClickAndCollect
-        && isItemRequiringDelivery"
-      class="address-block"
-    >
-      <TextField
-        class="address-block__title"
-        :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
+      <BillingForm
+        v-if="emailEntered && !isClickAndCollect"
+        @billingInfoFull="billingInfoFull"
       />
-      <div class="address-block__item">
-        <article>
-          <AddressBlock
-            :address_type="`shipping`"
-            :address="selected[address_type]"
-          />
-        </article>
-      </div>
-      <div
-        v-if="selected[address_type].id"
-        class="address-block__edit"
-        @click.prevent="editAddress"
-        @keydown.enter.prevent="editAddress"
-      >
-        <Edit />
-      </div>
-    </div>
 
-    <div class="address-form-error-message">
-      <ErrorMessage
-        v-if="!customerInfoValidation && addressFormErrorMessage"
-        :message="$t('errorMessages.addressFormErrorMessage')"
+      <MyButton
+        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
+        type="submit"
+        primary
+        :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
+        :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
+        @click="submitShippingOption();"
+      />
+      <MyButton
+        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !isItemRequiringDelivery"
+        type="submit"
+        primary
+        :label="proceedToPayText"
+        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        @click="goToPayment();"
       />
     </div>
-
-    <BillingForm
-      v-if="emailEntered && !isClickAndCollect"
-      @billingInfoFull="billingInfoFull"
-    />
-
-    <MyButton
-      v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
-      type="submit"
-      primary
-      :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-      :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
-      @click="submitShippingOption();"
-    />
-    <MyButton
-      v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !isItemRequiringDelivery"
-      type="submit"
-      primary
-      :label="proceedToPayText"
-      :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
-      @click="goToPayment();"
-    />
   </div>
 </template>
 <script>

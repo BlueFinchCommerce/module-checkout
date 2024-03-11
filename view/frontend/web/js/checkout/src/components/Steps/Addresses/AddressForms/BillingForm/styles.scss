@@ -8,8 +8,8 @@
   }
 
   &__title {
-    font-weight: 500;
-    font-size: var(--font__m);
+    font-weight: var(--font-weight__semibold);
+    font-size: var( --font__heading--mobile);
     margin-bottom: var(--indent__s);
     display: flex;
     align-items: center;
@@ -24,12 +24,6 @@
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }
-  }
-
-  &__title--address {
-    margin-bottom: 0;
-    font-weight: 500;
-    font-size: var(--font__m_);
   }
 
   &__address {
@@ -55,6 +49,11 @@
 //Styles for desktop
 
 @media screen and (min-width: $screen__m) {
+  .address-block {
+    &__title {
+      font-size: var(--font__heading--desktop);
+    }
+  }
   .manually-button {
     font-size: var(--font__m);
   }

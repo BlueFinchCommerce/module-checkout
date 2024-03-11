@@ -38,7 +38,7 @@
     //
     //  Skeleton Placeholder
     //  ---------------------------------------------
-    --text-placeholder__bg-color: var(--color__primary-grey5);
+    --text-placeholder__bg-color: var(--color__primary-grey6);
     --text-placeholder__bg-color-darker: var(--color__primary-grey4);
 
     //
@@ -53,9 +53,9 @@
     --layout__max-width: 1280px;
     --indent__base: 20px;
     --indent__base--mobile: 20px;
-    --indent__m: 15px;
-    --indent__s: 10px;
     --indent__xs: 5px;
+    --indent__s: 10px;
+    --indent__m: 15px;
     --indent__l: 30px;
     --indent__xl: 40px;
     --indent__xxl: 70px;
@@ -103,7 +103,7 @@
     // Steps
     //  ---------------------------------------------
     --steps__background-color--desktop: var(--color__primary-white);
-    --steps__border-radius--desktop: 0px;
+    --steps__border-radius--desktop: var(--base__border-radius-large);
     --steps-complete__background-color: var(--color__primary-grey5);
     --steps-complete__radius--desktop: var(--base__border-radius-large);
     --steps-complete__font-size-title--desktop: var(--font__m);
@@ -139,6 +139,7 @@
     --button__padding-xl: 24px;
     --button__height: 55px;
     --button__width: 100%;
+    --button__width-fixed-size: 247px;
     --button__text-transform: none;
     --button__text-placeholder-bg-radius: var(--button__border-radius);
 
@@ -385,7 +386,7 @@
     //
     // Instant Checkout
     //  ---------------------------------------------
-    --instant-checkout__text-align: left;
+    --instant-checkout__text-align: center;
 
     //
     // Pay With
