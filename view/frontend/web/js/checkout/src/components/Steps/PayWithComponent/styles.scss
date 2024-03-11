@@ -2,9 +2,9 @@
 
 .pay-with {
   &__container {
-    align-items: var(--pay-width-align-items);
+    align-items: var(--pay-with__align-items);
     display: flex;
-    flex-direction: var(--pay-with-flex-direction);
+    flex-direction: var(--pay-with__flex-direction);
     flex-wrap: wrap;
     margin-top: var(--pay-with-container-margin-top, var(--indent__s));
     min-height: var(--pay-with-container-min-height, auto);
@@ -13,9 +13,9 @@
 
   &__message {
     font-size: var(--font__heading--mobile);
-    font-weight: var(--font-weight__semibold);
-    color: var(--text__color--heading);
-    font-family: var(--font-family-header);
+    font-weight: var(--font-weight__medium);
+    color: var(--font__color);
+    font-family: var(--font-family__header);
     position: relative;
     display: var(--pay-with-message-display, none);
     align-items: center;

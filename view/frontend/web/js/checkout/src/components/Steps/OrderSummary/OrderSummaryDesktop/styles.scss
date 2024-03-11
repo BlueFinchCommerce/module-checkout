@@ -3,7 +3,7 @@
   min-height: 500px;
 
   .order-total-container {
-    background: var(--order-total-container__background-colour, var(--white__color));
+    background: var(--order-total-container__background-colour, var(--color__primary-white));
     padding: var(--container-padding, 40px 30px);
     font-family: var(--order-total-container__font-family, unset);
   }

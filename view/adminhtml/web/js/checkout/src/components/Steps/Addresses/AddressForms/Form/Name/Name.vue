@@ -28,7 +28,7 @@
     @keyup="textChange('Last name')"
     @focusout="validateNameField(address_type, 'Last name', selected[address_type].lastname, true)"
   />
-  <div class="phone-field">
+  <div className="phone-field">
     <TextInput
       v-model="selected[address_type].telephone"
       :error="getAddressFieldHasError(address_type, 'Telephone')"
@@ -125,7 +125,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../styles.scss";
-</style>

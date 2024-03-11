@@ -19,7 +19,7 @@
 }
 
 .modal {
-  background: var(--modal-background-color, var(--white__color));
+  background: var(--modal-background-color, var(--color__primary-white));
   bottom: 0;
   box-shadow: var(--modal-box-shadow, 0 0 12px 2px rgb(0 0 0 / 15%));
   display: flex;
@@ -34,9 +34,9 @@
   z-index: 400;
 
   &-header {
-    color: var(--primary__color);
+    color: var(--color__primary-dark-blue);
     padding: var(--indent__s);
-    font-weight: var(--font-weight__bold);
+    font-weight: var(--font-weight__semibold);
     font-size: 20px;
     display: flex;
     position: relative;
@@ -64,9 +64,9 @@
 }
 
 .btn-close {
-  font-weight: var(--font-weight__bold);
+  font-weight: var(--font-weight__semibold);
   padding: var(--indent__s);
-  color: var(--primary__color);
+  color: var(--color__primary-grey1);
   font-size: var(--font__l);
   position: absolute;
   top: 0;
@@ -87,7 +87,7 @@
     }
 
     &-body {
-      background: var(--primary-gray__color)
+      background: var(--color__primary-grey6)
     }
 
     &-header {

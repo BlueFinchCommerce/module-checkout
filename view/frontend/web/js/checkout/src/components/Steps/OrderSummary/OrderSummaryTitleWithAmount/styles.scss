@@ -5,9 +5,9 @@
 
   p {
     font-size: var(--font__heading--mobile);
-    color: var(--text__color--heading);
-    font-weight: var(--order-summary-title-amount-font-weight, var(--font-weight__bold));
-    font-family: var(--font-family-header);
+    color: var(--font__color);
+    font-weight: var(--order-summary-title-amount-font-weight, var(--font-weight__semibold));
+    font-family: var(--font-family__header);
     margin-bottom: 0;
 
     &:first-child {
@@ -20,7 +20,7 @@
 @media screen and (min-width: $screen__m) {
   .order-summary-title-amount {
     p {
-      font-family: var(--font-family-copy);
+      font-family: var(--font-family__copy);
       font-size: var(--font__heading--desktop);
     }
   }

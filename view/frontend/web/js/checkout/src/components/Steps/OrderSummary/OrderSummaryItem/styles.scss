@@ -29,20 +29,20 @@
 
     > p {
       font-size: var(--product-info-name__font-size, var(--font__m));
-      font-weight: var(--product-info-name__font-weight, var(--font-weight__light));
+      font-weight: var(--product-info-name__font-weight, var(--font-weight__regular));
     }
 
     p {
       margin: var(--order-item-margin, 5px 0);
-      font-family: var(--product-info-name__font-family, var(--font-family-copy));
+      font-family: var(--product-info-name__font-family, var(--font-family__copy));
     }
   }
 
   &-price {
     p {
-      font-size: var(--order-item-price-size), var(--font__xl);
-      font-weight: var(--order-item-price-weight, 400);
-      font-family: var(--font-family-copy);
+      font-size: var(--order-item-price-size, var(--font__l));
+      font-weight: var(--order-item-price-weight, var(--font-weight__bold));
+      font-family: var(--font-family__copy);
     }
   }
 
@@ -59,11 +59,19 @@
     gap: var(--indent__s);
     margin: var(--indent__s) 0 var(--indent__xs);
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: var(--button__link-text-decoration);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    color: var(--button__link-font-color);
 
     svg {
       width: 12px;
     }
+
+    &:hover {
+      font-weight: var(--button__link-font-weight-hover);
+    }
+
   }
 
   .product-option {
@@ -76,11 +84,11 @@
       display: flex;
 
       p {
-        font-size: var(--font__base);
+        font-size: var(--font__s);
         margin: 0;
         &:first-child {
           margin-right: var(--indent__xs);
-          color: var(--color-theme__light-grey1);
+          color: var(--color__primary-grey2);
         }
       }
     }
@@ -93,7 +101,7 @@
 
   &-action {
     display: var(--remove-button-text-display, none);
-    color: var(--text__color);
+    color: var(--button__link-font-color);
     cursor: pointer;
     line-height: var(--remove-item-action-line-height, 6px);
     background: transparent;
@@ -101,8 +109,8 @@
   }
 
   p {
-    text-decoration: var(--text-decoration, underline);
-    font-family: var(--font-family-copy);
+    text-decoration: var(--text-decoration, var(--button__link-text-decoration));
+    font-family: var(--font-family__copy);
     margin: var(--remove-item-margin, 5px 0);
   }
 
@@ -120,25 +128,27 @@
   }
 
   &-copy {
-    font-size: var(--remove-icon-copy-font-size, var(--button-remove-item-font-size));
+    font-size: var(--remove-icon-copy-font-size, var(--button__link-font-size));
     font-weight: var(--remove-icon-copy-font-weight, var(--font-weight__regular));
-    color: var(--button-remove-item-font-color);
+    color: var(--button__link-font-color);
 
     &:hover {
-      color: var(--button-remove-item-font-color-hover);
+      color: var(--button__link-font-color-hover);
+      font-weight: var(--button__link-font-weight-hover);
     }
 
     &:focus,
     &:focus-visible {
-      color: var(--button-remove-item-font-color-focus);
+      color: var(--button__link-font-color-focus);
+      font-weight: var(--button__link-font-weight-focus);
     }
   }
 }
 
 .item-qty-container {
-  border: var(--qty-border);
-  border-radius: var(--qty-border-radius);
-  box-shadow: var(--qty-box-shadow);
+  border: var(--qty__border);
+  border-radius: var(--qty__border-radius);
+  box-shadow: var(--qty__box-shadow);
   display: inline-flex;
   margin: 0;
   overflow: hidden;
@@ -146,41 +156,42 @@
   label {
     input {
       &:disabled {
-        opacity: 1;
+        opacity: 1 !important; // override root style
       }
     }
   }
 
   button {
-    background: var(--item-qty-button__background, var(--qty-input-background-color));
-    border: var(--qty-button-border);
-    border-radius: var(--qty-button-border-radius);
-    font-family: var(--font-family-copy);
-    font-size: var(--qty-button-font-size);
-    height: var(--qty-button-height);
-    min-height: var(--qty-button-height);
+    background: var(--item-qty-button__background, var(--qty-input__background-color));
+    border: var(--qty-button__border);
+    border-radius: var(--qty-button__border-radius);
+    font-family: var(--font-family__copy);
+    font-size: var(--qty-button__font-size);
+    height: var(--qty__height);
+    min-height: var(--qty__height);
     min-width: var(--qty-button__min-width, 30px);
     max-width: var(--qty-button__max-width, 30px);
     padding: 0;
-    box-shadow: none;
+    box-shadow: var(--qty__box-shadow);
     font-weight: var(--qty-button__font-weight, var(--font-weight__regular));
-    color: var(--item-qty-button-colour, var(--qty-input-font-color));
+    color: var(--item-qty-button-colour, var(--qty-button__font-color));
   }
 
   input {
-    background-color: var(--qty-input-background-color);
-    border: var(--qty-input-border);
-    border-bottom: var(--qty-input-border-bottom);
-    border-top: var(--qty-input-border-top);
-    border-radius: var(--qty-input-border-radius);
-    color: var(--qty-input-font-color);
-    font-size: var(--qty-font-size);
-    height: var(--qty-button-height);
+    background-color: var(--qty-input__background-color);
+    border: var(--qty-input__border);
+    border-bottom: var(--qty-input__border-bottom);
+    border-top: var(--qty-input__border-top);
+    border-radius: var(--qty-input__border-radius);
+    color: var(--qty-input__font-color);
+    font-size: var(--qty-input__font-size);
+    font-weight: var(--qty-input__font-weight);
+    height: var(--qty__height);
     max-width: var(--qty-button-width, 40px);
     text-align: center;
 
     &:disabled {
-      color: var(--qty-input-font-color);
+      color: var(--qty-input__font-color);
     }
   }
 }
