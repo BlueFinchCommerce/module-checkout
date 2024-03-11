@@ -4,8 +4,8 @@
   "description": "## What is this?",
   "main": ".eslintrc",
   "scripts": {
-    "lint": "eslint . --rulesdir ./vendor/magento/magento-coding-standard/eslint/rules",
-    "lint-fix": "eslint . --rulesdir ./vendor/magento/magento-coding-standard/eslint/rules --fix"
+    "lint": "eslint . --rulesdir ../../../vendor/magento/magento-coding-standard/eslint/rules",
+    "lint-fix": "eslint . --rulesdir ../../../vendor/magento/magento-coding-standard/eslint/rules --fix"
   },
   "repository": {
     "type": "git",
