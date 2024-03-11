@@ -53,7 +53,7 @@
 
 <script>
 // Stores
-import {mapActions, mapWritableState} from 'pinia';
+import { mapActions, mapWritableState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 
 // Components
