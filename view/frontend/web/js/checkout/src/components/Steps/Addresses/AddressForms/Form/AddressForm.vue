@@ -186,7 +186,6 @@ import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
 
-
 // Stores
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
