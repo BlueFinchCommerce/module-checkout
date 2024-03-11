@@ -9,7 +9,6 @@ use Gene\BetterCheckout\Api\GetGuestCheckoutDataInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Quote\Model\QuoteIdMask;
-use Magento\Quote\Model\QuoteIdMaskFactory;
 
 class GetGuestCheckoutData implements GetGuestCheckoutDataInterface
 {
@@ -19,20 +18,20 @@ class GetGuestCheckoutData implements GetGuestCheckoutDataInterface
     private $getCheckoutData;
 
     /**
-     * @var QuoteIdMaskFactory
+     * @var QuoteIdMask
      */
-    private $quoteMaskedIdFactory;
+    private $quoteMaskedId;
 
     /**
      * @param GetCheckoutDataInterface $getCheckoutData
-     * @param QuoteIdMaskFactory $quoteMaskedIdFactory
+     * @param QuoteIdMask $quoteMaskedId
      */
     public function __construct(
         GetCheckoutDataInterface $getCheckoutData,
-        QuoteIdMaskFactory $quoteMaskedIdFactory
+        QuoteIdMask $quoteMaskedId
     ) {
         $this->getCheckoutData = $getCheckoutData;
-        $this->quoteMaskedIdFactory = $quoteMaskedIdFactory;
+        $this->quoteMaskedId = $quoteMaskedId;
     }
 
     /**
@@ -42,7 +41,7 @@ class GetGuestCheckoutData implements GetGuestCheckoutDataInterface
     public function execute(
         string $cartId
     ): string {
-        $quoteIdMask = $this->quoteMaskedIdFactory->create()->load(
+        $quoteIdMask = $this->quoteMaskedId->create()->load(
             $cartId,
             'masked_id'
         );

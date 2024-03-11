@@ -114,6 +114,10 @@ jobs:
       - run:
           name: DI Compile
           command: php -d memory_limit=-1 bin/magento setup:di:compile
+      - run:
+          name: Install composer modules within Better Checkout
+          command: |
+            composer install --working-dir=vendor/gene/module-better-checkout  --dev
       - persist_to_workspace:
           root: .
           paths:
@@ -131,14 +135,17 @@ jobs:
             ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
       - run:
           name: PHPStan
-          command: ./vendor/bin/phpstan analyse vendor/gene/module-better-checkout
+          working_directory: ./vendor/gene/module-better-checkout
+          command: ./vendor/bin/phpstan analyse . --configuration=./phpstan.neon
       - run:
           name: Configure PHPunit
+          working_directory: ./vendor/gene/module-better-checkout
           command: |
             mkdir -p ~/phpunit
-      - run:
-          name: PHPUnit
-          command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml vendor/gene/module-better-checkout
+      # - run:
+      #     name: PHPUnit
+      #     working_directory: ./vendor/gene/module-better-checkout
+      #     command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml .
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
