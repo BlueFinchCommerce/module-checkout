@@ -19,7 +19,7 @@
     }
 
     .divider-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       width: 75%;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
@@ -47,7 +47,7 @@
 .manually-button {
   padding-top: var(--manually-padding-top, 0);
   margin: var(--manually-margin, var(--indent__s) 0);
-  color: var(--manually-button-color, var(--text__color));
+  color: var(--manually-button-color, var(--button__link-font-color));
   width: 100%;
   text-align: left;
 }

@@ -16,9 +16,9 @@
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.label')"
           required
-          @input="validateStreet(selected[address_type].street[0])"
+          @input="validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
           @focusout="
-            validateStreet(selected[address_type].street[0])"
+            validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
         />
 
         <TextInput
@@ -31,9 +31,9 @@
             'addressField.unrequired')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.unrequiredLabel')"
-          @input="validateStreet2(selected[address_type].street[1])"
+          @input="validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
           @focusout="
-            validateStreet2(selected[address_type].street[1])"
+            validateStreet(selected[address_type].street[0]), validateStreet2(selected[address_type].street[1])"
         />
 
         <TextInput
@@ -132,7 +132,6 @@
         </div>
         <div>
           <MyButton
-            v-if="address_type !== 'shipping'"
             class="select-address-btn"
             type="submit"
             primary
@@ -192,7 +191,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'inputsSanitiseError']),
+    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn']),
     ...mapState(useConfigStore, ['countries', 'stateRequired', 'displayState',
       'countryCode', 'optionalZipCountries', 'postcodeRequired']),
     selectOptions() {
@@ -207,7 +206,7 @@ export default {
         ));
     },
   },
-  created() {
+  async created() {
     this.setupCountry();
     this.updateRegionRequired(this.address_type);
 
@@ -218,7 +217,7 @@ export default {
         && mutation.payload.selected[this.address_type])) {
         this.updateButtonState();
       }
-    }, { flush: 'sync' });
+    });
     this.updateButtonState();
   },
   methods: {
@@ -334,7 +333,7 @@ export default {
             this.selected[addressType].firstname,
           ) && this.validateNameField(
             addressType,
-            'Last name',
+            'First name',
             this.selected[addressType].firstname,
           ) && this.validatePhone(
             addressType,
@@ -342,10 +341,8 @@ export default {
           )
         );
 
-      const validAddress = this.validateAddress(addressType);
-      const validPostcode = this.validatePostcode(this.address_type);
-
-      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
+      this.buttonEnabled = this.validateAddress(addressType) && this.validatePostcode(this.address_type)
+        && areNamesValid;
     },
   },
 };

@@ -1,7 +1,7 @@
 @supports (-webkit-appearance: -apple-pay-button) {
   #braintree-apple-pay {
     &.text-loading {
-      border-radius: var(--text-placeholder-bg-button-radius);
+      border-radius: var(--button__text-placeholder-bg-radius);
       height: var(--adyen-express-button-height, 48px);
     }
   }
@@ -9,7 +9,7 @@
   .braintree-apple-pay {
     display: inline-block;
     -webkit-appearance: -apple-pay-button;
-    border-radius: var(--button-border-radius);
+    border-radius: var(--button__border-radius);
     height: var(--braintree-express-button-height, 48px);
   }
   .braintree-apple-pay-black {

@@ -6,13 +6,13 @@
     align-items: center;
 
     &-line {
-      border-bottom: 1px solid var(--border__gray-color2);
+      border-bottom: var(--divider__border);
       width: 100%;
     }
 
     p {
-      font-weight: var(--font-weight__bold);
-      font-family: var(--font-family-copy);
+      font-weight: var(--font-weight__semibold);
+      font-family: var(--font-family__copy);
       font-size: var(--font__m);
       margin: 0 var(--indent__s);
       text-align: center;
@@ -23,7 +23,7 @@
     padding-top: var(--welcome-message-padding, 0);
     font-size: var(--welcome-message-font-size, 14px);
     font-weight: var(--welcome-message-font-weight, var(--font-weight__regular));
-    font-family: var(--font-family-copy);
+    font-family: var(--font-family__copy);
     margin-bottom: var(--welcome-message-margin-bottom, var(--indent__s));
     text-align: var(--welcome-message-text-align, center);
 
@@ -66,7 +66,7 @@
     p {
       text-align: left;
       margin: var(--indent__s) 0 var(--indent__xs);
-      font-family: var(--font-family-copy);
+      font-family: var(--font-family__copy);
     }
   }
 
@@ -75,7 +75,7 @@
     cursor: pointer;
     right: 0;
     left: 0;
-    bottom: calc(var(--input-height) / 2);
+    bottom: calc(var(--input__height) / 2);
     text-align: right;
     transform: translateY(50%);
     padding-right: 15px;
@@ -88,7 +88,7 @@
 
     p {
       cursor: pointer;
-      font-family: var(--font-family-copy);
+      font-family: var(--font-family__copy);
     }
   }
 }
@@ -97,7 +97,7 @@
   align-items: center;
   background: transparent;
   border: none;
-  color: var(--text__color);
+  color: var(--button__link-font-color);
   cursor: pointer;
   display: flex;
   grid-gap: var(--indent__s);
@@ -110,20 +110,20 @@
   .logged-in-email-title {
     display: var(--logged-in-email-title-visibility, none);
     font-size: var(--font__l);
-    font-weight: var(--font-weight__bold);
+    font-weight: var(--font-weight__semibold);
     margin-top: var(--indent__l);
   }
 
   .welcome-message-title {
     display: var(--logged-in-email-title-visibility, none);
     font-size: var(--welcome-message-title__font-size, var(--font__l));
-    font-weight: var(--welcome-message-title__font-weight, var(--font-weight__bold));
-    font-family: var(--welcome-message-title__font-family, var(--font-family-copy));
+    font-weight: var(--welcome-message-title__font-weight, var(--font-weight__semibold));
+    font-family: var(--welcome-message-title__font-family, var(--font-family__copy));
   }
 
   &__footer {
     a {
-      color: var(--text__color);
+      color: var(--font__color-light);
     }
   }
 
