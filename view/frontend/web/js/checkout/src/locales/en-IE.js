@@ -81,7 +81,7 @@ export default {
       savedAddressesTitle: 'Select your saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
-      billingAddressTitle: 'Billing Address',
+      billingAddressTitle: 'Select a billing address',
       shippingButton: 'SHIPPING ADDRESS',
       clickandCollectButton: 'CLICK & COLLLECT',
       addressFinder: {

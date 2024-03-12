@@ -7,6 +7,14 @@
     margin: var(--indent__l) 0 var(--indent__base);
   }
 
+  &__title-with-icon {
+    display: flex;
+
+    svg {
+      margin-right: var(--indent__s);
+    }
+  }
+
   &__title {
     font-weight: var(--font-weight__semibold);
     font-size: var( --font__heading--mobile);
