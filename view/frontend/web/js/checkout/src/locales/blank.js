@@ -18,11 +18,13 @@ export default {
     removeItemButton: ' ',
     couponDiscountTitle: ' ',
     couponDiscount: {
+      errorMessage: '',
       placeholder: ' ',
       successMessage: ' ',
     },
     giftDiscountTitle: ' ',
     giftCardDiscount: {
+      errorMessage: ' ',
       placeholder: ' ',
       successMessage: ' ',
     },

@@ -24,11 +24,13 @@ export default {
     plusOneItem: 'plus one item',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
     },
@@ -45,7 +47,7 @@ export default {
     storeCreditTitle: 'Store Credit',
   },
   progressBar: {
-    detailStepTitle: 'Your details',
+    detailStepTitle: 'Details',
     shippingStepTitle: 'Shipping',
     paymentStepTitle: 'Payment',
   },
@@ -119,7 +121,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
-    sanitiseError: 'Invalid character entered.',
+    sanitiseError: 'Invalid character entered',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',
     emailErrorMessage: 'Please enter a valid email address',
