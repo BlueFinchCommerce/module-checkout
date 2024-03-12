@@ -4,7 +4,7 @@
 
 .progress-bar {
   &-container {
-    padding: var(--indent__s) var(--indent__base);
+    padding: 0 0 var(--indent__m);
     background: var(--color__primary-white);
     z-index: 10;
     position: sticky;

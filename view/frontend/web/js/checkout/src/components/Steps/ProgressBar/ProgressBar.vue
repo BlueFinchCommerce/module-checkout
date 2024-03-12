@@ -42,9 +42,9 @@
 <script>
 
 // Components
-import ProgressBarArrow from "@/components/Core/Icons/ProgressBarArrow/ProgressBarArrow.vue";
+import ProgressBarArrow from '@/components/Core/Icons/ProgressBarArrow/ProgressBarArrow.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
-import StepCompletedIcon from "@/components/Core/Icons/StepCompletedIcon/StepCompletedIcon.vue";
+import StepCompletedIcon from '@/components/Core/Icons/StepCompletedIcon/StepCompletedIcon.vue';
 
 // Stores
 import { mapState, mapActions } from 'pinia';

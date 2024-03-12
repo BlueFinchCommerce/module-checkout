@@ -122,6 +122,8 @@ a {
 
   .checkout-shipping-methods {
     &__title {
+      padding-top: 0;
+
       .title {
         .main-text {
           font-size: var(--shipping-page-title-desktop-size, var(--font__heading--desktop));

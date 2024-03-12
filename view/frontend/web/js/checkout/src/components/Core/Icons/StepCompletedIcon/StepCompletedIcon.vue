@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 
 export default {
   name: 'StepCompletedIcon',
