@@ -109,11 +109,11 @@ div.dropdown.gift-dropdown {
 @media screen and (min-width: $screen__m) {
   .dropdown-button {
     &.gift-discount-trigger {
-      order: var(--gift-card-trigger-order, 2);
+      order: var(--gift-card-trigger-order, 5);
     }
   }
 
   div.dropdown.gift-dropdown {
-    order: var(--gift-card-dropdown-order, 3);
+    order: var(--gift-card-dropdown-order, 6);
   }
 }

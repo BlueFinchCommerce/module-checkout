@@ -104,11 +104,11 @@ div.dropdown.coupon-dropdown {
 @media screen and (min-width: $screen__m) {
   .dropdown-button {
     &.coupon-discount-trigger {
-      order: var(--coupon-discount-trigger-order, 0);
+      order: var(--coupon-discount-trigger-order, 3);
     }
   }
 
   div.dropdown.coupon-dropdown {
-    order: var(--coupon-discount-dropdown-order, 1);
+    order: var(--coupon-discount-dropdown-order, 4);
   }
 }

@@ -10,7 +10,7 @@
     max-width: none;
     justify-content: normal;
     position: relative;
-    order: var(--promo-triggers-order, 4);
+    order: var(--promo-triggers-order, 5);
 
     img {
       display: var(--promo-products-icon-visibility, block);
@@ -36,7 +36,7 @@
 
       div {
         display: flex;
-        margin-right: var(--indent__base);
+        margin: 0 var(--indent__base) 0 var(--indent__s);
 
         p {
           font-size: var(--promo-products-title-font-size, var(--font__s));
@@ -63,7 +63,7 @@ div.dropdown.promo-dropdown {
   border-top: 0;
   margin: 0;
   max-width: none;
-  order: var(--promo-dropdown-order, 4);
+  order: var(--promo-dropdown-order, 6);
   display: grid;
 
   .promo-title {
@@ -111,7 +111,7 @@ div.dropdown.promo-dropdown {
 }
 
 .product-item {
-  border: var(--order-summary-carousel-item-border, 1px solid rgba(39, 48, 58, 0.2));
+  border: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--input__border-color));
   border-radius: var(--buttons-border-radius, 4px);
   display: flex;
   flex-direction: column;
@@ -173,6 +173,8 @@ div.dropdown.promo-dropdown {
   }
 
   div.dropdown.promo-dropdown {
+    order: var(--promo-dropdown-order, 1);
+
     .promo-title {
       padding-top: var(--indent__base);
     }
@@ -180,6 +182,16 @@ div.dropdown.promo-dropdown {
 
   .dropdown-button {
     &.promotion-trigger {
+      padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
+      order: var(--promo-triggers-order, 0);
+      margin: var(--indent__s) 0 var(--indent__xs);
+
+      .promo-title {
+        div {
+          margin: 0 var(--indent__s) 0 0;
+        }
+      }
+
       img {
         width: 50px;
         height: 23px;

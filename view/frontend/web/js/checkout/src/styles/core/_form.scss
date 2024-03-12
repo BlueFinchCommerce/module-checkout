@@ -183,7 +183,7 @@
       font-weight: var(--input-span-font-weight, var(--font-weight__regular));
       font-family: var(--font-family__copy);
       position: var(--input-span-position, absolute);
-      top: var(--input-span-top-value, var(--indent__xs));
+      top: var(--input-span-top-value, 0);
       min-height: var(--input-label-min-height, 25px);
       z-index: 1;
       border-radius: var(--base__border-radius);

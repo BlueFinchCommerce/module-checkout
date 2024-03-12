@@ -2,7 +2,7 @@
 // --border-radius
 
 .product-item {
-  border-top: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--input__border-color));
+  border-top: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
   padding: var(--order-item-paddings, 25px 0);
 
   &:first-child {
@@ -10,7 +10,7 @@
   }
 
   &:last-child {
-    border-bottom: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--input__border-color));
+    border-bottom: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
   }
 
   &-container {
