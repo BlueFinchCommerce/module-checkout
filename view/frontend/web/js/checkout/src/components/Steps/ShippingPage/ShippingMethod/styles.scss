@@ -10,9 +10,9 @@
   min-height: 150px; //min height for shipping methods container with 1 shipping method available
 
   &__title {
-    padding-top: var(--padding-top, 30px);
-    padding-bottom: var(--padding-bottom, 10px);
-    margin-bottom: var(--shipping-page-title-margin, 30px);
+    padding-top: var(--padding-top, var(--indent__base));
+    padding-bottom: var(--padding-bottom, 0);
+    margin-bottom: var(--shipping-page-title-margin, var(--indent__base));
     display: flex;
     align-items: center;
 
@@ -27,7 +27,7 @@
       margin-left: var(--shipping-address-text-margin, var(--indent__base));
 
       .main-text {
-        font-weight: var(--font-weight__medium, 500);
+        font-weight: var(--font-weight__semibold);
         font-family: var(--shipping-page-main-text-font-family, var(--font-family__copy));
         font-size: var(--font__heading--mobile);
         color: var(--font__color);
@@ -71,14 +71,14 @@
         width: 80%;
 
         span {
-          padding-left: var(--shipping-methods-left-padding, 30px);
+          padding-left: var(--shipping-methods-left-padding, var(--indent__l));
         }
 
         & + p {
           width: 20%;
           text-align: right;
-          font-size: var(--shipping-cost-font-size, var(--font__m));
-          font-weight: var(--shipping-cost-font-weight, var(--font-weight__regular));
+          font-size: var(--shipping-cost-font-size, var(--font__s));
+          font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
         }
       }
     }
@@ -95,12 +95,14 @@
   top: var(--shipping-methods-top-value, 0);
 
   p:first-child {
-    font-size: var(--shipping-method-title-font-size, var(--font__m));
-    font-weight: var(--shipping-method-title-font-weight, var(--font-weight__medium, 400));
+    font-size: var(--shipping-method-title-font-size, var(--font__s));
+    font-weight: var(--shipping-method-title-font-weight, var(--font-weight__semibold));
   }
 
   p:nth-child(2) {
-    font-size: var(--shipping-methods-desciption-font-size, var(--font__xs));
+    font-size: var(--shipping-methods-desciption-font-size, var(--font__s));
+    color: var(--font__color-light);
+    font-weight: var(--font-weight__medium);
   }
 }
 

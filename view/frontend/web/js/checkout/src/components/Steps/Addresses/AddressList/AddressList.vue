@@ -37,13 +37,14 @@
       </li>
       <li
         v-if="selected[addressType].id !== 'custom'"
-        value=""
-        class="address-list__item-new"
-        data-cy="add-address-new"
-        @click="newAddress"
-        @keydown="newAddress"
-        v-text="$t('addNewAddressBtn')"
-      />
+        class="address-list__item-new">
+        <MyButton
+          type="button"
+          secondary
+          :label="$t('addNewAddressBtn')"
+          @click="newAddress"
+        />
+      </li>
     </ul>
   </div>
 </template>
@@ -60,6 +61,7 @@ import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
+import MyButton from '@/components/Core/Button/Button.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
@@ -70,6 +72,7 @@ export default {
     Locate,
     TextField,
     Tick,
+    MyButton,
   },
   props: {
     addressType: {
@@ -89,19 +92,19 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, [
-      'setAddress',
+      'setAddressToStore',
       'createNewAddress',
-      'setEditing',
+      'setAddressAsEditing',
       'setAddressAsCustom',
     ]),
     selectAddress(address) {
       const clonedAddress = deepClone(address);
-      this.setAddress(clonedAddress, this.addressType);
-      this.setEditing(this.addressType, false);
+      this.setAddressToStore(clonedAddress, this.addressType);
+      this.setAddressAsEditing(this.addressType, false);
 
       // If the billing address is set to match then update this too.
       if (this.selected.billing.same_as_shipping) {
-        this.setAddress(clonedAddress, 'billing');
+        this.setAddressToStore(clonedAddress, 'billing');
       }
     },
     newAddress() {

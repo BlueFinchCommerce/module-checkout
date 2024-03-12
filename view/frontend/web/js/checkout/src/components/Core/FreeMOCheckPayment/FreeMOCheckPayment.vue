@@ -30,9 +30,9 @@ import RadioButton from '@/components/Core/Inputs/RadioButton/RadioButton.vue';
 
 // Services
 import createPayment from '@/services/createPayment';
+import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 export default {
@@ -64,14 +64,10 @@ export default {
     });
 
     this.cartEmitter.on('cartUpdated', async () => {
-      await this.getCartData();
-      await this.getCart();
-      await this.getCartTotals();
       await this.getPaymentMethods();
     });
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
     async selectPaymentMethod() {
       this.isMethodSelected = true;
@@ -82,14 +78,13 @@ export default {
       });
     },
     createPayment() {
-      const data = {
-        billingAddress: this.getSelectedBillingAddress,
-        paymentMethod: this.getPaymentMethod(),
-        email: this.customer.email,
+      const paymentMethod = {
+        code: this.paymentType,
       };
       this.buttonDisabled = true;
 
-      createPayment(data)
+      createPayment(paymentMethod)
+        .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((error) => {
           if (error.response && error.response.data && error.response.data.message) {
@@ -100,13 +95,6 @@ export default {
         });
     },
 
-    getPaymentMethod() {
-      return {
-        method: this.paymentType,
-        additional_data: {},
-        extension_attributes: getPaymentExtensionAttributes(),
-      };
-    },
     redirectToSuccess() {
       window.location.href = getSuccessPageUrl();
     },

@@ -2,8 +2,9 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
-import graphQlRequest from './graphQlRequest';
-import formatAddress from '../helpers/formatAddress';
+import graphQlRequest from '@/services/graphQlRequest';
+import formatAddress from '@/helpers/formatAddress';
+import getFullCart from '@/helpers/getFullCart';
 
 const convertBoolean = (value) => (value === 1);
 
@@ -24,40 +25,7 @@ mutation {
     }
   ) {
     cart {
-      shipping_addresses {
-        firstname
-        lastname
-        company
-        street
-        city
-        region {
-          code
-          label
-        }
-        postcode
-        telephone
-        country {
-          code
-          label
-        }
-        available_shipping_methods {
-          carrier_code
-          carrier_title
-          method_code
-          method_title
-          amount {
-            value
-          }
-          available
-          error_message
-          price_excl_tax {
-            value
-          }
-          price_incl_tax {
-            value
-          }
-        }
-      }
+      ${getFullCart}
     }
   }
 }`;
@@ -88,7 +56,7 @@ export default async (shippingAddress) => {
     region: formattedShippingAddress.region,
     region_id: formattedShippingAddress.region_id || null,
     postcode: formattedShippingAddress.postcode,
-    country_code: formattedShippingAddress.country_id,
+    country_code: formattedShippingAddress.country_code,
     telephone: formattedShippingAddress.telephone,
     save_in_address_book: convertBoolean(formattedShippingAddress.save_in_address_book),
   };
@@ -96,7 +64,7 @@ export default async (shippingAddress) => {
   // Check if the region is a name and retrieve the corresponding code
   const { countries } = useConfigStore();
   const foundCountry = countries.find((country) => country.two_letter_abbreviation
-    === formattedShippingAddress.country_id);
+    === formattedShippingAddress.country_code);
 
   if (foundCountry && foundCountry.available_regions) {
     const foundRegion = foundCountry.available_regions.find((region) => region.name

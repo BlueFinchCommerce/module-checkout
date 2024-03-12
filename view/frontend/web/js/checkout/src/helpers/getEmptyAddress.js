@@ -4,7 +4,7 @@ export default (sameAsShipping = false) => {
     street: ['', ''],
     city: '',
     region: '',
-    country_id: '',
+    country_code: '',
     postcode: '',
     company: '',
     telephone: '',

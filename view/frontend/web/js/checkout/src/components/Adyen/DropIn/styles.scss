@@ -119,13 +119,13 @@
 }
 
 #adyen-dropin-container-new {
-  padding-top: var(--adyen-container-padding-top, 20px);
+  padding-top: var(--adyen-container-padding-top, var(--indent__base));
 
   .adyen-checkout {
     &__payment-method__name {
       font-size: var(--adyen-font-size, var(--font__m));
-      font-weight: var(--adyen-font-weight, var(--font-weight__medium));
-      color: var(--adyen-font-color, #00112C);
+      font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
+      color: var(--adyen-font-color, var(--font__color));
     }
 
     &__payment-method {
@@ -217,6 +217,7 @@
   &__header {
     font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
     color: var(--font__color);
+    font-weight: var(--font-weight__semibold);
   }
 
 }
