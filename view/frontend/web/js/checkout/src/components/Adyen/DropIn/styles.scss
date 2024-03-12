@@ -36,7 +36,7 @@
 
 .adyen-checkout__label {
   &__text {
-    padding: 0 10px;
+    padding: 0 var(--indent__s);
     position: var(--adyen-label-position, absolute);
     top: -5px;
     background: var(--adyen-checkout-field-label__background-color, var(--input__background-color));
@@ -45,6 +45,7 @@
     left: var(--adyen-label-left-value, 10px);
     color: var(--adyen-font-color, var(--input__label-font-color));
     font-size: var(--adyen-font-size, var(--font__xs));
+    font-weight: var(--font-weight__medium);
     margin-bottom: var(--adyen-label-margin-bottom, 0);
     transition: none;
     border-radius: var(--base__border-radius);
@@ -207,28 +208,6 @@
 
 .adyen-checkout-form-instruction {
   display: none;
-}
-
-.adyen-payment {
-  &__title {
-    display: flex;
-    gap: var(--indent__m);
-  }
-  &__header {
-    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
-    color: var(--font__color);
-    font-weight: var(--font-weight__semibold);
-  }
-
-}
-
-
-@media screen and (min-width: $screen__m) {
-  .adyen-payment {
-    &__header {
-      font-size: var(--payment-page-title-desktop-font, var(--font__heading--desktop));
-    }
-  }
 }
 
 @media screen and (max-width: $screen__m) {
