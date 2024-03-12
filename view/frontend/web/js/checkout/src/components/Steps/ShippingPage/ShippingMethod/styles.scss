@@ -19,27 +19,27 @@
     .divider-line {
       border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
-      width: 45%;
+      width: 100%;
       display: var(--divider-line-display, block);
     }
 
     .title {
-      margin-left: var(--shipping-address-text-margin, var(--indent__base));
+      margin-left: var(--shipping-address-text-margin, var(--indent__s));
 
       .main-text {
         font-weight: var(--font-weight__semibold);
         font-family: var(--shipping-page-main-text-font-family, var(--font-family__copy));
         font-size: var(--font__heading--mobile);
         color: var(--font__color);
+        white-space: nowrap;
       }
     }
 
     &-icon {
-      width: var(--shipping-address-icon-width, 24px);
       display: var(--shipping-address-icon-display, flex);
 
       img {
-        width: 100%;
+        width: var(--shipping-address-icon-width, 24px);
       }
     }
   }
