@@ -307,6 +307,7 @@
     --input__border-weight-focus: var(--base__border-weight-active);
     --input__border-weight-active: var(--base__border-weight-active);
     --input__height: 55px;
+    --input__label-font-color: var(--font__color-dark);
     --input__label-padding: var(--indent__s);
     --input__placeholder-font-color: var(--color__primary-grey1);
     --input__placeholder-font-weight: var(--font-weight__medium);
@@ -390,7 +391,7 @@
     --slide-up__background-color-closed: var(--color__primary-grey5);
     --slide-up__font-size-title-closed: var(--font__s);
     --slide-up__font-size-price-closed: var(--font__m);
-    --slide-up__box-shadow-closed: var(0px -5px 20px 5px rgba(0, 0, 0, 0.20));
+    --slide-up__box-shadow-closed: 0px -5px 20px 5px rgba(0, 0, 0, 0.20);
     --slide-up__height: initial;
     --slide-up__border-radius: var(--base__border-radius-large);
     --slide-up__background-color-open: var(--color__primary-white);

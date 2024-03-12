@@ -16,11 +16,12 @@
 
     p {
       margin-bottom: 0;
+      white-space: nowrap;
     }
 
     .divider-line {
       border-bottom: var(--divider__border);
-      width: 75%;
+      width: 100%;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }

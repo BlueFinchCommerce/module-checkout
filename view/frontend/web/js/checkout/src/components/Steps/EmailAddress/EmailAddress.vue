@@ -52,8 +52,6 @@
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
-              font-weight="400"
-              font-size="12px"
             />
             <Edit/>
           </button>
@@ -105,8 +103,6 @@
           <TextField
             class="field__help-text"
             :text="$t('errorMessages.passwordHelpText')"
-            font-weight="300"
-            font-size="12px"
           />
         </div>
 
@@ -124,8 +120,6 @@
             <span style="display: none">forgotPass link</span>
             <TextField
               :text="$t('forgotPass')"
-              font-weight="300"
-              font-size="14px"
             />
           </a>
         </div>

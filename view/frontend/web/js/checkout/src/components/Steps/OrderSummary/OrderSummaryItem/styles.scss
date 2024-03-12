@@ -132,7 +132,7 @@
 
   &-copy {
     font-size: var(--remove-icon-copy-font-size, var(--button__link-font-size));
-    font-weight: var(--remove-icon-copy-font-weight, var(--font-weight__regular));
+    font-weight: var(--remove-icon-copy-font-weight, var(--font-weight__medium));
     color: var(--button__link-font-color);
 
     &:hover {
@@ -176,7 +176,7 @@
     max-width: var(--qty-button__max-width, 30px);
     padding: 0;
     box-shadow: var(--qty__box-shadow);
-    font-weight: var(--qty-button__font-weight, var(--font-weight__regular));
+    font-weight: var(--qty-button__font-weight, var(--font-weight__medium));
     color: var(--item-qty-button-colour, var(--qty-button__font-color));
   }
 

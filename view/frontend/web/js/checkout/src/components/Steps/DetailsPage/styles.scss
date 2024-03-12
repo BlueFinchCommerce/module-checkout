@@ -42,14 +42,14 @@
 
   &-title {
     border-top: var(--details-form-title__border-top, unset);
-    padding-bottom: var(--padding-bottom, 10px);
+    padding-bottom: var(--padding-bottom, var(--indent__s));
     padding-top: var(--details-form-title__padding-top, unset);
     display: flex;
     align-items: center;
-    margin-top: var(--details-form-title__margin-top, 25px);
+    margin-top: var(--details-form-title__margin-top, var(--indent__l));
 
     .divider-line {
-      width: 75%;
+      width: 100%;
     }
 
     img {
@@ -58,10 +58,11 @@
     }
 
     p {
-      font-weight: var(--font-weight__medium);
+      font-weight: var(--font-weight__semibold);
       font-family: var(--your-details-font-family, var(--font-family__copy));
-      font-size: var(--your-details-font-size, var(--font__m));
-      margin-left: var(--your-details-margin-left, var(--indent__base));
+      font-size: var(--your-details-font-size, var(--font__heading--mobile));
+      margin-left: var(--your-details-margin-left, var(--indent__m));
+      white-space: nowrap;
     }
   }
 }
@@ -97,7 +98,7 @@
     display: flex;
 
     .divider-line {
-      width: 50%;
+      width: 100%;
     }
 
     img {
@@ -106,12 +107,13 @@
     }
 
     &-text {
-      margin-left: var(--delivery-section-margin-left, var(--indent__base));
+      margin-left: var(--delivery-section-margin-left, var(--indent__s));
 
-      p:first-child {
-        font-weight: var(--font-weight__medium);
+      p {
+        font-size: var(--font__heading--mobile);
+        font-weight: var(--font-weight__semibold);
         font-family: var(--delivery-section-font-family, var(--font-family__copy));
-        font-size: var(--delivery-section-font-size, var(--font__m));
+        white-space: nowrap;
       }
     }
   }
@@ -172,6 +174,24 @@
   .instantCheckout-block {
     p {
       font-size: var(--font__heading--desktop);
+    }
+  }
+
+  .details-form {
+    &-title {
+      p {
+        font-size: var(--font__heading--desktop);
+      }
+    }
+  }
+
+  .delivery-section {
+    &-title {
+      &-text {
+        p {
+          font-size: var(--font__heading--desktop);
+        }
+      }
     }
   }
 
