@@ -19,16 +19,16 @@
       <div>
         <TextField
           :text="$t('orderSummary.couponCodeTitle')"
-          font-weight="325"
         />
         <Price
+          class="bold"
           :value="freeShipping"
         />
         <TextField
           :text="$t('orderSummary.couponCodeTitleBottom')"
-          font-weight="325"
         />
         <TextField
+          class="bold"
           :text="$t('orderSummary.couponCodeTitleFreeShipping')"
         />
       </div>
@@ -62,8 +62,6 @@
       <TextField
         class="promo-title"
         :text="$t('orderSummary.promoTitle')"
-        font-weight="500"
-        font-size="16px"
       />
       <div :class="['product-item-carousel', `product-item-carousel-${crosssells.length}`]">
         <div
@@ -78,17 +76,10 @@
             >
           </div>
           <div class="product-item-info">
-            <Price
-              :value="product.price_range.minimum_price.final_price.value"
-              font-size="18px"
-              font-weight="500"
-            />
             <TextField
               :text="product.name"
-              class="product-item-name"
-              font-weight="325"
-              font-size="14px"
-            />
+              class="product-item-name"/>
+            <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
           </div>
           <div class="product-actions">
             <MyButton

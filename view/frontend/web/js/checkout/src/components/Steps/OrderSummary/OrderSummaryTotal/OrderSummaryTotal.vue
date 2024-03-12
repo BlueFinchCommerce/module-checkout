@@ -9,6 +9,17 @@
   </div>
   <div class="order-total-container">
     <div class="order-total-wrapper">
+      <div class="total__row">
+        <TextField
+          class="total__text title"
+          :text="$t('orderSummary.subtotalTitle')"
+        />
+        <Price
+          v-if="cart.prices.subtotal_including_tax"
+          class="total__text"
+          :value="cart.prices.subtotal_including_tax.value"
+        />
+      </div>
       <div
         v-for="(discount, index) in cart?.prices?.discounts"
         :key="index"
@@ -16,18 +27,18 @@
       >
         <div class="total__row">
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="discount.label"
           />
           <Price
-            class="total__text"
-            :value="discount.amount.value"
+            class="total__text discount"
+            :value="'-' + discount.amount.value"
           />
         </div>
       </div>
       <div class="total__row">
         <TextField
-          class="total__text"
+          class="total__text title"
           :text="$t('progressBar.shippingStepTitle')"
         />
         <Price
@@ -43,7 +54,7 @@
       </div>
     </div>
     <div class="order-total-grand">
-      <TextField :text="grandTotalText" />
+      <TextField class="title" :text="grandTotalText" />
       <Price :value="cartGrandTotal / 100" />
     </div>
   </div>
