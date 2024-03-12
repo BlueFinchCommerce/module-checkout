@@ -4,7 +4,8 @@
 
 .order-total {
   &-container {
-    order: var(--order-total-container-order, 5);
+    order: var(--order-total-container-order, 7);
+    margin-bottom: var(--indent__s);
   }
 
   &-wrapper {
@@ -18,15 +19,24 @@
 
       .total__text {
         max-width: 350px;
-        text-align: left;
+
+        &.title {
+          text-align: left;
+          font-weight: var(--font-weight__regular);
+        }
       }
 
       p {
+        color: var(--font__color);
         margin-bottom: var(--indent__xs);
         min-width: 110px;
         text-align: right;
         font-size: var(--totals-row-text__font-size, var(--font__s));
         font-weight: var(--totals-row-text__font-weight, var(--font-weight__medium));
+      }
+
+      .discount {
+        color: var(--color__semantic-error);
       }
     }
   }
@@ -51,6 +61,7 @@
     display: flex;
     justify-content: space-between;
     padding: var(--grand-total-padding, 20px 0);
+    border-top: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
 
     p {
       font-size: var(--font__m);
@@ -63,6 +74,12 @@
 //Styles for desktop
 @media screen and (min-width: $screen__m) {
   .order-total {
+    &-container {
+      order: var(--order-total-container-order, 2);
+      margin-bottom: var(--indent__s);
+    }
+
+
     &-wrapper {
       padding: var(--order-total-wrapper, 15px 0);
     }
