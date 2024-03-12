@@ -17,7 +17,7 @@
   }
 
   &-button {
-    font-weight: var(--font-weight__regular);
+    font-weight: var(--font-weight__medium);
     background-color: var(--dropdown__background-color);
     border: var(--drop-down-border, var(--dropdown__border));
     border-radius: var(--drop-down-border-radius, var(--dropdown__border-radius));
@@ -34,7 +34,6 @@
       border-bottom-left-radius: var(--drop-down-border-radius, 0);
       border-bottom-right-radius: var(--drop-down-border-radius, 0);
       border-bottom: none;
-
     }
   }
 

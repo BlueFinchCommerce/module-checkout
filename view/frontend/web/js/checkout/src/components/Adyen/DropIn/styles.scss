@@ -43,14 +43,14 @@
     line-height: 1em;
     z-index: 1;
     left: var(--adyen-label-left-value, 10px);
-    color: var(--adyen-font-color, var(--font__color-dark));
+    color: var(--adyen-font-color, var(--input__label-font-color));
     font-size: var(--adyen-font-size, var(--font__xs));
     margin-bottom: var(--adyen-label-margin-bottom, 0);
     transition: none;
     border-radius: var(--base__border-radius);
 
     .adyen-checkout__label--focused & {
-      color: var(--font__color-dark);
+      color: var(--input__label-font-color);
     }
   }
 }

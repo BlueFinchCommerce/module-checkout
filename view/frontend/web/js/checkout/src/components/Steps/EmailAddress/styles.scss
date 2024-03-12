@@ -21,11 +21,12 @@
 
   .welcome-message {
     padding-top: var(--welcome-message-padding, 0);
-    font-size: var(--welcome-message-font-size, 14px);
-    font-weight: var(--welcome-message-font-weight, var(--font-weight__regular));
+    font-size: var(--welcome-message-font-size, var(--font__s));
+    font-weight: var(--welcome-message-font-weight, var(--font-weight__medium));
     font-family: var(--font-family__copy);
     margin-bottom: var(--welcome-message-margin-bottom, var(--indent__s));
     text-align: var(--welcome-message-text-align, center);
+    color: var(--font__color-light);
 
     &:empty {
       padding-top: 0;
@@ -60,6 +61,9 @@
   .field__help-text {
     display: var(--password-help-text-display);
     margin-top: var(--indent__s);
+    font-size: var(--font__xs);
+    font-weight: var(--font-weight__medium);
+    color: var(--font__color-light);
   }
 
   .forgot-pass {
@@ -78,7 +82,7 @@
     bottom: calc(var(--input__height) / 2);
     text-align: right;
     transform: translateY(50%);
-    padding-right: 15px;
+    padding-right: var(--indent__m);
 
     button {
       text-align: right;
@@ -87,8 +91,11 @@
     }
 
     p {
+      display: none;  // Removed form latest design
       cursor: pointer;
       font-family: var(--font-family__copy);
+      font-size: var(--font__xs);
+      font-weight: var(--font-weight__medium);
     }
   }
 }
@@ -123,7 +130,16 @@
 
   &__footer {
     a {
-      color: var(--font__color-light);
+      font-size: var(--button__link-font-size);
+      font-weight: var(--button__link-font-weight);
+      color: var(---button__link-font-color);
+      text-decoration: var(--button__link-text-decoration);
+      
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        font-weight: var(--button__link-font-weight-hover);
+      }
     }
   }
 
