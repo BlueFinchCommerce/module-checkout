@@ -2,7 +2,7 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--color__accent-mint));
+    border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
     padding: var(--promo-products-paddings, var(--indent__m) var(--indent__base));
     background: var(--dropdown__background-color-highlight);
     margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
@@ -64,7 +64,7 @@
 div.dropdown.promo-dropdown {
   background: var(--dropdown__background-color);
   padding: var(--promo-products-paddings, var(--indent__s) var(--indent__base) var(--indent__base) var(--indent__base));
-  border: var(--base__border-weight) var(--base__border-style) var(--color__accent-mint);
+  border: var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight);
   margin: 0;
   max-width: none;
   order: var(--promo-dropdown-order, 6);

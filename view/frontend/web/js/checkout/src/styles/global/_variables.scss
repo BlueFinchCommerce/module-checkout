@@ -113,6 +113,12 @@
     --steps-complete__font-size-sub--mobile: var(--font__xs);
 
     //
+    // Order Summary Desktop
+    //  ---------------------------------------------
+    --summary__background-color: var(--color__primary-white);
+    
+
+    //
     // Base Borders
     //  ---------------------------------------------
     --base__border-radius: 4px;
@@ -365,11 +371,13 @@
     // Dropdowns
     //  ---------------------------------------------
     --dropdown__background-color: var(--color__primary-white);
-    --dropdown__background-color-highlight: var(--color__accent-mint-light);
     --dropdown__border-color: var(--base__border-color);
     --dropdown__border-radius: var(--base__border-radius-large);
     --dropdown__border-weight: var(--base__border-weight);
     --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
+
+    --dropdown__border-color-highlight: var(--color__accent-mint);
+    --dropdown__background-color-highlight: var(--color__accent-mint-light);
 
     //
     // Messages

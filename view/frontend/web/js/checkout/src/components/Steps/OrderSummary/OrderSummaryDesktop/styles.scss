@@ -1,12 +1,12 @@
 .order-summary-desktop {
-  background: var(--color__primary-white);
+  background: var(--summary__background-color);
   padding: var(--indent__base) var(--indent__base--desktop);
   display: grid;
   min-height: 500px;
 
   .order-total-container {
-    background: var(--order-total-container__background-colour, var(--color__primary-white));
-    padding: var(--container-padding, 40px 30px);
+    background: var(--order-total-container__background-colour, var(--summary__background-color));
+    padding: var(--container-padding, var(--indent__xl) var(--indent__l));
     font-family: var(--order-total-container__font-family, unset);
   }
 
@@ -15,6 +15,7 @@
     margin-top: var(--indent__base);
     min-height: 180px;
     overflow-y: auto;
+    overflow-x: hidden;
     order: var(--order-summary-desktop-order, 7);
   }
 }

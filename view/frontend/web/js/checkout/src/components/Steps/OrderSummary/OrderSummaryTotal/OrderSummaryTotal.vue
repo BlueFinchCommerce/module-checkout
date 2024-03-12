@@ -27,7 +27,7 @@
       >
         <div class="total__row">
           <TextField
-            class="total__text"
+            class="total__text title"
             :text="discount.label"
           />
           <Price
