@@ -101,16 +101,16 @@ export default {
           placeholder: 'City',
         },
         countryField: {
-          label: 'Country',
-          placeholder: 'County',
+          label: 'State',
+          placeholder: 'State',
         },
         postCodeField: {
           label: 'Postcode',
           placeholder: 'Postcode',
         },
         regionField: {
-          label: 'County',
-          placeholder: 'County',
+          label: 'State',
+          placeholder: 'State',
         },
       },
     },

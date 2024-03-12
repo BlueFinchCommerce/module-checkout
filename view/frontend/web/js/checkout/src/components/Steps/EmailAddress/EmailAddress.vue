@@ -80,6 +80,7 @@
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
+            ref="passwordInput"
             required
           >
             <template #icon>
@@ -222,6 +223,7 @@ export default {
       loginErrorMessage: null,
       showPassword: false,
       passwordValid: false,
+      password: '',
       loadingLogin: false,
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
@@ -349,6 +351,9 @@ export default {
     },
 
     passwordKeyTrigger(event) {
+      // Update the password value whenever a key is pressed
+      this.password = event.target.value;
+
       // Check if the Enter key was pressed
       const pressedKey = event.key || event.keyCode;
 
