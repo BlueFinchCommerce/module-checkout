@@ -13,62 +13,64 @@
       class="pay-with__message"
       :text="$t('payNoExpressWithBlockTitle')"
     />
-    <ul class="pay-with__column" v-if="Object.keys(paymentTypes).length > 0">
-      <li
-        v-for="(paymentType, index) in paymentTypes"
-        :key="index"
-        class="pay-with__content"
-      >
-        <img v-if="!paymentType.icon.includes('klarna_account')"
-             :src="paymentType.icon.includes('klarna') ? klarnaIcon
+    <div :class="(isAdyenAvailable && Object.keys(paymentTypes).length === 0)
+          ? 'text-loading' : ''">
+      <ul class="pay-with__column" v-if="isAdyenAvailable && Object.keys(paymentTypes).length > 0">
+        <li
+          v-for="(paymentType, index) in paymentTypes"
+          :key="index"
+          class="pay-with__content"
+        >
+          <img v-if="!paymentType.icon.includes('klarna_account')"
+               :src="paymentType.icon.includes('klarna') ? klarnaIcon
           : paymentType.icon.includes('clearpay') ? clearPayIcon
           : paymentType.icon.includes('paypal') ? paypalIcon
           : paymentType.icon.includes('amex') ? amexIcon
           : paymentType.icon.includes('mc') ? mastercardIcon
           : paymentType.icon.includes('visa') ? visaIcon
           : paymentType.icon"
-             :alt="paymentType.name"
-             :class="generateClass(paymentType.name)"
+               :alt="paymentType.name"
+               :class="generateClass(paymentType.name)"
+          >
+        </li>
+      </ul>
+    </div>
+    <div :class="(!isAdyenAvailable
+    && isPaymentMethodAvailable('braintree')
+    && paymentOptionPriority.length === 0)
+          ? 'text-loading' : ''">
+      <ul class="pay-with__column" v-if="!isAdyenAvailable
+      && isPaymentMethodAvailable('braintree')
+      && paymentOptionPriority.length > 0">
+        <li
+          v-for="(paymentType, index) in paymentOptionPriority"
+          :key="index"
+          class="pay-with__content"
         >
-      </li>
-    </ul>
-    <ul class="pay-with__column" v-else>
-      <li class="pay-with__content">
-        <img :src="klarnaIcon"
-             alt="klarna">
-      </li>
-      <li class="pay-with__content">
-        <img :src="clearPayIcon"
-             alt="clearPayIcon">
-      </li>
-      <li class="pay-with__content">
-        <img :src="paypalIcon"
-             alt="paypalIcon">
-      </li>
-      <li class="pay-with__content">
-        <img :src="amexIcon"
-             alt="amexIcon">
-      </li>
-      <li class="pay-with__content">
-        <img :src="mastercardIcon"
-             alt="mastercardIcon">
-      </li>
-      <li class="pay-with__content">
-        <img :src="visaIcon"
-             alt="visaIcon">
-      </li>
-    </ul>
+          <img :src="paymentType === 'card' ? cardPayIcon
+          : paymentType === 'applePay' ? applePayIcon
+          : paymentType === 'googlePay' ? googlePayIcon
+          : paymentType === 'venmo' ? venmoPayIcon
+          : paymentType === 'paypal' ? paypalIcon
+          : ''"
+               :alt="paymentType"
+               :class="generateClass(paymentType)"
+          >
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 // Stores
-import {mapActions, mapState} from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useAdyenStore from '@/stores/AdyenStore';
+import usePaymentStore from '@/stores/PaymentStore';
 import getStaticUrl from '@/helpers/getStaticPath';
 
-import {computed, reactive} from 'vue';
+import { computed, reactive } from 'vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 
 // icons
@@ -78,6 +80,10 @@ import amex from './icons/AmericanExpress.svg';
 import clearPay from './icons/ClearPay.svg';
 import klarna from './icons/Klarna.svg';
 import paypal from './icons/Paypal.svg';
+import googlePay from './icons/GooglePay.svg';
+import applePay from './icons/ApplePay.svg';
+import cardPay from './icons/CardPay.svg';
+import venmoIcon from './icons/VenmoIcon.svg';
 
 export default {
   name: 'PayWith',
@@ -113,10 +119,13 @@ export default {
       payWithText: '',
       payWithTextId: 'gene-bettercheckout-paywith-text',
       paymentIcons: [],
+      map: [],
+      paymentOptionPriority: [],
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['paymentTypes']),
+    ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
+    ...mapState(usePaymentStore, ['getPaymentPriority', 'isPaymentMethodAvailable']),
     visaIcon() {
       return `${getStaticUrl(visa)}`;
     },
@@ -135,10 +144,36 @@ export default {
     paypalIcon() {
       return `${getStaticUrl(paypal)}`;
     },
+    applePayIcon() {
+      return `${getStaticUrl(applePay)}`;
+    },
+    googlePayIcon() {
+      return `${getStaticUrl(googlePay)}`;
+    },
+    cardPayIcon() {
+      return `${getStaticUrl(cardPay)}`;
+    },
+    venmoPayIcon() {
+      return `${getStaticUrl(venmoIcon)}`;
+    },
   },
   async created() {
     await this.getStoreConfig();
     this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
+
+    this.map = {
+      braintree: 'card',
+      braintree_applepay: 'applePay',
+      braintree_googlepay: 'googlePay',
+      braintree_venmo: 'venmo',
+      braintree_paypal: 'paypal',
+    };
+
+    const sortedAvailableMethods = Object.keys(this.map).toSorted((a, b) => (
+      this.getPaymentPriority(a) - this.getPaymentPriority(b)
+    ));
+
+    this.paymentOptionPriority = sortedAvailableMethods.map((method) => this.map[method]);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

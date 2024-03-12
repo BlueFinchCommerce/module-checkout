@@ -1,5 +1,11 @@
 @import '@/styles/global/_breakpoints';
 
+.text-loading {
+  ul {
+    opacity: 0;
+  }
+}
+
 .footer-icons {
   width: var(--footer-icons-width-mobile, auto);
 
@@ -8,13 +14,22 @@
     margin: var(--footer-icons-margin-mobile, 30px 0 35px);
     display: flex;
     flex-wrap: wrap;
-    align-items: var(--footer-icons-align-items, baseline);
+    align-items: var(--footer-icons-align-items, center);
     justify-content: center;
 
     li {
       display: block;
       list-style: none;
       margin: var(--footer-icon-margin-mobile, 0 10px);
+
+      .google_pay {
+        top: 2px;
+      }
+
+      .card,
+      .venmo {
+        width: 30px;
+      }
 
       .klarna-icon {
         margin-bottom: 2px;
