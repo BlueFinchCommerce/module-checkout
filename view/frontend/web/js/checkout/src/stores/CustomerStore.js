@@ -279,6 +279,14 @@ export default defineStore('customerStore', {
         });
         const data = await this.getCachedResponse(getCustomerInformation, 'getCustomerInformation');
         if (data) {
+          this.setData({
+            customer: {
+              addresses: data.addresses,
+              id: data.firstname,
+            },
+          });
+          this.setEmailEntered();
+
           // If we have a matched shipping address then set it so it doesn't show as custom.
           const matchedShipping = data.addresses.findIndex((address) => (
             doAddressesMatch(address, this.selected.shipping)

@@ -78,7 +78,8 @@
   }
 
   .product-option {
-    margin: var(--indent__xs) 0;
+    line-height: 1;
+    margin: var(--indent__xs) 0 var(--indent__s);
   }
 
   .gift-message {
