@@ -31,6 +31,8 @@
       }
 
       &.router-link-active {
+        cursor: auto;
+
         p {
           text-decoration: none;
         }
