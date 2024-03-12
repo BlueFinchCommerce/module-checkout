@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="product"
+    v-if="item"
     class="item-qty-container"
   >
     <MyButton
@@ -8,17 +8,17 @@
       :aria-label="$t('orderSummary.minusOneItem')"
       data-cy="qty-decrease"
       label=" - "
-      @click="product.qty === 1 ? false : updateQuantity(product, -1)"
+      @click="item.quantity === 1 ? false : updateQuantity(item, -1)"
     />
-    <label :for="`input-qty-${product.item_id}`">
+    <label :for="`input-qty-${item.item_id}`">
       <!--  eslint-disable vue/no-mutating-props -->
       <input
-        v-model="product.qty"
-        :name="`input-qty-${product.item_id}`"
+        v-model="item.quantity"
+        :name="`input-qty-${item.id}`"
         data-cy="qty-input-"
         type="text"
         disabled
-        :placeholder="product.qty"
+        :placeholder="item.quantity"
       >
     </label>
     <MyButton
@@ -26,7 +26,7 @@
       :aria-label="$t('orderSummary.plusOneItem')"
       data-cy="qty-increase"
       label=" + "
-      @click="updateQuantity(product, 1)"
+      @click="updateQuantity(item, 1)"
     />
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     MyButton,
   },
   props: {
-    product: {
+    item: {
       type: Object,
     },
   },

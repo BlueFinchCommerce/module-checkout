@@ -1,7 +1,7 @@
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
-import graphQlRequest from './graphQlRequest';
+import graphQlRequest from '@/services/graphQlRequest';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
   const transformedData = paymentMethodsExtraDetails.map((item) => ({
@@ -53,6 +53,7 @@ export default async () => {
                 configuration {
                     merchantId
                     merchantName
+                    gatewayMerchantId
                 }
                 details {
                     key

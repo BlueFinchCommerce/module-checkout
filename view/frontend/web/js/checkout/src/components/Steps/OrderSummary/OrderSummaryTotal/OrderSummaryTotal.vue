@@ -2,140 +2,44 @@
   <div class="order-total-title">
     <TextField :text="orderSummaryText" />
     <TextField
-      v-if="cartItemsQty > 0"
+      v-if="getCartItemsQty > 0"
       class="order-total-title-amount"
-      :text="`(${cartItemsQty})`"
+      :text="`(${getCartItemsQty})`"
     />
   </div>
   <div class="order-total-container">
     <div class="order-total-wrapper">
       <div
-        v-for="(total, index) in totalSegments"
+        v-for="(discount, index) in cart?.prices?.discounts"
         :key="index"
         class="order-total"
       >
-        <div
-          v-if="total.code === 'penniesdonation'"
-          class="total__row"
-        >
+        <div class="total__row">
           <TextField
-            class="total__text title"
-            :text="total.title"
+            class="total__text"
+            :text="discount.label"
           />
           <Price
             class="total__text"
-            :value="total.value"
+            :value="discount.amount.value"
           />
         </div>
-        <div
-          v-if="total.code === 'shipping'"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('progressBar.shippingStepTitle')"
-          />
-          <Price
-            v-if="selectedMethod.method_code"
-            class="total__text"
-            :value="shippingPrice"
-          />
-          <TextField
-            v-else
-            class="total__text"
-            :text="$t('shippingStep.tbc')"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'discount'"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="total.title"
-          />
-          <Price
-            class="total__text discount"
-            :value="total.value"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'giftcardaccount'"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="total.title"
-          />
-          <Price
-            class="total__text gift-card"
-            :value="total.value"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'reward' && total.value"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.rewardsTitle')"
-          />
-          <Price
-            :value="total.value"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'customerbalance' && total.value"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.storeCreditTitle')"
-          />
-          <Price
-            :value="total.value"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'subtotal'"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="subtotalText"
-          />
-          <Price
-            class="total__text"
-            :value="total.value"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'giftwrapping'
-            && total.extension_attributes.gw_base_price > 0 "
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.discountTitle')"
-          />
-          <Price
-            class="total__text"
-            :value="total.extension_attributes.gw_base_price"
-          />
-        </div>
-        <div
-          v-else-if="total.code === 'tax' && taxCartDisplayFullSummary"
-          class="total__row"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.inclTaxTitle')"
-          />
-          <Price
-            class="total__text"
-            :value="total.value"
-          />
-        </div>
+      </div>
+      <div class="total__row">
+        <TextField
+          class="total__text"
+          :text="$t('progressBar.shippingStepTitle')"
+        />
+        <Price
+          v-if="cart.shipping_addresses?.[0]?.selected_shipping_method"
+          class="total__text"
+          :value="cart.shipping_addresses[0].selected_shipping_method.amount.value"
+        />
+        <TextField
+          v-else
+          class="total__text"
+          :text="$t('shippingStep.tbc')"
+        />
       </div>
     </div>
     <div class="order-total-grand">
@@ -172,7 +76,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cartGrandTotal', 'totalSegments', 'shippingPrice', 'cartItemsQty']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty']),
     ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },

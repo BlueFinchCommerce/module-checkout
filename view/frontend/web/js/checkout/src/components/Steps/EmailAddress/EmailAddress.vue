@@ -134,6 +134,7 @@
           v-if="!emailEntered"
           class="actions"
         >
+          <Recaptcha id="customerLogin" />
           <MyButton
             type="submit"
             class="sign-in-btn"
@@ -185,6 +186,7 @@ import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 
 // icons
 import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
@@ -212,6 +214,7 @@ export default {
     ErrorMessage,
     Loader,
     Edit,
+    Recaptcha,
   },
   data() {
     return {
@@ -236,6 +239,7 @@ export default {
     ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
+    ...mapState(useConfigStore, ['storeCode']),
     proceedAsGuestInvalid() {
       return this.emailError;
     },
@@ -244,9 +248,11 @@ export default {
     },
   },
   async mounted() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     this.trackStep({
       step: 1,
       description: 'login',
@@ -258,10 +264,11 @@ export default {
     ...mapActions(useCustomerStore, [
       'login',
       'submitEmail',
+      'setEmailEntered',
       'isEmailAvailable',
       'editEmail',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'emitUpdate']),
+    ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
 
     toggleShowPassword() {
@@ -323,7 +330,8 @@ export default {
     },
 
     proceed() {
-      this.submitEmail();
+      this.setEmailEntered();
+      this.submitEmail(this.customer.email);
     },
 
     /**

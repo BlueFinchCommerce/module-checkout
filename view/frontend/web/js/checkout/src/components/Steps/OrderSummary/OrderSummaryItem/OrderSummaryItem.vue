@@ -1,57 +1,81 @@
 <template>
   <div v-if="Object.keys(cartItems).length !== 0">
-    <div class="product-item"
-         v-for="(product, index) in cartItems" :key="index">
+    <div
+      v-for="(item, index) in cartItems"
+      :key="index"
+      class="product-item"
+    >
       <div class="product-item-container">
         <div class="product-image">
-          <img :src="product.image.src" :alt="product.image.alt"
-               :width="product.image.width" :height="product.image.height">
+          <img
+            :src="item.product?.thumbnail?.url"
+            :alt="item.product?.thumbnail?.label"
+          >
         </div>
         <div class="product-item-info">
-          <TextField :text="product.name" />
-          <ProductOptions :product="product" />
+          <TextField :text="item?.product?.name" />
+          <ProductOptions
+            v-if="item.product?.options"
+            :product="item.product"
+          />
           <div class="product-item-price">
-            <Price v-if="taxCartDisplayPrice" :value="product.price_incl_tax" />
-            <Price v-else :value="product.price" />
+            <Price :value="item.product?.price_range?.minimum_price?.final_price?.value" />
           </div>
           <div class="product-item-actions">
-            <QtyButton :product="product" />
-            <RemoveItemButton :product="product" />
+            <QtyButton :item="item" />
+            <RemoveItemButton :product="item" />
           </div>
-          <div v-if="product.giftMessage" class="gift-message">
+          <div
+            v-if="item.__typename === 'GiftCardCartItem'"
+            class="gift-message"
+          >
             <div class="gift-message__item">
-              <TextField :text="$t('giftMessage.to')"/>
-              <TextField :text="product.giftMessage.to"/>
+              <TextField :text="$t('giftMessage.to')" />
+              <TextField :text="item.recipient_name" />
             </div>
             <div class="gift-message__item">
-              <TextField :text="$t('giftMessage.from')"/>
-              <TextField :text="product.giftMessage.from"/>
+              <TextField :text="$t('giftMessage.from')" />
+              <TextField :text="item.sender_name" />
             </div>
             <div class="gift-message__item">
-              <TextField :text="$t('giftMessage.message')"/>
-              <TextField :text="product.giftMessage.message"/>
+              <TextField :text="$t('giftMessage.message')" />
+              <TextField :text="item.message" />
             </div>
           </div>
-          <div class="qty-error-message">
-            <ErrorMessage v-if="product.cartUpdateErrorMessage" :message="product.cartUpdateErrorMessage"/>
+          <div
+            v-if="item?.errors"
+            class="qty-error-message"
+          >
+            <template
+              v-for="error in item.errors"
+              :key="error.message"
+            >
+              <ErrorMessage
+                :message="error.message"
+              />
+            </template>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div v-else class="loader__absolute-container">
-    <Loader/>
+  <div
+    v-else
+    class="loader__absolute-container"
+  >
+    <Loader />
   </div>
-  <div v-if="cartLoading === 'true'"
-       class="loader__absolute-container">
-    <Loader/>
+  <div
+    v-if="cartLoading === 'true'"
+    class="loader__absolute-container"
+  >
+    <Loader />
   </div>
 </template>
 <script>
 // store
 import { mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
 
 // icons
 import Loader from '@/components/Core/Loader/Loader.vue';
@@ -82,7 +106,6 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartItems', 'cartLoading']),
-    ...mapState(useConfigStore, ['taxCartDisplayPrice']),
   },
 };
 </script>

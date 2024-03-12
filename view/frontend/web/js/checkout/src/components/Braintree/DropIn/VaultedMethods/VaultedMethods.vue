@@ -77,8 +77,6 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 // Services
@@ -212,7 +210,7 @@ export default {
           locality: this.getSelectedBillingAddress.city,
           region: this.getSelectedBillingAddress.region_code,
           postalCode: this.getSelectedBillingAddress.postcode,
-          countryCodeAlpha2: this.getSelectedBillingAddress.country_id,
+          countryCodeAlpha2: this.getSelectedBillingAddress.country_code,
         };
 
         const threeDSecureParameters = {
@@ -277,21 +275,15 @@ export default {
       });
     },
 
-    getPaymentData(payload) {
+    getPaymentData() {
       const { publicHash } = this.selectedVaultMethod;
-      const additionalPaymentData = getAdditionalPaymentData();
 
       return {
-        billingAddress: this.getSelectedBillingAddress,
-        email: this.customer.email,
         paymentMethod: {
-          method: 'braintree_cc_vault',
-          additional_data: {
-            payment_method_nonce: payload.nonce,
+          code: 'braintree_cc_vault',
+          braintree_cc_vault: {
             public_hash: publicHash,
-            ...additionalPaymentData,
           },
-          extension_attributes: getPaymentExtensionAttributes(),
         },
       };
     },

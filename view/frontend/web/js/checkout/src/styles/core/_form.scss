@@ -49,13 +49,8 @@
     }
 
     span {
-      font-weight: var(--font-weight__regular);
+      font-weight: var(--font-weight__semibold);
       font-size: var(--font__m);
-    }
-
-    & + p {
-      font-size: var(--font__xs);
-      margin: 0;
     }
 
     &.error,
@@ -251,16 +246,15 @@
       span {
         display: var(--logged-in-email-label-visibility, none);
         font-family: var(--input-label-logged-in-font-family, var(--font-family__copy));
-        font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
+        font-size: var(--input-label-logged-in-font-size, var(--font__xs));
         padding-left: var(--input-label-logged-in-padding, var(--input__label-padding));
         margin-left: var(--input-label-logged-in-margin, var(--input-label-margin));
         font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__regular));
       }
-          font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
-        }
 
       input {
         border: var(--logged-in-email-border-width, none);
+        border-radius: var(--input__border-radius);
         padding: var(--logged-in-email-padding, var(--indent__s));
         margin-top: var(--logged-in-email-margin-top, 0);
         text-align: center;
@@ -268,8 +262,6 @@
         font-weight: var(--font-weight__bold);
         font-size: var(--font__m);
         color: var(--font__color-light);
-
-        ::placeholder {
 
         &:hover {
           border: none;

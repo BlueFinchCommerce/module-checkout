@@ -74,7 +74,7 @@ import PrivacyPolicy from '@/components/Core/PrivacyPolicy/PrivacyPolicy.vue';
 import RadioButton from '@/components/Core/Inputs/RadioButton/RadioButton.vue';
 
 // Services
-import getAdyenPaymentDetails from '@/services/getAdyenPaymentDetails';
+import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers

@@ -138,9 +138,7 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    await this.getCartData();
     await this.getCart();
-    await this.getCartTotals();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
     }
@@ -152,7 +150,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
-      'getCartData', 'getCart', 'getCartTotals', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
+      'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;
