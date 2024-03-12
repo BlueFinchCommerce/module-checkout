@@ -98,6 +98,11 @@ export default defineStore('cartStore', {
     },
 
     async getCart() {
+      if (!this.maskedId) {
+        const maskedId = await getMaskedIdFromGraphQl();
+        this.setData({ maskedId });
+      }
+
       const cart = await this.getCachedResponse(getCart, 'getCart');
 
       this.handleCartData(cart);
