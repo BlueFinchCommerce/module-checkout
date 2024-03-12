@@ -5,7 +5,7 @@
   &-container {
     align-items: center;
     background: var(--slide-up__background-color-closed);
-    border-top: 1px solid rgba(37, 48, 59, 0.4);
+    border-top: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey3);
     box-shadow: var(--order-summary-box-shadow, var(--slide-up__box-shadow-closed));
     bottom: 0;
     display: flex;

@@ -22,7 +22,7 @@
 
         &.title {
           text-align: left;
-          font-weight: var(--font-weight__regular);
+          font-weight: var(--font-weight__medium);
         }
       }
 
@@ -32,7 +32,7 @@
         min-width: 110px;
         text-align: right;
         font-size: var(--totals-row-text__font-size, var(--font__s));
-        font-weight: var(--totals-row-text__font-weight, var(--font-weight__medium));
+        font-weight: var(--totals-row-text__font-weight, var(--font-weight__semibold));
       }
 
       .discount {
@@ -63,10 +63,15 @@
     padding: var(--grand-total-padding, 20px 0);
     border-top: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
 
-    p {
+    .title {
       font-size: var(--font__m);
+      font-weight: var(--font-weight__semibold);
+    }
+
+    p {
+      font-size: var(--font__l);
       color: var(--font__color);
-      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__semibold));
+      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__bold));
     }
   }
 }

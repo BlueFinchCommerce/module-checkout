@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="order-total-grand">
-      <TextField :text="grandTotalText" />
+      <TextField class="title" :text="grandTotalText" />
       <Price :value="cartGrandTotal / 100" />
     </div>
   </div>
