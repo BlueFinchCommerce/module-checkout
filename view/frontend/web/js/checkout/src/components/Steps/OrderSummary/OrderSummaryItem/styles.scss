@@ -28,8 +28,8 @@
     margin-left: var(--indent__l);
 
     > p {
-      font-size: var(--product-info-name__font-size, var(--font__m));
-      font-weight: var(--product-info-name__font-weight, var(--font-weight__regular));
+      font-size: var(--product-info-name__font-size, var(--font__s));
+      font-weight: var(--product-info-name__font-weight, var(--font-weight__medium));
     }
 
     p {

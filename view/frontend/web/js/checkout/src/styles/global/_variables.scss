@@ -286,7 +286,7 @@
     // Inputs
     //  ---------------------------------------------
     --input__font-color: var(--color__primary-dark-blue);
-    --input__font-size: var(--font__s);
+    --input__font-size: var(--font__m);
     --input__font-weight: var(--font-weight__semibold);
     --input__background-color: var(--color__primary-white);
     --input__border-color: var(--color__primary-grey2);
@@ -379,8 +379,11 @@
     // Slide Up
     //  ---------------------------------------------
     --slide-up__background-color-closed: var(--color__primary-grey5);
+    --slide-up__font-size-title-closed: var(--font__s);
+    --slide-up__font-size-price-closed: var(--font__m);
+    --slide-up__box-shadow-closed: var(0px -5px 20px 5px rgba(0, 0, 0, 0.20));
     --slide-up__height: initial;
-    --slide-up__border-radius: 10px;
+    --slide-up__border-radius: var(--base__border-radius-large);
     --slide-up__background-color-open: var(--color__primary-white);
 
     //
