@@ -15,8 +15,8 @@
         <div class="product-item-info">
           <TextField :text="item?.product?.name" />
           <ProductOptions
-            v-if="item.product?.options"
-            :product="item.product"
+            v-if="item?.configurable_options"
+            :item="item"
           />
           <div class="product-item-price">
             <Price :value="item.product?.price_range?.minimum_price?.final_price?.value" />
