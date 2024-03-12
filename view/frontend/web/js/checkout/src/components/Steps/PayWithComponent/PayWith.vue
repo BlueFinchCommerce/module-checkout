@@ -13,24 +13,49 @@
       class="pay-with__message"
       :text="$t('payNoExpressWithBlockTitle')"
     />
-    <ul class="pay-with__column">
+    <ul class="pay-with__column" v-if="Object.keys(paymentTypes).length > 0">
       <li
         v-for="(paymentType, index) in paymentTypes"
         :key="index"
         class="pay-with__content"
       >
         <img v-if="!paymentType.icon.includes('klarna_account')"
-          :src="paymentType.icon.includes('klarna') ? klarnaIcon
+             :src="paymentType.icon.includes('klarna') ? klarnaIcon
           : paymentType.icon.includes('clearpay') ? clearPayIcon
           : paymentType.icon.includes('paypal') ? paypalIcon
           : paymentType.icon.includes('amex') ? amexIcon
           : paymentType.icon.includes('mc') ? mastercardIcon
           : paymentType.icon.includes('visa') ? visaIcon
-          : paymentType.icon.includes('paypal') ? paypalIcon
           : paymentType.icon"
-          :alt="paymentType.name"
-          :class="generateClass(paymentType.name)"
+             :alt="paymentType.name"
+             :class="generateClass(paymentType.name)"
         >
+      </li>
+    </ul>
+    <ul class="pay-with__column" v-else>
+      <li class="pay-with__content">
+        <img :src="klarnaIcon"
+             alt="klarna">
+      </li>
+      <li class="pay-with__content">
+        <img :src="clearPayIcon"
+             alt="clearPayIcon">
+      </li>
+      <li class="pay-with__content">
+        <img :src="paypalIcon"
+             alt="paypalIcon">
+      </li>
+      <li class="pay-with__content">
+        <img :src="amexIcon"
+             alt="amexIcon">
+      </li>
+      <li class="pay-with__content">
+        <img :src="mastercardIcon"
+             alt="mastercardIcon">
+      </li>
+      <li class="pay-with__content">
+        <img :src="visaIcon"
+             alt="visaIcon">
       </li>
     </ul>
   </div>
@@ -38,12 +63,12 @@
 
 <script>
 // Stores
-import { mapActions, mapState } from 'pinia';
+import {mapActions, mapState} from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useAdyenStore from '@/stores/AdyenStore';
 import getStaticUrl from '@/helpers/getStaticPath';
 
-import { computed, reactive } from 'vue';
+import {computed, reactive} from 'vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 
 // icons
