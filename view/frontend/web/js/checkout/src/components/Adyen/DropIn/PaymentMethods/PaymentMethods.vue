@@ -149,7 +149,6 @@ export default {
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
-    console.log(paymentMethodsResponse);
     this.storedPaymentMethods = this.getFilteredStoredMethods(paymentMethodsResponse);
 
     // If we are on a stored payment component but have no stored payments
@@ -339,7 +338,7 @@ export default {
         paymentMethod.adyen_additional_data_cc = {
           cc_type: state.data.paymentMethod.mc,
           stateData,
-          recurringProcessingModel: state.data.storePaymentMethod ? 'Subscription' : '',
+          recurringProcessingModel: state.data.storePaymentMethod ? 'CardOnFile' : '',
         };
       } else {
         paymentMethod.adyen_additional_data_hpp = {

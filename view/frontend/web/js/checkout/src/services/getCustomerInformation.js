@@ -10,7 +10,6 @@ export default async () => {
       email
       firstname
       lastname
-      id
       addresses {
         city
         country_code
