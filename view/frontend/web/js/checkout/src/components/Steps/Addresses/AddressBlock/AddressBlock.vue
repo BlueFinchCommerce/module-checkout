@@ -33,7 +33,7 @@ export default {
         street: ['', ''],
         city: '',
         region: '',
-        country_id: '',
+        country_code: '',
         postcode: '',
         company: '',
         telephone: '',

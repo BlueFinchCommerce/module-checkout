@@ -11,7 +11,11 @@ export default (sections = []) => {
   });
   const url = `${secureBaseUrl}customer/section/load/?${params.toString()}`;
 
-  return axios.get(url)
+  const headers = {
+    'X-Requested-With': 'XMLHttpRequest',
+  };
+
+  return axios.get(url, { headers })
     .then((response) => response.data)
     .then((data) => {
       const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));

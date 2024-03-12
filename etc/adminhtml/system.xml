@@ -45,16 +45,6 @@
                     <base_url type="media" scope_info="1">gene_better_checkout</base_url>
                     <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
                 </field>
-                <group id="adyen" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Adyen</label>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                    <field id="adyen_auth_token" translate="label comment" sortOrder="10" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
-                        <label>Adyen Auth Token</label>
-                        <comment><![CDATA[The Auth Token allowing access to the Adyen endpoints.]]></comment>
-                    </field>
-                </group>
                 <group id="loqate" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Loqate</label>
                     <depends>

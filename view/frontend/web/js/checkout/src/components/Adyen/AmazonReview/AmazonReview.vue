@@ -63,8 +63,8 @@ import SavedShippingMethod
 
 // Services
 import createPayment from '@/services/createPayment';
-import getAdyenPaymentStatus from '@/services/getAdyenPaymentStatus';
-import getAdyenPaymentDetails from '@/services/getAdyenPaymentDetails';
+import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
+import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
@@ -90,7 +90,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal']),
-    ...mapState(useConfigStore, ['currencyCode', 'locale']),
+    ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
     formattedTotal() {
       return formatPrice(this.cartGrandTotal / 100);
@@ -100,11 +100,12 @@ export default {
     // Get the Amazon checkout sessionID.
     const amazonCheckoutSessionId = getUrlQuery('amazonCheckoutSessionId');
 
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getAdyenConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const clientKey = await this.getAdyenClientKey();
@@ -160,7 +161,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['getAdyenConfig', 'getAdyenClientKey', 'getPaymentMethodsResponse']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
 
     setOrderId(orderId) {

@@ -281,7 +281,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -296,7 +296,7 @@ export default {
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
-      await this.getPaymentMethodsResponse();
+      // await this.getPaymentMethodsResponse();
       this.storedKey += 1;
     });
 
@@ -311,9 +311,10 @@ export default {
     this.updateButtonState();
   },
   async mounted() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
 
     const types = {
       shipping: 'customerInfoValidation',
@@ -332,19 +333,24 @@ export default {
     });
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressAsCustom',
-      'setEditing',
+      'setAddressAsEditing',
       'validateAddress',
       'validateNameField',
       'validatePhone',
       'validatePostcode',
-      'setAddress',
+      'setAddressToStore',
     ]),
     ...mapActions(useAdyenStore, ['getPaymentMethodsResponse', 'clearPaymentReponseCache']),
-    ...mapActions(useShippingMethodsStore, ['clearShippingMethodCache', 'setClickAndCollect', 'setNotClickAndCollect']),
+    ...mapActions(useShippingMethodsStore, [
+      'clearShippingMethodCache',
+      'setClickAndCollect',
+      'setNotClickAndCollect',
+      'setShippingAddressesOnCart',
+    ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
     expressPaymentsVisible(value) {
       this.isExpressPaymentsVisible = value;
@@ -375,18 +381,23 @@ export default {
 
       this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
     },
-    async validateAndSave() {
+    async submitShippingOption() {
       this.requiredErrorMessage = '';
+
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+
       if (isValid) {
         this.setAddressAsCustom(this.address_type);
-        this.setEditing(this.address_type, false);
+        this.setAddressAsEditing(this.address_type, false);
 
         // If the address type is shipping and the billing is set to use the same then update billing too.
-        if (this.address_type === 'shipping' && this.selected.billing.same_as_shipping) {
-          const clonedShipping = deepClone(this.selected.shipping);
-          this.setAddress(clonedShipping, 'billing');
+        if (this.selected.billing.same_as_shipping) {
+          const clonedAddress = deepClone(this.selected.shipping);
+          this.setAddressToStore(clonedAddress, 'billing');
         }
+
+        await this.setShippingAddressesOnCart();
+        this.goToShipping();
       } else {
         const fieldErrors = this.selected.formErrors[this.address_type];
         Object.entries(fieldErrors).forEach(([value]) => {
@@ -395,20 +406,8 @@ export default {
         this.requiredErrorMessage = this.selected.formErrors.message[this.address_type];
       }
     },
-    async submitShippingOption() {
-      await this.validateAndSave();
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
-      if (isValid) {
-        if (this.selected.billing.same_as_shipping) {
-          const clonedAddress = deepClone(this.selected.shipping);
-          this.setAddress(clonedAddress, 'billing');
-        }
-        this.clearShippingMethodCache();
-        this.goToShipping();
-      }
-    },
     editAddress() {
-      this.setEditing(this.address_type, true);
+      this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
     },
     showAddressBlock(value) {

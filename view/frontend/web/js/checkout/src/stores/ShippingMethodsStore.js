@@ -6,14 +6,15 @@ import useStepsStore from '@/stores/StepsStore';
 
 import cleanAddress from '@/helpers/cleanAddress';
 import deepClone from '@/helpers/deepClone';
-import doAddressesMatch from '@/helpers/doAddressesMatch';
 import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippingInformation';
 
-import setShippingInformation from '@/services/setShippingInformation';
-import getShipping from '@/services/getShippingMethods';
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
+import getShipping from '@/services/addresses/getShippingMethods';
 import getNominatedDates from '@/services/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/updateAmastyClickCollectStores';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
@@ -132,6 +133,17 @@ export default defineStore('shippingMethodsStore', {
       this.loadingShippingMethods = false;
     },
 
+    async setDefaultShippingMethod() {
+      const cartStore = useCartStore();
+
+      // Check if we have shipping methods but not one selected.
+      if (!cartStore.cart.shipping_addresses[0].selected_shipping_method
+          && cartStore.cart.shipping_addresses[0].available_shipping_methods.length) {
+        const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+        this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
+      }
+    },
+
     /**
      * Get Nominated Delivery Methods
      */
@@ -185,128 +197,33 @@ export default defineStore('shippingMethodsStore', {
     },
 
     setShippingDataFromCartData(data) {
-      if (!this.selectedMethod.carrier_code
-        && data.extension_attributes.shipping_assignments.length) {
-        const [{ shipping }] = data.extension_attributes.shipping_assignments;
-
-        // Set const for shipping method easier to pass around.
-        const { method: shippingMethod, address } = shipping;
-
-        if (shippingMethod) {
-          // Set Character which is splitting the values
-          const char = '_';
-          // Check if how many char's we have.
-          const count = [...shippingMethod].filter((x) => x === char).length;
-          let methodArray = [];
-
-          // If we have more than one we know this is a delivery method with two words
-          // i.e delivery_method_delivery_method.
-          if (count > 1) {
-            const methodItems = shippingMethod.split('_');
-            const firstUnderscore = methodItems.slice(0, -2);
-            const secondUnderscore = methodItems.slice(-2);
-
-            methodArray = [
-              firstUnderscore.join('_'),
-              secondUnderscore.join('_'),
-            ];
-          } else {
-            methodArray = shippingMethod ? shippingMethod.split('_') : [];
-          }
-
-          const [carrierCode, methodCode] = methodArray;
-
-          if (carrierCode && methodCode) {
-            this.selectShippingMethod({
-              carrier_code: carrierCode,
-              method_code: methodCode,
-            });
-          }
-
-          // If the method code contains click and collect then set the store to show it as click and collect.
-          if (carrierCode === 'collect') {
-            this.setData({
-              isClickAndCollect: true,
-            });
-          }
-        }
-
-        const customerStore = useCustomerStore();
-
-        // Set the shipping address if nothing in store exists.
-        if (address.firstname && address.lastname) {
-          if (!customerStore.$state.selected.shipping.id) {
-            customerStore.setAddress(address, 'shipping');
-            customerStore.setEditing('shipping', false);
-          }
-        }
-
-        // Set the billing from data if nothing in store exists.
-        const { billing_address: billingAddress } = data;
-        if (billingAddress.firstname && billingAddress.lastname) {
-          if (!customerStore.$state.selected.billing.id) {
-            customerStore.setAddress(data.billing_address, 'billing');
-          }
-        }
-
-        // If the addresses have different IDs they must be different so set billing to custom.
-        if (!doAddressesMatch(address, billingAddress)) {
-          customerStore.setAddressAsCustom('billing');
-          customerStore.setData({
-            selected: {
-              billing: {
-                same_as_shipping: false,
-              },
-            },
-          });
-        }
-
-        // Set the customers email address from the shipping data if it doesn't already exist.
-        if (address.email && !customerStore.$state.customer.email) {
-          customerStore.setData({
-            customer: {
-              email: address.email,
-            },
-          });
-        }
-      }
+      this.setData({
+        shippingMethods: data.shipping_addresses?.[0].available_shipping_methods,
+        selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
+      });
     },
 
-    /**
-     * Submit shipping info to magento
-     * @returns
-     */
-    async submitShippingInfo() {
+    async setShippingAddressesOnCart() {
       const customerStore = useCustomerStore();
       const cartStore = useCartStore();
-      const clonedShipping = cleanAddress({ ...customerStore.selected.shipping });
-      const clonedBilling = cleanAddress({ ...customerStore.selected.billing });
 
+      await setBillingAddressOnCart(customerStore.selected.billing);
+      const response = await setShippingAddressesOnCart(customerStore.selected.shipping);
+
+      cartStore.handleCartData(response.data.setShippingAddressesOnCart.cart);
+    },
+
+    async submitShippingInfo(carrierCode, methodCode) {
       this.loadingShippingMethods = true;
+      const cart = await setShippingMethodOnCart(carrierCode, methodCode);
 
-      const { totals } = await this.getCachedResponse(
-        setShippingInformation,
-        'submitShippingInfo',
-        {
-          shippingAddress: clonedShipping,
-          billingAddress: clonedBilling,
-          carrierCode: this.selectedMethod.carrier_code,
-          methodCode: this.selectedMethod.method_code,
-        },
-      );
-      cartStore.updateTotals(totals);
-      cartStore.setData({
-        cache: {
-          getCartTotals: totals,
-        },
-      });
+      const cartStore = useCartStore();
+      cartStore.handleCartData(cart);
 
       // Allow custom behaviour after setting the shipping information.
       await afterSubmittingShippingInformation();
 
       this.loadingShippingMethods = false;
-
-      return totals;
     },
 
     async setAsClickAndCollect(agentId) {

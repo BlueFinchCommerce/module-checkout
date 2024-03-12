@@ -11,6 +11,7 @@ import login from '@/services/login';
 import refreshCustomerData from '@/services/refreshCustomerData';
 import subscribeToNewsletter from '@/services/subscribeToNewsletter';
 import amastyConsentLogic from '@/services/amastyConsentLogic';
+import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
 import cleanAddress from '@/helpers/cleanAddress';
 import doAddressesMatch from '@/helpers/doAddressesMatch';
@@ -94,10 +95,10 @@ export default defineStore('customerStore', {
     setData(data) {
       this.$patch(data);
     },
-    setAddress(address, addressType) {
+
+    setAddressToStore(address, addressType) {
       if (addressType === 'shipping') {
         const shippingMethodsStore = useShippingMethodsStore();
-        shippingMethodsStore.clearShippingMethodCache();
 
         // If we're setting the shipping but billing is the same then set it to match.
         if (this.selected.billing.same_as_shipping && !shippingMethodsStore.isClickAndCollect) {
@@ -115,11 +116,18 @@ export default defineStore('customerStore', {
           [addressType]: Object.assign(address, { email: this.customer.email }),
         },
       });
-
-      // Emit an update after updating the address as we will need to get all new information.
-      const cartStore = useCartStore();
-      cartStore.emitUpdate();
     },
+
+    setAddressAsEditing(addressType, value) {
+      this.setData({
+        selected: {
+          [addressType]: {
+            editing: value,
+          },
+        },
+      });
+    },
+
     setAddressAsCustom(addressType) {
       this.setData({
         selected: {
@@ -139,9 +147,10 @@ export default defineStore('customerStore', {
         });
       }
     },
+
     updateRegionRequired(addressType) {
       const { stateRequired } = useConfigStore();
-      const currentCountry = this.selected[addressType].country_id;
+      const currentCountry = this.selected[addressType].country_code;
 
       this.setData({
         selected: {
@@ -181,6 +190,7 @@ export default defineStore('customerStore', {
         }
       }
     },
+
     addAddressError(addressType, error) {
       const errors = this.selected.formErrors[addressType];
       const index = errors.indexOf(error);
@@ -197,6 +207,7 @@ export default defineStore('customerStore', {
         });
       }
     },
+
     removeAddressError(addressType, error) {
       const errors = this.selected.formErrors[addressType];
       const index = errors.indexOf(error);
@@ -211,15 +222,7 @@ export default defineStore('customerStore', {
         });
       }
     },
-    setEditing(addressType, value) {
-      this.setData({
-        selected: {
-          [addressType]: {
-            editing: value,
-          },
-        },
-      });
-    },
+
     isEmailAvailable(email) {
       // Cancel the previous request if it exists.
       if (this.$state.isEmailAvailableController) {
@@ -234,6 +237,7 @@ export default defineStore('customerStore', {
 
       return isEmailAvailable(email, controller);
     },
+
     setEmailAddress(email) {
       this.setData({
         customer: {
@@ -241,6 +245,7 @@ export default defineStore('customerStore', {
         },
       });
     },
+
     async login(email, pass) {
       const data = await login(email, pass);
       await refreshCustomerData(['customer'].concat(getCartSectionNames()));
@@ -254,9 +259,7 @@ export default defineStore('customerStore', {
       });
       cartStore.clearAllCaches();
       cartStore.clearCartItems('all');
-      await cartStore.getCartData();
       await cartStore.getCart();
-      await cartStore.getCartTotals();
 
       this.clearCaches(['getCustomerInformation']);
       await this.getCustomerInformation();
@@ -268,6 +271,7 @@ export default defineStore('customerStore', {
 
       return data;
     },
+
     async getCustomerInformation() {
       if (this.customer.tokenType !== tokenTypes.guestUser) {
         this.setData({
@@ -280,7 +284,7 @@ export default defineStore('customerStore', {
             doAddressesMatch(address, this.selected.shipping)
           ));
           if (matchedShipping !== -1) {
-            this.setAddress(data.addresses[matchedShipping], 'shipping');
+            this.setAddressToStore(data.addresses[matchedShipping], 'shipping');
           }
 
           // If we have a matched billing address then set it so it doesn't show as custom.
@@ -288,22 +292,22 @@ export default defineStore('customerStore', {
             doAddressesMatch(address, this.selected.billing)
           ));
           if (matchedBilling !== -1) {
-            this.setAddress(data.addresses[matchedBilling], 'billing');
+            this.setAddressToStore(data.addresses[matchedBilling], 'billing');
           }
 
           // Default to the customers default addresses if nothing exists.
           if (!this.selected.shipping.id && !this.selected.shipping.firstname) {
             const defaultShipping = this.getDefaultAddress(data, 'default_shipping');
-            defaultShipping && this.setAddress(defaultShipping, 'shipping');
+            defaultShipping && this.setAddressToStore(defaultShipping, 'shipping');
           }
           if (!this.selected.billing.id && !this.selected.billing.firstname) {
             const defaultBilling = this.getDefaultAddress(data, 'default_billing');
-            defaultBilling && this.setAddress(defaultBilling, 'billing');
+            defaultBilling && this.setAddressToStore(defaultBilling, 'billing');
           }
 
           // If at this point we still haven't got a shipping address then set it to editing to show the new form.
           if (!this.selected.shipping.id) {
-            this.setEditing('shipping', true);
+            this.setAddressAsEditing('shipping', true);
           }
 
           // Set if the billing address is custom based on whether it matches the shipping address.
@@ -340,12 +344,14 @@ export default defineStore('customerStore', {
 
       return null;
     },
+
     checkForGuestUser() {
       const maskedId = getMaskedId();
       if (maskedId) {
         this.setMaskedId(maskedId);
       }
     },
+
     setMaskedId(maskedId) {
       this.setData({
         customer: {
@@ -354,12 +360,24 @@ export default defineStore('customerStore', {
         },
       });
     },
-    submitEmail() {
+
+    async submitEmail(email) {
+      if (this.customer.tokenType === tokenTypes.guestUser) {
+        const cart = await setGuestEmailOnCart(email);
+
+        const cartStore = useCartStore();
+        cartStore.handleCartData(cart);
+      }
+    },
+
+    setEmailEntered() {
       this.setData({ emailEntered: true });
     },
+
     editEmail() {
       this.setData({ emailEntered: false });
     },
+
     createNewAddress(addressType) {
       const sameAsShipping = addressType === 'billing';
       this.setData({
@@ -379,7 +397,7 @@ export default defineStore('customerStore', {
       const requiredFields = {
         street: 'Address Line 1',
         city: 'City',
-        country_id: 'Country',
+        country_code: 'Country',
         region: 'State/Region',
       };
 
@@ -438,11 +456,11 @@ export default defineStore('customerStore', {
 
       let isValid = true;
 
-      if (configStore.postcodeRequired(this.selected[addressType].country_id)) {
-        if (!this.selected[addressType].country_id) {
+      if (configStore.postcodeRequired(this.selected[addressType].country_code)) {
+        if (!this.selected[addressType].country_code) {
           addErrors && this.addAddressError(addressType, 'Country');
         } else {
-          const countId = this.selected[addressType].country_id;
+          const countId = this.selected[addressType].country_code;
           const postCode = this.selected[addressType].postcode;
           if (postcodeValidatorExistsForCountry(countId)) {
             isValid = postcodeValidator(postCode, countId);
