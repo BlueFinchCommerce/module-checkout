@@ -334,7 +334,12 @@ export default {
       const stateData = JSON.stringify(state.data);
 
       if (paymentMethod.code === 'adyen_cc') {
-        paymentMethod.adyen_additional_data_cc = { stateData };
+        console.log(state);
+        paymentMethod.adyen_additional_data_cc = {
+          cc_type: state.data.paymentMethod.mc,
+          stateData,
+          recurringProcessingModel: state.data.storePaymentMethod ? 'CardOnFile' : '',
+        };
       } else {
         paymentMethod.adyen_additional_data_hpp = {
           brand_code: state.data.paymentMethod.type,

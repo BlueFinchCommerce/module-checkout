@@ -1,5 +1,11 @@
 @import '@/styles/global/_breakpoints';
 
+.text-loading {
+  .pay-with__column {
+    opacity: 0;
+  }
+}
+
 .pay-with {
   &__container {
     align-items: var(--pay-with__align-items);
@@ -38,6 +44,10 @@
     img {
         width: var(--pay-with-image-max-width, 35px);
         height: var(--pay-with-image-max-height, 24px);
+
+      &.card {
+        border: 1px solid var(--color__primary-dark-blue);
+      }
 
       &.google_pay {
         width: 40px;

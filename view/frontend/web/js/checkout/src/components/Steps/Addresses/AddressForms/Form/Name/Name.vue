@@ -66,7 +66,6 @@
       <TextField
         v-if="!phoneErrorClass"
         :text="$t('yourDetailsSection.phoneField.infoMessage')"
-        font-weight="300"
       />
     </div>
   </div>

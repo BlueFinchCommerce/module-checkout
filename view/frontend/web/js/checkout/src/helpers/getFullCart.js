@@ -77,6 +77,12 @@ export default `
     __typename
     id
     uid
+    ... on ConfigurableCartItem {
+      configurable_options {
+        option_label
+        value_label
+      }
+    }
     ... on GiftCardCartItem {
       recipient_name
       recipient_email

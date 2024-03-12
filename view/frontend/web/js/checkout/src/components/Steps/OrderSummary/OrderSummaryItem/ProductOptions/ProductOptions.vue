@@ -1,18 +1,30 @@
 <template>
-  <div class="product-options" v-if="product.options && product.options.length">
-      <div class="product-options-trigger"
-           data-cy="product-options-trigger"
-              @click="showProductOptions" @keydown="showProductOptions">
-          <TextField :text="$t('productOptionsTrigger')"/>
-          <ArrowUp v-if="productOptionsVisible"/>
-          <ArrowDown v-if="!productOptionsVisible"/>
+  <div
+    v-if="item.configurable_options && item.configurable_options.length"
+    class="product-options"
+  >
+    <div
+      class="product-options-trigger"
+      data-cy="product-options-trigger"
+      @click="showProductOptions"
+      @keydown="showProductOptions"
+    >
+      <TextField :text="$t('productOptionsTrigger')" />
+      <ArrowUp v-if="productOptionsVisible" />
+      <ArrowDown v-if="!productOptionsVisible" />
+    </div>
+    <div
+      v-if="productOptionsVisible"
+      class="product-option"
+    >
+      <div
+        v-for="(option, index) in item.configurable_options"
+        :key="index"
+        class="option-value"
+      >
+        <TextField :text="`${option.option_label}: ${option.value_label}`" />
       </div>
-      <div class="product-option" v-if="productOptionsVisible">
-          <div class="option-value"
-              v-for="(option, index) in product.options" :key="index">
-          <TextField :text="option.value.replaceAll('&lt;', '<').replaceAll('&gt;', '>')"/>
-          </div>
-      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -31,7 +43,7 @@ export default {
     ArrowDown,
   },
   props: {
-    product: {
+    item: {
       type: Object,
     },
   },
