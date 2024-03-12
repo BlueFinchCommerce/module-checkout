@@ -1,5 +1,9 @@
 <template>
-  <div class="free-payment">
+  <div
+    v-if="paymentVisible"
+    class="free-payment"
+    :class="{active: isMethodSelected}"
+  >
     <RadioButton
       :text="title"
       :checked="isMethodSelected"
@@ -46,6 +50,7 @@ export default {
     return {
       buttonDisabled: false,
       isMethodSelected: false,
+      paymentVisible: true,
     };
   },
   computed: {
@@ -65,6 +70,10 @@ export default {
 
     this.cartEmitter.on('cartUpdated', async () => {
       await this.getPaymentMethods();
+    });
+
+    this.paymentEmitter.on('changePaymentMethodDisplay', ({ visible }) => {
+      this.paymentVisible = visible;
     });
   },
   methods: {
