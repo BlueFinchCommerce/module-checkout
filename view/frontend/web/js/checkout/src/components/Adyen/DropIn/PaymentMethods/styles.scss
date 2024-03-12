@@ -153,7 +153,6 @@
 .adyen-payment {
   &__title {
     display: flex;
-    grid-gap: var(--indent__m);
     padding-bottom: var(--indent__s);
     margin-bottom: var(--adyen-payment-title-margin, 0);
     align-items: center;
@@ -161,7 +160,7 @@
     .divider-line {
       border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
-      width: 40%;
+      width: 100%;
       display: var(--divider-line-display, block);
     }
   }
@@ -175,10 +174,12 @@
   }
 
   &__header {
-    font-size: var(--payment-page-title-mobile-font, var(--font__m));
-    font-weight: var(--payment-page-header-font-weight, var(--font-weight__medium));
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--font__color);
+    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
     font-family: var(--payment-page-header-font-family, var(--font-family__copy));
-    margin-left: var(--payment-page-title-left-margin, var(--indent__base));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
+    white-space: nowrap;
   }
 }
 
@@ -230,6 +231,11 @@
       &-2 {
         grid-auto-columns: calc(50% - var(--indent__xs));
       }
+    }
+  }
+  .adyen-payment {
+    &__header {
+      font-size: var(--payment-page-title-desktop-font, var(--font__heading--desktop));
     }
   }
 }
