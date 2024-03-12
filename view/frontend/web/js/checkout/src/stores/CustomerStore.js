@@ -248,9 +248,14 @@ export default defineStore('customerStore', {
 
     async login(email, pass) {
       const data = await login(email, pass);
-      await refreshCustomerData(['customer'].concat(getCartSectionNames()));
-      refreshCustomerData(['customer']);
       const cartStore = useCartStore();
+
+      // Clear maskedId.
+      cartStore.setData({
+        maskedId: null,
+      });
+
+      await refreshCustomerData(['customer'].concat(getCartSectionNames()));
       this.setData({
         customer: {
           email,
@@ -263,11 +268,6 @@ export default defineStore('customerStore', {
 
       this.clearCaches(['getCustomerInformation']);
       await this.getCustomerInformation();
-
-      // Clear maskedId.
-      cartStore.setData({
-        maskedId: null,
-      });
 
       return data;
     },
