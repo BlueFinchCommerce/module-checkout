@@ -44,7 +44,7 @@
   }
 
   &-location {
-    border-top: var(--click-and-collect-border-top, 1px solid rgba(39, 48, 58, 0.2));
+    border-top: var(--click-and-collect-border-top, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
     display: grid;
     grid-gap: var(--indent__s);
     padding-top: var(--indent__l);
