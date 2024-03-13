@@ -1,6 +1,6 @@
 <template>
   <div class="progress-bar-container" id="progress-bar" v-if="progressBarVisible">
-    <router-link aria-label="progress-bar-link"
+    <router-link aria-label="progress-bar-link to-details-page"
                  to="/checkout"
                  class="details active"
                  @click="goToYouDetails">
@@ -13,7 +13,7 @@
     <div class="progress-bar-arrow" :class="{active: shippingActive}">
       <ProgressBarArrow/>
     </div>
-    <router-link aria-label="progress-bar-link"
+    <router-link aria-label="progress-bar-link to-shipping-page"
                  :to="shippingActive ? '/shipping' : ''"
                  :class="{active: shippingActive}"
                  class="shipping"
@@ -27,7 +27,7 @@
     <div class="progress-bar-arrow" :class="{active: paymentActive}">
       <ProgressBarArrow/>
     </div>
-    <router-link aria-label="progress-bar-link"
+    <router-link aria-label="progress-bar-link to-payment-page"
                  :to="paymentActive ? '/payments' : ''"
                  :class="{active: paymentActive}"
                  class="payment"
