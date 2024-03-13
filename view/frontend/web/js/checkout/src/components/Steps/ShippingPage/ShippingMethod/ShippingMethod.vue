@@ -24,6 +24,11 @@
             v-for="(item) in cart.shipping_addresses?.[0]?.available_shipping_methods"
             :key="item.carrier_code"
             class="shipping-method"
+            :class="{
+              'selected': (
+                item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
+              )
+            }"
           >
             <label
               v-if="item.method_code !== nominatedId"

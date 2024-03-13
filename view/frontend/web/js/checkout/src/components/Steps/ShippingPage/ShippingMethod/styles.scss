@@ -61,6 +61,9 @@
       list-style: none;
       flex-wrap: wrap;
       font-family: var(--shipping-methods-font-family, unset);
+      padding: var(--indent__base);
+      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+      border-radius: var(--base__border-radius-large);
 
       input {
         cursor: pointer;
@@ -79,8 +82,12 @@
           text-align: right;
           font-size: var(--shipping-cost-font-size, var(--font__s));
           font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
+          align-self: flex-start;
         }
       }
+    }
+    .selected {
+      border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
     }
   }
 
