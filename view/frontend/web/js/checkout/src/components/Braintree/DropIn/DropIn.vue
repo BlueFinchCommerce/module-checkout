@@ -2,6 +2,7 @@
   <ErrorMessage
     v-if="errorMessage"
     :message="errorMessage"
+    :attached="false"
   />
   <VaultedMethods v-if="isPaymentMethodAvailable('braintree_cc_vault')" />
   <BraintreeNewMethods v-if="isPaymentMethodAvailable('braintree')" />

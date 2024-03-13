@@ -1,6 +1,23 @@
 .braintree-drop-in {
+  .braintree-test-class {
+    display: none;
+  }
+
   .braintree-dropin {
     font-family: var(--font-family__copy);
+  }
+
+  .braintree-loading {
+    margin-top: var(--indent__base);
+
+    .braintree-upper-container:before {
+      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+      border-radius: var(--base__border-radius-large);
+    }
+
+    .braintree-sheet__container {
+      display: none;
+    }
   }
 
   .braintree-heading,
@@ -24,8 +41,15 @@
     }
 
     &__content--button {
+      min-height: 0;
       padding: 0;
       text-align: left;
+    }
+
+    [data-braintree-id="google-pay-button"] button,
+    &__button--venmo {
+      height: var(--button__height);
+      width: 100%;
     }
 
     &__button--paypal,
@@ -39,13 +63,17 @@
       }
     }
 
+    &__error {
+      display: none;
+    }
+
     &.braintre-hidden {
       display: none;
     }
   }
 
   .braintree-store-method {
-    margin: var(--indent__m) 0 0;
+    margin: var(--indent__m) 0 var(--indent__s);
     width: 100%;
   }
 
@@ -65,15 +93,12 @@
 
   .braintree-option {
     background-color: transparent;
-    border: none;
+    border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+    border-radius: var(--base__border-radius-large);
     flex-wrap: wrap;
-    line-height: 3em;
-    margin-bottom: var(--indent__base);
-    padding: 4px 4px 4px 0;
-
-    &:hover .braintree-option__label {
-      font-weight: var(--font-weight__medium);
-    }
+    line-height: 1;
+    margin-top: var(--indent__base);
+    padding: var(--indent__base);
 
     &:before {
       box-shadow: var(--radio-input__box-shadow);
@@ -83,29 +108,46 @@
       width: var(--radio-input__width);
       height: var(--radio-input__height);
       border-radius: 50%;
-      position: absolute;
-      top: 15px;
     }
 
     &__selected {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: var(--base__border-color-active);
+      border-width: var(--base__border-weight-active);
+
       &:before {
         border: var(--radio-input__border-checked);
         box-shadow: var(--radio-input__box-shadow-checked);
       }
 
       ~.braintree-sheet__content {
+        border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color);
+        border-bottom-left-radius: var(--base__border-radius-large);
+        border-bottom-right-radius: var(--base__border-radius-large);
+        border-color: var(--base__border-color-active);
+        border-top: 0;
         display: block;
+        padding: 0 var(--indent__base) var(--indent__base);
       }
     }
 
     &__logo {
-      max-width: 74px;
-      padding-left: 34px;
+      order: 3;
     }
 
     &__label {
-      margin-left: 10px;
+      flex-grow: 1;
+      font-weight: var(--font-weight__semibold);
+      margin-left: var(--indent__s);
       width: auto;
+    }
+
+    &:hover {
+      .braintree-option__label {
+        font-weight: var(--font-weight__semibold);
+      }
     }
   }
 

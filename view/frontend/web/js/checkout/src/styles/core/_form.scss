@@ -446,10 +446,13 @@
   }
 
   .error-message {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     border-width: var(--error-message-border-width, var(--base__border-weight-active));
-    margin-top: -2px;
+
+    &-attached {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: -2px;
+    }
   }
 
   .success-message {

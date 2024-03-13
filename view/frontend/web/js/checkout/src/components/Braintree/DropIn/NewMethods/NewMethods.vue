@@ -4,12 +4,6 @@
     ref="braintreeContainer"
     class="braintree-drop-in"
   />
-  <MyButton
-    v-if="showPayButton"
-    label="Pay"
-    primary
-    @click="startPayment()"
-  />
   <teleport
     v-if="saveVaultLocation !== ''"
     :to="saveVaultLocation"
@@ -21,6 +15,11 @@
       :checked="storeMethod"
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
+    />
+    <MyButton
+      label="Pay"
+      primary
+      @click="startPayment()"
     />
   </teleport>
 </template>
@@ -57,7 +56,6 @@ export default {
   data() {
     return {
       instance: null,
-      showPayButton: false,
       storeMethod: false,
       saveVaultLocation: '',
       paymentOptionPriority: [],
@@ -295,7 +293,6 @@ export default {
       instance.on('changeActiveView', ({ newViewId, previousViewId }) => {
         this.removeActiveClass();
 
-        this.showPayButton = newViewId === 'card';
         this.clearErrorMessage();
 
         if (newViewId === 'methods') {
@@ -387,7 +384,6 @@ export default {
     },
 
     showLoader() {
-      this.showPayButton = false;
       this.instance._mainView.showLoadingIndicator();
     },
 
