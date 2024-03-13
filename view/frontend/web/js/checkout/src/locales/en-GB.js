@@ -34,6 +34,7 @@ export default {
       placeholder: 'Enter Gift Card Code',
       successMessage: 'Successfully applied code "{code}".',
     },
+    crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Good news: your order will be delivered for Free.',
     couponCodeTitle: 'For another',
     couponCodeTitleBottom: 'you can get a',
