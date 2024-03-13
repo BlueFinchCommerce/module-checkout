@@ -65,6 +65,19 @@ export default async () => {
                     optional
                 }
             }
+            storedPaymentMethods {
+              id
+              brand
+              expiryMonth
+              expiryYear
+              holderName
+              lastFour
+              name
+              ownerName
+              networkTxReference
+              type
+              supportedShopperInteractions
+            }
         }
     }
 }`;
