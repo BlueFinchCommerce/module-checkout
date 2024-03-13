@@ -153,6 +153,7 @@
           class="address-block__edit"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
+          tabindex="0"
         >
           <Edit />
         </div>

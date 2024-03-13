@@ -51,6 +51,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
+          tabindex="0"
           @click.prevent="editBillingAddress"
           @keydown.enter.prevent="editBillingAddress"
         >
