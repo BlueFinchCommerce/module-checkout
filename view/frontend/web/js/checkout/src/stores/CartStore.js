@@ -180,7 +180,7 @@ export default defineStore('cartStore', {
       }
 
       // Also trigger refresh of User's cart data.
-      await refreshCustomerData(getCartSectionNames());
+      refreshCustomerData(getCartSectionNames());
 
       // Emit update GTM event.
       const gtmStore = useGtmStore();

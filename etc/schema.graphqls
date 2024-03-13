@@ -112,11 +112,17 @@ type StoreConfig {
     braintree_3dsecure_allowspecific: Boolean @doc(description: "Braintree 3D Secure, should 3D Secure be used for specific countries.")
     braintree_3dsecure_specificcountry: String @doc(description: "Braintree 3D Secure, the specific countries to use 3D Secure in, to be used if allow specific is status is enabled.")
 }
+
 type Query {
     storecode(
         store_id: String! @doc(description: "Store ID")
     ): StoreCode @resolver(class:"Gene\\BetterCheckout\\Model\\Resolver\\StoreCode")
 }
+
 type StoreCode @doc(description: "Returns current store code") {
     store_code: String
+}
+
+input AdyenAdditionalDataCc {
+    is_active_payment_token_enabler: Boolean @doc(description: "Extend Adyen to allow cards to be saved.")
 }

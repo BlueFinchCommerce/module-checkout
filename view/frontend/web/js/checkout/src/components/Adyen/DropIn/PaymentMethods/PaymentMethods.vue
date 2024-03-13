@@ -1,37 +1,20 @@
 <template>
+  <div
+    v-if="!loadingPaymentMethods"
+    class="adyen-payment__title"
+  >
+    <Payment
+      class="adyen-payment__icon"
+      fill="black"
+    />
+    <TextField
+      class="adyen-payment__header"
+      :text="paymentStepText"
+    />
+    <div class="divider-line" />
+  </div>
   <template v-if="!storedPayments || storedPaymentMethods.length">
     <Loader v-if="loadingPaymentMethods" />
-    <div
-      v-if="storedPayments"
-      v-show="!isErrorDisplayed && !hideStoredPaymentRadio && paymentVisible"
-      class="adyen-dropin-stored-payments"
-      :class="{
-        'adyen-dropin-stored-payments-active': storedPaymentSelected,
-        'adyen-checkout__payment-method--loading': paymentLoading,
-      }"
-    >
-      <RadioButton
-        class="adyen-checkout__payment-stored-methods"
-        :checked="storedPaymentSelected"
-        :text="$t('paymentStep.storedPayments')"
-        :change-handler="selectStoredPaymentRadio"
-        :disabled="paymentLoading"
-      >
-        <template #icon>
-          <span
-            class="adyen-checkout__payment-method__image__wrapper
-              adyen-checkout__payment-method__image__wrapper--outline"
-          >
-            <img
-              class="adyen-checkout__payment-method__image
-                adyen-checkout__image adyen-checkout__image--loaded"
-              src="https://checkoutshopper-live.adyen.com/checkoutshopper/images/logos/card.svg"
-              :alt="$t('paymentStep.creditDebitCard')"
-            >
-          </span>
-        </template>
-      </RadioButton>
-    </div>
     <teleport
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
@@ -46,6 +29,7 @@
       <AdyenPaymentCard
         v-for="storedPaymentMethod in storedPaymentMethods"
         v-show="!isErrorDisplayed && paymentVisible"
+        :class="{'adyen-stored-payment-selected': storedPaymentSelected}"
         :key="storedPaymentMethod.id"
         :method="storedPaymentMethod"
       />
@@ -76,7 +60,8 @@ import AdyenPaymentCard from '@/components/Adyen/DropIn/PaymentCard/PaymentCard.
 import Agreements from '@/components/Core/Agreements/Agreements.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import PrivacyPolicy from '@/components/Core/PrivacyPolicy/PrivacyPolicy.vue';
-import RadioButton from '@/components/Core/Inputs/RadioButton/RadioButton.vue';
+import Payment from '@/components/Core/Icons/Payment/Payment.vue';
+import TextField from '@/components/Core/TextField/TextField.vue';
 
 // Services
 import createPayment from '@/services/createPayment';
@@ -98,7 +83,8 @@ export default {
     Agreements,
     Loader,
     PrivacyPolicy,
-    RadioButton,
+    Payment,
+    TextField,
   },
   props: {
     id: {
@@ -125,6 +111,7 @@ export default {
       hideStoredPaymentRadio: false,
       paymentLoading: false,
       paymentVisible: true,
+      paymentStepText: '',
     };
   },
   computed: {
@@ -155,6 +142,18 @@ export default {
     // available then we can return early.
     if (this.storedPayments && !this.storedPaymentMethods.length) {
       return;
+    }
+
+    // The titles need to be reflective of the state we're in.
+    if (this.storedPayments) {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+        || this.$t('paymentStep.titleStored');
+    } else if (this.storedPaymentMethods.length) {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+        || this.$t('paymentStep.titleNew');
+    } else {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+        || this.$t('paymentStep.titleGuest');
     }
 
     this.storedPaymentSelected = true;
@@ -290,10 +289,6 @@ export default {
         this.selectedOriginalId = originalId;
       }
     });
-
-    this.paymentEmitter.on('changePaymentMethodDisplay', ({ visible }) => {
-      this.paymentVisible = visible;
-    });
   },
   beforeUnmount() {
     if (this.checkout) {
@@ -338,6 +333,7 @@ export default {
           cc_type: state.data.paymentMethod.brand,
           stateData,
           recurringProcessingModel: 'CardOnFile',
+          is_active_payment_token_enabler: true,
         };
       } else {
         paymentMethod.adyen_additional_data_hpp = {
@@ -433,12 +429,11 @@ export default {
     },
 
     onSelect(paymentMethod) {
-      // Timeout of 500 as this element doesn't exist at the point onSelect is called by Adyen.
       this.paymentEmitter.emit('paymentMethodSelected', {
         id: this.id,
         type: paymentMethod.type,
       });
-      setTimeout(this.updateAgreementLocation, 500);
+      setTimeout(this.updateAgreementLocation, 0);
     },
 
     updateAgreementLocation() {
@@ -500,17 +495,6 @@ export default {
       setTimeout(() => {
         this.storedPaymentCardsLocation = '.adyen-checkout__payment-methods-list-styled';
       }, 0);
-    },
-    selectStoredPaymentRadio() {
-      // On selecting the stored payment we need to emit an event so that the non-stored payments
-      // can update.
-      this.paymentEmitter.emit('paymentMethodSelected', {
-        id: this.id,
-        type: 'adyen_stored_card',
-      });
-      // Emit the stored payment card selected but with no original ID as they are all going
-      // to be unselected by default.
-      this.paymentEmitter.emit('adyenStoredPaymentCardSelected', { originalId: this.selectedOriginalId });
     },
   },
 };
