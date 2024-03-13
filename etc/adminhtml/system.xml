@@ -35,33 +35,36 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
                 </field>
-                <field id="font_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="15" showInDefault="1" showInWebsite="1" >
-                    <label>Checkout Font File</label>
-                    <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
-                    <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
-                    <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
-                </field>
-                <field id="designer_trigger" translate="label comment" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Designer</label>
-                    <depends>
-                        <field id="enabled">1</field>
-                    </depends>
-                    <frontend_model>Gene\BetterCheckout\Block\Adminhtml\System\Config\Designer</frontend_model>
-                </field>
-                <field id="designer_values" translate="label comment" type="textarea" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Designer Values</label>
-                </field>
-                <field id="custom_wording" translate="label comment" type="textarea" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Custom Wording</label>
-                </field>
-                <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Checkout Logo</label>
-                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                    <upload_dir config="system" scope_info="1">gene_better_checkout</upload_dir>
-                    <base_url type="media" scope_info="1">gene_better_checkout</base_url>
-                    <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
-                </field>
-                <group id="loqate" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="checkout_designer" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Designer</label>
+                    <field id="designer_trigger" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Open Designer</label>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                        <frontend_model>Gene\BetterCheckout\Block\Adminhtml\System\Config\Designer</frontend_model>
+                    </field>
+                    <field id="designer_values" translate="label comment" type="textarea" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Designer Values</label>
+                    </field>
+                    <field id="custom_wording" translate="label comment" type="textarea" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Custom Wording</label>
+                    </field>
+                    <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Checkout Logo</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system" scope_info="1">gene_better_checkout</upload_dir>
+                        <base_url type="media" scope_info="1">gene_better_checkout</base_url>
+                        <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
+                    </field>
+                    <field id="font_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Checkout Font File</label>
+                        <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
+                        <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
+                        <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
+                    </field>
+                </group>
+                <group id="loqate" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Loqate</label>
                     <depends>
                         <field id="enabled">1</field>
