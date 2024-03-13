@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Ange din e-postadress för att betala med kredit-/betalkort',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Tillämpa',
     removeBtn: 'Ta bort',
     modalHeader: 'Sammanfattning av beställningen',

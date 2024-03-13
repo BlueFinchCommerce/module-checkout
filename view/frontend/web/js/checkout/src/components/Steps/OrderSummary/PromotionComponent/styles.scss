@@ -34,6 +34,13 @@
       display: var(--promo__title__visible, block);
       line-height: 1.5em;
 
+      &.crosssells {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       div {
         display: flex;
         margin: 0 var(--indent__base) 0 var(--indent__s);
@@ -142,7 +149,6 @@ div.dropdown.promo-dropdown {
     button {
       font-size: var(--font__xs);
       padding: var(--indent__s) var(--indent__xs);
-      text-transform: uppercase;
       word-break: break-word;
     }
   }

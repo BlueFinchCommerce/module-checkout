@@ -28,6 +28,7 @@ export default {
       placeholder: ' ',
       successMessage: ' ',
     },
+    crossSellsTitle: ' ',
     freeShippingAvailable: ' ',
     couponCodeTitle: ' ',
     couponCodeTitleBottom: ' ',

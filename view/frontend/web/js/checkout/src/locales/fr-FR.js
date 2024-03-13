@@ -34,6 +34,7 @@ export default {
       placeholder: 'Entrez le code',
       successMessage: 'Coupon appliqué "{code}".',
     },
+    crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Bonne nouvelle: votre commande sera livrée gratuitement',
     couponCodeTitle: 'Dépensez',
     couponCodeTitleBottom: 'plus pour profiter',

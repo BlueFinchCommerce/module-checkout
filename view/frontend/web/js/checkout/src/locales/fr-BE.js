@@ -21,6 +21,7 @@ export default {
     removeItemButtonLabel: 'Supprimer l\'article',
     minusOneItem: 'Un article en moins',
     plusOneItem: 'Un article en plus',
+    crossSellsTitle: 'You may also like these items...',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
       errorMessage: 'Please enter a valid code.',
