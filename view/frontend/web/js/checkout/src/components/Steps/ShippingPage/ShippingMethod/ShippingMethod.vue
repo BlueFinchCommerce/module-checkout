@@ -4,6 +4,7 @@
       <div v-if="loadingShippingMethods">
         <Loader />
       </div>
+      <ProgressBar />
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
           <div class="checkout-shipping-methods__title-icon">
@@ -124,6 +125,7 @@ import TextField from '@/components/Core/TextField/TextField.vue';
 import NominatedDay from
   '@/components/Steps/ShippingPage/ShippingMethod/NominatedDay/NominatedDay.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
+import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Icons
 import Loader from '@/components/Core/Loader/Loader.vue';
@@ -140,6 +142,7 @@ export default {
     Shipping,
     NominatedDay,
     MyButton,
+    ProgressBar,
     ...shippingMethods(),
   },
   props: {

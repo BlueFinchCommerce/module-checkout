@@ -48,6 +48,7 @@ export default defineStore('configStore', {
     taxCartDisplayShipping: false,
     taxCartDisplayFullSummary: false,
     copyrightText: '',
+    progressBarVisible: false,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -111,6 +112,7 @@ export default defineStore('configStore', {
         'tax_cart_display_full_summary',
         'gene_better_checkout_copyright_text',
         'gene_better_checkout_afd_enable',
+        'gene_better_checkout_progress_bar_visible',
       ];
 
       if (this.locale) {
@@ -148,6 +150,7 @@ export default defineStore('configStore', {
           taxCartDisplayFullSummary: data.tax_cart_display_full_summary === '1',
           copyrightText: data.gene_better_checkout_copyright_text,
           afdStatus: data.gene_better_checkout_afd_enable,
+          progressBarVisible: data.gene_better_checkout_progress_bar_visible === true,
         });
 
         if (data.locale) {

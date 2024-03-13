@@ -6,6 +6,7 @@
     <StoreCredit v-if="getTotalSegment('customerbalance')" />
     <div class="payment-page">
       <div class="payment-form">
+        <ProgressBar />
         <Recaptcha id="placeOrder" />
         <template v-if="cartGrandTotal">
           <ErrorMessage
@@ -58,6 +59,7 @@ import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheck
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
 import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
+import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
@@ -75,6 +77,7 @@ export default {
     BraintreeDropIn,
     StoreCredit,
     Recaptcha,
+    ProgressBar,
     ...paymentMethods(),
   },
   data() {

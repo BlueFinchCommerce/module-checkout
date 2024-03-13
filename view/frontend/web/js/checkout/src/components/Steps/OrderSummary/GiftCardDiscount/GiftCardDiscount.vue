@@ -65,7 +65,7 @@
         <div class="error">
           <ErrorMessage
             v-if="giftCardErrorMessage"
-            :message="giftCardErrorMessage"
+            :message="$t('orderSummary.giftCardDiscount.errorMessage')"
           />
         </div>
       </div>

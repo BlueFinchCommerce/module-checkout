@@ -21,6 +21,8 @@
       <DividerComponent />
       <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
 
+      <ProgressBar v-if="emailEntered"/>
+
       <EmailAddress />
 
       <Newsletter v-if="emailEntered && !customer.id" />
@@ -215,6 +217,7 @@ import Newsletter from '@/components/Core/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import ClickAndCollect from '@/components/Steps/Addresses/ClickAndCollect/ClickAndCollect.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
+import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Stores
 import { mapActions, mapState } from 'pinia';
@@ -257,6 +260,7 @@ export default {
     MyButton,
     ClickAndCollect,
     Loader,
+    ProgressBar,
   },
   props: {
     address_type: {

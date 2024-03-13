@@ -15,7 +15,7 @@
           :text="$t('orderSummary.subtotalTitle')"
         />
         <Price
-          v-if="cart.prices.subtotal_including_tax"
+          v-if="cart?.prices?.subtotal_including_tax"
           class="total__text"
           :value="cart.prices.subtotal_including_tax.value"
         />

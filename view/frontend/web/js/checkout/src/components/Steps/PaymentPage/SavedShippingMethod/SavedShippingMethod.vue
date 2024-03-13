@@ -48,6 +48,7 @@ import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
+import useStepsStore from '@/stores/StepsStore';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
@@ -82,10 +83,12 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useStepsStore, ['goToShipping']),
 
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('shipping-active');
+      this.goToShipping();
     },
   },
 };
