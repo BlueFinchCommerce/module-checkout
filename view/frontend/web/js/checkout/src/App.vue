@@ -27,6 +27,7 @@ export default {
   },
   async created() {
     document.querySelector('html').classList.add('vue-checkout-active');
+    document.getElementById('gene-better-checkout-root').setAttribute('role', 'main');
     await this.getStoreConfig();
 
     this.setInitialStepState();
