@@ -6,7 +6,7 @@
   border-bottom: var(--header__border-bottom);
 
   .header-content {
-    max-width: var(--header-max-width, var(--layout__max-width));
+    max-width: var(--header-max-width, 1235px);
     padding: var(--header-container-mobile-paddings, 0);
     margin: 0 auto;
     display: flex;
@@ -36,8 +36,7 @@
       min-height: 18px;
 
       img {
-        width: var(--lock-icon-width, 15px);
-        height: var(--lock-icon-height, 18px);
+        top: -2px;
       }
 
       p {
@@ -45,7 +44,7 @@
         font-weight: var(--font-weight__medium);
         line-height: var(--font__s);
         color: var(--secure-header-text-color, var(--color__primary-white));
-        margin: 0 0 0 var(--indent__s);
+        margin: 0 0 0 var(--indent__xs);
         font-family: var(--font-family__copy);
       }
     }
