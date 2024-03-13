@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Zastosuj',
     removeBtn: 'Usuń',
     modalHeader: 'Podsumowanie zamówienia',

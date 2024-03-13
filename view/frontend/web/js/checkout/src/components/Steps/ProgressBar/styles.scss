@@ -87,6 +87,19 @@
       }
     }
   }
+
+  &-arrow {
+    svg {
+      width: 40px;
+      opacity: 0.5;
+    }
+
+    &.active {
+      svg {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 //Desktop design
@@ -94,6 +107,16 @@
   .progress-bar {
     &-container {
       display: flex;
+    }
+  }
+}
+
+@media screen and (min-width: $screen__l) {
+  .progress-bar {
+    &-arrow {
+      svg {
+        width: 90px;
+      }
     }
   }
 }
