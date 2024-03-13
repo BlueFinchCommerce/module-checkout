@@ -41,12 +41,12 @@
 
 div.dropdown.coupon-dropdown {
   background: var(--coupon-discount__background, var(--dropdown__background-color));
-  padding: var(--drop-down-padding, var(--indent__base));
+  padding: var(--drop-down-padding, 0 var(--indent__base));
   order: var(--coupon-dropdown-order, 1);
   max-width: none;
   border-top: 0;
   margin: 0 auto;
-  min-height: 90px;
+  min-height: 80px;
 
   .field {
     display: flex;
@@ -63,7 +63,7 @@ div.dropdown.coupon-dropdown {
     button {
       max-height: var(--drop-down-max-height, 55px);
       margin-left: var(--drop-button-down-left-margin, 0);
-      text-transform: var(--drop-button-down-text-transform, uppercase);
+      text-transform: var(--drop-button-down-text-transform, none);
       border-radius: var(--inputs-border-radius, 0 var(--input__border-radius) var(--input__border-radius) 0);
       padding: var(--drop-button-padding, 12px);
       margin-top: 0;

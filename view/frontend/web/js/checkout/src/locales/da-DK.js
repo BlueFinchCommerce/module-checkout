@@ -23,11 +23,13 @@ export default {
     plusOneItem: 'plus en artikel',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Indtast Promo kode',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Indtast kode',
       successMessage: 'koden er indtastet "{code}".',
     },

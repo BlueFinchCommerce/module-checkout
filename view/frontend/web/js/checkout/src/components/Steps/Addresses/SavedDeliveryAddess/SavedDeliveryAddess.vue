@@ -39,6 +39,7 @@
 import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
+import useStepsStore from '@/stores/StepsStore';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
@@ -71,10 +72,12 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('details-active');
+      this.goToYouDetails();
     },
   },
 };

@@ -53,10 +53,8 @@
       "promo-icon.svg",
       "gift-icon.svg",
       "coupon-icon.svg",
-      "detailsIcon.svg",
-      "shippingIcon.svg",
-      "paymentIcon.svg",
       "delivery.svg",
+      "detailsIcon.svg",
       "Visa.svg",
       "MasterCard.svg",
       "AmericanExpress.svg",
@@ -66,6 +64,8 @@
       "GooglePay.svg",
       "ApplePay.svg",
       "VenmoIcon.svg",
+      "shippingIcon.svg",
+      "paymentIcon.svg",
       "bancontact.svg",
       "eps.svg",
       "giropay.svg",
@@ -249,7 +249,7 @@
   },
   "src/components/Footer/FooterIcons/icons/icon-cardpay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
+    "src": "src/components/Steps/PayWithComponent/icons/CardPay.svg"
   },
   "src/components/Footer/FooterIcons/icons/icon-clearpay.svg": {
     "file": "icon-clearpay.svg",
@@ -301,7 +301,7 @@
   },
   "src/components/Steps/PayWithComponent/icons/CardPay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
+    "src": "src/components/Steps/PayWithComponent/icons/CardPay.svg"
   },
   "src/components/Steps/PayWithComponent/icons/ClearPay.svg": {
     "file": "ClearPay.svg",
