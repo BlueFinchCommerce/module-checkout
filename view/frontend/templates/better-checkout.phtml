@@ -9,6 +9,7 @@ $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
+$fontUrl = $assetViewModel->getFontUrl();
 $customWordings = $assetViewModel->getCustomWording();
 
 ?>
@@ -23,6 +24,15 @@ $customWordings = $assetViewModel->getCustomWording();
 </script>
 
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
+
+<?php if ($fontUrl !== null) : ?>
+    <style>
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
+    </style>
+<?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>
     <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
