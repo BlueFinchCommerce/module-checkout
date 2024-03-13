@@ -83,7 +83,7 @@ export default {
       savedAddressesTitle: 'Select your saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
-      billingAddressTitle: 'Billing Address',
+      billingAddressTitle: 'Select a billing address',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',
@@ -103,16 +103,16 @@ export default {
           placeholder: 'City',
         },
         countryField: {
-          label: 'Country',
-          placeholder: 'County',
+          label: 'State',
+          placeholder: 'State',
         },
         postCodeField: {
           label: 'Postcode',
           placeholder: 'Postcode',
         },
         regionField: {
-          label: 'County',
-          placeholder: 'County',
+          label: 'State',
+          placeholder: 'State',
         },
       },
     },

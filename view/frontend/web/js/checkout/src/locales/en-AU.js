@@ -83,7 +83,7 @@ export default {
       savedAddressesTitle: 'Select your saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
-      billingAddressTitle: 'Billing Address',
+      billingAddressTitle: 'Select a billing address',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',

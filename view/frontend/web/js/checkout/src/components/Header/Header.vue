@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import Logo from '@/components/Core/Logo/Logo.vue';
 import Lock from '@/components/Core/Icons/Lock/Lock.vue';
@@ -51,8 +51,11 @@ export default {
     await this.getStoreConfig();
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
   },
+  computed: {
+    ...mapState(useConfigStore, ['secureBaseUrl']),
+  },
   methods: {
-    ...mapActions(useConfigStore, ['custom', 'getStoreConfig', 'secureBaseUrl']),
+    ...mapActions(useConfigStore, ['custom', 'getStoreConfig']),
   },
 };
 </script>

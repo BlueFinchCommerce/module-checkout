@@ -16,10 +16,13 @@
 
       <div class="address-block__title"
            v-if="(!selected[address_type].same_as_shipping && !isClickAndCollect) || !isItemRequiringDelivery">
-        <TextField
-          class="address-block__title"
-          :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
-        />
+       <div class="address-block__title-with-icon">
+         <BillingAddressIcon/>
+         <TextField
+           class="address-block__title"
+           :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
+         />
+       </div>
         <div class="divider-line"></div>
       </div>
 
@@ -103,6 +106,7 @@ import AddressList from '@/components/Steps/Addresses/AddressList/AddressList.vu
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
@@ -110,6 +114,7 @@ import deepClone from '@/helpers/deepClone';
 export default {
   name: 'BillingForm',
   components: {
+    BillingAddressIcon,
     TextField,
     AddressForm,
     AddressBlock,

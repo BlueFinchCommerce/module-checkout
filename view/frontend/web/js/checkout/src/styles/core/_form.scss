@@ -401,6 +401,10 @@
       &::marker {
         display: none;
       }
+
+      &.selected {
+        border: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
+      }
     }
 
     svg {
