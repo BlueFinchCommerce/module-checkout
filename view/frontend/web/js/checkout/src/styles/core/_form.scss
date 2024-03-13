@@ -75,6 +75,7 @@
   .shipping-method {
     label {
       display: var(--shipping-label-display, flex);
+      align-items: flex-start;
     }
   }
 
