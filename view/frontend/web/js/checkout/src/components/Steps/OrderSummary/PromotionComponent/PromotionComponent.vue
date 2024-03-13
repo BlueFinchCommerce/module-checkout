@@ -1,6 +1,7 @@
 <template>
   <div
     class="promotion-trigger dropdown-button"
+    v-if="freeShipping > 0 && crosssells.length === 0"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"
     @click="openDropDown"
@@ -12,34 +13,21 @@
         alt="promo-dropdown-icon"
       >
     </div>
-    <div
-      v-if="freeShipping > 0"
-      class="promo-title no-shipping"
-    >
+    <div class="promo-title no-shipping">
       <div>
         <TextField
           :text="$t('orderSummary.couponCodeTitle')"
-          font-weight="325"
         />
         <Price
+          class="bold"
           :value="freeShipping"
         />
         <TextField
           :text="$t('orderSummary.couponCodeTitleBottom')"
-          font-weight="325"
         />
         <TextField
+          class="bold"
           :text="$t('orderSummary.couponCodeTitleFreeShipping')"
-        />
-      </div>
-    </div>
-    <div
-      v-else
-      class="promo-title"
-    >
-      <div>
-        <TextField
-          :text="freeShippingText"
         />
       </div>
     </div>
@@ -53,18 +41,42 @@
     />
   </div>
 
+  <div
+    v-if="!freeShipping && crosssells.length > 0"
+    class="promotion-trigger dropdown-button"
+    :class="{opened: isDropDownVisible}"
+    data-cy="dropdown-trigger"
+    @click="openDropDown"
+    @keydown="openDropDown"
+  >
+    <div class="promotion-icon-container">
+      <img
+        :src="promoIconUrl"
+        alt="promo-dropdown-icon"
+      >
+    </div>
+    <div class="promo-title crosssells">
+      <div>
+        <TextField
+          :text="freeShippingText"
+        />
+      </div>
+      <ArrowDown
+        v-if="!isDropDownVisible && crosssells.length"
+        class="dropdown-arrow__down"
+      />
+      <ArrowUp
+        v-if="isDropDownVisible && crosssells.length"
+        class="dropdown-arrow__up"
+      />
+    </div>
+  </div>
   <DropDown
     v-if="isDropDownVisible && crosssells.length"
     class="promo-dropdown"
     :class="{active: isDropDownVisible}"
   >
     <template #content>
-      <TextField
-        class="promo-title"
-        :text="$t('orderSummary.promoTitle')"
-        font-weight="500"
-        font-size="16px"
-      />
       <div :class="['product-item-carousel', `product-item-carousel-${crosssells.length}`]">
         <div
           v-for="(product, index) in crosssells"
@@ -78,17 +90,10 @@
             >
           </div>
           <div class="product-item-info">
-            <Price
-              :value="product.price_range.minimum_price.final_price.value"
-              font-size="18px"
-              font-weight="500"
-            />
             <TextField
               :text="product.name"
-              class="product-item-name"
-              font-weight="325"
-              font-size="14px"
-            />
+              class="product-item-name"/>
+            <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
           </div>
           <div class="product-actions">
             <MyButton
@@ -145,21 +150,19 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    await this.getCartData();
     await this.getCart();
-    await this.getCartTotals();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
     }
     await this.getCrosssells();
 
     this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
-     || this.$t('orderSummary.freeShippingAvailable');
+     || this.$t('orderSummary.crossSellsTitle');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
-      'getCartData', 'getCart', 'getCartTotals', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
+      'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

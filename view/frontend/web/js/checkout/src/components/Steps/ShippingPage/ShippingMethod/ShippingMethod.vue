@@ -4,7 +4,7 @@
       <div v-if="loadingShippingMethods">
         <Loader />
       </div>
-
+      <ProgressBar />
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
           <div class="checkout-shipping-methods__title-icon">
@@ -19,11 +19,16 @@
           <div class="divider-line"></div>
         </div>
 
-        <ul v-if="shippingMethods.length">
+        <ul v-if="cart.shipping_addresses?.[0]?.available_shipping_methods">
           <li
-            v-for="(item) in shippingMethods"
+            v-for="(item) in cart.shipping_addresses?.[0]?.available_shipping_methods"
             :key="item.carrier_code"
             class="shipping-method"
+            :class="{
+              'selected': (
+                item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
+              )
+            }"
           >
             <label
               v-if="item.method_code !== nominatedId"
@@ -33,7 +38,7 @@
               <span class="shipping-method__input">
                 <input
                   :id="item.method_code"
-                  :checked="item.method_code === selectedMethod.method_code"
+                  :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
                   data-cy="radio-button"
                   type="radio"
                   name="shipping-option"
@@ -54,7 +59,7 @@
               <span class="shipping-method__input">
                 <input
                   :id="nominatedId"
-                  :checked="item.method_code === selectedMethod.method_code"
+                  :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
                   type="radio"
                   radio-button
                   name="shipping-option"
@@ -87,7 +92,7 @@
           />
         </ul>
         <TextField
-          v-else-if="!shippingMethods.length && !loadingShippingMethods"
+          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods.length && !loadingShippingMethods"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
         />
@@ -100,8 +105,8 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!shippingMethods.length || !selectedMethod.method_code || loadingShippingMethods"
-        @click="checkChangedAddress();"
+        :disabled="!cart.shipping_addresses?.[0]?.available_shipping_methods?.length || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code || loadingShippingMethods"
+        @click="goToPayment"
       />
     </div>
   </section>
@@ -125,6 +130,7 @@ import TextField from '@/components/Core/TextField/TextField.vue';
 import NominatedDay from
   '@/components/Steps/ShippingPage/ShippingMethod/NominatedDay/NominatedDay.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
+import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Icons
 import Loader from '@/components/Core/Loader/Loader.vue';
@@ -141,6 +147,7 @@ export default {
     Shipping,
     NominatedDay,
     MyButton,
+    ProgressBar,
     ...shippingMethods(),
   },
   props: {
@@ -161,6 +168,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(useCartStore, ['cart']),
     ...mapState(useConfigStore, ['taxCartDisplayShipping']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
@@ -168,7 +176,6 @@ export default {
       'getError',
       'nominatedDayEnabled',
       'nominatedPrice',
-      'shippingMethods',
       'selectedMethod',
     ]),
   },
@@ -185,7 +192,6 @@ export default {
       'setShippingMethodTitle',
     ]),
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
-    ...mapActions(useCartStore, ['getCartTotals']),
     ...mapActions(useStepsStore, ['goToPayment']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
 
@@ -198,16 +204,7 @@ export default {
 
     async handleChange(item) {
       this.selectShippingMethod(item);
-      await this.submitShippingInfo();
-      this.hasSubmitted = true;
-    },
-
-    async checkChangedAddress() {
-      if (!this.hasSubmitted) {
-        await this.submitShippingInfo();
-        this.hasSubmitted = true;
-      }
-      this.goToPayment();
+      await this.submitShippingInfo(item.carrier_code, item.method_code);
     },
   },
 };

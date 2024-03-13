@@ -26,7 +26,7 @@ import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 import handleServiceError from '@/helpers/handleServiceError';
 
 import createPayment from '@/services/createPayment';
-import getShippingMethods from '@/services/getShippingMethods';
+import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 export default {
@@ -50,14 +50,16 @@ export default {
       'countryCode',
       'countries',
       'getRegionId',
+      'storeCode',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getPaymentMethods();
     await this.getBraintreeConfig();
 
@@ -114,7 +116,7 @@ export default {
           }),
           onShippingChange: async (data) => {
             const address = {
-              country_id: data.shipping_address.country_code,
+              country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
               region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
@@ -183,9 +185,9 @@ export default {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getAdyenConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddress']),
+    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
@@ -194,7 +196,7 @@ export default {
 
     async setShippingInformation(payload) {
       const adddress = this.mapAddress(payload.details.shippingAddress, payload.details.email, payload.details.phone);
-      this.setAddress(adddress, 'shipping');
+      this.setAddressToStore(adddress, 'shipping');
 
       await this.submitShippingInfo();
 
@@ -234,7 +236,7 @@ export default {
           address.line3,
         ],
         postcode: address.postalCode,
-        country_id: address.countryCode,
+        country_code: address.countryCode,
         email,
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),

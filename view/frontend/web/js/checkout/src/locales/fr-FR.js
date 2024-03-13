@@ -24,14 +24,17 @@ export default {
     plusOneItem: 'Plus un article',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Entrez votre code to réduction',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Entrez le code',
       successMessage: 'Coupon appliqué "{code}".',
     },
+    crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Bonne nouvelle: votre commande sera livrée gratuitement',
     couponCodeTitle: 'Dépensez',
     couponCodeTitleBottom: 'plus pour profiter',

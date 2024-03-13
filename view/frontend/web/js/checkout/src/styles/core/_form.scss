@@ -49,13 +49,8 @@
     }
 
     span {
-      font-weight: var(--font-weight__regular);
+      font-weight: var(--font-weight__semibold);
       font-size: var(--font__m);
-    }
-
-    & + p {
-      font-size: var(--font__xs);
-      margin: 0;
     }
 
     &.error,
@@ -80,6 +75,7 @@
   .shipping-method {
     label {
       display: var(--shipping-label-display, flex);
+      align-items: flex-start;
     }
   }
 
@@ -185,14 +181,14 @@
       padding-left: var(--input__label-padding);
       margin-left: var(--input-label-margin, var(--indent__s));
       margin-top: var(--input-label-margin-top, 0);
-      font-weight: var(--input-span-font-weight, var(--font-weight__regular));
+      font-weight: var(--input-span-font-weight, var(--font-weight__medium));
       font-family: var(--font-family__copy);
       position: var(--input-span-position, absolute);
-      top: var(--input-span-top-value, var(--indent__xs));
+      top: var(--input-span-top-value, 0);
       min-height: var(--input-label-min-height, 25px);
       z-index: 1;
       border-radius: var(--base__border-radius);
-      color: var(--input__font-color);
+      color: var(--input__label-font-color);
     }
   }
 
@@ -208,7 +204,7 @@
       width: 100%;
       outline: none;
       border: var(--input-border, var(--input__border-weight) var(--base__border-style) var(--input__border-color));
-      font-weight: var(--font-weight__regular);
+      font-weight: var(--font-weight__semibold);
       background-color: var(--input__background-color);
 
       &:focus-visible,
@@ -227,7 +223,7 @@
     input::placeholder {
       color: var(--input__placeholder-font-color);
       font-size: var(--input__font-size);
-      font-weight: var(--font-weight__regular);
+      font-weight: var(--font-weight__medium);
     }
   }
 
@@ -251,16 +247,15 @@
       span {
         display: var(--logged-in-email-label-visibility, none);
         font-family: var(--input-label-logged-in-font-family, var(--font-family__copy));
-        font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
+        font-size: var(--input-label-logged-in-font-size, var(--font__xs));
         padding-left: var(--input-label-logged-in-padding, var(--input__label-padding));
         margin-left: var(--input-label-logged-in-margin, var(--input-label-margin));
-        font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__regular));
+        font-weight: var(--input-label-logged-in-font-weight, var(--font-weight__medium));
       }
-          font-size: var(--input-label-logged-in-font-size, var(--input__font-size));
-        }
 
       input {
         border: var(--logged-in-email-border-width, none);
+        border-radius: var(--input__border-radius);
         padding: var(--logged-in-email-padding, var(--indent__s));
         margin-top: var(--logged-in-email-margin-top, 0);
         text-align: center;
@@ -268,8 +263,6 @@
         font-weight: var(--font-weight__bold);
         font-size: var(--font__m);
         color: var(--font__color-light);
-
-        ::placeholder {
 
         &:hover {
           border: none;
@@ -361,8 +354,9 @@
 
     > p {
       font-family: var(--phone-field-text__font-family, unset);
-      font-weight: var(--phone-field-text__font-weight, 300);
-      padding-top: var(--phone-field-text__padding-top, 0);
+      font-weight: var(--phone-field-text__font-weight, var(--font-weight__medium));
+      padding-top: var(--phone-field-text__padding-top, var(--indent__m));
+      color: var(--font__color-light);
     }
 
     .error-message {
@@ -385,6 +379,7 @@
       margin-top: var(--select-margin-top, var(--indent__s));
       font-size: var(--font__m);
       font-family: var(--font-family__copy);
+      font-weight: var(--font-weight__medium);
       color: var(--input__font-color);
       border: var(--input__border-weight) var(--base__border-style) var(--input__border-color);
       appearance: none;
@@ -407,6 +402,10 @@
       &::marker {
         display: none;
       }
+
+      &.selected {
+        border: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
+      }
     }
 
     svg {
@@ -414,7 +413,7 @@
       right: var(--select-icon-right, 10px);
       top: var(--select-icon-top, 27px);
       width: var(--select-icon-width, 19px);
-      stroke: var(----color__primary-blue);
+      stroke: var(--color__primary-blue);
     }
 
     .select-input-label {
@@ -437,7 +436,7 @@
     display: flex;
     font-family: var(--font-family__copy);
     font-size: var(--error-message-font-size, var(--font__xs));
-    font-weight: var(--error-message-font-weight, var(--font-weight__regular));
+    font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
     margin: var(--message__margin);
     min-height: var(--messages-min-height, auto);
     padding: var(--message-padding, var(--indent__xs));
@@ -452,10 +451,13 @@
   }
 
   .error-message {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
     border-width: var(--error-message-border-width, var(--base__border-weight-active));
-    margin-top: -2px;
+
+    &-attached {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: -2px;
+    }
   }
 
   .success-message {
@@ -480,7 +482,7 @@
       color: var(--success__color, var(--color__primary-navy));
       font-family: var(--font-family__copy);
       font-size: var(--message-font-size, var(--font__xs));
-      font-weight: var(--message-font-weight, var(--font-weight__regular));
+      font-weight: var(--message-font-weight, var(--font-weight__semibold));
       margin-bottom: 0;
     }
   }

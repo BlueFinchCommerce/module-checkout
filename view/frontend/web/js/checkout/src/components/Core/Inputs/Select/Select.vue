@@ -12,7 +12,7 @@
               :required="required"
               :value="modelValue"
               :data-cy="dataCy ? dataCy : 'select'"
-              @change="$emit('update:modelValue', $event.target.value)">
+              @change="onSelectChange">
         <option value="" disabled selected>{{selectedOption}}</option>
         <option v-for="(option, index) in options"
                 :value="option.option.value"
@@ -85,6 +85,19 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    onSelectChange(event) {
+      this.$emit('update:modelValue', event.target.value);
+      // Toggling the selected class based on whether an option is selected or not
+      const selectElement = event.target;
+      const selectedOption = selectElement.options[selectElement.selectedIndex];
+      if (selectedOption.value !== '') {
+        selectElement.classList.add('selected');
+      } else {
+        selectElement.classList.remove('selected');
+      }
     },
   },
   setup(props) {

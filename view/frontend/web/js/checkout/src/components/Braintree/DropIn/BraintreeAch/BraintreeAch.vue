@@ -279,7 +279,7 @@ export default {
       };
 
       if (typeof bankDetails.billingAddress.region === 'undefined') {
-        const regions = await fetch(`/rest/V1/directory/countries/${this.getSelectedBillingAddress.country_id}`)
+        const regions = await fetch(`/rest/V1/directory/countries/${this.getSelectedBillingAddress.country_code}`)
           .then((data) => data.json());
         if (typeof regions.available_regions !== 'undefined') {
           regions.available_regions.forEach((region) => {

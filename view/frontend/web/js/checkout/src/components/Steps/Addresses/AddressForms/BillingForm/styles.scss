@@ -7,29 +7,32 @@
     margin: var(--indent__l) 0 var(--indent__base);
   }
 
+  &__title-with-icon {
+    display: flex;
+
+    svg {
+      margin-right: var(--indent__s);
+    }
+  }
+
   &__title {
-    font-weight: 500;
-    font-size: var(--font__m);
+    font-weight: var(--font-weight__semibold);
+    font-size: var( --font__heading--mobile);
     margin-bottom: var(--indent__s);
     display: flex;
     align-items: center;
 
     p {
       margin-bottom: 0;
+      white-space: nowrap;
     }
 
     .divider-line {
       border-bottom: var(--divider__border);
-      width: 75%;
+      width: 100%;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }
-  }
-
-  &__title--address {
-    margin-bottom: 0;
-    font-weight: 500;
-    font-size: var(--font__m_);
   }
 
   &__address {
@@ -55,6 +58,11 @@
 //Styles for desktop
 
 @media screen and (min-width: $screen__m) {
+  .address-block {
+    &__title {
+      font-size: var(--font__heading--desktop);
+    }
+  }
   .manually-button {
     font-size: var(--font__m);
   }

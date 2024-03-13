@@ -25,7 +25,7 @@ export default defineStore('gtmStore', {
       }
     },
     trackStep(actionField) {
-      const { cartItems } = useCartStore();
+      const { cart } = useCartStore();
       const { currencyCode } = useConfigStore();
 
       this.trackGtmEvent({
@@ -34,7 +34,7 @@ export default defineStore('gtmStore', {
           currencyCode,
           checkout: {
             actionField,
-            products: cartItems,
+            products: cart.items,
           },
         },
       });

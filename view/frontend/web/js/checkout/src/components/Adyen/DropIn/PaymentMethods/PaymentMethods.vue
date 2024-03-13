@@ -61,13 +61,14 @@
 <script>
 // stores
 import { mapActions, mapState } from 'pinia';
+import AdyenCheckout from '@adyen/adyen-web';
 import useAdyenStore from '@/stores/AdyenStore';
+import useAgreementStore from '@/stores/AgreementStore';
 import usePaymentStore from '@/stores/PaymentStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 // Components
@@ -79,12 +80,11 @@ import RadioButton from '@/components/Core/Inputs/RadioButton/RadioButton.vue';
 
 // Services
 import createPayment from '@/services/createPayment';
-import getAdyenPaymentStatus from '@/services/getAdyenPaymentStatus';
-import getAdyenPaymentDetails from '@/services/getAdyenPaymentDetails';
+import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
+import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/refreshCustomerData';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
@@ -136,15 +136,16 @@ export default {
       'getSelectedBillingAddress',
       'isLoggedIn',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'locale']),
+    ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
   },
 
   async created() {
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getAdyenConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -181,15 +182,10 @@ export default {
 
         if (state.isValid) {
           const paymentMethod = this.getPaymentMethod(state, extensionAttributes);
-          const data = {
-            billingAddress: this.getSelectedBillingAddress,
-            paymentMethod,
-            email: this.customer.email,
-          };
 
           this.paymentEmitter.emit('adyenPaymentLoading', { id: this.id, loading: true });
 
-          createPayment(data)
+          createPayment(paymentMethod)
             .then(this.setOrderId)
             .then(getAdyenPaymentStatus)
             .then(async (response) => {
@@ -313,7 +309,7 @@ export default {
       'getPaymentMethodsResponse',
       'clearPaymentReponseCache',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals', 'validateAgreements']),
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     setOrderId(orderId) {
@@ -331,19 +327,27 @@ export default {
       ));
     },
 
-    getPaymentMethod(state, extensionAttributes) {
-      const method = state.data.paymentMethod.type === 'scheme' ? 'adyen_cc' : 'adyen_hpp';
-      const additionalPaymentData = getAdditionalPaymentData();
-      return {
-        method,
-        additional_data: {
-          brand_code: state.data.paymentMethod.type,
-          stateData: JSON.stringify(state.data),
-          is_active_payment_token_enabler: !!state.data.storePaymentMethod,
-          ...additionalPaymentData,
-        },
-        extension_attributes: extensionAttributes,
+    getPaymentMethod(state) {
+      const paymentMethod = {
+        code: state.data.paymentMethod.type === 'scheme' ? 'adyen_cc' : 'adyen_hpp',
       };
+      const stateData = JSON.stringify(state.data);
+
+      if (paymentMethod.code === 'adyen_cc') {
+        console.log(state);
+        paymentMethod.adyen_additional_data_cc = {
+          cc_type: state.data.paymentMethod.mc,
+          stateData,
+          recurringProcessingModel: state.data.storePaymentMethod ? 'CardOnFile' : '',
+        };
+      } else {
+        paymentMethod.adyen_additional_data_hpp = {
+          brand_code: state.data.paymentMethod.type,
+          stateData,
+        };
+      }
+
+      return paymentMethod;
     },
     async handlePaymentStatus(response, dropin) {
       if (response.isFinal) {
@@ -424,6 +428,8 @@ export default {
         if (this.storedPayments && this.storedPaymentMethods.length) {
           setTimeout(() => this.modifyStoredPayments(), 0);
         }
+
+        this.updateAgreementLocation();
       }, 3000);
     },
 
@@ -433,14 +439,17 @@ export default {
         id: this.id,
         type: paymentMethod.type,
       });
-      setTimeout(() => {
-        this.agreementLocation = '';
-        setTimeout(() => {
-          this.agreementLocation = `.${this.methodSelectedClass}
-            .adyen-checkout__payment-method__details`;
-        }, 0);
-      }, 500);
+      setTimeout(this.updateAgreementLocation, 500);
     },
+
+    updateAgreementLocation() {
+      this.agreementLocation = '';
+      setTimeout(() => {
+        this.agreementLocation = `.${this.methodSelectedClass}
+            .adyen-checkout__payment-method__details`;
+      }, 0);
+    },
+
     modifyStoredPayments() {
       setTimeout(() => {
         // Reset the placement of the stored payment cards before working on them.

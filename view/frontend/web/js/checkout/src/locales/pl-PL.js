@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Wprowadź swój adres e-mail, aby zapłacić kartą kredytową/debetową',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Zastosuj',
     removeBtn: 'Usuń',
     modalHeader: 'Podsumowanie zamówienia',
@@ -23,11 +24,13 @@ export default {
     plusOneItem: 'plus jedna pozycja',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Dodaj kod promocyjny',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Wprowadź kod tutaj',
       successMessage: 'Pomyślnie zastosowano kod "{code}".',
     },

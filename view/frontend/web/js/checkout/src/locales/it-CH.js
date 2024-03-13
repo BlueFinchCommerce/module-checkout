@@ -21,13 +21,16 @@ export default {
     removeItemButtonLabel: 'Elimina articolo',
     minusOneItem: 'Un articolo in meno',
     plusOneItem: 'Un articolo in più',
+    crossSellsTitle: 'You may also like these items...',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Inserisci il codice promozionale',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Inserisci il codice',
       successMessage: 'Il codice "{code}" è stato inserito correttamente',
     },

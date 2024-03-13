@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Voer je e-mailadres in om met een creditcard/debetkaart te betalen',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Gebruiken',
     removeBtn: 'Verwijderen',
     modalHeader: 'Besteloverzicht',
@@ -23,11 +24,13 @@ export default {
     plusOneItem: 'Een artikel meer',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Kortingscode invoeren',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Code invoeren',
       successMessage: 'Code succesvol ingevoerd "{code}".',
     },

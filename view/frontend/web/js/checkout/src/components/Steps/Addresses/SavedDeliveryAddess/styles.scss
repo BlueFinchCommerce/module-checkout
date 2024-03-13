@@ -3,8 +3,9 @@
 .delivery-address {
   background: var(--delivery-address-section-background, var(--steps-complete__background-color));
   position: relative;
-  border-bottom: var(--details-section-border, 1px solid rgba(39, 48, 58, 0.1));
+  border-bottom: var(--details-section-border, 0);
   min-height: var(--details-section-min-height, 75px); //prevent jumping on page load
+  margin-bottom: var(--indent__xxs);
 
   &-link {
     color: var(--details-title-color, var(--button__link-font-color));
@@ -76,6 +77,10 @@
   .delivery-address {
     margin-top: var(--delivery-address-desktop-margin, 0);
     border-radius: var(--steps-complete__radius--desktop);
+
+    &-link {
+      margin-bottom: var(--indent__m);
+    }
 
     .address-block {
       p {

@@ -29,6 +29,7 @@ export default {
     document.querySelector('html').classList.add('vue-checkout-active');
     await this.getStoreConfig();
 
+    this.setInitialStepState();
     // If we have a Amazon redirect URL then go to that page.
     if (getUrlQuery('amazonCheckoutSessionId')) {
       const stepsStore = useStepsStore();
@@ -37,6 +38,7 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useStepsStore, ['setInitialStepState', 'goToAdyenAmazonReviw']),
   },
 };
 </script>

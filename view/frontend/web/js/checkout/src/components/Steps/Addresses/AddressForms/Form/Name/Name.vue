@@ -66,7 +66,6 @@
       <TextField
         v-if="!phoneErrorClass"
         :text="$t('yourDetailsSection.phoneField.infoMessage')"
-        font-weight="300"
       />
     </div>
   </div>
@@ -143,13 +142,8 @@ export default {
       this.nameValid = !!first;
       this.lastNameValid = !!last;
 
-      if (this.storeCode === 'uk') {
-        this.phoneValidError = this.selected[type].telephone.length > 11;
-        this.phoneValid = this.selected[type].telephone.length === 11;
-      } else {
-        this.phoneValidError = this.selected[type].telephone.length > 10;
-        this.phoneValid = this.selected[type].telephone.length === 10;
-      }
+      this.phoneValidError = this.selected[type].telephone.length > 20;
+      this.phoneValid = this.selected[type].telephone.length > 1;
 
       const fullDetails = first && last && phone;
       this.$emit('isCustomerInfoFull', fullDetails);

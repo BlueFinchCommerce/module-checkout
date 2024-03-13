@@ -6,6 +6,8 @@
     <StoreCredit v-if="getTotalSegment('customerbalance')" />
     <div class="payment-page">
       <div class="payment-form">
+        <ProgressBar />
+        <Recaptcha id="placeOrder" />
         <template v-if="cartGrandTotal">
           <ErrorMessage
             v-if="rvvupErrorMessage !== ''"
@@ -56,6 +58,8 @@ import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
 import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
+import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
@@ -72,6 +76,8 @@ export default {
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
+    Recaptcha,
+    ProgressBar,
     ...paymentMethods(),
   },
   data() {
@@ -85,7 +91,6 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
-      'adyenAuthToken',
     ]),
     ...mapState(useAdyenStore, ['isAdyenAvailable']),
     ...mapState(usePaymentStore, [
@@ -99,7 +104,6 @@ export default {
   async created() {
     if (!this.storeCode) {
       await this.getStoreConfig();
-      await this.getCartData();
       await this.getCart();
     }
 
@@ -115,7 +119,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['getIsAdyenAvailable']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
     setDetailsStepActive() {

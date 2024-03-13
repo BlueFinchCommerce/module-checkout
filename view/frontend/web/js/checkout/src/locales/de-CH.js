@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Ange din e-postadress för att betala med kredit-/betalkort',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Tillämpa',
     removeBtn: 'Ta bort',
     modalHeader: 'Sammanfattning av beställningen',
@@ -23,11 +24,13 @@ export default {
     plusOneItem: 'plus en artikel',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
     },
