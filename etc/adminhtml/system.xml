@@ -35,6 +35,12 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
                 </field>
+                <field id="font_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="15" showInDefault="1" showInWebsite="1" >
+                    <label>Checkout Font File</label>
+                    <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
+                    <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
+                    <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
+                </field>
                 <field id="designer_trigger" translate="label comment" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Designer</label>
                     <depends>
