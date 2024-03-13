@@ -55,6 +55,7 @@
         </div>
         <div
           class="address-block__edit"
+          tabindex="0"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
         >

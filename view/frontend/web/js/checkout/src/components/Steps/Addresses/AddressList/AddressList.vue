@@ -15,6 +15,7 @@
     <ul class="address-list__list">
       <li
         v-for="(item) in customer.addresses"
+        tabindex="0"
         :key="item.id"
         class="address-list__item"
         :class="{ active: item.id === selected[addressType].id }"

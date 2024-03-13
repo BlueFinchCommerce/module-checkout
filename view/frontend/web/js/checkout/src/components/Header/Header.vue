@@ -18,10 +18,9 @@
           stroke="white"
           class="secure-logo"
         />
-        <TextField
-          class="secure-text"
-          :text="headerText"
-        />
+        <h1 class="secure-text">
+          {{ headerText }}
+        </h1>
       </div>
     </div>
   </header>
@@ -32,14 +31,12 @@ import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import Logo from '@/components/Core/Logo/Logo.vue';
 import Lock from '@/components/Core/Icons/Lock/Lock.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 
 export default {
   name: 'AppHeader',
   components: {
     Logo,
     Lock,
-    TextField,
   },
   data() {
     return {
