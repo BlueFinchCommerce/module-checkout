@@ -20,6 +20,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable newsletter signup within the checkout.]]></comment>
                 </field>
+                <field id="progress_bar_visible" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Progress Bar Functionality</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable progress bar functionality on checkout.]]></comment>
+                </field>
                 <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable AFD Postcode Lookup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

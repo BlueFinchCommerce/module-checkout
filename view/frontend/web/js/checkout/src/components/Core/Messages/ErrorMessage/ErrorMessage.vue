@@ -1,5 +1,9 @@
 <template>
-  <div class="error-message" :style="style">
+  <div
+    class="error-message"
+    :class="{'error-message-attached': attached}"
+    :style="style"
+  >
     <TextField :text="message" />
   </div>
 </template>
@@ -17,6 +21,10 @@ export default {
       type: String,
       require: true,
       default: '',
+    },
+    attached: {
+      type: Boolean,
+      default: true,
     },
     backgroundColor: {
       type: String,

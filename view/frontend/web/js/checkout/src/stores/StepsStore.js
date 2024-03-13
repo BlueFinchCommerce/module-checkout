@@ -11,6 +11,15 @@ export default defineStore('stepsStore', {
     setData(data) {
       this.$patch(data);
     },
+    setInitialStepState() {
+      const { name } = this.$router.currentRoute.value;
+
+      this.setData({
+        yourDetailsActive: name === 'DetailsPage' || name === 'ShippingPage' || name === 'PaymentPage',
+        shippingActive: name === 'ShippingPage' || name === 'PaymentPage',
+        paymentActive: name === 'PaymentPage',
+      });
+    },
     goToYouDetails() {
       this.setData({
         yourDetailsActive: true,

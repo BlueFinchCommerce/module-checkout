@@ -65,7 +65,7 @@
         <div class="error">
           <ErrorMessage
             v-if="discountErrorMessage"
-            :message="discountErrorMessage"
+            :message="$t('orderSummary.couponDiscount.errorMessage')"
           />
         </div>
       </div>
