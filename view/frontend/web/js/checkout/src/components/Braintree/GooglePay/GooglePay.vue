@@ -21,13 +21,12 @@ import usePaymentStore from '@/stores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import formatPrice from '@/helpers/formatPrice';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
-import handleServiceError from '@/helpers/handleServiceError';
 
 import createPayment from '@/services/createPayment';
-import getShippingMethods from '@/services/getShippingMethods';
+import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/refreshCustomerData';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
 
 export default {
   name: 'BraintreeGooglePay',
@@ -42,7 +41,7 @@ export default {
   },
   computed: {
     ...mapState(useBraintreeStore, ['environment', 'clientToken', 'google']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
       'currencyCode',
@@ -50,15 +49,17 @@ export default {
       'countryCode',
       'countries',
       'getRegionId',
+      'storeCode',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     await this.getBraintreeConfig();
-    await this.getCartData();
-    await this.getCart();
-    await this.getCartTotals();
     await this.getPaymentMethods();
 
     const googlePayConfig = this.availableMethods.find((method) => (
@@ -117,11 +118,11 @@ export default {
   },
   methods: {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'getCartTotals']),
-    ...mapActions(useConfigStore, ['getStoreConfig', 'getAdyenConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddress']),
+    ...mapActions(useCartStore, ['getCart']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
@@ -173,7 +174,7 @@ export default {
     onPaymentDataChanged(data) {
       return new Promise((resolve) => {
         const address = {
-          country_id: data.shippingAddress.countryCode,
+          country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
           region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
@@ -212,13 +213,7 @@ export default {
             ? response[0]
             : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
 
-          this.selectShippingMethod(selectedShipping);
-
-          // Set the billing address to the same as shipping for now. Magento doesn't use this
-          // yet and it is replaced with the correct billing in the onAuthorized.
-          this.setAddress(address, 'shipping');
-          this.setAddress(address, 'billing');
-          const totals = await this.submitShippingInfo();
+          await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
               defaultSelectedOptionId: selectedShipping.method_code,
@@ -229,13 +224,13 @@ export default {
                 {
                   label: 'Shipping',
                   type: 'LINE_ITEM',
-                  price: totals.shipping_incl_tax.toString(),
+                  price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
                   status: 'FINAL',
                 },
               ],
-              currencyCode: totals.quote_currency_code,
+              currencyCode: this.cart.prices.grand_total.currency,
               totalPriceStatus: 'FINAL',
-              totalPrice: totals.base_grand_total.toString(),
+              totalPrice: this.cart.prices.grand_total.value.toString(),
               totalPriceLabel: 'Total',
               countryCode: this.countryCode,
             },
@@ -248,7 +243,7 @@ export default {
     onPaymentAuthorized(data) {
       return new Promise((resolve) => {
         // If there is no select shipping method at this point display an error.
-        if (!this.selectedMethod.carrier_code) {
+        if (!this.cart.shipping_addresses[0].selected_shipping_method) {
           resolve({
             error: {
               reason: 'SHIPPING_OPTION_INVALID',
@@ -275,19 +270,25 @@ export default {
         const { email } = data;
         const { billingAddress } = data.paymentMethodData.info;
         const { phoneNumber } = billingAddress;
-        const mapShippingAddress = this.mapAddress(data.shippingAddress, email, phoneNumber);
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
-        this.setEmailAddress(email);
-        this.setAddress(mapShippingAddress, 'shipping');
-        this.setAddress(mapBillingAddress, 'billing');
-
-        this.submitShippingInfo()
-          .then(async () => {
-            resolve({
-              transactionState: 'SUCCESS',
+        try {
+          this.submitEmail(email)
+            .then(() => setBillingAddressOnCart(mapBillingAddress))
+            .then(() => {
+              resolve({
+                transactionState: 'SUCCESS',
+              });
             });
+        } catch (error) {
+          resolve({
+            error: {
+              reason: 'PAYMENT_DATA_INVALID',
+              message: error.message,
+              intent: 'PAYMENT_AUTHORIZATION',
+            },
           });
+        }
       });
     },
 
@@ -316,7 +317,7 @@ export default {
         });
 
       return new Promise((resolve, reject) => {
-        billingAddress.countryCodeAlpha2 = billingAddress.country_id;
+        billingAddress.countryCodeAlpha2 = billingAddress.country_code;
 
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
@@ -370,19 +371,15 @@ export default {
     },
 
     makePayment(response) {
-      const payload = {
-        email: response.email,
-        billingAddress: response.billingAddress,
-        paymentMethod: {
-          method: 'braintree_googlepay',
-          additional_data: {
-            payment_method_nonce: response.nonce,
-          },
-          extension_attributes: getPaymentExtensionAttributes(),
+      const paymentMethod = {
+        code: 'braintree_googlepay',
+        braintree: {
+          payment_method_nonce: response.nonce,
+          is_active_payment_token_enabler: false,
         },
       };
 
-      return createPayment(payload).catch(handleServiceError);
+      return createPayment(paymentMethod);
     },
 
     mapAddress(address, email, telephone) {
@@ -391,10 +388,9 @@ export default {
         street: [
           address.address1,
           address.address2,
-          address.address3,
         ],
         postcode: address.postalCode,
-        country_id: address.countryCode,
+        country_code: address.countryCode,
         email,
         firstname,
         lastname: lastname.length ? lastname.join(' ') : 'UNKNOWN',

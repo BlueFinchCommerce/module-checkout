@@ -24,4 +24,4 @@ app.use(i18n);
 app.use(pinia);
 app.use(router);
 
-app.mount('#vue-checkout-root');
+app.mount('#gene-better-checkout-root');

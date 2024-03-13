@@ -24,7 +24,7 @@ export default {
     request = { cancel: axiosSource.cancel, msg: 'Loading...' };
     // Create url for get request
     const container = typeof containerQuery === 'string' ? `&Container=${containerQuery}` : '';
-    const loqateCountry = selected[addressType]?.country_id || countryCode;
+    const loqateCountry = selected[addressType]?.country_code || countryCode;
     const requestUrl = `${findUrl
     }?key=${
       loqate.apiKey

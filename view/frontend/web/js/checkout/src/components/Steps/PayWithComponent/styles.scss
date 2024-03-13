@@ -1,22 +1,29 @@
 @import '@/styles/global/_breakpoints';
 
+.text-loading {
+  .pay-with__column {
+    opacity: 0;
+  }
+}
+
 .pay-with {
   &__container {
-    align-items: var(--pay-width-align-items);
+    align-items: var(--pay-with__align-items);
     display: flex;
-    flex-direction: var(--pay-with-flex-direction);
+    flex-direction: var(--pay-with__flex-direction);
     flex-wrap: wrap;
-    margin-top: var(--pay-with-container-margin-top, var(--indent__base));
-    min-height: var(--pay-with-container-min-height, 170px);
+    margin: var(--indent__s) var(--indent__s) 0;
+    min-height: var(--pay-with-container-min-height, auto);
+    justify-content: var(--pay-with-justify-content, center);
   }
 
   &__message {
     font-size: var(--font__heading--mobile);
-    font-weight: var(--font-weight__semibold);
-    color: var(--text__color--heading);
-    font-family: var(--font-family-header);
+    font-weight: var(--font-weight__medium);
+    color: var(--font__color);
+    font-family: var(--font-family__header);
     position: relative;
-    display: flex;
+    display: var(--pay-with-message-display, none);
     align-items: center;
     margin-bottom: var(--pay-with-text-margin-bottom, 0);
     max-width: var(--pay-with-width, unset);
@@ -32,8 +39,21 @@
     justify-content: center;
     list-style: none;
     padding-left: 0;
-    min-height: 55px;
     margin: var(--pay-with-column-margin, unset);
+
+    img {
+        width: var(--pay-with-image-max-width, 35px);
+        height: var(--pay-with-image-max-height, 24px);
+
+      &.card {
+        border: 1px solid var(--color__primary-dark-blue);
+      }
+
+      &.google_pay {
+        width: 40px;
+        height: 40px;
+      }
+    }
   }
 
   &__content {
@@ -52,10 +72,6 @@
 
 @media screen and (min-width: $screen__m) {
   .pay-with {
-    &__container {
-      justify-content: left;
-    }
-
     &__column {
       padding: var(--indent__s);
     }

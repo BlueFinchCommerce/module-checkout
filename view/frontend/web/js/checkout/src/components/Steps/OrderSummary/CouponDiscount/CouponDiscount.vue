@@ -11,7 +11,7 @@
   >
     <div class="coupon-discount-icon-container">
       <img
-        :src="GiftIcon"
+        :src="CouponCodeIcon"
         alt="coupon-dropdown-icon"
       >
     </div>
@@ -22,12 +22,10 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown
@@ -42,32 +40,32 @@
           :error="discountErrorMessage"
           name="coupon-code"
           :placeholder="couponDiscountPlaceholderText"
-          :disabled="discountApplied"
+          :disabled="cart.applied_coupons?.length"
           autocomplete="off"
         />
         <MyButton
-          v-if="!discountApplied"
+          v-if="!cart.applied_coupons?.length"
           primary
           :label="applyButtonText"
           @click="dispatchDiscountCode(discountCode)"
         />
 
         <MyButton
-          v-if="discountApplied"
+          v-if="cart.applied_coupons?.length"
           secondary
           :label="removeButtonText"
           @click="removeDiscountCode"
         />
         <div class="success">
           <SuccessMessage
-            v-if="discountApplied"
-            :message="$t('orderSummary.couponDiscount.successMessage', { code: discountCode })"
+            v-if="cart.applied_coupons?.length"
+            :message="$t('orderSummary.couponDiscount.successMessage', { code: cart.applied_coupons[0].code })"
           />
         </div>
         <div class="error">
           <ErrorMessage
             v-if="discountErrorMessage"
-            :message="discountErrorMessage"
+            :message="$t('orderSummary.couponDiscount.errorMessage')"
           />
         </div>
       </div>
@@ -90,10 +88,10 @@ import SuccessMessage from '@/components/Core/Messages/SuccessMessage/SuccessMes
 import Loader from '@/components/Core/Loader/Loader.vue';
 
 // stores
-import { mapWritableState, mapActions } from 'pinia';
+import { mapWritableState, mapState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
-import GiftIcon from '@/icons/gift-icon.svg';
+import CouponCode from '@/icons/coupon-icon.svg';
 
 export default {
   name: 'CouponDiscount',
@@ -132,10 +130,10 @@ export default {
       || this.$t('orderSummary.couponDiscount.placeholder');
   },
   computed: {
-    ...mapWritableState(useCartStore, ['discountCode', 'discountApplied',
-      'discountErrorMessage']),
-    GiftIcon() {
-      return `${getStaticUrl(GiftIcon)}`;
+    ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
+    ...mapWritableState(useCartStore, ['discountCode']),
+    CouponCodeIcon() {
+      return `${getStaticUrl(CouponCode)}`;
     },
   },
   methods: {

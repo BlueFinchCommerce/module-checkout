@@ -150,7 +150,7 @@ export default {
       const isVirtual = !this.isItemRequiringDelivery;
 
       const address = {
-        countryCode: this.selected.shipping.country_id,
+        countryCode: this.selected.shipping.country_code,
       };
 
       if (!isVirtual) {

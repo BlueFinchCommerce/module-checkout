@@ -4,6 +4,7 @@ export default {
     text: 'Veilig betalen',
   },
   dividerText: 'Of voer je e-mailadres in om met een creditcard/debetkaart te betalen',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Voer je e-mailadres in om met een creditcard/debetkaart te betalen',
   orderSummary: {
     applyBtn: 'Gebruiken',
@@ -20,8 +21,15 @@ export default {
     removeItemButtonLabel: 'Artikel verwijderen',
     minusOneItem: 'Een artikel minder',
     plusOneItem: 'Een artikel meer',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Kortingscode invoeren',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Code invoeren',
       successMessage: 'Code succesvol ingevoerd "{code}".',
     },

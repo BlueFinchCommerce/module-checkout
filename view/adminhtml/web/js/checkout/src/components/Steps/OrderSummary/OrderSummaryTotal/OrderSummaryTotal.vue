@@ -81,7 +81,18 @@
             :text="$t('orderSummary.rewardsTitle')"
           />
           <Price
+            :value="total.value"
+          />
+        </div>
+        <div
+          v-else-if="total.code === 'customerbalance' && total.value"
+          class="total__row"
+        >
+          <TextField
             class="total__text"
+            :text="$t('orderSummary.storeCreditTitle')"
+          />
+          <Price
             :value="total.value"
           />
         </div>

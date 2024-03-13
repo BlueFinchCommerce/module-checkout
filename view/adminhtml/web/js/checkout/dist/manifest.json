@@ -22,15 +22,17 @@
       "bin.svg",
       "promo-icon.svg",
       "gift-icon.svg",
+      "coupon-icon.svg",
       "detailsIcon.svg",
       "shippingIcon.svg",
       "paymentIcon.svg",
       "delivery.svg",
+      "Visa.svg",
+      "MasterCard.svg",
       "AmericanExpress.svg",
       "ClearPay.svg",
       "Klarna.svg",
-      "MasterCard.svg",
-      "Visa.svg",
+      "Paypal.svg",
       "rvvup-payment.svg"
     ]
   }

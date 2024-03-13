@@ -6,6 +6,7 @@
       ref="backdrop"
       @click="close"
       @keydown="focus"
+      tabindex="0"
     />
   </transition>
 
@@ -13,9 +14,11 @@
     <div
       v-show="visible"
       :class="getModalClasses"
+      :data-cy="dataCy ? dataCy : 'modal'"
       role="dialog"
       aria-labelledby="modalTitle"
       aria-describedby="modalDescription"
+      @keydown="handleKeydown"
       @click.stop=""
     >
       <header
@@ -56,6 +59,9 @@ export default {
       type: String,
       default: '',
     },
+    dataCy: {
+      type: String,
+    },
     header: {
       type: Boolean,
       default: true,
@@ -71,6 +77,9 @@ export default {
     },
   },
   methods: {
+    handleKeydown() {
+      this.$emit('focus');
+    },
     close() {
       this.$emit('close');
     },

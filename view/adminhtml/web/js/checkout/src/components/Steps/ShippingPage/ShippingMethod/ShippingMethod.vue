@@ -16,6 +16,7 @@
               :text="shippingStepText"
             />
           </div>
+          <div class="divider-line"></div>
         </div>
 
         <ul v-if="shippingMethods.length">
@@ -33,6 +34,7 @@
                 <input
                   :id="item.method_code"
                   :checked="item.method_code === selectedMethod.method_code"
+                  data-cy="radio-button"
                   type="radio"
                   name="shipping-option"
                   @change="handleChange(item)"
@@ -54,6 +56,7 @@
                   :id="nominatedId"
                   :checked="item.method_code === selectedMethod.method_code"
                   type="radio"
+                  radio-button
                   name="shipping-option"
                   @change="handleChange(item)"
                 >
@@ -65,11 +68,11 @@
             </label>
             <TextField
               v-if="taxCartDisplayShipping"
-              :text="formatPrice(item.price_incl_tax)"
+              :text="formatPrice(item.price_incl_tax.value)"
             />
             <TextField
               v-else
-              :text="formatPrice(item.price_excl_tax)"
+              :text="formatPrice(item.price_excl_tax.value)"
             />
             <NominatedDay
               v-if="item.carrier_code === nominatedId
@@ -77,9 +80,14 @@
               :item="item"
             />
           </li>
+          <component
+            :is="additionalShippingMethod"
+            v-for="additionalShippingMethod in additionalShippingMethods"
+            :key="additionalShippingMethod"
+          />
         </ul>
         <TextField
-          v-else-if="!shippingMethods.length"
+          v-else-if="!shippingMethods.length && !loadingShippingMethods"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
         />
@@ -122,6 +130,9 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
+// Extensions
+import shippingMethods from '@/extensions/shippingMethods';
+
 export default {
   name: 'ShippingMethod',
   components: {
@@ -130,6 +141,7 @@ export default {
     Shipping,
     NominatedDay,
     MyButton,
+    ...shippingMethods(),
   },
   props: {
     buttonText: {
@@ -139,6 +151,7 @@ export default {
   },
   data() {
     return {
+      additionalShippingMethods: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
@@ -160,6 +173,7 @@ export default {
     ]),
   },
   async created() {
+    this.additionalShippingMethods = Object.keys(shippingMethods());
     await this.getStoreConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');

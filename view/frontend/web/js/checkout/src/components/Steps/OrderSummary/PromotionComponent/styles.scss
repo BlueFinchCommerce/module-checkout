@@ -2,15 +2,15 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, 1px solid var(--dropdown-border-color));
-    padding: var(--promo-products-paddings, 15px var(--indent__base));
-    background: var(--dropdown-background-color);
-    margin-top: var(--indent__base);
+    border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
+    padding: var(--promo-products-paddings, var(--indent__m) var(--indent__base));
+    background: var(--dropdown__background-color-highlight);
+    margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
     display: var(--promotion-visibility, flex);
     max-width: none;
     justify-content: normal;
     position: relative;
-    order: var(--promo-triggers-order, 6);
+    order: var(--promo-triggers-order, 5);
 
     img {
       display: var(--promo-products-icon-visibility, block);
@@ -27,19 +27,25 @@
 
     &.opened {
       margin-bottom: 0;
+      border-bottom: none;
     }
 
     .promo-title {
       display: var(--promo__title__visible, block);
       line-height: 1.5em;
-      padding: 0 20px 0 10px;
 
       div {
         display: flex;
+        margin: 0 var(--indent__base) 0 var(--indent__s);
+
+        .bold {
+          font-weight: var(--font-weight__bold);
+        }
+
         p {
-          font-size: var(--promo-roducts-title-font-size, var(--font__base));
-          font-weight: var(--promo-roducts-title-font-weight, var(--font-weight__semibold));
-          color: var(--text__color);
+          font-size: var(--promo-products-title-font-size, var(--font__s));
+          font-weight: var(--promo-products-title-font-weight, var(--font-weight__medium));
+          color: var(--font__color);
           margin: 0;
         }
       }
@@ -56,19 +62,22 @@
 }
 
 div.dropdown.promo-dropdown {
-  background: var(--dropdown-background-color);
-  padding: var(--promo-products-paddings, var(--indent__base) var(--indent__s));
-  border-top: 0;
+  background: var(--dropdown__background-color);
+  padding: var(--promo-products-paddings, var(--indent__s) var(--indent__base) var(--indent__base) var(--indent__base));
+  border: var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight);
   margin: 0;
   max-width: none;
-  order: var(--promo-dropdown-order, 7);
+  order: var(--promo-dropdown-order, 6);
   display: grid;
 
   .promo-title {
-    margin-bottom: 15px;
+    margin-bottom: var(--indent__base);
+    font-weight: var(--font-weight__semibold);
   }
 
   &.active {
+    border-top: 0;
+
     p {
       padding: 0;
     }
@@ -76,11 +85,10 @@ div.dropdown.promo-dropdown {
 }
 
 .product-item-carousel {
-  padding-bottom: var(--indent__base);
   grid-auto-flow: column;
   display: grid;
-  grid-auto-columns: 44%;
-  grid-gap: var(--indent__s);
+  grid-auto-columns: 55%;
+  grid-gap: var(--indent__m);
   grid-template-columns: unset;
   overflow-x: auto;
   padding: 0 0 var(--indent__base);
@@ -91,25 +99,25 @@ div.dropdown.promo-dropdown {
   }
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px var(--color-theme__light-grey);
+    -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
     border-radius: var(--border-radius, 6px);
   }
 
   &::-webkit-scrollbar {
     height: 4px;
-    background-color: var(--white__color);
+    background-color: var(--color__primary-white);
   }
 
   &::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px var(--color-theme__light-grey);
-    background-color: var(--primary__color);
+    -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+    background-color: var(--color__primary-grey2);
     border-radius: var(--border-radius, 6px);
   }
 }
 
 .product-item {
-  border: var(--order-summary-carousel-item-border, 1px solid rgba(39, 48, 58, 0.2));
-  border-radius: var(--buttons-border-radius, 4px);
+  border: var(--order-summary-item-border, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
+  border-radius: var(--buttons-border-radius, var(--base__border-radius));
   display: flex;
   flex-direction: column;
   padding: var(--indent__s);
@@ -119,6 +127,7 @@ div.dropdown.promo-dropdown {
     max-width: 120px;
     margin: 0 auto;
     width: 100%;
+    height: 100%;
 
     img {
       width: 100%;
@@ -131,7 +140,7 @@ div.dropdown.promo-dropdown {
 
   .product-actions {
     button {
-      font-size: var(--font__s);
+      font-size: var(--font__xs);
       padding: var(--indent__s) var(--indent__xs);
       text-transform: uppercase;
       word-break: break-word;
@@ -139,29 +148,31 @@ div.dropdown.promo-dropdown {
   }
 
   &-info {
-    flex-grow: 1;
     margin-bottom: var(--indent__s);
   }
 
   &-name {
     margin: var(--indent__s) 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     word-break: break-word;
+    min-height: 44px;
+    font-weight: var(--font-weight__medium);
+  }
+
+  &-price {
+    font-weight: var(--font-weight__bold);
+    font-size: var(--font__l);
   }
 }
 
 //Styles for desktop
 @media screen and (min-width: $screen__m) {
-  .product-item-carousel {
-    grid-auto-columns: 35%;
-
-    &-1,
-    &-2,
-    &-3 {
-      grid-auto-columns: calc(33% - calc(var(--indent__s) / 4 * 3));
-    }
-  }
-
   div.dropdown.promo-dropdown {
+    order: var(--promo-dropdown-order, 1);
+
     .promo-title {
       padding-top: var(--indent__base);
     }
@@ -169,13 +180,17 @@ div.dropdown.promo-dropdown {
 
   .dropdown-button {
     &.promotion-trigger {
-      margin-bottom: 0;
+      padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
+      order: var(--promo-triggers-order, 0);
+      margin: var(--indent__s) 0 var(--indent__xs);
 
-      .promo-title{
+      svg {
+        position: relative;
+      }
+
+      .promo-title {
         div {
-          p {
-            font-size: var(--promo-roducts-title-font-size, var(--font__m));
-          }
+          margin: 0 var(--indent__s) 0 0;
         }
       }
 

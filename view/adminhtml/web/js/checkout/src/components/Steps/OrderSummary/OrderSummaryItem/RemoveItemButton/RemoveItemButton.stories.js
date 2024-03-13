@@ -8,9 +8,16 @@ export default {
 const Template = (args) => ({
   components: { RemoveItemButton },
   setup() {
-    return { args };
+    const product = {
+      id: '123',
+      name: 'Sample Product',
+      price: 19.99,
+      imageUrl: 'https://example.com/product-image.jpg',
+    };
+
+    return { args, product };
   },
-  template: '<RemoveItemButton v-bind="args"/>',
+  template: '<RemoveItemButton :product="product" v-bind="args"/>',
 });
 
 export const RemoveItemButtonComponent = Template.bind({});

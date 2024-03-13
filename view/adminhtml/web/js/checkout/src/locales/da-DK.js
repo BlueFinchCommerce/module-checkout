@@ -4,6 +4,7 @@ export default {
     text: 'Sikker bestilling',
   },
   dividerText: 'Eller indtast din e-mailadresse for betaling med kredit- eller betalingskort',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Indtast din e-mailadresse for betaling med kredit- eller betalingskort',
   orderSummary: {
     applyBtn: 'Anvend',
@@ -20,6 +21,11 @@ export default {
     removeItemButtonLabel: 'Fjern artikel',
     minusOneItem: 'minus en artikel',
     plusOneItem: 'plus en artikel',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Indtast Promo kode',
     giftCardDiscount: {
       placeholder: 'Indtast kode',
@@ -38,6 +44,7 @@ export default {
     heliumItem: 'Leveres oppustet',
     skuNumber: 'SKU nr:',
     supplierStockNumber: 'Leverandørens lager nr:',
+    storeCreditTitle: 'Store Credit',
   },
   progressBar: {
     detailStepTitle: 'Dine oplysninger',
@@ -116,6 +123,7 @@ export default {
   editDetailsButtonLabel: 'Ændre oplysninger',
   editShippingButtonLabel: 'Ændre forsendelsesoplysninger',
   errorMessages: {
+    sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Indtast venligst et gyldigt fornavn',
     lastNameErrorMessage: 'Indtast venligst et gyldigt efternavn',
     emailErrorMessage: 'Indtast venligst en gyldig e-mailadresse',
@@ -166,7 +174,7 @@ export default {
   paymentStep: {
     title: 'Vælg betalingsmetode',
     freePayment: 'Ingen betalingsoplysninger påkrævet',
-    freeButton: 'Betal nu',
+    payNow: 'Betal nu',
     storedPayments: 'Dine gemte betalinger',
     creditDebitCard: 'Kredit- eller betalingskort',
   },
@@ -179,6 +187,23 @@ export default {
     cardNumber: 'Kortnummer',
     expiry: 'Udløbsdato',
     storedPaymentLabel: '{name} Gemt kort udløber den {lastFour}.',
+  },
+  braintree: {
+    payingWith: 'Paying with {paymentTitle}',
+    ach: {
+      accountNumber: 'Account Number',
+      accountType: 'Account Type',
+      businessName: 'Business Name',
+      firstname: 'First Name',
+      lastname: 'Last Name',
+      ownershipType: 'Ownership Type',
+      payment: 'ACH Payment',
+      proof: 'Proof of Authorization',
+      routingNumber: 'Routing Number',
+      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+    },
+    localPayment: 'Local Payment',
+    storePayment: 'Save for later use.',
   },
   agreements: {
     label: 'Jeg accepterer',
@@ -196,6 +221,20 @@ export default {
   },
   newsletter: {
     label: 'Tilmeld dig nyhedsbrevet',
+  },
+  rewards: {
+    applied: 'Reward points have been applied.',
+    applyButton: 'Apply Points',
+    available: ' available ',
+    removeButton: 'Remove Points',
+    rewardPoints: '{points} Reward Points',
+    youHave: 'You have ',
+  },
+  storeCredit: {
+    applyStoreCredit: 'You have {value} in store credit available.',
+    applyButton: 'Use store credit',
+    removeStoreCredit: 'Store credit has been used.',
+    removeButton: 'Remove store credit',
   },
   donation: {
     donateText: 'Donér',

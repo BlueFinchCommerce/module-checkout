@@ -25,7 +25,7 @@ export default {
   getSuggestions(query, addressType) {
     const { countryCode, afd: { maxQuantity } } = useConfigStore();
     const { selected } = useCustomerStore();
-    const afdCountry = selected[addressType]?.country_id || countryCode;
+    const afdCountry = selected[addressType]?.country_code || countryCode;
 
     const paramsObj = {
       format: 'json',
@@ -59,7 +59,7 @@ export default {
   getAndUseAddress(id, addressType) {
     const { countryCode } = useConfigStore();
     const { selected } = useCustomerStore();
-    const afdCountry = selected[addressType]?.country_id || countryCode;
+    const afdCountry = selected[addressType]?.country_code || countryCode;
 
     const paramsObj = {
       format: 'json',

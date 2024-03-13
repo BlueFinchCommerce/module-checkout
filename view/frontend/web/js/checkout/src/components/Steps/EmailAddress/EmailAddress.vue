@@ -26,6 +26,7 @@
           ref="email"
           v-model="customer.email"
           :error="emailError"
+          :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
           data-cy="email"
           :error-message="emailErrorMessage"
           identifier="email"
@@ -38,6 +39,8 @@
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
         />
+        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
+        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
@@ -49,10 +52,8 @@
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
-              font-weight="400"
-              font-size="12px"
             />
-            <Edit />
+            <Edit/>
           </button>
         </div>
       </div>
@@ -79,6 +80,7 @@
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
+            ref="passwordInput"
             required
           >
             <template #icon>
@@ -88,10 +90,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon />
+                  <ShowIcon/>
                 </span>
                 <span v-else>
-                  <HideIcon />
+                  <HideIcon/>
                 </span>
               </button>
             </template>
@@ -102,8 +104,6 @@
           <TextField
             class="field__help-text"
             :text="$t('errorMessages.passwordHelpText')"
-            font-weight="300"
-            font-size="12px"
           />
         </div>
 
@@ -121,8 +121,6 @@
             <span style="display: none">forgotPass link</span>
             <TextField
               :text="$t('forgotPass')"
-              font-weight="300"
-              font-size="14px"
             />
           </a>
         </div>
@@ -131,6 +129,7 @@
           v-if="!emailEntered"
           class="actions"
         >
+          <Recaptcha id="customerLogin" />
           <MyButton
             type="submit"
             class="sign-in-btn"
@@ -138,6 +137,11 @@
             :label="$t('signInButton')"
             @click="submitForm"
           />
+          <div class="divider">
+            <div class="divider-line"></div>
+            <TextField :text="$t('signInDividerText')"/>
+            <div class="divider-line"></div>
+          </div>
           <MyButton
             class="guest-btn"
             secondary
@@ -177,12 +181,15 @@ import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 import TextField from '@/components/Core/TextField/TextField.vue';
 import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 
 // icons
 import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
 import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import Loader from '@/components/Core/Loader/Loader.vue';
+import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
+import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // helpers
 import getBaseUrl from '@/helpers/getBaseUrl';
@@ -192,14 +199,17 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 export default {
   name: 'EmailAddress',
   components: {
+    ErrorIcon,
     TextInput,
     MyButton,
     HideIcon,
     ShowIcon,
+    ValidIcon,
     TextField,
     ErrorMessage,
     Loader,
     Edit,
+    Recaptcha,
   },
   data() {
     return {
@@ -207,11 +217,13 @@ export default {
       // emailRegistered has three states - Undefined, false, true. Undefined is for unknown state.
       emailRegistered: undefined,
       emailErrorMessage: '',
+      emailValid: false,
       passwordErrorMessage: '',
       passwordError: false,
       loginErrorMessage: null,
       showPassword: false,
       passwordValid: false,
+      password: '',
       loadingLogin: false,
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
@@ -220,9 +232,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered']),
+    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
+    ...mapState(useConfigStore, ['storeCode']),
     proceedAsGuestInvalid() {
       return this.emailError;
     },
@@ -231,9 +244,11 @@ export default {
     },
   },
   async mounted() {
-    await this.getStoreConfig();
-    await this.getCartData();
-    await this.getCart();
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
     this.trackStep({
       step: 1,
       description: 'login',
@@ -245,10 +260,11 @@ export default {
     ...mapActions(useCustomerStore, [
       'login',
       'submitEmail',
+      'setEmailEntered',
       'isEmailAvailable',
       'editEmail',
     ]),
-    ...mapActions(useCartStore, ['getCart', 'getCartData', 'emitUpdate']),
+    ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
 
     toggleShowPassword() {
@@ -310,7 +326,8 @@ export default {
     },
 
     proceed() {
-      this.submitEmail();
+      this.setEmailEntered();
+      this.submitEmail(this.customer.email);
     },
 
     /**
@@ -328,10 +345,15 @@ export default {
       if (!isEmailValid(this.customer.email.toLowerCase())) {
         // Set the error messages if the length is greater than 0.
         this.setEmailErrorState(this.customer.email.length > 0);
+      } else {
+        this.emailValid = true;
       }
     },
 
     passwordKeyTrigger(event) {
+      // Update the password value whenever a key is pressed
+      this.password = event.target.value;
+
       // Check if the Enter key was pressed
       const pressedKey = event.key || event.keyCode;
 

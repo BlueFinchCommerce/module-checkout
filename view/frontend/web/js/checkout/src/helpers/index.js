@@ -15,7 +15,6 @@ import getBaseRestUrl from '@/helpers/getBaseRestUrl';
 import getBaseUrl from '@/helpers/getBaseUrl';
 import getBasketPath from '@/helpers/getBasketPath';
 import getCartItems from '@/helpers/getCartItems';
-import getCartItemsQuantity from '@/helpers/getCartItemsQuantity';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getCurrencyCode from '@/helpers/getCurrencyCode';
 import getCustomConfigs from '@/helpers/getCustomConfigs';
@@ -64,7 +63,6 @@ export default {
   getBaseUrl,
   getBasketPath,
   getCartItems,
-  getCartItemsQuantity,
   getCartSectionNames,
   getCurrencyCode,
   getCustomConfigs,

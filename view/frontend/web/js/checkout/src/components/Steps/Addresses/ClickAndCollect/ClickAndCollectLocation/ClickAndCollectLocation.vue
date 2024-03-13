@@ -28,7 +28,6 @@
       <ArrowDown
         v-else
         height="9"
-        stroke="black"
         width="12"
       />
     </div>
@@ -124,7 +123,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useCustomerStore, ['setAddress']),
+    ...mapActions(useCustomerStore, ['setAddressToStore']),
     ...mapActions(useShippingMethodsStore, ['setAsClickAndCollect', 'setClickAndCollectLocation']),
     async selectAddress(location) {
       await this.setAsClickAndCollect(location.site_number);
@@ -133,12 +132,12 @@ export default {
         company: location.siteName,
         street: [location.address],
         city: location.city,
-        country_id: this.countryCode,
+        country_code: this.countryCode,
         region: location.county,
         region_id: 0,
         postcode: location.postcode,
       };
-      this.setAddress(newAddress, 'shipping');
+      this.setAddressToStore(newAddress, 'shipping');
       this.setClickAndCollectLocation(location);
     },
   },

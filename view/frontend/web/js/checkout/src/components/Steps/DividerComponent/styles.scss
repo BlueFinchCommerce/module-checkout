@@ -1,16 +1,31 @@
+@import '@/styles/global/_breakpoints';
+
 .divider {
-  display: var(--divider-display);
+  display: var(--divider__display);
   align-items: center;
-  margin-top: var(--indent__m);
+  margin-top: var(--indent__s);
 
   &-line {
-    border-bottom: 1px solid var(--border__gray-color2);
-    width: 100%;
+    border-bottom: var(--divider__border);
+    width: 20%;
   }
 
   p {
-    font-weight: var(--font-weight__bold) !important; //override inline styles
-    font-family: var(--font-family-copy);
+    font-weight: var(--font-weight__semibold);
+    font-family: var(--font-family__copy);
+    font-size: var(--font__heading--mobile);
     margin: 0 var(--indent__s);
+    text-align: center;
+  }
+}
+
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .divider {
+    p {
+      font-size: var(--font__heading--desktop);
+    }
   }
 }

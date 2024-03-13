@@ -9,12 +9,16 @@ $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
+$customWordings = $assetViewModel->getCustomWording();
 
 ?>
 
 <script>
     window.geneCheckout = window.geneCheckout || {
         logo: "<?= $escaper->escapeJs($logo); ?>",
+        <?php if ($customWordings): ?>
+            ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'),
+        <?php endif; ?>
     };
 </script>
 

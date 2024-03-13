@@ -13,16 +13,8 @@ const convertToString = (sku) => (
   `"${sku}"`
 );
 
-export default (products) => {
-  const productSkus = Object.values(products).map(({ sku }) => sku);
-  Object.values(products).forEach((item) => {
-    if (item.extension_attributes
-          && item.extension_attributes.parent_product_sku
-          && typeof item.extension_attributes.parent_product_sku !== 'undefined'
-          && !productSkus.includes(item.extension_attributes.parent_product_sku)) {
-      productSkus.push(item.extension_attributes.parent_product_sku);
-    }
-  });
+export default (items) => {
+  const productSkus = items.map(({ product: { sku } }) => sku);
   const request = `{
     products (
       filter: {

@@ -4,12 +4,6 @@
     ref="braintreeContainer"
     class="braintree-drop-in"
   />
-  <MyButton
-    v-if="showPayButton"
-    label="Pay"
-    primary
-    @click="startPayment()"
-  />
   <teleport
     v-if="saveVaultLocation !== ''"
     :to="saveVaultLocation"
@@ -21,6 +15,11 @@
       :checked="storeMethod"
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
+    />
+    <MyButton
+      label="Pay"
+      primary
+      @click="startPayment()"
     />
   </teleport>
 </template>
@@ -39,8 +38,6 @@ import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 
 // Helpers
-import getAdditionalPaymentData from '@/helpers/getAdditionalPaymentData';
-import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
 
 // Services
@@ -59,7 +56,6 @@ export default {
   data() {
     return {
       instance: null,
-      showPayButton: false,
       storeMethod: false,
       saveVaultLocation: '',
       paymentOptionPriority: [],
@@ -231,7 +227,7 @@ export default {
           locality: this.getSelectedBillingAddress.city,
           region: this.getSelectedBillingAddress.region_code,
           postalCode: this.getSelectedBillingAddress.postcode,
-          countryCodeAlpha2: this.getSelectedBillingAddress.country_id,
+          countryCodeAlpha2: this.getSelectedBillingAddress.country_code,
         };
 
         const price = this.cartGrandTotal / 100;
@@ -261,19 +257,11 @@ export default {
     },
 
     getPaymentData(payload) {
-      const additionalPaymentData = getAdditionalPaymentData();
-
       return {
-        billingAddress: this.getSelectedBillingAddress,
-        email: this.customer.email,
-        paymentMethod: {
-          method: this.getBraintreeMethod(payload.type),
-          additional_data: {
-            payment_method_nonce: payload.nonce,
-            is_active_payment_token_enabler: this.storeMethod,
-            ...additionalPaymentData,
-          },
-          extension_attributes: getPaymentExtensionAttributes(),
+        code: this.getBraintreeMethod(payload.type),
+        braintree: {
+          payment_method_nonce: payload.nonce,
+          is_active_payment_token_enabler: this.storeMethod,
         },
       };
     },
@@ -305,7 +293,6 @@ export default {
       instance.on('changeActiveView', ({ newViewId, previousViewId }) => {
         this.removeActiveClass();
 
-        this.showPayButton = newViewId === 'card';
         this.clearErrorMessage();
 
         if (newViewId === 'methods') {
@@ -397,7 +384,6 @@ export default {
     },
 
     showLoader() {
-      this.showPayButton = false;
       this.instance._mainView.showLoadingIndicator();
     },
 

@@ -9,6 +9,7 @@
         :aria-checked="ariaChecked"
         :role="role"
         :content="content"
+        :data-cy="dataCy ? dataCy : 'checkbox'"
         @change="changeHandler"
       >
       <span :style="style">{{ text }}<slot /></span>
@@ -24,6 +25,9 @@ export default {
     id: {
       type: String,
       default: '',
+    },
+    dataCy: {
+      type: String,
     },
     text: {
       type: String,

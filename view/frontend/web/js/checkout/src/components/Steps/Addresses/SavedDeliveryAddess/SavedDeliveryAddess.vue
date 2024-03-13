@@ -17,7 +17,7 @@
       <AddressBlockShort
         class="shipping-billing-steps"
         :address_type="isItemRequiringDelivery ? `shipping` : `billing`"
-        :address="isItemRequiringDelivery ? selected.shipping : selected.billing"
+        :address="isItemRequiringDelivery ? cart.shipping_addresses?.[0] : cart.billing_address"
       />
       <div class="address-block__edit proceed-to-details">
         <button
@@ -39,11 +39,10 @@
 import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
-import useCustomerStore from '@/stores/CustomerStore';
+import useStepsStore from '@/stores/StepsStore';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
-// eslint-disable-next-line max-len
 import AddressBlockShort from '@/components/Steps/Addresses/AddressBlockShort/AddressBlockShort.vue';
 
 // icons
@@ -65,8 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['isItemRequiringDelivery']),
-    ...mapState(useCustomerStore, ['selected']),
+    ...mapState(useCartStore, ['cart', 'isItemRequiringDelivery']),
   },
   async created() {
     await this.getStoreConfig();
@@ -74,10 +72,12 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('details-active');
+      this.goToYouDetails();
     },
   },
 };

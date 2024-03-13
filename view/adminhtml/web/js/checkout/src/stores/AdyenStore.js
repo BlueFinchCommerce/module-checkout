@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import usePaymentStore from '@/stores/PaymentStore';
 
 import getStoreConfig from '@/services/getStoreConfig';
-import getAdyenPaymentMethods from '@/services/getAdyenPaymentMethods';
+import getAdyenPaymentMethods from '@/services/adyen/getAdyenPaymentMethods';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 
 export default defineStore('adyenStore', {
@@ -12,7 +12,6 @@ export default defineStore('adyenStore', {
     vaultActive: false,
     paymentTypes: [],
     isAdyenAvailable: false,
-    adyenAuthToken: undefined,
     adyenEnvironmentMode: 'live',
     adyenVaultEnabled: false,
     loadingPaymentMethods: true,
@@ -37,7 +36,6 @@ export default defineStore('adyenStore', {
 
     async getAdyenConfig() {
       const configs = [
-        'gene_better_checkout_adyen_auth_token',
         'adyen_environment_mode',
         'adyen_vault_enabled',
       ];
@@ -45,7 +43,6 @@ export default defineStore('adyenStore', {
 
       if (data) {
         this.setData({
-          adyenAuthToken: data.gene_better_checkout_adyen_auth_token,
           // Adyen's modes are '0' = live, '1' = test.
           adyenEnvironmentMode: data.adyen_environment_mode === '0' ? 'live' : 'test',
           adyenVaultEnabled: data.adyen_vault_enabled,

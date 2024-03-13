@@ -19,16 +19,16 @@
       <div>
         <TextField
           :text="$t('orderSummary.couponCodeTitle')"
-          font-weight="325"
         />
         <Price
+          class="bold"
           :value="freeShipping"
         />
         <TextField
           :text="$t('orderSummary.couponCodeTitleBottom')"
-          font-weight="325"
         />
         <TextField
+          class="bold"
           :text="$t('orderSummary.couponCodeTitleFreeShipping')"
         />
       </div>
@@ -46,12 +46,10 @@
     <ArrowDown
       v-if="!isDropDownVisible && crosssells.length"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-if="isDropDownVisible && crosssells.length"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
 
@@ -64,8 +62,6 @@
       <TextField
         class="promo-title"
         :text="$t('orderSummary.promoTitle')"
-        font-weight="500"
-        font-size="16px"
       />
       <div :class="['product-item-carousel', `product-item-carousel-${crosssells.length}`]">
         <div
@@ -80,17 +76,10 @@
             >
           </div>
           <div class="product-item-info">
-            <Price
-              :value="product.price_range.minimum_price.final_price.value"
-              font-size="18px"
-              font-weight="500"
-            />
             <TextField
               :text="product.name"
-              class="product-item-name"
-              font-weight="325"
-              font-size="14px"
-            />
+              class="product-item-name"/>
+            <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
           </div>
           <div class="product-actions">
             <MyButton
@@ -140,19 +129,17 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['crosssells', 'freeShipping']),
+    ...mapState(useCartStore, ['crosssells', 'freeShipping', 'amastyEnabled']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
   async created() {
     await this.getStoreConfig();
-    await this.getCartData();
     await this.getCart();
-    await this.getCartTotals();
-    // Commented out as none of our clients are currently using amasty shipping module
-    // @todo - work out how to only call this function if the module is enabled
-    // await this.getAmastyShippingData();
+    if (this.amastyEnabled) {
+      await this.getAmastyShippingData();
+    }
     await this.getCrosssells();
 
     this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
@@ -161,7 +148,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
-      'getCartData', 'getCart', 'getCartTotals', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
+      'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

@@ -2,6 +2,7 @@
   <div
     class="promotion-trigger dropdown-button"
     :class="{opened: isDropDownVisible}"
+    data-cy="dropdown-trigger"
     @click="openDropDown"
     @keydown="openDropDown"
   >
@@ -45,12 +46,10 @@
     <ArrowDown
       v-if="!isDropDownVisible && crosssells.length"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-if="isDropDownVisible && crosssells.length"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
 

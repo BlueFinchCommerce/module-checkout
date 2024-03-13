@@ -1,23 +1,51 @@
-import useCustomerStore from '@/stores/CustomerStore';
-import authenticatedRequest from '@/services/authenticatedRequest';
-import buildCartUrl from '@/helpers/buildCartUrl';
+import useCartStore from '@/stores/CartStore';
+import useRecaptchaStore from '@/stores/RecaptchaStore';
+
 import beforePaymentRequest from '@/services/beforePaymentRequest';
-import deepClone from '@/helpers/deepClone';
-import doAddressesMatch from '@/helpers/doAddressesMatch';
+import graphQlRequest from './graphQlRequest';
 
-export default (payment) => {
-  const { selected: { shipping: shippingAddress } } = useCustomerStore();
+export default (paymentMethod) => {
+  const { maskedId } = useCartStore();
+  const { tokens } = useRecaptchaStore();
 
-  const clonedPayment = deepClone(payment);
-  // We need to remove the same_as_shipping information.
-  delete clonedPayment.billingAddress.same_as_shipping;
+  const request = `
+    mutation PlaceOrder($cartId: String!, $paymentMethod: PaymentMethodInput!) {
+      setPayment: setPaymentMethodOnCart(input: {
+        cart_id: $cartId
+        payment_method: $paymentMethod
+      }) {
+        cart {
+          id
+        }
+      }
 
-  // If shipping and billing match then there's no need to save billing to address book as well.
-  if (doAddressesMatch(clonedPayment.billingAddress, shippingAddress)) {
-    delete clonedPayment.billingAddress.save_in_address_book;
+      placeOrder: placeOrder(input: {
+        cart_id: $cartId
+      }) {
+        order {
+          order_number
+        }
+      }
+    }`;
+
+  const variables = {
+    cartId: maskedId,
+    paymentMethod,
+  };
+
+  const customHeaders = {};
+
+  if (tokens.placeOrder) {
+    customHeaders['X-ReCaptcha'] = tokens.placeOrder;
   }
 
   return beforePaymentRequest()
-    .then(() => authenticatedRequest().post(buildCartUrl('payment-information'), clonedPayment))
-    .then((response) => response.data);
+    .then(() => graphQlRequest(request, variables, customHeaders))
+    .then((response) => {
+      if (response.errors) {
+        throw new Error(response.errors[0].message);
+      }
+
+      return response.data.placeOrder.order.order_number;
+    });
 };

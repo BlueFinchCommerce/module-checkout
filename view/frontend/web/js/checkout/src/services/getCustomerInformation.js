@@ -20,7 +20,6 @@ export default async () => {
         lastname
         postcode
         region {
-          region_code
           region
           region_id
         }

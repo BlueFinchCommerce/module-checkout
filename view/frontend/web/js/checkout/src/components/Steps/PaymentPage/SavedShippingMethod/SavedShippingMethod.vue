@@ -18,26 +18,26 @@
               </div>
             </div>
             <div class="shipping-method-title">
-              <TextField :text="`${selectedMethod.method_title}, `" />
+              <TextField :text="`${cart.shipping_addresses?.[0]?.selected_shipping_method?.method_title}, `" />
               <Price
                 class="shipping-method-value"
-                :value="shippingPrice"
+                :value="cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value"
               />
-            </div>
-            <div class="proceed-to-shipping">
-              <button
-                class="button--blank edit-shipping-button"
-                :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
-              >
-                <TextField
-                  class="edit-button-title"
-                  :text="$t('yourDetailsSection.editButton')"
-                />
-                <Edit />
-              </button>
             </div>
           </div>
         </div>
+      </div>
+      <div class="proceed-to-shipping">
+        <button
+          class="button--blank edit-shipping-button"
+          :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+        >
+          <TextField
+            class="edit-button-title"
+            :text="$t('yourDetailsSection.editButton')"
+          />
+          <Edit />
+        </button>
       </div>
     </router-link>
   </div>
@@ -48,6 +48,7 @@ import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
+import useStepsStore from '@/stores/StepsStore';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
@@ -77,15 +78,17 @@ export default {
       || this.$t('shippingStep.stepCompleteTitle');
   },
   computed: {
-    ...mapState(useCartStore, ['totalSegments', 'shippingPrice']),
+    ...mapState(useCartStore, ['cart']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useStepsStore, ['goToShipping']),
 
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('shipping-active');
+      this.goToShipping();
     },
   },
 };

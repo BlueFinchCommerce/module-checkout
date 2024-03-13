@@ -2,6 +2,7 @@
   <p
     :class="classes"
     :style="style"
+    :data-cy="dataCy ? dataCy : 'text'"
     v-html="classes['text-loading'] ? '' : text"
   />
 </template>
@@ -16,6 +17,9 @@ export default {
       type: String,
       required: true,
       default: '',
+    },
+    dataCy: {
+      type: String,
     },
     color: {
       type: String,

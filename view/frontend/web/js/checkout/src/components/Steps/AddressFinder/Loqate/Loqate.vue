@@ -1,18 +1,13 @@
 <template>
   <div class="loqate__container">
-    <TextField
-      class="loqate__title"
-      :text="$t('yourDetailsSection.deliverySection.addressFinder.title')"
-      font-size="16px"
-      font-weight="500"
-    />
     <div class="loqate__field">
       <TextInput
         id="loqate"
+        :class="{'field-valid': loqateValid}"
         v-model="query"
         type="text"
         :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-        :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+        :label="$t('yourDetailsSection.deliverySection.addressFinder.title')"
         class="loqate__input"
         autocomplete="postal-code"
         @blur="onBlur"
@@ -22,6 +17,7 @@
         @keydown.up="onArrowUp"
         @keydown.enter="onEnter"
       />
+      <ValidIcon v-if="loqateValid"/>
       <Search stroke="black" />
     </div>
 
@@ -84,22 +80,22 @@ import loqate from '@/services/loqate';
 // Components
 import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock.vue';
 import TextInput from '@/components/Core/Inputs/TextInput/TextInput.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 import MyButton from '@/components/Core/Button/Button.vue';
 
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 
 export default {
   name: 'LoqateAddress',
   components: {
     AddressBlock,
     TextInput,
-    TextField,
     Search,
     Edit,
     MyButton,
+    ValidIcon,
   },
   props: {
     address_type: {
@@ -115,6 +111,7 @@ export default {
       address: false,
       request: null,
       displayResults: false,
+      loqateValid: false,
     };
   },
   computed: {
@@ -124,11 +121,11 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
-      'setAddress',
+      'setAddressToStore',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
-      'setEditing',
+      'setAddressAsEditing',
     ]),
     editAddress() {
       this.address = false;
@@ -150,6 +147,9 @@ export default {
       // Single Address
       if (item.Type === 'Address') {
         loqate.getAndUseAddress(item.Id).then(this.updateAddress);
+
+        // Set loqate valid
+        this.loqateValid = true;
 
         // Hide the list after selecting an item.
         this.displayResults = false;
@@ -210,19 +210,19 @@ export default {
         company: address.Company,
         street: [address.Line1, address.Line2],
         city: address.City,
-        country_id: countryCode,
+        country_code: countryCode,
         region: region ? region.option.name : address.ProvinceName,
         region_id: region ? region.option.value : 0,
         postcode: address.PostalCode,
       };
-      this.setAddress(newAddress, this.address_type);
+      this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
 
       // If the address we get back from AFD is not valid then open the form
       // allowing User's the ability to edit.
       if (!isValid) {
-        this.setEditing(this.address_type, true);
+        this.setAddressAsEditing(this.address_type, true);
       }
     },
   },

@@ -6,6 +6,7 @@
     :role="role"
     :aria-label="ariaLabel"
     :disabled="disabled"
+    :data-cy="dataCy ? dataCy : type"
     @click="onClick"
   >
     <TextField :text="label" />
@@ -24,6 +25,9 @@ export default {
   },
   props: {
     type: {
+      type: String,
+    },
+    dataCy: {
       type: String,
     },
     label: {

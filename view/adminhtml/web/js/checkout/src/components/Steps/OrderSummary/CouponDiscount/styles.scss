@@ -10,11 +10,12 @@
     padding: var(--drop-down-trigger-padding, var(--indent__m) var(--indent__base));
     background: var(--coupon-discount__background, var(--dropdown-background-color));
     margin-top: var(--drop-down-trigger-margin-top, var(--indent__base));
+    order: var(--coupon-discount-trigger-order, 0);
     max-width: none;
     justify-content: normal;
     position: relative;
     min-height: 60px;
-    order: var(--coupon-discount-trigger-order, 6);
+    cursor: pointer;
 
     .coupon-discount-icon-container {
       display: flex;
@@ -42,11 +43,11 @@
 div.dropdown.coupon-dropdown {
   background: var(--coupon-discount__background, var(--dropdown-background-color));
   padding: var(--drop-down-padding, var(--indent__base));
+  order: var(--coupon-dropdown-order, 1);
   max-width: none;
   border-top: 0;
   margin: 0 auto;
   min-height: 90px;
-  order: var(--coupon-dropdown-order, 7);
 
   .field {
     display: flex;
@@ -103,37 +104,13 @@ div.dropdown.coupon-dropdown {
 
 @mixin largeWidth() {
   .dropdown-button {
-    border: none !important; //override dropdown global styles
-
     &.coupon-discount-trigger {
-      padding: var(--coupon-discount-paddings, 15px 20px);
-
-      .coupon-discount-title {
-        font-size: var(--font__m);
-        font-family: var(--font-family-copy);
-      }
-
-      img {
-        width: var(--lock-icon-width, 50px);
-        height: var(--lock-icon-height, 30px);
-      }
-
-      svg {
-        display: var(--coupon-discount-icon-desktop-display, none);
-      }
+      order: var(--coupon-discount-trigger-order, 9);
     }
   }
 
   div.dropdown.coupon-dropdown {
-    padding: var(--coupon-discount-paddings, 0 20px 20px);
-    display: block;
-
-    .field {
-      &:first-child {
-        padding-top: var(--coupon-dropdown-first-child-padding-top, var(--indent__base));
-        border-top: var(--coupon-header-border-bottom, 1px solid #D9DADB);
-      }
-    }
+    order: var(--coupon-discount-trigger-order, 10);
   }
 }
 

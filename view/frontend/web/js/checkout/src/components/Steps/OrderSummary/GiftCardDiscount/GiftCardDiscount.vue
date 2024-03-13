@@ -22,12 +22,10 @@
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
-      stroke="black"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
-      stroke="black"
     />
   </div>
   <DropDown
@@ -42,32 +40,32 @@
           :error="giftCardErrorMessage"
           name="gift-code"
           :placeholder="giftCardPlaceholderText"
-          :disabled="giftCardApplied"
+          :disabled="cart.applied_gift_cards?.[0]"
           autocomplete="off"
         />
         <MyButton
-          v-if="!giftCardApplied"
+          v-if="!cart.applied_gift_cards?.[0]"
           primary
           :label="applyButtonText"
           @click="dispatchDiscountCode(giftCardCode)"
         />
 
         <MyButton
-          v-if="giftCardApplied"
+          v-if="cart.applied_gift_cards?.[0]"
           secondary
           :label="$t('orderSummary.removeBtn')"
           @click="removeGiftCardCode(giftCardCode)"
         />
         <div class="success">
           <SuccessMessage
-            v-if="giftCardApplied"
+            v-if="cart.applied_gift_cards?.[0]"
             :message="$t('orderSummary.giftCardDiscount.successMessage', { code: giftCardCode })"
           />
         </div>
         <div class="error">
           <ErrorMessage
             v-if="giftCardErrorMessage"
-            :message="giftCardErrorMessage"
+            :message="$t('orderSummary.giftCardDiscount.errorMessage')"
           />
         </div>
       </div>
@@ -90,7 +88,7 @@ import SuccessMessage from '@/components/Core/Messages/SuccessMessage/SuccessMes
 import Loader from '@/components/Core/Loader/Loader.vue';
 
 // stores
-import { mapWritableState, mapActions } from 'pinia';
+import { mapState, mapWritableState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStore';
 import GiftIcon from '@/icons/gift-icon.svg';
@@ -131,8 +129,8 @@ export default {
       || this.$t('orderSummary.giftCardDiscount.placeholder');
   },
   computed: {
-    ...mapWritableState(useCartStore, ['giftCardCode', 'giftCardApplied',
-      'giftCardErrorMessage']),
+    ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),
+    ...mapWritableState(useCartStore, ['giftCardCode']),
     GiftIcon() {
       return `${getStaticUrl(GiftIcon)}`;
     },

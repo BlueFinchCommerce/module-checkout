@@ -1,18 +1,17 @@
 <template>
   <div class="agreements-container">
     <Agreement
-      v-for="agreement in data.agreements"
-      :key="agreement.agreementId"
+      v-for="agreement in agreements"
+      :key="agreement.agreement_id"
       :agreement="agreement"
     />
   </div>
 </template>
 
 <script>
-
 // Stores
-import { mapState } from 'pinia';
-import useCartStore from '@/stores/CartStore';
+import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/AgreementStore';
 
 // Components
 import Agreement from '@/components/Core/Agreements/Agreement/Agreement.vue';
@@ -23,7 +22,13 @@ export default {
     Agreement,
   },
   computed: {
-    ...mapState(useCartStore, ['data']),
+    ...mapState(useAgreementStore, ['agreements']),
+  },
+  created() {
+    this.getAgreements();
+  },
+  methods: {
+    ...mapActions(useAgreementStore, ['getAgreements']),
   },
 };
 </script>

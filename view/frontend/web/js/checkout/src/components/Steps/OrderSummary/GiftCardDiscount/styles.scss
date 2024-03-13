@@ -8,13 +8,13 @@
 .dropdown-button {
   &.gift-discount-trigger {
     padding: var(--drop-down-trigger-padding, var(--indent__m) var(--indent__base));
-    background: var(--gift-discount__background, var(--dropdown-background-color));
+    background: var(--gift-discount__background, var(--dropdown__background-color));
     margin-top: var(--drop-down-trigger-margin-top, var(--indent__base));
     max-width: none;
     justify-content: normal;
     position: relative;
     min-height: 60px;
-    order: var(--gift-discount-trigger-order, 2);
+    order: var(--gift-card-trigger-order, 2);
     cursor: pointer;
 
     .gift-discount-icon-container {
@@ -23,11 +23,11 @@
     }
 
     .gift-discount-title {
-      color: var(--text__color);
+      color: var(--font__color);
       flex-grow: 1;
-      font-size: var(--drop-down-trigger-title-font-size, var(--font__base));
-      font-family: var(--font-family-copy);
-      font-weight: 500;
+      font-size: var(--drop-down-trigger-title-font-size, var(--font__s));
+      font-family: var(--font-family__copy);
+      font-weight: var(--font-weight__semibold);
       margin: 0;
       padding: var(--drop-down-trigger-title-padding, 0 var(--indent__base) 0 var(--indent__s));
     }
@@ -41,13 +41,13 @@
 }
 
 div.dropdown.gift-dropdown {
-  background: var(--gift-discount__background, var(--dropdown-background-color));
-  padding: var(--drop-down-padding, var(--indent__base));
+  background: var(--gift-discount__background, var(--dropdown__background-color));
+  padding: var(--drop-down-padding, 0 var(--indent__base));
   order: var(--gift-dropdown-order, 3);
   max-width: none;
   border-top: 0;
   margin: 0 auto;
-  min-height: 90px;
+  min-height: 80px;
 
   .field {
     display: flex;
@@ -57,16 +57,17 @@ div.dropdown.gift-dropdown {
       flex: 1;
 
       input {
-        border-color: var(--primary__color);
+        border-color: var(--input__border-color);
       }
     }
 
     button {
       max-height: var(--drop-down-max-height, 55px);
       margin-left: var(--drop-button-down-left-margin, 0);
-      text-transform: var(--drop-button-down-text-transform, uppercase);
-      border-radius: var(--inputs-border-radius, 0 var(--input-border-radius) var(--input-border-radius) 0);
+      text-transform: var(--drop-button-down-text-transform, none);
+      border-radius: var(--inputs-border-radius, 0 var(--input__border-radius) var(--input__border-radius) 0);
       padding: var(--drop-button-padding, 12px);
+      margin-top: 0;
       width: initial;
 
       p {
@@ -108,11 +109,11 @@ div.dropdown.gift-dropdown {
 @media screen and (min-width: $screen__m) {
   .dropdown-button {
     &.gift-discount-trigger {
-      order: var(--coupon-discount-trigger-order, 11);
+      order: var(--gift-card-trigger-order, 5);
     }
   }
 
   div.dropdown.gift-dropdown {
-    order: var(--coupon-discount-trigger-order, 12);
+    order: var(--gift-card-dropdown-order, 6);
   }
 }

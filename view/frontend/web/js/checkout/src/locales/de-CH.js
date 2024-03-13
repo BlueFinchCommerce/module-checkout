@@ -4,6 +4,7 @@ export default {
     text: 'Säker beställning',
   },
   dividerText: 'Eller ange din e-postadress för att betala med kredit-/betalkort',
+  signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Ange din e-postadress för att betala med kredit-/betalkort',
   orderSummary: {
     applyBtn: 'Tillämpa',
@@ -20,8 +21,15 @@ export default {
     removeItemButtonLabel: 'Ta bort artikel',
     minusOneItem: 'minus ett artikel',
     plusOneItem: 'plus en artikel',
+    couponDiscountTitle: 'Add promo code',
+    couponDiscount: {
+      errorMessage: 'Please enter a valid code.',
+      placeholder: 'Enter promo code',
+      successMessage: 'Successfully applied code "{code}".',
+    },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
     },

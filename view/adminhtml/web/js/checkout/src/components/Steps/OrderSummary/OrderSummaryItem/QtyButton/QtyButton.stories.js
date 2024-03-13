@@ -8,9 +8,23 @@ export default {
 const Template = (args) => ({
   components: { QtyButton },
   setup() {
-    return { args };
+    const product = {
+      productId: '123',
+      name: 'Sample Product',
+      quantity: 1,
+    };
+
+    return { args, product };
   },
-  template: '<QtyButton v-bind="args"/>',
+  template: '<QtyButton :product="product" v-bind="args"/>',
 });
 
 export const QtyButtonComponent = Template.bind({});
+
+// Example of how to use the component with specific props
+export const DefaultQtyButton = QtyButtonComponent.bind({});
+DefaultQtyButton.args = {
+  productId: '123',
+  name: 'Sample Product',
+  quantity: 1,
+};

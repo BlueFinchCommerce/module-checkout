@@ -1,25 +1,30 @@
 <template>
-  <div class="error-message" :style="style">
-    <ErrorIcon/>
+  <div
+    class="error-message"
+    :class="{'error-message-attached': attached}"
+    :style="style"
+  >
     <TextField :text="message" />
   </div>
 </template>
 <script>
 import { computed, reactive } from 'vue';
 import TextField from '../../TextField/TextField.vue';
-import ErrorIcon from '../../Icons/ErrorIcon/ErrorIcon.vue';
 
 export default {
   name: 'ErrorMessage',
   components: {
     TextField,
-    ErrorIcon,
   },
   props: {
     message: {
       type: String,
       require: true,
       default: '',
+    },
+    attached: {
+      type: Boolean,
+      default: true,
     },
     backgroundColor: {
       type: String,

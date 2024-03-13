@@ -1,17 +1,21 @@
 .order-summary-desktop {
+  background: var(--summary__background-color);
+  padding: var(--indent__base) var(--indent__base--desktop);
   display: grid;
   min-height: 500px;
 
   .order-total-container {
-    background: var(--order-total-container__background-colour, var(--white__color));
-    padding: var(--container-padding, 40px 30px);
+    background: var(--order-total-container__background-colour, var(--summary__background-color));
+    padding: var(--container-padding, var(--indent__xl) var(--indent__l));
     font-family: var(--order-total-container__font-family, unset);
   }
 
   &-items {
     max-height: var(--summary-desktop-items-max-height, 455px);
+    margin-top: var(--indent__base);
     min-height: 180px;
     overflow-y: auto;
-    order: var(--order-summary-desktop-order, 4);
+    overflow-x: hidden;
+    order: var(--order-summary-desktop-order, 7);
   }
 }

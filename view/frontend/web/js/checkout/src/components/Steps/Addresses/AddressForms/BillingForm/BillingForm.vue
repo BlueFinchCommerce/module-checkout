@@ -14,11 +14,17 @@
         />
       </div>
 
-      <TextField
-        v-if="(!selected[address_type].same_as_shipping && !isClickAndCollect) || !isItemRequiringDelivery"
-        class="address-block__title"
-        :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
-      />
+      <div class="address-block__title"
+           v-if="(!selected[address_type].same_as_shipping && !isClickAndCollect) || !isItemRequiringDelivery">
+       <div class="address-block__title-with-icon">
+         <BillingAddressIcon/>
+         <TextField
+           class="address-block__title"
+           :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
+         />
+       </div>
+        <div class="divider-line"></div>
+      </div>
 
       <AddressList
         v-if="emailEntered && customer.addresses.length
@@ -64,7 +70,7 @@
       />
 
       <div class="billing-form-address">
-        <div :class="!customerInfoValidation ? 'disabled' : ''">
+        <div>
           <AddressFinder
             v-if="!selected[address_type].id
               || (selected[address_type].id === 'custom' && selected[address_type].editing)"
@@ -72,13 +78,6 @@
           />
         </div>
 
-        <LinkComponent
-          v-if="selected[address_type].id !== 'custom' && addressFinder.enabled"
-          class="manually-button"
-          :class="!customerInfoValidation ? 'disabled' : ''"
-          :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
-          @click.prevent="editBillingAddress"
-        />
         <AddressForm
           v-if="selected[address_type].editing || !addressFinder.enabled"
           :address_type="address_type"
@@ -103,11 +102,11 @@ import AddressBlock from '@/components/Steps/Addresses/AddressBlock/AddressBlock
 import NameFields from '@/components/Steps/Addresses/AddressForms/Form/Name/Name.vue';
 import CheckboxComponent from '@/components/Core/Inputs/Checkbox/Checkbox.vue';
 import AddressFinder from '@/components/Steps/AddressFinder/AddressFinder.vue';
-import LinkComponent from '@/components/Core/Link/Link.vue';
 import AddressList from '@/components/Steps/Addresses/AddressList/AddressList.vue';
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
@@ -115,6 +114,7 @@ import deepClone from '@/helpers/deepClone';
 export default {
   name: 'BillingForm',
   components: {
+    BillingAddressIcon,
     TextField,
     AddressForm,
     AddressBlock,
@@ -122,7 +122,6 @@ export default {
     NameFields,
     CheckboxComponent,
     AddressFinder,
-    LinkComponent,
     AddressList,
   },
   props: {
@@ -148,7 +147,7 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, [
-      'setEditing',
+      'setAddressAsEditing',
       'createNewAddress',
       'submitCustom',
       'setAddressAsCustom',
@@ -157,15 +156,15 @@ export default {
       if (!event.target.checked) {
         this.createNewAddress(this.address_type);
         this.selected[this.address_type].same_as_shipping = false;
-        this.setEditing(this.address_type, true);
+        this.setAddressAsEditing(this.address_type, true);
       } else {
         this.selected[this.address_type] = deepClone(this.selected.shipping);
         this.selected[this.address_type].same_as_shipping = true;
-        this.setEditing(this.address_type, false);
+        this.setAddressAsEditing(this.address_type, false);
       }
     },
     editBillingAddress() {
-      this.setEditing(this.address_type, true);
+      this.setAddressAsEditing(this.address_type, true);
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;

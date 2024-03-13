@@ -1,7 +1,7 @@
 .adyen-checkout__payment-method-tick {
   align-self: self-start;
   display: flex;
-  fill: var(--adyen-saved-card-tick-color, var(--primary__color));
+  fill: var(--adyen-saved-card-tick-color, var(--color__primary-blue));
   grid-column: 2;
   grid-row: 1;
   justify-self: flex-end;
