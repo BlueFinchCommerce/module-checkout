@@ -75,6 +75,7 @@
   .shipping-method {
     label {
       display: var(--shipping-label-display, flex);
+      align-items: flex-start;
     }
   }
 
@@ -403,7 +404,7 @@
       }
 
       &.selected {
-        border-color: var(--base__border-weight-active) solid var(--valid-field-border, var(--color__primary-dark-blue));
+        border-color: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
       }
     }
 
