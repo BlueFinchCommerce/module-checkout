@@ -142,8 +142,8 @@ export default {
       this.nameValid = !!first;
       this.lastNameValid = !!last;
 
-      this.phoneValidError = this.selected[type].telephone.length > 11;
-      this.phoneValid = this.selected[type].telephone.length === 11;
+      this.phoneValidError = this.selected[type].telephone.length > 20;
+      this.phoneValid = this.selected[type].telephone.length > 1;
 
       const fullDetails = first && last && phone;
       this.$emit('isCustomerInfoFull', fullDetails);

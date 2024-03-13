@@ -404,7 +404,7 @@
       }
 
       &.selected {
-        border-color: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
+        border: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
       }
     }
 
