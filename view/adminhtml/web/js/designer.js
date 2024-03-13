@@ -11,19 +11,20 @@ define([
     const SELECTORS = {
         DESIGNER_MODAL: '#gene-bettercheckout-designer',
         DESIGNER_ROOT: '#gene-better-checkout-root',
-        DESIGNER_VALUES: '#gene_better_checkout_general_designer_values',
+        DESIGNER_VALUES: '#gene_better_checkout_general_checkout_designer_designer_values',
         DESIGNER_VALUES_SYSTEM: `
-            #gene_better_checkout_general_designer_values_inherit,
-            #gene_better_checkout_general_custom_wording_inherit,
-            #gene_better_checkout_general_gene_better_checkout_logo_inherit
+            #gene_better_checkout_general_checkout_designer_designer_values_inherit,
+            #gene_better_checkout_general_checkout_designer_custom_wording_inherit,
+            #gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_inherit
         `,
-        CUSTOM_WORDING: '#gene_better_checkout_general_custom_wording',
-        DESIGNER_LOGO: '#gene_better_checkout_general_gene_better_checkout_logo',
+        CUSTOM_WORDING: '#gene_better_checkout_general_checkout_designer_custom_wording',
+        DESIGNER_LOGO: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo',
         DESIGNER_LOGO_LABEL: `
-            #gene-bettercheckout-designer label[for="gene_better_checkout_general_gene_better_checkout_logo"]
+            #gene-bettercheckout-designer 
+            label[for="gene_better_checkout_general_checkout_designer_gene_better_checkout_logo"]
         `,
-        DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_gene_better_checkout_logo_image',
-        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_gene_better_checkout_logo_delete'
+        DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_image',
+        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_delete'
     };
 
     return Component.extend({
