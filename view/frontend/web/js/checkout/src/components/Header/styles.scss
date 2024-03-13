@@ -6,7 +6,7 @@
   border-bottom: var(--header__border-bottom);
 
   .header-content {
-    max-width: var(--header-max-width, 1235px);
+    max-width: calc(var(--layout__max-width) - var(--indent__xl));
     padding: var(--header-container-mobile-paddings, 0);
     margin: 0 auto;
     display: flex;
