@@ -4,6 +4,8 @@ import useRecaptchaStore from '@/stores/RecaptchaStore';
 import beforePaymentRequest from '@/services/beforePaymentRequest';
 import graphQlRequest from './graphQlRequest';
 
+import paymentComplete from '@/helpers/dataLayer/paymentComplete';
+
 export default (paymentMethod) => {
   const { maskedId } = useCartStore();
   const { tokens } = useRecaptchaStore();
@@ -45,6 +47,9 @@ export default (paymentMethod) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
       }
+
+      // Add tracking in on payment complete.
+      paymentComplete();
 
       return response.data.placeOrder.order.order_number;
     });
