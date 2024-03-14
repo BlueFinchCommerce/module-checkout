@@ -19,7 +19,7 @@ import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getPaymentExtensionAttributes from '@/helpers/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
-import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
+import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/createPayment';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
@@ -159,7 +159,7 @@ export default {
         onAuthorized: this.onAuthorized.bind(this),
         onShippingContactSelected: this.onShippingContactSelect.bind(this),
         onShippingMethodSelected: this.onShippingMethodSelect.bind(this),
-        onClick: (resolve, reject) => expressPaymentOnClick(resolve, reject, applePayMethod.type),
+        onClick: (resolve, reject) => expressPaymentOnClickDataLayer(resolve, reject, applePayMethod.type),
         onSubmit: () => {},
       };
     },

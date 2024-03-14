@@ -29,6 +29,8 @@ import getCartItems from '@/helpers/getCartItems';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getMaskedId from '@/helpers/getMaskedId';
 import redirectToBasketPage from '@/helpers/redirectToBasketPage';
+import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
+import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 
 export default defineStore('cartStore', {
   state: () => ({
@@ -227,6 +229,7 @@ export default defineStore('cartStore', {
           cart,
           discountErrorMessage: null,
         });
+        discountCodeDataLayer('discountCodeApplied');
       } catch (error) {
         this.setData({
           discountErrorMessage: error.message,
@@ -242,6 +245,7 @@ export default defineStore('cartStore', {
 
     async removeDiscountCode() {
       try {
+        discountCodeDataLayer('discountCodeRemoved');
         const cart = await removeDiscountCode();
 
         this.setData({
@@ -269,6 +273,7 @@ export default defineStore('cartStore', {
           cart,
           giftCardErrorMessage: null,
         });
+        giftCardCodeDataLayer('giftCardCodeApplied');
       } catch (error) {
         this.setData({
           giftCardErrorMessage: error.message,
@@ -283,6 +288,7 @@ export default defineStore('cartStore', {
     },
 
     async removeGiftCardCode(code) {
+      giftCardCodeDataLayer('giftCardCodeRemoved');
       try {
         const cart = await removeGiftCardCode(code);
 

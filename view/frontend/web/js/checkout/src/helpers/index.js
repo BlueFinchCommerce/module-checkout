@@ -1,10 +1,13 @@
 import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippingInformation';
+import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 import buildCartUrl from '@/helpers/buildCartUrl';
 import cleanAddress from '@/helpers/cleanAddress';
 import createScriptLoadPromise from '@/helpers/createScriptLoadPromise';
 import deepClone from '@/helpers/deepClone';
+import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import doAddressesMatch from '@/helpers/doAddressesMatch';
 import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
+import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 import formatAddress from '@/helpers/formatAddress';
 import formatClickAndCollectAddress from '@/helpers/formatClickAndCollectAddress';
 import formatPrice from '@/helpers/formatPrice';
@@ -38,6 +41,7 @@ import getUrlQuery from '@/helpers/getUrlQuery';
 import getUrlTokens from '@/helpers/getUrlTokens';
 import getWebsiteId from '@/helpers/getWebsiteId';
 import getWithdrawTermsServicesId from '@/helpers/getWithdrawTermsServicesId';
+import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 import handleServiceError from '@/helpers/handleServiceError';
 import isEmailValid from '@/helpers/isEmailValid';
 import mapCustomConfigs from '@/helpers/mapCustomConfigs';
@@ -47,12 +51,15 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 
 export default {
   afterSubmittingShippingInformation,
+  beginCheckoutDataLayer,
   buildCartUrl,
   cleanAddress,
   createScriptLoadPromise,
   deepClone,
+  discountCodeDataLayer,
   doAddressesMatch,
   expressPaymentOnClick,
+  expressPaymentOnClickDataLayer,
   formatAddress,
   formatClickAndCollectAddress,
   formatPrice,
@@ -86,6 +93,7 @@ export default {
   getUrlTokens,
   getWebsiteId,
   getWithdrawTermsServicesId,
+  giftCardCodeDataLayer,
   handleServiceError,
   isEmailValid,
   mapCustomConfigs,
