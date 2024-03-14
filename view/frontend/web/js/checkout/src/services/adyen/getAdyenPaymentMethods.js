@@ -4,13 +4,13 @@ import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
-  const transformedData = paymentMethodsExtraDetails.map((item) => ({
+  const transformedData = paymentMethodsExtraDetails?.map((item) => ({
     [item.type]: {
       icon: item.icon,
       isOpenInvoice: item.isOpenInvoice,
       configuration: item.configuration,
     },
-  }));
+  })) || [];
 
   return Object.assign({}, ...transformedData);
 }
@@ -65,6 +65,19 @@ export default async () => {
                     optional
                 }
             }
+            storedPaymentMethods {
+              id
+              brand
+              expiryMonth
+              expiryYear
+              holderName
+              lastFour
+              name
+              ownerName
+              networkTxReference
+              type
+              supportedShopperInteractions
+            }
         }
     }
 }`;
@@ -73,6 +86,8 @@ export default async () => {
     .then((response) => ({
       paymentMethodsExtraDetails:
         transformGraphqlExtraDetails(response.data.adyenPaymentMethods.paymentMethodsExtraDetails),
-      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse,
+      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse || {
+        paymentMethods: [],
+      },
     }));
 };

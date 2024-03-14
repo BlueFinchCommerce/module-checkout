@@ -1,16 +1,4 @@
 <template>
-  <div class="adyen-payment__title">
-    <Payment
-      class="adyen-payment__icon"
-      fill="black"
-    />
-    <TextField
-      v-if="!storedPayments"
-      class="adyen-payment__header"
-      :text="paymentStepText"
-    />
-    <div class="divider-line"></div>
-  </div>
   <div :class="loadingPaymentMethods ? 'text-loading' : ''">
     <AdyenPaymentMethods
       v-if="isLoggedIn && adyenVaultEnabled"
@@ -36,15 +24,11 @@ import useGtmStore from '@/stores/GtmStore';
 
 // Components
 import AdyenPaymentMethods from '@/components/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
-import Payment from '@/components/Core/Icons/Payment/Payment.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 
 export default {
   name: 'AdyenDropIn',
   components: {
     AdyenPaymentMethods,
-    Payment,
-    TextField,
   },
   data() {
     return {
@@ -53,8 +37,6 @@ export default {
       storedPaymentsId: 'adyen-dropin-container-stored',
       adyenKey: 0,
       storedKey: 0,
-      paymentStepText: '',
-      paymentStepTextId: 'gene-bettercheckout-paymentstep-text',
     };
   },
   computed: {
@@ -70,7 +52,6 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    this.paymentStepText = window.geneCheckout?.[this.paymentStepTextId] || this.$t('paymentStep.title');
 
     this.cartEmitter.on('cartUpdated', () => {
       this.clearPaymentReponseCache();

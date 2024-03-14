@@ -13,7 +13,7 @@ interface ConfigurationInterface
     /** @var string */
     const VUE_CHECKOUT_ENABLED_XML_PATH = 'gene_better_checkout/general/enabled';
     /** @var string */
-    const VUE_CHECKOUT_FONT_XML_PATH = 'gene_better_checkout/general/font_upload';
+    const VUE_CHECKOUT_FONT_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_upload';
 
     /**
      * @param string $scopeType

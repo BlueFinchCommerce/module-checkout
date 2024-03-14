@@ -125,6 +125,9 @@ export default `
   applied_coupons {
     code
   }
+  applied_reward_points {
+    points
+  }
   prices {
     grand_total {
       value

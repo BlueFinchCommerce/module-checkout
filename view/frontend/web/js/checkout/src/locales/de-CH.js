@@ -177,7 +177,9 @@ export default {
   addNewAddressBtn: 'Lägg till ny adress',
   saveNewAddress: 'Spara i adressbok',
   paymentStep: {
-    title: 'Välj en betalningsmetod',
+    titleGuest: 'Välj en betalningsmetod',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Ingen betalningsinformation krävs',
     payNow: 'Betala nu',
     storedPayments: 'Dina sparade betalningar',
@@ -192,6 +194,7 @@ export default {
     cardNumber: 'Kortnummer',
     expiry: 'Förfallodag',
     storedPaymentLabel: '{namn} Lagrat kort upphör att gälla {sistaFjärde}',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

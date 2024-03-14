@@ -177,7 +177,9 @@ export default {
   addNewAddressBtn: 'Añadir nueva dirección',
   saveNewAddress: 'Guardar en la libreta de direcciones',
   paymentStep: {
-    title: 'Seleccione el método de pago',
+    titleGuest: 'Seleccione el método de pago',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'No se requieren datos de pago',
     payNow: 'Pagar ahora',
     storedPayments: 'Sus pagos guardados',
@@ -192,6 +194,7 @@ export default {
     cardNumber: 'Número de tarjeta',
     expiry: 'Fecha de caducidad',
     storedPaymentLabel: '{name} Tarjeta guardada caduca el {lastFour}',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

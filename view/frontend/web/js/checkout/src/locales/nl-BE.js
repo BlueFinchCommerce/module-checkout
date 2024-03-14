@@ -177,7 +177,9 @@ export default {
   addNewAddressBtn: 'Nieuw adres toevoegen',
   saveNewAddress: 'Opslaan in adresboek',
   paymentStep: {
-    title: 'Selecteer betaalmethode',
+    titleGuest: 'Selecteer betaalmethode',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Geen betalingsgegevens nodig',
     payNow: 'Nu betalen',
     storedPayments: 'Je opgeslagen betalingen',
@@ -192,6 +194,7 @@ export default {
     cardNumber: 'Kaartnummer',
     expiry: 'Vervaldatum',
     storedPaymentLabel: '{name} Opgeslagen kaart verloopt op {lastFour}',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

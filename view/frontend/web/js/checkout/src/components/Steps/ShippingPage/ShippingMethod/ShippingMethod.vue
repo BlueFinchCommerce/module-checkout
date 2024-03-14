@@ -16,82 +16,78 @@
               :text="shippingStepText"
             />
           </div>
-          <div class="divider-line"></div>
+          <div class="divider-line" />
         </div>
 
-        <ul v-if="cart.shipping_addresses?.[0]?.available_shipping_methods">
-          <li
+        <div
+          v-if="cart.shipping_addresses?.[0]?.available_shipping_methods"
+          class="shipping-method__container"
+        >
+          <template
             v-for="(item) in cart.shipping_addresses?.[0]?.available_shipping_methods"
             :key="item.carrier_code"
-            class="shipping-method"
-            tabindex="0"
-            :class="{
-              'selected': (
-                item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
-              )
-            }"
           >
             <label
-              v-if="item.method_code !== nominatedId"
               :for="item.method_code"
               class="shipping-method__label"
+              :class="{
+                'selected': (
+                  item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
+                )
+              }"
             >
-              <span class="shipping-method__input">
-                <input
-                  :id="item.method_code"
-                  :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                  data-cy="radio-button"
-                  type="radio"
-                  name="shipping-option"
-                  @change="handleChange(item)"
-                >
-              </span>
-              <span class="shipping-method__content">
-                <TextField :text="item.method_title" />
-                <TextField :text="item.carrier_title" />
-              </span>
-            </label>
+              <template v-if="item.method_code !== nominatedId">
+                <span class="shipping-method__input">
+                  <input
+                    :id="item.method_code"
+                    :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
+                    data-cy="radio-button"
+                    type="radio"
+                    name="shipping-option"
+                    @change="handleChange(item)"
+                  >
+                </span>
+                <span class="shipping-method__content">
+                  <TextField :text="item.method_title" />
+                  <TextField :text="item.carrier_title" />
+                </span>
+              </template>
 
-            <label
-              v-else
-              :for="nominatedId"
-              class="shipping-method__label"
-            >
-              <span class="shipping-method__input">
-                <input
-                  :id="nominatedId"
-                  :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                  type="radio"
-                  radio-button
-                  name="shipping-option"
-                  @change="handleChange(item)"
-                >
-              </span>
-              <span class="shipping-method__content">
-                <TextField :text="item.method_title" />
-                <TextField :text="item.carrier_title" />
-              </span>
+              <template v-else>
+                <span class="shipping-method__input">
+                  <input
+                    :id="nominatedId"
+                    :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
+                    type="radio"
+                    radio-button
+                    name="shipping-option"
+                    @change="handleChange(item)"
+                  >
+                </span>
+                <span class="shipping-method__content">
+                  <TextField :text="item.method_title" />
+                  <TextField :text="item.carrier_title" />
+                </span>
+              </template>
+              <TextField
+                class="shipping-method__price"
+                :text="taxCartDisplayShipping
+                  ? formatPrice(item.price_incl_tax.value)
+                  : formatPrice(item.price_excl_tax.value)"
+              />
+              <NominatedDay
+                v-if="item.carrier_code === nominatedId
+                  && nominatedDayEnabled && selectedMethod.carrier_code === nominatedId"
+                :item="item"
+              />
             </label>
-            <TextField
-              v-if="taxCartDisplayShipping"
-              :text="formatPrice(item.price_incl_tax.value)"
-            />
-            <TextField
-              v-else
-              :text="formatPrice(item.price_excl_tax.value)"
-            />
-            <NominatedDay
-              v-if="item.carrier_code === nominatedId
-                && nominatedDayEnabled && selectedMethod.carrier_code === nominatedId"
-              :item="item"
-            />
-          </li>
+          </template>
           <component
             :is="additionalShippingMethod"
             v-for="additionalShippingMethod in additionalShippingMethods"
             :key="additionalShippingMethod"
           />
-        </ul>
+        </div>
         <TextField
           v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods.length && !loadingShippingMethods"
           class="checkout-shipping-methods__error"
