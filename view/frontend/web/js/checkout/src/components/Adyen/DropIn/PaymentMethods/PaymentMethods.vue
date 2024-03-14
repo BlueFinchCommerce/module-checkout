@@ -146,13 +146,13 @@ export default {
 
     // The titles need to be reflective of the state we're in.
     if (this.storedPayments) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
     } else if (this.storedPaymentMethods.length) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
         || this.$t('paymentStep.titleNew');
     } else {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text']
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
         || this.$t('paymentStep.titleGuest');
     }
 
