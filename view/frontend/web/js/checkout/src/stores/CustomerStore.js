@@ -9,7 +9,6 @@ import getCustomerStoreCredit from '@/services/storeCredit/getCustomerStoreCredi
 import isEmailAvailable from '@/services/isEmailAvailable';
 import login from '@/services/login';
 import refreshCustomerData from '@/services/refreshCustomerData';
-import subscribeToNewsletter from '@/services/subscribeToNewsletter';
 import amastyConsentLogic from '@/services/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
@@ -559,22 +558,6 @@ export default defineStore('customerStore', {
 
       if (response.customer) {
         this.setData(response);
-      }
-    },
-
-    async subscribeToNewsletter() {
-      const { newsletterEnabled, newsletterAllowGuests } = useConfigStore();
-
-      // If the User is logged in then check they aren't already subscribed.
-      // If they are not logged in the check that guests are allowed to subscribe.
-      const newSignUp = this.isLoggedIn
-        ? !this.newsletter.isSubscribed
-        : newsletterAllowGuests;
-
-      if (newsletterEnabled
-        && newSignUp
-        && this.newsletter.subscribeToNewsletter) {
-        await subscribeToNewsletter();
       }
     },
 

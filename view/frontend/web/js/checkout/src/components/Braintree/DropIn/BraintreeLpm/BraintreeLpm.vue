@@ -128,7 +128,6 @@ export default {
       'clearErrorMessage',
     ]),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'getPaymentMethodTitle']),
 
     getIcon(method) {
@@ -214,7 +213,6 @@ export default {
       const paymentData = this.getPaymentData(payload);
 
       createPayment(paymentData)
-        .then(this.subscribeToNewsletter)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((error) => {
