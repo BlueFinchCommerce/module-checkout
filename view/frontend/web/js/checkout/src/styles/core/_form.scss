@@ -72,13 +72,6 @@
     }
   }
 
-  .shipping-method {
-    label {
-      display: var(--shipping-label-display, flex);
-      align-items: flex-start;
-    }
-  }
-
   input[type="radio"] {
     width: var(--radio-input__width);
     height: var(--radio-input__height);
