@@ -39,7 +39,7 @@ export default defineStore('gtmStore', {
         },
       });
     },
-    addToCartEvent(product, quantity) {
+    addToCartEvent(product) {
       const { currencyCode } = useConfigStore();
 
       this.trackGtmEvent({
@@ -52,10 +52,10 @@ export default defineStore('gtmStore', {
               list: 'Shopping Basket',
             },
             products: [{
-              id: product.item_id,
+              id: product.id,
               name: product.name,
-              price: product.price,
-              quantity: quantity || 1,
+              price: product.price_range.minimum_price.final_price.value,
+              quantity: product.quantity || 1,
               brand: product.brand,
               category: product.category_name,
             }],
@@ -76,9 +76,9 @@ export default defineStore('gtmStore', {
               list: 'Shopping Basket',
             },
             products: [{
-              id: product.item_id,
+              id: product.id,
               name: product.name,
-              price: product.price,
+              price: product.price_range.minimum_price.final_price.value,
               quantity: quantity || 1,
               brand: product.brand,
               category: product.category_name,

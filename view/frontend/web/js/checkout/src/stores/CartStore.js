@@ -161,7 +161,7 @@ export default defineStore('cartStore', {
       } catch (error) {
         // Add the error message to the cart item.
         const { items } = this.cart;
-        items.map((item) => {
+        const updatedItems = items.map((item) => {
           if (item.uid === updateItem.uid) {
             return {
               ...item,
@@ -174,7 +174,7 @@ export default defineStore('cartStore', {
           return item;
         });
 
-        this.setData({ cart: { items } });
+        this.setData({ cart: { items: updatedItems } });
       }
 
       if (this.penniesDonation.enabled) {
@@ -186,10 +186,11 @@ export default defineStore('cartStore', {
 
       // Emit update GTM event.
       const gtmStore = useGtmStore();
+
       if (change > 0) {
-        gtmStore.addToCartEvent(updateItem);
+        gtmStore.addToCartEvent(updateItem.product);
       } else {
-        gtmStore.removeFromCartEvent(updateItem);
+        gtmStore.removeFromCartEvent(updateItem.product);
       }
 
       this.cartLoading = 'false';
@@ -216,7 +217,7 @@ export default defineStore('cartStore', {
       await refreshCustomerData(getCartSectionNames());
 
       const gtmStore = useGtmStore();
-      gtmStore.removeFromCartEvent(product, product.qty);
+      gtmStore.removeFromCartEvent(product.product, product.quantity);
 
       this.cartLoading = 'false';
     },
