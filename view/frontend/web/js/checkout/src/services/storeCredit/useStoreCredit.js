@@ -1,5 +1,6 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
+import getFullCart from '@/helpers/getFullCart';
 
 export default () => {
   const { maskedId } = useCartStore();
@@ -7,7 +8,7 @@ export default () => {
     mutation {
       applyStoreCreditToCart(input: { cart_id: "${maskedId}" }) {
         cart {
-          id
+          ${getFullCart}
         }
       }
     }`;
