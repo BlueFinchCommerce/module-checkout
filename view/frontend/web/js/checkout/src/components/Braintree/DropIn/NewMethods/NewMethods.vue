@@ -190,7 +190,6 @@ export default {
       'getPayPalLineItems',
     ]),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
 
     startPayment() {
@@ -198,7 +197,6 @@ export default {
       this.requestPaymentMethod()
         .then(this.getPaymentData)
         .then(createPayment)
-        .then(this.subscribeToNewsletter)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((paymentError) => {

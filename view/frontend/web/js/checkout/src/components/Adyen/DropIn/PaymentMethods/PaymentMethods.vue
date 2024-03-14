@@ -187,10 +187,6 @@ export default {
           createPayment(paymentMethod)
             .then(this.setOrderId)
             .then(getAdyenPaymentStatus)
-            .then(async (response) => {
-              await this.subscribeToNewsletter();
-              return response;
-            })
             .then((response) => this.handlePaymentStatus(response, dropin))
             .catch((error) => {
               this.displayError(dropin, error.response?.data?.message).bind(this);
@@ -306,7 +302,6 @@ export default {
     ]),
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     setOrderId(orderId) {
       this.orderId = orderId;
       return orderId;

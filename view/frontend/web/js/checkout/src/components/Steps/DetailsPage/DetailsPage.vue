@@ -25,7 +25,7 @@
 
       <EmailAddress />
 
-      <Newsletter v-if="emailEntered && !customer.id" />
+      <Newsletter v-if="emailEntered" />
 
       <div
         v-if="custom.clickandcollectEnabled && emailEntered && isItemRequiringDelivery"

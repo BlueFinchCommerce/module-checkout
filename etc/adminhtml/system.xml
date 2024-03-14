@@ -20,11 +20,6 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
                 </field>
-                <field id="newsletter_signup" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Enable Newsletter Signup</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Enable newsletter signup within the checkout.]]></comment>
-                </field>
                 <field id="progress_bar_visible" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Progress Bar Functionality</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

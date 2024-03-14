@@ -139,7 +139,6 @@ export default {
       'mapCartTypes',
     ]),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
 
     async selectPaymentCard(vaultedMethod) {
@@ -262,7 +261,6 @@ export default {
         const paymentData = this.getPaymentData(response);
 
         return createPayment(paymentData)
-          .then(this.subscribeToNewsletter)
           .then(() => refreshCustomerData(['cart']))
           .then(this.redirectToSuccess);
       }).catch((paymentError) => {
