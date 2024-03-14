@@ -18,8 +18,8 @@ import removeCartItem from '@/services/cart/removeCartItem';
 import removeGiftCardCode from '@/services/giftCard/removeGiftCardCode';
 import updateCartItemQuantity from '@/services/cart/updateCartItemQuantity';
 import removeDiscountCode from '@/services/discount/removeDiscountCode';
-import removeRewardPoints from '@/services/removeRewardPoints';
-import useRewardPoints from '@/services/useRewardPoints';
+import removeRewardPoints from '@/services/reward/removeRewardPoints';
+import useRewardPoints from '@/services/reward/useRewardPoints';
 import useStoreCredit from '@/services/storeCredit/useStoreCredit';
 import refreshCustomerData from '@/services/refreshCustomerData';
 import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
@@ -57,9 +57,6 @@ export default defineStore('cartStore', {
       amount: null,
       enabled: false,
       isAvailable: true,
-    },
-    rewards: {
-      used: false,
     },
   }),
   getters: {
@@ -449,19 +446,15 @@ export default defineStore('cartStore', {
     },
 
     async useRewardPoints() {
-      await useRewardPoints();
-
-      const paymentStore = usePaymentStore();
-      await paymentStore.refreshPaymentMethods();
+      const cart = await useRewardPoints();
+      this.handleCartData(cart);
 
       this.emitUpdate();
     },
 
     async removeRewardPoints() {
-      await removeRewardPoints();
-
-      const paymentStore = usePaymentStore();
-      await paymentStore.refreshPaymentMethods();
+      const cart = await removeRewardPoints();
+      this.handleCartData(cart);
 
       this.emitUpdate();
     },
