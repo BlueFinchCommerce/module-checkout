@@ -208,7 +208,7 @@ export default defineStore('cartStore', {
       await this.getCrosssells();
 
       // Also trigger refresh of User's cart data.
-      await refreshCustomerData(getCartSectionNames());
+      refreshCustomerData(getCartSectionNames());
 
       const gtmStore = useGtmStore();
       gtmStore.removeFromCartEvent(product, product.qty);
@@ -350,7 +350,7 @@ export default defineStore('cartStore', {
       this.calculateFreeShipping();
 
       // Also trigger refresh of User's cart data.
-      await refreshCustomerData(getCartSectionNames());
+      refreshCustomerData(getCartSectionNames());
 
       const gtmStore = useGtmStore();
       gtmStore.addToCartEvent(product);
@@ -404,7 +404,7 @@ export default defineStore('cartStore', {
       this.$state.cartEmitter.emit('cartUpdated');
 
       // Also trigger refresh of User's cart data.
-      await refreshCustomerData(getCartSectionNames());
+      refreshCustomerData(getCartSectionNames());
     },
 
     async addDonation() {
