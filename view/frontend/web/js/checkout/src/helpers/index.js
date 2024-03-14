@@ -2,6 +2,8 @@ import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippin
 import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 import buildCartUrl from '@/helpers/buildCartUrl';
 import cleanAddress from '@/helpers/cleanAddress';
+import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLayer';
+import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
 import createScriptLoadPromise from '@/helpers/createScriptLoadPromise';
 import deepClone from '@/helpers/deepClone';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
@@ -54,6 +56,8 @@ export default {
   beginCheckoutDataLayer,
   buildCartUrl,
   cleanAddress,
+  continueAsGuestDataLayer,
+  customerLoginDataLayer,
   createScriptLoadPromise,
   deepClone,
   discountCodeDataLayer,
