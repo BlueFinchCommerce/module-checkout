@@ -96,6 +96,7 @@ export default `
     product {
       name
       sku
+      id
       thumbnail {
         url
         label

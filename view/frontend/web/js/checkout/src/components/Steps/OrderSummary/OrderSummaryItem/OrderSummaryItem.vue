@@ -51,6 +51,7 @@
               :key="error.message"
             >
               <ErrorMessage
+                :attached="false"
                 :message="error.message"
               />
             </template>
