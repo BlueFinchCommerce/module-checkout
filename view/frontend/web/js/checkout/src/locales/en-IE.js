@@ -183,7 +183,9 @@ export default {
   addNewAddressBtn: '+ Add new address',
   saveNewAddress: 'Save in address book',
   paymentStep: {
-    title: 'Select a payment method',
+    titleGuest: 'Select a payment method',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     payNow: 'Pay Now',
     storedPayments: 'Your Saved Payments',
     creditDebitCard: 'Credit or debit card',
@@ -197,6 +199,7 @@ export default {
     expiry: 'Expiry',
     storedPaymentLabel: '{name} Stored card ends in {lastFour}',
     paymentSuccessful: 'Payment Successful',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

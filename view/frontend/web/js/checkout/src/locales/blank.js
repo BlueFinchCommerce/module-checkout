@@ -149,7 +149,8 @@ export default {
   addNewAddressBtn: ' ',
   saveNewAddress: ' ',
   paymentStep: {
-    title: ' ',
+    titleGuest: ' ',
+    titleStored: ' ',
     freePayment: ' ',
     payNow: ' ',
   },
@@ -159,6 +160,7 @@ export default {
     applePayTotal: ' ',
     applePayNoShippingMethods: ' ',
     cardNumber: ' ',
+    select: ' ',
   },
   braintree: {
     payingWith: ' ',

@@ -179,7 +179,9 @@ export default {
   addNewAddressBtn: '+ Ajouter une nouvelle adresse',
   saveNewAddress: 'Enregistrer dans le carnet d\'adresses',
   paymentStep: {
-    title: 'Sélectionnez un mode de paiement',
+    titleGuest: 'Sélectionnez un mode de paiement',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Aucune information de paiement requise',
     payNow: 'Payez maintenant',
     storedPayments: 'Vos paiements enregistrés',
@@ -194,6 +196,7 @@ export default {
     expiry: 'D\'expiration',
     storedPaymentLabel: '{name} La carte enregistrée se termine par {lastFour}',
     paymentSuccessful: 'Payment Successful',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',
