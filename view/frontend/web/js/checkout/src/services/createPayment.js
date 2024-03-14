@@ -4,7 +4,7 @@ import useRecaptchaStore from '@/stores/RecaptchaStore';
 import beforePaymentRequest from '@/services/beforePaymentRequest';
 import graphQlRequest from './graphQlRequest';
 
-import paymentComplete from '@/helpers/dataLayer/paymentComplete';
+import paymentComplete from '@/helpers/dataLayer/paymentCompleteDataLayer';
 
 export default (paymentMethod) => {
   const { maskedId } = useCartStore();

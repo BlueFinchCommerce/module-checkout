@@ -62,7 +62,7 @@ import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
 // Helpers
-import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelected';
+import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
