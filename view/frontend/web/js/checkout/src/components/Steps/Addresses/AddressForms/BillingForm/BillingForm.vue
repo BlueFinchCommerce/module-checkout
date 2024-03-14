@@ -15,7 +15,9 @@
       </div>
 
       <div class="address-block__title"
-           v-if="(!selected[address_type].same_as_shipping && !isClickAndCollect) || !isItemRequiringDelivery">
+           v-if="customer.addresses.length > 0
+           && (!selected[address_type].same_as_shipping && !isClickAndCollect)
+           || !isItemRequiringDelivery">
        <div class="address-block__title-with-icon">
          <BillingAddressIcon/>
          <TextField
@@ -36,10 +38,15 @@
       <div
         v-if="!selected[address_type].editing
           && (!selected[address_type].same_as_shipping || isClickAndCollect || !isItemRequiringDelivery)
-          && selected[address_type].postcode
+          && selected[address_type].id
           && !isUsingSavedBillingAddress"
         class="address-block"
+        :class="customer.addresses.length > 0 ? 'saved-address-active' : ''"
       >
+        <TextField
+          class="address-block__title selected"
+          :text="$t('yourDetailsSection.deliverySection.selectedBillingAddressTitle')"
+        />
         <div class="address-block__item">
           <article>
             <AddressBlock
@@ -60,11 +67,20 @@
       </div>
     </div>
 
-    <template
-      v-if="(!selected[address_type].id || (selected[address_type].id === 'custom'
-        && selected[address_type].editing))
-        && (!selected[address_type].same_as_shipping || isClickAndCollect || !isItemRequiringDelivery)"
-    >
+    <template v-if="
+       ((customer.addresses.length > 0
+       ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
+      || (selected[address_type].id === 'custom' && selected[address_type].editing))
+      && (!selected[address_type].same_as_shipping || isClickAndCollect || !isItemRequiringDelivery)">
+
+      <div class="address-block__title-with-icon billing">
+        <Locate />
+        <TextField
+          class="address-block__title"
+          :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
+        />
+        <div class="divider-line"></div>
+      </div>
       <NameFields
         :address_type="address_type"
         @isCustomerInfoFull="isCustomerInfoFull"
@@ -108,6 +124,7 @@ import AddressList from '@/components/Steps/Addresses/AddressList/AddressList.vu
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
+import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
@@ -124,6 +141,7 @@ export default {
     CheckboxComponent,
     AddressFinder,
     AddressList,
+    Locate,
   },
   props: {
     showCheckbox: {
@@ -138,6 +156,7 @@ export default {
     return {
       address_type: 'billing',
       customerInfoValidation: false,
+      savedAddressActive: false,
     };
   },
   computed: {
@@ -155,10 +174,14 @@ export default {
     ]),
     toggleBillingAddress(event) {
       if (!event.target.checked) {
+        if (this.customer.addresses.length > 0) {
+          this.savedAddressActive = true;
+        }
         this.createNewAddress(this.address_type);
         this.selected[this.address_type].same_as_shipping = false;
         this.setAddressAsEditing(this.address_type, true);
       } else {
+        this.savedAddressActive = false;
         this.selected[this.address_type] = deepClone(this.selected.shipping);
         this.selected[this.address_type].same_as_shipping = true;
         this.setAddressAsEditing(this.address_type, false);

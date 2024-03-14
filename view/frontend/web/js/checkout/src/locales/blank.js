@@ -74,6 +74,8 @@ export default {
       shipHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
+      selectedBillingAddressTitle: ' ',
+      newAddressTitle: ' ',
       addressFinder: {
         title: ' ',
         placeholder: ' ',

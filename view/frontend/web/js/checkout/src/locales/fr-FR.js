@@ -85,6 +85,8 @@ export default {
       shipHere: 'Livrer ici',
       deliveryAddressTitle: 'Adresse de livraison',
       billingAddressTitle: 'Adresse de facturation',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       addressFinder: {
         title: 'Recherche d\'adresse',
         placeholder: 'Cherchez par nom de rue ou code postal',

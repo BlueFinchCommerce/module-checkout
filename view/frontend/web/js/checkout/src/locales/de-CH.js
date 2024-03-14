@@ -87,6 +87,8 @@ export default {
       shipHere: 'Skicka här',
       info: 'Vart ska vi leverera den till?',
       billingAddressTitle: 'Faktureringsadress',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveransadress',
       addressFinder: {
         title: 'Sök efter adress',
