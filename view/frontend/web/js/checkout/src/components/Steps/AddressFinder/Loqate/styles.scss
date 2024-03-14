@@ -8,7 +8,7 @@
   }
 
   &__title {
-    margin-bottom: 15px;
+    margin-bottom: var(--indent__m);
     display: var(--loqate-section-title__display, unset);
   }
 
@@ -17,7 +17,7 @@
 
     svg {
       position: absolute;
-      top: var(--loqate-top, 15px);
+      top: var(--loqate-top, var(--indent__m));
       right: 20px;
       width: var(--loqate-svg-width, 23px);
     }
@@ -34,7 +34,7 @@
 
     li {
       list-style: none;
-      padding: 15px 0;
+      padding: var(--indent__m) 0;
       margin: 0;
 
       &:nth-child(odd) {
@@ -90,7 +90,7 @@
 
   &.saved-address-active {
     border-radius: var(--base__border-radius-large);
-    padding: 15px var(--indent__base);
+    padding: var(--indent__m) var(--indent__base);
     font-size: var(--font__s);
     margin-bottom: var(--indent__base);
     font-weight: var(--font-weight__semibold);

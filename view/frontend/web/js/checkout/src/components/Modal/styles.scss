@@ -91,7 +91,7 @@
     }
 
     &-header {
-      padding: 15px var(--indent__base) var(--indent__s);
+      padding: var(--indent__m)x var(--indent__base) var(--indent__s);
       border-bottom: var(--order-summary-modal-header-border, 1px solid #EBECEC);
       justify-content: normal;
     }

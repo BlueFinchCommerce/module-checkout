@@ -72,7 +72,7 @@
 
   &.saved-address-active {
     border-radius: var(--base__border-radius-large);
-    padding: 15px var(--indent__base);
+    padding: var(--indent__m) var(--indent__base);
     font-size: var(--font__s);
     margin-bottom: var(--indent__base);
     font-weight: var(--font-weight__semibold);

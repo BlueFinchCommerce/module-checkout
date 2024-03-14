@@ -377,7 +377,7 @@
       border: var(--input__border-weight) var(--base__border-style) var(--input__border-color);
       appearance: none;
       cursor: pointer;
-      padding: var(--select-input-padding, 0 15px 0);
+      padding: var(--select-input-padding, 0 var(--indent__m) 0);
       height: var(--input__height);
       width: 100%;
       -webkit-appearance: none;
