@@ -4,13 +4,13 @@ import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
-  const transformedData = paymentMethodsExtraDetails.map((item) => ({
+  const transformedData = paymentMethodsExtraDetails?.map((item) => ({
     [item.type]: {
       icon: item.icon,
       isOpenInvoice: item.isOpenInvoice,
       configuration: item.configuration,
     },
-  }));
+  })) || [];
 
   return Object.assign({}, ...transformedData);
 }
@@ -86,6 +86,8 @@ export default async () => {
     .then((response) => ({
       paymentMethodsExtraDetails:
         transformGraphqlExtraDetails(response.data.adyenPaymentMethods.paymentMethodsExtraDetails),
-      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse,
+      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse || {
+        paymentMethods: [],
+      },
     }));
 };
