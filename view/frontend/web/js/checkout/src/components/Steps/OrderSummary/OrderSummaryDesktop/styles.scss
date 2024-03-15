@@ -1,6 +1,7 @@
 .order-summary-desktop {
   background: var(--summary__background-color);
   padding: var(--indent__base) var(--indent__base--desktop);
+  border-radius: var(--steps__border-radius--desktop);
   display: grid;
   min-height: 500px;
 
