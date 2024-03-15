@@ -1,5 +1,5 @@
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 

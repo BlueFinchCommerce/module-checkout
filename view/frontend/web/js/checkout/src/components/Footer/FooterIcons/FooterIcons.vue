@@ -53,9 +53,9 @@
 <script>
 // Stores
 import { mapState } from 'pinia';
-import useAdyenStore from '@/stores/AdyenStore';
-import usePaymentStore from '@/stores/PaymentStore';
-import getStaticUrl from '@/helpers/getStaticPath';
+import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import { computed, reactive } from 'vue';
 
 // Icons

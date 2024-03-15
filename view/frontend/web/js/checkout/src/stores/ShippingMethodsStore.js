@@ -1,20 +1,20 @@
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import useGtmStore from '@/stores/GtmStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useStepsStore from '@/stores/StepsStore';
 
-import cleanAddress from '@/helpers/cleanAddress';
-import deepClone from '@/helpers/deepClone';
-import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippingInformation';
+import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import deepClone from '@/helpers/addresses/deepClone';
+import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
 import getShipping from '@/services/addresses/getShippingMethods';
-import getNominatedDates from '@/services/getNominatedShippingMethods';
-import setClickAndCollectAgent from '@/services/setClickAndCollectAgent';
-import updateAmastyClickCollectStores from '@/services/updateAmastyClickCollectStores';
+import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
+import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
+import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
 import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
 
 export default defineStore('shippingMethodsStore', {

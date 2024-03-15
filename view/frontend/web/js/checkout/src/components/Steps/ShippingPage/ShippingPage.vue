@@ -10,13 +10,13 @@
 // stores
 import { mapActions, mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
-import useGtmStore from '@/stores/GtmStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
 // components
 import SavedDeliveryAddress
-  from '@/components/Steps/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
+  from '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
 import ShippingMethod from '@/components/Steps/ShippingPage/ShippingMethod/ShippingMethod.vue';
 
 export default {

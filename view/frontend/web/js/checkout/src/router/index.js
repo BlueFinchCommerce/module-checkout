@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import DetailsPage from '@/components/Steps/DetailsPage/DetailsPage.vue';
+import DetailsPage from '@/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue';
 import ShippingPage from '@/components/Steps/ShippingPage/ShippingPage.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
-import AmazonReview from '@/components/Adyen/AmazonReview/AmazonReview.vue';
+import AmazonReview from '@/components/Steps/PaymentPage/Adyen/AmazonReview/AmazonReview.vue';
 
 const routes = [
   {

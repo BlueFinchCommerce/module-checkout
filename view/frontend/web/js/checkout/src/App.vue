@@ -7,18 +7,18 @@
 <script>
 // Stores
 import { mapActions } from 'pinia';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
 
 // Components
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
 import OrderSummaryMobile from
-  '@/components/Steps/OrderSummary/OrderSummaryMobile/OrderSummaryMobile.vue';
+  '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryMobile/OrderSummaryMobile.vue';
 import Steps from '@/components/Steps/Steps.vue';
 
 // Helpers
-import getUrlQuery from '@/helpers/getUrlQuery';
+import getUrlQuery from '@/helpers/storeConfigs/getUrlQuery';
 import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 
 export default {

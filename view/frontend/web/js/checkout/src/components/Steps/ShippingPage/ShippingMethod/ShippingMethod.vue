@@ -113,24 +113,24 @@
 // Stores
 import { mapState, mapActions } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
 
 // Helpers
-import formatPrice from '@/helpers/formatPrice';
+import formatPrice from '@/helpers/payment/formatPrice';
 
 // Components
-import TextField from '@/components/Core/TextField/TextField.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import NominatedDay from
   '@/components/Steps/ShippingPage/ShippingMethod/NominatedDay/NominatedDay.vue';
-import MyButton from '@/components/Core/Button/Button.vue';
-import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
+import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 
 // Icons
-import Loader from '@/components/Core/Loader/Loader.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // Extensions

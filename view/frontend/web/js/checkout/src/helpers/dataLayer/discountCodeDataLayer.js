@@ -1,4 +1,4 @@
-import useGtmStore from '@/stores/GtmStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 
 export default (type) => {

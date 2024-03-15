@@ -1,10 +1,10 @@
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
-import formatAddress from '@/helpers/formatAddress';
-import getFullCart from '@/helpers/getFullCart';
+import formatAddress from '@/helpers/addresses/formatAddress';
+import getFullCart from '@/helpers/cart/getFullCart';
 
 const convertBoolean = (value) => (value === 1);
 

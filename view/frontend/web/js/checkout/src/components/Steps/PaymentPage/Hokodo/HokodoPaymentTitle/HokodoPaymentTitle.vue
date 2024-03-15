@@ -57,12 +57,12 @@
 <script>
 
 // components
-import Modal from '@/components/Modal/Modal.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
-import MyButton from '@/components/Core/Button/Button.vue';
+import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 
 // helpers
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // icons
 import hokodoLogo from './icons/hokodo.svg';

@@ -136,8 +136,8 @@ import { mapState, mapActions, mapWritableState } from 'pinia';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 // components
-import TextField from '@/components/Core/TextField/TextField.vue';
-import Loader from '@/components/Core/Loader/Loader.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // icons
 import Calendar from '@/components/Core/Icons/Calendar/Calendar.vue';

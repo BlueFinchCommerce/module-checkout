@@ -19,7 +19,7 @@
 <script>
 // components
 import OrderSummaryDesktop from
-  '@/components/Steps/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
+  '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
 
 export default {
   name: 'AppSteps',

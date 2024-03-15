@@ -45,14 +45,14 @@
 <script>
 // stores
 import { mapState, mapActions } from 'pinia';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 
 // components
-import TextField from '@/components/Core/TextField/TextField.vue';
-import Price from '@/components/Core/Price/Price.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import Price from '@/components/Core/ContentComponents/Price/Price.vue';
 
 // icons
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';

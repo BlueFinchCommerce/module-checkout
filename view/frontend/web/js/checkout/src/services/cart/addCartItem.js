@@ -1,6 +1,6 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
-import getFullCart from '@/helpers/getFullCart';
+import getFullCart from '@/helpers/cart/getFullCart';
 
 export default (product) => {
   const { maskedId } = useCartStore();
