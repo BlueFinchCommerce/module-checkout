@@ -9,18 +9,19 @@
         aria-label="logo"
         class="header-logo"
         :class="custom.checkoutLogo ? 'logo-no-width' : ''"
-        alt="Header Logo"
       >
-        <Logo alt="logo" />
+        <Logo alt="logo"/>
       </a>
       <div class="header-title">
         <Lock
           stroke="white"
           class="secure-logo"
         />
-        <h1 class="secure-text">
-          {{ headerText }}
-        </h1>
+        <div :class="headerText ? '' : 'text-loading'">
+          <h1 class="secure-text">
+            {{ headerText }}
+          </h1>
+        </div>
       </div>
     </div>
   </header>

@@ -1,9 +1,11 @@
 <template>
-  <img
-    :src="logo"
-    :alt="alt"
-    :style="params"
-  >
+  <span :class="logo ? '' : 'text-loading'">
+      <img
+        :src="logo"
+        :alt="alt"
+        :style="params"
+      >
+  </span>
 </template>
 
 <script>
@@ -64,3 +66,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./styles.scss";
+</style>

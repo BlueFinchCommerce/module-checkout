@@ -11,7 +11,7 @@
 }
 
 .instantCheckout-block {
-  padding-bottom: 0;
+  padding-bottom: var(--indent__base);
 
   p {
     font-size: var(--font__heading--mobile);

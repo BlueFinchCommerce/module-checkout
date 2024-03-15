@@ -4,6 +4,7 @@
   background: var(--header__background-color);
   padding: var(--indent__m) var(--indent__base);
   border-bottom: var(--header__border-bottom);
+  min-height: var(--header__min-height, 80px);
 
   .header-content {
     max-width: calc(var(--layout__max-width) - var(--indent__xl));
@@ -22,10 +23,6 @@
       &.logo-no-width {
         width: auto;
       }
-
-      img {
-        width: 100%;
-      }
     }
 
     .header-title {
@@ -37,6 +34,11 @@
 
       img {
         top: -2px;
+      }
+
+      .text-loading {
+        min-width: var(--secure-text-loading-width, 100px);
+        opacity: 0.5;
       }
 
       .secure-text {
