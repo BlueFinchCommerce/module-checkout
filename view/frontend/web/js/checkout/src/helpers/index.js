@@ -3,8 +3,9 @@ import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 import buildCartUrl from '@/helpers/buildCartUrl';
 import cleanAddress from '@/helpers/cleanAddress';
 import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLayer';
-import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
+import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryDataLayer';
 import createScriptLoadPromise from '@/helpers/createScriptLoadPromise';
+import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
 import deepClone from '@/helpers/deepClone';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import doAddressesMatch from '@/helpers/doAddressesMatch';
@@ -47,9 +48,13 @@ import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 import handleServiceError from '@/helpers/handleServiceError';
 import isEmailValid from '@/helpers/isEmailValid';
 import mapCustomConfigs from '@/helpers/mapCustomConfigs';
+import paymentCompleteDataLayer from '@/helpers/dataLayer/paymentCompleteDataLayer';
+import paymentMethodSelectedDataLayer from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 import redirectToBasketPage from '@/helpers/redirectToBasketPage';
 import requestHokodoOffer from '@/helpers/requestHokodoOffer';
 import scrollToTarget from '@/helpers/scrollToTarget';
+import selectAddressDataLayer from '@/helpers/dataLayer/selectAddressDataLayer';
+import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 export default {
   afterSubmittingShippingInformation,
@@ -57,8 +62,9 @@ export default {
   buildCartUrl,
   cleanAddress,
   continueAsGuestDataLayer,
-  customerLoginDataLayer,
+  continueToDeliveryDataLayer,
   createScriptLoadPromise,
+  customerLoginDataLayer,
   deepClone,
   discountCodeDataLayer,
   doAddressesMatch,
@@ -101,7 +107,11 @@ export default {
   handleServiceError,
   isEmailValid,
   mapCustomConfigs,
+  paymentCompleteDataLayer,
+  paymentMethodSelectedDataLayer,
   redirectToBasketPage,
   requestHokodoOffer,
   scrollToTarget,
+  selectAddressDataLayer,
+  setShippingMethodDataLayer,
 };
