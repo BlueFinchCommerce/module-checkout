@@ -3,6 +3,9 @@ import useRecaptchaStore from '@/stores/RecaptchaStore';
 
 import beforePaymentRequest from '@/services/beforePaymentRequest';
 import getNewsletterMutation from '@/services/newsletter/getNewsletterMutation';
+
+import paymentComplete from '@/helpers/dataLayer/paymentCompleteDataLayer';
+
 import graphQlRequest from './graphQlRequest';
 
 export default (paymentMethod) => {
@@ -48,6 +51,9 @@ export default (paymentMethod) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
       }
+
+      // Add tracking in on payment complete.
+      paymentComplete();
 
       return response.data.placeOrder.order.order_number;
     });

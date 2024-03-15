@@ -243,6 +243,7 @@ import useStepsStore from '@/stores/StepsStore';
 // Helpers
 import deepClone from '@/helpers/deepClone';
 import formatPrice from '@/helpers/formatPrice';
+import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryDataLayer';
 
 export default {
   name: 'YourDetailComponent',
@@ -419,6 +420,7 @@ export default {
 
         await this.setShippingAddressesOnCart();
         this.goToShipping();
+        continueToDeliveryDataLayer();
       } else {
         const fieldErrors = this.selected.formErrors[this.address_type];
         Object.entries(fieldErrors).forEach(([value]) => {

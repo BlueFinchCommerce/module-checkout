@@ -29,6 +29,8 @@ import getCartItems from '@/helpers/getCartItems';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getMaskedId from '@/helpers/getMaskedId';
 import redirectToBasketPage from '@/helpers/redirectToBasketPage';
+import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
+import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 
 export default defineStore('cartStore', {
   state: () => ({
@@ -156,7 +158,7 @@ export default defineStore('cartStore', {
       } catch (error) {
         // Add the error message to the cart item.
         const { items } = this.cart;
-        items.map((item) => {
+        const updatedItems = items.map((item) => {
           if (item.uid === updateItem.uid) {
             return {
               ...item,
@@ -169,7 +171,7 @@ export default defineStore('cartStore', {
           return item;
         });
 
-        this.setData({ cart: { items } });
+        this.setData({ cart: { items: updatedItems } });
       }
 
       if (this.penniesDonation.enabled) {
@@ -181,10 +183,11 @@ export default defineStore('cartStore', {
 
       // Emit update GTM event.
       const gtmStore = useGtmStore();
+
       if (change > 0) {
-        gtmStore.addToCartEvent(updateItem);
+        gtmStore.addToCartEvent(updateItem.product);
       } else {
-        gtmStore.removeFromCartEvent(updateItem);
+        gtmStore.removeFromCartEvent(updateItem.product);
       }
 
       this.cartLoading = 'false';
@@ -211,7 +214,7 @@ export default defineStore('cartStore', {
       refreshCustomerData(getCartSectionNames());
 
       const gtmStore = useGtmStore();
-      gtmStore.removeFromCartEvent(product, product.qty);
+      gtmStore.removeFromCartEvent(product.product, product.quantity);
 
       this.cartLoading = 'false';
     },
@@ -224,6 +227,7 @@ export default defineStore('cartStore', {
           cart,
           discountErrorMessage: null,
         });
+        discountCodeDataLayer('discountCodeApplied');
       } catch (error) {
         this.setData({
           discountErrorMessage: error.message,
@@ -239,6 +243,7 @@ export default defineStore('cartStore', {
 
     async removeDiscountCode() {
       try {
+        discountCodeDataLayer('discountCodeRemoved');
         const cart = await removeDiscountCode();
 
         this.setData({
@@ -266,6 +271,7 @@ export default defineStore('cartStore', {
           cart,
           giftCardErrorMessage: null,
         });
+        giftCardCodeDataLayer('giftCardCodeApplied');
       } catch (error) {
         this.setData({
           giftCardErrorMessage: error.message,
@@ -280,6 +286,7 @@ export default defineStore('cartStore', {
     },
 
     async removeGiftCardCode(code) {
+      giftCardCodeDataLayer('giftCardCodeRemoved');
       try {
         const cart = await removeGiftCardCode(code);
 

@@ -88,6 +88,7 @@ import MyButton from '@/components/Core/Button/Button.vue';
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
+import selectAddressDataLayer from '@/helpers/dataLayer/selectAddressDataLayer';
 
 export default {
   name: 'LoqateAddress',
@@ -155,6 +156,8 @@ export default {
 
         // Hide the list after selecting an item.
         this.displayResults = false;
+
+        selectAddressDataLayer(this.address_type);
       } else {
         // Re run the search
         this.query = item.Text;

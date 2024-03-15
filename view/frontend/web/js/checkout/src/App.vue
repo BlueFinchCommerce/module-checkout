@@ -5,17 +5,21 @@
   <OrderSummaryMobile />
 </template>
 <script>
+// Stores
+import { mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
-import { mapActions } from 'pinia';
 
+// Components
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
 import OrderSummaryMobile from
   '@/components/Steps/OrderSummary/OrderSummaryMobile/OrderSummaryMobile.vue';
 import Steps from '@/components/Steps/Steps.vue';
 
+// Helpers
 import getUrlQuery from '@/helpers/getUrlQuery';
+import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 
 export default {
   name: 'App',
@@ -36,6 +40,8 @@ export default {
       const stepsStore = useStepsStore();
       stepsStore.goToAdyenAmazonReviw();
     }
+
+    beginCheckoutDataLayer();
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

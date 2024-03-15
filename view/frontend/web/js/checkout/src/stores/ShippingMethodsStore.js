@@ -7,6 +7,7 @@ import useStepsStore from '@/stores/StepsStore';
 import cleanAddress from '@/helpers/cleanAddress';
 import deepClone from '@/helpers/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/afterSubmittingShippingInformation';
+import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
@@ -222,6 +223,9 @@ export default defineStore('shippingMethodsStore', {
 
       // Allow custom behaviour after setting the shipping information.
       await afterSubmittingShippingInformation();
+
+      // Track this event.
+      setShippingMethodDataLayer();
 
       this.loadingShippingMethods = false;
     },
