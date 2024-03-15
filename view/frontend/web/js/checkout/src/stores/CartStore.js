@@ -2,18 +2,18 @@
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import useGtmStore from '@/stores/GtmStore';
-import usePaymentStore from '@/stores/PaymentStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
 import addDiscountCode from '@/services/discount/addDiscountCode';
-import getAmastyShippingInfo from '@/services/getAmastyShippingInfo';
+import getAmastyShippingInfo from '@/services/shipping/getAmastyShippingInfo';
 import getCart from '@/services/cart/getCart';
-import getCartData from '@/services/getCartData';
-import getCrosssells from '@/services/getCrosssells';
+import getCartData from '@/services/cart/getCartData';
+import getCrosssells from '@/services/cart/getCrosssells';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
-import mergeGuestCart from '@/services/mergeGuestCart';
+import mergeGuestCart from '@/services/cart/mergeGuestCart';
 import removeCartItem from '@/services/cart/removeCartItem';
 import removeGiftCardCode from '@/services/giftCard/removeGiftCardCode';
 import updateCartItemQuantity from '@/services/cart/updateCartItemQuantity';
@@ -21,14 +21,14 @@ import removeDiscountCode from '@/services/discount/removeDiscountCode';
 import removeRewardPoints from '@/services/reward/removeRewardPoints';
 import useRewardPoints from '@/services/reward/useRewardPoints';
 import useStoreCredit from '@/services/storeCredit/useStoreCredit';
-import refreshCustomerData from '@/services/refreshCustomerData';
+import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
-import pennies from '@/services/penniesCharityBox';
+import pennies from '@/services/payments/penniesCharityBox';
 
-import getCartItems from '@/helpers/getCartItems';
-import getCartSectionNames from '@/helpers/getCartSectionNames';
-import getMaskedId from '@/helpers/getMaskedId';
-import redirectToBasketPage from '@/helpers/redirectToBasketPage';
+import getCartItems from '@/helpers/cart/getCartItems';
+import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getMaskedId from '@/helpers/cart/getMaskedId';
+import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 

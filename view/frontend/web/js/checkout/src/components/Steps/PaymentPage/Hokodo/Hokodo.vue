@@ -37,26 +37,26 @@
 import { mapState, mapActions } from 'pinia';
 
 // stores
-import useConfigStore from '@/stores/ConfigStore';
-import usePaymentStore from '@/stores/PaymentStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useCartStore from '@/stores/CartStore';
-import useHokodoStore from '@/stores/HokodoStore';
+import useHokodoStore from '@/stores/PaymentStores/HokodoStore';
 
 // components
-import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
-import Loader from '@/components/Core/Loader/Loader.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import HokodoPaymentTitle from '@/components/Steps/PaymentPage/Hokodo/HokodoPaymentTitle/HokodoPaymentTitle.vue';
 
 // helpers
-import requestHokodoOffer from '@/helpers/requestHokodoOffer';
-import getCartSectionNames from '@/helpers/getCartSectionNames';
-import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
+import requestHokodoOffer from '@/helpers/payment/requestHokodoOffer';
+import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 // services
-import getHokodoCustomerData from '@/services/getHokodoCustomerData';
-import createPayment from '@/services/createPayment';
-import refreshCustomerData from '@/services/refreshCustomerData';
+import getHokodoCustomerData from '@/services/customer/getHokodoCustomerData';
+import createPayment from '@/services/payments/createPayment';
+import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 export default {
   name: 'HokodoComponent',

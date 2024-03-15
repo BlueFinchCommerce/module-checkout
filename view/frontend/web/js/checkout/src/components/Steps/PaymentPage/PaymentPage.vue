@@ -40,26 +40,26 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/AdyenStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
-import usePaymentStore from '@/stores/PaymentStore';
-import useGtmStore from '@/stores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
 // Components
 import SavedDeliveryAddress from
-  '@/components/Steps/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
-import AdyenDropIn from '@/components/Adyen/DropIn/DropIn.vue';
-import BraintreeDropIn from '@/components/Braintree/DropIn/DropIn.vue';
+  '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
+import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
+import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
-import Rewards from '@/components/Core/Rewards/Rewards.vue';
-import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
-import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
+import Rewards from '@/components/Core/ContentComponents/Rewards/Rewards.vue';
+import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.vue';
+import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
-import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
-import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
-import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
+import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 
 // Helpers
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';

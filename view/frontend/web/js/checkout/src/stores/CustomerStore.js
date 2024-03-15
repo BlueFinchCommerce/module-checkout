@@ -1,26 +1,26 @@
 import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import getCustomerInformation from '@/services/getCustomerInformation';
-import getCustomerRewardPoints from '@/services/getCustomerRewardPoints';
+import getCustomerInformation from '@/services/customer/getCustomerInformation';
+import getCustomerRewardPoints from '@/services/customer/getCustomerRewardPoints';
 import getCustomerStoreCredit from '@/services/storeCredit/getCustomerStoreCredit';
-import isEmailAvailable from '@/services/isEmailAvailable';
-import login from '@/services/login';
-import refreshCustomerData from '@/services/refreshCustomerData';
-import amastyConsentLogic from '@/services/amastyConsentLogic';
+import isEmailAvailable from '@/services/customer/isEmailAvailable';
+import login from '@/services/customer/login';
+import refreshCustomerData from '@/services/customer/refreshCustomerData';
+import amastyConsentLogic from '@/services/content/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
-import cleanAddress from '@/helpers/cleanAddress';
-import doAddressesMatch from '@/helpers/doAddressesMatch';
-import formatAddress from '@/helpers/formatAddress';
-import getCartSectionNames from '@/helpers/getCartSectionNames';
-import getEmptyAddress from '@/helpers/getEmptyAddress';
-import getMaskedId from '@/helpers/getMaskedId';
-import getPhoneValidation from '@/helpers/getPhoneValidation';
-import getUrlTokens from '@/helpers/getUrlTokens';
-import tokenTypes from '@/helpers/getTokenTypes';
+import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
+import formatAddress from '@/helpers/addresses/formatAddress';
+import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getEmptyAddress from '@/helpers/addresses/getEmptyAddress';
+import getMaskedId from '@/helpers/cart/getMaskedId';
+import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
+import getUrlTokens from '@/helpers/tokens/getUrlTokens';
+import tokenTypes from '@/helpers/tokens/getTokenTypes';
 
 import { postcodeValidator, postcodeValidatorExistsForCountry } from 'postcode-validator';
 

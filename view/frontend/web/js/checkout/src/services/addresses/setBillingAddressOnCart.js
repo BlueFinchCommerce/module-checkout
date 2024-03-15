@@ -1,7 +1,7 @@
 import useCartStore from '@/stores/CartStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/getFullCart';
-import deepClone from '@/helpers/deepClone';
+import getFullCart from '@/helpers/cart/getFullCart';
+import deepClone from '@/helpers/addresses/deepClone';
 
 const mapToGraphQLString = (obj) => Object.entries(obj)
   .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)

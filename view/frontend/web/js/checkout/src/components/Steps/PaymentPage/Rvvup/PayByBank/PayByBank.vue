@@ -79,21 +79,21 @@ import { mapState, mapActions } from 'pinia';
 // Stores
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
-import Modal from '@/components/Modal/Modal.vue';
-import IframeComponent from '@/components/Core/Iframe/Iframe.vue';
-import Loader from '@/components/Core/Loader/Loader.vue';
+import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
+import IframeComponent from '@/components/Core/ActionComponents/Iframe/Iframe.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // Services
-import createPayment from '@/services/createPayment';
-import getRvvupPaymentMethods from '@/services/getRvvupPaymentMethods';
-import getRvvupPaymentActions from '@/services/getRvvupPaymentActions';
+import createPayment from '@/services/payments/createPayment';
+import getRvvupPaymentMethods from '@/services/payments/getRvvupPaymentMethods';
+import getRvvupPaymentActions from '@/services/payments/getRvvupPaymentActions';
 
 // icons
 import rvvupPaymentSvg from '@/icons/rvvup-payment.svg';
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 export default {
   name: 'RvvupPayByBank',

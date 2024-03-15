@@ -1,5 +1,5 @@
 import useCartStore from '@/stores/CartStore';
-import useGtmStore from '@/stores/GtmStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
 export default () => {
   const gtmStore = useGtmStore();

@@ -211,45 +211,13 @@
     "isDynamicEntry": true,
     "src": "node_modules/@adyen/adyen-web/dist/es/zh-TW.js"
   },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
-    "file": "bancontact.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/eps.svg": {
-    "file": "eps.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/eps.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/giropay.svg": {
-    "file": "giropay.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/giropay.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/ideal.svg": {
-    "file": "ideal.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/ideal.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/mybank.svg": {
-    "file": "mybank.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/mybank.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/p24.svg": {
-    "file": "p24.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/p24.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/sepa.svg": {
-    "file": "sepa.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/sepa.svg"
-  },
-  "src/components/Braintree/DropIn/BraintreeLpm/icons/sofort.svg": {
-    "file": "sofort.svg",
-    "src": "src/components/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
-  },
   "src/components/Footer/FooterIcons/icons/icon-apple.svg": {
     "file": "icon-apple.svg",
     "src": "src/components/Footer/FooterIcons/icons/icon-apple.svg"
   },
   "src/components/Footer/FooterIcons/icons/icon-cardpay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/CardPay.svg"
+    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
   },
   "src/components/Footer/FooterIcons/icons/icon-clearpay.svg": {
     "file": "icon-clearpay.svg",
@@ -287,49 +255,81 @@
     "file": "icon-visa.svg",
     "src": "src/components/Footer/FooterIcons/icons/icon-visa.svg"
   },
-  "src/components/Steps/OrderSummary/PromotionComponent/images/promo-icon.svg": {
+  "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/components/Steps/OrderSummary/PromotionComponent/images/promo-icon.svg"
+    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/AmericanExpress.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/AmericanExpress.svg": {
     "file": "AmericanExpress.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/AmericanExpress.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/AmericanExpress.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/ApplePay.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/ApplePay.svg": {
     "file": "ApplePay.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/ApplePay.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/ApplePay.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/CardPay.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/CardPay.svg"
+    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/ClearPay.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/ClearPay.svg": {
     "file": "ClearPay.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/ClearPay.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/ClearPay.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/GooglePay.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/GooglePay.svg": {
     "file": "GooglePay.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/GooglePay.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/GooglePay.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/Klarna.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/Klarna.svg": {
     "file": "Klarna.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/Klarna.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/Klarna.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/MasterCard.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/MasterCard.svg": {
     "file": "MasterCard.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/MasterCard.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/MasterCard.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/Paypal.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/Paypal.svg": {
     "file": "Paypal.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/Paypal.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/Paypal.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/VenmoIcon.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/VenmoIcon.svg": {
     "file": "VenmoIcon.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/VenmoIcon.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/VenmoIcon.svg"
   },
-  "src/components/Steps/PayWithComponent/icons/Visa.svg": {
+  "src/components/Steps/GlobalComponents/PayWithComponent/icons/Visa.svg": {
     "file": "Visa.svg",
-    "src": "src/components/Steps/PayWithComponent/icons/Visa.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/Visa.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
+    "file": "bancontact.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/eps.svg": {
+    "file": "eps.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/eps.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/giropay.svg": {
+    "file": "giropay.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/giropay.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/ideal.svg": {
+    "file": "ideal.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/ideal.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/mybank.svg": {
+    "file": "mybank.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/mybank.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/p24.svg": {
+    "file": "p24.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/p24.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sepa.svg": {
+    "file": "sepa.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sepa.svg"
+  },
+  "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg": {
+    "file": "sofort.svg",
+    "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
   },
   "src/icons/bin.svg": {
     "file": "bin.svg",

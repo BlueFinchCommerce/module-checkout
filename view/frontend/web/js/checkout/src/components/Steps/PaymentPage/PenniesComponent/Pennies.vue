@@ -55,21 +55,21 @@
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // stores
 import useCartStore from '@/stores/CartStore';
 
 // components
-import TextField from '@/components/Core/TextField/TextField.vue';
-import DropDown from '@/components/Core/DropDown/DropDown.vue';
-import MyButton from '@/components/Core/Button/Button.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import DropDown from '@/components/Core/ActionComponents/DropDown/DropDown.vue';
+import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 
 // charity logo
 import charityLogo from '@/icons/charityLogo.png';
 
 // helpers
-import formatPrice from '@/helpers/formatPrice';
+import formatPrice from '@/helpers/payment/formatPrice';
 
 export default {
   name: 'PenniesComponent',
