@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStore';
 import Logo from '@/components/Core/Logo/Logo.vue';
 import Lock from '@/components/Core/Icons/Lock/Lock.vue';
