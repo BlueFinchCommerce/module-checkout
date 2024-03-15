@@ -86,7 +86,7 @@
 
 
     &-wrapper {
-      padding: var(--order-total-wrapper, 15px 0);
+      padding: var(--order-total-wrapper, var(--indent__m) 0);
     }
 
     &-title {

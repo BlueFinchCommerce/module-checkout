@@ -49,12 +49,6 @@
     @click="openDropDown"
     @keydown="openDropDown"
   >
-    <div class="promotion-icon-container">
-      <img
-        :src="promoIconUrl"
-        alt="promo-dropdown-icon"
-      >
-    </div>
     <div class="promo-title crosssells">
       <div>
         <TextField

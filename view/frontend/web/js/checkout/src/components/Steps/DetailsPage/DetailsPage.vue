@@ -67,6 +67,8 @@
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && isItemRequiringDelivery"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
+        @passSelectedItemId = "passSelectedItemId"
+        @selectedSavedAddress="selectedSavedAddress"
       />
 
       <div
@@ -78,12 +80,19 @@
         <div
           class="delivery-section"
         >
-          <div
-            class="details-form-title"
-          >
+          <div v-if="customer.addresses.length <= 0"
+            class="details-form-title">
             <YourDetails fill="black" />
             <TextField
               :text="$t('yourDetailsSection.title')"
+            />
+            <div class="divider-line"></div>
+          </div>
+          <div v-else class="details-form-title saved-address">
+            <Locate />
+            <TextField
+              class="address-block__title"
+              :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
             />
             <div class="divider-line"></div>
           </div>
@@ -129,15 +138,16 @@
 
       <div
         v-if="emailEntered && !selected[address_type].editing
+          && !isSavedAddressSelected
           && selected[address_type].id
-          && selected[address_type].postcode
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
           && isItemRequiringDelivery"
         class="address-block"
+        :class="customer.addresses.length > 0 ? 'saved-address-active' : ''"
       >
         <TextField
-          class="address-block__title"
+          class="address-block__title selected"
           :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
         />
         <div class="address-block__item">
@@ -272,6 +282,8 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
+      isSavedAddressSelected: false,
+      savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
       addressFormErrorMessage: false,
@@ -392,7 +404,11 @@ export default {
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
 
       if (isValid) {
-        this.setAddressAsCustom(this.address_type);
+        if (this.savedAddressID === null
+        || this.selected[this.address_type].id === null) {
+          this.setAddressAsCustom(this.address_type);
+        }
+
         this.setAddressAsEditing(this.address_type, false);
 
         // If the address type is shipping and the billing is set to use the same then update billing too.
@@ -417,6 +433,12 @@ export default {
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
+    },
+    passSelectedItemId(value) {
+      this.savedAddressID = value;
+    },
+    selectedSavedAddress(value) {
+      this.isSavedAddressSelected = value;
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;

@@ -44,7 +44,7 @@
     background: var(--color__primary-white);
     border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
     border-radius: var(--base__border-radius-large);
-    padding: 15px var(--indent__base);
+    padding: var(--indent__m) var(--indent__base);
     font-size: var(--font__s);
     margin-bottom: var(--indent__base);
     font-weight: var(--font-weight__semibold);
@@ -60,12 +60,12 @@
         fill: var(--selected-address-svg-colour, var(--color__semantic-success));
         position: absolute;
         right: var(--indent__base);
-        top: 15px;
+        top: var(--indent__m);
       }
     }
 
     .ship-here {
-      bottom: 15px;
+      bottom: var(--indent__m);
       color: var(--ship-here-color, var(--button__link-font-color));
       font-size: var(--button__link-font-size);
       font-weight: var(--button__link-font-weight);

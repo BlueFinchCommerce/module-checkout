@@ -67,7 +67,7 @@ export default {
       span: 'Email',
     },
     passwordField: {
-      placeholder: 'Password',
+      placeholder: 'Enter you password',
       label: 'Your Password',
     },
     firstName: {
@@ -81,10 +81,12 @@ export default {
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
       title: 'Where should we deliver it to?',
-      savedAddressesTitle: 'Select your saved {addressType} address',
+      savedAddressesTitle: 'Select a saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',

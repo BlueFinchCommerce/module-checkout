@@ -124,7 +124,7 @@
 
   .adyen-checkout {
     &__payment-method__name {
-      font-size: var(--adyen-font-size, var(--font__m));
+      font-size: var(--adyen-font-size, var(--font__s));
       font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
       color: var(--adyen-font-color, var(--font__color));
     }
