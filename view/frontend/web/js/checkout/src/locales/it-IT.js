@@ -87,6 +87,8 @@ export default {
       shipHere: 'Spedire qui',
       info: 'Dove dobbiamo consegnare?',
       billingAddressTitle: 'Indirizzo di fatturazione',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Indirizzo di spedizione',
       addressFinder: {
         title: 'Cerca indirizzo',
@@ -175,7 +177,9 @@ export default {
   addNewAddressBtn: 'Aggiungi un nuovo indirizzo',
   saveNewAddress: 'Salva in rubrica',
   paymentStep: {
-    title: 'Scegli il metodo di pagamento',
+    titleGuest: 'Scegli il metodo di pagamento',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Non sono richieste informazioni di pagamento',
     payNow: 'Paga ora',
     storedPayments: 'I pagamenti effettuati',
@@ -190,6 +194,7 @@ export default {
     cardNumber: 'Numero di carta',
     expiry: 'Data di scadenza',
     storedPaymentLabel: '{name} La carta scade il {lastFour}',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

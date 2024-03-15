@@ -2,6 +2,7 @@ import useCartStore from '@/stores/CartStore';
 import useRecaptchaStore from '@/stores/RecaptchaStore';
 
 import beforePaymentRequest from '@/services/beforePaymentRequest';
+import getNewsletterMutation from '@/services/newsletter/getNewsletterMutation';
 import graphQlRequest from './graphQlRequest';
 
 import paymentComplete from '@/helpers/dataLayer/paymentCompleteDataLayer';
@@ -12,6 +13,8 @@ export default (paymentMethod) => {
 
   const request = `
     mutation PlaceOrder($cartId: String!, $paymentMethod: PaymentMethodInput!) {
+      ${getNewsletterMutation()}
+
       setPayment: setPaymentMethodOnCart(input: {
         cart_id: $cartId
         payment_method: $paymentMethod

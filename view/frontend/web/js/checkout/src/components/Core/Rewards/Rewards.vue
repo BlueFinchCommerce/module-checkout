@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="customer.reward_points && customer.reward_points.balance.points && !rewards.used"
+    v-if="customer.reward_points && customer.reward_points.balance.points && !cart.applied_reward_points?.points"
     class="reward-points"
   >
     <div>
@@ -23,7 +23,7 @@
     />
   </div>
   <div
-    v-else-if="customer.reward_points && rewards.used"
+    v-else-if="customer.reward_points && cart.applied_reward_points?.points"
     class="reward-points"
   >
     <span>{{ $t('rewards.applied') }}</span>
@@ -50,7 +50,7 @@ export default {
     MyButton,
   },
   computed: {
-    ...mapState(useCartStore, ['rewards']),
+    ...mapState(useCartStore, ['cart']),
     ...mapState(useCustomerStore, ['customer']),
   },
   async created() {

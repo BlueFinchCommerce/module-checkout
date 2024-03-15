@@ -124,7 +124,7 @@ export default {
       const inputType = this.type;
       const isValid = sanitiseInputValue(inputValue, inputType);
 
-      if (this.type !== 'password') {
+      if (this.identifier !== 'password') {
         if (isValid) {
           this.$emit('update:modelValue', inputValue);
           this.validationErrorMessage = '';

@@ -74,6 +74,8 @@ export default {
       shipHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
+      selectedBillingAddressTitle: ' ',
+      newAddressTitle: ' ',
       addressFinder: {
         title: ' ',
         placeholder: ' ',
@@ -149,7 +151,8 @@ export default {
   addNewAddressBtn: ' ',
   saveNewAddress: ' ',
   paymentStep: {
-    title: ' ',
+    titleGuest: ' ',
+    titleStored: ' ',
     freePayment: ' ',
     payNow: ' ',
   },
@@ -159,6 +162,7 @@ export default {
     applePayTotal: ' ',
     applePayNoShippingMethods: ' ',
     cardNumber: ' ',
+    select: ' ',
   },
   braintree: {
     payingWith: ' ',

@@ -11,6 +11,11 @@
       v-if="method.default"
       class="adyen-checkout__payment-method-tick"
     />
+    <TextField
+      v-else
+      class="adyen-checkout__payment-method-select"
+      :text="$t('adyen.select')"
+    />
     <span
       class="adyen-checkout__payment-method__radio"
       aria-hidden="true"
@@ -27,11 +32,11 @@
     </span>
     <span class="adyen-checkout__payment-method__card-number">{{ $t('adyen.cardNumber') }}</span>
     <span class="adyen-checkout__payment-method__name">
-      •••• {{ method.lastFour }}
+      **** **** **** {{ method.lastFour }}
     </span>
     <span class="adyen-checkout__payment-method__expiry-label">{{ $t('adyen.expiry') }}</span>
     <span class="adyen-checkout__payment-method__expiry">
-      {{ method.expiryMonth }} / {{ method.expiryYear }}
+      {{ method.expiryMonth }}/{{ method.expiryYear }}
     </span>
   </button>
 </template>
@@ -41,11 +46,13 @@ import { mapState } from 'pinia';
 import usePaymentStore from '@/stores/PaymentStore';
 
 // Components.
+import TextField from '@/components/Core/TextField/TextField.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 export default {
   name: 'AdyenPaymentCard',
   components: {
+    TextField,
     Tick,
   },
   props: {

@@ -203,7 +203,6 @@ export default {
       'clearErrorMessage',
     ]),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['subscribeToNewsletter']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
 
     selectMethod() {
@@ -304,7 +303,6 @@ export default {
         })
         .then(this.getPaymentData)
         .then(createPayment)
-        .then(this.subscribeToNewsletter)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((paymentError) => {

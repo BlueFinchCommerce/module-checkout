@@ -87,6 +87,8 @@ export default {
       shipHere: 'Send her',
       info: 'Hvor skal vi sende til?',
       billingAddressTitle: 'Faktureringsadresse',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveringsadresse',
       addressFinder: {
         title: 'Søg efter adresse',
@@ -175,7 +177,9 @@ export default {
   addNewAddressBtn: 'Tilføj ny adresse',
   saveNewAddress: 'Gem i adressebogen',
   paymentStep: {
-    title: 'Vælg betalingsmetode',
+    titleGuest: 'Vælg betalingsmetode',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Ingen betalingsoplysninger påkrævet',
     payNow: 'Betal nu',
     storedPayments: 'Dine gemte betalinger',
@@ -190,6 +194,7 @@ export default {
     cardNumber: 'Kortnummer',
     expiry: 'Udløbsdato',
     storedPaymentLabel: '{name} Gemt kort udløber den {lastFour}.',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

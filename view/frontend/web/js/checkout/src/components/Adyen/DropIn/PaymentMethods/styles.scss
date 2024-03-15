@@ -1,7 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 #adyen-dropin-container-stored {
-  max-height: 0;
+  margin: var(--indent__base) 0 var(--indent__xl);
   overflow: hidden;
   transition-duration: 0.5s;
   transition-property: max-height;
@@ -25,7 +25,7 @@
 
     .adyen-checkout__payment-method__header__title {
       background: var(--adyen-saved-card__background-color);
-      border: var(--adyen-saved-card__border-active);
+      border: var(--adyen-saved-card__border);
       border-radius: var(--base__border-radius);
       box-shadow: none;
       color: var(--adyen-saved-card__font-color);
@@ -35,37 +35,23 @@
       margin: 0;
       padding: var(--indent__base);
 
+      &.adyen-stored-payment-selected {
+        background: var(--adyen-saved-card__background-color-active);
+        border: var(--adyen-saved-card__border-active);
+      }
+
       &.adyen-checkout__payment-method-disabled {
+        background: var(--adyen-saved-card__background-color);
         border: var(--adyen-saved-card__border);
       }
-    }
-
-    .adyen-checkout__payment-method__card-number,
-    .adyen-checkout__payment-method__name {
-      font-size: var(--font__xs);
-      grid-column: 1;
-      line-height: 1.5em;
-      text-align: left;
-    }
-
-    .adyen-checkout__payment-method__expiry-label,
-    .adyen-checkout__payment-method__expiry {
-      font-size: var(--font__xs);
-      grid-column: 2;
-      line-height: 1.5em;
-      text-align: right;
-    }
-
-    .adyen-checkout__payment-method__expiry-label {
-      grid-row: 2;
     }
 
     .adyen-checkout__payment-method__image__wrapper {
       grid-column: 1;
       grid-row: 1;
       height: auto;
-      margin: 0 0 var(--indent__base);
-      width: 50%;
+      margin: 0 0 var(--indent__xl);
+      width: 30%;
 
       img {
         height: auto;
@@ -100,17 +86,13 @@
       background-color: transparent;
       border: none;
       border-radius: 0;
+      display: none;
       margin: 0;
-      max-height: 0;
       overflow: hidden;
-      transition-duration: 0.5s;
-      transition-property: max-height;
-      transition-timing-function: ease;
     }
 
     .adyen-checkout__payment-method--selected {
-      max-height: 300px;
-      transition-delay: 0.5s;
+      display: block;
     }
 
     .adyen-checkout__payment-method__header,

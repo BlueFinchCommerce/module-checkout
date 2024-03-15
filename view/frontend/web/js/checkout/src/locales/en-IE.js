@@ -67,7 +67,7 @@ export default {
       span: 'Email',
     },
     passwordField: {
-      placeholder: 'Password',
+      placeholder: 'Enter you password',
       label: 'Your Password',
     },
     firstName: {
@@ -81,10 +81,12 @@ export default {
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
       title: 'Where should we deliver it to?',
-      savedAddressesTitle: 'Select your saved {addressType} address',
+      savedAddressesTitle: 'Select a saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       shippingButton: 'SHIPPING ADDRESS',
       clickandCollectButton: 'CLICK & COLLLECT',
       addressFinder: {
@@ -183,7 +185,9 @@ export default {
   addNewAddressBtn: '+ Add new address',
   saveNewAddress: 'Save in address book',
   paymentStep: {
-    title: 'Select a payment method',
+    titleGuest: 'Select a payment method',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     payNow: 'Pay Now',
     storedPayments: 'Your Saved Payments',
     creditDebitCard: 'Credit or debit card',
@@ -197,6 +201,7 @@ export default {
     expiry: 'Expiry',
     storedPaymentLabel: '{name} Stored card ends in {lastFour}',
     paymentSuccessful: 'Payment Successful',
+    select: 'Select',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

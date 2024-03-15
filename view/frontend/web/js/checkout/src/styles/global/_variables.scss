@@ -117,7 +117,7 @@
     // Order Summary Desktop
     //  ---------------------------------------------
     --summary__background-color: var(--color__primary-white);
-    
+
 
     //
     // Base Borders
@@ -183,6 +183,8 @@
     --adyen-saved-card__background-color: var(--color__transparent);
     --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
     --adyen-saved-card__font-color: var(--color__primary-blue);
+    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --adyen-saved-card__background-color-active: var(--color__primary-grey5);
     --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
 
     //
@@ -267,7 +269,7 @@
 
     // --text-placeholder__bg-color-tertiary: var(--button-tertiary-background-color);
     // --text-placeholder__bg-color-tertiary-gradient: var(--button-tertiary-background-color-hover);
-    
+
     //
     // Blank Buttons
     //  ---------------------------------------------
@@ -384,7 +386,7 @@
     //
     // Messages
     //  ---------------------------------------------
-    --message__margin: 15px 0;
+    --message__margin: var(--indent__m) 0;
 
     //
     // Slide Up

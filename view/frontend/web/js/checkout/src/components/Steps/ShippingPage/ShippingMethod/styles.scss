@@ -48,57 +48,47 @@
     margin-bottom: var(--shipping-methods-error-margin-bottom, var(--indent__base));
   }
 
-  ul {
-    padding: 0;
-    border-bottom: var(--shipping-methods-border-bottom, none);
-    margin-bottom: var(--shipping-methods-margin-bottom, 0);
+  .shipping-method__container {
+    #gene-better-checkout-root & {
+      padding: 0;
+      border-bottom: var(--shipping-methods-border-bottom, none);
+      margin-bottom: var(--shipping-methods-margin-bottom, 0);
 
-    li {
-      margin-bottom: var(--indent__base);
-      display: flex;
-      justify-content: space-between;
-      align-items: var(--shipping-methods-align-items, center);
-      list-style: none;
-      flex-wrap: wrap;
-      font-family: var(--shipping-methods-font-family, unset);
-      padding: var(--indent__base);
-      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-      border-radius: var(--base__border-radius-large);
+      .shipping-method__label {
+        margin-bottom: var(--indent__base);
+        display: flex;
+        align-items: var(--shipping-methods-align-items, flex-start);
+        list-style: none;
+        flex-wrap: wrap;
+        font-family: var(--shipping-methods-font-family, unset);
+        padding: var(--indent__base);
+        border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+        border-radius: var(--base__border-radius-large);
 
-      input {
-        cursor: pointer;
-      }
-
-      label {
-        align-items: flex-start;
-        width: 80%;
-
-        span {
-          padding-left: var(--shipping-methods-left-padding, var(--indent__l));
+        input {
+          cursor: pointer;
         }
 
-        & + p {
-          width: 20%;
-          text-align: right;
+        .shipping-method__price {
           font-size: var(--shipping-cost-font-size, var(--font__s));
           font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
-          align-self: flex-start;
         }
       }
+      .selected {
+        border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+      }
     }
-    .selected {
-      border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    }
-  }
 
-  .shipping-method {
-    &__input {
-      padding: 0;
+    .shipping-method {
+      &__input {
+        padding: 0;
+      }
     }
   }
 }
 
 .shipping-method__content {
+  flex-grow: 1;
   top: var(--shipping-methods-top-value, 0);
 
   p:first-child {
