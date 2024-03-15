@@ -61,6 +61,9 @@ import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.v
 import Recaptcha from '@/components/Core/Recaptcha/Recaptcha.vue';
 import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 
+// Helpers
+import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
+
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
 
@@ -115,6 +118,11 @@ export default {
     this.trackStep({
       step: 3,
       description: 'payment',
+    });
+
+    // Track payment method selection globally.
+    this.paymentEmitter.on('paymentMethodSelected', ({ type }) => {
+      paymentMethodSelected(type);
     });
   },
   methods: {

@@ -147,7 +147,7 @@
             secondary
             :disabled="proceedAsGuestInvalid"
             :label="$t('accountGuestButton')"
-            @click="proceed();"
+            @click="proceedAsGuest();"
           />
         </div>
       </div>
@@ -161,7 +161,7 @@
           secondary
           :disabled="proceedAsGuestInvalid"
           :label="$t('noAccountGuestButton')"
-          @click="proceed();"
+          @click="proceedAsGuest();"
         />
       </div>
     </div>
@@ -195,6 +195,8 @@ import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 import getBaseUrl from '@/helpers/getBaseUrl';
 import isEmailValid from '@/helpers/isEmailValid';
 import scrollToTarget from '@/helpers/scrollToTarget';
+import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
+import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLayer';
 
 export default {
   name: 'EmailAddress',
@@ -283,6 +285,7 @@ export default {
         await this.login(this.customer.email, this.password);
         this.loginErrorMessage = '';
         this.proceed();
+        customerLoginDataLayer();
       } catch (error) {
         this.loginErrorMessage = error.message;
       }
@@ -323,6 +326,11 @@ export default {
         this.passwordError = false;
         this.passwordErrorMessage = '';
       }
+    },
+
+    proceedAsGuest() {
+      continueAsGuestDataLayer();
+      this.proceed();
     },
 
     proceed() {

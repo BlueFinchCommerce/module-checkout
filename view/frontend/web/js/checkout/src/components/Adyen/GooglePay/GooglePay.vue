@@ -25,7 +25,7 @@ import formatPrice from '@/helpers/formatPrice';
 import getAdyenProductionMode from '@/helpers/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/getSuccessPageUrl';
-import expressPaymentOnClick from '@/helpers/expressPaymentOnClick';
+import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/createPayment';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
@@ -194,7 +194,7 @@ export default {
           merchantId: googlePayConfig.configuration.merchantId,
         },
         onAuthorized: this.handeOnAuthorized,
-        onClick: (resolve, reject) => expressPaymentOnClick(resolve, reject, googlePayConfig.type),
+        onClick: (resolve, reject) => expressPaymentOnClickDataLayer(resolve, reject, googlePayConfig.type),
         onSubmit: () => {},
       };
     },
