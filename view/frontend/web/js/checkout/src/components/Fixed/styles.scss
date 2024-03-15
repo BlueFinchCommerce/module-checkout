@@ -11,7 +11,7 @@
     top: 0;
 
     .fixed-content {
-      padding: 25px var(--indent__base) 15px;
+      padding: var(--indent__base--desktop) var(--indent__base) var(--indent__m);
     }
   }
 
@@ -19,7 +19,7 @@
     bottom: 0;
 
     .fixed-content {
-      padding: 15px var(--indent__base) 25px;
+      padding: var(--indent__m) var(--indent__base) var(--indent__base--desktop);
     }
   }
 

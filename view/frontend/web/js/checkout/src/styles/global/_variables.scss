@@ -386,7 +386,7 @@
     //
     // Messages
     //  ---------------------------------------------
-    --message__margin: 15px 0;
+    --message__margin: var(--indent__m) 0;
 
     //
     // Slide Up

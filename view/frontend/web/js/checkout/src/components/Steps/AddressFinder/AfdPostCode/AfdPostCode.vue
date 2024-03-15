@@ -44,7 +44,8 @@
     </div>
 
     <template v-if="address">
-      <div class="address-block">
+      <div class="address-block"
+           :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
         <div class="address-block__item">
           <article>
             <AddressBlock
@@ -117,7 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected']),
+    ...mapWritableState(useCustomerStore, ['selected', 'customer']),
     ...mapState(useConfigStore, [
       'countryCode',
       'stateRequired',

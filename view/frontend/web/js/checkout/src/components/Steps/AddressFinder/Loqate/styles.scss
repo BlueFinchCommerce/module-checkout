@@ -8,7 +8,7 @@
   }
 
   &__title {
-    margin-bottom: 15px;
+    margin-bottom: var(--indent__m);
     display: var(--loqate-section-title__display, unset);
   }
 
@@ -17,7 +17,7 @@
 
     svg {
       position: absolute;
-      top: var(--loqate-top, 15px);
+      top: var(--loqate-top, var(--indent__m));
       right: 20px;
       width: var(--loqate-svg-width, 23px);
     }
@@ -34,7 +34,7 @@
 
     li {
       list-style: none;
-      padding: 15px 0;
+      padding: var(--indent__m) 0;
       margin: 0;
 
       &:nth-child(odd) {
@@ -79,6 +79,27 @@
       margin-left: var(--indent__s);
       box-shadow: none;
       padding: 0;
+    }
+  }
+
+  &__title {
+    &.selected {
+      font-size: var(--font__s);
+    }
+  }
+
+  &.saved-address-active {
+    border-radius: var(--base__border-radius-large);
+    padding: var(--indent__m) var(--indent__base);
+    font-size: var(--font__s);
+    margin-bottom: var(--indent__base);
+    font-weight: var(--font-weight__semibold);
+    background: var(--address-list-selected-background, var(--color__primary-grey5));
+    border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+    box-shadow: var(--selected-address-box-shadow, none);
+
+    .address-block__edit {
+      top: var(--indent__m);
     }
   }
 }

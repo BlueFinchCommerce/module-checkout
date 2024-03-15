@@ -394,6 +394,14 @@ export default defineStore('customerStore', {
       });
     },
 
+    createNewBillingAddress(addressType) {
+      this.setData({
+        selected: {
+          [addressType]: getEmptyAddress(false),
+        },
+      });
+    },
+
     /**
       * Validate Email Forms
       * @todo - this is a naff. It would be much better to handle this differently
