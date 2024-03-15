@@ -3,9 +3,10 @@ import useRecaptchaStore from '@/stores/RecaptchaStore';
 
 import beforePaymentRequest from '@/services/beforePaymentRequest';
 import getNewsletterMutation from '@/services/newsletter/getNewsletterMutation';
-import graphQlRequest from './graphQlRequest';
 
 import paymentComplete from '@/helpers/dataLayer/paymentCompleteDataLayer';
+
+import graphQlRequest from './graphQlRequest';
 
 export default (paymentMethod) => {
   const { maskedId } = useCartStore();
