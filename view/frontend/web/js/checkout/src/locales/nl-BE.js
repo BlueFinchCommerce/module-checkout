@@ -87,6 +87,8 @@ export default {
       shipHere: 'Hier verzenden',
       info: 'Waar moeten we naartoe verzenden?',
       billingAddressTitle: 'Factuuradres',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveringsadres',
       addressFinder: {
         title: 'Adres zoeken',

@@ -1,5 +1,11 @@
 @import '@/styles/global/_breakpoints';
 
+.divider-line {
+  border-bottom: var(--divider__border);
+  margin-left: var(--indent__base);
+  display: var(--divider-line-display, block);
+}
+
 .address-block {
   position: relative;
 
@@ -13,6 +19,20 @@
     svg {
       margin-right: var(--indent__s);
     }
+
+    &.billing {
+      align-items: center;
+
+      p {
+        margin-bottom: 0;
+        margin-left: var(--indent__s);
+        white-space: nowrap;
+      }
+
+      .divider-line {
+        width: 100%;
+      }
+    }
   }
 
   &__title {
@@ -21,6 +41,10 @@
     margin-bottom: var(--indent__s);
     display: flex;
     align-items: center;
+
+    &.selected {
+      font-size: var(--font__s);
+    }
 
     p {
       margin-bottom: 0;
@@ -44,6 +68,21 @@
     right: var(--indent__base);
     top: 0;
     cursor: pointer;
+  }
+
+  &.saved-address-active {
+    border-radius: var(--base__border-radius-large);
+    padding: var(--indent__m) var(--indent__base);
+    font-size: var(--font__s);
+    margin-bottom: var(--indent__base);
+    font-weight: var(--font-weight__semibold);
+    background: var(--address-list-selected-background, var(--color__primary-grey5));
+    border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+    box-shadow: var(--selected-address-box-shadow, none);
+
+    .address-block__edit {
+      top: var(--indent__m);
+    }
   }
 }
 

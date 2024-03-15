@@ -25,6 +25,7 @@
 
       p {
         color: var(--color__primary-blue);
+        font-weight: var(--font-weight__semibold);
         font-size: var(--font__s);
         white-space: pre;
         text-decoration: underline;
@@ -45,7 +46,7 @@
       }
 
       svg {
-        margin-right: var(--indent__base);
+        margin-right: var(--indent__s);
       }
     }
 
@@ -60,6 +61,7 @@
 
       p {
         color: var(--color__primary-blue);
+        font-weight: var(--font-weight__semibold);
       }
 
       &.active {
@@ -107,6 +109,8 @@
   .progress-bar {
     &-container {
       display: flex;
+      max-width: var(--progress-bar-max-width, 550px);
+      margin: 0 auto;
     }
   }
 }

@@ -4,7 +4,10 @@
       v-if="displayTitle"
       class="delivery-section-title"
     >
-      <Locate />
+      <img
+        :src="savedAddressIconUrl"
+        alt="saved-address-icon"
+      >
       <div class="delivery-section-title-text">
         <TextField
           :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
@@ -25,7 +28,7 @@
       >
         <Tick v-if="item.id === selected[addressType].id" />
         <TextField
-          v-else-if="addressType =='shipping'"
+          v-else-if="addressType ==='shipping'"
           class="ship-here"
           :text="$t('yourDetailsSection.deliverySection.shipHere')"
         />
@@ -37,7 +40,7 @@
         {{ item.telephone }}
       </li>
       <li
-        v-if="selected[addressType].id !== 'custom'"
+        v-if="selected[addressType].id !== 'custom' && isShippingNewCTA"
         class="address-list__item-new">
         <MyButton
           type="button"
@@ -57,8 +60,8 @@ import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 
 // icons
-import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
+import promoSvg from '@/components/Steps/OrderSummary/PromotionComponent/images/promo-icon.svg';
 
 // components
 import TextField from '@/components/Core/TextField/TextField.vue';
@@ -66,11 +69,11 @@ import MyButton from '@/components/Core/Button/Button.vue';
 
 // Helpers
 import deepClone from '@/helpers/deepClone';
+import getStaticUrl from '@/helpers/getStaticPath';
 
 export default {
   name: 'AddressList',
   components: {
-    Locate,
     TextField,
     Tick,
     MyButton,
@@ -85,11 +88,29 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      isShippingNewCTA: true,
+    };
+  },
   computed: {
     ...mapState(useCustomerStore, ['customer', 'selected']),
+    savedAddressIconUrl() {
+      return `${getStaticUrl(promoSvg)}`;
+    },
   },
   mounted() {
     this.$emit('showAddressBlock', false);
+
+    let selectedId = null;
+
+    const selectedItem = this.customer.addresses.find((item) => item.id === this.selected[this.addressType].id);
+
+    if (selectedItem) {
+      selectedId = selectedItem.id;
+    }
+
+    this.$emit('passSelectedItemId', selectedId);
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -97,6 +118,7 @@ export default {
       'createNewAddress',
       'setAddressAsEditing',
       'setAddressAsCustom',
+      'createNewBillingAddress',
     ]),
     selectAddress(address) {
       const clonedAddress = deepClone(address);
@@ -107,9 +129,28 @@ export default {
       if (this.selected.billing.same_as_shipping) {
         this.setAddressToStore(clonedAddress, 'billing');
       }
+
+      this.$emit('selectedSavedAddress', true);
+      this.$emit('passSelectedItemId', address.id);
+
+      if (this.addressType === 'billing') {
+        this.isShippingNewCTA = true;
+      }
     },
     newAddress() {
-      this.createNewAddress(this.addressType);
+      this.isShippingNewCTA = false;
+
+      if (this.selected[this.addressType].region_id !== null) {
+        this.selected[this.addressType].region_id = null;
+      }
+
+      if (this.addressType === 'billing') {
+        this.createNewBillingAddress('billing');
+        this.setAddressAsCustom('billing');
+        this.setAddressAsEditing('billing', true);
+      } else {
+        this.createNewAddress(this.addressType);
+      }
     },
   },
 };

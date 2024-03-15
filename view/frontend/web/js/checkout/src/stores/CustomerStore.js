@@ -254,7 +254,7 @@ export default defineStore('customerStore', {
         maskedId: null,
       });
 
-      await refreshCustomerData(['customer'].concat(getCartSectionNames()));
+      refreshCustomerData(['customer'].concat(getCartSectionNames()));
       this.setData({
         customer: {
           email,
@@ -390,6 +390,14 @@ export default defineStore('customerStore', {
       this.setData({
         selected: {
           [addressType]: getEmptyAddress(sameAsShipping),
+        },
+      });
+    },
+
+    createNewBillingAddress(addressType) {
+      this.setData({
+        selected: {
+          [addressType]: getEmptyAddress(false),
         },
       });
     },
