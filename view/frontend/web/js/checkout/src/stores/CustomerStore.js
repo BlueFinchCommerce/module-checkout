@@ -254,7 +254,7 @@ export default defineStore('customerStore', {
         maskedId: null,
       });
 
-      await refreshCustomerData(['customer'].concat(getCartSectionNames()));
+      refreshCustomerData(['customer'].concat(getCartSectionNames()));
       this.setData({
         customer: {
           email,
