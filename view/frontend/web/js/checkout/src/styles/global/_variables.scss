@@ -188,6 +188,16 @@
     --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
 
     //
+    // Adyen Cards
+    //  ---------------------------------------------
+    --braintree-saved-card__background-color: var(--color__transparent);
+    --braintree-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+    --braintree-saved-card__font-color: var(--color__primary-blue);
+    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --braintree-saved-card__background-color-active: var(--color__primary-grey5);
+    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+
+    //
     // Adyen Icons
     //  ---------------------------------------------
     --adyen-payment-icon__display: block;

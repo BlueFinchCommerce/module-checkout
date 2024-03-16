@@ -7,6 +7,7 @@
     <RadioButton
       :text="title"
       :checked="isMethodSelected"
+      class="free-payment-radio"
       @click="selectPaymentMethod"
       @keydown="selectPaymentMethod"
     />
@@ -33,7 +34,7 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // Helpers
@@ -58,7 +59,6 @@ export default {
     ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
     ...mapState(useCustomerStore, [
       'customer',
-      'getSelectedBillingAddress',
     ]),
   },
   created() {
@@ -110,6 +110,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./styles.scss";
 </style>

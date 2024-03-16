@@ -77,7 +77,7 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // Images
@@ -102,7 +102,7 @@ export default {
       'lpm',
     ]),
     ...mapState(useConfigStore, ['currencyCode']),
-    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'isItemRequiringDelivery']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
@@ -148,35 +148,43 @@ export default {
       });
       const isVirtual = !this.isItemRequiringDelivery;
 
-      const address = {
-        countryCode: this.selected.shipping.country_code,
-      };
+      const shippingAddress = this.cart.shipping_addresses[0];
+      const address = {};
+
+      address.countryCode = shippingAddress.country.code;
 
       if (!isVirtual) {
-        const [streetAddress, extendedAddress] = this.selected.shipping.street;
+        const [streetAddress, extendedAddress] = shippingAddress.street;
         address.streetAddress = streetAddress;
         address.extendedAddress = extendedAddress;
-        address.locality = this.selected.shipping.city;
-        address.postalCode = this.selected.shipping.postcode;
-        address.region = this.selected.shipping.region.region;
+        address.locality = shippingAddress.city;
+        address.postalCode = shippingAddress.postcode;
+        address.region = shippingAddress.region.code;
       }
+
+      const billingAddress = this.cart.billing_address;
 
       const paymentOptions = {
         amount: (this.cartGrandTotal / 100).toString(),
         currencyCode: this.currencyCode,
-        email: this.selected.billing.email,
-        phone: this.selected.billing.telephone,
-        givenName: this.selected.billing.firstname,
-        surname: this.selected.billing.lastname,
+        email: this.cart.email,
+        phone: billingAddress.telephone,
+        givenName: billingAddress.firstname,
+        surname: billingAddress.lastname,
         shippingAddressRequired: !isVirtual,
         address,
         paymentType: allowedMethod,
+        paymentTypeCountryCode: billingAddress.country.code,
+        recurrent: false,
+        customerId: null,
         onPaymentStart(data, start) {
           start();
         },
         fallback: {
-          url: this.lpm.redirectOnFail,
+          url: 'N/A',
           buttonText: 'N/A',
+          cancelButtonText: 'N/A',
+          cancelUrl: 'https://google.com',
         },
       };
 
@@ -226,7 +234,6 @@ export default {
       const additionalPaymentData = getAdditionalPaymentData();
 
       return {
-        billingAddress: this.getSelectedBillingAddress,
         email: this.customer.email,
         paymentMethod: {
           method: 'braintree_local_payment',

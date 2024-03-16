@@ -37,7 +37,7 @@ export default async (billingAddress) => {
         }
       ) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

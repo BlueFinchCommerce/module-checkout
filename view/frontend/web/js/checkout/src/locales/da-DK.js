@@ -24,12 +24,14 @@ export default {
     crossSellsTitle: 'You may also like these items...',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Indtast Promo kode',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Indtast kode',
       successMessage: 'koden er indtastet "{code}".',
@@ -48,6 +50,7 @@ export default {
     skuNumber: 'SKU nr:',
     supplierStockNumber: 'Leverandørens lager nr:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Dine oplysninger',
@@ -191,10 +194,12 @@ export default {
   adyen: {
     applePayTotal: 'Pris i alt',
     applePayNoShippingMethods: 'Der er i øjeblikket ingen forsendelsesmetoder tilgængelige for dig. Prøv igen eller brug en anden betalingsmetode',
+  },
+  paymentCard: {
     cardNumber: 'Kortnummer',
     expiry: 'Udløbsdato',
-    storedPaymentLabel: '{name} Gemt kort udløber den {lastFour}.',
     select: 'Select',
+    storedPaymentLabel: '{name} Gemt kort udløber den {lastFour}.',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

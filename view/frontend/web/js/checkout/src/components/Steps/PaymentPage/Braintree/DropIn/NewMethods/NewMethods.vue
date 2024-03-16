@@ -1,5 +1,18 @@
 <template>
   <div
+    class="braintree-payment__title"
+  >
+    <Payment
+      class="braintree-payment__icon"
+      fill="black"
+    />
+    <TextField
+      class="braintree-payment__header"
+      :text="paymentStepText"
+    />
+    <div class="divider-line" />
+  </div>
+  <div
     id="braintree-drop-in"
     ref="braintreeContainer"
     class="braintree-drop-in"
@@ -9,7 +22,7 @@
     :to="saveVaultLocation"
   >
     <CheckboxComponent
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && vaultActive"
       id="braintree-store-method"
       class="braintree-store-method"
       :checked="storeMethod"
@@ -36,12 +49,15 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import Payment from '@/components/Core/Icons/Payment/Payment.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // External
@@ -52,6 +68,8 @@ export default {
   components: {
     CheckboxComponent,
     MyButton,
+    Payment,
+    TextField,
   },
   data() {
     return {
@@ -60,6 +78,7 @@ export default {
       saveVaultLocation: '',
       paymentOptionPriority: [],
       map: {},
+      paymentStepText: '',
     };
   },
   computed: {
@@ -71,10 +90,11 @@ export default {
       'alwaysRequestThreeDS',
       'google',
       'paypal',
+      'vaultedMethods',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
-    ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
+    ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
       'isPaymentMethodAvailable',
@@ -87,6 +107,15 @@ export default {
     await this.getPaymentMethods();
     await this.getBraintreeConfig();
     await this.createClientToken();
+
+    // The titles need to be reflective of the state we're in.
+    if (Object.values(this.vaultedMethods).length) {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
+        || this.$t('paymentStep.titleNew');
+    } else {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
+        || this.$t('paymentStep.titleGuest');
+    }
 
     const total = (this.cartGrandTotal / 100).toString();
 
@@ -214,18 +243,20 @@ export default {
           reject(new Error('Unable to initialise payment components.'));
         }
 
-        const firstName = this.escapeNonAsciiCharacters(this.getSelectedBillingAddress.firstname);
-        const lastName = this.escapeNonAsciiCharacters(this.getSelectedBillingAddress.lastname);
-        const billingAddress = {
+        const billingAddress = this.cart.billing_address;
+
+        const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
+        const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
+        const formattedBillingAddress = {
           givenName: firstName,
           surname: lastName,
-          phoneNumber: this.getSelectedBillingAddress.telephone,
-          streetAddress: this.getSelectedBillingAddress.street[0],
-          extendedAddress: this.getSelectedBillingAddress.street[1],
-          locality: this.getSelectedBillingAddress.city,
-          region: this.getSelectedBillingAddress.region_code,
-          postalCode: this.getSelectedBillingAddress.postcode,
-          countryCodeAlpha2: this.getSelectedBillingAddress.country_code,
+          phoneNumber: billingAddress.telephone,
+          streetAddress: billingAddress.street[0],
+          extendedAddress: billingAddress.street[1],
+          locality: billingAddress.city,
+          region: billingAddress.region_code,
+          postalCode: billingAddress.postcode,
+          countryCodeAlpha2: billingAddress.country_code,
         };
 
         const price = this.cartGrandTotal / 100;
@@ -236,7 +267,7 @@ export default {
           threeDSecure: {
             amount: parseFloat(price).toFixed(2),
             email: this.customer.email,
-            billingAddress,
+            billingAddress: formattedBillingAddress,
             challengeRequested,
           },
         }, (error, payload) => {
@@ -256,10 +287,14 @@ export default {
 
     getPaymentData(payload) {
       return {
-        code: this.getBraintreeMethod(payload.type),
-        braintree: {
-          payment_method_nonce: payload.nonce,
-          is_active_payment_token_enabler: this.storeMethod,
+        email: this.customer.email,
+        paymentMethod: {
+          method: this.getBraintreeMethod(payload.type),
+          additional_data: {
+            payment_method_nonce: payload.nonce,
+            is_active_payment_token_enabler: this.storeMethod,
+          },
+          extension_attributes: getPaymentExtensionAttributes(),
         },
       };
     },
@@ -328,7 +363,8 @@ export default {
 
     clearSelectedMethod({ id }) {
       this.unselectVaultedMethods();
-      if (!id.startsWith('braintree') || id === 'braintree-lpm' || id === 'braintree-vaulted') {
+      if (!id.startsWith('braintree')
+        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach') {
         this.clearSelectedPaymentMethod();
       }
 

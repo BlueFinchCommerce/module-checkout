@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'Een artikel meer',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Kortingscode invoeren',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Code invoeren',
       successMessage: 'Code succesvol ingevoerd "{code}".',
@@ -48,6 +50,7 @@ export default {
     skuNumber: 'SKU-nr.:',
     supplierStockNumber: 'Leverancier Voorraadnr.',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Jouw informatie',
@@ -191,10 +194,12 @@ export default {
   adyen: {
     applePayTotal: 'Totaal',
     applePayNoShippingMethods: 'Er zijn momenteel geen verzendmethoden beschikbaar. Probeer het opnieuw of gebruik een andere betaalmethode.',
+  },
+  paymentCard: {
     cardNumber: 'Kaartnummer',
     expiry: 'Vervaldatum',
-    storedPaymentLabel: '{name} Opgeslagen kaart verloopt op {lastFour}',
     select: 'Select',
+    storedPaymentLabel: '{name} Opgeslagen kaart verloopt op {lastFour}',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

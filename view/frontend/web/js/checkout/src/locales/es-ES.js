@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'Un artículo más',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Introducir código promocional',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Introducir código',
       successMessage: 'Código introducido con éxito "{code}".',
@@ -48,6 +50,7 @@ export default {
     skuNumber: 'Nº SKU',
     supplierStockNumber: 'Proveedor Nº de stock:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Su información',
@@ -191,10 +194,12 @@ export default {
   adyen: {
     applePayTotal: 'Total compra',
     applePayNoShippingMethods: 'Actualmente no hay opciones de envío disponibles para usted. Por favor, inténtelo de nuevo o utilice otro método de pago',
+  },
+  paymentCard: {
     cardNumber: 'Número de tarjeta',
     expiry: 'Fecha de caducidad',
-    storedPaymentLabel: '{name} Tarjeta guardada caduca el {lastFour}',
     select: 'Select',
+    storedPaymentLabel: '{name} Tarjeta guardada caduca el {lastFour}',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

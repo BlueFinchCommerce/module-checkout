@@ -21,7 +21,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 

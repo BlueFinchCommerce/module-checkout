@@ -27,11 +27,12 @@ import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 
 export default {
   name: 'AdyenGooglePay',
@@ -284,12 +285,21 @@ export default {
 
         const { email } = data;
         const { billingAddress } = data.paymentMethodData.info;
-        const { phoneNumber } = billingAddress;
-        const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
+        const { phoneNumber: billingPhoneNumber } = billingAddress;
+        const mapBillingAddress = this.mapAddress(billingAddress, email, billingPhoneNumber);
+
+        const { shippingAddress } = data;
+        const { phoneNumber: shippingPhoneNumber } = shippingAddress;
+        const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
 
         try {
           this.submitEmail(email)
-            .then(() => setBillingAddressOnCart(mapBillingAddress))
+            .then(() => (
+              Promise.all([
+                setBillingAddressOnCart(mapBillingAddress),
+                setShippingAddressesOnCart(mapShippingAddress),
+              ])
+            ))
             .then(() => {
               const stateData = JSON.stringify({
                 paymentMethod: {
@@ -308,7 +318,7 @@ export default {
                 },
               };
 
-              createPayment(paymentMethod)
+              return createPayment(paymentMethod)
                 .then((orderNumber) => {
                   this.setOrderId(orderNumber);
                   resolve({

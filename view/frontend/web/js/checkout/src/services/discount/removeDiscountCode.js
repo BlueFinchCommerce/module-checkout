@@ -10,7 +10,7 @@ export default () => {
         cart_id: "${maskedId}"
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

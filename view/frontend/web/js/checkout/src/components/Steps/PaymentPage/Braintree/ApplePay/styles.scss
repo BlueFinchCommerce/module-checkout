@@ -2,7 +2,7 @@
   #braintree-apple-pay {
     &.text-loading {
       border-radius: var(--button__text-placeholder-bg-radius);
-      height: var(--adyen-express-button-height, 48px);
+      height: var(--braintree-express-button-height, 48px);
     }
   }
 

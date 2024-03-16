@@ -44,8 +44,6 @@ export default {
     ...mapState(useCartStore, ['cartEmitter']),
     ...mapState(useCustomerStore, [
       'customer',
-      'getSelectedBillingAddress',
-      'getSelectedShippingAddress',
       'isLoggedIn',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'locale']),

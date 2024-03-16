@@ -3,12 +3,43 @@
 .braintree-vault {
   display: grid;
   gap: var(--indent__base);
-  margin-bottom: var(--indent__base);
+  margin: var(--indent__base) 0 var(--indent__xl);;
+
+  &__title {
+    display: flex;
+    padding-bottom: var(--indent__s);
+    margin-bottom: var(--braintree-payment-title-margin, 0);
+    align-items: center;
+
+    .divider-line {
+      border-bottom: var(--divider__border);
+      margin-left: var(--indent__base);
+      width: 100%;
+      display: var(--divider-line-display, block);
+    }
+  }
+
+  &__icon {
+    display: var(--braintree-payment-icon__display);
+
+    img {
+      width: 24px;
+    }
+  }
+
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--font__color);
+    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
+    font-family: var(--payment-page-header-font-family, var(--font-family__copy));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
+    white-space: nowrap;
+  }
 
   [name="braintree-hosted-field-cvv"],
   [name="braintree-hosted-field=expirationDate"],
   [name="braintree-hosted-field-number"] {
-    background: var(--adyen-checkout-input__background-color, var(--color__primary-white));
+    background: var(--braintree-payment-input__background-color, var(--color__primary-white));
     border-radius: 4px;
     border: var(--input-border, 1px solid var(--input__border-color)) !important;
     height: var(--input__height) !important;
@@ -39,62 +70,91 @@
     grid-auto-columns: 100%;
   }
 
-  .adyen-checkout__payment-method {
+  .braintree-payment__payment-method {
     border: none;
-  }
 
-  .adyen-checkout__payment-method__header__title {
-    background: var(--adyen-saved-card__background-color);
-    border: var(--adyen-saved-card__border-active);
-    border-radius: var(--base__border-radius);
-    box-shadow: none;
-    color: var(--adyen-saved-card__font-color);
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, auto);
-    margin: 0;
-    padding: var(--indent__base);
+    &__header__title {
+      background: var(--braintree-saved-card__background-color-active);
+      border: var(--braintree-saved-card__border-active);
+      border-radius: var(--base__border-radius);
+      box-shadow: none;
+      color: var(--braintree-saved-card__font-color);
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, auto);
+      margin: 0;
+      padding: var(--indent__base);
 
-    &.adyen-checkout__payment-method-disabled {
-      border: var(--adyen-saved-card__border);
+      &.braintree-payment__payment-method-disabled {
+        background: var(--braintree-saved-card__background-color);
+        border: var(--braintree-saved-card__border);
+      }
+    }
+
+    &__card-number,
+    &__name {
+      font-size: var(--font__xs);
+      grid-column: 1;
+      text-align: left;
+    }
+
+    &__expiry-label,
+    &__expiry {
+      font-size: var(--font__xs);
+      grid-column: 2;
+      text-align: right;
+    }
+
+    &__card-number,
+    &__expiry-label {
+      font-weight: var(--font-weight__regular);
+    }
+
+    &__name,
+    &__expiry {
+      font-weight: var(--font-weight__semibold);
+    }
+
+    &-tick {
+      align-self: self-start;
+      display: flex;
+      fill: var(--braintree-saved-card-tick-color, var(--color__semantic-success));
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: flex-end;
+    }
+
+    &-select {
+      align-self: flex-start;
+      justify-self: flex-end;
+      text-decoration: underline;
+    }
+
+    &__radio {
+      display: none;
+    }
+
+    &__expiry-label {
+      grid-row: 2;
+    }
+
+    &__image__wrapper {
+      grid-column: 1;
+      grid-row: 1;
+      height: var(--indent__base);
+      margin: 0 0 var(--indent__xl);
+      padding: var(--indent__xs);
+      width: 30%;
+
+      svg {
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 
-  .adyen-checkout__payment-method__card-number,
-  .adyen-checkout__payment-method__name {
-    font-size: var(--font__xs);
-    grid-column: 1;
-    line-height: 1.5em;
-    text-align: left;
-  }
-
-  .adyen-checkout__payment-method__expiry-label,
-  .adyen-checkout__payment-method__expiry {
-    font-size: var(--font__xs);
-    grid-column: 2;
-    line-height: 1.5em;
-    text-align: right;
-  }
-
-  .adyen-checkout__payment-method__expiry-label {
-    grid-row: 2;
-  }
-
-  .adyen-checkout__payment-method__image__wrapper {
-    grid-column: 1;
-    grid-row: 1;
-    height: var(--indent__xl);
-    margin: 0 0 var(--indent__xl);
-    padding: var(--indent__xs);
-    width: 30%;
-
-    svg {
-      height: 100%;
-      width: 100%;
-    }
-  }
-
-  .adyen-checkout__card__exp-date__input--oneclick {
+  .braintree-payment__card__exp-date__input--oneclick {
     background-color: transparent;
     border: none;
     color: var(--color__primary-white);
@@ -107,10 +167,6 @@
     &:active {
       box-shadow: none
     }
-  }
-
-  .adyen-checkout__payment-method__radio {
-    display: none;
   }
 }
 

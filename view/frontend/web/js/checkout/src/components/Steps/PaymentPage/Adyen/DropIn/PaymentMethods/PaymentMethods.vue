@@ -64,7 +64,7 @@ import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
@@ -120,7 +120,6 @@ export default {
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [
       'customer',
-      'getSelectedBillingAddress',
       'isLoggedIn',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
@@ -269,6 +268,15 @@ export default {
       // Set the stored payment radio field state depending on if it matches
       // the current ID.
       this.storedPaymentSelected = this.id === id;
+
+      // If the selected method isn't a stored method then reset all stored method selection.
+      if (id !== 'adyen-dropin-container-stored') {
+        this.storedPaymentMethods = this.storedPaymentMethods.map((storedMethod) => {
+          const updatedMethod = storedMethod;
+          updatedMethod.default = false;
+          return updatedMethod;
+        });
+      }
     });
 
     this.paymentEmitter.on('adyenStoredPaymentCardSelected', ({ originalId }) => {

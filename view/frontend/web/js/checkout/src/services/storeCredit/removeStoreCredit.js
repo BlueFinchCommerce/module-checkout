@@ -8,9 +8,16 @@ export default () => {
     mutation {
       removeStoreCreditFromCart(input: { cart_id: "${maskedId}" }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;
-  return graphQlRequest(request);
+  return graphQlRequest(request)
+    .then((response) => {
+      if (response.errors) {
+        throw new Error(response.errors[0].message);
+      }
+
+      return response.data.removeStoreCreditFromCart.cart;
+    });
 };

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="customer.reward_points && customer.reward_points.balance.points && !cart.applied_reward_points?.points"
+    v-if="customer.reward_points?.balance?.points && !cart.applied_reward_points?.points"
     class="reward-points"
   >
     <div>
@@ -23,7 +23,7 @@
     />
   </div>
   <div
-    v-else-if="customer.reward_points && cart.applied_reward_points?.points"
+    v-else-if="customer.reward_points?.balance?.points && cart.applied_reward_points?.points"
     class="reward-points"
   >
     <span>{{ $t('rewards.applied') }}</span>
@@ -53,12 +53,8 @@ export default {
     ...mapState(useCartStore, ['cart']),
     ...mapState(useCustomerStore, ['customer']),
   },
-  async created() {
-    await this.getAvailableRewardPoints();
-  },
   methods: {
     ...mapActions(useCartStore, ['useRewardPoints', 'removeRewardPoints']),
-    ...mapActions(useCustomerStore, ['getAvailableRewardPoints']),
     getFormattedPrice() {
       return formatPrice(this.customer.reward_points.balance.money.value);
     },

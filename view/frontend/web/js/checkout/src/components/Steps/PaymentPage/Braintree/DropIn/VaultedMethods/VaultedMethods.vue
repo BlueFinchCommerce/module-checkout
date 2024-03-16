@@ -1,4 +1,18 @@
 <template>
+  <div
+    v-if="Object.values(vaultedMethods).length"
+    class="braintree-vault__title"
+  >
+    <Payment
+      class="braintree-vault__icon"
+      fill="black"
+    />
+    <TextField
+      class="braintree-vault__header"
+      :text="paymentStepText"
+    />
+    <div class="divider-line" />
+  </div>
   <div class="braintree-vault">
     <div
       v-show="!loading && clientInstance"
@@ -10,23 +24,28 @@
         :key="vaultedMethod.publicHash"
       >
         <button
-          class="adyen-checkout__payment-method__header__title"
-          :class="{ 'adyen-checkout__payment-method-disabled': !vaultedMethod.selected }"
-          :aria-label="$t('adyen.storedPaymentLabel', { lastFour: vaultedMethod.details.maskedCC })"
+          class="braintree-payment__payment-method__header__title button"
+          :class="{ 'braintree-payment__payment-method-disabled': !vaultedMethod.selected }"
+          :aria-label="$t('paymentCard.storedPaymentLabel', { lastFour: vaultedMethod.details.maskedCC })"
           type="button"
           @click="selectPaymentCard(vaultedMethod)"
         >
           <Tick
             v-if="vaultedMethod.selected"
-            class="adyen-checkout__payment-method-tick"
+            class="braintree-payment__payment-method-tick"
+          />
+          <TextField
+            v-else
+            class="braintree-payment__payment-method-select"
+            :text="$t('paymentCard.select')"
           />
           <span
-            class="adyen-checkout__payment-method__radio"
+            class="braintree-payment__payment-method__radio"
             aria-hidden="true"
           />
           <span
-            class="adyen-checkout__payment-method__image__wrapper
-          adyen-checkout__payment-method__image__wrapper--outline"
+            class="braintree-payment__payment-method__image__wrapper
+          braintree-payment__payment-method__image__wrapper--outline"
           >
             <svg>
               <use
@@ -35,12 +54,12 @@
               />
             </svg>
           </span>
-          <span class="adyen-checkout__payment-method__card-number">{{ $t('adyen.cardNumber') }}</span>
-          <span class="adyen-checkout__payment-method__name">
-            •••• {{ vaultedMethod.details.maskedCC }}
+          <span class="braintree-payment__payment-method__card-number">{{ $t('paymentCard.cardNumber') }}</span>
+          <span class="braintree-payment__payment-method__name">
+            **** **** **** {{ vaultedMethod.details.maskedCC }}
           </span>
-          <span class="adyen-checkout__payment-method__expiry-label">{{ $t('adyen.expiry') }}</span>
-          <span class="adyen-checkout__payment-method__expiry">
+          <span class="braintree-payment__payment-method__expiry-label">{{ $t('paymentCard.expiry') }}</span>
+          <span class="braintree-payment__payment-method__expiry">
             {{ vaultedMethod.details.expirationDate }}
           </span>
         </button>
@@ -75,12 +94,14 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
+import Payment from '@/components/Core/Icons/Payment/Payment.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import getPaymentNonce from '@/services/braintree/getPaymentNonce';
 import updatePayment from '@/services/braintree/updatePayment';
@@ -93,11 +114,14 @@ export default {
   components: {
     MyButton,
     Tick,
+    Payment,
+    TextField,
   },
   data() {
     return {
       hostedFieldsInstance: null,
       loading: false,
+      paymentStepText: '',
     };
   },
   computed: {
@@ -114,7 +138,7 @@ export default {
       'alwaysRequestThreeDS',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
   },
@@ -123,6 +147,9 @@ export default {
     await this.getPaymentMethods();
     await this.getBraintreeConfig();
     await this.getVaultedMethods();
+
+    this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+        || this.$t('paymentStep.titleStored');
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
@@ -198,18 +225,20 @@ export default {
           return;
         }
 
-        const firstName = this.escapeNonAsciiCharacters(this.getSelectedBillingAddress.firstname);
-        const lastName = this.escapeNonAsciiCharacters(this.getSelectedBillingAddress.lastname);
-        const billingAddress = {
+        const billingAddress = this.cart.billing_address;
+
+        const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
+        const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
+        const formattedBillingAddress = {
           givenName: firstName,
           surname: lastName,
-          phoneNumber: this.getSelectedBillingAddress.telephone,
-          streetAddress: this.getSelectedBillingAddress.street[0],
-          extendedAddress: this.getSelectedBillingAddress.street[1],
-          locality: this.getSelectedBillingAddress.city,
-          region: this.getSelectedBillingAddress.region_code,
-          postalCode: this.getSelectedBillingAddress.postcode,
-          countryCodeAlpha2: this.getSelectedBillingAddress.country_code,
+          phoneNumber: billingAddress.telephone,
+          streetAddress: billingAddress.street[0],
+          extendedAddress: billingAddress.street[1],
+          locality: billingAddress.city,
+          region: billingAddress.region_code,
+          postalCode: billingAddress.postcode,
+          countryCodeAlpha2: billingAddress.country_code,
         };
 
         const threeDSecureParameters = {
@@ -217,7 +246,7 @@ export default {
           email: this.customer.email,
           nonce,
           bin,
-          billingAddress,
+          billingAddress: formattedBillingAddress,
           challengeRequested: this.alwaysRequestThreeDS,
         };
 
@@ -273,13 +302,14 @@ export default {
       });
     },
 
-    getPaymentData() {
+    getPaymentData(response) {
       const { publicHash } = this.selectedVaultMethod;
 
       return {
         paymentMethod: {
-          code: 'braintree_cc_vault',
-          braintree_cc_vault: {
+          method: 'braintree_cc_vault',
+          additional_data: {
+            payment_method_nonce: response.nonce,
             public_hash: publicHash,
           },
         },

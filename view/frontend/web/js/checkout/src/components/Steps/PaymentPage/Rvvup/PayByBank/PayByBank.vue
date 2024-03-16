@@ -87,7 +87,7 @@ import IframeComponent from '@/components/Core/ActionComponents/Iframe/Iframe.vu
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import getRvvupPaymentMethods from '@/services/payments/getRvvupPaymentMethods';
 import getRvvupPaymentActions from '@/services/payments/getRvvupPaymentActions';
 

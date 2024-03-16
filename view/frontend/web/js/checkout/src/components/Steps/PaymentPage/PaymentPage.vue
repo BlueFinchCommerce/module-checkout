@@ -3,7 +3,7 @@
     <SavedDeliveryAddress />
     <SavedShippingMethod v-if="isItemRequiringDelivery" />
     <Rewards v-if="rewardsEnabled" />
-    <StoreCredit v-if="getTotalSegment('customerbalance')" />
+    <StoreCredit />
     <div class="payment-page">
       <div class="payment-form">
         <ProgressBar />
@@ -102,7 +102,7 @@ export default {
       'getPaymentMethodTitle',
       'rvvupErrorMessage',
     ]),
-    ...mapState(useCartStore, ['cartGrandTotal', 'getTotalSegment', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
   },
   async created() {
     if (!this.storeCode) {
