@@ -36,6 +36,7 @@
   "main.js": {
     "assets": [
       "logo.svg",
+      "loader.gif",
       "lockIcon.svg",
       "icon-apple.svg",
       "icon-google.svg",
@@ -48,7 +49,6 @@
       "icon-clearpay.svg",
       "CardPay.svg",
       "icon-venmo.svg",
-      "loader.gif",
       "bin.svg",
       "promo-icon.svg",
       "gift-icon.svg",
@@ -217,7 +217,7 @@
   },
   "src/components/Footer/FooterIcons/icons/icon-cardpay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg"
   },
   "src/components/Footer/FooterIcons/icons/icon-clearpay.svg": {
     "file": "icon-clearpay.svg",
@@ -269,7 +269,7 @@
   },
   "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
+    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg"
   },
   "src/components/Steps/GlobalComponents/PayWithComponent/icons/ClearPay.svg": {
     "file": "ClearPay.svg",
