@@ -25,6 +25,7 @@
 .instant-payment-buttons {
   display: grid;
   grid-gap: var(--indent__xs);
+  margin-top: var(--indent__base);
 }
 
 .details-form {

@@ -10,6 +10,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -120,7 +121,8 @@ export default {
     document.head.appendChild(googlePayScript);
   },
   methods: {
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useAgreementStore, ['validateAgreements']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(useAdyenStore, [
       'getAdyenConfig',
       'getIsAdyenAvailable',
@@ -132,7 +134,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
+    ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
@@ -195,9 +197,20 @@ export default {
           merchantId: googlePayConfig.configuration.merchantId,
         },
         onAuthorized: this.handeOnAuthorized,
-        onClick: (resolve, reject) => expressPaymentOnClickDataLayer(resolve, reject, googlePayConfig.type),
+        onClick: (resolve, reject) => this.onClick(resolve, reject, googlePayConfig.type),
         onSubmit: () => {},
       };
+    },
+
+    onClick(resolve, reject, type) {
+      // Check that the agreements (if any) are valid.
+      const isValid = this.validateAgreements();
+
+      if (!isValid) {
+        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+      }
+
+      return expressPaymentOnClickDataLayer(resolve, reject, type);
     },
 
     onPaymentDataChanged(data) {

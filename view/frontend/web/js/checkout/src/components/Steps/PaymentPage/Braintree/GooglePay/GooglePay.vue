@@ -13,6 +13,7 @@ import { markRaw } from 'vue';
 
 import braintree from 'braintree-web';
 
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -126,6 +127,7 @@ export default {
     document.head.appendChild(googlePayScript);
   },
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
@@ -139,6 +141,13 @@ export default {
     },
 
     onClick() {
+      // Check that the agreements (if any) are valid.
+      const isValid = this.validateAgreements();
+
+      if (!isValid) {
+        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+      }
+
       const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
         transactionInfo: {
           countryCode: this.countryCode,
