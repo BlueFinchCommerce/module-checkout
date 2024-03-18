@@ -86,6 +86,9 @@ export default defineStore('cartStore', {
         ? Math.round(state.cart.prices.grand_total.value * 100)
         : 0
     ),
+    cartDiscountTotal: (state) => (
+      state.cart.prices?.discounts?.reduce((prev, { amount }) => (prev + amount.value), 0) || 0
+    ),
     getCouponValue: (state) => (
       (coupon) => state.cart.prices.discounts?.find((discount) => discount.label.includes(coupon))?.amount?.value || 0
     ),
