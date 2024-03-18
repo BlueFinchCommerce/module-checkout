@@ -11,15 +11,15 @@
   top: -5px;
 
   &__info {
-    font-size: var(--font__base);
-    font-family: var(--font-family-copy);
+    font-size: var(--font__s);
+    font-family: var(--font-family__copy);
     color: var(--adyen-font-color, #00112c);
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 
     p {
-      font-weight: var(--font-weight__bold);
+      font-weight: var(--font-weight__semibold);
     }
 
     .hokodo-logo,
@@ -39,13 +39,13 @@
   }
 
   .more-info-button {
-    color: var(--blue-color);
-    font-size: var(--font__base);
-    font-weight: var(--font-weight__bold);
-    text-decoration: underline;
+    color: var(--button__link-font-color);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    text-decoration: var(--button__link-text-decoration);
     cursor: pointer;
-    background: transparent;
-    border: none;
+    background: var(--button__link-background-color);
+    border: var(--button__link-border);
   }
 }
 

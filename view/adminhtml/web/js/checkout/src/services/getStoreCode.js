@@ -1,4 +1,4 @@
-import getStoreId from '@/helpers/getStoreId';
+import getStoreId from '@/helpers/storeConfigs/getStoreId';
 import graphQlRequest from './graphQlRequest';
 
 export default () => {

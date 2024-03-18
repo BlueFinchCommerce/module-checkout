@@ -1,29 +1,15 @@
 @import '@/styles/global/_breakpoints';
-.shipping-step {
-  padding-bottom: 55px; // only for checkout ui designer
-}
 
 .shipping-form {
-  background: var(--page-background__color-mobile);
-  padding: var(--shipping-page-paddings, 0 var(--mobile-indent__base) 50px);
+  background: var(--page__background-color--mobile);
+  padding: var(--shipping-page-paddings, 0 var(--indent__base--mobile) 50px);
 }
 
 //Styles for desktop
 
-@mixin largeWidth() {
-  .shipping-form {
-    background: var(--page-background__color-desktop);
-    padding: 0 0 50px;
-  }
-}
-
-.mock-laptop,
-.mock-desktop {
-    @include largeWidth;
-}
-
 @media screen and (min-width: $screen__m) {
-  .mock-full {
-      @include largeWidth;
+  .shipping-form {
+    background: var(--page__background-color--desktop);
+    padding: 0 0 50px;
   }
 }

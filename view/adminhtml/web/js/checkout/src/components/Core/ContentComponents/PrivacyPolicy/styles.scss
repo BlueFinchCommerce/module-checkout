@@ -1,0 +1,32 @@
+.privacy-policy-content {
+  font-size: var(--font__xs);
+  color: var(--font__color-light);
+  font-family: var(--privacy-policy-content-font-family, unset);
+
+  &_button {
+    font-size: var(--font__xs);
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+.privacy-close {
+  font-size: var(--privacy-close-button-font-size, var(--font__l));
+  font-weight: var(--privacy-close-button-font-weight, var(--font-weight__medium));
+  min-height: var(--privacy-close-button-min-height, 50px);
+  padding: var(--privacy-close-button-paddings, 10px);
+  background: var(--privecy-close-button-background, transparent);
+  border-radius: var(--privecy-close-button-border-radius, 10px);
+  color: var(--button-privacy-policy__text-color);
+  border: var(--button-privacy-policy__border);
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-visible {
+    background: var(--button-privacy-policy__background-color-hover);
+    color: var(--button-privacy-policy__text-color-hover);
+    border: var(--button-privacy-policy__border);
+  }
+}

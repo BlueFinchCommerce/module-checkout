@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Inserisci il tuo indirizzo e-mail per pagare con carta di credito/debito',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Utilizza',
     removeBtn: 'Rimuovi',
     modalHeader: 'Riepilogo ordine',
@@ -23,11 +24,15 @@ export default {
     plusOneItem: 'Un articolo in più',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Inserisci il codice promozionale',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Inserisci il codice',
       successMessage: 'Il codice "{code}" è stato inserito correttamente',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'N. SKU',
     supplierStockNumber: 'N° di magazzino',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'I tuoi recapiti',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Spedire qui',
       info: 'Dove dobbiamo consegnare?',
       billingAddressTitle: 'Indirizzo di fatturazione',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Indirizzo di spedizione',
       addressFinder: {
         title: 'Cerca indirizzo',
@@ -172,7 +180,9 @@ export default {
   addNewAddressBtn: 'Aggiungi un nuovo indirizzo',
   saveNewAddress: 'Salva in rubrica',
   paymentStep: {
-    title: 'Scegli il metodo di pagamento',
+    titleGuest: 'Scegli il metodo di pagamento',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Non sono richieste informazioni di pagamento',
     payNow: 'Paga ora',
     storedPayments: 'I pagamenti effettuati',
@@ -184,8 +194,11 @@ export default {
   adyen: {
     applePayTotal: 'Importo totale',
     applePayNoShippingMethods: 'Al momento non ci sono metodi di spedizione disponibili. Riprova o utilizza un altro metodo di pagamento.',
+  },
+  paymentCard: {
     cardNumber: 'Numero di carta',
     expiry: 'Data di scadenza',
+    select: 'Select',
     storedPaymentLabel: '{name} La carta scade il {lastFour}',
   },
   braintree: {

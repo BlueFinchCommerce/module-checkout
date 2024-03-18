@@ -3,10 +3,39 @@
     "file": "main.min.js",
     "src": "main.js",
     "isEntry": true,
+    "dynamicImports": [
+      "node_modules/@adyen/adyen-web/dist/es/ar.js",
+      "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js",
+      "node_modules/@adyen/adyen-web/dist/es/da-DK.js",
+      "node_modules/@adyen/adyen-web/dist/es/de-DE.js",
+      "node_modules/@adyen/adyen-web/dist/es/el-GR.js",
+      "node_modules/@adyen/adyen-web/dist/es/es-ES.js",
+      "node_modules/@adyen/adyen-web/dist/es/fi-FI.js",
+      "node_modules/@adyen/adyen-web/dist/es/fr-FR.js",
+      "node_modules/@adyen/adyen-web/dist/es/hr-HR.js",
+      "node_modules/@adyen/adyen-web/dist/es/hu-HU.js",
+      "node_modules/@adyen/adyen-web/dist/es/it-IT.js",
+      "node_modules/@adyen/adyen-web/dist/es/ja-JP.js",
+      "node_modules/@adyen/adyen-web/dist/es/ko-KR.js",
+      "node_modules/@adyen/adyen-web/dist/es/nl-NL.js",
+      "node_modules/@adyen/adyen-web/dist/es/no-NO.js",
+      "node_modules/@adyen/adyen-web/dist/es/pl-PL.js",
+      "node_modules/@adyen/adyen-web/dist/es/pt-BR.js",
+      "node_modules/@adyen/adyen-web/dist/es/pt-PT.js",
+      "node_modules/@adyen/adyen-web/dist/es/ro-RO.js",
+      "node_modules/@adyen/adyen-web/dist/es/ru-RU.js",
+      "node_modules/@adyen/adyen-web/dist/es/sk-SK.js",
+      "node_modules/@adyen/adyen-web/dist/es/sl-SI.js",
+      "node_modules/@adyen/adyen-web/dist/es/sv-SE.js",
+      "node_modules/@adyen/adyen-web/dist/es/zh-CN.js",
+      "node_modules/@adyen/adyen-web/dist/es/zh-TW.js"
+    ],
     "css": [
       "main.css"
     ],
     "assets": [
+      "logo.svg",
+      "lockIcon.svg",
       "icon-apple.svg",
       "icon-google.svg",
       "icon-express.svg",
@@ -16,24 +45,160 @@
       "icon-mastercard.svg",
       "icon-visa.svg",
       "icon-clearpay.svg",
-      "logo.svg",
-      "lockIcon.svg",
+      "icon-cardpay.svg",
+      "icon-venmo.svg",
       "loader.gif",
       "bin.svg",
       "promo-icon.svg",
       "gift-icon.svg",
       "coupon-icon.svg",
-      "detailsIcon.svg",
-      "shippingIcon.svg",
-      "paymentIcon.svg",
       "delivery.svg",
+      "detailsIcon.svg",
       "Visa.svg",
       "MasterCard.svg",
       "AmericanExpress.svg",
       "ClearPay.svg",
       "Klarna.svg",
       "Paypal.svg",
+      "GooglePay.svg",
+      "ApplePay.svg",
+      "VenmoIcon.svg",
+      "shippingIcon.svg",
+      "paymentIcon.svg",
+      "bancontact.svg",
+      "eps.svg",
+      "giropay.svg",
+      "ideal.svg",
+      "mybank.svg",
+      "p24.svg",
+      "sepa.svg",
+      "sofort.svg",
       "rvvup-payment.svg"
     ]
+  },
+  "node_modules/@adyen/adyen-web/dist/es/ar.js": {
+    "file": "ar.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/ar.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js": {
+    "file": "cs-CZ.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/da-DK.js": {
+    "file": "da-DK.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/da-DK.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/de-DE.js": {
+    "file": "de-DE.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/de-DE.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/el-GR.js": {
+    "file": "el-GR.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/el-GR.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/es-ES.js": {
+    "file": "es-ES.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/es-ES.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/fi-FI.js": {
+    "file": "fi-FI.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/fi-FI.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/fr-FR.js": {
+    "file": "fr-FR.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/fr-FR.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/hr-HR.js": {
+    "file": "hr-HR.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/hr-HR.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/hu-HU.js": {
+    "file": "hu-HU.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/hu-HU.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/it-IT.js": {
+    "file": "it-IT.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/it-IT.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/ja-JP.js": {
+    "file": "ja-JP.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/ja-JP.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/ko-KR.js": {
+    "file": "ko-KR.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/ko-KR.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/nl-NL.js": {
+    "file": "nl-NL.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/nl-NL.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/no-NO.js": {
+    "file": "no-NO.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/no-NO.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/pl-PL.js": {
+    "file": "pl-PL.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/pl-PL.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/pt-BR.js": {
+    "file": "pt-BR.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/pt-BR.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/pt-PT.js": {
+    "file": "pt-PT.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/pt-PT.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/ro-RO.js": {
+    "file": "ro-RO.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/ro-RO.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/ru-RU.js": {
+    "file": "ru-RU.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/ru-RU.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/sk-SK.js": {
+    "file": "sk-SK.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/sk-SK.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/sl-SI.js": {
+    "file": "sl-SI.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/sl-SI.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/sv-SE.js": {
+    "file": "sv-SE.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/sv-SE.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/zh-CN.js": {
+    "file": "zh-CN.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/zh-CN.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@adyen/adyen-web/dist/es/zh-TW.js": {
+    "file": "zh-TW.min.js",
+    "src": "node_modules/@adyen/adyen-web/dist/es/zh-TW.js",
+    "isDynamicEntry": true
   }
 }

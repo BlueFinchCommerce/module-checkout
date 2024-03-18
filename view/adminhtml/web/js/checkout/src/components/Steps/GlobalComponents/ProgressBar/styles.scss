@@ -1,0 +1,126 @@
+@import '@/styles/global/_breakpoints';
+
+// --progress-bar-border-radius
+
+.progress-bar {
+  &-container {
+    padding: 0 0 var(--indent__m);
+    background: var(--color__primary-white);
+    z-index: 10;
+    position: sticky;
+    top: 0;
+    min-height: 69px;
+    display: var(--progess-bar-display-mobile, none);
+    justify-content: space-between;
+    align-items: center;
+
+    .details,
+    .shipping,
+    .payment {
+      text-align: left;
+      cursor: pointer;
+      min-width: 45px;
+      text-decoration: none;
+      display: flex;
+
+      p {
+        color: var(--color__primary-blue);
+        font-weight: var(--font-weight__semibold);
+        font-size: var(--font__s);
+        white-space: pre;
+        text-decoration: underline;
+      }
+
+      &.router-link-active {
+        cursor: auto;
+
+        p {
+          text-decoration: none;
+        }
+      }
+
+      &.active {
+        p {
+          color: var(--color__primary-dark-blue);
+        }
+      }
+
+      svg {
+        margin-right: var(--indent__s);
+      }
+    }
+
+    .number {
+      margin-right: var(--indent__s);
+      border: 1px solid var(--color__primary-blue);
+      background: transparent;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      text-align: center;
+
+      p {
+        color: var(--color__primary-blue);
+        font-weight: var(--font-weight__semibold);
+      }
+
+      &.active {
+        background: var(--color__primary-blue);
+
+        p {
+          color: var(--color__primary-white);
+        }
+      }
+    }
+
+    &.shipping-active {
+      .shipping {
+        p {
+          color: var(--color__primary-dark-blue);
+        }
+      }
+    }
+
+    &.payment-active {
+      .payment {
+        p {
+          color: var(--color__primary-dark-blue);
+        }
+      }
+    }
+  }
+
+  &-arrow {
+    svg {
+      width: 40px;
+      opacity: 0.5;
+    }
+
+    &.active {
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+//Desktop design
+@media screen and (min-width: $screen__m) {
+  .progress-bar {
+    &-container {
+      display: flex;
+      max-width: var(--progress-bar-max-width, 550px);
+      margin: 0 auto;
+    }
+  }
+}
+
+@media screen and (min-width: $screen__l) {
+  .progress-bar {
+    &-arrow {
+      svg {
+        width: 90px;
+      }
+    }
+  }
+}

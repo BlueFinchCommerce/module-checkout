@@ -15,7 +15,7 @@
 
   // Select Button
   &-select {
-    border: var(--calendar-select-border, 1px solid #25303B);
+    border: var(--calendar-select-border, var(--base__border-weight) var(--base__border-style) var(--color__primary-blue));
     padding: 13px var(--indent__base);
     display: flex;
     cursor: pointer;
@@ -42,8 +42,7 @@
     height: 100%;
     border: none;
 
-    .mock-laptop,
-    .mock-desktop {
+    @media only screen and (min-width: $screen__m) {
       background:none;
     }
   }
@@ -60,7 +59,7 @@
   margin: 0;
 
   &-container {
-    background: var(--white__color);
+    background: var(--color__primary-white);
     border-radius: var(--indent__s) var(--indent__s) 0 0;
     z-index: var(--calendar-modal-z-index, 9999);
     overflow: scroll;
@@ -69,9 +68,8 @@
     width: 100%;
     left: 0;
 
-    .mock-laptop,
-    .mock-desktop {
-      border: 1px solid var(--primary__color);
+    @media only screen and (min-width: $screen__m) {
+      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
       border-radius: var(--indent__s);
       position: absolute;
       top: 0;
@@ -82,7 +80,7 @@
   }
 
   &-header {
-    background-color: var(--primary-gray__color);
+    background-color: var(--color__primary-grey6);
     padding: var(--indent__s) 40px;
     display: flex;
     position: relative;
@@ -96,12 +94,12 @@
     }
 
     &-close {
-      border: var(--header-button-border, 1px solid #D3D5D8);
+      border: var(--header-button-border, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
       right: var(--indent__base);
-      background: var(--white__color);
+      background: var(--color__primary-white);
       padding: var(--indent__s);
       position: absolute;
-      border-radius: var(--button-border-radius);
+      border-radius: var(--button__border-radius);
       width: 32px;
       height: 32px;
       text-align: center;
@@ -115,10 +113,10 @@
     }
 
     &-button {
-      border: var(--header-button-border, 1px solid #D3D5D8);
-      background: var(--white__color);
+      border: var(--header-button-border, var(--base__border-weight) var(--base__border-style) var(--base__border-color));
+      background: var(--color__primary-white);
       padding: 1px 8px var(--indent__xs);
-      border-radius: var(--button-border-radius);
+      border-radius: var(--button__border-radius);
       height: 32px;
 
       &:disabled {
@@ -131,7 +129,7 @@
 
   &-day {
     width: calc(100% / 7);
-    height: var(--input-height);
+    height: var(--input__height);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -144,16 +142,16 @@
   }
 
   &-button {
-    color: var(--primary__color);
+    color: var(--color__primary-blue);
     padding: var(--indent__s);
-    font-size: var(--font__base);
+    font-size: var(--font__s);
     background-color: transparent;
     border: 0;
     line-height: 1;
 
     &.active {
-      background-color: var(--primary__color);
-      color: var(--white__color);
+      background-color: var(--color__primary-blue);
+      color: var(--color__primary-white);
 
       .calendar-button-symbol {
         display: none;
@@ -167,7 +165,7 @@
     }
 
     &-symbol {
-      background: var(--available__color);
+      background: var(--color__semantic-success);
       display: block;
       width: 6px;
       height: 6px;
@@ -186,8 +184,8 @@
     margin: 0;
 
     &-day {
-      font-weight: var(--font-weight__bold);
-      height: var(--input-height);
+      font-weight: var(--font-weight__semibold);
+      height: var(--input__height);
       width: calc(100% / 7);
       display: flex;
       justify-content: center;
@@ -205,7 +203,7 @@
     right: 0;
     top: 0;
     z-index: 9999;
-    background: rgba(255,255,255,0.5);
+    background: var(--color__primary-grey6);
   }
 
   img {
@@ -220,7 +218,7 @@
 }
 
 
-@media screen and (max-width: $screen__m) {
+@media only screen and (max-width: $screen__m) {
   .slide-mobile-enter-from,
   .slide-mobile-leave-to {
     transform: translateX(0) translateY(100%);
@@ -233,8 +231,7 @@
   }
 }
 
-.mock-laptop,
-.mock-desktop {
+@media screen and (min-width: $screen__m) {
   .nominated {
     &-container {
       margin: var(--indent__base) 0 0 55px;

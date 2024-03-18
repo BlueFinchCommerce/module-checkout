@@ -1,7 +1,7 @@
 import useCustomerStore from '@/stores/CustomerStore';
 import axios from 'axios';
-import getBaseRestUrl from '@/helpers/getBaseRestUrl';
-import tokenTypes from '@/helpers/getTokenTypes';
+import getBaseRestUrl from '@/helpers/storeConfigs/getBaseRestUrl';
+import tokenTypes from '@/helpers/tokens/getTokenTypes';
 
 export default () => {
   const instance = axios.create({

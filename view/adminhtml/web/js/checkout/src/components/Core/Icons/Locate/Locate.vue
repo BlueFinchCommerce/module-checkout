@@ -4,7 +4,7 @@
 
 <script>
 import { computed, reactive } from 'vue';
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import deliverySvg from '@/icons/delivery.svg';
 
 export default {

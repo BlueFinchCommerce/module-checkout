@@ -1,0 +1,30 @@
+.address-block__address {
+  font-size: var(--font__m);
+  font-family: var(--address-block__font-family, unset);
+
+  p {
+    font-weight: var(--address-block__font-weight, var(--font-weight__medium));
+  }
+}
+
+.shipping-billing-steps {
+  margin-right: 23px;
+  max-height: var(--short-info-height, 55px);
+  padding-left: 50px;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+
+  strong {
+    display: block;
+    width: 100%;
+  }
+
+  div {
+    display: var(--shipping-address-bisplay, -webkit-box);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: var(--shipping-address-width, none);
+  }
+}

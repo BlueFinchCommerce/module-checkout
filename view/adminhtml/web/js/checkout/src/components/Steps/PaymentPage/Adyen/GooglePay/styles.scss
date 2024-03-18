@@ -1,0 +1,29 @@
+#adyen-google-pay {
+  line-height: var(--button__line-height);
+
+  &.text-loading {
+    border-radius: var(--button__text-placeholder-bg-radius);
+    height: var(--adyen-express-button-height, 48px);
+  }
+
+  button {
+    border-radius: var(--button__border-radius);
+    height: var(--adyen-express-button-height, 48px);
+    overflow: hidden;
+    width: 100%;
+
+    .gpay-card-info-iframe {
+      height: 40px;
+    }
+  }
+
+  .gpay-card-info-animation-container {
+    animation-name: none;
+    position: relative;
+  }
+
+  .gpay-card-info-animated-progress-bar-container,
+  iframe {
+    display: none;
+  }
+}

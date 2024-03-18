@@ -24,14 +24,19 @@ export default {
     plusOneItem: 'Plus un article',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Entrez votre code to réduction',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Entrez le code',
       successMessage: 'Coupon appliqué "{code}".',
     },
+    crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Bonne nouvelle: votre commande sera livrée gratuitement',
     couponCodeTitle: 'Dépensez',
     couponCodeTitleBottom: 'plus pour profiter',
@@ -43,6 +48,7 @@ export default {
     promoTitle: 'Produits fréquemment achetés ensemble',
     rewardsTitle: 'Points de fidélité',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Vos coordonnées',
@@ -82,6 +88,8 @@ export default {
       shipHere: 'Livrer ici',
       deliveryAddressTitle: 'Adresse de livraison',
       billingAddressTitle: 'Adresse de facturation',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       addressFinder: {
         title: 'Recherche d\'adresse',
         placeholder: 'Cherchez par nom de rue ou code postal',
@@ -176,7 +184,9 @@ export default {
   addNewAddressBtn: '+ Ajouter une nouvelle adresse',
   saveNewAddress: 'Enregistrer dans le carnet d\'adresses',
   paymentStep: {
-    title: 'Sélectionnez un mode de paiement',
+    titleGuest: 'Sélectionnez un mode de paiement',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Aucune information de paiement requise',
     payNow: 'Payez maintenant',
     storedPayments: 'Vos paiements enregistrés',
@@ -187,10 +197,13 @@ export default {
   adyen: {
     applePayTotal: 'Montant global',
     applePayNoShippingMethods: 'Il n\'y a pas de méthode de livraison disponible pour vous en ce moment. Veuillez réessayer ou utiliser un autre mode de paiement.',
+    paymentSuccessful: 'Payment Successful',
+  },
+  paymentCard: {
     cardNumber: 'Numéro de carte',
     expiry: 'D\'expiration',
+    select: 'Select',
     storedPaymentLabel: '{name} La carte enregistrée se termine par {lastFour}',
-    paymentSuccessful: 'Payment Successful',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',
