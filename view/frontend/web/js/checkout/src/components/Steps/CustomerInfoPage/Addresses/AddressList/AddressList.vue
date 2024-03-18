@@ -17,7 +17,7 @@
     </div>
     <ul class="address-list__list">
       <li
-        v-for="(item) in customer.addresses"
+        v-for="(item) in uniqueAddressList"
         tabindex="0"
         :key="item.id"
         class="address-list__item"
@@ -91,6 +91,7 @@ export default {
   data() {
     return {
       isShippingNewCTA: true,
+      uniqueAddressList: [],
     };
   },
   computed: {
@@ -103,14 +104,25 @@ export default {
     this.$emit('showAddressBlock', false);
 
     let selectedId = null;
-
     const selectedItem = this.customer.addresses.find((item) => item.id === this.selected[this.addressType].id);
-
     if (selectedItem) {
       selectedId = selectedItem.id;
     }
-
     this.$emit('passSelectedItemId', selectedId);
+
+    const uniqueAddresses = {};
+    // Iterate through the addresses
+    this.customer.addresses.forEach((address) => {
+      // Create a unique identifier based on relevant fields
+      const identifier = `${address.city}-${address.postcode}-${address.street.join('-')}`;
+      // Check if the identifier already exists
+      if (!uniqueAddresses[identifier]) {
+        // If it doesn't exist, add it to the object
+        uniqueAddresses[identifier] = true;
+        // Add the address to the final list
+        this.uniqueAddressList.push(address);
+      }
+    });
   },
   methods: {
     ...mapActions(useCustomerStore, [

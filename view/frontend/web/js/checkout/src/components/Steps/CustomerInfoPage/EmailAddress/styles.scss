@@ -45,16 +45,17 @@
       position: relative;
 
       .button_show_password {
+        cursor: pointer;
         background: transparent;
         border: none;
         bottom: var(--indent__l);
         height: 30px;
         padding: 0;
         position: absolute;
-        right: var(--indent__xxl);
+        right: calc(2 * var(--indent__l));
         transform: translateY(50%);
         width: auto;
-        top: 7px;
+        top: 12px;
       }
     }
   }
