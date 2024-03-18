@@ -13,6 +13,7 @@ import { markRaw } from 'vue';
 
 import braintree from 'braintree-web';
 
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -106,8 +107,15 @@ export default {
           },
           fundingSource: window.paypal.FUNDING.PAYPAL,
           offerCredit: false,
-          createOrder: () => (
-            paypalInstance.createPayment({
+          createOrder: () => {
+            // Check that the agreements (if any) are valid.
+            const isValid = this.validateAgreements();
+
+            if (!isValid) {
+              return Promise.reject(new Error(this.$t('agreements.paymentErrorMessage')));
+            }
+
+            return paypalInstance.createPayment({
               amount: this.cartGrandTotal / 100,
               flow: 'checkout',
               currency: this.currencyCode,
@@ -115,8 +123,8 @@ export default {
               intent: 'capture',
               lineItems: this.getPayPalLineItems(),
               shippingOptions: [],
-            })
-          ),
+            });
+          },
           onShippingChange: async (data) => {
             const address = {
               country_code: data.shipping_address.country_code,
@@ -184,6 +192,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),

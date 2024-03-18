@@ -5,13 +5,14 @@
       <div class="instantCheckout-block" v-show="isExpressPaymentsVisible">
         <TextField :text="instantCheckoutText" />
       </div>
+      <Recaptcha id="placeOrder" />
+      <Agreements />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
           :message="errorMessage"
           :attached="false"
         />
-        <Recaptcha id="placeOrder" />
         <BraintreeGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeGooglePay-${storedKey}`" />
         <BraintreeApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeApplePay-${storedKey}`" />
         <BraintreePayPal @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreePayPal-${storedKey}`" />
@@ -232,6 +233,7 @@ import ClickAndCollect from '@/components/Steps/CustomerInfoPage/Addresses/Click
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
 import { mapActions, mapState } from 'pinia';
@@ -277,6 +279,7 @@ export default {
     Loader,
     ProgressBar,
     Recaptcha,
+    Agreements,
   },
   props: {
     address_type: {
