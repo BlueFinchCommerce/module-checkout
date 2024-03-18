@@ -5,3 +5,7 @@ parameters:
     excludePaths:
         - 'vendor'
         - 'node_modules'
+    ignoreErrors:
+        - '#Property .*?Factory has unknown class .*?Factory as its type.#'
+        - '#Parameter .*?Factory of method .*? has invalid type .*?Factory.#'
+        - '#Call to method .*? on an unknown class .*?Factory.#'
