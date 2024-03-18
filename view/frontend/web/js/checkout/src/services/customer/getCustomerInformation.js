@@ -29,8 +29,21 @@ export default async () => {
       }
       created_at
       reward_points {
+        balance {
+          points
+          money {
+            value
+          }
+        }
         subscription_status {
           balance_updates
+        }
+      }
+      store_credit {
+        enabled
+        current_balance {
+          value
+          currency
         }
       }
       is_subscribed

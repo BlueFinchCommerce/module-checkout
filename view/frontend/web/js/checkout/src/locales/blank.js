@@ -18,12 +18,14 @@ export default {
     removeItemButton: ' ',
     couponDiscountTitle: ' ',
     couponDiscount: {
+      title: ' ',
       errorMessage: '',
       placeholder: ' ',
       successMessage: ' ',
     },
     giftDiscountTitle: ' ',
     giftCardDiscount: {
+      title: ' ',
       errorMessage: ' ',
       placeholder: ' ',
       successMessage: ' ',
@@ -37,6 +39,7 @@ export default {
     promoTitle: ' ',
     rewardsTitle: ' ',
     storeCreditTitle: ' ',
+    giftWrappingTitle: ' ',
   },
   progressBar: {
     detailStepTitle: ' ',
@@ -161,8 +164,13 @@ export default {
   adyen: {
     applePayTotal: ' ',
     applePayNoShippingMethods: ' ',
+    paymentSuccessful: ' ',
+  },
+  paymentCard: {
     cardNumber: ' ',
+    expiry: ' ',
     select: ' ',
+    storedPaymentLabel: ' ',
   },
   braintree: {
     payingWith: ' ',

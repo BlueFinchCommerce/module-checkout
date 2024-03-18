@@ -36,6 +36,19 @@
           />
         </div>
       </div>
+      <div
+        v-if="getGiftWrappingTotal"
+        class="total__row"
+      >
+        <TextField
+          class="total__text title"
+          :text="$t('orderSummary.giftWrappingTitle')"
+        />
+        <Price
+          class="total__text"
+          :value="getGiftWrappingTotal"
+        />
+      </div>
       <div class="total__row">
         <TextField
           class="total__text title"
@@ -87,7 +100,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
     ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },

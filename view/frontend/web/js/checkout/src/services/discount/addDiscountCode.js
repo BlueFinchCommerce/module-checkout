@@ -11,7 +11,7 @@ export default (coupon) => {
         coupon_code: "${coupon}"
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

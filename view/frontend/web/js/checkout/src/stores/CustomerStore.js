@@ -4,8 +4,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import getCustomerInformation from '@/services/customer/getCustomerInformation';
-import getCustomerRewardPoints from '@/services/customer/getCustomerRewardPoints';
-import getCustomerStoreCredit from '@/services/storeCredit/getCustomerStoreCredit';
 import isEmailAvailable from '@/services/customer/isEmailAvailable';
 import login from '@/services/customer/login';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
@@ -280,8 +278,8 @@ export default defineStore('customerStore', {
         if (data) {
           this.setData({
             customer: {
-              addresses: data.addresses,
-              id: data.firstname,
+              ...data,
+              id: this.customer.firstname,
             },
           });
           this.setEmailEntered();
@@ -551,22 +549,6 @@ export default defineStore('customerStore', {
       return foundAddress
         ? Object.assign(foundAddress, { editing: false })
         : {};
-    },
-
-    async getAvailableRewardPoints() {
-      const response = await getCustomerRewardPoints();
-
-      if (response.customer) {
-        this.setData(response);
-      }
-    },
-
-    async getAvailableStoreCredit() {
-      const response = await getCustomerStoreCredit();
-
-      if (response.customer) {
-        this.setData(response);
-      }
     },
 
     updateNewsletterSubscription(state) {

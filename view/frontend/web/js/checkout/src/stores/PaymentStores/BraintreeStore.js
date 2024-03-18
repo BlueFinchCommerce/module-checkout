@@ -22,6 +22,7 @@ export default defineStore('brainteeStore', {
     threeDSEnabled: false,
     alwaysRequestThreeDS: false,
     errorMessage: null,
+    sendCartLineItems: false,
     google: {
       buttonColor: 'white',
       cCTypes: [],
@@ -37,7 +38,6 @@ export default defineStore('brainteeStore', {
       merchantNameOverride: null,
       merchantCountry: '',
       requireBillingAddress: false,
-      sendCartLineItems: false,
       buttonLabel: '',
       buttonColor: '',
       buttonShape: '',
@@ -73,6 +73,7 @@ export default defineStore('brainteeStore', {
         'braintree_merchant_account_id',
         'braintree_cc_vault_active',
         'braintree_cc_vault_cvv',
+        'braintree_send_line_items',
         'braintree_3dsecure_threshold_amount',
         'braintree_3dsecure_verify_3dsecure',
         'braintree_3dsecure_always_request_3ds',
@@ -83,7 +84,6 @@ export default defineStore('brainteeStore', {
         'braintree_paypal_merchant_name_override',
         'braintree_paypal_merchant_country',
         'braintree_paypal_require_billing_address',
-        'braintree_paypal_send_cart_line_items',
         'braintree_paypal_button_location_checkout_type_paypal_label',
         'braintree_paypal_button_location_checkout_type_paypal_color',
         'braintree_paypal_button_location_checkout_type_paypal_shape',
@@ -100,6 +100,7 @@ export default defineStore('brainteeStore', {
           merchantAccountId: data.braintree_merchant_account_id,
           vaultActive: data.braintree_cc_vault_active === '1',
           vaultVerifyCvv: data.braintree_cc_vault_cvv,
+          sendCartLineItems: data.braintree_send_line_items,
           threeDSThresholdAmount: data.braintree_3dsecure_threshold_amount
             ? parseFloat(data.braintree_3dsecure_threshold_amount)
             : 0,
@@ -120,7 +121,6 @@ export default defineStore('brainteeStore', {
             merchantNameOverride: data.braintree_paypal_merchant_name_override,
             merchantCountry: data.braintree_paypal_merchant_country,
             requireBillingAddress: data.braintree_paypal_require_billing_address,
-            sendCartLineItems: data.braintree_paypal_send_cart_line_items,
             buttonLabel: data.braintree_paypal_button_location_checkout_type_paypal_label,
             buttonColor: data.braintree_paypal_button_location_checkout_type_paypal_color,
             buttonShape: data.braintree_paypal_button_location_checkout_type_paypal_shape,
@@ -155,61 +155,83 @@ export default defineStore('brainteeStore', {
     getPayPalLineItems(includeShipping = true) {
       const items = [];
 
-      if (!this.paypal.sendCartLineItems) {
+      if (!this.sendCartLineItems) {
         return items;
       }
 
-      const { cartItems, totalSegments } = useCartStore();
+      const {
+        cart,
+        cartItems,
+        getCouponValue,
+        getGiftWrappingTotal,
+      } = useCartStore();
 
       Object.values(cartItems).forEach((cartItem) => {
         items.push({
-          name: cartItem.name,
+          name: cartItem.product.name,
           kind: 'debit',
-          quantity: cartItem.qty,
-          unitAmount: cartItem.price_incl_tax,
-          productCode: cartItem.product_sku,
+          quantity: cartItem.quantity,
+          unitAmount: cartItem.product.price_range.minimum_price.final_price.value,
+          productCode: cartItem.product.sku,
           description: '',
         });
       });
 
-      totalSegments.forEach((segment) => {
-        const { code } = segment;
-        if (code === 'giftwrapping' || code === 'shipping' || code === 'customerbalance'
-        || code === 'reward' || code === 'discount') {
-          // If we aren't including shipping then we can ship the shipping segment.
-          if (!includeShipping && code === 'shipping') {
-            return;
-          }
+      if (getGiftWrappingTotal) {
+        items.push({
+          name: this.$i18n.global.t('orderSummary.giftWrappingTitle'),
+          kind: 'debit',
+          quantity: 1,
+          unitAmount: Math.abs(getGiftWrappingTotal),
+        });
+      }
 
-          const unitAmount = code === 'giftwrapping'
-            ? parseFloat(segment.extension_attributes.gw_items_price_incl_tax) : segment.value;
+      if (cart.applied_store_credit) {
+        items.push({
+          name: this.$i18n.global.t('orderSummary.storeCreditTitle'),
+          kind: 'credit',
+          quantity: 1,
+          unitAmount: Math.abs(cart.applied_store_credit.applied_balance.value),
+        });
+      }
 
-          // If the unit amount is 0 then we only need to add the line item for shipping.
-          if (!unitAmount && code !== 'shipping') {
-            return;
-          }
+      if (cart.applied_reward_points) {
+        items.push({
+          name: this.$i18n.global.t('orderSummary.rewardsTitle'),
+          kind: 'credit',
+          quantity: 1,
+          unitAmount: Math.abs(cart.applied_reward_points.value),
+        });
+      }
 
+      if (cart.applied_gift_cards) {
+        cart.applied_gift_cards.forEach((giftCard) => {
           items.push({
-            name: segment.title,
-            kind: segment.value >= 0 ? 'debit' : 'credit',
+            name: this.$i18n.global.t('giftCardDiscount.title', { code: giftCard.code }),
+            kind: 'credit',
             quantity: 1,
-            unitAmount: Math.abs(unitAmount),
+            unitAmount: Math.abs(giftCard.applied_balance.value),
           });
-        }
+        });
+      }
 
-        if (code === 'giftcardaccount') {
-          const giftcards = JSON.parse(segment.extension_attributes.gift_cards);
+      if (cart.applied_coupons) {
+        items.push({
+          name: this.$i18n.global.t('couponDiscount.title'),
+          kind: 'credit',
+          quantity: 1,
+          unitAmount: Math.abs(getCouponValue(cart.applied_coupons[0].code)),
+        });
+      }
 
-          giftcards.forEach((giftcard) => {
-            items.push({
-              name: giftcard.c,
-              kind: 'credit',
-              quantity: 1,
-              unitAmount: giftcard.a,
-            });
-          });
-        }
-      });
+      if (includeShipping && cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value) {
+        items.push({
+          name: this.$i18n.global.t('progressBar.shippingStepTitle'),
+          kind: 'debit',
+          quantity: 1,
+          unitAmount: Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
+        });
+      }
 
       return items;
     },

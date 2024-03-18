@@ -3,7 +3,6 @@ import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
-import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
@@ -73,9 +72,6 @@ export default defineStore('cartStore', {
     getTotalSegment: (state) => (
       (segment) => state.totalSegments.find(({ code }) => code === segment)
     ),
-    getTotalSegmentValue: (state) => (
-      (segment) => state.getTotalSegment(segment)?.value
-    ),
     cartItems: (state) => (
       state.cart.items
     ),
@@ -89,6 +85,18 @@ export default defineStore('cartStore', {
       state.cart?.prices?.grand_total?.value
         ? Math.round(state.cart.prices.grand_total.value * 100)
         : 0
+    ),
+    getCouponValue: (state) => (
+      (coupon) => state.cart.prices.discounts?.find((discount) => discount.label.includes(coupon))?.amount?.value || 0
+    ),
+    getGiftWrappingTotal: (state) => (
+      state.cart.items.reduce((prev, curr) => {
+        if (!curr.gift_wrapping) {
+          return prev;
+        }
+
+        return prev + curr.gift_wrapping.price.value;
+      }, state.cart.gift_wrapping?.price?.value || 0)
     ),
   },
   actions: {
@@ -467,27 +475,15 @@ export default defineStore('cartStore', {
     },
 
     async useStoreCredit() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
-      await useStoreCredit();
-
-      const paymentStore = usePaymentStore();
-      await paymentStore.refreshPaymentMethods();
+      const cart = await useStoreCredit();
+      this.handleCartData(cart);
 
       this.emitUpdate();
     },
 
     async removeStoreCredit() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
-      await removeStoreCredit();
-
-      const paymentStore = usePaymentStore();
-      await paymentStore.refreshPaymentMethods();
+      const cart = await removeStoreCredit();
+      this.handleCartData(cart);
 
       this.emitUpdate();
     },

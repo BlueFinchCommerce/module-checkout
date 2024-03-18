@@ -15,7 +15,7 @@ export default (item, change) => {
         }]
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

@@ -8,7 +8,7 @@ export default () => {
     mutation {
       removeRewardPointsFromCart(cartId: "${maskedId}") {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

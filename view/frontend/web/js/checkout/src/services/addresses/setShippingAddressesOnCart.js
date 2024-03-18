@@ -38,7 +38,7 @@ export default async (shippingAddress) => {
         }
       ) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

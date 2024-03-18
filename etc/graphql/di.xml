@@ -49,6 +49,8 @@
                       xsi:type="string">payment/braintree_cc_vault/active</item>
                 <item name="braintree_cc_vault_cvv"
                       xsi:type="string">payment/braintree_cc_vault/cvv</item>
+                <item name="braintree_send_line_items"
+                      xsi:type="string">payment/braintree/send_line_items</item>
                 <!-- PayPal GraphQL config -->
                 <item name="braintree_paypal_merchant_name_override"
                       xsi:type="string">payment/braintree_paypal/merchant_name_override</item>
@@ -56,8 +58,6 @@
                       xsi:type="string">paypal/general/merchant_country</item>
                 <item name="braintree_paypal_require_billing_address"
                       xsi:type="string">payment/braintree_paypal/require_billing_address</item>
-                <item name="braintree_paypal_send_cart_line_items"
-                      xsi:type="string">payment/braintree_paypal/send_cart_line_items</item>
                 <item name="braintree_paypal_display_on_shopping_cart"
                       xsi:type="string">payment/braintree_paypal/display_on_shopping_cart</item>
                 <item name="braintree_paypal_credit_uk_merchant_name"

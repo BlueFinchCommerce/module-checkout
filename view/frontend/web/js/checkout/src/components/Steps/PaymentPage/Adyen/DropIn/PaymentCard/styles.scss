@@ -18,7 +18,6 @@
   &__name {
     font-size: var(--font__xs);
     grid-column: 1;
-    line-height: 1.5em;
     text-align: left;
   }
 
@@ -26,7 +25,6 @@
   &__expiry {
     font-size: var(--font__xs);
     grid-column: 2;
-    line-height: 1.5em;
     text-align: right;
   }
 

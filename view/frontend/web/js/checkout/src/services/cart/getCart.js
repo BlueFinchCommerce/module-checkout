@@ -7,7 +7,7 @@ export default () => {
 
   const request = `{
     cart(cart_id: "${maskedId}") {
-      ${getFullCart}
+      ${getFullCart()}
     }
   }`;
 

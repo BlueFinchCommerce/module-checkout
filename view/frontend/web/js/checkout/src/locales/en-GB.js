@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'plus one item',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Redeem Gift Card',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter Gift Card Code',
       successMessage: 'Successfully applied code "{code}".',
@@ -46,6 +48,7 @@ export default {
     promoTitle: 'Complete your order with',
     rewardsTitle: 'Reward Points',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Details',
@@ -211,11 +214,13 @@ export default {
   adyen: {
     applePayTotal: 'Grand Total',
     applePayNoShippingMethods: 'There are no shipping methods available for you right now. Please try again or use an alternative payment method.',
+    paymentSuccessful: 'Payment Successful',
+  },
+  paymentCard: {
     cardNumber: 'Card Number',
     expiry: 'Expiry',
-    storedPaymentLabel: '{name} Stored card ends in {lastFour}',
-    paymentSuccessful: 'Payment Successful',
     select: 'Select',
+    storedPaymentLabel: '{name} Stored card ends in {lastFour}',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="customer?.store_credit?.current_balance?.value && !getTotalSegmentValue('customerbalance')"
+    v-if="customer?.store_credit?.current_balance?.value && !cart.applied_store_credit?.applied_balance?.value"
     class="store-credit"
   >
     <div>
@@ -20,7 +20,7 @@
     />
   </div>
   <div
-    v-else-if="customer.store_credit && getTotalSegmentValue('customerbalance')"
+    v-else-if="cart.applied_store_credit?.applied_balance?.value"
     class="store-credit"
   >
     <span>{{ $t('storeCredit.removeStoreCredit') }}</span>
@@ -47,15 +47,11 @@ export default {
     MyButton,
   },
   computed: {
-    ...mapState(useCartStore, ['getTotalSegmentValue']),
+    ...mapState(useCartStore, ['cart']),
     ...mapState(useCustomerStore, ['customer']),
-  },
-  async created() {
-    await this.getAvailableStoreCredit();
   },
   methods: {
     ...mapActions(useCartStore, ['useStoreCredit', 'removeStoreCredit']),
-    ...mapActions(useCustomerStore, ['getAvailableStoreCredit']),
     getFormattedPrice() {
       return formatPrice(this.customer.store_credit.current_balance.value);
     },

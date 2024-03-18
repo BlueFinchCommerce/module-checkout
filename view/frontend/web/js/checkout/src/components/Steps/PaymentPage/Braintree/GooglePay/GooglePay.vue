@@ -22,11 +22,13 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import formatPrice from '@/helpers/payment/formatPrice';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 
 export default {
   name: 'BraintreeGooglePay',
@@ -40,7 +42,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(useBraintreeStore, ['environment', 'clientToken', 'google']),
+    ...mapState(useBraintreeStore, [
+      'environment',
+      'clientToken',
+      'google',
+      'threeDSEnabled',
+      'threeDSThresholdAmount',
+      'alwaysRequestThreeDS',
+    ]),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
@@ -272,9 +281,18 @@ export default {
         const { phoneNumber } = billingAddress;
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
+        const { shippingAddress } = data;
+        const { phoneNumber: shippingPhoneNumber } = shippingAddress;
+        const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
+
         try {
           this.submitEmail(email)
-            .then(() => setBillingAddressOnCart(mapBillingAddress))
+            .then(() => (
+              Promise.all([
+                setBillingAddressOnCart(mapBillingAddress),
+                setShippingAddressesOnCart(mapShippingAddress),
+              ])
+            ))
             .then(() => {
               resolve({
                 transactionState: 'SUCCESS',
@@ -319,11 +337,15 @@ export default {
       return new Promise((resolve, reject) => {
         billingAddress.countryCodeAlpha2 = billingAddress.country_code;
 
+        const price = this.cartGrandTotal / 100;
+        const threshold = this.threeDSThresholdAmount;
+        const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
           nonce: androidPayCards[0].nonce,
           bin: androidPayCards[0].details.bin,
-          challengeRequested: true,
+          challengeRequested,
           billingAddress,
           onLookupComplete: (lookupData, next) => {
             next();
@@ -371,15 +393,18 @@ export default {
     },
 
     makePayment(response) {
-      const paymentMethod = {
-        code: 'braintree_googlepay',
-        braintree: {
-          payment_method_nonce: response.nonce,
-          is_active_payment_token_enabler: false,
+      const payment = {
+        email: response.email,
+        paymentMethod: {
+          method: 'braintree_googlepay',
+          additional_data: {
+            payment_method_nonce: response.nonce,
+          },
+          extension_attributes: getPaymentExtensionAttributes(),
         },
       };
 
-      return createPayment(paymentMethod);
+      return createPayment(payment);
     },
 
     mapAddress(address, email, telephone) {

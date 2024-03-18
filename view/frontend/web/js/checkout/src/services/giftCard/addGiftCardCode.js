@@ -11,7 +11,7 @@ export default (code) => {
         gift_card_code: "${code}"
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

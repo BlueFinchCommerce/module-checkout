@@ -128,7 +128,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 // Services
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // External
@@ -166,8 +166,8 @@ export default {
       'ach',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
-    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
-    ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(useCustomerStore, ['customer', 'selected']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
   async created() {
@@ -181,7 +181,7 @@ export default {
     } else {
       const braintreeStore = useBraintreeStore();
       braintreeStore.$subscribe((mutation) => {
-        if ('clientInstance' in mutation.payload) {
+        if (mutation.payload && 'clientInstance' in mutation.payload) {
           this.createInstance();
         }
       });
@@ -263,31 +263,21 @@ export default {
 
       const mandateText = this.$t('braintree.achTerms', { websiteName: this.websiteName });
 
+      const billingAddress = this.cart.billing_address;
+
       const bankDetails = {
         routingNumber: this.routingNumber,
         accountNumber: this.accountNumber,
         accountType: this.accountType,
         ownershipType: this.ownershipType,
         billingAddress: {
-          streetAddress: this.getSelectedBillingAddress.street[0],
-          extendedAddress: this.getSelectedBillingAddress.street[1],
-          locality: this.getSelectedBillingAddress.city,
-          region: this.getSelectedBillingAddress.region_code,
-          postalCode: this.getSelectedBillingAddress.postcode,
+          streetAddress: billingAddress.street[0],
+          extendedAddress: billingAddress.street[1],
+          locality: billingAddress.city,
+          region: billingAddress.region.code,
+          postalCode: billingAddress.postcode,
         },
       };
-
-      if (typeof bankDetails.billingAddress.region === 'undefined') {
-        const regions = await fetch(`/rest/V1/directory/countries/${this.getSelectedBillingAddress.country_code}`)
-          .then((data) => data.json());
-        if (typeof regions.available_regions !== 'undefined') {
-          regions.available_regions.forEach((region) => {
-            if (region.id === this.getSelectedBillingAddress.regionId.toString()) {
-              bankDetails.billingAddress.region = region.code;
-            }
-          });
-        }
-      }
 
       if (bankDetails.ownershipType === 'personal') {
         bankDetails.firstName = this.firstname;
@@ -315,7 +305,6 @@ export default {
       const additionalPaymentData = getAdditionalPaymentData();
 
       return {
-        billingAddress: this.getSelectedBillingAddress,
         email: this.customer.email,
         paymentMethod: {
           method: 'braintree_ach_direct_debit',

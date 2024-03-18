@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'plus en artikel',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
@@ -48,6 +50,7 @@ export default {
     skuNumber: 'SKU-nr:',
     supplierStockNumber: 'Leverantör Lager nr:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Din information',
@@ -191,10 +194,12 @@ export default {
   adyen: {
     applePayTotal: 'Totalt',
     applePayNoShippingMethods: 'Det finns inga tillgängliga fraktmetoder för dig just nu. Försök igen eller använd en annan betalningsmetod.',
+  },
+  paymentCard: {
     cardNumber: 'Kortnummer',
     expiry: 'Förfallodag',
-    storedPaymentLabel: '{namn} Lagrat kort upphör att gälla {sistaFjärde}',
     select: 'Select',
+    storedPaymentLabel: '{namn} Lagrat kort upphör att gälla {sistaFjärde}',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

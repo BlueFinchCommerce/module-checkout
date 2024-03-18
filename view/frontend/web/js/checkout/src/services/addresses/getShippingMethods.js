@@ -25,7 +25,7 @@ mutation {
     }
   ) {
     cart {
-      ${getFullCart}
+      ${getFullCart()}
     }
   }
 }`;

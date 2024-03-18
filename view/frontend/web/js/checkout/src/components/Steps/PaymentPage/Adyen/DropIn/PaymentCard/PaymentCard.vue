@@ -1,8 +1,8 @@
 <template>
   <button
-    class="adyen-checkout__payment-method__header__title"
+    class="adyen-checkout__payment-method__header__title button"
     :class="{'adyen-checkout__payment-method-disabled': !method.default}"
-    :aria-label="$t('adyen.storedPaymentLabel', { name: method.name, lastFour: method.lastFour })"
+    :aria-label="$t('paymentCard.storedPaymentLabel', { name: method.name, lastFour: method.lastFour })"
     type="button"
     :data-original-id="method.originalId"
     @click="selectPaymentCard"
@@ -14,7 +14,7 @@
     <TextField
       v-else
       class="adyen-checkout__payment-method-select"
-      :text="$t('adyen.select')"
+      :text="$t('paymentCard.select')"
     />
     <span
       class="adyen-checkout__payment-method__radio"
@@ -30,11 +30,11 @@
         :alt="method.name"
       >
     </span>
-    <span class="adyen-checkout__payment-method__card-number">{{ $t('adyen.cardNumber') }}</span>
+    <span class="adyen-checkout__payment-method__card-number">{{ $t('paymentCard.cardNumber') }}</span>
     <span class="adyen-checkout__payment-method__name">
       **** **** **** {{ method.lastFour }}
     </span>
-    <span class="adyen-checkout__payment-method__expiry-label">{{ $t('adyen.expiry') }}</span>
+    <span class="adyen-checkout__payment-method__expiry-label">{{ $t('paymentCard.expiry') }}</span>
     <span class="adyen-checkout__payment-method__expiry">
       {{ method.expiryMonth }}/{{ method.expiryYear }}
     </span>

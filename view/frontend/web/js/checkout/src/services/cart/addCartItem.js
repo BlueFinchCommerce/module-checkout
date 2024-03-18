@@ -20,7 +20,7 @@ export default (product) => {
         ]
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

@@ -2,9 +2,14 @@
 
 @media screen and (min-width: $screen__m) {
   .braintree-ach-container {
+    border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    border-bottom-left-radius: var(--base__border-radius-large);
+    border-bottom-right-radius: var(--base__border-radius-large);
+    border-top: 0;
+    column-gap: var(--indent__base);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--indent__base);
+    padding: 0 var(--indent__base) var(--indent__base);
   }
 
   .braintree-ach-mandate,

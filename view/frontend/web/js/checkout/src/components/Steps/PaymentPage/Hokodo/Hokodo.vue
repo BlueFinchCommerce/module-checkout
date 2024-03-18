@@ -55,7 +55,7 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 // services
 import getHokodoCustomerData from '@/services/customer/getHokodoCustomerData';
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentGraphQl';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 export default {

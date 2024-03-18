@@ -20,14 +20,15 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
-import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import handleServiceError from '@/helpers/validation/handleServiceError';
+import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 
-import createPayment from '@/services/payments/createPayment';
+import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 
 export default {
   name: 'BraintreePayPal',
@@ -42,7 +43,7 @@ export default {
   },
   computed: {
     ...mapState(useBraintreeStore, ['clientToken', 'environment', 'paypal']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
       'currencyCode',
@@ -105,15 +106,17 @@ export default {
           },
           fundingSource: window.paypal.FUNDING.PAYPAL,
           offerCredit: false,
-          createOrder: () => paypalInstance.createPayment({
-            amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
-            flow: 'checkout',
-            currency: this.currencyCode,
-            enableShippingAddress: true,
-            intent: 'capture',
-            lineItems: this.getPayPalLineItems(false),
-            shippingOptions: [],
-          }),
+          createOrder: () => (
+            paypalInstance.createPayment({
+              amount: this.cartGrandTotal / 100,
+              flow: 'checkout',
+              currency: this.currencyCode,
+              enableShippingAddress: true,
+              intent: 'capture',
+              lineItems: this.getPayPalLineItems(),
+              shippingOptions: [],
+            })
+          ),
           onShippingChange: async (data) => {
             const address = {
               country_code: data.shipping_address.country_code,
@@ -132,7 +135,7 @@ export default {
               : fShippingMethods.find(({ method_code: id }) => (
                 id === data.selected_shipping_option.id)) || fShippingMethods[0];
 
-            this.selectShippingMethod(selectedShipping);
+            await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
 
             const shippingOptions = fShippingMethods.map((method) => (
               {
@@ -147,7 +150,7 @@ export default {
               }
             ));
 
-            const amount = this.cartGrandTotal / 100 + selectedShipping.amount;
+            const amount = this.cartGrandTotal / 100;
 
             return paypalInstance.updatePayment({
               paymentId: data.paymentId,
@@ -159,9 +162,8 @@ export default {
           },
           onApprove: (data) => paypalInstance
             .tokenizePayment(data)
-            .then(this.setShippingInformation)
-            .then(this.getPaymentData)
-            .then(createPayment)
+            .then(this.setInformationToQuote)
+            .then(this.makePayment)
             .then(() => refreshCustomerData(['cart']))
             .then(this.redirectToSuccess)
             .catch((err) => {
@@ -183,48 +185,51 @@ export default {
   },
   methods: {
     ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig', 'getAdyenConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
       this.$emit('expressPaymentsLoad', 'true');
       this.paypalLoaded = true;
     },
 
-    async setShippingInformation(payload) {
-      const adddress = this.mapAddress(payload.details.shippingAddress, payload.details.email, payload.details.phone);
-      this.setAddressToStore(adddress, 'shipping');
+    setInformationToQuote(payload) {
+      const shippingAddress = this.mapAddress(
+        payload.details.shippingAddress,
+        payload.details.email,
+        payload.details.phone,
+      );
+      const billingAddress = this.mapAddress(
+        payload.details.billingAddress,
+        payload.details.email,
+        payload.details.phone,
+        payload.details.firstName,
+        payload.details.lastName,
+      );
 
-      await this.submitShippingInfo();
-
-      return payload;
+      return Promise.all([
+        this.submitEmail(payload.details.email).then(() => ({ payload, email: payload.details.email })),
+        setBillingAddressOnCart(shippingAddress),
+        setShippingAddressesOnCart(billingAddress),
+      ]);
     },
 
-    getPaymentData(payload) {
-      const additionalPaymentData = getAdditionalPaymentData();
-      const { details } = payload;
-
-      return {
-        billingAddress: this.mapAddress(
-          details.billingAddress,
-          details.email,
-          details.phone,
-          details.firstName,
-          details.lastName,
-        ),
-        email: details.email,
+    makePayment([{ payload, email }]) {
+      const payment = {
+        email,
         paymentMethod: {
           method: 'braintree_paypal',
           additional_data: {
             payment_method_nonce: payload.nonce,
-            ...additionalPaymentData,
           },
           extension_attributes: getPaymentExtensionAttributes(),
         },
       };
+
+      return createPayment(payment);
     },
 
     mapAddress(address, email, telephone, billingFirstname, billingLastname) {
@@ -232,8 +237,7 @@ export default {
       return {
         street: [
           address.line1,
-          address.line2,
-          address.line3,
+          address.line2 || '',
         ],
         postcode: address.postalCode,
         country_code: address.countryCode,

@@ -11,7 +11,7 @@ export default (uid) => {
         cart_item_uid: "${uid}"
       }) {
         cart {
-          ${getFullCart}
+          ${getFullCart()}
         }
       }
     }`;

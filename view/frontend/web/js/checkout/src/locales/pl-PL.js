@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'plus jedna pozycja',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Dodaj kod promocyjny',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Wprowadź kod tutaj',
       successMessage: 'Pomyślnie zastosowano kod "{code}".',
@@ -48,6 +50,7 @@ export default {
     skuNumber: 'Nr SKU:',
     supplierStockNumber: 'Nr magazynowy dostawcy:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Twoje dane',
@@ -191,10 +194,12 @@ export default {
   adyen: {
     applePayTotal: 'Razem:',
     applePayNoShippingMethods: 'W tej chwili nie są dostępne żadne metody wysyłki. Spróbuj ponownie lub skorzystaj z alternatywnej metody płatności.',
+  },
+  paymentCard: {
     cardNumber: 'Numer karty',
     expiry: 'Data ważności',
-    storedPaymentLabel: '{name} Przechowywana karta kończy się na {lastFour}.',
     select: 'Select',
+    storedPaymentLabel: '{name} Przechowywana karta kończy się na {lastFour}.',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

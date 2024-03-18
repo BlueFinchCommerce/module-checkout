@@ -24,12 +24,14 @@ export default {
     plusOneItem: 'Plus un article',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Entrez votre code to réduction',
     giftCardDiscount: {
+      title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Entrez le code',
       successMessage: 'Coupon appliqué "{code}".',
@@ -46,6 +48,7 @@ export default {
     promoTitle: 'Produits fréquemment achetés ensemble',
     rewardsTitle: 'Points de fidélité',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Vos coordonnées',
@@ -194,11 +197,13 @@ export default {
   adyen: {
     applePayTotal: 'Montant global',
     applePayNoShippingMethods: 'Il n\'y a pas de méthode de livraison disponible pour vous en ce moment. Veuillez réessayer ou utiliser un autre mode de paiement.',
+    paymentSuccessful: 'Payment Successful',
+  },
+  paymentCard: {
     cardNumber: 'Numéro de carte',
     expiry: 'D\'expiration',
-    storedPaymentLabel: '{name} La carte enregistrée se termine par {lastFour}',
-    paymentSuccessful: 'Payment Successful',
     select: 'Select',
+    storedPaymentLabel: '{name} La carte enregistrée se termine par {lastFour}',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',
