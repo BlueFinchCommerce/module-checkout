@@ -43,7 +43,7 @@
 
     img {
         width: var(--pay-with-image-max-width, 35px);
-        height: var(--pay-with-image-max-height, 24px);
+        height: var(--pay-with-image-max-height, auto);
 
       &.card {
         border: 1px solid var(--color__primary-dark-blue);

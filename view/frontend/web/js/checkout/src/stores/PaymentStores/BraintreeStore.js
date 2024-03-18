@@ -12,6 +12,7 @@ export default defineStore('brainteeStore', {
     cache: {},
     environment: 'sandbox',
     merchantAccountId: '',
+    cCTypes: [],
     clientToken: null,
     clientInstance: null,
     threeDSecureInstance: null,
@@ -71,6 +72,7 @@ export default defineStore('brainteeStore', {
       const configs = [
         'braintree_environment',
         'braintree_merchant_account_id',
+        'braintree_cc_types',
         'braintree_cc_vault_active',
         'braintree_cc_vault_cvv',
         'braintree_send_line_items',
@@ -98,6 +100,7 @@ export default defineStore('brainteeStore', {
         this.setData({
           environment: data.braintree_environment,
           merchantAccountId: data.braintree_merchant_account_id,
+          cCTypes: data.braintree_cc_types.split(','),
           vaultActive: data.braintree_cc_vault_active === '1',
           vaultVerifyCvv: data.braintree_cc_vault_cvv,
           sendCartLineItems: data.braintree_send_line_items,
