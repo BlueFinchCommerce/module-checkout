@@ -106,7 +106,7 @@ div.dropdown.gift-dropdown {
 }
 
 //Styles for desktop
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .dropdown-button {
     &.gift-discount-trigger {
       order: var(--gift-card-trigger-order, 5);
@@ -115,5 +115,16 @@ div.dropdown.gift-dropdown {
 
   div.dropdown.gift-dropdown {
     order: var(--gift-card-dropdown-order, 6);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

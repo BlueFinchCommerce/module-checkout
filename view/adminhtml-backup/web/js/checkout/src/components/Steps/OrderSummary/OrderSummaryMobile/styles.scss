@@ -1,0 +1,122 @@
+// --order-summary-background - #f4f4f4;
+// --order-summary-box-shadow - inset 0px -1px 5px rgba(0, 0, 0, 0.1);
+
+.order-summary {
+  &-container {
+    align-items: center;
+    background: var(--summary-background);
+    color: var(--mobile-text__color);
+    border-top: 1px solid rgba(37, 48, 59, 0.4);
+    box-shadow: var(--order-summary-box-shadow, 0px -1px 5px rgba(0, 0, 0, 0.4));
+    bottom: 0;
+    display: flex;
+    height: var(--summary-height);
+    justify-content: space-between;
+    padding: var(--indent__base);
+    position: sticky;
+    width: 100%;
+    z-index: 200;
+
+    .gene-checkout-threeds-opened & {
+      pointer-events: none;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &-header {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    width: 100%;
+  }
+
+  &-title {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 5px;
+    align-items: center;
+
+    &-text {
+      font-size: var(--font__heading--mobile);
+      font-weight: var(--font-weight__semibold);
+      color: var(--text__color--heading);
+    }
+
+    .price {
+      font-size: var(--font__heading--mobile);
+      font-weight: var(--font-weight__bold, 500);
+      color: var(--text__color--heading);
+    }
+  }
+
+  &-description {
+    font-size: var(--font__s);
+    font-weight: var(--font-weight__light);
+    color: var(--text__color);
+  }
+
+  &-icon {
+    align-items: center;
+    display: flex;
+    grid-row: span 2;
+    justify-content: flex-end;
+    stroke: var(--mobile-text__color);
+    fill: var(--mobile-text__color);
+
+    svg {
+      stroke: var(--mobile-text__color);
+    }
+  }
+
+  &-close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-left: var(--indent__s) !important; //override storybook styles
+  }
+
+  + p {
+    margin-left: 30px !important; //override storybook styles
+  }
+}
+
+.product-items {
+  margin-top: var(--indent__m);
+  order: var(--order-summary-order, 4);
+}
+
+//Styles for empty StoryBook data
+
+.storyBookEmptyPrice {
+  display: none;
+}
+
+#root {
+  p {
+    margin: 0;
+  }
+
+  .storyBookEmptyPrice {
+    margin-left: var(--indent__s);
+    display: block;
+  }
+
+  .order-summary-amount {
+    margin-bottom: var(--indent__s);
+
+    .price {
+      display: none;
+    }
+  }
+}

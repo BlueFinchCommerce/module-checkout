@@ -176,7 +176,7 @@ div.dropdown.promo-dropdown {
 }
 
 //Styles for desktop
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   div.dropdown.promo-dropdown {
     order: var(--promo-dropdown-order, 1);
 
@@ -206,5 +206,16 @@ div.dropdown.promo-dropdown {
         height: 23px;
       }
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

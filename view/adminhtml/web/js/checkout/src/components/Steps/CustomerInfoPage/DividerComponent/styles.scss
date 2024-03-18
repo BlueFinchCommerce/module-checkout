@@ -8,7 +8,7 @@
 
   &-line {
     border-bottom: var(--divider__border);
-    width: 20%;
+    flex-grow: 1;
   }
 
   p {
@@ -23,10 +23,21 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .divider {
     p {
       font-size: var(--font__heading--desktop);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

@@ -1,0 +1,72 @@
+@import '@/styles/global/_breakpoints';
+
+.address-block {
+  position: relative;
+
+  &__checkbox {
+    margin: var(--indent__l) 0 var(--indent__base);
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: var(--font__m);
+    margin-bottom: var(--indent__s);
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .divider-line {
+      border-bottom: 1px solid var(--border__gray-color2);
+      flex-grow: 1;
+      margin-left: var(--indent__base);
+      display: var(--divider-line-display, block);
+    }
+  }
+
+  &__title--address {
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: var(--font__m_);
+  }
+
+  &__address {
+    margin-bottom: var(--indent__base);
+  }
+
+  &__edit {
+    position: absolute;
+    right: var(--indent__base);
+    top: 0;
+    cursor: pointer;
+  }
+}
+
+.manually-button {
+  padding-top: var(--manually-padding-top, 0);
+  margin: var(--manually-margin, var(--indent__s) 0);
+  color: var(--manually-button-color, var(--text__color));
+  width: 100%;
+  text-align: left;
+}
+
+//Styles for desktop
+
+@mixin largeWidth() {
+  .manually-button {
+    font-size: var(--font__m);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

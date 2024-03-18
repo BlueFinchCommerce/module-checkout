@@ -8,7 +8,7 @@
 
   &-line {
     border-bottom: var(--divider__border);
-    width: 20%;
+    flex-grow: 1;
   }
 
   p {

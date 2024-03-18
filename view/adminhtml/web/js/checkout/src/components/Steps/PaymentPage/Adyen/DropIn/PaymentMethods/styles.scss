@@ -142,7 +142,7 @@
     .divider-line {
       border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
-      width: 100%;
+      flex-grow: 1;
       display: var(--divider-line-display, block);
     }
   }
@@ -204,7 +204,7 @@
   }
 }
 
-@media screen and (min-width: $screen__l) {
+@mixin xlargeWidth() {
   #adyen-dropin-container-stored {
     .adyen-checkout__payment-methods-list-styled {
       grid-auto-columns: 40%;
@@ -219,5 +219,15 @@
     &__header {
       font-size: var(--payment-page-title-desktop-font, var(--font__heading--desktop));
     }
+  }
+}
+
+.mock-desktop {
+  @include xlargeWidth;
+}
+
+@media screen and (min-width: $screen__l) {
+  .mock-full {
+    @include xlargeWidth;
   }
 }

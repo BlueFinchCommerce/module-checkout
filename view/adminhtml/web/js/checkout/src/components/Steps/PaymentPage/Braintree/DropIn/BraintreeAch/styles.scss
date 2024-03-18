@@ -1,6 +1,6 @@
 @import '@/styles/global/_breakpoints';
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .braintree-ach-container {
     border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
     border-bottom-left-radius: var(--base__border-radius-large);
@@ -21,5 +21,16 @@
     display: grid;
     gap: var(--indent__base);
     margin-top: var(--indent__m);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

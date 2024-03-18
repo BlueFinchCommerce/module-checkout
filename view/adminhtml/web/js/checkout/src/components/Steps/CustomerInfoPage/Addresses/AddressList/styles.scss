@@ -7,7 +7,7 @@
   .delivery-section {
     .divider-line {
       border-bottom: var(--divider__border);
-      width: 75%;
+      flex-grow: 1;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }
@@ -83,7 +83,7 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .address-list {
     .delivery-section {
       &-title {
@@ -98,5 +98,16 @@
     &__item-new {
       max-width: var(--button__width-fixed-size);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

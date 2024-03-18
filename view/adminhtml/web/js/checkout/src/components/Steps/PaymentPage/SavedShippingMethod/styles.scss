@@ -82,7 +82,7 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .saved-shipping {
     border-radius: var(--steps-complete__radius--desktop);
     .shipping-method-title {
@@ -93,5 +93,16 @@
         font-size: var(--steps-complete__font-size-title--desktop);
       }
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

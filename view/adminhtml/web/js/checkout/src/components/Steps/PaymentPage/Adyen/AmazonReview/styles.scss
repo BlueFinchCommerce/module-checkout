@@ -9,7 +9,7 @@
   }
 }
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .payment-page {
     padding: 0;
 
@@ -17,5 +17,16 @@
       background: var(--color__primary-white);
       padding: var(--form-details-padding-desktop, 40px 40px 70px);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

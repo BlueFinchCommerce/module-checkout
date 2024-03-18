@@ -1,0 +1,254 @@
+@import '@/styles/global/_breakpoints';
+
+.adyen-checkout__input {
+  background: var(--adyen-checkout-input__background-color, var(--input-background-color));
+  border-radius: var(--input-border-radius);
+  border: var(--input-border, var(--input-border-weight) solid var(--input-border-color));
+  height: 50px;
+  outline: none;
+  transition: none;
+
+  &:focus-visible,
+  &:focus,
+  &:active {
+    border: var(--input-border, var(--input-border-weight-focus) solid var(--input-border-color-focus));
+    box-shadow: none;
+
+    &:hover {
+      border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+      box-shadow: none;
+    }
+  }
+
+  &:hover {
+    border: var(--input-border-focus, var(--input-border-weight-hover) solid var(--input-border-color-hover));
+    box-shadow: none;
+  }
+
+  &-wrapper {
+    width: 100%;
+  }
+}
+
+#adyen-dropin-container-stored {
+  margin: var(--adyen-stored-margin, 0);
+}
+
+.adyen-checkout__label {
+  &__text {
+    padding: 0 10px;
+    position: var(--adyen-label-position, absolute);
+    top: -5px;
+    background: var(--adyen-checkout-field-label__background-color, var(--input-background-color));
+    line-height: 1em;
+    z-index: 1;
+    left: var(--adyen-label-left-value, 10px);
+    color: var(--adyen-font-color, #00112C);
+    font-size: var(--adyen-font-size, var(--font__s));
+    margin-bottom: var(--adyen-label-margin-bottom, 0);
+    transition: none;
+    border-radius: var(--base-border-radius);
+
+    .adyen-checkout__label--focused & {
+      color: var(--text__color);
+    }
+  }
+}
+
+.adyen-checkout__button {
+  background: var(--button-adyen-pay-background-color);
+  border-radius: var(--button-adyen-pay-border-radius);
+  box-shadow: var(--button-primary-border-box-shadow);
+  font-size: var(--button-font-medium);
+  line-height: var(--button-line-height);
+  min-height: var(--button-height);
+  text-transform: var(--adyen-checkout-button-text-transform, var(--button-text-transform));
+
+  &.adyen-checkout__button--pay {
+    margin-top: 20px;
+  }
+
+  &:hover {
+    background: var(--button-adyen-pay-background-color-hover);
+    border-color: var(--button-adyen-pay-border-color-hover);
+    box-shadow: none;
+  }
+
+  &__text {
+    font-family: var(--button-font-family);
+    font-size: var(--adyen-text-button-font-size, var(--button-font-medium));
+    font-weight: var(--adyen-text-button-font-weight, var(--button-font-weight));
+  }
+
+  &.adyen-checkout__button--loading {
+    background: var(--button-adyen-pay-background-color);
+  }
+}
+
+.adyen-checkout__payment-method {
+  overflow: hidden;
+
+  &__header {
+    cursor: pointer;
+    padding-top: 0 !important;
+    padding-left: 30px;
+    padding-bottom: 0;
+  }
+
+  &__header__title {
+    &:hover {
+      color: var(--text__color);
+      background: transparent;
+      border: none;
+    }
+
+    &:focus {
+      color: var(--text__color);
+      background: transparent;
+      border: none;
+    }
+  }
+
+  &__details {
+    padding: 0;
+  }
+}
+
+.adyen-checkout__card-input {
+  margin-top: var(--indent__s);
+}
+
+#adyen-dropin-container-new {
+  padding-top: var(--adyen-container-padding-top, 20px);
+
+  .adyen-checkout {
+    &__payment-method__name {
+      font-size: var(--adyen-font-size, var(--font__m));
+      font-weight: var(--adyen-font-weight, var(--font-weight__semibold));
+      color: var(--adyen-font-color, #00112C);
+    }
+
+    &__payment-method {
+      background: transparent;
+      border: none;
+      position: relative;
+      margin-bottom: var(--indent__base);
+      max-height: initial;
+
+      &:before {
+        box-shadow: var(--radio__input-box-shadow);
+        border: var(--radio__input-border);
+        content: '';
+        display: block;
+        width: var(--radio__input-width);
+        height: var(--radio__input-height);
+        border-radius: 50%;
+        position: absolute;
+        top: 15px;
+      }
+
+      &__header__title {
+        font-family: var(--font-family-copy);
+        line-height: 3em;
+        position: relative;
+        text-transform: initial;
+      }
+
+      &__image__wrapper {
+        margin-right: var(--indent__s);
+      }
+    }
+
+    &__payment-method__details {
+      display: block;
+      max-height: 0;
+      overflow: hidden;
+      transition-duration: 0.5s;
+      transition-property: max-height;
+      transition-timing-function: ease;
+    }
+
+    &__payment-method--selected {
+      background: var(--adyen-drop-in-selected__background, transparent);
+
+      &:before {
+        border: var(--radio__input-checked-border);
+        box-shadow: var(--radio__input-checked-box-shadow);
+      }
+
+      .adyen-checkout__payment-method__details {
+        max-height: 500px;
+        transition-delay: 0.5s;
+        margin-right: var(--payment-method-detail-margin, 0);
+
+        &__content {
+          margin-top: var(--adyen-drop-inside-content-margin-top, unset);
+        }
+      }
+    }
+
+    &__checkbox {
+      margin-top: var(--indent__base);
+
+      input[name='storeDetails'] {
+        display: none;
+      }
+    }
+
+    &__store-details {
+      margin-top: 0;
+    }
+  }
+}
+
+.adyen-checkout__dropdown__list--active {
+  position: relative;
+}
+
+.adyen-checkout-form-instruction {
+  display: none;
+}
+
+.adyen-payment {
+  &__title {
+    display: flex;
+    gap: var(--indent__m);
+  }
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--text__color--heading);
+  }
+
+}
+
+
+@mixin largeWidth() {
+  .adyen-payment {
+    &__header {
+      font-size: var(--payment-page-title-desktop-font, var(--font__heading--desktop));
+    }
+  }
+}
+
+@media screen and (max-width: $screen__m) {
+  #adyen-dropin-container-new {
+    padding-bottom: 0;
+
+    .adyen-checkout {
+      &__payment-method--selected {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+    @include largeWidth;
+  }
+}

@@ -19,7 +19,7 @@
     .divider-line {
       border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
-      width: 100%;
+      flex-grow: 1;
       display: var(--divider-line-display, block);
     }
 
@@ -109,7 +109,7 @@ a {
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .checkout-shipping {
     background: var(--checkout-shipping-section-background, var(--steps__background-color--desktop));
     border-radius: var(--steps__border-radius--desktop);
@@ -131,5 +131,16 @@ a {
         }
       }
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

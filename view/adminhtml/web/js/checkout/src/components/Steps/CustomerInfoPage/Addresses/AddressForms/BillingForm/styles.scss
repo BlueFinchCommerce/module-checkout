@@ -30,7 +30,7 @@
       }
 
       .divider-line {
-        width: 100%;
+        flex-grow: 1;
       }
     }
   }
@@ -53,7 +53,7 @@
 
     .divider-line {
       border-bottom: var(--divider__border);
-      width: 100%;
+      flex-grow: 1;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }
@@ -96,7 +96,7 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .address-block {
     &__title {
       font-size: var(--font__heading--desktop);
@@ -104,5 +104,16 @@
   }
   .manually-button {
     font-size: var(--font__m);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

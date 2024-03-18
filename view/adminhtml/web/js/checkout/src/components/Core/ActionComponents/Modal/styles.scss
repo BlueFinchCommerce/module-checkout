@@ -121,13 +121,6 @@
   .modal-body {
     padding: 0;
   }
-
-  @media screen and (min-width: $screen__max) {
-    transform: translateY(-50%);
-    top: 50%;
-    bottom: auto;
-    max-width: 550px;
-  }
 }
 
 #root {
@@ -164,12 +157,30 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .amasty-modal {
     max-height: var(--modal-desktop-max-height, none);
 
     .modal-body {
       overflow: var(--modal-desktop-overflow, auto);
     }
+  }
+
+  .rvvup-modal {
+    transform: translateY(-50%);
+    top: 50%;
+    bottom: auto;
+    max-width: 550px;
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

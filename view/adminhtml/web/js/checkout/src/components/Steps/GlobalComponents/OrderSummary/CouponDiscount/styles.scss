@@ -101,7 +101,7 @@ div.dropdown.coupon-dropdown {
 }
 
 //Styles for desktop
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .dropdown-button {
     &.coupon-discount-trigger {
       order: var(--coupon-discount-trigger-order, 3);
@@ -110,5 +110,16 @@ div.dropdown.coupon-dropdown {
 
   div.dropdown.coupon-dropdown {
     order: var(--coupon-discount-dropdown-order, 4);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

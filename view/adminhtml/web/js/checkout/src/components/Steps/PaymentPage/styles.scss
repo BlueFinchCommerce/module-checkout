@@ -37,7 +37,7 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .payment-page {
     padding: 0;
 
@@ -46,5 +46,16 @@
       border-radius: var(--steps__border-radius--desktop);
       padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

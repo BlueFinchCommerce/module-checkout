@@ -27,6 +27,10 @@ body {
   margin: 0;
 }
 
+p {
+  margin: 0;
+}
+
 #gene-better-checkout-root {
   color: var(--font__color);
   display: flex;
@@ -53,7 +57,7 @@ body {
     opacity: var(--disabled-buttons-opacity, 0.5);
   }
 
-  @media screen and (min-width: $screen__m) {
+  @mixin largeWidth() {
     .root {
       background: var(--page__background-color--desktop);
     }
@@ -83,9 +87,31 @@ body {
     }
   }
 
-  @media screen and (max-width: $screen__m) {
+  .mock-laptop,
+  .mock-desktop {
+    @include largeWidth;
+  }
+
+  @media screen and (min-width: $screen__m) {
+    .mock-full {
+      @include largeWidth;
+    }
+  }
+
+  @mixin smallWidth() {
     .is-hidden-mobile {
       display: none !important;
+    }
+  }
+
+  .mock-mobile,
+  .mock-tablet {
+    @include smallWidth;
+  }
+
+  @media screen and (max-width: $screen__m) {
+    .mock-full {
+      @include smallWidth;
     }
   }
 }

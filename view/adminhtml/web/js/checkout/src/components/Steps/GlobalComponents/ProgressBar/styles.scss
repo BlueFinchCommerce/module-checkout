@@ -105,7 +105,7 @@
 }
 
 //Desktop design
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .progress-bar {
     &-container {
       display: flex;
@@ -115,12 +115,33 @@
   }
 }
 
-@media screen and (min-width: $screen__l) {
+@mixin xlargeWidth() {
   .progress-bar {
     &-arrow {
       svg {
         width: 90px;
       }
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+.mock-desktop {
+    @include xlargeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}
+
+@media screen and (min-width: $screen__l) {
+  .mock-full {
+    @include xlargeWidth;
   }
 }

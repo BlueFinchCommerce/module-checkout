@@ -17,11 +17,22 @@
 }
 
 //Styles for desktop
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .order-summary-title-amount {
     p {
       font-family: var(--font-family__copy);
       font-size: var(--font__heading--desktop);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

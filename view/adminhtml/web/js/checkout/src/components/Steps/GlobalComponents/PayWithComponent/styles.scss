@@ -70,7 +70,7 @@
 
 //Styles for desktop
 
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .pay-with {
     &__container {
       margin: var(--indent__base) var(--indent__base) 0;
@@ -83,5 +83,16 @@
     &__message {
       font-size: var(--font__heading--desktop);
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }

@@ -1,0 +1,79 @@
+.loading-mask {
+  background: rgba(255, 255, 255, .5);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 250;
+}
+
+.loader {
+  align-items: center;
+  display: grid;
+  justify-items: center;
+  height: 100%;
+
+  img {
+      width: 50px;
+  }
+}
+
+.text-loading {
+  background-color: var(--text-placeholder-bg);
+  min-height: var(--indent__m);
+  min-width: 200px;
+  background-image: linear-gradient(to left, var(--text-placeholder-bg) 0%, var(--text-placeholder-bg-darker) 50%, var(--text-placeholder-bg) 100%);
+  animation: 1.5s linear 0s infinite normal forwards running loading;
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+
+  button & {
+    min-width: 100%;
+  }
+}
+
+.button {
+
+  .text-loading {
+    border-radius: var(--text-placeholder-bg-button-radius);
+    height: var(--text-placeholder-bg-button-height, var(--button-height));
+  }
+
+  &--primary {
+    .text-loading {
+      background-color: var(--text-placeholder-bg-primary);
+      background-image: linear-gradient(to left, var(--text-placeholder-bg-primary) 0%, var(--button-primary-text-color-hover) 50%, var(--text-placeholder-bg-primary) 100%);
+    }
+  }
+
+  &--secondary {
+    .text-loading {
+      background-color: var(--text-placeholder-bg-secondary);
+      background-image: linear-gradient(to left, var(--text-placeholder-bg-secondary) 0%, var(--text-placeholder-bg-secondary-gradient) 50%, var(--text-placeholder-bg-secondary) 100%);
+    }
+  }
+
+  &--tertiary {
+    .text-loading {
+      background-color: var(--text-placeholder-bg-tertiary);
+      background-image: linear-gradient(to left, var(--text-placeholder-bg-tertiary) 0%, var(--text-placeholder-bg-tertiary-gradient) 50%, var(--text-placeholder-bg-tertiary) 100%);
+    }
+  }
+}
+
+.adyen-payment__title {
+  + .text-loading {
+    min-height: 500px;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: calc(100% + 200px) 0;
+  }
+}

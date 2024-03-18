@@ -77,7 +77,7 @@
 }
 
 //Styles for desktop
-@media screen and (min-width: $screen__m) {
+@mixin largeWidth() {
   .order-total {
     &-container {
       order: var(--order-total-container-order, 2);
@@ -106,5 +106,16 @@
         font-size: var(--font__l);
       }
     }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
   }
 }
