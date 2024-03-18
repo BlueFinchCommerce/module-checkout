@@ -4,6 +4,7 @@
   </div>
   <div
     class="coupon-discount-trigger dropdown-button"
+    tabindex="0"
     data-cy="dropdown-trigger-coupon"
     :class="{opened: isDropDownVisible}"
     @click="openDropDown"

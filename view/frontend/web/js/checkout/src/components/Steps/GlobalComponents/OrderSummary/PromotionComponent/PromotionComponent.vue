@@ -1,6 +1,7 @@
 <template>
   <div
     class="promotion-trigger dropdown-button"
+    tabindex="0"
     v-if="freeShipping > 0 && crosssells.length === 0"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"
@@ -44,6 +45,7 @@
   <div
     v-if="!freeShipping && crosssells.length > 0"
     class="promotion-trigger dropdown-button"
+    tabindex="1"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"
     @click="openDropDown"
