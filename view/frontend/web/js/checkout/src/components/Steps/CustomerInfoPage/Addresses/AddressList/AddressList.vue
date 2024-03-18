@@ -145,9 +145,7 @@ export default {
       this.$emit('selectedSavedAddress', true);
       this.$emit('passSelectedItemId', address.id);
 
-      if (this.addressType === 'billing') {
-        this.isShippingNewCTA = true;
-      }
+      this.isShippingNewCTA = true;
     },
     newAddress() {
       this.isShippingNewCTA = false;

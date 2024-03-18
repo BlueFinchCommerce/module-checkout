@@ -72,9 +72,8 @@
         <div class="field__password">
           <TextInput
             v-model="password"
-            :error="passwordError || loginErrorMessage !== null"
-            :error-message="passwordErrorMessage
-            || (loginErrorMessage !== null ? loginErrorMessage : '')"
+            :error="passwordError"
+            :error-message="passwordErrorMessage"
             :type="passwordInputType"
             @keyup="passwordKeyTrigger"
             data-cy="password"
@@ -100,6 +99,11 @@
             </template>
           </TextInput>
         </div>
+
+        <ErrorMessage
+          v-if="loginErrorMessage"
+          :message="loginErrorMessage"
+        />
 
         <div id="password_help_text">
           <TextField
@@ -176,6 +180,7 @@ import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 
 // icons
@@ -203,6 +208,7 @@ export default {
     ShowIcon,
     ValidIcon,
     TextField,
+    ErrorMessage,
     Loader,
     Edit,
     Recaptcha,

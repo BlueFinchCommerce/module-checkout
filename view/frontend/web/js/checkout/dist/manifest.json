@@ -217,7 +217,7 @@
   },
   "src/components/Footer/FooterIcons/icons/icon-cardpay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg"
+    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
   },
   "src/components/Footer/FooterIcons/icons/icon-clearpay.svg": {
     "file": "icon-clearpay.svg",
@@ -269,7 +269,7 @@
   },
   "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg": {
     "file": "CardPay.svg",
-    "src": "src/components/Steps/GlobalComponents/PayWithComponent/icons/CardPay.svg"
+    "src": "src/components/Footer/FooterIcons/icons/icon-cardpay.svg"
   },
   "src/components/Steps/GlobalComponents/PayWithComponent/icons/ClearPay.svg": {
     "file": "ClearPay.svg",
