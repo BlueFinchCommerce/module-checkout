@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     level: 0
     paths:
         - .
