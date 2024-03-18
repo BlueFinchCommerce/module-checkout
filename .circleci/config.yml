@@ -142,10 +142,10 @@ jobs:
           working_directory: ./vendor/gene/module-better-checkout
           command: |
             mkdir -p ~/phpunit
-      # - run:
-      #     name: PHPUnit
-      #     working_directory: ./vendor/gene/module-better-checkout
-      #     command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml .
+      - run:
+         name: PHPUnit
+         working_directory: ./vendor/gene/module-better-checkout
+         command: ./vendor/bin/phpunit -c phpunit.xml
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:

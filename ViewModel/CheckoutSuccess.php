@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Gene\BetterCheckout\ViewModel;
 
-use Magento\Catalog\Helper\Image;
+use Magento\Catalog\Model\Product\ImageFactory;
+use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Customer\Model\AccountManagement;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\View\Asset\Repository as AssetRepository;
+use Magento\Framework\View\DesignInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Sales\Block\Order\Info;
 use Magento\Sales\Model\Order;
@@ -19,123 +23,108 @@ use Magento\Tax\Model\Config;
 
 class CheckoutSuccess implements ArgumentInterface
 {
+    /** @var string[] */
+    private $placeholderCache = [];
 
-  /**
-   * @var CheckoutSession
-   */
-  private $checkoutSession;
+    /**
+     * @param CheckoutSession $checkoutSession
+     * @param Info $orderInfoBlock
+     * @param OrderCustomerDelegateInterface $delegateService
+     * @param ScopeConfigInterface $scopeConfig
+     * @param PlaceholderFactory $placeholderFactory
+     * @param AssetRepository $assetRepository
+     * @param DesignInterface $themeDesign
+     * @param ImageFactory $productImageFactory
+     */
+    public function __construct(
+        private readonly CheckoutSession $checkoutSession,
+        private readonly Info $orderInfoBlock,
+        private readonly OrderCustomerDelegateInterface $delegateService,
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly PlaceholderFactory $placeholderFactory,
+        private readonly AssetRepository $assetRepository,
+        private readonly DesignInterface $themeDesign,
+        private readonly ImageFactory $productImageFactory,
+    ) {}
 
-  /**
-   * @var Info
-   */
-  private $orderInfoBlock;
-
-  /**
-   * @var Image
-   */
-  private $imageHelper;
-
-  /**
-   * @var OrderCustomerDelegateInterface
-   */
-  private $delegateService;
-
-  /**
-   * @var ScopeConfigInterface
-   */
-  private $scopeConfig;
-
-  /**
-   * @param CheckoutSession $checkoutSession
-   * @param Image $imageHelper
-   * @param Info $orderInfoBlock
-   * @param OrderCustomerDelegateInterface $customerDelegation
-   * @param ScopeConfigInterface $scopeConfig
-   */
-  public function __construct(
-    CheckoutSession $checkoutSession,
-    Image $imageHelper,
-    Info $orderInfoBlock,
-    OrderCustomerDelegateInterface $customerDelegation,
-    ScopeConfigInterface $scopeConfig
-  ) {
-    $this->checkoutSession = $checkoutSession;
-    $this->imageHelper = $imageHelper;
-    $this->orderInfoBlock = $orderInfoBlock;
-    $this->delegateService = $customerDelegation;
-    $this->scopeConfig = $scopeConfig;
-  }
-
-  /**
-   * @return Order
-   */
-  public function getLastOrder(): Order
-  {
-    return $this->checkoutSession->getLastRealOrder();
-  }
-
-  /**
-   * Delegate order for new customer
-   *
-   * @return void
-   */
-  public function assignOrderToNewCustomer(): void
-  {
-    $this->delegateService->delegateNew((int)$this->getLastOrder()->getId());
-  }
-
-  /**
-   * Return Product Image URL for Order Item
-   *
-   * @param Item $orderItem
-   * @param string $imageType
-   * @return string|null
-   */
-  public function getOrderItemProductImageUrl(
-    Item $orderItem,
-    string $imageType = 'customer_sales_order_grid'
-  ): ?string {
-    $product = $orderItem->getProduct();
-    $productImageUrl = null;
-    if ($product) {
-      $productImageUrl = $this->imageHelper->init(
-        $product,
-        $imageType
-      )->getUrl();
+    /**
+     * @return Order
+     */
+    public function getLastOrder(): Order
+    {
+        return $this->checkoutSession->getLastRealOrder();
     }
-    return $productImageUrl;
-  }
 
-  /**
-   * Returns string with formatted address
-   *
-   * @param Address $address
-   * @return null|string
-   */
-  public function getFormattedAddress(Address $address)
-  {
-    return $this->orderInfoBlock->getFormattedAddress($address);
-  }
+    /**
+     * Delegate order for new customer
+     *
+     * @return void
+     */
+    public function assignOrderToNewCustomer(): void
+    {
+        $this->delegateService->delegateNew((int)$this->getLastOrder()->getId());
+    }
 
-  /**
-   * Get minimum password length
-   *
-   * @return string
-   */
-  public function getMinimumPasswordLength(): string
-  {
-    return $this->scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH);
-  }
+    /**
+     * Return Product Image URL for Order Item
+     *
+     * @param Item $orderItem
+     * @param string $imageType
+     * @return string|null
+     */
+    public function getOrderItemProductImageUrl(Item $orderItem, string $imageType = 'thumbnail'): ?string
+    {
+        $product = $orderItem->getProduct();
+        $imagePath = $product->getData($imageType);
+        try {
+            if (empty($imagePath) && !empty($this->placeholderCache[$imageType])) {
+                return $this->placeholderCache[$imageType];
+            }
+            $image = $this->productImageFactory->create();
+            $image->setDestinationSubdir($imageType)
+                ->setBaseFile($imagePath);
 
-  /**
-   * Get number of password required character classes
-   *
-   * @return string
-   */
-  public function getRequiredCharacterClassesNumber(): string
-  {
-    return $this->scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER);
-  }
+            if ($image->isBaseFilePlaceholder()) {
+                $this->placeholderCache[$imageType] = $this->getPlaceholder($imageType);
+                return $this->placeholderCache[$imageType];
+            }
+        } catch (\Exception $exception) {
+            return null;
+        }
+
+        return $image->getUrl();
+    }
+
+    /**
+     * Returns string with formatted address
+     *
+     * @param Address $address
+     * @return null|string
+     */
+    public function getFormattedAddress(Address $address)
+    {
+        return $this->orderInfoBlock->getFormattedAddress($address);
+    }
+
+    /**
+     * Get minimum password length
+     *
+     * @return int
+     */
+    public function getMinimumPasswordLength(): int
+    {
+        return (int) $this->scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH);
+    }
+
+    /**
+     * Get number of password required character classes
+     *
+     * @return int
+     */
+    public function getRequiredCharacterClassesNumber(): int
+    {
+        return (int) $this->scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER);
+    }
 
     /**
      * Get number of password required character classes
@@ -203,4 +192,27 @@ class CheckoutSuccess implements ArgumentInterface
             ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
     }
 
+    /**
+     * @param string $imageType
+     * @return string
+     */
+    private function getPlaceholder(string $imageType): string
+    {
+        $imageAsset = $this->placeholderFactory->create(['type' => $imageType]);
+
+        // check if placeholder defined in config
+        if ($imageAsset->getFilePath()) {
+            return $imageAsset->getUrl();
+        }
+
+        $params = [
+            'area' => Area::AREA_FRONTEND,
+            'themeId' => $this->themeDesign->getConfigurationDesignTheme(Area::AREA_FRONTEND),
+        ];
+
+        return $this->assetRepository->getUrlWithParams(
+            "Magento_Catalog::images/product/placeholder/{$imageType}.jpg",
+            $params
+        );
+    }
 }
