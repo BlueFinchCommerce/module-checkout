@@ -7,7 +7,7 @@
          bootstrap="./Test/Unit/bootstrap.php"
 >
     <testsuites>
-        <testsuite name="Blog_Unit_Tests">
+        <testsuite name="Checkout_Unit_Tests">
             <directory>./Test/*</directory>
         </testsuite>
     </testsuites>

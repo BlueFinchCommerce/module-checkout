@@ -58,12 +58,7 @@ if ($orderViewViewModel) {
           continue;
         }
         ?>
-        <?php
-        $image = $orderViewViewModel === null
-          ? null
-          : $orderViewViewModel->getOrderItemProductImageUrl($item);
-        ?>
-
+        <?php $image = $orderViewViewModel === null ? null : $orderViewViewModel->getOrderItemProductImageUrl($item); ?>
           <div class="checkout-success-summary-columns">
               <img class="single-order__item-image" src="<?= $image; ?>"
                    alt="<?= $escaper->escapeHtmlAttr($item->getName()) ?>">
