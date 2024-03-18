@@ -10,8 +10,6 @@ export default (payment) => {
     'X-Requested-With': 'XMLHttpRequest',
   };
 
-  console.log(payment);
-
   return authenticatedRequest().post(
     buildCartUrl('payment-information'),
     {
