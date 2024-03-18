@@ -109,21 +109,21 @@ class CheckoutSuccess implements ArgumentInterface
     /**
      * Get minimum password length
      *
-     * @return string
+     * @return int
      */
-    public function getMinimumPasswordLength(): string
+    public function getMinimumPasswordLength(): int
     {
-        return $this->scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH);
+        return (int) $this->scopeConfig->getValue(AccountManagement::XML_PATH_MINIMUM_PASSWORD_LENGTH);
     }
 
     /**
      * Get number of password required character classes
      *
-     * @return string
+     * @return int
      */
-    public function getRequiredCharacterClassesNumber(): string
+    public function getRequiredCharacterClassesNumber(): int
     {
-        return $this->scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER);
+        return (int) $this->scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER);
     }
 
     /**
