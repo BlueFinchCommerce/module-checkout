@@ -20,7 +20,7 @@ import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 export default {
   name: 'Logo',
   components: {
-    Loader
+    Loader,
   },
   props: {
     params: {
