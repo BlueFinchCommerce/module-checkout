@@ -1,29 +1,33 @@
 <template>
   <div
     id="adyen-apple-pay"
-    :class="!applePayLoaded ? 'text-loading' : ''" />
+    :class="!applePayLoaded ? 'text-loading' : ''"
+  />
 </template>
 
 <script>
 import { mapActions, mapState } from 'pinia';
+import AdyenCheckout from '@adyen/adyen-web';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/payments/createPaymentGraphQl';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
+import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
+import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 
 export default {
   name: 'AdyenApplePay',
@@ -40,7 +44,7 @@ export default {
 
   computed: {
     ...mapState(useAdyenStore, ['isAdyenAvailable']),
-    ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartDiscountTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
     ...mapState(useConfigStore, [
       'currencyCode',
@@ -116,7 +120,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'setShippingMethods', 'submitShippingInfo']),
+    ...mapActions(useAgreementStore, ['validateAgreements']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(useAdyenStore, [
       'getAdyenConfig',
       'getPaymentMethodsResponse',
@@ -125,7 +130,10 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(useCustomerStore, ['setEmailAddress', 'setAddressToStore', 'validatePostcode']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
+    ...mapActions(usePaymentStore, [
+      'setErrorMessage',
+    ]),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
@@ -141,7 +149,7 @@ export default {
     getApplePayConfiguration(applePayMethod) {
       return {
         amount: {
-          value: this.cartGrandTotal,
+          valie: parseFloat(this.cartGrandTotal / 100).toFixed(2),
           currency: this.currencyCode,
         },
         currencyCode: this.currencyCode,
@@ -159,60 +167,74 @@ export default {
         onAuthorized: this.onAuthorized.bind(this),
         onShippingContactSelected: this.onShippingContactSelect.bind(this),
         onShippingMethodSelected: this.onShippingMethodSelect.bind(this),
-        onClick: (resolve, reject) => expressPaymentOnClickDataLayer(resolve, reject, applePayMethod.type),
+        onClick: (resolve, reject) => this.onClick(resolve, reject, applePayMethod.type),
         onSubmit: () => {},
       };
     },
 
+    onClick(resolve, reject, type) {
+      // Check that the agreements (if any) are valid.
+      const isValid = this.validateAgreements();
+
+      if (!isValid) {
+        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+      }
+
+      return expressPaymentOnClickDataLayer(resolve, reject, type);
+    },
+
     async onAuthorized(resolve, reject, data) {
-      const extensionAttributes = getPaymentExtensionAttributes();
       const { shippingContact, billingContact } = data.payment;
       const email = shippingContact.emailAddress;
       const telephone = shippingContact.phoneNumber;
       const shippingAddress = this.mapAddress(shippingContact, email, telephone);
       const billingAddress = this.mapAddress(billingContact, email, telephone);
 
-      if (!this.validatePostcode('shipping', false)) {
-        this.setAddressToStore(shippingAddress, 'shipping');
-        await this.submitShippingInfo();
-      }
-
-      this.setAddressToStore(shippingAddress, 'shipping');
-      this.setAddressToStore(billingAddress, 'billing');
-      await this.submitShippingInfo();
-
       if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {
         reject(window.ApplePaySession.STATUS_FAILURE);
         return;
       }
 
-      const stateData = {
-        paymentMethod: {
-          type: 'applepay',
-          applePayToken: btoa(JSON.stringify(data.payment.token.paymentData)),
-        },
-      };
-      const payload = {
-        email,
-        shippingAddress,
-        billingAddress,
-        paymentMethod: {
-          method: 'adyen_hpp',
-          additional_data: {
-            brand_code: 'applepay',
-            stateData: JSON.stringify(stateData),
-          },
-          extension_attributes: extensionAttributes,
-        },
-      };
+      try {
+        this.submitEmail(email)
+          .then(() => (
+            Promise.all([
+              setBillingAddressOnCart(billingAddress),
+              setShippingAddressesOnCart(shippingAddress),
+            ])
+          ))
+          .then(() => {
+            const stateData = JSON.stringify({
+              paymentMethod: {
+                applePayToken: btoa(JSON.stringify(data.payment.token.paymentData)),
+                type: 'applepay',
+              },
+              browserInfo: this.browserInfo,
+            });
 
-      const response = await createPayment(payload);
-      if (response.action) {
-        console.log(response.action);
-      } else {
-        resolve(window.ApplePaySession.STATUS_SUCCESS);
-        await refreshCustomerData(getCartSectionNames());
-        window.location.href = getSuccessPageUrl();
+            const paymentMethod = {
+              code: 'adyen_hpp',
+              adyen_additional_data_hpp: {
+                brand_code: 'applepay',
+                stateData,
+              },
+            };
+
+            return createPayment(paymentMethod);
+          })
+          .then(async () => {
+            resolve(window.ApplePaySession.STATUS_SUCCESS);
+            await refreshCustomerData(getCartSectionNames());
+            window.location.href = getSuccessPageUrl();
+          });
+      } catch (error) {
+        const errors = {
+          errors: [
+            new window.ApplePayError('unknown', 'country', error.message),
+          ],
+        };
+
+        resolve(errors);
       }
     },
 
@@ -234,8 +256,6 @@ export default {
         methodCode !== 'nominated_delivery'
       ));
 
-      this.setShippingMethods(filteredMethods);
-
       // If there are no shipping methods available show an error.
       if (!filteredMethods.length) {
         const errors = {
@@ -254,44 +274,38 @@ export default {
 
       // Set the shipping method back to the first available method.
       const selectedShipping = filteredMethods[0];
-      if (selectedShipping) {
-        this.selectShippingMethod(selectedShipping);
-      }
 
-      // Set the billing address to the same as shipping for now. Magento doesn't use this
-      // yet and it is replaced with the correct billing in the onAuthorized.
-      this.setAddressToStore(address, 'shipping');
-      this.setAddressToStore(address, 'billing');
-      const totals = await this.submitShippingInfo();
+      await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
       const newShippingMethods = this.mapShippingMethods(filteredMethods);
       const applePayShippingContactUpdate = {
         newShippingMethods,
         newTotal: {
           label: this.applePayTotal,
-          amount: totals.base_grand_total.toString(),
+          amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
         },
         newLineItems: [
           {
             type: 'final',
             label: 'Subtotal',
-            amount: totals.subtotal.toString(),
+            amount: this.cart.prices.subtotal_including_tax.value.toString(),
           },
           {
             type: 'final',
             label: 'Shipping',
-            amount: selectedShipping.amount.toString(),
+            amount: selectedShipping.amount.value.toString(),
           },
         ],
       };
 
       // Add discount price if available.
-      if (totals.discount_amount) {
+      if (this.cartDiscountTotal) {
         applePayShippingContactUpdate.newLineItems.push({
           type: 'final',
           label: 'Discount',
-          amount: totals.discount_amount.toString(),
+          amount: this.cartDiscountTotal.toString(),
         });
       }
+
       resolve(applePayShippingContactUpdate);
     },
 
@@ -299,28 +313,36 @@ export default {
       const selectedShipping = this.shippingMethods.find(({ method_code: id }) => (
         id === data.shippingMethod.identifier
       ));
-      this.selectShippingMethod(selectedShipping);
 
-      const totals = await this.submitShippingInfo();
+      await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
       const applePayShippingContactUpdate = {
         newTotal: {
-          type: 'final',
           label: this.applePayTotal,
-          amount: totals.base_grand_total.toString(),
+          amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
         },
         newLineItems: [
           {
             type: 'final',
-            label: this.applPaySubtotaltitle,
-            amount: totals.subtotal.toString(),
+            label: 'Subtotal',
+            amount: this.cart.prices.subtotal_including_tax.value.toString(),
           },
           {
             type: 'final',
-            label: this.applePayShippingStepTitle,
-            amount: selectedShipping.amount.toString(),
+            label: 'Shipping',
+            amount: selectedShipping.amount.value.toString(),
           },
         ],
       };
+
+      // Add discount price if available.
+      if (this.cartDiscountTotal) {
+        applePayShippingContactUpdate.newLineItems.push({
+          type: 'final',
+          label: 'Discount',
+          amount: this.cartDiscountTotal.toString(),
+        });
+      }
+
       resolve(applePayShippingContactUpdate);
     },
 
@@ -349,9 +371,6 @@ export default {
         region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
         country_code: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
-        same_as_billing: 0,
-        customer_address_id: 0,
-        save_in_address_book: false,
       };
     },
   },
