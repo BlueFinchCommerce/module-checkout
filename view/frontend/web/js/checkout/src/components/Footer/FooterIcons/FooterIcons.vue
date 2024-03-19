@@ -82,20 +82,19 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Icons
-import ApplePaySvg from '@/icons/payments/white/icon-applepay.svg';
-import GooglePaySvg from '@/icons/payments/white/icon-google.svg';
-import ExpressPaySvg from '@/icons/payments/white/icon-express.svg';
-import PayPalSvg from '@/icons/payments/white/icon-paypal.svg';
-import KlarnaSvg from '@/icons/payments/white/icon-klarna.svg';
-import MaestroPaySvg from '@/icons/payments/white/icon-maestro.svg';
-import MastercardPaySvg from '@/icons/payments/white/icon-mastercard.svg';
-import VisaPaySvg from '@/icons/payments/white/icon-visa.svg';
-import ClearpaySvg from '@/icons/payments/white/icon-clearpay.svg';
-import CardPayIcon from '@/icons/payments/white/icon-cardpay.svg';
-import VenmoPayIcon from '@/icons/payments/white/icon-venmo.svg';
-import DI from '@/icons/payments/white/DI.png';
-import DN from '@/icons/payments/white/DN.png';
-import JCB from '@/icons/payments/white/JCB.png';
+import ApplePaySvg from '@/icons/payments/white/icon-applepay-white.svg';
+import GooglePaySvg from '@/icons/payments/white/icon-googlepay-white.svg';
+import ExpressPaySvg from '@/icons/payments/white/icon-amex-white.svg';
+import PayPalSvg from '@/icons/payments/white/icon-paypal-white.svg';
+import KlarnaSvg from '@/icons/payments/white/icon-klarna-white.svg';
+import MaestroPaySvg from '@/icons/payments/white/icon-maestro-white.svg';
+import MastercardPaySvg from '@/icons/payments/white/icon-mastercard-white.svg';
+import VisaPaySvg from '@/icons/payments/white/icon-visa-white.svg';
+import ClearpaySvg from '@/icons/payments/white/icon-clearpay-white.svg';
+import VenmoPayIcon from '@/icons/payments/white/icon-venmo-white.svg';
+import DiscoverSvg from '@/icons/payments/white/icon-discover-white.svg';
+import DinersSvg from '@/icons/payments/white/icon-diners-white.svg';
+import JCBSvg from '@/icons/payments/white/icon-jcb-white.svg';
 
 export default {
   name: 'FooterIcons',
@@ -141,9 +140,6 @@ export default {
     ClearpayIcon() {
       return `${getStaticUrl(ClearpaySvg)}`;
     },
-    CardPayIcon() {
-      return `${getStaticUrl(CardPayIcon)}`;
-    },
     VenmoPayIcon() {
       return `${getStaticUrl(VenmoPayIcon)}`;
     },
@@ -159,11 +155,11 @@ export default {
         case 'AE':
           return getStaticUrl(ExpressPaySvg);
         case 'DI':
-          return DI;
+          return getStaticUrl(DiscoverSvg);
         case 'DN':
-          return DN;
+          return getStaticUrl(DinersSvg);
         case 'JCB':
-          return JCB;
+          return getStaticUrl(JCBSvg);
         case 'MC':
           return getStaticUrl(MastercardPaySvg);
         case 'MI':
