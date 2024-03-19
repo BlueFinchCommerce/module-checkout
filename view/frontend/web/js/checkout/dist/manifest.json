@@ -37,17 +37,19 @@
     "assets": [
       "logo.svg",
       "lockIcon.svg",
-      "icon-applepay2.svg",
-      "icon-google2.svg",
-      "icon-express2.svg",
-      "icon-paypal2.svg",
-      "icon-klarna2.svg",
-      "icon-maestro2.svg",
-      "icon-mastercard2.svg",
-      "icon-visa2.svg",
-      "icon-clearpay2.svg",
-      "icon-cardpay.svg",
-      "icon-venmo2.svg",
+      "icon-applepay-white.svg",
+      "icon-googlepay-white.svg",
+      "icon-amex-white.svg",
+      "icon-paypal-white.svg",
+      "icon-klarna-white.svg",
+      "icon-maestro-white.svg",
+      "icon-mastercard-white.svg",
+      "icon-visa-white.svg",
+      "icon-clearpay-white.svg",
+      "icon-venmo-white.svg",
+      "icon-discover-white.svg",
+      "icon-diners-white.svg",
+      "icon-jcb-white.svg",
       "loader.gif",
       "bin.svg",
       "promo-icon.svg",
@@ -55,16 +57,19 @@
       "coupon-icon.svg",
       "delivery.svg",
       "detailsIcon.svg",
-      "icon-applepay.svg",
-      "icon-google.svg",
-      "icon-express.svg",
-      "icon-paypal.svg",
-      "icon-klarna.svg",
-      "icon-maestro.svg",
-      "icon-mastercard.svg",
-      "icon-visa.svg",
-      "icon-clearpay.svg",
-      "icon-venmo.svg",
+      "icon-applepay-colour.svg",
+      "icon-googlepay-colour.svg",
+      "icon-amex-colour.svg",
+      "icon-paypal-colour.svg",
+      "icon-klarna-colour.svg",
+      "icon-maestro-colour.svg",
+      "icon-mastercard-colour.svg",
+      "icon-visa-colour.svg",
+      "icon-clearpay-colour.svg",
+      "icon-venmo-colour.svg",
+      "icon-discover-colour.svg",
+      "icon-diners-colour.svg",
+      "icon-jcb-colour.svg",
       "shippingIcon.svg",
       "paymentIcon.svg",
       "bancontact.svg",
@@ -284,93 +289,109 @@
     "file": "paymentIcon.svg",
     "src": "src/icons/paymentIcon.svg"
   },
-  "src/icons/payments/colour/icon-applepay.svg": {
-    "file": "icon-applepay.svg",
-    "src": "src/icons/payments/colour/icon-applepay.svg"
+  "src/icons/payments/colour/icon-amex-colour.svg": {
+    "file": "icon-amex-colour.svg",
+    "src": "src/icons/payments/colour/icon-amex-colour.svg"
   },
-  "src/icons/payments/colour/icon-cardpay.svg": {
-    "file": "icon-cardpay.svg",
-    "src": "src/icons/payments/white/icon-cardpay.svg"
+  "src/icons/payments/colour/icon-applepay-colour.svg": {
+    "file": "icon-applepay-colour.svg",
+    "src": "src/icons/payments/colour/icon-applepay-colour.svg"
   },
-  "src/icons/payments/colour/icon-clearpay.svg": {
-    "file": "icon-clearpay.svg",
-    "src": "src/icons/payments/colour/icon-clearpay.svg"
+  "src/icons/payments/colour/icon-clearpay-colour.svg": {
+    "file": "icon-clearpay-colour.svg",
+    "src": "src/icons/payments/colour/icon-clearpay-colour.svg"
   },
-  "src/icons/payments/colour/icon-express.svg": {
-    "file": "icon-express.svg",
-    "src": "src/icons/payments/colour/icon-express.svg"
+  "src/icons/payments/colour/icon-diners-colour.svg": {
+    "file": "icon-diners-colour.svg",
+    "src": "src/icons/payments/colour/icon-diners-colour.svg"
   },
-  "src/icons/payments/colour/icon-google.svg": {
-    "file": "icon-google.svg",
-    "src": "src/icons/payments/colour/icon-google.svg"
+  "src/icons/payments/colour/icon-discover-colour.svg": {
+    "file": "icon-discover-colour.svg",
+    "src": "src/icons/payments/colour/icon-discover-colour.svg"
   },
-  "src/icons/payments/colour/icon-klarna.svg": {
-    "file": "icon-klarna.svg",
-    "src": "src/icons/payments/colour/icon-klarna.svg"
+  "src/icons/payments/colour/icon-googlepay-colour.svg": {
+    "file": "icon-googlepay-colour.svg",
+    "src": "src/icons/payments/colour/icon-googlepay-colour.svg"
   },
-  "src/icons/payments/colour/icon-maestro.svg": {
-    "file": "icon-maestro.svg",
-    "src": "src/icons/payments/colour/icon-maestro.svg"
+  "src/icons/payments/colour/icon-jcb-colour.svg": {
+    "file": "icon-jcb-colour.svg",
+    "src": "src/icons/payments/colour/icon-jcb-colour.svg"
   },
-  "src/icons/payments/colour/icon-mastercard.svg": {
-    "file": "icon-mastercard.svg",
-    "src": "src/icons/payments/colour/icon-mastercard.svg"
+  "src/icons/payments/colour/icon-klarna-colour.svg": {
+    "file": "icon-klarna-colour.svg",
+    "src": "src/icons/payments/colour/icon-klarna-colour.svg"
   },
-  "src/icons/payments/colour/icon-paypal.svg": {
-    "file": "icon-paypal.svg",
-    "src": "src/icons/payments/colour/icon-paypal.svg"
+  "src/icons/payments/colour/icon-maestro-colour.svg": {
+    "file": "icon-maestro-colour.svg",
+    "src": "src/icons/payments/colour/icon-maestro-colour.svg"
   },
-  "src/icons/payments/colour/icon-venmo.svg": {
-    "file": "icon-venmo.svg",
-    "src": "src/icons/payments/colour/icon-venmo.svg"
+  "src/icons/payments/colour/icon-mastercard-colour.svg": {
+    "file": "icon-mastercard-colour.svg",
+    "src": "src/icons/payments/colour/icon-mastercard-colour.svg"
   },
-  "src/icons/payments/colour/icon-visa.svg": {
-    "file": "icon-visa.svg",
-    "src": "src/icons/payments/colour/icon-visa.svg"
+  "src/icons/payments/colour/icon-paypal-colour.svg": {
+    "file": "icon-paypal-colour.svg",
+    "src": "src/icons/payments/colour/icon-paypal-colour.svg"
   },
-  "src/icons/payments/white/icon-applepay.svg": {
-    "file": "icon-applepay2.svg",
-    "src": "src/icons/payments/white/icon-applepay.svg"
+  "src/icons/payments/colour/icon-venmo-colour.svg": {
+    "file": "icon-venmo-colour.svg",
+    "src": "src/icons/payments/colour/icon-venmo-colour.svg"
   },
-  "src/icons/payments/white/icon-cardpay.svg": {
-    "file": "icon-cardpay.svg",
-    "src": "src/icons/payments/white/icon-cardpay.svg"
+  "src/icons/payments/colour/icon-visa-colour.svg": {
+    "file": "icon-visa-colour.svg",
+    "src": "src/icons/payments/colour/icon-visa-colour.svg"
   },
-  "src/icons/payments/white/icon-clearpay.svg": {
-    "file": "icon-clearpay2.svg",
-    "src": "src/icons/payments/white/icon-clearpay.svg"
+  "src/icons/payments/white/icon-amex-white.svg": {
+    "file": "icon-amex-white.svg",
+    "src": "src/icons/payments/white/icon-amex-white.svg"
   },
-  "src/icons/payments/white/icon-express.svg": {
-    "file": "icon-express2.svg",
-    "src": "src/icons/payments/white/icon-express.svg"
+  "src/icons/payments/white/icon-applepay-white.svg": {
+    "file": "icon-applepay-white.svg",
+    "src": "src/icons/payments/white/icon-applepay-white.svg"
   },
-  "src/icons/payments/white/icon-google.svg": {
-    "file": "icon-google2.svg",
-    "src": "src/icons/payments/white/icon-google.svg"
+  "src/icons/payments/white/icon-clearpay-white.svg": {
+    "file": "icon-clearpay-white.svg",
+    "src": "src/icons/payments/white/icon-clearpay-white.svg"
   },
-  "src/icons/payments/white/icon-klarna.svg": {
-    "file": "icon-klarna2.svg",
-    "src": "src/icons/payments/white/icon-klarna.svg"
+  "src/icons/payments/white/icon-diners-white.svg": {
+    "file": "icon-diners-white.svg",
+    "src": "src/icons/payments/white/icon-diners-white.svg"
   },
-  "src/icons/payments/white/icon-maestro.svg": {
-    "file": "icon-maestro2.svg",
-    "src": "src/icons/payments/white/icon-maestro.svg"
+  "src/icons/payments/white/icon-discover-white.svg": {
+    "file": "icon-discover-white.svg",
+    "src": "src/icons/payments/white/icon-discover-white.svg"
   },
-  "src/icons/payments/white/icon-mastercard.svg": {
-    "file": "icon-mastercard2.svg",
-    "src": "src/icons/payments/white/icon-mastercard.svg"
+  "src/icons/payments/white/icon-googlepay-white.svg": {
+    "file": "icon-googlepay-white.svg",
+    "src": "src/icons/payments/white/icon-googlepay-white.svg"
   },
-  "src/icons/payments/white/icon-paypal.svg": {
-    "file": "icon-paypal2.svg",
-    "src": "src/icons/payments/white/icon-paypal.svg"
+  "src/icons/payments/white/icon-jcb-white.svg": {
+    "file": "icon-jcb-white.svg",
+    "src": "src/icons/payments/white/icon-jcb-white.svg"
   },
-  "src/icons/payments/white/icon-venmo.svg": {
-    "file": "icon-venmo2.svg",
-    "src": "src/icons/payments/white/icon-venmo.svg"
+  "src/icons/payments/white/icon-klarna-white.svg": {
+    "file": "icon-klarna-white.svg",
+    "src": "src/icons/payments/white/icon-klarna-white.svg"
   },
-  "src/icons/payments/white/icon-visa.svg": {
-    "file": "icon-visa2.svg",
-    "src": "src/icons/payments/white/icon-visa.svg"
+  "src/icons/payments/white/icon-maestro-white.svg": {
+    "file": "icon-maestro-white.svg",
+    "src": "src/icons/payments/white/icon-maestro-white.svg"
+  },
+  "src/icons/payments/white/icon-mastercard-white.svg": {
+    "file": "icon-mastercard-white.svg",
+    "src": "src/icons/payments/white/icon-mastercard-white.svg"
+  },
+  "src/icons/payments/white/icon-paypal-white.svg": {
+    "file": "icon-paypal-white.svg",
+    "src": "src/icons/payments/white/icon-paypal-white.svg"
+  },
+  "src/icons/payments/white/icon-venmo-white.svg": {
+    "file": "icon-venmo-white.svg",
+    "src": "src/icons/payments/white/icon-venmo-white.svg"
+  },
+  "src/icons/payments/white/icon-visa-white.svg": {
+    "file": "icon-visa-white.svg",
+    "src": "src/icons/payments/white/icon-visa-white.svg"
   },
   "src/icons/rvvup-payment.svg": {
     "file": "rvvup-payment.svg",
