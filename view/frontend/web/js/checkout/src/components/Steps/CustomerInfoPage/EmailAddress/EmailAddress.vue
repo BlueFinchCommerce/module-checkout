@@ -99,11 +99,6 @@
           </TextInput>
         </div>
 
-        <ErrorMessage
-          v-if="loginErrorMessage"
-          :message="loginErrorMessage"
-        />
-
         <div id="password_help_text">
           <TextField
             class="field__help-text"
@@ -129,6 +124,13 @@
           class="actions"
         >
           <Recaptcha id="customerLogin" />
+
+          <ErrorMessage
+            v-if="loginErrorMessage"
+            :message="loginErrorMessage"
+            :attached="false"
+          />
+
           <MyButton
             type="submit"
             class="sign-in-btn"
