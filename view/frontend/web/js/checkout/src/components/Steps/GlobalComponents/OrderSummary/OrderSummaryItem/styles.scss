@@ -80,6 +80,7 @@
   .product-option {
     line-height: 1;
     margin: var(--indent__xs) 0 var(--indent__s);
+    color: var(--font__color-light);
   }
 
   .gift-message {
@@ -90,9 +91,9 @@
       p {
         font-size: var(--font__s);
         margin: 0;
+        color: var(--font__color-light);
         &:first-child {
           margin-right: var(--indent__xs);
-          color: var(--color__primary-grey2);
         }
       }
     }

@@ -281,8 +281,8 @@
 
   .text-input.field-valid {
     input {
-      border-color: var(--valid-field-border, var(--color__primary-dark-blue));
-      border-width: var(--base__border-weight-active);
+      border-color: var(--valid-field-border, var(--input__border-color-active));
+      border-width: var(--input__border-weight-active);
       outline: none;
     }
   }
@@ -296,12 +296,12 @@
   //override valid class if custom validation shows error
   .custom-validation-error.field-valid {
     input {
-      border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+      border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
       outline: none;
 
       &:focus,
       &:hover {
-        border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+        border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
         outline: none;
       }
     }
@@ -409,7 +409,7 @@
       }
 
       &.selected {
-        border: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
+        border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
       }
     }
 

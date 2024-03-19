@@ -13,12 +13,18 @@
   border-radius: var(--slide-up__border-radius);
   border-top: var(--slide-up-border, var(--indent__m) solid var(--slide-up-background-color, none));
   bottom: 0;
-  max-height: var(--slide-up-container-height, 85vh);
+  max-height: var(--slide-up-container-height, 50vh);
   height: var(--slide-up-container-height, auto);
   overflow: auto;
   position: fixed;
   width: 100%;
   z-index: 160; // High to be in front of Google Pay
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .slideup-header {

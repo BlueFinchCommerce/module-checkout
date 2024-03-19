@@ -83,7 +83,7 @@ export default defineStore('cartStore', {
       state.cart.items
     ),
     getCartItemsQty: (state) => (
-      Object.values(state.cartItems).reduce((prev, curr) => {
+      state.cart.items.reduce((prev, curr) => {
         const totalQuantity = prev + curr.quantity;
         return totalQuantity;
       }, 0)

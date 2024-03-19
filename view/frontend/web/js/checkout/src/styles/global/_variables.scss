@@ -84,7 +84,6 @@
 
     --font__color-light: var(--color__primary-blue);
     --font__color: var(--color__primary-dark-blue);
-    --font__color-dark: var(--color__primary-navy);
 
     //
     // Header
@@ -117,6 +116,7 @@
     // Order Summary Desktop
     //  ---------------------------------------------
     --summary__background-color: var(--color__primary-white);
+    --summary__border-radius--desktop: var(--base__border-radius-large);
 
 
     //
@@ -310,17 +310,17 @@
     --input__font-weight: var(--font-weight__semibold);
     --input__background-color: var(--color__primary-white);
     --input__border-color: var(--color__primary-grey2);
-    --input__border-color-hover: var(--color__primary-grey2); // Remove
+    --input__border-color-hover: var(--color__primary-grey2);
     --input__border-color-focus: var(--color__primary-grey2);
     --input__border-color-active: var(--base__border-color-active);
     --input__border-color-error: var(--color__semantic-error);
     --input__border-radius: var(--base__border-radius);
     --input__border-weight: var(--base__border-weight);
-    --input__border-weight-hover: 1px; // Remove
+    --input__border-weight-hover: var(--base__border-weight);
     --input__border-weight-focus: var(--base__border-weight-active);
     --input__border-weight-active: var(--base__border-weight-active);
     --input__height: 55px;
-    --input__label-font-color: var(--font__color-dark);
+    --input__label-font-color: var(--color__primary-navy);
     --input__label-padding: var(--indent__s);
     --input__placeholder-font-color: var(--color__primary-grey1);
     --input__placeholder-font-weight: var(--font-weight__medium);
