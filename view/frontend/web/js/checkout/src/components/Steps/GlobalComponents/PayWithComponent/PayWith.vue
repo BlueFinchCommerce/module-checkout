@@ -29,13 +29,15 @@
           >
             <img
               v-if="!paymentType.icon.includes('klarna_account')"
-              :src="paymentType.icon.includes('klarna') ? klarnaIcon
-                : paymentType.icon.includes('clearpay') ? clearPayIcon
-                  : paymentType.icon.includes('paypal') ? paypalIcon
-                    : paymentType.icon.includes('amex') ? amexIcon
-                      : paymentType.icon.includes('mc') ? mastercardIcon
-                        : paymentType.icon.includes('visa') ? visaIcon
-                          : paymentType.icon"
+              :src="paymentType.icon.includes('klarna') ? KlarnaIcon
+                : paymentType.icon.includes('clearpay') ? ClearpayIcon
+                  : paymentType.icon.includes('paypal') ? PayPalIcon
+                    : paymentType.icon.includes('amex') ? ExpressPayIcon
+                      : paymentType.icon.includes('mc') ? MastercardPayIcon
+                        : paymentType.icon.includes('visa') ? VisaPayIcon
+                          : paymentType.icon.includes('google') ? GooglePayIcon
+                            : paymentType.icon.includes('apple') ? ApplePayIcon
+                              : paymentType.icon"
               :alt="paymentType.name"
               :class="generateClass(paymentType.name)"
             >
@@ -63,18 +65,18 @@
             </li>
           </template>
           <template
-            v-else-if="paymentType.code !== 'braintree_cc_vault'
-              && paymentType.code !== 'braintree_ach_direct_debit' && paymentType.code !== 'braintree_local_payment'"
+            v-else-if="paymentType.code !== 'braintree_cc_vault' && paymentType.code !== 'braintree_ach_direct_debit'
+              && paymentType.code !== 'braintree_local_payment' && paymentType.code !== 'braintree_paypal_vault'"
           >
             <li
               v-if="paymentType.code.includes('braintree')"
               class="pay-with__content"
             >
               <img
-                :src="paymentType.code === 'braintree_applepay' ? applePayIcon
-                  : paymentType.code === 'braintree_googlepay' ? googlePayIcon
-                    : paymentType.code === 'braintree_venmo' ? venmoPayIcon
-                      : paymentType.code === 'braintree_paypal' ? paypalIcon
+                :src="paymentType.code === 'braintree_applepay' ? ApplePayIcon
+                  : paymentType.code === 'braintree_googlepay' ? GooglePayIcon
+                    : paymentType.code === 'braintree_venmo' ? VenmoPayIcon
+                      : paymentType.code === 'braintree_paypal' ? PayPalIcon
                         : ''"
                 :alt="paymentType.title"
                 :class="generateClass(paymentType.title)"
@@ -100,25 +102,20 @@ import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // icons
-import visa from './icons/Visa.svg';
-import mastercard from './icons/MasterCard.svg';
-import amex from './icons/AmericanExpress.svg';
-import clearPay from './icons/ClearPay.svg';
-import klarna from './icons/Klarna.svg';
-import paypal from './icons/Paypal.svg';
-import googlePay from './icons/GooglePay.svg';
-import applePay from './icons/ApplePay.svg';
-import cardPay from './icons/CardPay.svg';
-import venmoIcon from './icons/VenmoIcon.svg';
-import AE from './icons/AE.png';
-import CUP from './icons/CUP.png';
-import DI from './icons/DI.png';
-import DN from './icons/DN.png';
-import JCB from './icons/JCB.png';
-import MC from './icons/MC.png';
-import MI from './icons/MI.png';
-import PP from './icons/PP.png';
-import VI from './icons/VI.png';
+import ApplePaySvg from '@/icons/payments/colour/icon-applepay.svg';
+import GooglePaySvg from '@/icons/payments/colour/icon-google.svg';
+import ExpressPaySvg from '@/icons/payments/colour/icon-express.svg';
+import PayPalSvg from '@/icons/payments/colour/icon-paypal.svg';
+import KlarnaSvg from '@/icons/payments/colour/icon-klarna.svg';
+import MaestroPaySvg from '@/icons/payments/colour/icon-maestro.svg';
+import MastercardPaySvg from '@/icons/payments/colour/icon-mastercard.svg';
+import VisaPaySvg from '@/icons/payments/colour/icon-visa.svg';
+import ClearpaySvg from '@/icons/payments/colour/icon-clearpay.svg';
+import CardPayIcon from '@/icons/payments/colour/icon-cardpay.svg';
+import VenmoPayIcon from '@/icons/payments/colour/icon-venmo.svg';
+import DI from '@/icons/payments/colour/DI.png';
+import DN from '@/icons/payments/colour/DN.png';
+import JCB from '@/icons/payments/colour/JCB.png';
 
 export default {
   name: 'PayWith',
@@ -159,35 +156,38 @@ export default {
     ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods', 'getPaymentPriority', 'isPaymentMethodAvailable']),
-    visaIcon() {
-      return `${getStaticUrl(visa)}`;
+    ApplePayIcon() {
+      return `${getStaticUrl(ApplePaySvg)}`;
     },
-    mastercardIcon() {
-      return `${getStaticUrl(mastercard)}`;
+    GooglePayIcon() {
+      return `${getStaticUrl(GooglePaySvg)}`;
     },
-    amexIcon() {
-      return `${getStaticUrl(amex)}`;
+    ExpressPayIcon() {
+      return `${getStaticUrl(ExpressPaySvg)}`;
     },
-    clearPayIcon() {
-      return `${getStaticUrl(clearPay)}`;
+    PayPalIcon() {
+      return `${getStaticUrl(PayPalSvg)}`;
     },
-    klarnaIcon() {
-      return `${getStaticUrl(klarna)}`;
+    KlarnaIcon() {
+      return `${getStaticUrl(KlarnaSvg)}`;
     },
-    paypalIcon() {
-      return `${getStaticUrl(paypal)}`;
+    MaestroPayIcon() {
+      return `${getStaticUrl(MaestroPaySvg)}`;
     },
-    applePayIcon() {
-      return `${getStaticUrl(applePay)}`;
+    MastercardPayIcon() {
+      return `${getStaticUrl(MastercardPaySvg)}`;
     },
-    googlePayIcon() {
-      return `${getStaticUrl(googlePay)}`;
+    VisaPayIcon() {
+      return `${getStaticUrl(VisaPaySvg)}`;
     },
-    cardPayIcon() {
-      return `${getStaticUrl(cardPay)}`;
+    ClearpayIcon() {
+      return `${getStaticUrl(ClearpaySvg)}`;
     },
-    venmoPayIcon() {
-      return `${getStaticUrl(venmoIcon)}`;
+    CardPayIcon() {
+      return `${getStaticUrl(CardPayIcon)}`;
+    },
+    VenmoPayIcon() {
+      return `${getStaticUrl(VenmoPayIcon)}`;
     },
   },
   async created() {
@@ -204,9 +204,7 @@ export default {
     getCCIcon(type) {
       switch (type) {
         case 'AE':
-          return AE;
-        case 'CUP':
-          return CUP;
+          return getStaticUrl(ExpressPaySvg);
         case 'DI':
           return DI;
         case 'DN':
@@ -214,13 +212,11 @@ export default {
         case 'JCB':
           return JCB;
         case 'MC':
-          return MC;
+          return getStaticUrl(MastercardPaySvg);
         case 'MI':
-          return MI;
-        case 'PP':
-          return PP;
+          return getStaticUrl(MaestroPaySvg);
         case 'VI':
-          return VI;
+          return getStaticUrl(VisaPaySvg);
         default:
           return '';
       }
