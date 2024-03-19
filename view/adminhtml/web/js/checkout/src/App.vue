@@ -83,9 +83,12 @@ export default {
     ...mapState(useStepsStore, ['yourDetailsActive', 'shippingActive', 'paymentActive']),
   },
   async created() {
+    this.goToYouDetails();
     await this.getStoreConfig();
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
+
+    document.dispatchEvent(new Event('gene-better-checkout-loaded'));
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),

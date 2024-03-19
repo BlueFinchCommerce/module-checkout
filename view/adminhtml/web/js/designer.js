@@ -37,7 +37,6 @@ define([
 
         cacheElements: function () {
             this.designerModal = $(SELECTORS.DESIGNER_MODAL);
-            this.designerRoot = $(SELECTORS.DESIGNER_ROOT);
             this.designerValues = $(SELECTORS.DESIGNER_VALUES);
             this.designerValuesSystem = $(SELECTORS.DESIGNER_VALUES_SYSTEM);
             this.customWording = $(SELECTORS.CUSTOM_WORDING);
@@ -66,6 +65,14 @@ define([
             this.designerModal.find('.toggle').on('click', this.toggleSidebar.bind(this));
             this.designerValues.on('change', this.setSystemValue.bind(this));
             this.customWording.on('change', this.setSystemValue.bind(this));
+
+            document.addEventListener('gene-better-checkout-loaded', () => {
+                this.loadInitialLogo();
+                this.initializePixelInputs();
+                this.loadInitialCSSValues();
+                this.loadInitialWordingValues();
+                this.setupColorPickers();
+            });
 
             document.addEventListener('switchDeviceType', this.handleSwitchDeviceType.bind(this));
             document.addEventListener('switchDisplayedStep', this.handleSwitchDisplayedStep.bind(this));
@@ -115,7 +122,7 @@ define([
         },
 
         setCSSVariable: function (name, value) {
-            this.designerRoot.get(0).style.setProperty(name, value);
+            $(SELECTORS.DESIGNER_ROOT).get(0).style.setProperty(name, value);
         },
 
         handleSwitchDeviceType: function (event) {
@@ -157,11 +164,6 @@ define([
         openDesigner: function (event) {
             event.preventDefault();
             this.loadScriptIfNeeded();
-            this.loadInitialLogo();
-            this.initializePixelInputs();
-            this.loadInitialCSSValues();
-            this.loadInitialWordingValues();
-            this.setupColorPickers();
             this.designerModal.modal('openModal');
         },
 
