@@ -120,7 +120,7 @@
 }
 
 #adyen-dropin-container-new {
-  padding-top: var(--adyen-container-padding-top, var(--indent__base));
+  padding-top: var(--adyen-container-padding-top, var(--indent__s));
 
   .adyen-checkout {
     &__payment-method__name {

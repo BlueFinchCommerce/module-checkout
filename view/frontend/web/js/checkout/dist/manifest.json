@@ -36,7 +36,6 @@
   "main.js": {
     "assets": [
       "logo.svg",
-      "loader.gif",
       "lockIcon.svg",
       "icon-applepay2.svg",
       "icon-google2.svg",
@@ -49,6 +48,7 @@
       "icon-clearpay2.svg",
       "icon-cardpay.svg",
       "icon-venmo2.svg",
+      "loader.gif",
       "bin.svg",
       "promo-icon.svg",
       "gift-icon.svg",

@@ -46,7 +46,8 @@
       </div>
     </template>
     <div :class="availableMethods.length === 0 ? 'text-loading' : ''">
-      <ul class="pay-with__column">
+      <ul class="pay-with__column"
+      v-if="availableMethods.length > 0">
         <template
           v-for="(paymentType, index) in availableMethods"
           :key="index"

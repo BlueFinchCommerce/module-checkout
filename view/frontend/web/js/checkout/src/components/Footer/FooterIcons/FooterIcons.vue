@@ -29,8 +29,8 @@
         </ul>
       </div>
     </template>
-    <div :class="availableMethods.length === 0 ? 'text-loading' : ''">
-      <ul class="pay-with__column">
+    <div :class="!isAdyenAvailable && availableMethods.length === 0 ? 'text-loading' : ''">
+      <ul v-if="!isAdyenAvailable && availableMethods.length > 0">
         <template
           v-for="(paymentType, index) in availableMethods"
           :key="index"
