@@ -18,12 +18,10 @@
             v-if="item?.configurable_options"
             :item="item"
           />
-          <div class="product-item-price"
-               v-if="item.__typename !== 'GiftCardCartItem'">
-            <Price :value="item.product?.price_range?.minimum_price?.final_price?.value" />
-          </div>
-          <div class="product-item-price" v-else>
-            <Price :value="item.amount.value" />
+          <div class="product-item-price">
+            <Price v-if="item.__typename !== 'GiftCardCartItem'"
+              :value="item.product?.price_range?.minimum_price?.final_price?.value" />
+            <Price v-else :value="item.amount.value" />
           </div>
           <div class="product-item-actions">
             <QtyButton :item="item" />
