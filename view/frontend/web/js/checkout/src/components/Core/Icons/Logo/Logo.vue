@@ -1,27 +1,23 @@
 <template>
-  <Loader v-if="!logo"/>
-  <img
-    v-else
-    :src="logo"
-    :alt="alt"
-    :style="params"
-  >
+  <span :class="logo ? '' : 'text-loading'">
+      <img
+        :src="logo"
+        :alt="alt"
+        :style="params"
+      >
+  </span>
 </template>
 
 <script>
 import { mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import { computed, reactive } from 'vue';
-
 import logoSvg from '@/icons/logo.svg';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 export default {
   name: 'Logo',
-  components: {
-    Loader,
-  },
   props: {
     params: {
       type: String,
@@ -70,3 +66,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "./styles.scss";
+</style>

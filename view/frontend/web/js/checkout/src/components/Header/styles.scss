@@ -62,6 +62,10 @@
       .header-logo {
         width: var(--header-logo__width--desktop);
       }
+
+      .secure-text {
+        min-width: 100px; //prevent cls jump on desktop
+      }
     }
   }
 }
