@@ -1,7 +1,7 @@
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
-import graphQlRequest from '@/services/graphQlRequest';
+import getDummyPaymentMethods from '@/helpers/dummyContent/getDummyPaymentMethods';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
   const transformedData = paymentMethodsExtraDetails?.map((item) => ({
@@ -82,12 +82,12 @@ export default async () => {
     }
 }`;
 
-  return graphQlRequest(request)
-    .then((response) => ({
-      paymentMethodsExtraDetails:
-        transformGraphqlExtraDetails(response.data.adyenPaymentMethods.paymentMethodsExtraDetails),
-      paymentMethodsResponse: response.data.adyenPaymentMethods.paymentMethodsResponse || {
-        paymentMethods: [],
-      },
-    }));
+  // Uses dummy data for designer UI rather than graphQL request
+  return Promise.resolve({
+    paymentMethodsExtraDetails:
+      transformGraphqlExtraDetails(getDummyPaymentMethods.adyenPaymentMethods.paymentMethodsExtraDetails),
+    paymentMethodsResponse: getDummyPaymentMethods.adyenPaymentMethods.paymentMethodsResponse || {
+      paymentMethods: [],
+    },
+  });
 };

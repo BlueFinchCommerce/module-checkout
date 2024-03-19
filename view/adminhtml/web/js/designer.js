@@ -302,7 +302,9 @@ define([
         },
 
         saveImages: function () {
-            this.designerLogo.prependTo('#row_gene_better_checkout_general_gene_better_checkout_logo .value');
+            this.designerLogo.prependTo(`
+            #row_gene_better_checkout_general_checkout_designer_gene_better_checkout_logo .value
+            `);
         },
 
         saveColors: function () {
