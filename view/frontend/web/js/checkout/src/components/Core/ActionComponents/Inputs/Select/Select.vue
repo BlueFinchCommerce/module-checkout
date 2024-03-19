@@ -5,7 +5,8 @@
       <span>
         {{ required ? label + ' *' : label }}
       </span>
-      <select :id="identifier"
+      <select ref="selectElement"
+              :id="identifier"
               :name="name"
               :data-role="dataRole"
               :disabled="disabled"
@@ -99,6 +100,16 @@ export default {
         selectElement.classList.remove('selected');
       }
     },
+    addSelectedClassOnMount() {
+      const selectedOption = this.$refs.selectElement.options[this.$refs.selectElement.selectedIndex];
+
+      if (selectedOption.value !== '') {
+        this.$refs.selectElement.classList.add('selected');
+      }
+    },
+  },
+  mounted() {
+    this.addSelectedClassOnMount();
   },
   setup(props) {
     const reactiveProps = reactive(props);

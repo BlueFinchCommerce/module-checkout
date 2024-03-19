@@ -57,6 +57,7 @@
         <div
           class="address-block__edit"
           tabindex="0"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
         >

@@ -3,7 +3,8 @@
     <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
       <span
         v-if="label"
-        :class="modelValue.length > 0 ? 'text-input-has-value' : 'text-input-no-value'"
+        :class="(modelValue.length > 0 || isInputActive) ? 'text-input-has-value'
+        : 'text-input-no-value'"
       >
         {{ required ? label + ' *' : label }}
       </span>
@@ -113,6 +114,7 @@ export default {
     return {
       inputVal: '',
       validationErrorMessage: '',
+      isInputActive: false,
     };
   },
   computed: {
@@ -140,6 +142,8 @@ export default {
       }
     },
     moveIntoViewport(event) {
+      this.isInputActive = true;
+
       const breakpoint = parseInt(breakpoints.screenM, 10);
 
       if (window.innerWidth > breakpoint) {

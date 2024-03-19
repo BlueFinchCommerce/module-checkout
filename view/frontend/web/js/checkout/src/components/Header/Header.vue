@@ -17,11 +17,9 @@
           stroke="white"
           class="secure-logo"
         />
-        <div :class="headerText ? '' : 'text-loading'">
-          <h1 class="secure-text">
-            {{ headerText }}
-          </h1>
-        </div>
+        <h1 class="secure-text">
+          {{ headerText }}
+        </h1>
       </div>
     </div>
   </header>

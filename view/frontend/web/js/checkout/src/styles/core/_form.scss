@@ -166,7 +166,6 @@
   .text-input,
   .select-input {
     margin-bottom: var(--text-input-margin-bottom, var(--indent__s));
-
     span {
       background: var(--input-span__background-colour, var(--input__background-color));
       font-size: var(--input-span-font-size, var(--font__xs));
@@ -182,6 +181,12 @@
       z-index: 1;
       border-radius: var(--base__border-radius);
       color: var(--input__label-font-color);
+    }
+
+    button {
+      span {
+        background: transparent;
+      }
     }
   }
 
@@ -205,6 +210,11 @@
       &:active {
         outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
         box-shadow: none;
+
+        &::placeholder {
+          display: none;
+          font-size: 0;
+        }
       }
 
       &:hover {
@@ -526,6 +536,12 @@
     .text-input {
       span {
         background-color: var(--input-span__background-colour, var(--input__background-color));
+      }
+
+      button {
+        span {
+          background: transparent;
+        }
       }
     }
   }
