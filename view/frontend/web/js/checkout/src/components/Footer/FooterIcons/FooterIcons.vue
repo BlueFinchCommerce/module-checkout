@@ -82,26 +82,20 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Icons
-import ApplePaySvg from './icons/icon-apple.svg';
-import GooglePaySvg from './icons/icon-google.svg';
-import ExpressPaySvg from './icons/icon-express.svg';
-import PayPalSvg from './icons/icon-paypal.svg';
-import KlarnaSvg from './icons/icon-klarna.svg';
-import MaestroPaySvg from './icons/icon-maestro.svg';
-import MastercardPaySvg from './icons/icon-mastercard.svg';
-import VisaPaySvg from './icons/icon-visa.svg';
-import ClearpaySvg from './icons/icon-clearpay.svg';
-import CardPayIcon from './icons/icon-cardpay.svg';
-import VenmoPayIcon from './icons/icon-venmo.svg';
-import AE from './icons/AE.png';
-import CUP from './icons/CUP.png';
-import DI from './icons/DI.png';
-import DN from './icons/DN.png';
-import JCB from './icons/JCB.png';
-import MC from './icons/MC.png';
-import MI from './icons/MI.png';
-import PP from './icons/PP.png';
-import VI from './icons/VI.png';
+import ApplePaySvg from '@/icons/payments/white/icon-applepay.svg';
+import GooglePaySvg from '@/icons/payments/white/icon-google.svg';
+import ExpressPaySvg from '@/icons/payments/white/icon-express.svg';
+import PayPalSvg from '@/icons/payments/white/icon-paypal.svg';
+import KlarnaSvg from '@/icons/payments/white/icon-klarna.svg';
+import MaestroPaySvg from '@/icons/payments/white/icon-maestro.svg';
+import MastercardPaySvg from '@/icons/payments/white/icon-mastercard.svg';
+import VisaPaySvg from '@/icons/payments/white/icon-visa.svg';
+import ClearpaySvg from '@/icons/payments/white/icon-clearpay.svg';
+import CardPayIcon from '@/icons/payments/white/icon-cardpay.svg';
+import VenmoPayIcon from '@/icons/payments/white/icon-venmo.svg';
+import DI from '@/icons/payments/white/DI.png';
+import DN from '@/icons/payments/white/DN.png';
+import JCB from '@/icons/payments/white/JCB.png';
 
 export default {
   name: 'FooterIcons',
@@ -163,9 +157,7 @@ export default {
     getCCIcon(type) {
       switch (type) {
         case 'AE':
-          return AE;
-        case 'CUP':
-          return CUP;
+          return getStaticUrl(ExpressPaySvg);
         case 'DI':
           return DI;
         case 'DN':
@@ -173,13 +165,11 @@ export default {
         case 'JCB':
           return JCB;
         case 'MC':
-          return MC;
+          return getStaticUrl(MastercardPaySvg);
         case 'MI':
-          return MI;
-        case 'PP':
-          return PP;
+          return getStaticUrl(MaestroPaySvg);
         case 'VI':
-          return VI;
+          return getStaticUrl(VisaPaySvg);
         default:
           return '';
       }
