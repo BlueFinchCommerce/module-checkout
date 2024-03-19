@@ -190,7 +190,7 @@
         type="submit"
         primary
         :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-        :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
+        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -446,6 +446,9 @@ export default {
     },
     passSelectedItemId(value) {
       this.savedAddressID = value;
+      if (value !== null) {
+        this.buttonEnabled = true;
+      }
     },
     selectedSavedAddress(value) {
       this.isSavedAddressSelected = value;

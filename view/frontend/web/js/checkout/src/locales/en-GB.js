@@ -60,7 +60,7 @@ export default {
     selectPlaceholder: 'Please select your country',
     showPassLabel: 'Show or hide password',
     phoneField: {
-      infoMessage: 'For delivery questions',
+      infoMessage: 'We will use this for delivery questions',
       placeholder: 'Enter your phone number',
       label: 'Phone number',
     },
@@ -70,7 +70,7 @@ export default {
       span: 'Email',
     },
     passwordField: {
-      placeholder: 'Enter you password',
+      placeholder: 'Enter your password',
       label: 'Your Password',
     },
     firstName: {

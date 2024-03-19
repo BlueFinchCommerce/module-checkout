@@ -55,7 +55,7 @@
       margin-bottom: var(--shipping-methods-margin-bottom, 0);
 
       .shipping-method__label {
-        margin-bottom: var(--indent__base);
+        margin-bottom: var(--indent__m);
         display: flex;
         align-items: var(--shipping-methods-align-items, flex-start);
         list-style: none;
