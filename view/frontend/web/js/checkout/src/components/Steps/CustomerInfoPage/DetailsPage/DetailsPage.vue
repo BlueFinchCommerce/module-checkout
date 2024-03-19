@@ -164,6 +164,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
           tabindex="0"
