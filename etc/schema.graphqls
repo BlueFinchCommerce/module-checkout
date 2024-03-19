@@ -36,6 +36,7 @@ type StoreConfig {
 
     braintree_environment: String @doc(description: "Braintree environment.")
     braintree_merchant_account_id: String @doc(description: "Braintree Merchant Account ID.")
+    braintree_cc_types: String @doc(description: "Braintree cc types.")
     braintree_cc_vault_active: String @doc(description: "Braintree cc vault status.")
     braintree_cc_vault_cvv: Boolean @doc(description: "Braintree cc vault CVV re-verification enabled status.")
     braintree_send_line_items: Boolean @doc(description: "Does Braintree PayPal require the order line items?")
