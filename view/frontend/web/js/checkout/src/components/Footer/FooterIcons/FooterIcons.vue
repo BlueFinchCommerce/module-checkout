@@ -48,8 +48,8 @@
             </li>
           </template>
           <template
-            v-else-if="paymentType.code !== 'braintree_cc_vault'
-              && paymentType.code !== 'braintree_ach_direct_debit' && paymentType.code !== 'braintree_local_payment'"
+            v-else-if="paymentType.code !== 'braintree_cc_vault' && paymentType.code !== 'braintree_ach_direct_debit'
+              && paymentType.code !== 'braintree_local_payment' && paymentType.code !== 'braintree_paypal_vault'"
           >
             <li
               v-if="paymentType.code.includes('braintree')"
