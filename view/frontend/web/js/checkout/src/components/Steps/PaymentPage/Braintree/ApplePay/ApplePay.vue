@@ -65,10 +65,7 @@ export default {
 
   async created() {
     // If the browser doesn't support Apple Pay then return early.
-    if (window.ApplePaySession && window.ApplePaySession.canMakePayments) {
-      this.applePayAvailable = true;
-      this.applePayLoaded = false;
-    } else {
+    if (!window.ApplePaySession || !window.ApplePaySession.canMakePayments) {
       return;
     }
 
@@ -87,6 +84,9 @@ export default {
       this.applePayLoaded = true;
       return; // Early return if Braintree Apple Pay isn't enabled.
     }
+
+    this.applePayAvailable = true;
+    this.applePayLoaded = false;
 
     await this.createClientToken();
 

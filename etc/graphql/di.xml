@@ -45,6 +45,8 @@
                 <item name="braintree_environment" xsi:type="string">payment/braintree/environment</item>
                 <item name="braintree_merchant_account_id"
                       xsi:type="string">payment/braintree/merchant_account_id</item>
+                  <item name="braintree_cc_types"
+                      xsi:type="string">payment/braintree/cctypes</item>
                 <item name="braintree_cc_vault_active"
                       xsi:type="string">payment/braintree_cc_vault/active</item>
                 <item name="braintree_cc_vault_cvv"

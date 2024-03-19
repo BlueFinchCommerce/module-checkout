@@ -1,6 +1,7 @@
 <template>
   <div v-if="product" class="remove-item"
        data-cy="remove-item-button"
+       tabindex="0"
        @click="removeItem(product)"
        @keydown.enter="removeItem(product)">
     <div class="remove-item-icon">

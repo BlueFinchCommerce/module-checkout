@@ -2,6 +2,7 @@
   <div class="progress-bar-container" id="progress-bar" v-if="progressBarVisible">
     <router-link aria-label="progress-bar-link to-details-page"
                  to="/checkout"
+                 :tabindex="shippingActive ? 0 : -1"
                  class="details active"
                  @click="goToYouDetails">
       <StepCompletedIcon v-if="shippingActive"/>
@@ -15,6 +16,7 @@
     </div>
     <router-link aria-label="progress-bar-link to-shipping-page"
                  :to="shippingActive ? '/shipping' : ''"
+                 :tabindex=" paymentActive ? 0 : -1 "
                  :class="{active: shippingActive}"
                  class="shipping"
                  @click="shippingActive ? goToShipping() : null">
@@ -30,6 +32,7 @@
     <router-link aria-label="progress-bar-link to-payment-page"
                  :to="paymentActive ? '/payments' : ''"
                  :class="{active: paymentActive}"
+                 tabindex="-1"
                  class="payment"
                  @click="paymentActive ? goToPayment() : null">
       <div class="number" :class="{active: paymentActive}">
