@@ -112,13 +112,9 @@ import VisaPaySvg from '@/icons/payments/colour/icon-visa.svg';
 import ClearpaySvg from '@/icons/payments/colour/icon-clearpay.svg';
 import CardPayIcon from '@/icons/payments/colour/icon-cardpay.svg';
 import VenmoPayIcon from '@/icons/payments/colour/icon-venmo.svg';
-import AE from '@/icons/payments/colour/icon-express.svg';
 import DI from '@/icons/payments/colour/DI.png';
 import DN from '@/icons/payments/colour/DN.png';
 import JCB from '@/icons/payments/colour/JCB.png';
-import MC from '@/icons/payments/colour/icon-mastercard.svg';
-import MI from '@/icons/payments/colour/icon-maestro.svg';
-import VI from '@/icons/payments/colour/icon-visa.svg';
 
 export default {
   name: 'PayWith',
@@ -207,7 +203,7 @@ export default {
     getCCIcon(type) {
       switch (type) {
         case 'AE':
-          return getStaticUrl(AE);
+          return getStaticUrl(ExpressPaySvg);
         case 'DI':
           return DI;
         case 'DN':
@@ -215,11 +211,11 @@ export default {
         case 'JCB':
           return JCB;
         case 'MC':
-          return getStaticUrl(MC);
+          return getStaticUrl(MastercardPaySvg);
         case 'MI':
-          return getStaticUrl(MI);
+          return getStaticUrl(MaestroPaySvg);
         case 'VI':
-          return getStaticUrl(VI);
+          return getStaticUrl(VisaPaySvg);
         default:
           return '';
       }
