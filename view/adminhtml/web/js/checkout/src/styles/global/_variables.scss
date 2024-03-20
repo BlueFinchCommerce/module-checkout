@@ -310,14 +310,13 @@
     --input__background-color: var(--color__primary-white);
     --input__border-color: var(--color__primary-grey2);
     --input__border-color-hover: var(--color__primary-grey2);
-    --input__border-color-focus: var(--color__primary-grey2);
-    --input__border-color-active: var(--base__border-color-active);
+    --input__border-color-focus: var(--input__border-color);
+    --input__border-color-valid: var(--base__border-color-active);
     --input__border-color-error: var(--color__semantic-error);
     --input__border-radius: var(--base__border-radius);
     --input__border-weight: var(--base__border-weight);
     --input__border-weight-hover: var(--base__border-weight);
     --input__border-weight-focus: var(--base__border-weight-active);
-    --input__border-weight-active: var(--base__border-weight-active);
     --input__height: 55px;
     --input__label-font-color: var(--color__primary-navy);
     --input__label-padding: var(--indent__s);

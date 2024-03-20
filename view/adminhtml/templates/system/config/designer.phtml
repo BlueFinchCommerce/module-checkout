@@ -337,7 +337,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Border Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-border-color-focus" data-type="color-picker" data-css-variable="--input__border-color-focus" placeholder="#8193a6"/>
+                                                    <input id="gene-bettercheckout-input-border-color-focus" data-type="color-picker" data-css-variable="--input__border-color-valid" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-stroke-weight-focus">
@@ -347,38 +347,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-focus" type="number" placeholder="2" max="10"/>
                                                     <input class="hidden" id="gene-bettercheckout-input-stroke-weight-focus_hidden" type="text" data-css-variable="--input__border-weight-focus" placeholder="2px" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="section-config"
-                                        data-mage-init='{"collapsible": {
-                                            "animate": 200,
-                                            "collapsible": true,
-                                            "openedState": "active"
-                                        }}'
-                                    >
-                                        <div class="admin__collapsible-block">
-                                            <a data-role="title" class="subheading">
-                                                <?= $escaper->escapeHtml(__('Active Properties')) ?>
-                                            </a>
-                                            <div class="config" data-role="content">
-                                                <div class="fieldset">
-                                                    <label for="gene-bettercheckout-input-border-color-active">
-                                                        <span>
-                                                            <?= $escaper->escapeHtml(__('Input Border Active Colour')) ?>
-                                                        </span>
-                                                    </label>
-                                                    <input id="gene-bettercheckout-input-border-color-active" data-type="color-picker" data-css-variable="--input__border-color-active" placeholder="#063967"/>
-                                                </div>
-                                                <div class="fieldset">
-                                                    <label for="gene-bettercheckout-input-stroke-weight-active">
-                                                        <span>
-                                                            <?= $escaper->escapeHtml(__('Input Border Active Stroke Weight')) ?>
-                                                        </span>
-                                                    </label>
-                                                    <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-active" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-active_hidden" type="text" data-css-variable="--input__border-weight-active" placeholder="2px" />
                                                 </div>
                                             </div>
                                         </div>

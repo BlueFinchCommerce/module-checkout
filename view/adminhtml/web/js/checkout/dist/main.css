@@ -411,14 +411,14 @@ button .text-loading {
 #gene-better-checkout-root label.error input[data-v-bb500480],
 #gene-better-checkout-root label.error select[data-v-bb500480], #gene-better-checkout-root label.sanitise-error input[data-v-bb500480],
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-bb500480]:focus, #gene-better-checkout-root label.error input[data-v-bb500480]:hover,
 #gene-better-checkout-root label.error select[data-v-bb500480]:focus,
 #gene-better-checkout-root label.error select[data-v-bb500480]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-bb500480]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-bb500480]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-bb500480], #gene-better-checkout-root label.sanitise-error span[data-v-bb500480] {
   color: var(--color__semantic-error);
@@ -536,7 +536,7 @@ button .text-loading {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-bb500480]:focus-visible, #gene-better-checkout-root .text-input input[data-v-bb500480]:focus, #gene-better-checkout-root .text-input input[data-v-bb500480]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-bb500480]:hover {
@@ -586,8 +586,8 @@ button .text-loading {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-bb500480] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-bb500480] {
@@ -596,11 +596,11 @@ button .text-loading {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-bb500480],
@@ -686,7 +686,7 @@ button .text-loading {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-bb500480] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-bb500480] {
   position: absolute;
@@ -726,7 +726,7 @@ button .text-loading {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-bb500480] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-bb500480] {
   border-top-left-radius: 0;
@@ -1919,14 +1919,14 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
 #gene-better-checkout-root label.error input[data-v-09a3c202],
 #gene-better-checkout-root label.error select[data-v-09a3c202], #gene-better-checkout-root label.sanitise-error input[data-v-09a3c202],
 #gene-better-checkout-root label.sanitise-error select[data-v-09a3c202] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-09a3c202]:focus, #gene-better-checkout-root label.error input[data-v-09a3c202]:hover,
 #gene-better-checkout-root label.error select[data-v-09a3c202]:focus,
 #gene-better-checkout-root label.error select[data-v-09a3c202]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-09a3c202]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-09a3c202]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-09a3c202]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-09a3c202]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-09a3c202], #gene-better-checkout-root label.sanitise-error span[data-v-09a3c202] {
   color: var(--color__semantic-error);
@@ -2044,7 +2044,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-09a3c202]:focus-visible, #gene-better-checkout-root .text-input input[data-v-09a3c202]:focus, #gene-better-checkout-root .text-input input[data-v-09a3c202]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-09a3c202]:hover {
@@ -2094,8 +2094,8 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-09a3c202] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-09a3c202] {
@@ -2104,11 +2104,11 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-09a3c202] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-09a3c202]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-09a3c202]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-09a3c202],
@@ -2194,7 +2194,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-09a3c202] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-09a3c202] {
   position: absolute;
@@ -2234,7 +2234,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-09a3c202] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-09a3c202] {
   border-top-left-radius: 0;
@@ -2311,14 +2311,14 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
 #gene-better-checkout-root label.error input[data-v-3c631fa8],
 #gene-better-checkout-root label.error select[data-v-3c631fa8], #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8],
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-3c631fa8]:focus, #gene-better-checkout-root label.error input[data-v-3c631fa8]:hover,
 #gene-better-checkout-root label.error select[data-v-3c631fa8]:focus,
 #gene-better-checkout-root label.error select[data-v-3c631fa8]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-3c631fa8], #gene-better-checkout-root label.sanitise-error span[data-v-3c631fa8] {
   color: var(--color__semantic-error);
@@ -2436,7 +2436,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-3c631fa8]:focus-visible, #gene-better-checkout-root .text-input input[data-v-3c631fa8]:focus, #gene-better-checkout-root .text-input input[data-v-3c631fa8]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-3c631fa8]:hover {
@@ -2486,8 +2486,8 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-3c631fa8] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-3c631fa8] {
@@ -2496,11 +2496,11 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-3c631fa8],
@@ -2586,7 +2586,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-3c631fa8] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-3c631fa8] {
   position: absolute;
@@ -2626,7 +2626,7 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-3c631fa8] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-3c631fa8] {
   border-top-left-radius: 0;
@@ -3243,14 +3243,13 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   --input__background-color: var(--color__primary-white);
   --input__border-color: var(--color__primary-grey2);
   --input__border-color-hover: var(--color__primary-grey2);
-  --input__border-color-focus: var(--color__primary-grey2);
-  --input__border-color-active: var(--base__border-color-active);
+  --input__border-color-focus: var(--input__border-color);
+  --input__border-color-valid: var(--base__border-color-active);
   --input__border-color-error: var(--color__semantic-error);
   --input__border-radius: var(--base__border-radius);
   --input__border-weight: var(--base__border-weight);
   --input__border-weight-hover: var(--base__border-weight);
   --input__border-weight-focus: var(--base__border-weight-active);
-  --input__border-weight-active: var(--base__border-weight-active);
   --input__height: 55px;
   --input__label-font-color: var(--color__primary-navy);
   --input__label-padding: var(--indent__s);
@@ -3358,14 +3357,14 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
 #gene-better-checkout-root label.error input,
 #gene-better-checkout-root label.error select, #gene-better-checkout-root label.sanitise-error input,
 #gene-better-checkout-root label.sanitise-error select {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input:focus, #gene-better-checkout-root label.error input:hover,
 #gene-better-checkout-root label.error select:focus,
 #gene-better-checkout-root label.error select:hover, #gene-better-checkout-root label.sanitise-error input:focus, #gene-better-checkout-root label.sanitise-error input:hover,
 #gene-better-checkout-root label.sanitise-error select:focus,
 #gene-better-checkout-root label.sanitise-error select:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span, #gene-better-checkout-root label.sanitise-error span {
   color: var(--color__semantic-error);
@@ -3483,7 +3482,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input:focus-visible, #gene-better-checkout-root .text-input input:focus, #gene-better-checkout-root .text-input input:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input:hover {
@@ -3533,8 +3532,8 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg {
@@ -3543,11 +3542,11 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input:focus, #gene-better-checkout-root .custom-validation-error.field-valid input:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg,
@@ -3633,7 +3632,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg {
   position: absolute;
@@ -3673,7 +3672,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached {
   border-top-left-radius: 0;
@@ -4343,14 +4342,14 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-d1f67e38],
 #gene-better-checkout-root label.error select[data-v-d1f67e38], #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38],
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-d1f67e38]:focus, #gene-better-checkout-root label.error input[data-v-d1f67e38]:hover,
 #gene-better-checkout-root label.error select[data-v-d1f67e38]:focus,
 #gene-better-checkout-root label.error select[data-v-d1f67e38]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-d1f67e38], #gene-better-checkout-root label.sanitise-error span[data-v-d1f67e38] {
   color: var(--color__semantic-error);
@@ -4468,7 +4467,7 @@ body.no-scrollable {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-d1f67e38]:focus-visible, #gene-better-checkout-root .text-input input[data-v-d1f67e38]:focus, #gene-better-checkout-root .text-input input[data-v-d1f67e38]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-d1f67e38]:hover {
@@ -4518,8 +4517,8 @@ body.no-scrollable {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-d1f67e38] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-d1f67e38] {
@@ -4528,11 +4527,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-d1f67e38],
@@ -4618,7 +4617,7 @@ body.no-scrollable {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-d1f67e38] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-d1f67e38] {
   position: absolute;
@@ -4658,7 +4657,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-d1f67e38] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-d1f67e38] {
   border-top-left-radius: 0;
@@ -4735,14 +4734,14 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-4421e73e],
 #gene-better-checkout-root label.error select[data-v-4421e73e], #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e],
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-4421e73e]:focus, #gene-better-checkout-root label.error input[data-v-4421e73e]:hover,
 #gene-better-checkout-root label.error select[data-v-4421e73e]:focus,
 #gene-better-checkout-root label.error select[data-v-4421e73e]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-4421e73e], #gene-better-checkout-root label.sanitise-error span[data-v-4421e73e] {
   color: var(--color__semantic-error);
@@ -4860,7 +4859,7 @@ body.no-scrollable {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-4421e73e]:focus-visible, #gene-better-checkout-root .text-input input[data-v-4421e73e]:focus, #gene-better-checkout-root .text-input input[data-v-4421e73e]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-4421e73e]:hover {
@@ -4910,8 +4909,8 @@ body.no-scrollable {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-4421e73e] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-4421e73e] {
@@ -4920,11 +4919,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-4421e73e],
@@ -5010,7 +5009,7 @@ body.no-scrollable {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-4421e73e] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-4421e73e] {
   position: absolute;
@@ -5050,7 +5049,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-4421e73e] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-4421e73e] {
   border-top-left-radius: 0;
@@ -5155,14 +5154,14 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-72298f01],
 #gene-better-checkout-root label.error select[data-v-72298f01], #gene-better-checkout-root label.sanitise-error input[data-v-72298f01],
 #gene-better-checkout-root label.sanitise-error select[data-v-72298f01] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-72298f01]:focus, #gene-better-checkout-root label.error input[data-v-72298f01]:hover,
 #gene-better-checkout-root label.error select[data-v-72298f01]:focus,
 #gene-better-checkout-root label.error select[data-v-72298f01]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-72298f01]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-72298f01]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-72298f01]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-72298f01]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-72298f01], #gene-better-checkout-root label.sanitise-error span[data-v-72298f01] {
   color: var(--color__semantic-error);
@@ -5280,7 +5279,7 @@ body.no-scrollable {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-72298f01]:focus-visible, #gene-better-checkout-root .text-input input[data-v-72298f01]:focus, #gene-better-checkout-root .text-input input[data-v-72298f01]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-72298f01]:hover {
@@ -5330,8 +5329,8 @@ body.no-scrollable {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-72298f01] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-72298f01] {
@@ -5340,11 +5339,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-72298f01] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-72298f01]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-72298f01]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-72298f01],
@@ -5430,7 +5429,7 @@ body.no-scrollable {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-72298f01] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-72298f01] {
   position: absolute;
@@ -5470,7 +5469,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-72298f01] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-72298f01] {
   border-top-left-radius: 0;
@@ -8332,14 +8331,14 @@ a[data-v-1e58dc70] {
 #gene-better-checkout-root label.error input[data-v-b90c1728],
 #gene-better-checkout-root label.error select[data-v-b90c1728], #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728],
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728] {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error input[data-v-b90c1728]:focus, #gene-better-checkout-root label.error input[data-v-b90c1728]:hover,
 #gene-better-checkout-root label.error select[data-v-b90c1728]:focus,
 #gene-better-checkout-root label.error select[data-v-b90c1728]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728]:hover {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 }
 #gene-better-checkout-root label.error span[data-v-b90c1728], #gene-better-checkout-root label.sanitise-error span[data-v-b90c1728] {
   color: var(--color__semantic-error);
@@ -8457,7 +8456,7 @@ a[data-v-1e58dc70] {
   background-color: var(--input__background-color);
 }
 #gene-better-checkout-root .text-input input[data-v-b90c1728]:focus-visible, #gene-better-checkout-root .text-input input[data-v-b90c1728]:focus, #gene-better-checkout-root .text-input input[data-v-b90c1728]:active {
-  outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+  outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
   box-shadow: none;
 }
 #gene-better-checkout-root .text-input input[data-v-b90c1728]:hover {
@@ -8507,8 +8506,8 @@ a[data-v-1e58dc70] {
   border: none;
 }
 #gene-better-checkout-root .text-input.field-valid input[data-v-b90c1728] {
-  border-color: var(--valid-field-border, var(--input__border-color-active));
-  border-width: var(--input__border-weight-active);
+  border-color: var(--valid-field-border, var(--input__border-color-valid));
+  border-width: var(--input__border-weight-focus);
   outline: none;
 }
 #gene-better-checkout-root .text-input.field-valid + svg[data-v-b90c1728] {
@@ -8517,11 +8516,11 @@ a[data-v-1e58dc70] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728] {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728]:hover {
-  border: var(--input-error-border, var(--input__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-b90c1728],
@@ -8607,7 +8606,7 @@ a[data-v-1e58dc70] {
   display: none;
 }
 #gene-better-checkout-root .select-input select.selected[data-v-b90c1728] {
-  border: var(--input__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--input__border-color-active));
+  border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
 }
 #gene-better-checkout-root .select-input svg[data-v-b90c1728] {
   position: absolute;
@@ -8647,7 +8646,7 @@ a[data-v-1e58dc70] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-b90c1728] {
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
+  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 }
 #gene-better-checkout-root .error-message-attached[data-v-b90c1728] {
   border-top-left-radius: 0;
