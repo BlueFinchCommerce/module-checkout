@@ -19,11 +19,11 @@ class Assets implements ArgumentInterface
     /** @var string */
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
     /** @var string */
-    const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/designer_values';
+    const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
     /** @var string */
-    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/custom_wording';
+    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/custom_wording';
     /** @var string */
-    const LOGO_PATH = 'gene_better_checkout/general/gene_better_checkout_logo';
+    const LOGO_PATH = 'gene_better_checkout/general/checkout_designer/gene_better_checkout_logo';
 
     /** @var array */
     private $assetFilesByType = [];

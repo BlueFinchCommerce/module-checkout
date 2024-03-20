@@ -18,14 +18,19 @@ export default {
     removeItemButton: ' ',
     couponDiscountTitle: ' ',
     couponDiscount: {
+      title: ' ',
+      errorMessage: '',
       placeholder: ' ',
       successMessage: ' ',
     },
     giftDiscountTitle: ' ',
     giftCardDiscount: {
+      title: ' ',
+      errorMessage: ' ',
       placeholder: ' ',
       successMessage: ' ',
     },
+    crossSellsTitle: ' ',
     freeShippingAvailable: ' ',
     couponCodeTitle: ' ',
     couponCodeTitleBottom: ' ',
@@ -34,6 +39,7 @@ export default {
     promoTitle: ' ',
     rewardsTitle: ' ',
     storeCreditTitle: ' ',
+    giftWrappingTitle: ' ',
   },
   progressBar: {
     detailStepTitle: ' ',
@@ -71,6 +77,8 @@ export default {
       shipHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
+      selectedBillingAddressTitle: ' ',
+      newAddressTitle: ' ',
       addressFinder: {
         title: ' ',
         placeholder: ' ',
@@ -146,7 +154,8 @@ export default {
   addNewAddressBtn: ' ',
   saveNewAddress: ' ',
   paymentStep: {
-    title: ' ',
+    titleGuest: ' ',
+    titleStored: ' ',
     freePayment: ' ',
     payNow: ' ',
   },
@@ -155,7 +164,13 @@ export default {
   adyen: {
     applePayTotal: ' ',
     applePayNoShippingMethods: ' ',
+    paymentSuccessful: ' ',
+  },
+  paymentCard: {
     cardNumber: ' ',
+    expiry: ' ',
+    select: ' ',
+    storedPaymentLabel: ' ',
   },
   braintree: {
     payingWith: ' ',

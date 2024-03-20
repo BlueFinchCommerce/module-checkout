@@ -1,0 +1,46 @@
+<template>
+  <div class="shipping-step">
+    <SavedDeliveryAddress />
+    <div class="shipping-form">
+      <ShippingMethod />
+    </div>
+  </div>
+</template>
+<script>
+// stores
+import { mapActions, mapState } from 'pinia';
+import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStore';
+import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
+import useGtmStore from '@/stores/GtmStore';
+
+// components
+import SavedDeliveryAddress
+  from '@/components/Steps/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
+import ShippingMethod from '@/components/Steps/ShippingPage/ShippingMethod/ShippingMethod.vue';
+
+export default {
+  name: 'ShippingPage',
+  components: {
+    SavedDeliveryAddress,
+    ShippingMethod,
+  },
+  computed: {
+    ...mapState(useConfigStore, ['storeCode']),
+  },
+  async created() {
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+    }
+  },
+  methods: {
+    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useShippingMethodsStore, ['getShippingMethods']),
+    ...mapActions(useGtmStore, ['trackStep']),
+  },
+};
+</script>
+<style lang="scss" scoped>
+@import "./styles";
+</style>

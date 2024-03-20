@@ -1,0 +1,26 @@
+.fixed {
+  background-color: var(--color__primary-white);
+  position: fixed;
+  z-index: 10;
+  text-align: center;
+  left: 0;
+  width: 100%;
+  box-shadow: 0px -1px 20px rgba(0, 0, 0, 0.1);
+
+  &--top {
+    top: 0;
+
+    .fixed-content {
+      padding: var(--indent__base--desktop) var(--indent__base) var(--indent__m);
+    }
+  }
+
+  &--bottom {
+    bottom: 0;
+
+    .fixed-content {
+      padding: var(--indent__m) var(--indent__base) var(--indent__base--desktop);
+    }
+  }
+
+}

@@ -1,0 +1,125 @@
+@import '@/styles/global/_breakpoints';
+
+// --drop-down-max-width - max-width of drop-down by default is 335px
+// --drop-down-min-width - min-width of drop-down by default is 30%
+// --drop-down-max-height - max-height of drop-down by default is 60px
+// --header-border-bottom - 1px solid #D9DADB;
+
+.dropdown-button {
+  &.coupon-discount-trigger {
+    padding: var(--drop-down-trigger-padding, var(--indent__m) var(--indent__base));
+    background: var(--coupon-discount__background, var(--dropdown__background-color));
+    order: var(--coupon-discount-trigger-order, 0);
+    max-width: none;
+    justify-content: normal;
+    position: relative;
+    min-height: 60px;
+    cursor: pointer;
+
+    .coupon-discount-icon-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .coupon-discount-title {
+      color: var(--font__color);
+      flex-grow: 1;
+      font-size: var(--drop-down-trigger-title-font-size, var(--font__s));
+      font-family: var(--font-family__copy);
+      font-weight: var(--font-weight__semibold);
+      margin: 0;
+      padding: var(--drop-down-trigger-title-padding, 0 var(--indent__base) 0 var(--indent__s));
+    }
+
+    svg {
+      position: var(--drop-down-trigger-svg-position, absolute);
+      top: var(--drop-down-trigger-svg-top, var(--indent__base));
+      right: var(--drop-down-trigger-svg-right, var(--indent__base));
+    }
+  }
+}
+
+div.dropdown.coupon-dropdown {
+  background: var(--coupon-discount__background, var(--dropdown__background-color));
+  padding: var(--drop-down-padding, 0 var(--indent__base));
+  order: var(--coupon-dropdown-order, 1);
+  max-width: none;
+  border-top: 0;
+  margin: 0 auto;
+  min-height: 80px;
+
+  .field {
+    display: flex;
+    flex-wrap: wrap;
+
+    .text-input {
+      flex: 1;
+
+      input {
+        border-color: var(--input__border-color);
+      }
+    }
+
+    button {
+      max-height: var(--drop-down-max-height, 55px);
+      margin-left: var(--drop-button-down-left-margin, 0);
+      text-transform: var(--drop-button-down-text-transform, none);
+      border-radius: var(--inputs-border-radius, 0 var(--input__border-radius) var(--input__border-radius) 0);
+      padding: var(--drop-button-padding, 12px);
+      margin-top: 0;
+      width: initial;
+    }
+
+    .error,
+    .success {
+      width: 100%;
+    }
+  }
+}
+
+
+
+//Styles for StoryBook
+#root {
+  .dropdown-button {
+    &.coupon-discount-trigger {
+      max-width: var(--drop-down-max-width, 335px);
+
+      svg {
+        top: auto;
+      }
+    }
+  }
+
+  div.dropdown.coupon-dropdown {
+    max-width: var(--drop-down-max-width, 335px);
+
+    button {
+      max-height: var(--drop-down-max-height, 60px);
+    }
+  }
+}
+
+//Styles for desktop
+@mixin largeWidth() {
+  .dropdown-button {
+    &.coupon-discount-trigger {
+      order: var(--coupon-discount-trigger-order, 3);
+    }
+  }
+
+  div.dropdown.coupon-dropdown {
+    order: var(--coupon-discount-dropdown-order, 4);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

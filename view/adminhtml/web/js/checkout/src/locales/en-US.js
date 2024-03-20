@@ -11,7 +11,7 @@ export default {
     applyBtn: 'Apply',
     removeBtn: 'Remove',
     modalHeader: 'Order Summary',
-    mobileDiscountText: 'Or add a discount code',
+    mobileDiscountText: 'Add gift card or promo code',
     backBtn: 'Back',
     grandTotalTitle: 'Total to Pay',
     inclTaxTitle: 'Tax',
@@ -24,14 +24,19 @@ export default {
     plusOneItem: 'plus one item',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
     },
+    crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Good news: your order will be delivered for Free.',
     couponCodeTitle: 'For another',
     couponCodeTitleBottom: 'you can get a',
@@ -40,12 +45,13 @@ export default {
       placeholder: 'Enter promotional code',
     },
     addToCart: 'Add to Basket',
-    promoTitle: 'Often bought together',
+    promoTitle: 'Complete your order with',
     rewardsTitle: 'Reward Points',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
-    detailStepTitle: 'Your details',
+    detailStepTitle: 'Details',
     shippingStepTitle: 'Shipping',
     paymentStepTitle: 'Payment',
   },
@@ -64,7 +70,7 @@ export default {
       span: 'Email',
     },
     passwordField: {
-      placeholder: 'Password',
+      placeholder: 'Enter you password',
       label: 'Your Password',
     },
     firstName: {
@@ -78,10 +84,12 @@ export default {
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
       title: 'Where should we deliver it to?',
-      savedAddressesTitle: 'Select your saved {addressType} address',
+      savedAddressesTitle: 'Select a saved {addressType} address',
       shipHere: 'Ship here',
       deliveryAddressTitle: 'Delivery Address',
-      billingAddressTitle: 'Billing Address',
+      billingAddressTitle: 'Select a billing address',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',
@@ -102,15 +110,15 @@ export default {
         },
         countryField: {
           label: 'Country',
-          placeholder: 'County',
+          placeholder: 'Country',
         },
         postCodeField: {
           label: 'Postcode',
           placeholder: 'Postcode',
         },
         regionField: {
-          label: 'County',
-          placeholder: 'County',
+          label: 'State',
+          placeholder: 'State',
         },
       },
     },
@@ -119,7 +127,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
-    sanitiseError: 'Invalid character entered.',
+    sanitiseError: 'Invalid character entered',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',
     emailErrorMessage: 'Please enter a valid email address',
@@ -175,7 +183,9 @@ export default {
   addNewAddressBtn: '+ Add new address',
   saveNewAddress: 'Save in address book',
   paymentStep: {
-    title: 'Select a payment method',
+    titleGuest: 'Select a payment method',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     payNow: 'Pay Now',
     storedPayments: 'Your Saved Payments',
     creditDebitCard: 'Credit or debit card',
@@ -185,10 +195,13 @@ export default {
   adyen: {
     applePayTotal: 'Grand Total',
     applePayNoShippingMethods: 'There are no shipping methods available for you right now. Please try again or use an alternative payment method.',
+    paymentSuccessful: 'Payment Successful',
+  },
+  paymentCard: {
     cardNumber: 'Card Number',
     expiry: 'Expiry',
+    select: 'Select',
     storedPaymentLabel: '{name} Stored card ends in {lastFour}',
-    paymentSuccessful: 'Payment Successful',
   },
   braintree: {
     payingWith: 'Paying with {paymentTitle}',

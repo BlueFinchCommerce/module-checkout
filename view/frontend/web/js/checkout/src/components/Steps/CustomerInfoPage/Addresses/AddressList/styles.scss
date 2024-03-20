@@ -7,7 +7,7 @@
   .delivery-section {
     .divider-line {
       border-bottom: var(--divider__border);
-      width: 75%;
+      flex-grow: 1;
       margin-left: var(--indent__base);
       display: var(--divider-line-display, block);
     }

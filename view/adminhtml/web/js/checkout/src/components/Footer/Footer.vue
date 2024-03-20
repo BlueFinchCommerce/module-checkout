@@ -15,9 +15,9 @@
 <script>
 import { reactive, computed } from 'vue';
 import { mapState } from 'pinia';
-import TextField from '@/components/Core/TextField/TextField.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import FooterIcons from '@/components/Footer/FooterIcons/FooterIcons.vue';
-import useConfigStore from '@/stores/ConfigStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 export default {
   name: 'AppFooter',
