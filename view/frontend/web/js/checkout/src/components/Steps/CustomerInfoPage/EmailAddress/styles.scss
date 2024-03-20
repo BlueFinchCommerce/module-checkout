@@ -7,7 +7,7 @@
 
     &-line {
       border-bottom: var(--divider__border);
-      width: 100%;
+      flex-grow: 1;
     }
 
     p {
@@ -142,7 +142,7 @@
       font-weight: var(--button__link-font-weight);
       color: var(---button__link-font-color);
       text-decoration: var(--button__link-text-decoration);
-      
+
       &:hover,
       &:focus,
       &:focus-visible {

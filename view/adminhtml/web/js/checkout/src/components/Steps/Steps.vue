@@ -1,6 +1,5 @@
 <template>
   <div class="root">
-    <ProgressBar />
     <div class="steps-container">
       <div class="container">
         <div class="is-hidden-mobile summary">
@@ -19,14 +18,12 @@
 </template>
 <script>
 // components
-import ProgressBar from '@/components/Steps/ProgressBar/ProgressBar.vue';
 import OrderSummaryDesktop from
-  '@/components/Steps/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
+  '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
 
 export default {
   name: 'AppSteps',
   components: {
-    ProgressBar,
     OrderSummaryDesktop,
   },
 };

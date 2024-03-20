@@ -62,7 +62,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
-                                        <label for="gene_better_checkout_general_gene_better_checkout_logo">
+                                        <label for="gene_better_checkout_general_checkout_designer_gene_better_checkout_logo">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Logo')) ?>
                                             </span>
@@ -85,7 +85,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Header Background Colour')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-header-color" data-type="color-picker" data-css-variable="--header-background-color" placeholder="#2b2b2b" />
+                                        <input id="gene-bettercheckout-header-color" data-type="color-picker" data-css-variable="--header__background-color" placeholder="#063967" />
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Main Background Colour (Small Screens - Mobile & Tablet Screens)')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-page-background-color-mobile" data-type="color-picker" data-css-variable="--page-background__color-mobile" placeholder="#ffffff" />
+                                        <input id="gene-bettercheckout-page-background-color-mobile" data-type="color-picker" data-css-variable="--page__background-color--mobile" placeholder="#ffffff" />
                                     </div>
                                     <div class="fieldset desktop-specific-field">
                                         <label for="gene-bettercheckout-page-background-color-desktop">
@@ -116,7 +116,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Main Background Colour (Large Screens - Laptop Screens & Above)')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-page-background-color-desktop" data-type="color-picker" data-css-variable="--page-background__color-desktop" placeholder="#f8f8f8" />
+                                        <input id="gene-bettercheckout-page-background-color-desktop" data-type="color-picker" data-css-variable="--page__background-color--desktop" placeholder="#f5f9fe" />
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Steps Background Colour (Large Screens - Laptop Screens & Above)')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-steps-background-color-desktop" data-type="color-picker" data-css-variable="--steps-background-desktop" placeholder="#ffffff" />
+                                        <input id="gene-bettercheckout-steps-background-color-desktop" data-type="color-picker" data-css-variable="--steps__background-color--desktop" placeholder="#ffffff" />
                                     </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-steps-radius">
@@ -147,8 +147,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Steps Border Radius (Large Screens - Laptop Screens & Above)')) ?>
                                             </span>
                                         </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-steps-radius" type="number" placeholder="0" max="60"/>
-                                        <input class="hidden" id="gene-bettercheckout-steps-radius_hidden" type="text" data-css-variable="--steps-border-radius-desktop" placeholder="0px" />
+                                        <input class="pixel-input" id="gene-bettercheckout-steps-radius" type="number" placeholder="8" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-steps-radius_hidden" type="text" data-css-variable="--steps__border-radius--desktop" placeholder="8px" />
                                     </div>
                                 </div>
                             </div>
@@ -166,38 +166,20 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-heading-text-color">
+                                        <label for="gene-bettercheckout-text-color--sub">
                                             <span>
-                                                <?= $escaper->escapeHtml(__('Header Text Colour')) ?>
+                                                <?= $escaper->escapeHtml(__('Sub Text Colour')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-heading-text-color" data-type="color-picker" data-css-variable="--text__color--heading" placeholder="#2b2b2b" />
-                                    </div>
-                                    <div class="fieldset desktop-specific-field">
-                                        <label for="gene-bettercheckout-text-size--heading-desktop">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Header Text Size (Large Screens - Laptop Screens & Above)')) ?>
-                                            </span>
-                                        </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-text-size--heading-desktop" type="number" placeholder="22" />
-                                        <input class="hidden" id="gene-bettercheckout-text-size--heading-desktop_hidden" type="text" data-css-variable="--font__heading--desktop" placeholder="22px" />
-                                    </div>
-                                    <div class="fieldset mobile-specific-field">
-                                        <label for="gene-bettercheckout-text-size--heading-mobile">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Header Text Size (Small Screens - Mobile & Tablet Screens)')) ?>
-                                            </span>
-                                        </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-text-size--heading-mobile" type="number" placeholder="18" />
-                                        <input class="hidden" id="gene-bettercheckout-text-size--heading-mobile_hidden" type="text" data-css-variable="--font__heading--mobile" placeholder="18px" />
+                                        <input id="gene-bettercheckout-text-color--sub" data-type="color-picker" data-css-variable="--font__color-light" placeholder="#063967" />
                                     </div>
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-text-color">
+                                        <label for="gene-bettercheckout-text-color--base">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Base Text Colour')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-text-color" data-type="color-picker" data-css-variable="--text__color" placeholder="#2b2b2b" />
+                                        <input id="gene-bettercheckout-text-color--base" data-type="color-picker" data-css-variable="--font__color" placeholder="#042138" />
                                     </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-text-size--base">
@@ -206,7 +188,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                         <input class="pixel-input" id="gene-bettercheckout-text-size--base" type="number" placeholder="14" />
-                                        <input class="hidden" id="gene-bettercheckout-text-size--base_hidden" type="text" data-css-variable="--font__base" placeholder="14px" />
+                                        <input class="hidden" id="gene-bettercheckout-text-size--base_hidden" type="text" data-css-variable="--font__s" placeholder="14px" />
                                     </div>
                                 </div>
                             </div>
@@ -241,7 +223,15 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-text-color" data-type="color-picker" data-css-variable="--input-font-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-input-text-color" data-type="color-picker" data-css-variable="--input__font-color" placeholder="#042138"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-label-text-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Label Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-label-text-color" data-type="color-picker" data-css-variable="--input__label-font-color" placeholder="#000b14" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-placeholder-color">
@@ -249,7 +239,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Placeholder Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-placeholder-color" data-type="color-picker" data-css-variable="--input-placeholder-color" placeholder="#7a8086"/>
+                                                    <input id="gene-bettercheckout-input-placeholder-color" data-type="color-picker" data-css-variable="--input__placeholder-font-color" placeholder="#3f5d7c"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-background-color">
@@ -257,7 +247,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Background Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-background-color" data-type="color-picker" data-css-variable="--input-background-color" placeholder="#ffffff"/>
+                                                    <input id="gene-bettercheckout-input-background-color" data-type="color-picker" data-css-variable="--input__background-color" placeholder="#ffffff"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-border-color">
@@ -265,7 +255,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Border Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-border-color" data-type="color-picker" data-css-variable="--input-border-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-input-border-color" data-type="color-picker" data-css-variable="--input__border-color" placeholder="#8193a6"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-radius">
@@ -274,7 +264,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-input-radius" type="number" placeholder="4" max="30"/>
-                                                    <input class="hidden" id="gene-bettercheckout-input-radius_hidden" type="text" data-css-variable="--input-border-radius" placeholder="4px" />
+                                                    <input class="hidden" id="gene-bettercheckout-input-radius_hidden" type="text" data-css-variable="--input__border-radius" placeholder="4px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-stroke-weight">
@@ -283,7 +273,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight" type="number" placeholder="1" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight_hidden" type="text" data-css-variable="--input-border-weight" placeholder="1px" />
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight_hidden" type="text" data-css-variable="--input__border-weight" placeholder="1px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-text-size--input">
@@ -291,8 +281,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Text Size (based on base size as default)')) ?>
                                                         </span>
                                                     </label>
-                                                    <input class="pixel-input" id="gene-bettercheckout-text-size--input" type="number" placeholder="14" />
-                                                    <input class="hidden" id="gene-bettercheckout-text-size--input_hidden" type="text" data-css-variable="--input-font-size" placeholder="14px" />
+                                                    <input class="pixel-input" id="gene-bettercheckout-text-size--input" type="number" placeholder="16" />
+                                                    <input class="hidden" id="gene-bettercheckout-text-size--input_hidden" type="text" data-css-variable="--input__font-size" placeholder="16px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -315,7 +305,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Border Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-border-color-hover" data-type="color-picker" data-css-variable="--input-border-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-input-border-color-hover" data-type="color-picker" data-css-variable="--input__border-color-hover" placeholder="#8193a6"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-stroke-weight-hover">
@@ -324,7 +314,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-hover" type="number" placeholder="1" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-hover_hidden" type="text" data-css-variable="--input-border-weight-hover" placeholder="1px" />
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-hover_hidden" type="text" data-css-variable="--input__border-weight-hover" placeholder="1px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -347,7 +337,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Input Border Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-input-border-color-focus" data-type="color-picker" data-css-variable="--input-border-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-input-border-color-focus" data-type="color-picker" data-css-variable="--input__border-color-valid" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-input-stroke-weight-focus">
@@ -356,7 +346,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-focus" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-focus_hidden" type="text" data-css-variable="--input-border-weight-focus" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-focus_hidden" type="text" data-css-variable="--input__border-weight-focus" placeholder="2px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -383,7 +373,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                         <input class="pixel-input" id="gene-bettercheckout-button-radius" type="number" placeholder="4" max="30"/>
-                                        <input class="hidden" id="gene-bettercheckout-button-radius_hidden" type="text" data-css-variable="--button-border-radius" placeholder="4px" />
+                                        <input class="hidden" id="gene-bettercheckout-button-radius_hidden" type="text" data-css-variable="--button__border-radius" placeholder="4px" />
                                     </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-button-text-size">
@@ -391,8 +381,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Button Text Size')) ?>
                                             </span>
                                         </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-button-text-size" type="number" placeholder="14" />
-                                        <input class="hidden" id="gene-bettercheckout-button-text-size_hidden" type="text" data-css-variable="--button-font-medium" placeholder="14px" />
+                                        <input class="pixel-input" id="gene-bettercheckout-button-text-size" type="number" placeholder="16" />
+                                        <input class="hidden" id="gene-bettercheckout-button-text-size_hidden" type="text" data-css-variable="--button__font-medium" placeholder="16px" />
                                     </div>
                                 </div>
                             </div>
@@ -427,7 +417,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-color" data-type="color-picker" data-css-variable="--button-primary-background-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-color" data-type="color-picker" data-css-variable="--button-primary__background-color" placeholder="#000b14"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-color">
@@ -435,7 +425,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Border Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-border-color" data-type="color-picker" data-css-variable="--button-primary-border-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-border-color" data-type="color-picker" data-css-variable="--button-primary__border-color" placeholder="#000b14"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-stroke-weight">
@@ -444,7 +434,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-primary-border-weight" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-primary__border-weight" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-text-color">
@@ -452,7 +442,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-text-color" data-type="color-picker" data-css-variable="--button-primary-text-color" placeholder="#ffffff"/>
+                                                    <input id="gene-bettercheckout-primary-button-text-color" data-type="color-picker" data-css-variable="--button-primary__font-color" placeholder="#ffffff"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -475,7 +465,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-color-hover" data-type="color-picker" data-css-variable="--button-primary-background-color-hover" placeholder="#ffffff"/>
+                                                    <input id="gene-bettercheckout-primary-button-color-hover" data-type="color-picker" data-css-variable="--button-primary__background-color-hover" placeholder="#042138"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-color-hover">
@@ -483,7 +473,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Border Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-primary-border-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-primary__border-color-hover" placeholder="#042138"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-stroke-weight-hover">
@@ -492,7 +482,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight-hover" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-primary-border-weight-hover" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-primary__border-weight-hover" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-text-color-hover">
@@ -500,7 +490,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Text Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-primary-text-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-primary__font-color-hover" placeholder="#ffffff"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -523,7 +513,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-color-focus" data-type="color-picker" data-css-variable="--button-primary-background-color-focus" placeholder="#ffffff"/>
+                                                    <input id="gene-bettercheckout-primary-button-color-focus" data-type="color-picker" data-css-variable="--button-primary__background-color-focus" placeholder="#042138"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-color-focus">
@@ -531,7 +521,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Border Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-primary-border-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-primary__border-color-focus" placeholder="#042138"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-border-stroke-weight-focus">
@@ -540,7 +530,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight-focus" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-primary-border-weight-focus" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-primary__border-weight-focus" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-primary-button-text-color-focus">
@@ -548,7 +538,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Primary Button Text Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-primary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-primary-text-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-primary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-primary__font-color-focus" placeholder="#ffffff"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -586,7 +576,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-color" data-type="color-picker" data-css-variable="--button-secondary-background-color" placeholder="transparent"/>
+                                                    <input id="gene-bettercheckout-secondary-button-color" data-type="color-picker" data-css-variable="--button-secondary__background-color" placeholder="#ffffff"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-color">
@@ -594,7 +584,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Border Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-border-color" data-type="color-picker" data-css-variable="--button-secondary-border-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color" data-type="color-picker" data-css-variable="--button-secondary__border-color" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-stroke-weight">
@@ -603,7 +593,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-secondary-border-weight" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-secondary__border-weight" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-text-color">
@@ -611,7 +601,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-text-color" data-type="color-picker" data-css-variable="--button-secondary-text-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color" data-type="color-picker" data-css-variable="--button-secondary__font-color" placeholder="#063967"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -634,7 +624,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-color-hover" data-type="color-picker" data-css-variable="--button-secondary-background-color-hover" placeholder="transparent"/>
+                                                    <input id="gene-bettercheckout-secondary-button-color-hover" data-type="color-picker" data-css-variable="--button-secondary__background-color-hover" placeholder="#ccd2da"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-color-hover">
@@ -642,7 +632,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Border Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-secondary-border-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-secondary__border-color-hover" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-stroke-weight-hover">
@@ -651,7 +641,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight-hover" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-secondary-border-weight-hover" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-secondary__border-weight-hover" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-text-color-hover">
@@ -659,7 +649,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Text Hover Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-secondary-text-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-secondary__font-color-hover" placeholder="#063967"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -682,7 +672,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-color-focus" data-type="color-picker" data-css-variable="--button-secondary-background-color-focus" placeholder="transparent"/>
+                                                    <input id="gene-bettercheckout-secondary-button-color-focus" data-type="color-picker" data-css-variable="--button-secondary__background-color-focus" placeholder="#ccd2da"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-color-focus">
@@ -690,7 +680,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Border Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-secondary-border-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-secondary__border-color-focus" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-border-stroke-weight-focus">
@@ -699,7 +689,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                         </span>
                                                     </label>
                                                     <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight-focus" type="number" placeholder="2" max="10"/>
-                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-secondary-border-weight-focus" placeholder="2px" />
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-secondary__border-weight-focus" placeholder="2px" />
                                                 </div>
                                                 <div class="fieldset">
                                                     <label for="gene-bettercheckout-secondary-button-text-color-focus">
@@ -707,7 +697,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Secondary Button Text Focus Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-secondary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-secondary-text-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-secondary__font-color-focus" placeholder="#063967"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -740,21 +730,21 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </a>
                                             <div class="config" data-role="content">
                                                 <div class="fieldset">
-                                                    <label for="gene-bettercheckout-removeitem-font-colour">
+                                                    <label for="gene-bettercheckout-text-link-button-font-colour">
                                                         <span>
                                                             <?= $escaper->escapeHtml(__('Text Link Button Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-removeitem-font-colour" data-type="color-picker" data-css-variable="--button-remove-item-font-color" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-text-link-button-font-colour" data-type="color-picker" data-css-variable="--button__link-font-color" placeholder="#063967"/>
                                                 </div>
                                                 <div class="fieldset">
-                                                    <label for="gene-bettercheckout-removeitem-font-size">
+                                                    <label for="gene-bettercheckout-text-link-button-font-size">
                                                         <span>
                                                             <?= $escaper->escapeHtml(__('Text Link Button Text Size')) ?>
                                                         </span>
                                                     </label>
-                                                    <input class="pixel-input" id="gene-bettercheckout-removeitem-font-size" type="number" placeholder="12" />
-                                                    <input class="hidden" id="gene-bettercheckout-removeitem-font-size_hidden" type="text" data-css-variable="--button-remove-item-font-size" placeholder="12px" />
+                                                    <input class="pixel-input" id="gene-bettercheckout-text-link-button-font-size" type="number" placeholder="14" />
+                                                    <input class="hidden" id="gene-bettercheckout-text-link-button-font-size_hidden" type="text" data-css-variable="--button__link-font-size" placeholder="14px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -777,7 +767,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Text Link Button Hover Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-removeitem-font-colour-hover" data-type="color-picker" data-css-variable="--button-remove-item-font-color-hover" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-removeitem-font-colour-hover" data-type="color-picker" data-css-variable="--button__link-font-color-hover" placeholder="#063967"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -800,7 +790,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                             <?= $escaper->escapeHtml(__('Text Link Button Focus Text Colour')) ?>
                                                         </span>
                                                     </label>
-                                                    <input id="gene-bettercheckout-removeitem-font-colour-focus" data-type="color-picker" data-css-variable="--button-remove-item-font-color-focus" placeholder="#2b2b2b"/>
+                                                    <input id="gene-bettercheckout-removeitem-font-colour-focus" data-type="color-picker" data-css-variable="--button__link-font-color-focus" placeholder="#063967"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -842,29 +832,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                         <input id="gene-bettercheckout-ordersummary-text" data-type="checkout-wording" type="text" placeholder="Order Summary" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-config"
-                            data-mage-init='{"collapsible": {
-                                "animate": 200,
-                                "collapsible": true,
-                                "openedState": "active"
-                            }}'
-                        >
-                            <div class="admin__collapsible-block">
-                                <a data-role="title">
-                                    <?= $escaper->escapeHtml(__('Summary Price Text')) ?>
-                                </a>
-                                <div class="config" data-role="content">
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-subtotal-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Subtotal Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-subtotal-text" data-type="checkout-wording" type="text" placeholder="Subtotal" />
                                     </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-grandtotal-text">
@@ -1332,6 +1299,6 @@ $fontUrl = $assetViewModel->getFontUrl();
         </div>
     </div>
     <div class="content">
-        <div id="gene-better-checkout-root"></div>
+        <div id="gene-better-checkout-container"></div>
     </div>
 </div>

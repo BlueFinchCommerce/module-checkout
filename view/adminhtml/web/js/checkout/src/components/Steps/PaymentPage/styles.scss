@@ -3,11 +3,11 @@
 // --payment-title-border, 1px solid #D9DADB
 
 .payment-page {
-  padding: 0 var(--payment-page-mobile-padding, var(--mobile-indent__base));
+  padding: var(--indent__base--mobile) var(--payment-page-mobile-padding, var(--indent__base--mobile));
   font-family: var(--payment-page-font-family, unset);
 
   .payment-form {
-    background: var(--page-background__color-mobile);
+    background: var(--page__background-color--mobile);
     margin-top: var(--indent__base);
     min-height: var(--payment-form-min-height, 600px);
 
@@ -22,7 +22,7 @@
 
     .billing-address {
       padding: var(--indent__base);
-      background: var(--white__color);
+      background: var(--color__primary-white);
 
       .details-title-section {
         display: flex;
@@ -42,9 +42,9 @@
     padding: 0;
 
     .payment-form {
-      background: var(--payment-form-background, var(--steps-background-desktop));
-      border-radius: var(--steps-border-radius-desktop);
-      padding: var(--form-details-padding-desktop, 40px 40px 70px);
+      background: var(--payment-form-background, var(--steps__background-color--desktop));
+      border-radius: var(--steps__border-radius--desktop);
+      padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
     }
   }
 }

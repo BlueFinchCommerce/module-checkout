@@ -11,6 +11,15 @@ export default defineStore('stepsStore', {
     setData(data) {
       this.$patch(data);
     },
+    setInitialStepState() {
+      const { name } = this.$router.currentRoute.value;
+
+      this.setData({
+        yourDetailsActive: name === 'DetailsPage' || name === 'ShippingPage' || name === 'PaymentPage',
+        shippingActive: name === 'ShippingPage' || name === 'PaymentPage',
+        paymentActive: name === 'PaymentPage',
+      });
+    },
     goToYouDetails() {
       this.setData({
         yourDetailsActive: true,
@@ -41,6 +50,14 @@ export default defineStore('stepsStore', {
         paymentActive: true,
       });
       this.$router.push('/payments');
+    },
+    goToAdyenAmazonReviw() {
+      this.setData({
+        yourDetailsActive: true,
+        shippingActive: true,
+        paymentActive: true,
+      });
+      this.$router.push('/adyen-amazon-review');
     },
   },
 });

@@ -1,0 +1,188 @@
+// --button-display - display of a button default inline-block
+// --button-cursor - cursor displayed default pointer
+// --button-font-weight - font weight for bold default 600
+// --button-line-height - line height for button default 1
+// --button-border - border for a button default 0
+// --button-border-radius - border-radius for a button default 3em
+// --button-background-color - background-color for a button default #000
+// --button-primary-text-color - button primary text color #ffffff
+// --button-secondary-text-color - button secondary text color #000000
+// --button-primary-color - Primary colour for the project default #000000
+// --button-secondary-color - Color for transparent default transparent
+// --button-text-decoration - text-decoration for a button default none
+// --button-box-shadow - Box shadow for a button default rgba(0, 0, 0, 0.15) 0 0 0 1px inset
+// --button-font-small - small font size default 12px
+// --button-font-medium - medium font size default 14px
+// --button-padding-small  - small button padding default 12px
+// --button-padding-medium  - medium button padding default 16px
+// --button-padding-default - standard button padding default 20px
+// --button-padding-large - standard button padding default 24px
+
+.button {
+  font-family: var(--button-font-family);
+  font-weight: var(--button-font-weight, 600);
+  border-width: var(--button-border);
+  border-style: var(--border-style);
+  border-radius: var(--button-border-radius);
+  display: var(--button-display);
+  line-height: var(--button-line-height);
+  min-height: var(--button-height);
+  width: var(--button-width);
+  text-transform: var(--button-text-transform);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: var(--opacity-light);
+    pointer-events: none;
+  }
+
+  &--primary {
+    color: var(--button-primary-text-color);
+    background-color: var(--button-primary-background-color);
+    border-color: var(--button-primary-border-color);
+    border-width: var(--button-primary-border-weight);
+    box-shadow: var(--button-primary-border-box-shadow);
+    margin-top: var(--button-primary-margin-top, var(--indent__s));
+
+    &:hover {
+      color: var(--button-primary-text-color-hover);
+      background-color: var(--button-primary-background-color-hover);
+      border-color: var(--button-primary-border-color-hover);
+      border-width: var(--button-primary-border-weight-hover);
+    }
+
+    &:focus {
+      color: var(--button-primary-text-color-focus);
+      background-color: var(--button-primary-background-color-focus);
+      border-color: var(--button-primary-border-color-focus);
+      border-width: var(--button-primary-border-weight-focus);
+    }
+
+    &:disabled {
+      background-color: var(--button-primary-background-color-disabled, var(--button-primary-background-color));
+      border-color: var(--button-primary-border-color-disabled, var(--button-primary-background-color-disabled));
+      color: var(--button-primary-color-disabled, var(--button-primary-text-color));
+      border-width: var(--button-primary-border-weight);
+    }
+  }
+
+  &--secondary {
+    color: var(--button-secondary-text-color);
+    background-color: var(--button-secondary-background-color);
+    border-color: var(--button-secondary-border-color);
+    border-width: var(--button-secondary-border-weight);
+    box-shadow: var(--button-secondary-border-box-shadow);
+
+    &:hover {
+      color: var(--button-secondary-text-color-hover);
+      background-color: var(--button-secondary-background-color-hover);
+      border-color: var(--button-secondary-border-color-hover);
+      border-width: var(--button-secondary-border-weight-hover);
+    }
+
+    &:focus {
+      color: var(--button-secondary-text-color-focus);
+      background-color: var(--button-secondary-background-color-focus);
+      border-color: var(--button-secondary-border-color-focus);
+      border-width: var(--button-secondary-border-weight-focus);
+    }
+
+    &:disabled {
+      background-color: var(--button-secondary-background-color-disabled, var(--button-secondary-background-color));
+      border-width: var(--button-secondary-border-weight);
+    }
+  }
+
+  &--tertiary {
+    color: var(--button-tertiary-text-color);
+    background-color: var(--button-tertiary-background-color);
+    border-color: var(--button-tertiary-border-color);
+    box-shadow: var(--button-tertiary-border-box-shadow);
+
+    &:hover {
+      color: var(--button-tertiary-text-color-hover);
+      background-color: var(--button-tertiary-background-color-hover);
+      border-color: var(--button-tertiary-border-color-hover);
+    }
+
+    &:focus {
+      background-color: var(--button-tertiary-background-color-focus);
+    }
+
+    &:disabled {
+      background-color: var(--button-tertiary-background-color-disabled, var(--button-tertiary-background-color));
+    }
+  }
+
+  &--small {
+    font-size: var(--button-font-small);
+    padding: var(--button-padding-small);
+  }
+
+  &--medium {
+    font-size: var(--button-font-medium);
+    padding: var(--button-padding-medium);
+  }
+
+  &--large {
+    font-size: var(--button-font-large);
+    padding: var(--button-padding-large);
+  }
+
+  &--blank {
+    background: var(--button-background-color);
+    border: var(--button-blank-border);
+    font-weight: var(--font-weight__regular);
+    font-family: var(--font-family-copy);
+    font-size: var(--button-blank-font-size, initial);
+    color: var(--text__color);
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--link {
+    background: var(--button-link-background-color);
+    border: var(--button-link-border);
+    text-decoration: var(--button-link-text-decoration);
+    padding: var(--button-link-padding);
+
+    &:hover {
+      color: var(--button-link-text-color-hover);
+      background: var(--button-link-background-color);
+      border: var(--button-link-border);
+    }
+  }
+
+  &--checkout {
+    background: var(--button-adyen-pay-background-color);
+    border-radius: var(--button-adyen-pay-border-radius);
+    box-shadow: var(--button-primary-border-box-shadow);
+    font-size: var(--button-font-medium);
+    line-height: var(--button-line-height);
+    min-height: var(--button-height);
+    text-transform: var(--button-text-transform);
+    font-family: var(--button-font-family);
+
+    &.adyen-checkout__button--pay {
+      margin-top: 20px;
+    }
+
+    &:hover {
+      background: var(--button-adyen-pay-background-color-hover);
+      border-color: var(--button-adyen-pay-border-color-hover);
+      box-shadow: none;
+    }
+
+    &__text {
+      font-family: var(--button-font-family);
+      font-size: var(--adyen-text-button-font-size, var(--button-font-medium));
+      font-weight: var(--adyen-text-button-font-weight, var(--button-font-weight));
+    }
+
+    &.adyen-checkout__button--loading {
+      background: var(--button-adyen-pay-background-color);
+    }
+  }
+}

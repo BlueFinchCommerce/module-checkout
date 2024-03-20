@@ -7,7 +7,7 @@ export default (publicHash) => {
     .then((res) => res.json())
     .then(({
       paymentMethodNonce: nonce,
-      details: { bin },
+      details: { bin } = { bin: '' },
       message,
     }) => {
       if (!nonce) {

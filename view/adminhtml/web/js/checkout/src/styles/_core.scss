@@ -8,32 +8,44 @@
 @import "core/_button.scss";
 @import "core/_payment-method.scss";
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+}
+
+html,
+body,
+#gene-better-checkout-container,
+#gene-better-checkout-root {
+  height: 100%;
+}
+
 body {
-  &.no-scrollable {
-    overflow: hidden;
-  }
+  margin: 0;
+}
+
+p {
+  margin: 0;
 }
 
 #gene-better-checkout-root {
-  color: var(--text__color);
+  color: var(--font__color);
   display: flex;
   flex-direction: column;
-  font-family: var(--font-family-base);
-  font-size: var(--font__base);
+  font-family: var(--font-family__base);
+  font-size: var(--font__s);
   line-height: 1.6;
-  height: calc(100% - 110px);
   margin: 0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   .root {
-    background: var(--page-background__color-mobile);
+    background: var(--page__background-color--mobile);
     flex: 1;
-
-    p {
-      margin: 0;
-    }
 
     ul {
       margin-bottom: 0;
@@ -47,7 +59,7 @@ body {
 
   @mixin largeWidth() {
     .root {
-      background: var(--page-background__color-desktop);
+      background: var(--page__background-color--desktop);
     }
 
     .steps-container {
@@ -63,7 +75,7 @@ body {
         }
 
         .content {
-          margin-right: var(--column-gap);
+          margin-right: var(--indent__l);
           width: 60%;
         }
       }
@@ -101,5 +113,11 @@ body {
     .mock-full {
       @include smallWidth;
     }
+  }
+}
+
+body {
+  &.no-scrollable {
+    overflow: hidden;
   }
 }

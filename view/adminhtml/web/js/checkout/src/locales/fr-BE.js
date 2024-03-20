@@ -21,13 +21,18 @@ export default {
     removeItemButtonLabel: 'Supprimer l\'article',
     minusOneItem: 'Un article en moins',
     plusOneItem: 'Un article en plus',
+    crossSellsTitle: 'You may also like these items...',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Ajouter un code promotionnel',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Saisir le code ici',
       successMessage: 'Le code "{code}" a bien été pris en compte',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'N° SKU',
     supplierStockNumber: 'N° de stock fournisseur',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Vos coordonnées',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Expédier ici',
       info: 'Où devons-nous le livrer ?',
       billingAddressTitle: 'Adresse de facturation',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Adresse de livraison',
       addressFinder: {
         title: 'Recherche d\'adresse',
@@ -172,7 +180,9 @@ export default {
   addNewAddressBtn: 'Ajouter une autre adresse',
   saveNewAddress: 'Enregistrer dans le carnet d\'adresses',
   paymentStep: {
-    title: 'Sélectionnez un mode de paiement',
+    titleGuest: 'Sélectionnez un mode de paiement',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Aucune information de paiement n\'est requise',
     payNow: 'Payer maintenant',
     storedPayments: 'Vos paiements enregistrés',
@@ -184,8 +194,11 @@ export default {
   adyen: {
     applePayTotal: 'Montant total',
     applePayNoShippingMethods: 'Aucun mode d\'expédition n\'est actuellement disponible pour vous.  Veuillez réessayer ou utiliser un autre mode de paiement.',
+  },
+  paymentCard: {
     cardNumber: 'Numéro de carte',
     expiry: 'Date d\'expiration',
+    select: 'Select',
     storedPaymentLabel: '{name} La carte enregistrée expire le {lastFour}',
   },
   braintree: {

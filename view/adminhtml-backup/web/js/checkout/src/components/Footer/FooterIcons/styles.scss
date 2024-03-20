@@ -1,0 +1,49 @@
+@import '@/styles/global/_breakpoints';
+
+.footer-icons {
+  width: var(--footer-icons-width-mobile, auto);
+
+  ul {
+    padding: 0;
+    margin: var(--footer-icons-margin-mobile, 30px 0 35px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--footer-icons-align-items, baseline);
+    justify-content: center;
+
+    li {
+      display: block;
+      list-style: none;
+      margin: var(--footer-icon-margin-mobile, 0 10px);
+
+      .klarna-icon {
+        margin-bottom: 2px;
+      }
+    }
+  }
+}
+
+@mixin largeWidth() {
+  .footer-icons {
+    width: var(--footer-icons-width-desktop, auto);
+
+    ul {
+      margin: 0 0 0;
+
+      li {
+        margin: var(--footer-icon-margin, 0 10px);
+      }
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

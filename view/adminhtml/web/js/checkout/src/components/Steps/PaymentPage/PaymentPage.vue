@@ -3,16 +3,17 @@
     <SavedDeliveryAddress />
     <SavedShippingMethod v-if="isItemRequiringDelivery" />
     <Rewards v-if="rewardsEnabled" />
-    <StoreCredit v-if="getTotalSegment('customerbalance')" />
+    <StoreCredit />
     <div class="payment-page">
       <div class="payment-form">
+        <ProgressBar />
+        <Recaptcha id="placeOrder" />
         <template v-if="cartGrandTotal">
           <ErrorMessage
             v-if="rvvupErrorMessage !== ''"
             :message="rvvupErrorMessage"
           />
-          <AdyenDropIn />
-          <RvvupPayByBank v-if="rvvupPaymentsActive" />
+          <AdyenDropIn v-if="isAdyenAvailable" />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
               :payment-type="'checkmo'"
@@ -37,22 +38,29 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useConfigStore from '@/stores/ConfigStore';
+import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
-import usePaymentStore from '@/stores/PaymentStore';
-import useGtmStore from '@/stores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
-// components
+// Components
 import SavedDeliveryAddress from
-  '@/components/Steps/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
-import AdyenDropIn from '@/components/Adyen/DropIn/DropIn.vue';
+  '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
+import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
+import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
-import Rewards from '@/components/Core/Rewards/Rewards.vue';
-import StoreCredit from '@/components/Core/StoreCredit/StoreCredit.vue';
-import FreeMOCheckPayment from '@/components/Core/FreeMOCheckPayment/FreeMOCheckPayment.vue';
+import Rewards from '@/components/Core/ContentComponents/Rewards/Rewards.vue';
+import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.vue';
+import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
-import ErrorMessage from '@/components/Core/Messages/ErrorMessage/ErrorMessage.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
+import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
+
+// Extensions
+import paymentMethods from '@/extensions/paymentMethods';
 
 export default {
   name: 'PaymentPage',
@@ -64,15 +72,39 @@ export default {
     FreeMOCheckPayment,
     RvvupPayByBank,
     ErrorMessage,
+    BraintreeDropIn,
     StoreCredit,
+    Recaptcha,
+    ProgressBar,
+    ...paymentMethods(),
+  },
+  data() {
+    return {
+      additionalPaymentMethods: [],
+    };
   },
   computed: {
-    ...mapState(useConfigStore, ['storeCode', 'rewardsEnabled', 'rvvupPaymentsActive']),
-    ...mapState(usePaymentStore, ['rvvupErrorMessage', 'isPaymentMethodAvailable', 'getPaymentMethodTitle']),
-    ...mapState(useCartStore, ['cartGrandTotal', 'getTotalSegment', 'isItemRequiringDelivery']),
+    ...mapState(useConfigStore, [
+      'currencyCode',
+      'storeCode',
+      'rewardsEnabled',
+      'rvvupPaymentsActive',
+    ]),
+    ...mapState(useAdyenStore, ['isAdyenAvailable']),
+    ...mapState(usePaymentStore, [
+      'paymentEmitter',
+      'isPaymentMethodAvailable',
+      'getPaymentMethodTitle',
+      'rvvupErrorMessage',
+    ]),
+    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
+  },
+  async created() {
+    this.additionalPaymentMethods = Object.keys(paymentMethods());
   },
   methods: {
-    ...mapActions(useCartStore, ['getCart', 'getCartData']),
+    ...mapActions(useAdyenStore, ['getIsAdyenAvailable']),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
     setDetailsStepActive() {
