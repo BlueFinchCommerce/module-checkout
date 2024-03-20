@@ -1,18 +1,4 @@
 <template>
-  <div
-    v-if="Object.values(vaultedMethods).length"
-    class="braintree-vault__title"
-  >
-    <Payment
-      class="braintree-vault__icon"
-      fill="black"
-    />
-    <TextField
-      class="braintree-vault__header"
-      :text="paymentStepText"
-    />
-    <div class="divider-line" />
-  </div>
   <div class="braintree-vault">
     <div
       v-show="!loading && clientInstance"
@@ -94,7 +80,6 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
-import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
@@ -114,7 +99,6 @@ export default {
   components: {
     MyButton,
     Tick,
-    Payment,
     TextField,
   },
   data() {

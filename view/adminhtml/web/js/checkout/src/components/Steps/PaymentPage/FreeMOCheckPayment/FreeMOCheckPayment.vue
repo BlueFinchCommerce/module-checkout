@@ -11,11 +11,16 @@
       @click="selectPaymentMethod"
       @keydown="selectPaymentMethod"
     />
+    <Agreements
+      v-if="isMethodSelected"
+      id="freeMoPayment"
+    />
+    <PrivacyPolicy v-if="isMethodSelected" />
     <MyButton
+      v-if="isMethodSelected"
       class="free-payment-button"
       :label="$t('paymentStep.payNow')"
       primary
-      v-if="isMethodSelected"
       :disabled="buttonDisabled"
       @click="createPayment()"
     />
@@ -30,7 +35,9 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
 
 // Services
@@ -42,7 +49,12 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 export default {
   name: 'FreePayment',
-  components: { MyButton, RadioButton },
+  components: {
+    Agreements,
+    MyButton,
+    PrivacyPolicy,
+    RadioButton,
+  },
   props: {
     paymentType: String,
     title: String,
