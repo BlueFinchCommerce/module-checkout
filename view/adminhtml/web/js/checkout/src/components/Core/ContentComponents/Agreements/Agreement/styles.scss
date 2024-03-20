@@ -9,4 +9,14 @@
 .agreement-close {
   font-size: var(--font__l);
   font-weight: var(--font-weight__regular);
+  background: transparent;
+  border: none;
+  text-align: right;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: transparent;
+    border: none;
+  }
 }

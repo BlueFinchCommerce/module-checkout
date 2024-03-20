@@ -21,9 +21,9 @@
         :data-cy="dataCy ? dataCy : 'input'"
         :value="modelValue"
         @blur="onBlur"
-        @keyup="customValidation"
         @focus="(event) => { moveIntoViewport(event); onFocus() }"
         @input="$emit('update:modelValue', $event.target.value)"
+        @keyup="customValidation"
       >
       <slot name="icon" />
     </label>
@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     customValidation() {
-      const inputValue = this.modelValue;
+      const inputValue = this.$refs.input.value;
       const inputType = this.type;
       const isValid = sanitiseInputValue(inputValue, inputType);
 

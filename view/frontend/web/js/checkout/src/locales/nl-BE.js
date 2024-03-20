@@ -220,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Ik accepteer de',
     errorMessage: 'Dit is een verplicht veld',
   },

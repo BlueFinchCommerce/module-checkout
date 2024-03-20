@@ -220,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Confermo di aver letto e accetto il/la',
     errorMessage: 'Questo campo è obbligatorio',
   },
