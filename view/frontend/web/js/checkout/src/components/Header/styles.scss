@@ -20,6 +20,10 @@
       justify-content: end;
       width: var(--header-logo__width--mobile);
 
+      img {
+        width: 100%;
+      }
+
       &.logo-no-width {
         width: auto;
       }
@@ -34,11 +38,6 @@
 
       img {
         top: -2px;
-      }
-
-      .text-loading {
-        min-width: var(--secure-text-loading-width, 100px);
-        opacity: 0.5;
       }
 
       .secure-text {
@@ -62,6 +61,10 @@
 
       .header-logo {
         width: var(--header-logo__width--desktop);
+      }
+
+      .secure-text {
+        min-width: 100px; //prevent cls jump on desktop
       }
     }
   }

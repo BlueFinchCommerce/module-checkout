@@ -24,7 +24,7 @@
     font-size: var(--welcome-message-font-size, var(--font__s));
     font-weight: var(--welcome-message-font-weight, var(--font-weight__medium));
     font-family: var(--font-family__copy);
-    margin-bottom: var(--welcome-message-margin-bottom, var(--indent__s));
+    margin-bottom: var(--welcome-message-margin-bottom, var(--indent__m));
     text-align: var(--welcome-message-text-align, center);
     color: var(--font__color-light);
 
@@ -38,6 +38,12 @@
     grid-gap: var(--indent__m);
     margin: 0 0 var(--indent__s);
     width: 100%;
+  }
+
+  .guest-btn {
+    &.single {
+      margin-top: var(--indent__s);
+    }
   }
 
   .field {

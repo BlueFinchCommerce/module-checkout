@@ -1,9 +1,4 @@
-import DOMPurify from 'dompurify';
-
 export default (input, type) => {
-  // Use DOMPurify to sanitize and remove any script tags
-  const sanitizedInput = DOMPurify.sanitize(input);
-
   // Prevent users from entering emojis but still allow certain
   // special characters (such as Cyrillic or Japanese Kanji etc.)
   let allowedCharactersRegex;
@@ -20,5 +15,5 @@ export default (input, type) => {
 
   // Test if the input contains only allowed characters
   // Escape special characters to prevent script injection
-  return allowedCharactersRegex.test(sanitizedInput);
+  return allowedCharactersRegex.test(input);
 };

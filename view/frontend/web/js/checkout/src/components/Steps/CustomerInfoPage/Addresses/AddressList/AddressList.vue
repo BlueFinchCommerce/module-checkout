@@ -100,6 +100,17 @@ export default {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
+  watch: {
+    addressType: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal === 'billing') {
+          // When the addressType changes to 'billing', select the first address
+          this.selectFirstAddress();
+        }
+      },
+    },
+  },
   mounted() {
     this.$emit('showAddressBlock', false);
 
@@ -132,6 +143,12 @@ export default {
       'setAddressAsCustom',
       'createNewBillingAddress',
     ]),
+    selectFirstAddress() {
+      if (this.customer.addresses.length > 0) {
+        const firstItem = this.customer.addresses[0];
+        this.selectAddress(firstItem);
+      }
+    },
     selectAddress(address) {
       const clonedAddress = deepClone(address);
       this.setAddressToStore(clonedAddress, this.addressType);
@@ -145,9 +162,7 @@ export default {
       this.$emit('selectedSavedAddress', true);
       this.$emit('passSelectedItemId', address.id);
 
-      if (this.addressType === 'billing') {
-        this.isShippingNewCTA = true;
-      }
+      this.isShippingNewCTA = true;
     },
     newAddress() {
       this.isShippingNewCTA = false;

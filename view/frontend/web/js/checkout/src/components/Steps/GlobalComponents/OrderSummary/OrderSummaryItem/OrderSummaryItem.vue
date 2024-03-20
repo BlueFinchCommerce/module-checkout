@@ -19,7 +19,9 @@
             :item="item"
           />
           <div class="product-item-price">
-            <Price :value="item.product?.price_range?.minimum_price?.final_price?.value" />
+            <Price v-if="item.__typename !== 'GiftCardCartItem'"
+              :value="item.product?.price_range?.minimum_price?.final_price?.value" />
+            <Price v-else :value="item.amount.value" />
           </div>
           <div class="product-item-actions">
             <QtyButton :item="item" />

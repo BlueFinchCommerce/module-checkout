@@ -164,6 +164,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
           tabindex="0"
@@ -189,7 +190,7 @@
         type="submit"
         primary
         :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-        :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
+        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -445,6 +446,9 @@ export default {
     },
     passSelectedItemId(value) {
       this.savedAddressID = value;
+      if (value !== null) {
+        this.buttonEnabled = true;
+      }
     },
     selectedSavedAddress(value) {
       this.isSavedAddressSelected = value;

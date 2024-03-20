@@ -12,6 +12,7 @@ export default defineStore('brainteeStore', {
     cache: {},
     environment: 'sandbox',
     merchantAccountId: '',
+    cCTypes: [],
     clientToken: null,
     clientInstance: null,
     threeDSecureInstance: null,
@@ -71,6 +72,7 @@ export default defineStore('brainteeStore', {
       const configs = [
         'braintree_environment',
         'braintree_merchant_account_id',
+        'braintree_cc_types',
         'braintree_cc_vault_active',
         'braintree_cc_vault_cvv',
         'braintree_send_line_items',
@@ -98,6 +100,7 @@ export default defineStore('brainteeStore', {
         this.setData({
           environment: data.braintree_environment,
           merchantAccountId: data.braintree_merchant_account_id,
+          cCTypes: data.braintree_cc_types.split(','),
           vaultActive: data.braintree_cc_vault_active === '1',
           vaultVerifyCvv: data.braintree_cc_vault_cvv,
           sendCartLineItems: data.braintree_send_line_items,
@@ -108,12 +111,14 @@ export default defineStore('brainteeStore', {
           alwaysRequestThreeDS: data.braintree_3dsecure_always_request_3ds,
           google: {
             buttonColor: data.braintree_googlepay_btn_color === '0' ? 'white' : 'black',
-            cCTypes: markRaw(data.braintree_googlepay_cctypes.split(',')),
+            cCTypes: data.braintree_googlepay_cctypes ? markRaw(data.braintree_googlepay_cctypes.split(',')) : [],
             merchantId: data.braintree_googlepay_merchant_id,
             vaultActive: data.braintree_googlepay_vault_active,
           },
           lpm: {
-            allowedMethods: data.braintree_local_payment_allowed_methods.split(','),
+            allowedMethods: data.braintree_local_payment_allowed_methods
+              ? data.braintree_local_payment_allowed_methods.split(',')
+              : [],
             fallbackText: data.braintree_local_payment_fallback_button_text,
             redirectOnFail: data.braintree_local_payment_redirect_on_fail,
           },
