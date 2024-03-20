@@ -139,6 +139,7 @@ export default {
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'createNewAddress',
+      'removeAddressError',
       'setAddressAsEditing',
       'setAddressAsCustom',
       'createNewBillingAddress',
@@ -166,6 +167,9 @@ export default {
     },
     newAddress() {
       this.isShippingNewCTA = false;
+
+      // Remove postcode error from new address form if saved address has an error.
+      this.removeAddressError(this.addressType, 'Postcode');
 
       if (this.selected[this.addressType].region_id !== null) {
         this.selected[this.addressType].region_id = null;
