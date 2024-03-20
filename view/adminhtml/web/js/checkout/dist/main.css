@@ -3033,9 +3033,6 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   grid-row: span 2;
   justify-content: flex-end;
 }
-.order-summary-icon .arrow-up-icon[data-v-7d1f3868] {
-  margin-right: var(--indent__m);
-}
 .order-summary-close-button[data-v-7d1f3868] {
   background: none;
   border: none;
