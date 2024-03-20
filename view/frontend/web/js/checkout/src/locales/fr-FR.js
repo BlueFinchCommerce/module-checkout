@@ -127,6 +127,7 @@ export default {
     editShippingButtonLabel: 'Modifier votre adresse de livraison',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Caractère saisi non valide.',
     firstNameErrorMessage: 'Veuillez entrer votre prénom',
     lastNameErrorMessage: 'Veuillez entrer votre nom',

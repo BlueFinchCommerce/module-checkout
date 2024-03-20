@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Edytuj szczegóły wysyłki',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Wprowadzono nieprawidłowy znak.',
     firstNameErrorMessage: 'Wprowadź prawidłowe imię',
     lastNameErrorMessage: 'Wprowadź prawidłowe nazwisko',

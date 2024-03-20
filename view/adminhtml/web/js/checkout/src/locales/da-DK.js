@@ -131,6 +131,7 @@ export default {
   editDetailsButtonLabel: 'Ændre oplysninger',
   editShippingButtonLabel: 'Ændre forsendelsesoplysninger',
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Indtast venligst et gyldigt fornavn',
     lastNameErrorMessage: 'Indtast venligst et gyldigt efternavn',

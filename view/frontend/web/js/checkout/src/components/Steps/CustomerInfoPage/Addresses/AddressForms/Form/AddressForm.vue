@@ -18,6 +18,7 @@
             'addressForm.addressField.placeholder')"
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.label')"
+            autocomplete="address-line1"
             required
             @input="validateStreet(selected[address_type].street[0])"
             @focusout="validateStreet(selected[address_type].street[0])"
@@ -41,6 +42,7 @@
             'addressField.unrequired')"
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.unrequiredLabel')"
+            autocomplete="address-line2"
             @input="validateStreet2(selected[address_type].street[1])"
             @focusout="validateStreet2(selected[address_type].street[1])"
           />
@@ -64,6 +66,7 @@
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'cityField.label')"
             required
+            autocomplete="address-level2"
             @input="validateCity(selected[address_type].city)"
             @focusout="validateCity(selected[address_type].city)"
           />
@@ -87,6 +90,7 @@
             'regionField.placeholder')"
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'regionField.label')"
+            autocomplete="address-level1"
             :required="getRegionRequired(address_type)"
             @input="validateRegion(selected[address_type].region)"
             @focusout="validateRegion(selected[address_type].region)"
@@ -114,11 +118,11 @@
             :class="{'field-valid': postCodeValid
             && selected[address_type].postcode !== ''}"
             type="text"
-            autocomplete="postal-code"
             :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.placeholder')"
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.label')"
+            autocomplete="postal-code"
             :required="postcodeRequired(selected[address_type].country_code)"
             @input="validatePostcode(address_type, true)"
             @focusout="validatePostcode(address_type, true)"

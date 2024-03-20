@@ -110,6 +110,7 @@ export default {
     editButton: ' ',
   },
   errorMessages: {
+    addressWrongError: ' ',
     sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
