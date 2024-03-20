@@ -74,6 +74,11 @@
         @selectedSavedAddress="selectedSavedAddress"
       />
 
+      <div class="address-form-error-message">
+        <ErrorMessage v-if="addressInfoWrong"
+                      :message="$t('errorMessages.addressWrongError')"/>
+      </div>
+
       <div
         v-if="emailEntered && (!selected[address_type].id
           || (selected[address_type].id === 'custom' && selected[address_type].editing))
@@ -303,6 +308,7 @@ export default {
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
       buttonEnabled: false,
+      addressInfoWrong: false,
     };
   },
   computed: {
@@ -365,6 +371,7 @@ export default {
       'setAddressAsCustom',
       'setAddressAsEditing',
       'validateAddress',
+      'addAddressError',
       'validateNameField',
       'validatePhone',
       'validatePostcode',
@@ -384,23 +391,18 @@ export default {
     updateButtonState() {
       const addressType = this.address_type;
 
-      // If we're on shipping then names are valid in this scenario.
-      // If we're on billing then validate the name fields.
-      const areNamesValid = addressType !== 'billing'
-        || (
-          this.validateNameField(
-            addressType,
-            'First name',
-            this.selected[addressType].firstname,
-          ) && this.validateNameField(
-            addressType,
-            'Last name',
-            this.selected[addressType].firstname,
-          ) && this.validatePhone(
-            addressType,
-            this.selected[addressType].telephone,
-          )
-        );
+      const areNamesValid = this.validateNameField(
+        addressType,
+        'First name',
+        this.selected[addressType].firstname,
+      ) && this.validateNameField(
+        addressType,
+        'Last name',
+        this.selected[addressType].firstname,
+      ) && this.validatePhone(
+        addressType,
+        this.selected[addressType].telephone,
+      );
 
       const validAddress = this.validateAddress(addressType);
       const validPostcode = this.validatePostcode(this.address_type);
@@ -435,6 +437,7 @@ export default {
           this.addAddressError(this.address_type, value);
         });
         this.requiredErrorMessage = this.selected.formErrors.message[this.address_type];
+        this.addressInfoWrong = true;
       }
     },
     editAddress() {

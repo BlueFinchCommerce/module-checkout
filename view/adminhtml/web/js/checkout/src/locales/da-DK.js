@@ -21,13 +21,18 @@ export default {
     removeItemButtonLabel: 'Fjern artikel',
     minusOneItem: 'minus en artikel',
     plusOneItem: 'plus en artikel',
+    crossSellsTitle: 'You may also like these items...',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Indtast Promo kode',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Indtast kode',
       successMessage: 'koden er indtastet "{code}".',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'SKU nr:',
     supplierStockNumber: 'Leverandørens lager nr:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Dine oplysninger',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Send her',
       info: 'Hvor skal vi sende til?',
       billingAddressTitle: 'Faktureringsadresse',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveringsadresse',
       addressFinder: {
         title: 'Søg efter adresse',
@@ -123,6 +131,7 @@ export default {
   editDetailsButtonLabel: 'Ændre oplysninger',
   editShippingButtonLabel: 'Ændre forsendelsesoplysninger',
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Indtast venligst et gyldigt fornavn',
     lastNameErrorMessage: 'Indtast venligst et gyldigt efternavn',
@@ -172,7 +181,9 @@ export default {
   addNewAddressBtn: 'Tilføj ny adresse',
   saveNewAddress: 'Gem i adressebogen',
   paymentStep: {
-    title: 'Vælg betalingsmetode',
+    titleGuest: 'Vælg betalingsmetode',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Ingen betalingsoplysninger påkrævet',
     payNow: 'Betal nu',
     storedPayments: 'Dine gemte betalinger',
@@ -184,8 +195,11 @@ export default {
   adyen: {
     applePayTotal: 'Pris i alt',
     applePayNoShippingMethods: 'Der er i øjeblikket ingen forsendelsesmetoder tilgængelige for dig. Prøv igen eller brug en anden betalingsmetode',
+  },
+  paymentCard: {
     cardNumber: 'Kortnummer',
     expiry: 'Udløbsdato',
+    select: 'Select',
     storedPaymentLabel: '{name} Gemt kort udløber den {lastFour}.',
   },
   braintree: {

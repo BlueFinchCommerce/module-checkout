@@ -1,0 +1,381 @@
+//
+//  Global Variables
+//  ---------------------------------------------
+#gene-better-checkout-root {
+    //
+    //  Colors
+    //  ---------------------------------------------
+    --primary__color: #2b2b2b;
+    --text__color: var(--primary__color);
+    --mobile-text__color: var(--primary__color);
+    --white__color: #ffffff;
+    --primary-gray__color: #f8f8f8;
+    --border__gray-color: #6d7278;
+    --gray-color1: #7A8086;
+    --border__gray-color2: #B9BCBF;
+    --border__gray-color3: #CDCECF;
+    --text-placeholder-bg: var(--border__gray-color3);
+    --text-placeholder-bg-darker: var(--border__gray-color2);
+    --inactive__gray-color: #D0D0D0;
+    --active__gray-color: #F3F3F3;
+    --focus-color: var(--primary__color);
+    --blue-color: #326BAB;
+    --color-theme__light-grey: rgba(39, 48, 58, 0.1);
+    --color-theme__light-grey1: #A3A4A7;
+    --transparent-color: transparent;
+    --success__color: var(--primary__color);
+    --success__border-color: #ACD765;
+    --success__background-color: #E9F2C6;
+    --error__color: #E22222;
+    --error-text__color: var(--error__color);
+    --error-label__color: var(--error__color);
+    --error__border-color: #CF302A;
+    --error__background-color: #FDE9E9;
+    --available__color: #76CA39;
+    --available__color2: #50BA32;
+    --page-background__color-desktop: var(--primary-gray__color);
+    --page-background__color-mobile: var(--white__color);
+    --container-background__color: var(--primary-gray__color);
+    --header-background: #063967;
+    --footer-background: #063967;
+
+    //
+    // States
+    //  ---------------------------------------------
+    --opacity-light: 0.4;
+    --opacity-heavy: 0.8;
+
+    //
+    //  Layout
+    //  ---------------------------------------------
+    --layout__max-width: 1280px;
+    --indent__base: 20px;
+    --mobile-indent__base: 20px;
+    --indent__m: 15px;
+    --indent__s: 10px;
+    --indent__xs: 5px;
+    --indent__l: 30px;
+    --indent__xl: 40px;
+    --indent__xxl: 70px;
+
+    --column-gap: var(--indent__l);
+
+    //
+    //  Fonts
+    //  ---------------------------------------------
+    --font__base: 14px;
+    --font__s: calc(var(--font__base) * 0.8571);  /* ~12px */
+    --font__m: calc(var(--font__base) * 1.1429);  /* ~16px */
+    --font__l: calc(var(--font__base) * 1.2857);  /* ~18px */
+    --font__xl: calc(var(--font__base) * 1.5714); /* ~22px */
+    --font__xxl: calc(var(--font__base) * 1.8571); /* ~26px */
+
+    --font-weight__light: 300;
+    --font-weight__regular: 400;
+    --font-weight__semibold: 500;
+    --font-weight__bold: 600;
+    --font-weight__heavier: 700;
+
+    --font-family-base: 'Gotham', sans-serif;
+    --font-family-header: var(--font-family-base);
+    --font-family-copy: var(--font-family-base);
+
+    --font__heading--desktop: var(--font__xl);
+    --font__heading--mobile: var(--font__l);
+
+    //
+    // Header
+    //  ---------------------------------------------
+    --header-background-color: var(--header-background);
+    --header-logo__width-mobile: 130px;
+    --header-logo__width-desktop: 150px;
+    --header__border-bottom: none;
+
+    //
+    // Footer
+    //  ---------------------------------------------
+    --footer-display: block;
+    --footer-border-top: none;
+
+    //
+    // Steps
+    //  ---------------------------------------------
+    --steps-background-desktop: var(--white__color);
+    --steps-border-radius-desktop: 0px;
+    --steps-completed-background: var(--active__gray-color);
+    --steps-completed-radius: 0px;
+
+    //
+    // Summary
+    //  ---------------------------------------------
+    --summary-background: var(--active__gray-color);
+    --summary-height: initial;
+
+    //
+    // Base
+    //  ---------------------------------------------
+    --base-border-radius: 4px;
+
+    //
+    // Buttons
+    //  ---------------------------------------------
+    --button-font-family: var(--font-family-copy);
+    --button-font-weight: var(--font-weight__semibold);
+    --button-border: 2px;
+    --border-style: solid;
+    --button-border-radius: var(--base-border-radius);
+    --button-display: inline-block;
+    --button-line-height: 1em;
+    --button-box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px inset;
+    --button-padding-s: 12px;
+    --button-padding-base: 16px;
+    --button-badding-l: 20px;
+    --button-padding-xl: 24px;
+    --button-height: 55px;
+    --button-width: 100%;
+    --button-text-transform: none;
+    --text-placeholder-bg-button-radius: var(--button-border-radius);
+    --button-remove-item-font-color: var(--text__color);
+    --button-remove-item-font-color-hover: var(--text__color);
+    --button-remove-item-font-color-focus: var(--text__color);
+    --button-remove-item-font-size: var(--font__s);
+
+    //
+    // Small Buttons
+    //  ---------------------------------------------
+    --button-font-small: var(--font__s);
+    --button-padding-small: var(--button-padding-s) var(--button-padding-base);
+
+    //
+    // Medium Buttons
+    //  ---------------------------------------------
+    --button-font-medium: var(--font__m);
+    --button-padding-medium: var(--button-padding-s) var(--button-padding-l);
+
+    //
+    // Large Buttons
+    //  ---------------------------------------------
+    --button-font-large: var(--font__l);
+    --button-padding-large: var(--button-padding-s) var(--button-padding-xl);
+
+    //
+    // Adyen Buttons
+    //  ---------------------------------------------
+    --button-adyen-pay-background-color: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
+    --button-adyen-pay-background-color-hover: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
+    --button-adyen-pay-border-color-hover: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
+    --button-adyen-pay-border-radius: var(--button-border-radius);
+
+    //
+    // Adyen Buttons
+    //  ---------------------------------------------
+    --adyen-saved-card-background-color: var(--transparent-color);
+    --adyen-saved-card-border: 1px solid var(--primary__color);
+    --adyen-saved-card-color: var(--primary__color);
+    --adyen-saved-card-border-active: 2px solid var(--primary__color);
+
+    //
+    // Adyen Icons
+    //  ---------------------------------------------
+    --adyen-payment-icon-display: block;
+
+    //
+    // Adyen Icons
+    //  ---------------------------------------------
+    --adyen-payment-threeds-max-height: 650px;
+    --adyen-payment-threeds-max-width: 450px;
+    //
+    // Privacy Policy Close Button
+    //  ---------------------------------------------
+    --button-privacy-policy-border: var(--button-blank-border);
+    --button-privacy-policy-background-color-hover: var(--button-blank-background-color);
+    --button-privacy-policy-text-color-hover:  var(--button-link-text-color-hover);
+    --button-privacy-policy-text-color:   var(--button-primary-text-color);
+
+    //
+    // Primary Buttons
+    //  ---------------------------------------------
+    --button-primary-text-color: var(--white__color);
+    --button-primary-background-color: var(--primary__color);
+    --button-primary-border-color: var(--primary__color);
+    --button-primary-border-weight: var(--button-border);
+    --button-primary-border-box-shadow: 0;
+    --text-placeholder-bg-primary: var(--button-primary-background-color);
+
+    --button-primary-text-color-hover: var(--focus-color);
+    --button-primary-background-color-hover: var(--white__color);
+    --button-primary-border-color-hover: var(--primary__color);
+    --button-primary-border-weight-hover: var(--button-border);
+
+    --button-primary-text-color-focus: var(--primary__color);
+    --button-primary-background-color-focus: var(--white__color);
+    --button-primary-border-color-focus: var(--primary__color);
+    --button-primary-border-weight-focus: var(--button-border);
+
+    //
+    // Secondary Buttons
+    //  ---------------------------------------------
+    --button-secondary-text-color: var(--primary__color);
+    --button-secondary-background-color: var(--transparent-color);
+    --button-secondary-border-color: var(--primary__color);
+    --button-secondary-border-weight: var(--button-border);
+    --button-secondary-border-box-shadow: var(--button-box-shadow);
+
+    --button-secondary-text-color-hover: var(--focus-color);
+    --button-secondary-background-color-hover: var(--transparent-color);
+    --button-secondary-border-color-hover: var(--primary__color);
+    --button-secondary-border-weight-hover: var(--button-border);
+
+    --button-secondary-text-color-focus: var(--focus-color);
+    --button-secondary-background-color-focus: var(--transparent-color);
+    --button-secondary-border-color-focus: var(--primary__color);
+    --button-secondary-border-weight-focus: var(--button-border);
+
+    --text-placeholder-bg-secondary: var(--button-secondary-background-color);
+    --text-placeholder-bg-secondary-gradient: var(--button-secondary-border-color-hover);
+
+    //
+    // Tertiary Buttons
+    //  ---------------------------------------------
+    --button-tertiary-text-color: var(--text__color);
+    --button-tertiary-background-color: var(--primary-gray__color);
+    --button-tertiary-border-color: var(--primary-gray__color);
+    --button-tertiary-border-box-shadow: var(--button-box-shadow);
+
+    --button-tertiary-text-color-hover: var(--text__color);
+    --button-tertiary-background-color-hover: var(--primary-gray__color);
+    --button-tertiary-background-color-focus: var(--primary-gray__color);
+    --button-tertiary-border-color-hover: var(--primary-gray__color);
+
+    --text-placeholder-bg-tertiary: var(--button-tertiary-background-color);
+    --text-placeholder-bg-tertiary-gradient: var(--button-tertiary-background-color-hover);
+    //
+    // Blank Buttons
+    //  ---------------------------------------------
+    --button-blank-background-color: var(--transparent-color);
+    --button-blank-border: none;
+
+    //
+    // Link Buttons
+    //  ---------------------------------------------
+    --button-link-background-color: var(--transparent-color);
+    --button-link-border: none;
+    --button-link-text-decoration: underline;
+    --button-link-padding: 0;
+
+    --button-link-text-color-hover: var(--primary__color);
+
+    //
+    // Inputs
+    //  ---------------------------------------------
+    --input-font-color: var(--primary__color);
+    --input-font-size: var(--font__base);
+    --input-background-color: var(--white__color);
+    --input-border-color: var(--primary__color);
+    --input-border-color-hover: var(--primary__color);
+    --input-border-color-focus: var(--focus-color);
+    --input-border-radius: var(--base-border-radius);
+    --input-border-weight: 1px;
+    --input-border-weight-hover: 1px;
+    --input-border-weight-focus: 2px;
+    --input-height: 55px;
+    --input-label-padding: var(--indent__s);
+    --input-placeholder-color: var(--gray-color1);
+    --input-rounded-left-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+    --inline-label-display: flex;
+
+    //
+    // Qty Input
+    //  ---------------------------------------------
+    --qty-box-shadow: 0;
+    --qty-button-height: 30px;
+    --qty-border: var(--input-border-weight) solid var(--input-border-color);
+    --qty-border-radius: var(--input-border-radius);
+    --qty-input-background-color: var(--white__color);
+    --qty-input-font-color: var(--primary__color);
+    --qty-input-border: var(--input-border-weight) solid var(--input-border-color);
+    --qty-input-border-bottom: none;
+    --qty-input-border-top: none;
+    --qty-input-border-radius: 0;
+    --qty-button-border: none;
+    --qty-button-border-radius: 0;
+    --qty-font-size: var(--input-font-size);
+    --qty-button-font-size: 22px;
+
+    //
+    // Radio Inputs
+    //  ---------------------------------------------
+    --radio__input-width: 24px;
+    --radio__input-height: 24px;
+    --radio__input-border: solid 1px var(--radio__input-border-color, var(--border__gray-color));
+    --radio__input-border-radius: 50%;
+    --radio__input-selected-color: #063967;
+    --radio__input-box-shadow: inset 0 0 0 5px var(--white__color), inset 0 0 0 40px #E0E0E0;
+    --radio__input-checked-box-shadow: inset 0px 0px 0px 5px var(--white__color), inset 0px 0px 0px 40px var(--radio__input-selected-color);
+    --radio__input-checked-border: 1px solid var(--focus-color);
+
+    //
+    // Checkbox Inputs
+    //  ---------------------------------------------
+    --checkbox__input-height: 22px;
+    --checkbox__input-width: 22px;
+    --checkbox__input-border-radius: 4px;
+    --checkbox__input-tick-height: 14px;
+    --checkbox__input-tick-width: 8px;
+    --checkbox__input-tick-top: 1px;
+    --checkbox__input-tick-left: 6px;
+    --checkbox__input-tick-thickness: 0 2px 2px 0;
+    --checkbox-checked-background: var(--focus-color);
+    --checkbox-checked-border-color: var(--checkbox-checked-background);
+
+    //
+    // Dropdowns
+    //  ---------------------------------------------
+    --dropdown-background-color: var(--white__color);
+    --dropdown-border-color: var(--border__gray-color2);
+    --dropdown-border-radius: var(--base-border-radius);
+
+    //
+    // Messages
+    //  ---------------------------------------------
+    --message-margin: 15px 0;
+
+    //
+    // Slide Up
+    //  ---------------------------------------------
+    --slide-up-border-radius: 10px;
+    --slide-up-background-color-open: var(--white__color);
+
+    //
+    // Instant Checkout
+    //  ---------------------------------------------
+    --instant-checkout-text-align: left;
+
+    //
+    // Pay With
+    //  ---------------------------------------------
+    --pay-with-flex-direction: row;
+    --pay-width-align-items: center;
+
+    //
+    // Divider
+    //  ---------------------------------------------
+    --divider-display: flex;
+    --divider-color: var(--border__gray-color2);
+
+    //
+    // Google Maps
+    //  ---------------------------------------------
+    --google-map-height: 200px;
+    --google-map-width: 100%;
+
+    //
+    // Google Maps
+    //  ---------------------------------------------
+    --skeleton-border-radius: var(--base-border-radius);
+
+    //
+    // Postcode lookup
+    //  ---------------------------------------------
+    --postcode-lookup-max-height: 185px;
+}

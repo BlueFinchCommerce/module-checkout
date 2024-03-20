@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Verzendgegevens wijzigen',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ugyldig tegn angitt.',
     firstNameErrorMessage: 'Voer een geldige voornaam in',
     lastNameErrorMessage: 'Voer een geldige achternaam in',

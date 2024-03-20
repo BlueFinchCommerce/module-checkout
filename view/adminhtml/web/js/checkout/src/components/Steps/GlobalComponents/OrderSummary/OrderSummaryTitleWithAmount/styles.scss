@@ -1,0 +1,38 @@
+@import '@/styles/global/_breakpoints';
+
+.order-summary-title-amount {
+  display: flex;
+
+  p {
+    font-size: var(--font__heading--mobile);
+    color: var(--font__color);
+    font-weight: var(--order-summary-title-amount-font-weight, var(--font-weight__semibold));
+    font-family: var(--font-family__header);
+    margin-bottom: 0;
+
+    &:first-child {
+      margin-right: 5px;
+    }
+  }
+}
+
+//Styles for desktop
+@mixin largeWidth() {
+  .order-summary-title-amount {
+    p {
+      font-family: var(--font-family__copy);
+      font-size: var(--font__heading--desktop);
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

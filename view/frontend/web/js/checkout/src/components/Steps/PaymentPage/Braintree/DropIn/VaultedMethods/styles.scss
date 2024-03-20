@@ -3,7 +3,14 @@
 .braintree-vault {
   display: grid;
   gap: var(--indent__base);
-  margin: var(--indent__base) 0 var(--indent__xl);;
+
+  .braintree-vaulted-methods-container {
+    margin: var(--indent__base) 0 var(--indent__xl);
+
+    &:empty {
+      margin: 0;
+    }
+  }
 
   &__title {
     display: flex;
@@ -14,7 +21,7 @@
     .divider-line {
       border-bottom: var(--divider__border);
       margin-left: var(--indent__base);
-      width: 100%;
+      flex-grow: 1;
       display: var(--divider-line-display, block);
     }
   }

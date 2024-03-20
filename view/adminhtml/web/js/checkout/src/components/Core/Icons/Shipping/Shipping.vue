@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import { computed, reactive } from 'vue';
 import shippingSvg from '@/icons/shippingIcon.svg';
 

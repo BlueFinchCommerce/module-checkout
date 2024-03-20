@@ -1,0 +1,186 @@
+@import '@/styles/global/_breakpoints';
+
+.customer-form {
+  .divider {
+    display: flex;
+    align-items: center;
+
+    &-line {
+      border-bottom: var(--divider__border);
+      flex-grow: 1;
+    }
+
+    p {
+      font-weight: var(--font-weight__semibold);
+      font-family: var(--font-family__copy);
+      font-size: var(--font__m);
+      margin: 0 var(--indent__s);
+      text-align: center;
+    }
+  }
+
+  .welcome-message {
+    padding-top: var(--welcome-message-padding, 0);
+    font-size: var(--welcome-message-font-size, var(--font__s));
+    font-weight: var(--welcome-message-font-weight, var(--font-weight__medium));
+    font-family: var(--font-family__copy);
+    margin-bottom: var(--welcome-message-margin-bottom, var(--indent__s));
+    text-align: var(--welcome-message-text-align, center);
+    color: var(--font__color-light);
+
+    &:empty {
+      padding-top: 0;
+    }
+  }
+
+  .actions {
+    display: grid;
+    grid-gap: var(--indent__m);
+    margin: 0 0 var(--indent__s);
+    width: 100%;
+  }
+
+  .field {
+    &__password {
+      position: relative;
+
+      .button_show_password {
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        bottom: var(--indent__l);
+        height: 30px;
+        padding: 0;
+        position: absolute;
+        right: calc(2 * var(--indent__l));
+        transform: translateY(50%);
+        width: auto;
+        top: 12px;
+      }
+    }
+  }
+
+  .field__help-text {
+    display: var(--password-help-text-display);
+    margin-top: var(--indent__s);
+    font-size: var(--font__xs);
+    font-weight: var(--font-weight__medium);
+    color: var(--font__color-light);
+  }
+
+  .forgot-pass {
+    p {
+      text-align: left;
+      margin: var(--indent__s) 0 var(--indent__xs);
+      font-family: var(--font-family__copy);
+    }
+  }
+
+  .email-address-edit-btn {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    left: 0;
+    bottom: calc(var(--input__height) / 2);
+    text-align: right;
+    transform: translateY(50%);
+    padding-right: var(--indent__m);
+
+    button {
+      text-align: right;
+      width: 100%;
+      border: none;
+      justify-content: flex-end;
+    }
+
+    p {
+      display: none;  // Removed form latest design
+      cursor: pointer;
+      font-family: var(--font-family__copy);
+      font-size: var(--font__xs);
+      font-weight: var(--font-weight__medium);
+    }
+  }
+}
+
+.edit-button {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--button__link-font-color);
+  cursor: pointer;
+  display: flex;
+  grid-gap: var(--indent__s);
+  justify-content: end;
+  line-height: 20px;
+  padding: 0;
+}
+
+.checkout-email {
+  .logged-in-email-title {
+    display: var(--logged-in-email-title-visibility, none);
+    font-size: var(--font__l);
+    font-weight: var(--font-weight__semibold);
+    margin-top: var(--indent__l);
+  }
+
+  .welcome-message-title {
+    display: var(--logged-in-email-title-visibility, none);
+    font-size: var(--welcome-message-title__font-size, var(--font__l));
+    font-weight: var(--welcome-message-title__font-weight, var(--font-weight__semibold));
+    font-family: var(--welcome-message-title__font-family, var(--font-family__copy));
+  }
+
+  &__footer {
+    a {
+      font-size: var(--button__link-font-size);
+      font-weight: var(--button__link-font-weight);
+      color: var(---button__link-font-color);
+      text-decoration: var(--button__link-text-decoration);
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        font-weight: var(--button__link-font-weight-hover);
+      }
+    }
+  }
+
+  &__text {
+    display: flex;
+
+    p {
+      margin-left: var(--indent__xs);
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    .terms,
+    .policy {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+//Styles for desktop
+
+@mixin largeWidth() {
+  .welcome-message-title {
+    margin-top: 10px;
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

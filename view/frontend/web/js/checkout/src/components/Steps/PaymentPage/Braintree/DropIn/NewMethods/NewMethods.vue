@@ -326,8 +326,17 @@ export default {
 
       this.attachEventListeners(instance);
       this.movePaymentContainers();
+      this.selectFirstPaymentOption();
 
       this.paymentEmitter.emit('braintreeInitComplete');
+    },
+
+    selectFirstPaymentOption() {
+      const sheetContainer = this.$refs.braintreeContainer.querySelector('.braintree-sheet--active');
+      const firstOption = sheetContainer.querySelector('.braintree-option');
+      if (firstOption) {
+        firstOption.classList.add('braintree-option__selected');
+      }
     },
 
     attachEventListeners(instance) {

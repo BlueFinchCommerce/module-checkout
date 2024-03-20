@@ -1,10 +1,10 @@
 <template>
-  <img :src="bin" width="23" height="20" :alt="bin" />
+  <img :src="bin" width="24" height="24" alt="remove-icon" />
 </template>
 
 <script>
 import { computed, reactive } from 'vue';
-import getStaticUrl from '@/helpers/getStaticPath';
+import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import binSvg from '@/icons/bin.svg';
 
 export default {

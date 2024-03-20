@@ -133,6 +133,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Invalid character entered',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',

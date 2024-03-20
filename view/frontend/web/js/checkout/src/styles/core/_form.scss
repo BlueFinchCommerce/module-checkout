@@ -58,11 +58,11 @@
 
       input,
       select {
-        border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+        border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
 
         &:focus,
         &:hover {
-          border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+          border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
         }
       }
 
@@ -155,6 +155,20 @@
     font-weight: var(--font-weight__medium);
     font-family: var(--font-family__copy);
     top: var(--checkbox-text-position, auto);
+
+    a {
+      color: var(--button__link-font-color);
+      font-size: var(--button__link-font-size);
+      font-weight: var(--button__link-font-weight);
+      text-decoration: var(--button__link-text-decoration);
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        font-weight: var(--button__link-font-weight-hover);
+        color: var(--button__link-font-color-hover);
+      }
+    }
   }
 
   input[type="text"] {
@@ -208,7 +222,7 @@
       &:focus-visible,
       &:focus,
       &:active {
-        outline: var(--base__border-weight) var(--base__border-style) var(--input__border-color-focus);
+        outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
         box-shadow: none;
 
         &::placeholder {
@@ -291,8 +305,8 @@
 
   .text-input.field-valid {
     input {
-      border-color: var(--valid-field-border, var(--color__primary-dark-blue));
-      border-width: var(--base__border-weight-active);
+      border-color: var(--valid-field-border, var(--input__border-color-valid));
+      border-width: var(--input__border-weight-focus);
       outline: none;
     }
   }
@@ -306,12 +320,12 @@
   //override valid class if custom validation shows error
   .custom-validation-error.field-valid {
     input {
-      border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+      border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
       outline: none;
 
       &:focus,
       &:hover {
-        border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+        border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
         outline: none;
       }
     }
@@ -419,7 +433,7 @@
       }
 
       &.selected {
-        border: var(--base__border-weight-active) var(--base__border-style) var(--valid-field-border, var(--base__border-color-active));
+        border: var(--input__border-weight-focus) var(--base__border-style) var(--valid-field-border, var(--input__border-color-valid));
       }
     }
 
@@ -466,12 +480,12 @@
   }
 
   .error-message {
-    border-width: var(--error-message-border-width, var(--base__border-weight-active));
+    border-width: var(--error-message-border-width, var(--input__border-weight-focus));
 
     &-attached {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      margin-top: -2px;
+      margin-top: -12px;
     }
   }
 
