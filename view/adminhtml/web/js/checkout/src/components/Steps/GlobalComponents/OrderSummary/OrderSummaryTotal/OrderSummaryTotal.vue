@@ -95,8 +95,6 @@ export default {
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       grandTotalText: '',
       grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
-      subtotalText: '',
-      subtotalTextId: 'gene-bettercheckout-subtotal-text',
     };
   },
   computed: {
@@ -107,16 +105,13 @@ export default {
   async created() {
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
-    this.subtotalText = window.geneCheckout?.[this.subtotalTextId] || this.$t('orderSummary.subtotalTitle');
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.grandTotalTextId, this.setGrandTotalText);
-    document.addEventListener(this.subtotalTextId, this.setSubtotalText);
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.removeEventListener(this.grandTotalTextId, this.setGrandTotalText);
-    document.removeEventListener(this.subtotalTextId, this.setSubtotalText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -126,9 +121,6 @@ export default {
     },
     setGrandTotalText(event) {
       this.grandTotalText = event?.detail || this.$t('orderSummary.grandTotalTitle');
-    },
-    setSubtotalText(event) {
-      this.subtotalText = event?.detail || this.$t('orderSummary.subtotalTitle');
     },
   },
 };

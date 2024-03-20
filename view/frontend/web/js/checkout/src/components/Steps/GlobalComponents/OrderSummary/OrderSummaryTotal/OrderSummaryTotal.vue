@@ -95,8 +95,6 @@ export default {
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       grandTotalText: '',
       grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
-      subtotalText: '',
-      subtotalTextId: 'gene-bettercheckout-subtotal-text',
     };
   },
   computed: {
@@ -108,7 +106,6 @@ export default {
     await this.getStoreConfig();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
-    this.subtotalText = window.geneCheckout?.[this.subtotalTextId] || this.$t('orderSummary.subtotalTitle');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
