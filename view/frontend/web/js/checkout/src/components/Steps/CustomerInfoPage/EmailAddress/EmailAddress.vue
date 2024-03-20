@@ -36,7 +36,7 @@
           autocomplete="email"
           type="email"
           :disabled="emailEntered"
-          @blur="emailAddressBlur($event)"
+          @blur="emailAddressBlur"
           @keyup="emailAddressChange"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>

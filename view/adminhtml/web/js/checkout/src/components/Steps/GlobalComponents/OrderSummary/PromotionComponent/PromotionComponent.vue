@@ -1,11 +1,12 @@
 <template>
   <div
     class="promotion-trigger dropdown-button"
+    tabindex="0"
     v-if="freeShipping > 0 && crosssells.length === 0"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"
     @click="openDropDown"
-    @keydown="openDropDown"
+    @keydown="openDropDownKeyDown($event)"
   >
     <div class="promotion-icon-container">
       <img
@@ -44,10 +45,11 @@
   <div
     v-if="!freeShipping && crosssells.length > 0"
     class="promotion-trigger dropdown-button"
+    tabindex="0"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"
     @click="openDropDown"
-    @keydown="openDropDown"
+    @keydown="openDropDownKeyDown($event)"
   >
     <div class="promo-title crosssells">
       <div>
@@ -143,26 +145,29 @@ export default {
     },
   },
   async created() {
-    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
-     || this.$t('orderSummary.crossSellsTitle');
+    await this.getStoreConfig();
+    await this.getCart();
+    if (this.amastyEnabled) {
+      await this.getAmastyShippingData();
+    }
+    await this.getCrosssells();
 
-    document.addEventListener(this.freeShippingTextId, this.setFreeShippingText);
-  },
-  unmounted() {
-    document.removeEventListener(this.freeShippingTextId, this.setFreeShippingText);
+    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+      || this.$t('orderSummary.crossSellsTitle');
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
       'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
-
-    setFreeShippingText(event) {
-      this.freeShippingText = event?.detail || this.$t('orderSummary.freeShippingAvailable');
-    },
-
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;
+    },
+    openDropDownKeyDown(event) {
+      // Check if the event is a click or if the key pressed is "Enter" (key code 13)
+      if (event.type === 'keydown' && event.key === 'Enter') {
+        this.isDropDownVisible = !this.isDropDownVisible;
+      }
     },
     async addItem(product) {
       await this.addCartItem(product);

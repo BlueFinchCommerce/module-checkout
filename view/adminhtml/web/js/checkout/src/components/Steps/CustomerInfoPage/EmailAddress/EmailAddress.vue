@@ -72,11 +72,9 @@
         <div class="field__password">
           <TextInput
             v-model="password"
-            :error="passwordError || loginErrorMessage !== null"
-            :error-message="passwordErrorMessage
-            || (loginErrorMessage !== null ? loginErrorMessage : '')"
+            :error="passwordError"
+            :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            @keyup="passwordKeyTrigger"
             data-cy="password"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
@@ -126,6 +124,13 @@
           class="actions"
         >
           <Recaptcha id="customerLogin" />
+
+          <ErrorMessage
+            v-if="loginErrorMessage"
+            :message="loginErrorMessage"
+            :attached="false"
+          />
+
           <MyButton
             type="submit"
             class="sign-in-btn"
@@ -153,7 +158,7 @@
         class="actions"
       >
         <MyButton
-          class="guest-btn"
+          class="guest-btn single"
           secondary
           :disabled="proceedAsGuestInvalid"
           :label="$t('noAccountGuestButton')"
@@ -176,6 +181,7 @@ import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 
 // icons
@@ -203,6 +209,7 @@ export default {
     ShowIcon,
     ValidIcon,
     TextField,
+    ErrorMessage,
     Loader,
     Edit,
     Recaptcha,
@@ -225,6 +232,7 @@ export default {
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
       continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
+      tabKeyPressed: false,
     };
   },
   computed: {
@@ -250,6 +258,7 @@ export default {
       description: 'login',
     });
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    document.addEventListener('keydown', this.handleKeyDown);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -342,6 +351,12 @@ export default {
       this.emailErrorMessage = hasError ? this.$t('errorMessages.emailErrorMessage') : '';
     },
 
+    handleKeyDown(event) {
+      if (event.key === 'Tab') {
+        this.tabKeyPressed = true;
+      }
+    },
+
     emailAddressBlur() {
       // On blur validate the email and show error if invalid.
       if (!isEmailValid(this.customer.email.toLowerCase())) {
@@ -349,19 +364,17 @@ export default {
         this.setEmailErrorState(this.customer.email.length > 0);
       } else {
         this.emailValid = true;
+
+        // If focus was lost due to a Tab key press and email
+        // is valid, and focus hasn't returned to email yet, focus back on the email field
+        if (this.tabKeyPressed && this.emailValid && !this.focusReturnedToEmail) {
+          this.$refs.email.$refs.input.focus();
+          this.focusReturnedToEmail = true; // Update the flag to indicate that focus has returned to email field
+        }
       }
-    },
 
-    passwordKeyTrigger(event) {
-      // Update the password value whenever a key is pressed
-      this.password = event.target.value;
-
-      // Check if the Enter key was pressed
-      const pressedKey = event.key || event.keyCode;
-
-      if (pressedKey === 'Enter' || pressedKey === 13) {
-        this.submitForm();
-      }
+      // Reset the flag for Tab key press
+      this.tabKeyPressed = false;
     },
 
     async emailAddressChange() {

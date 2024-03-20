@@ -15,13 +15,13 @@
       </button>
     </template>
     <template #body>
+      <PromotionComponent />
       <CouponDiscount />
       <GiftCardDiscount />
       <div class="product-items">
         <OrderSummaryItem />
       </div>
       <OrderSummaryTotal />
-      <PromotionComponent />
     </template>
   </SlideUp>
   <div
@@ -144,16 +144,17 @@ export default {
     ...mapState(useConfigStore, ['storeCode']),
   },
   async created() {
+    this.checkForGuestUser();
+
+    if (!this.storeCode) {
+      await this.getStoreConfig();
+      await this.getCart();
+    }
+
+    await this.getCustomerInformation();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
       || this.$t('orderSummary.mobileDiscountText');
-
-    document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
-    document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
-  },
-  unmounted() {
-    document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
-    document.removeEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -170,12 +171,6 @@ export default {
     closeSummary() {
       document.body.classList.remove('no-scrollable');
       this.isModalVisible = false;
-    },
-    setOrderSummaryText(event) {
-      this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');
-    },
-    setOrderSummaryDescriptionText(event) {
-      this.orderSummaryDescriptionText = event?.detail || this.$t('orderSummary.mobileDiscountText');
     },
   },
 };
