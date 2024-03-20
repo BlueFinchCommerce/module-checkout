@@ -221,8 +221,8 @@ export default {
 
       return Promise.all([
         this.submitEmail(payload.details.email).then(() => ({ payload, email: payload.details.email })),
-        setBillingAddressOnCart(shippingAddress),
-        setShippingAddressesOnCart(billingAddress),
+        setBillingAddressOnCart(billingAddress),
+        setShippingAddressesOnCart(shippingAddress),
       ]);
     },
 
@@ -250,6 +250,7 @@ export default {
         ],
         postcode: address.postalCode,
         country_code: address.countryCode,
+        company: address.company || '',
         email,
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),

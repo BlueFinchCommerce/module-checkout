@@ -385,6 +385,7 @@ export default {
           address.address1,
           address.address2,
         ],
+        company: address.company || '',
         postcode: address.postalCode,
         country_code: address.countryCode,
         email,

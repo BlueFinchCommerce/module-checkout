@@ -186,6 +186,7 @@ export default {
           color: this.paypal.buttonColor,
           label: this.paypal.buttonLabel,
           shape: this.paypal.buttonShape,
+          size: 'responsive',
         },
       };
     }

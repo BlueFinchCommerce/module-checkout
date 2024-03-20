@@ -365,6 +365,7 @@ export default {
         telephone,
         firstname: address.givenName,
         lastname: address.familyName,
+        company: address.company || '',
         street: address.addressLines,
         city: address.locality,
         region: address.administrativeArea,

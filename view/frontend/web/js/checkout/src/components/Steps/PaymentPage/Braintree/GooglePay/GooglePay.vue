@@ -425,6 +425,7 @@ export default {
         ],
         postcode: address.postalCode,
         country_code: address.countryCode,
+        company: address.company || '',
         email,
         firstname,
         lastname: lastname.length ? lastname.join(' ') : 'UNKNOWN',
