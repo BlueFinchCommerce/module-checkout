@@ -1,7 +1,7 @@
 <template>
   <div class="divider">
     <div class="divider-line"></div>
-    <TextField :text="$t('dividerText')" />
+    <TextField :text="dividerText" />
     <div class="divider-line"></div>
   </div>
 </template>
@@ -13,8 +13,18 @@ export default {
   components: {
     TextField,
   },
+  data() {
+    return {
+      dividerText: '',
+      dividerTextId: 'gene-bettercheckout-divider-text',
+    };
+  },
+  mounted() {
+    this.dividerText = window.geneCheckout?.[this.dividerTextId] || this.$t('dividerText');
+  },
 };
 </script>
 <style lang="scss" scoped>
 @import "./styles.scss";
 </style>
+

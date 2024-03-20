@@ -6,7 +6,7 @@
     <TextField
       v-if="isExpressPaymentsVisible"
       class="pay-with__message"
-      :text="payWithText"
+      :text="$t('payWithBlockTitle')"
     />
     <TextField
       v-else
@@ -116,8 +116,6 @@ export default {
   },
   data() {
     return {
-      payWithText: '',
-      payWithTextId: 'gene-bettercheckout-paywith-text',
       paymentIcons: [],
       map: [],
       paymentOptionPriority: [],
@@ -158,10 +156,6 @@ export default {
     },
   },
   async created() {
-    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
-
-    document.addEventListener(this.payWithTextId, this.setPayWithText);
-
     this.map = {
       braintree: 'card',
       braintree_applepay: 'applePay',
@@ -176,15 +170,8 @@ export default {
 
     this.paymentOptionPriority = sortedAvailableMethods.map((method) => this.map[method]);
   },
-  unmounted() {
-    document.removeEventListener(this.payWithTextId, this.setPayWithText);
-  },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
-
-    setPayWithText(event) {
-      this.payWithText = event?.detail || this.$t('payWithBlockTitle');
-    },
 
     generateClass(paymentName) {
       // Convert paymentType.name to lowercase and replace spaces with underscores

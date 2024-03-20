@@ -42,7 +42,6 @@
   </div>
 
   <div
-    v-if="!freeShipping && crosssells.length > 0"
     class="promotion-trigger dropdown-button"
     :class="{opened: isDropDownVisible}"
     data-cy="dropdown-trigger"

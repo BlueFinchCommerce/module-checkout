@@ -356,6 +356,13 @@ export default {
 
       this[types[type]] = first && last && phone;
     });
+
+    document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutTextId);
+    document.addEventListener(this.proceedToPayTextId, this.setProceedToPayTextId);
+  },
+  unmounted() {
+    document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutTextId);
+    document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayTextId);
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -457,6 +464,12 @@ export default {
     },
     formatPrice(price) {
       return formatPrice(price);
+    },
+    setInstantCheckoutTextId(event) {
+      this.instantCheckoutText = event?.detail || this.$t('instantCheckout');
+    },
+    setProceedToPayTextId(event) {
+      this.proceedToPayText = event?.detail || this.$t('shippingStep.proceedToPay');
     },
   },
 };
