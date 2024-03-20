@@ -107,23 +107,24 @@ export default {
           },
           fundingSource: window.paypal.FUNDING.PAYPAL,
           offerCredit: false,
-          createOrder: () => {
+          createOrder: () => paypalInstance.createPayment({
+            amount: this.cartGrandTotal / 100,
+            flow: 'checkout',
+            currency: this.currencyCode,
+            enableShippingAddress: true,
+            intent: 'capture',
+            lineItems: this.getPayPalLineItems(),
+            shippingOptions: [],
+          }),
+          onClick: () => {
             // Check that the agreements (if any) are valid.
             const isValid = this.validateAgreements();
 
             if (!isValid) {
-              return Promise.reject(new Error(this.$t('agreements.paymentErrorMessage')));
+              return false;
             }
 
-            return paypalInstance.createPayment({
-              amount: this.cartGrandTotal / 100,
-              flow: 'checkout',
-              currency: this.currencyCode,
-              enableShippingAddress: true,
-              intent: 'capture',
-              lineItems: this.getPayPalLineItems(),
-              shippingOptions: [],
-            });
+            return true;
           },
           onShippingChange: async (data) => {
             const address = {
@@ -221,8 +222,8 @@ export default {
 
       return Promise.all([
         this.submitEmail(payload.details.email).then(() => ({ payload, email: payload.details.email })),
-        setBillingAddressOnCart(shippingAddress),
-        setShippingAddressesOnCart(billingAddress),
+        setBillingAddressOnCart(billingAddress),
+        setShippingAddressesOnCart(shippingAddress),
       ]);
     },
 
@@ -250,6 +251,7 @@ export default {
         ],
         postcode: address.postalCode,
         country_code: address.countryCode,
+        company: address.company || '',
         email,
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),

@@ -6,6 +6,7 @@
         <TextField :text="instantCheckoutText" />
       </div>
       <Recaptcha id="placeOrder" />
+      <Agreements id="detailsPage" />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
@@ -238,6 +239,7 @@ import ClickAndCollect from '@/components/Steps/CustomerInfoPage/Addresses/Click
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
 import { mapActions, mapState } from 'pinia';
@@ -283,6 +285,7 @@ export default {
     Loader,
     ProgressBar,
     Recaptcha,
+    Agreements,
   },
   props: {
     address_type: {
