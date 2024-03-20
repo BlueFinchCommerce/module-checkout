@@ -52,7 +52,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useStepsStore from '@/stores/StepsStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 // Components
@@ -62,17 +61,12 @@ import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
 
 // Services
-import createPayment from '@/services/payments/createPaymentGraphQl';
-import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getAdyenPaymentDetails from '@/services/adyen/getAdyenPaymentDetails';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // Helpers
-import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 import formatPrice from '@/helpers/payment/formatPrice';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
-import getUrlQuery from '@/helpers/storeConfigs/getUrlQuery';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 export default {

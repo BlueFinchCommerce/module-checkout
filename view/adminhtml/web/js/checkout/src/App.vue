@@ -123,8 +123,7 @@ export default {
 
     dispatchStep(stepName) {
       document.dispatchEvent(new CustomEvent('switchDisplayedStep', { detail: stepName }));
-    }
-
+    },
   },
 };
 </script>

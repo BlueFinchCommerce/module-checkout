@@ -4025,13 +4025,13 @@ p {
 }
 body.no-scrollable {
   overflow: hidden;
-}.switchers[data-v-5823e85c] {
+}.switchers[data-v-08c3d004] {
   display: grid;
   gap: 20px;
   grid-auto-flow: column;
   justify-content: center;
 }
-#gene-better-checkout-root[data-v-5823e85c] {
+#gene-better-checkout-root[data-v-08c3d004] {
   margin: 20px 0;
 }.text-loading .pay-with__column[data-v-d116008e] {
   opacity: 0;
@@ -8864,27 +8864,27 @@ a[data-v-1e58dc70] {
     border-radius: var(--steps__border-radius--desktop);
     padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
 }
-}.payment-page[data-v-3ae796d6] {
+}.payment-page[data-v-5962ee45] {
   padding: 0 var(--indent__base--mobile);
 }
-.payment-page .payment-form[data-v-3ae796d6] {
+.payment-page .payment-form[data-v-5962ee45] {
   background: var(--color__primary-grey6);
   margin-top: var(--indent__base);
 }
-.mock-laptop .payment-page[data-v-3ae796d6],
-.mock-desktop .payment-page[data-v-3ae796d6] {
+.mock-laptop .payment-page[data-v-5962ee45],
+.mock-desktop .payment-page[data-v-5962ee45] {
   padding: 0;
 }
-.mock-laptop .payment-page .payment-form[data-v-3ae796d6],
-.mock-desktop .payment-page .payment-form[data-v-3ae796d6] {
+.mock-laptop .payment-page .payment-form[data-v-5962ee45],
+.mock-desktop .payment-page .payment-form[data-v-5962ee45] {
   background: var(--color__primary-white);
   padding: var(--form-details-padding-desktop, 40px 40px 70px);
 }
 @media screen and (min-width: 768px) {
-.mock-full .payment-page[data-v-3ae796d6] {
+.mock-full .payment-page[data-v-5962ee45] {
     padding: 0;
 }
-.mock-full .payment-page .payment-form[data-v-3ae796d6] {
+.mock-full .payment-page .payment-form[data-v-5962ee45] {
     background: var(--color__primary-white);
     padding: var(--form-details-padding-desktop, 40px 40px 70px);
 }
