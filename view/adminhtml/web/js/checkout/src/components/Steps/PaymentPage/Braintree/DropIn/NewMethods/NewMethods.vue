@@ -245,6 +245,7 @@ export default {
           const error = new Error();
           error.name = 'DropinError';
           reject(error);
+          return;
         }
 
         if (!this.instance) {
