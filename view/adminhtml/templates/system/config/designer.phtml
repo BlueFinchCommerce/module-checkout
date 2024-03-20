@@ -1289,7 +1289,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Completed Step Background Colour')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-steps-completed-background-colour" data-type="color-picker" data-css-variable="--steps-completed-background" placeholder="#f3f3f3"/>
+                                        <input id="gene-bettercheckout-steps-completed-background-colour" data-type="color-picker" data-css-variable="--steps-complete__background-color" placeholder="#e8edf3"/>
                                     </div>
                                     <div class="fieldset desktop-specific-field">
                                         <label for="gene-bettercheckout-steps-completed-radius">
@@ -1297,8 +1297,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Completed Step Radius (Large Screens - Laptop Screens & Above)')) ?>
                                             </span>
                                         </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-steps-completed-radius" type="number" placeholder="0" max="60"/>
-                                        <input class="hidden" id="gene-bettercheckout-steps-completed-radius_hidden" type="text" data-css-variable="--steps-completed-radius" placeholder="0px" />
+                                        <input class="pixel-input" id="gene-bettercheckout-steps-completed-radius" type="number" placeholder="8" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-steps-completed-radius_hidden" type="text" data-css-variable="--steps-complete__radius--desktop" placeholder="8px" />
                                     </div>
                                 </div>
                             </div>
@@ -1316,31 +1316,20 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-paymentstep-text">
+                                        <label for="gene-bettercheckout-paymentstep-text-stored">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Saved Payment" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-paymentstep-text-stored" data-type="checkout-wording" type="text" placeholder="Your saved payment methods" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-paymentstep-text-new">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Payment Step Text')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-paymentstep-text" data-type="checkout-wording" type="text" placeholder="Select a payment method" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="config" data-role="content">
-                            <div class="section-config"
-                                data-mage-init='{"collapsible": {
-                                    "animate": 200,
-                                    "collapsible": true,
-                                    "openedState": "active"
-                                }}'
-                            >
-                                <div class="admin__collapsible-block">
-                                    <a data-role="title">
-                                        <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
-                                    </a>
-                                    <div class="config" data-role="content">
-                                    <!-- ToDo Payment Button Text -->
-                                    <p>ToDo Payment Button Text</p>
+                                        <input id="gene-bettercheckout-paymentstep-text-new" data-type="checkout-wording" type="text" placeholder="Select a payment method" />
                                     </div>
                                 </div>
                             </div>
