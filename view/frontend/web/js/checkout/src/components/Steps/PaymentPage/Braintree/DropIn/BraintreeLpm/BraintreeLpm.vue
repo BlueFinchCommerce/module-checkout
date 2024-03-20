@@ -44,6 +44,8 @@
         v-show="selectedMethod === 'braintree-lpm'"
         class="braintree-lpm-container"
       >
+        <Agreements />
+        <PrivacyPolicy />
         <button
           v-for="allowedMethod in lpm.allowedMethods"
           v-show="!loading"
@@ -70,6 +72,10 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
+// Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
+
 // Helpers
 import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
@@ -88,6 +94,10 @@ import braintree from 'braintree-web';
 
 export default {
   name: 'BraintreeLpm',
+  components: {
+    Agreements,
+    PrivacyPolicy,
+  },
   data() {
     return {
       loading: false,

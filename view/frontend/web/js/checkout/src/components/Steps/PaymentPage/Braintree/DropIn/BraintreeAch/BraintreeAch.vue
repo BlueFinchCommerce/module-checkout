@@ -95,6 +95,8 @@
             :text="$t('braintree.ach.proof')"
           />
           <TextField :text="$t('braintree.ach.terms', { websiteName })" />
+          <Agreements />
+          <PrivacyPolicy />
           <MyButton
             label="Pay"
             primary
@@ -116,8 +118,10 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import SelectInput from '@/components/Core/ActionComponents/Inputs/Select/Select.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
@@ -137,8 +141,10 @@ import braintree from 'braintree-web';
 export default {
   name: 'BraintreeAch',
   components: {
+    Agreements,
     CheckboxComponent,
     MyButton,
+    PrivacyPolicy,
     SelectInput,
     TextField,
     TextInput,
