@@ -497,6 +497,16 @@ button .text-loading {
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
 }
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-bb500480] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-bb500480]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-bb500480]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-bb500480]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
+}
 #gene-better-checkout-root input[type=text][data-v-bb500480]:disabled {
   opacity: var(--opacity__heavy);
 }
@@ -2005,6 +2015,16 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
 }
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-09a3c202] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-09a3c202]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-09a3c202]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-09a3c202]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
+}
 #gene-better-checkout-root input[type=text][data-v-09a3c202]:disabled {
   opacity: var(--opacity__heavy);
 }
@@ -2396,6 +2416,16 @@ div.dropdown.promo-dropdown.active p[data-v-34147bd9] {
   font-weight: var(--font-weight__medium);
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-3c631fa8] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-3c631fa8]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-3c631fa8]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-3c631fa8]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
 }
 #gene-better-checkout-root input[type=text][data-v-3c631fa8]:disabled {
   opacity: var(--opacity__heavy);
@@ -3443,6 +3473,16 @@ div.dropdown.coupon-dropdown .field .success[data-v-02cb506f] {
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
 }
+#gene-better-checkout-root input[type=checkbox] + span a {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a:hover, #gene-better-checkout-root input[type=checkbox] + span a:focus, #gene-better-checkout-root input[type=checkbox] + span a:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
+}
 #gene-better-checkout-root input[type=text]:disabled {
   opacity: var(--opacity__heavy);
 }
@@ -4428,6 +4468,16 @@ body.no-scrollable {
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
 }
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-d1f67e38] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-d1f67e38]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-d1f67e38]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-d1f67e38]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
+}
 #gene-better-checkout-root input[type=text][data-v-d1f67e38]:disabled {
   opacity: var(--opacity__heavy);
 }
@@ -4819,6 +4869,16 @@ body.no-scrollable {
   font-weight: var(--font-weight__medium);
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-4421e73e] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-4421e73e]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-4421e73e]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-4421e73e]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
 }
 #gene-better-checkout-root input[type=text][data-v-4421e73e]:disabled {
   opacity: var(--opacity__heavy);
@@ -5239,6 +5299,16 @@ body.no-scrollable {
   font-weight: var(--font-weight__medium);
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-72298f01] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-72298f01]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-72298f01]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-72298f01]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
 }
 #gene-better-checkout-root input[type=text][data-v-72298f01]:disabled {
   opacity: var(--opacity__heavy);
@@ -8416,6 +8486,16 @@ a[data-v-1e58dc70] {
   font-weight: var(--font-weight__medium);
   font-family: var(--font-family__copy);
   top: var(--checkbox-text-position, auto);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-b90c1728] {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root input[type=checkbox] + span a[data-v-b90c1728]:hover, #gene-better-checkout-root input[type=checkbox] + span a[data-v-b90c1728]:focus, #gene-better-checkout-root input[type=checkbox] + span a[data-v-b90c1728]:focus-visible {
+  font-weight: var(--button__link-font-weight-hover);
+  color: var(--button__link-font-color-hover);
 }
 #gene-better-checkout-root input[type=text][data-v-b90c1728]:disabled {
   opacity: var(--opacity__heavy);

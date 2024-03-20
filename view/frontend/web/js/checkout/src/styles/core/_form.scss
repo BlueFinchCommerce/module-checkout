@@ -155,6 +155,20 @@
     font-weight: var(--font-weight__medium);
     font-family: var(--font-family__copy);
     top: var(--checkbox-text-position, auto);
+
+    a {
+      color: var(--button__link-font-color);
+      font-size: var(--button__link-font-size);
+      font-weight: var(--button__link-font-weight);
+      text-decoration: var(--button__link-text-decoration);
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        font-weight: var(--button__link-font-weight-hover);
+        color: var(--button__link-font-color-hover);
+      }
+    }
   }
 
   input[type="text"] {
