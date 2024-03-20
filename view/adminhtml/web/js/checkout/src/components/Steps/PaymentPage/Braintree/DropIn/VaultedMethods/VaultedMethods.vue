@@ -56,13 +56,16 @@
       v-show="!loading"
       :id="'cid_' + selectedVaultMethod.publicHash"
     />
-    <MyButton
-      v-if="selectedVaultMethod && !loading"
-      class="braintree-vaulted-methods-pay-button"
-      label="Pay"
-      primary
-      @click="startPayment()"
-    />
+    <template v-if="selectedVaultMethod && !loading">
+      <Agreements id="braintreeVault" />
+      <PrivacyPolicy />
+      <MyButton
+        class="braintree-vaulted-methods-pay-button"
+        label="Pay"
+        primary
+        @click="startPayment()"
+      />
+    </template>
   </div>
 </template>
 
@@ -71,6 +74,7 @@ import { markRaw } from 'vue';
 
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -78,12 +82,15 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 
 // Services
 import createPayment from '@/services/payments/createPaymentRest';
@@ -97,7 +104,9 @@ import braintree from 'braintree-web';
 export default {
   name: 'BraintreeNewMethods',
   components: {
+    Agreements,
     MyButton,
+    PrivacyPolicy,
     Tick,
     TextField,
   },
@@ -139,6 +148,7 @@ export default {
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
   },
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -186,6 +196,11 @@ export default {
 
     startPayment() {
       this.clearErrorMessage();
+
+      if (!this.validateAgreements()) {
+        return;
+      }
+
       this.paymentEmitter.emit('braintreePaymentStart');
 
       const { publicHash } = this.selectedVaultMethod;
@@ -296,6 +311,7 @@ export default {
             payment_method_nonce: response.nonce,
             public_hash: publicHash,
           },
+          extension_attributes: getPaymentExtensionAttributes(),
         },
       };
     },

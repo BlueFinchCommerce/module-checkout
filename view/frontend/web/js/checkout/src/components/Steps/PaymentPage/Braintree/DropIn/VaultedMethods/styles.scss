@@ -5,7 +5,7 @@
   gap: var(--indent__base);
 
   .braintree-vaulted-methods-container {
-    margin: var(--indent__base) 0 var(--indent__xl);
+    margin: var(--indent__base) 0;
 
     &:empty {
       margin: 0;
