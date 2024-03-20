@@ -131,9 +131,6 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
-    ...mapActions(usePaymentStore, [
-      'setErrorMessage',
-    ]),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
@@ -177,7 +174,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       return expressPaymentOnClickDataLayer(resolve, reject, type);

@@ -107,23 +107,24 @@ export default {
           },
           fundingSource: window.paypal.FUNDING.PAYPAL,
           offerCredit: false,
-          createOrder: () => {
+          createOrder: () => paypalInstance.createPayment({
+            amount: this.cartGrandTotal / 100,
+            flow: 'checkout',
+            currency: this.currencyCode,
+            enableShippingAddress: true,
+            intent: 'capture',
+            lineItems: this.getPayPalLineItems(),
+            shippingOptions: [],
+          }),
+          onClick: () => {
             // Check that the agreements (if any) are valid.
             const isValid = this.validateAgreements();
 
             if (!isValid) {
-              return Promise.reject(new Error(this.$t('agreements.paymentErrorMessage')));
+              return false;
             }
 
-            return paypalInstance.createPayment({
-              amount: this.cartGrandTotal / 100,
-              flow: 'checkout',
-              currency: this.currencyCode,
-              enableShippingAddress: true,
-              intent: 'capture',
-              lineItems: this.getPayPalLineItems(),
-              shippingOptions: [],
-            });
+            return true;
           },
           onShippingChange: async (data) => {
             const address = {

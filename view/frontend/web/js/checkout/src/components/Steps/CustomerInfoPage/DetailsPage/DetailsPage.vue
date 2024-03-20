@@ -6,7 +6,7 @@
         <TextField :text="instantCheckoutText" />
       </div>
       <Recaptcha id="placeOrder" />
-      <Agreements />
+      <Agreements id="detailsPage" />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"

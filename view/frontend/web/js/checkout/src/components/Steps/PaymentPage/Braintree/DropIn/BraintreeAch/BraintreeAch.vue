@@ -94,9 +94,9 @@
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
-          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
-          <Agreements />
+          <Agreements id="braintreeAch" />
           <PrivacyPolicy />
+          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
             label="Pay"
             primary
@@ -111,6 +111,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -202,6 +203,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -263,6 +265,11 @@ export default {
 
       if (!this.achMandate) {
         this.setErrorMessage('You must accept proof of authorization.');
+        this.paymentEmitter.emit('braintreePaymentError');
+        return false;
+      }
+
+      if (!this.validateAgreements()) {
         this.paymentEmitter.emit('braintreePaymentError');
         return false;
       }

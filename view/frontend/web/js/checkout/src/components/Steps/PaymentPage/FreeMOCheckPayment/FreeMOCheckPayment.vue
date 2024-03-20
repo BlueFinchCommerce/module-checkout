@@ -11,13 +11,16 @@
       @click="selectPaymentMethod"
       @keydown="selectPaymentMethod"
     />
-    <Agreements v-if="isMethodSelected" />
+    <Agreements
+      v-if="isMethodSelected"
+      id="freeMoPayment"
+    />
     <PrivacyPolicy v-if="isMethodSelected" />
     <MyButton
+      v-if="isMethodSelected"
       class="free-payment-button"
       :label="$t('paymentStep.payNow')"
       primary
-      v-if="isMethodSelected"
       :disabled="buttonDisabled"
       @click="createPayment()"
     />

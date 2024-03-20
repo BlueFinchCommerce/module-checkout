@@ -134,7 +134,6 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
         return;
       }
 

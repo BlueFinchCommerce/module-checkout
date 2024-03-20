@@ -19,7 +19,7 @@
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
     />
-    <Agreements />
+    <Agreements id="braintreeNew" />
     <PrivacyPolicy />
     <MyButton
       v-if="selectedMethod === 'card'"
@@ -33,6 +33,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -207,6 +208,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -239,6 +241,12 @@ export default {
 
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
+        if (!this.validateAgreements()) {
+          const error = new Error();
+          error.name = 'DropinError';
+          reject(error);
+        }
+
         if (!this.instance) {
           reject(new Error('Unable to initialise payment components.'));
         }

@@ -145,7 +145,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return;
       }
 
       const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({

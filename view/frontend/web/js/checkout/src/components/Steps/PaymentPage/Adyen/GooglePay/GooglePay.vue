@@ -207,7 +207,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       return expressPaymentOnClickDataLayer(resolve, reject, type);

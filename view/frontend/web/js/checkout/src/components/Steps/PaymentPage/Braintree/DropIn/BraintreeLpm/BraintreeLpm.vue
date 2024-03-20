@@ -44,7 +44,7 @@
         v-show="selectedMethod === 'braintree-lpm'"
         class="braintree-lpm-container"
       >
-        <Agreements />
+        <Agreements id="braintreeLpm" />
         <PrivacyPolicy />
         <button
           v-for="allowedMethod in lpm.allowedMethods"
@@ -66,6 +66,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -131,6 +132,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -151,6 +153,11 @@ export default {
     async initialiseLpm(allowedMethod) {
       this.clearErrorMessage();
       this.paymentEmitter.emit('braintreePaymentStart');
+
+      if (!this.validateAgreements()) {
+        this.paymentEmitter.emit('braintreePaymentError');
+        return false;
+      }
 
       const lpmInstance = await braintree.localPayment.create({
         client: this.clientInstance,
