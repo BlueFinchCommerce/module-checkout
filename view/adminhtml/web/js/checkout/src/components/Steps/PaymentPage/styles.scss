@@ -39,7 +39,7 @@
 
 @mixin largeWidth() {
   .payment-page {
-    padding: 0;
+    padding: var(--indent__base) 0 0;
 
     .payment-form {
       background: var(--payment-form-background, var(--steps__background-color--desktop));

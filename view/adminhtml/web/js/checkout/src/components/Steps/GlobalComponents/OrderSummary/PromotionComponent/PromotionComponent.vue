@@ -145,21 +145,24 @@ export default {
     },
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getCart();
-    if (this.amastyEnabled) {
-      await this.getAmastyShippingData();
-    }
-    await this.getCrosssells();
-
     this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
-      || this.$t('orderSummary.crossSellsTitle');
+     || this.$t('orderSummary.crossSellsTitle');
+
+    document.addEventListener(this.freeShippingTextId, this.setFreeShippingText);
+  },
+  unmounted() {
+    document.removeEventListener(this.freeShippingTextId, this.setFreeShippingText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCartStore, [
       'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
+
+    setFreeShippingText(event) {
+      this.freeShippingText = event?.detail || this.$t('orderSummary.freeShippingAvailable');
+    },
+
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;
     },

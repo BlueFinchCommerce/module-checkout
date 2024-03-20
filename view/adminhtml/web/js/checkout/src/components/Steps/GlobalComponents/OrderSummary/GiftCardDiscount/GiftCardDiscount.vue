@@ -128,6 +128,17 @@ export default {
     this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
     this.giftCardPlaceholderText = window.geneCheckout?.[this.giftCardPlaceholderTextId]
       || this.$t('orderSummary.giftCardDiscount.placeholder');
+
+    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.addEventListener(this.giftCardTextId, this.setGiftCardText);
+    document.addEventListener(this.giftCardPlaceholderTextId, this.setGiftCardPlaceholderText);
+  },
+  unmounted() {
+    document.removeEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.removeEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.removeEventListener(this.giftCardTextId, this.setGiftCardText);
+    document.removeEventListener(this.giftCardPlaceholderTextId, this.setGiftCardPlaceholderText);
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),
@@ -140,10 +151,23 @@ export default {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
 
-    async dispatchDiscountCode(giftCardCode) {
-      this.loadingDiscountCode = true;
-      await this.addGiftCardCode(giftCardCode);
-      this.loadingDiscountCode = false;
+    setApplyButtonText(event) {
+      this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');
+    },
+    setRemoveButtonText(event) {
+      this.removeButtonText = event?.detail || this.$t('orderSummary.removeBtn');
+    },
+    setGiftCardText(event) {
+      this.giftCardText = event?.detail || this.$t('orderSummary.giftDiscountTitle');
+    },
+    setGiftCardPlaceholderText(event) {
+      this.giftCardPlaceholderText = event?.detail || this.$t('orderSummary.giftCardDiscount.placeholder');
+    },
+
+    async dispatchDiscountCode() {
+      // this.loadingDiscountCode = true;
+      // await this.addGiftCardCode(giftCardCode);
+      // this.loadingDiscountCode = false;
     },
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

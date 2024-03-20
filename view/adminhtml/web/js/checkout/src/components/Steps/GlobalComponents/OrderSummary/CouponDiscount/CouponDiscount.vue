@@ -122,13 +122,22 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
     this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId]
       || this.$t('orderSummary.couponDiscountTitle');
     this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountTextId]
       || this.$t('orderSummary.couponDiscount.placeholder');
+    document.addEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.addEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.addEventListener(this.couponDiscountTextId, this.setcouponDiscountText);
+    document.addEventListener(this.couponDiscountPlaceholderTextId, this.setCouponDiscountPlaceholderText);
+  },
+  unmounted() {
+    document.removeEventListener(this.applyButtonTextId, this.setApplyButtonText);
+    document.removeEventListener(this.removeButtonTextId, this.setRemoveButtonText);
+    document.removeEventListener(this.couponDiscountTextId, this.setcouponDiscountText);
+    document.removeEventListener(this.couponDiscountPlaceholderTextId, this.setCouponDiscountPlaceholderText);
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
@@ -141,10 +150,24 @@ export default {
     ...mapActions(useCartStore, ['addDiscountCode', 'removeDiscountCode']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
 
-    async dispatchDiscountCode(discountCode) {
-      this.loadingDiscountCode = true;
-      await this.addDiscountCode(discountCode);
-      this.loadingDiscountCode = false;
+    setApplyButtonText(event) {
+      this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');
+    },
+    setRemoveButtonText(event) {
+      this.removeButtonText = event?.detail || this.$t('orderSummary.removeBtn');
+    },
+    setcouponDiscountText(event) {
+      this.couponDiscountText = event?.detail || this.$t('orderSummary.couponDiscountTitle');
+    },
+    setCouponDiscountPlaceholderText(event) {
+      this.couponDiscountPlaceholderText = event?.detail || this.$t('orderSummary.couponDiscount.placeholder');
+    },
+
+    async dispatchDiscountCode() {
+      // Commented out to prevent functionality only for UI designer
+      // this.loadingDiscountCode = true;
+      // await this.addDiscountCode(discountCode);
+      // this.loadingDiscountCode = false;
     },
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;
