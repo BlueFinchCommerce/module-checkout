@@ -36,7 +36,7 @@
           autocomplete="email"
           type="email"
           :disabled="emailEntered"
-          @blur="emailAddressBlur"
+          @blur="emailAddressBlur($event)"
           @keyup="emailAddressChange"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
@@ -232,6 +232,7 @@ export default {
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
       continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
+      tabKeyPressed: false,
     };
   },
   computed: {
@@ -257,6 +258,7 @@ export default {
       description: 'login',
     });
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    document.addEventListener('keydown', this.handleKeyDown);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -349,6 +351,12 @@ export default {
       this.emailErrorMessage = hasError ? this.$t('errorMessages.emailErrorMessage') : '';
     },
 
+    handleKeyDown(event) {
+      if (event.key === 'Tab') {
+        this.tabKeyPressed = true;
+      }
+    },
+
     emailAddressBlur() {
       // On blur validate the email and show error if invalid.
       if (!isEmailValid(this.customer.email.toLowerCase())) {
@@ -356,7 +364,17 @@ export default {
         this.setEmailErrorState(this.customer.email.length > 0);
       } else {
         this.emailValid = true;
+
+        // If focus was lost due to a Tab key press and email
+        // is valid, and focus hasn't returned to email yet, focus back on the email field
+        if (this.tabKeyPressed && this.emailValid && !this.focusReturnedToEmail) {
+          this.$refs.email.$refs.input.focus();
+          this.focusReturnedToEmail = true; // Update the flag to indicate that focus has returned to email field
+        }
       }
+
+      // Reset the flag for Tab key press
+      this.tabKeyPressed = false;
     },
 
     async emailAddressChange() {
