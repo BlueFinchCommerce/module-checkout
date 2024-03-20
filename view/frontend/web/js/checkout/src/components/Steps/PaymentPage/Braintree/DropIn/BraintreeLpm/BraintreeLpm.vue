@@ -156,7 +156,7 @@ export default {
 
       if (!this.validateAgreements()) {
         this.paymentEmitter.emit('braintreePaymentError');
-        return false;
+        return;
       }
 
       const lpmInstance = await braintree.localPayment.create({

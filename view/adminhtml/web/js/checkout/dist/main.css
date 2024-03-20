@@ -7882,7 +7882,7 @@ a[data-v-1e58dc70] {
     gap: var(--indent__base);
     margin-top: var(--indent__m);
 }
-}.braintree-lpm-container[data-v-431a92f5] {
+}.braintree-lpm-container[data-v-0080a21c] {
   border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
   border-bottom-left-radius: var(--base__border-radius-large);
   border-bottom-right-radius: var(--base__border-radius-large);
@@ -7891,10 +7891,10 @@ a[data-v-1e58dc70] {
   gap: var(--indent__m);
   padding: 0 var(--indent__base) var(--indent__base);
 }
-.braintree-lpm-method[data-v-431a92f5] {
+.braintree-lpm-method[data-v-0080a21c] {
   height: var(--button__height);
 }
-.braintree-lpm-method img[data-v-431a92f5] {
+.braintree-lpm-method img[data-v-0080a21c] {
   height: 100%;
   padding: var(--indent__xs);
 }#gene-better-checkout-root .braintree-drop-in .braintree-dropin {

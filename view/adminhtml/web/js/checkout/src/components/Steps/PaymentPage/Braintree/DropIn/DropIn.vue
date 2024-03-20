@@ -96,9 +96,9 @@ export default {
       this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
         || this.$t('paymentStep.titleGuest');
 
-    document.addEventListener(this.paymentStepTextStoredId, this.setPaymentStepText);
-    document.addEventListener(this.paymentStepTextNewId, this.setPaymentStepText);
-    document.addEventListener(this.paymentStepTextGuestId, this.setPaymentStepText);
+      document.addEventListener(this.paymentStepTextStoredId, this.setPaymentStepText);
+      document.addEventListener(this.paymentStepTextNewId, this.setPaymentStepText);
+      document.addEventListener(this.paymentStepTextGuestId, this.setPaymentStepText);
     }
   },
   methods: {
@@ -116,7 +116,7 @@ export default {
         this.paymentStepText = this.$t('paymentStep.titleGuest');
       }
     },
-  }
+  },
 };
 </script>
 
