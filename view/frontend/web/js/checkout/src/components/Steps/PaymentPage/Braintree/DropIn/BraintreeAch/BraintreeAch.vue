@@ -94,6 +94,8 @@
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
+          <Agreements id="braintreeAch" />
+          <PrivacyPolicy />
           <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
             label="Pay"
@@ -109,6 +111,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -116,8 +119,10 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import SelectInput from '@/components/Core/ActionComponents/Inputs/Select/Select.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
@@ -137,8 +142,10 @@ import braintree from 'braintree-web';
 export default {
   name: 'BraintreeAch',
   components: {
+    Agreements,
     CheckboxComponent,
     MyButton,
+    PrivacyPolicy,
     SelectInput,
     TextField,
     TextInput,
@@ -196,6 +203,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -257,6 +265,11 @@ export default {
 
       if (!this.achMandate) {
         this.setErrorMessage('You must accept proof of authorization.');
+        this.paymentEmitter.emit('braintreePaymentError');
+        return false;
+      }
+
+      if (!this.validateAgreements()) {
         this.paymentEmitter.emit('braintreePaymentError');
         return false;
       }

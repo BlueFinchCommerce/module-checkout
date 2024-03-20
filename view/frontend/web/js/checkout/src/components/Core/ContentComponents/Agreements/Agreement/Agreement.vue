@@ -2,7 +2,7 @@
   <div class="agreement-container">
     <div v-if="agreement.mode === 'MANUAL'">
       <CheckboxComponent
-        :id="agreement.agreement_id"
+        :id="`${agreement.agreement_id}-${id}`"
         :checked="agreement.approved"
         :change-handler="changeAgreement"
       >
@@ -92,6 +92,10 @@ export default {
       type: Object,
       required: true,
     },
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -120,6 +124,6 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./styles";
 </style>

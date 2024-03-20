@@ -13,7 +13,6 @@ import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
@@ -131,9 +130,6 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
-    ...mapActions(usePaymentStore, [
-      'setErrorMessage',
-    ]),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
@@ -177,7 +173,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       return expressPaymentOnClickDataLayer(resolve, reject, type);
@@ -365,6 +361,7 @@ export default {
         telephone,
         firstname: address.givenName,
         lastname: address.familyName,
+        company: address.company,
         street: address.addressLines,
         city: address.locality,
         region: address.administrativeArea,

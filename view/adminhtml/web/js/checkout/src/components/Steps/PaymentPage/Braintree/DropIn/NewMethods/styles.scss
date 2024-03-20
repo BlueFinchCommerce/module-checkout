@@ -1,40 +1,3 @@
-.braintree-payment {
-  display: grid;
-  gap: var(--indent__base);
-  margin-bottom: var(--indent__base);
-
-  &__title {
-    display: flex;
-    padding-bottom: var(--indent__s);
-    margin-bottom: var(--braintree-payment-title-margin, 0);
-    align-items: center;
-
-    .divider-line {
-      border-bottom: var(--divider__border);
-      margin-left: var(--indent__base);
-      flex-grow: 1;
-      display: var(--divider-line-display, block);
-    }
-  }
-
-  &__icon {
-    display: var(--braintree-payment-icon__display);
-
-    img {
-      width: 24px;
-    }
-  }
-
-  &__header {
-    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
-    color: var(--font__color);
-    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
-    font-family: var(--payment-page-header-font-family, var(--font-family__copy));
-    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
-    white-space: nowrap;
-  }
-}
-
 #gene-better-checkout-root .braintree-drop-in {
   .braintree-dropin {
     font-family: var(--font-family__copy);
@@ -79,18 +42,10 @@
           &__flexible-fields {
             gap: var(--indent__base);
             margin-top: var(--indent__base);
-
-            .braintree-form__field-group {
-              .braintree-form {
-                &__label,
-                &__field {
-                  flex: 1;
-                }
-              }
-            }
           }
 
           &__field-group {
+            margin-bottom: 0;
             padding-left: 0;
 
             &--has-error {
@@ -133,6 +88,10 @@
             font-weight: var(--font-weight__regular);
             margin-left: 0;
           }
+
+          &__notice-of-collection {
+            flex: 100%;
+          }
         }
       }
 
@@ -156,6 +115,7 @@
       margin: 0 0 var(--indent__m);
 
       .braintree-store-method {
+        margin: var(--indent__s) 0 var(--indent__base);
         order: -1;
       }
     }

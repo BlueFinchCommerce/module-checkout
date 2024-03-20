@@ -134,7 +134,6 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
         return;
       }
 
@@ -379,6 +378,7 @@ export default {
         telephone,
         firstname: address.givenName,
         lastname: address.familyName,
+        company: address.company || '',
         street: address.addressLines,
         city: address.locality,
         region: address.administrativeArea,

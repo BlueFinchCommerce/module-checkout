@@ -19,7 +19,7 @@
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
     >
-      <Agreements />
+      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
       <PrivacyPolicy />
     </teleport>
     <teleport
