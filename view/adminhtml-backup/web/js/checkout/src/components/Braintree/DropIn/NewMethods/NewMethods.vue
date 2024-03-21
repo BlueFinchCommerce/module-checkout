@@ -102,7 +102,7 @@ export default {
       braintree_paypal: 'paypal',
     };
 
-    const sortedAvailableMethods = Object.keys(this.map).toSorted((a, b) => (
+    const sortedAvailableMethods = Object.keys(this.map).sort((a, b) => (
       this.getPaymentPriority(a) - this.getPaymentPriority(b)
     ));
     this.paymentOptionPriority = sortedAvailableMethods.map((method) => this.map[method]);
