@@ -80,7 +80,7 @@
         <div>
           <TextInput
             v-if="displayState && !getRegionOptions(address_type).length"
-            v-model="selectedAddressType.region"
+            v-model="selectedAddressType.region.region"
             :class="{'field-valid': regionValid
             && !getAddressFieldHasError(address_type, 'State/Region')}"
             type="text"
@@ -105,7 +105,7 @@
         <!-- State/Region -->
         <SelectInput
           v-if="displayState && getRegionOptions(address_type).length"
-          v-model="selectedAddressType.region_id"
+          v-model="selectedAddressType.region.region_id"
           :options="getRegionOptions(address_type)"
           :error="getAddressFieldHasError(address_type, 'State/Region')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
@@ -256,7 +256,10 @@ export default {
   },
   created() {
     this.setupCountry();
-    this.updateRegionRequired(this.address_type);
+
+    if (!this.selected[this.address_type].region.region) {
+      this.updateRegionRequired(this.address_type);
+    }
 
     const customerStore = useCustomerStore();
     customerStore.$subscribe((mutation) => {
@@ -319,10 +322,17 @@ export default {
         const regionId = parseInt(event.target.value, 10);
         const region = availableRegions.find((rgion) => rgion.option.value === regionId);
         if (region) {
-          this.selectedAddressType.region = region.option.name;
+          this.selectedAddressType.region = {
+            region: region.option.name,
+            region_code: region.option.code,
+            region_id: region.option.value,
+          };
         } else {
-          this.selectedAddressType.region = '';
-          this.selectedAddressType.region_id = 0;
+          this.selectedAddressType.region = {
+            region: '',
+            region_code: '',
+            region_id: 0,
+          };
         }
       }
     },
