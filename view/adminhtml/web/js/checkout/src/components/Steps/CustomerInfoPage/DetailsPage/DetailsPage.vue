@@ -6,7 +6,7 @@
         <TextField :text="instantCheckoutText" />
       </div>
       <Recaptcha id="placeOrder" />
-      <Agreements />
+      <Agreements id="detailsPage" />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
@@ -74,6 +74,11 @@
         @selectedSavedAddress="selectedSavedAddress"
       />
 
+      <div class="address-form-error-message">
+        <ErrorMessage v-if="addressInfoWrong"
+                      :message="$t('errorMessages.addressWrongError')"/>
+      </div>
+
       <div
         v-if="emailEntered && (!selected[address_type].id
           || (selected[address_type].id === 'custom' && selected[address_type].editing))
@@ -84,7 +89,7 @@
           class="delivery-section"
         >
           <div v-if="customer.addresses.length <= 0"
-            class="details-form-title">
+               class="details-form-title">
             <YourDetails fill="black" />
             <TextField
               :text="$t('yourDetailsSection.title')"
@@ -164,6 +169,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
           tabindex="0"
@@ -189,7 +195,7 @@
         type="submit"
         primary
         :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-        :disabled="!buttonEnabled || (!customer.id && !customerInfoValidation)"
+        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -302,6 +308,7 @@ export default {
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
       buttonEnabled: false,
+      addressInfoWrong: false,
     };
   },
   computed: {
@@ -371,6 +378,7 @@ export default {
       'setAddressAsCustom',
       'setAddressAsEditing',
       'validateAddress',
+      'addAddressError',
       'validateNameField',
       'validatePhone',
       'validatePostcode',
@@ -390,23 +398,18 @@ export default {
     updateButtonState() {
       const addressType = this.address_type;
 
-      // If we're on shipping then names are valid in this scenario.
-      // If we're on billing then validate the name fields.
-      const areNamesValid = addressType !== 'billing'
-        || (
-          this.validateNameField(
-            addressType,
-            'First name',
-            this.selected[addressType].firstname,
-          ) && this.validateNameField(
-            addressType,
-            'Last name',
-            this.selected[addressType].firstname,
-          ) && this.validatePhone(
-            addressType,
-            this.selected[addressType].telephone,
-          )
-        );
+      const areNamesValid = this.validateNameField(
+        addressType,
+        'First name',
+        this.selected[addressType].firstname,
+      ) && this.validateNameField(
+        addressType,
+        'Last name',
+        this.selected[addressType].firstname,
+      ) && this.validatePhone(
+        addressType,
+        this.selected[addressType].telephone,
+      );
 
       const validAddress = this.validateAddress(addressType);
       const validPostcode = this.validatePostcode(this.address_type);
@@ -420,7 +423,7 @@ export default {
 
       if (isValid) {
         if (this.savedAddressID === null
-        || this.selected[this.address_type].id === null) {
+          || this.selected[this.address_type].id === null) {
           this.setAddressAsCustom(this.address_type);
         }
 
@@ -441,6 +444,7 @@ export default {
           this.addAddressError(this.address_type, value);
         });
         this.requiredErrorMessage = this.selected.formErrors.message[this.address_type];
+        this.addressInfoWrong = true;
       }
     },
     editAddress() {
@@ -452,6 +456,9 @@ export default {
     },
     passSelectedItemId(value) {
       this.savedAddressID = value;
+      if (value !== null) {
+        this.buttonEnabled = true;
+      }
     },
     selectedSavedAddress(value) {
       this.isSavedAddressSelected = value;

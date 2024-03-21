@@ -6,6 +6,7 @@ export default defineStore('agreementStore', {
   state: () => ({
     cache: {},
     agreements: {},
+    showError: false,
   }),
   getters: {
     agreementIds: (state) => {
@@ -40,6 +41,7 @@ export default defineStore('agreementStore', {
             approved,
           },
         },
+        showError: false,
       });
     },
 
@@ -71,6 +73,12 @@ export default defineStore('agreementStore', {
       const unaprovedAgreements = updatedAgreements.some((agreement) => (
         agreement.mode === 'MANUAL' && agreement.valid === false
       ));
+
+      if (unaprovedAgreements) {
+        this.setData({
+          showError: true,
+        });
+      }
 
       return !unaprovedAgreements;
     },

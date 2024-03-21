@@ -145,7 +145,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
@@ -425,6 +425,7 @@ export default {
         ],
         postcode: address.postalCode,
         country_code: address.countryCode,
+        company: address.company || '',
         email,
         firstname,
         lastname: lastname.length ? lastname.join(' ') : 'UNKNOWN',

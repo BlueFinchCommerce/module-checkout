@@ -44,6 +44,8 @@
         v-show="selectedMethod === 'braintree-lpm'"
         class="braintree-lpm-container"
       >
+        <Agreements id="braintreeLpm" />
+        <PrivacyPolicy />
         <button
           v-for="allowedMethod in lpm.allowedMethods"
           v-show="!loading"
@@ -64,11 +66,16 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+
+// Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 
 // Helpers
 import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
@@ -94,6 +101,10 @@ export default {
       selectedMethod: null,
       lpmLocation: null,
     };
+  },
+  components: {
+    Agreements,
+    PrivacyPolicy,
   },
   computed: {
     ...mapState(useBraintreeStore, [
@@ -121,6 +132,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -141,6 +153,11 @@ export default {
     async initialiseLpm(allowedMethod) {
       this.clearErrorMessage();
       this.paymentEmitter.emit('braintreePaymentStart');
+
+      if (!this.validateAgreements()) {
+        this.paymentEmitter.emit('braintreePaymentError');
+        return;
+      }
 
       const lpmInstance = await braintree.localPayment.create({
         client: this.clientInstance,

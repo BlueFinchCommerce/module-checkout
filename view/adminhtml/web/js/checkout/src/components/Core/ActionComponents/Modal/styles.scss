@@ -25,13 +25,16 @@
   display: flex;
   flex-direction: column;
   left: 0;
-  margin: 0 auto;
+  margin: 0 var(--indent__base);
   max-width: var(--modal-width, 800px);
   overflow-x: auto;
   position: fixed;
   right: 0;
-  top: 0;
+  top: 50px;
   z-index: 400;
+  border-radius: var(--base__border-radius-large);
+  padding: var(--indent__s);
+  max-height: max-content;
 
   &-header {
     color: var(--color__primary-dark-blue);
@@ -158,29 +161,15 @@
 //Styles for desktop
 
 @mixin largeWidth() {
+  .modal {
+    margin: 0 auto;
+  }
+
   .amasty-modal {
     max-height: var(--modal-desktop-max-height, none);
 
     .modal-body {
       overflow: var(--modal-desktop-overflow, auto);
     }
-  }
-
-  .rvvup-modal {
-    transform: translateY(-50%);
-    top: 50%;
-    bottom: auto;
-    max-width: 550px;
-  }
-}
-
-.mock-laptop,
-.mock-desktop {
-    @include largeWidth;
-}
-
-@media screen and (min-width: $screen__m) {
-  .mock-full {
-      @include largeWidth;
   }
 }

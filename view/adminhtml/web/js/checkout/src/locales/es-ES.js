@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Modificar sus datos de envío',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Se ha introducido un carácter no válido.',
     firstNameErrorMessage: 'Introduzca un nombre válido',
     lastNameErrorMessage: 'Introduzca un apellido válido',

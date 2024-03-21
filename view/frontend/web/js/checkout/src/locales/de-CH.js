@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Redigera leveransinformation',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Vänligen ange giltigt förnamn',
     lastNameErrorMessage: 'Vänligen ange giltigt efternamn',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Jag bekräftar att jag har läst och accepterar',
     errorMessage: 'Detta är ett obligatoriskt fält.',
   },

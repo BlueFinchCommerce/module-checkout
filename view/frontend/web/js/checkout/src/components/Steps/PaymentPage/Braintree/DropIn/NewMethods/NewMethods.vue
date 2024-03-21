@@ -1,35 +1,28 @@
 <template>
   <div
-    class="braintree-payment__title"
-  >
-    <Payment
-      class="braintree-payment__icon"
-      fill="black"
-    />
-    <TextField
-      class="braintree-payment__header"
-      :text="paymentStepText"
-    />
-    <div class="divider-line" />
-  </div>
-  <div
     id="braintree-drop-in"
     ref="braintreeContainer"
     class="braintree-drop-in"
   />
   <teleport
-    v-if="saveVaultLocation !== ''"
-    :to="saveVaultLocation"
+    v-if="additionalComponents !== ''"
+    :to="additionalComponents"
   >
     <CheckboxComponent
-      v-if="isLoggedIn && vaultActive"
+      v-if="isLoggedIn && (
+        (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
+        || (selectedMethod === 'paypal' && paypal.vaultActive)
+      )"
       id="braintree-store-method"
       class="braintree-store-method"
       :checked="storeMethod"
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
     />
+    <Agreements id="braintreeNew" />
+    <PrivacyPolicy />
     <MyButton
+      v-if="selectedMethod === 'card'"
       label="Pay"
       primary
       @click="startPayment()"
@@ -40,6 +33,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -47,10 +41,10 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
+import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
-import Payment from '@/components/Core/Icons/Payment/Payment.vue';
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 
 // Helpers
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
@@ -66,19 +60,19 @@ import braintreeWebDropIn from 'braintree-web-drop-in';
 export default {
   name: 'BraintreeNewMethods',
   components: {
+    Agreements,
     CheckboxComponent,
     MyButton,
-    Payment,
-    TextField,
+    PrivacyPolicy,
   },
   data() {
     return {
       instance: null,
       storeMethod: false,
-      saveVaultLocation: '',
+      additionalComponents: '',
       paymentOptionPriority: [],
       map: {},
-      paymentStepText: '',
+      selectedMethod: null,
     };
   },
   computed: {
@@ -108,15 +102,6 @@ export default {
     await this.getBraintreeConfig();
     await this.createClientToken();
 
-    // The titles need to be reflective of the state we're in.
-    if (Object.values(this.vaultedMethods).length) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
-        || this.$t('paymentStep.titleNew');
-    } else {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
-        || this.$t('paymentStep.titleGuest');
-    }
-
     const total = (this.cartGrandTotal / 100).toString();
 
     this.map = {
@@ -137,13 +122,23 @@ export default {
       container: '#braintree-drop-in',
       threeDSecure: false,
       paymentOptionPriority: this.paymentOptionPriority,
-      card: {
+      translations: {
+        Card: this.getPaymentMethodTitle('braintree'),
+        PayPal: this.getPaymentMethodTitle('braintree_paypal'),
+      },
+    };
+
+    if (this.isPaymentMethodAvailable('braintree')) {
+      options.card = {
         vault: {
           allowVaultCardOverride: true,
           vault: this.isLoggedIn,
         },
-      },
-      applePay: {
+      };
+    }
+
+    if (this.isPaymentMethodAvailable('braintree_applepay')) {
+      options.applePay = {
         displayName: this.websiteName,
         paymentRequest: {
           total: {
@@ -151,8 +146,11 @@ export default {
             amount: total,
           },
         },
-      },
-      googlePay: {
+      };
+    }
+
+    if (this.isPaymentMethodAvailable('braintree_googlepay')) {
+      options.googlePay = {
         merchantId: this.google.merchantId,
         googlePayVersion: 2,
         transactionInfo: {
@@ -175,8 +173,11 @@ export default {
         button: {
           buttonColor: this.google.buttonColor,
         },
-      },
-      paypal: {
+      };
+    }
+
+    if (this.isPaymentMethodAvailable('braintree_paypal')) {
+      options.paypal = {
         flow: 'checkout',
         amount: total,
         currency: this.currencyCode,
@@ -186,16 +187,16 @@ export default {
           color: this.paypal.buttonColor,
           label: this.paypal.buttonLabel,
           shape: this.paypal.buttonShape,
+          size: 'responsive',
         },
-      },
-      venmo: {
+      };
+    }
+
+    if (this.isPaymentMethodAvailable('braintree_venmo')) {
+      options.venmo = {
         allowDesktop: true,
-      },
-      translations: {
-        Card: this.getPaymentMethodTitle('braintree'),
-        PayPal: this.getPaymentMethodTitle('braintree_paypal'),
-      },
-    };
+      };
+    }
 
     if (this.threeDSEnabled) {
       options.threeDSecure = {
@@ -207,6 +208,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'getBraintreeConfig',
       'createClientToken',
@@ -239,6 +241,13 @@ export default {
 
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
+        if (!this.validateAgreements()) {
+          const error = new Error();
+          error.name = 'DropinError';
+          reject(error);
+          return;
+        }
+
         if (!this.instance) {
           reject(new Error('Unable to initialise payment components.'));
         }
@@ -318,8 +327,17 @@ export default {
 
       this.attachEventListeners(instance);
       this.movePaymentContainers();
+      this.selectFirstPaymentOption();
 
       this.paymentEmitter.emit('braintreeInitComplete');
+    },
+
+    selectFirstPaymentOption() {
+      const sheetContainer = this.$refs.braintreeContainer.querySelector('.braintree-sheet--active');
+      const firstOption = sheetContainer.querySelector('.braintree-option');
+      if (firstOption) {
+        firstOption.classList.add('braintree-option__selected');
+      }
     },
 
     attachEventListeners(instance) {
@@ -336,12 +354,16 @@ export default {
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
           this.paymentEmitter.emit('paymentMethodSelected', { id });
 
+          this.selectedMethod = newViewId;
+
           if (newViewId === 'card') {
-            this.saveVaultLocation = '.braintree-form__flexible-fields';
-          } else if (newViewId === 'paypal' && this.paypal.vaultActive) {
-            this.saveVaultLocation = 'div[data-braintree-id="paypal-button"]';
-          } else if (newViewId === 'googlePay' && this.google.vaultActive) {
-            this.saveVaultLocation = 'div[data-braintree-id="google-pay-button"]';
+            this.additionalComponents = '.braintree-form__flexible-fields';
+          } else if (newViewId === 'paypal') {
+            this.additionalComponents = 'div[data-braintree-id="paypal-button"]';
+          } else if (newViewId === 'googlePay') {
+            this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
+          } else if (newViewId === 'venmo') {
+            this.additionalComponents = '.braintree-venmo .braintree-sheet__content';
           }
         }
       });

@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     customValidation() {
-      const inputValue = this.modelValue;
+      const inputValue = this.$refs.input.value;
       const inputType = this.type;
       const isValid = sanitiseInputValue(inputValue, inputType);
 

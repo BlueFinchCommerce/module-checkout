@@ -130,6 +130,7 @@ export default {
     editShippingButtonLabel: 'Modifier votre adresse d\'expédition',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Caractère saisi non valide.',
     firstNameErrorMessage: 'Veuillez saisir un prénom valide',
     lastNameErrorMessage: 'Veuillez saisir un nom valide',
@@ -218,6 +219,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Je confirme que j\'ai lu et que j\'accepte les',
     errorMessage: 'Ce champ est obligatoire.',
   },

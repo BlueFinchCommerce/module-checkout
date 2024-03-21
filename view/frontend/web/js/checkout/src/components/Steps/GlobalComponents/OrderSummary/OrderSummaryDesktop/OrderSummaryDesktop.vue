@@ -1,12 +1,12 @@
 <template>
   <div class="order-summary-desktop">
+    <PromotionComponent />
     <CouponDiscount />
     <GiftCardDiscount />
     <div class="order-summary-desktop-items">
       <OrderSummaryItem/>
     </div>
     <OrderSummaryTotal/>
-    <PromotionComponent />
   </div>
 </template>
 <script>

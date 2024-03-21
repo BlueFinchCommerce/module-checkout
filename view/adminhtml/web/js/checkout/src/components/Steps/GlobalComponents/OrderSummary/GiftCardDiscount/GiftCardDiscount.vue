@@ -5,9 +5,10 @@
   <div
     class="gift-discount-trigger dropdown-button"
     data-cy="dropdown-trigger-gift"
+    tabindex="0"
     :class="{opened: isDropDownVisible}"
     @click="openDropDown"
-    @keydown="openDropDown"
+    @keydown="openDropDownKeyDown($event)"
   >
     <div class="gift-discount-icon-container">
       <img
@@ -170,6 +171,12 @@ export default {
     },
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;
+    },
+    openDropDownKeyDown(event) {
+      // Check if the event is a click or if the key pressed is "Enter" (key code 13)
+      if (event.type === 'keydown' && event.key === 'Enter') {
+        this.isDropDownVisible = !this.isDropDownVisible;
+      }
     },
   },
 };

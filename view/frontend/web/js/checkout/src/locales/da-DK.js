@@ -131,6 +131,7 @@ export default {
   editDetailsButtonLabel: 'Ændre oplysninger',
   editShippingButtonLabel: 'Ændre forsendelsesoplysninger',
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Indtast venligst et gyldigt fornavn',
     lastNameErrorMessage: 'Indtast venligst et gyldigt efternavn',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Jeg accepterer',
     errorMessage: 'Dette er et påkrævet felt',
   },

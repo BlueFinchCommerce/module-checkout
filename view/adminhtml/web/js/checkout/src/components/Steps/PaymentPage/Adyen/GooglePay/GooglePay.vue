@@ -207,7 +207,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       return expressPaymentOnClickDataLayer(resolve, reject, type);
@@ -385,6 +385,7 @@ export default {
           address.address1,
           address.address2,
         ],
+        company: address.company || '',
         postcode: address.postalCode,
         country_code: address.countryCode,
         email,

@@ -33,7 +33,7 @@
       ? $t('errorMessages.lastNameErrorMessage') : ''"
       type="text"
       required
-      autocomplete="family-name"
+      autocomplete="name"
       @keyup="textChange('Last name')"
       @focusout="validateNameField(address_type, 'Last name', selected[address_type].lastname, true)"
     />
