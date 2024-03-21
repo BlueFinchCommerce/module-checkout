@@ -116,7 +116,30 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Main Background Colour (Large Screens - Laptop Screens & Above)')) ?>
                                             </span>
                                         </label>
-                                        <input id="gene-bettercheckout-page-background-color-desktop" data-type="color-picker" data-css-variable="--page__background-color--desktop" placeholder="#f5f9fe" />
+                                        <input id="gene-bettercheckout-page-background-color-desktop" data-type="color-picker" data-css-variable="--page__background-color--desktop" placeholder="#f5f5f5" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Footer')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-footer-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Footer Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-footer-color" data-type="color-picker" data-css-variable="--footer__background-color" placeholder="#063967" />
                                     </div>
                                 </div>
                             </div>
@@ -794,6 +817,71 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Notifications')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-success-background-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Success Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-success-background-color" data-type="color-picker" data-css-variable="--notification__success-background-color" placeholder="#e9f8eb"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-success-border-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Success Border Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-success-border-color" data-type="color-picker" data-css-variable="--notification__succss-border-color" placeholder="#24b53b"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-error-background-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Error Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-error-background-color" data-type="color-picker" data-css-variable="--notification__error-background-color" placeholder="#f8e6e6"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-error-border-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Error Border Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-error-border-color" data-type="color-picker" data-css-variable="--notification__error-border-color" placeholder="#bd0005"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-notification-border-stroke-weight">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Notification Border Stroke Weight')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-notification-border-stroke-weight" type="number" placeholder="2" max="10"/>
+                                        <input class="hidden" id="gene-bettercheckout-notification-border-stroke-weight_hidden" type="text" data-css-variable="--notification__border-weight" placeholder="2px" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-notification-border-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Notification Border Radius')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-notification-border-radius" type="number" placeholder="4" max="10"/>
+                                        <input class="hidden" id="gene-bettercheckout-notification-border-radius_hidden" type="text" data-css-variable="--notification__border-radius" placeholder="4px" />
                                     </div>
                                 </div>
                             </div>

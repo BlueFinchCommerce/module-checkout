@@ -239,8 +239,6 @@
     --button-primary__text-placeholder-bg: var(--button-primary__background-color);
     --button-primary__text-placeholder-bg-gradient: var(--button-primary__font-color-hover);
 
-    // ToDo Disabled styles
-
     //
     // Secondary Buttons
     //  ---------------------------------------------
@@ -262,8 +260,6 @@
 
     --button-secondary__text-placeholder-bg: var(--button-secondary__background-color);
     --button-secondary__text-placeholder-bg-gradient: var(--button-secondary__border-color-hover);
-
-    // ToDo Disabled styles
 
     //
     // Tertiary Buttons
@@ -392,6 +388,16 @@
 
     --dropdown__border-color-highlight: var(--color__accent-mint);
     --dropdown__background-color-highlight: var(--color__accent-mint-light);
+
+    //
+    // Notifications
+    //  ---------------------------------------------
+    --notification__success-background-color: var(--color__semantic-success-light);
+    --notification__succss-border-color: var(--color__semantic-success);
+    --notification__error-background-color: var(--color__semantic-error-light);
+    --notification__error-border-color: var(--color__semantic-error);
+    --notification__border-weight: var(--base__border-weight-active);
+    --notification__border-radius: var(--base__border-radius);
 
     //
     // Messages
