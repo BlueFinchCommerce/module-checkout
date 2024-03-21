@@ -411,17 +411,17 @@ button .text-loading {
 #gene-better-checkout-root label.error input[data-v-bb500480],
 #gene-better-checkout-root label.error select[data-v-bb500480], #gene-better-checkout-root label.sanitise-error input[data-v-bb500480],
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-bb500480]:focus, #gene-better-checkout-root label.error input[data-v-bb500480]:hover,
 #gene-better-checkout-root label.error select[data-v-bb500480]:focus,
 #gene-better-checkout-root label.error select[data-v-bb500480]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-bb500480]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-bb500480]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-bb500480]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-bb500480], #gene-better-checkout-root label.sanitise-error span[data-v-bb500480] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-bb500480] {
   width: var(--radio-input__width);
@@ -634,11 +634,11 @@ button .text-loading {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-bb500480]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-bb500480],
@@ -743,15 +743,15 @@ button .text-loading {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-bb500480],
 #gene-better-checkout-root .error-message[data-v-bb500480] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -764,7 +764,7 @@ button .text-loading {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-bb500480] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-bb500480] {
   border-top-left-radius: 0;
@@ -772,14 +772,14 @@ button .text-loading {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-bb500480] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -789,7 +789,7 @@ button .text-loading {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-bb500480] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -1958,17 +1958,17 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
 #gene-better-checkout-root label.error input[data-v-1fbb8afe],
 #gene-better-checkout-root label.error select[data-v-1fbb8afe], #gene-better-checkout-root label.sanitise-error input[data-v-1fbb8afe],
 #gene-better-checkout-root label.sanitise-error select[data-v-1fbb8afe] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-1fbb8afe]:focus, #gene-better-checkout-root label.error input[data-v-1fbb8afe]:hover,
 #gene-better-checkout-root label.error select[data-v-1fbb8afe]:focus,
 #gene-better-checkout-root label.error select[data-v-1fbb8afe]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-1fbb8afe]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-1fbb8afe]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-1fbb8afe]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-1fbb8afe]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-1fbb8afe], #gene-better-checkout-root label.sanitise-error span[data-v-1fbb8afe] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-1fbb8afe] {
   width: var(--radio-input__width);
@@ -2181,11 +2181,11 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-1fbb8afe] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-1fbb8afe]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-1fbb8afe]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-1fbb8afe],
@@ -2290,15 +2290,15 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-1fbb8afe],
 #gene-better-checkout-root .error-message[data-v-1fbb8afe] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -2311,7 +2311,7 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-1fbb8afe] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-1fbb8afe] {
   border-top-left-radius: 0;
@@ -2319,14 +2319,14 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-1fbb8afe] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -2336,7 +2336,7 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-1fbb8afe] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -2388,17 +2388,17 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
 #gene-better-checkout-root label.error input[data-v-3c631fa8],
 #gene-better-checkout-root label.error select[data-v-3c631fa8], #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8],
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-3c631fa8]:focus, #gene-better-checkout-root label.error input[data-v-3c631fa8]:hover,
 #gene-better-checkout-root label.error select[data-v-3c631fa8]:focus,
 #gene-better-checkout-root label.error select[data-v-3c631fa8]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-3c631fa8]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-3c631fa8]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-3c631fa8], #gene-better-checkout-root label.sanitise-error span[data-v-3c631fa8] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-3c631fa8] {
   width: var(--radio-input__width);
@@ -2611,11 +2611,11 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-3c631fa8]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-3c631fa8],
@@ -2720,15 +2720,15 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-3c631fa8],
 #gene-better-checkout-root .error-message[data-v-3c631fa8] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -2741,7 +2741,7 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-3c631fa8] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-3c631fa8] {
   border-top-left-radius: 0;
@@ -2749,14 +2749,14 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-3c631fa8] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -2766,7 +2766,7 @@ div.dropdown.promo-dropdown.active p[data-v-3fed84c8] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-3c631fa8] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -3346,10 +3346,10 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   --button__link-border: none;
   --button__link-text-decoration: underline;
   --button__link-padding: 0;
-  --button__link-font-color-hover: var(--color__primary-blue);
   --button__link-font-weight-hover: var(--font-weight__semibold);
-  --button__link-font-color-focus: var(--color__primary-blue);
+  --button__link-font-color-hover: var(--color__primary-blue);
   --button__link-font-weight-focus: var(--font-weight__semibold);
+  --button__link-font-color-focus: var(--color__primary-blue);
   --input__font-color: var(--color__primary-dark-blue);
   --input__font-size: var(--font__m);
   --input__font-weight: var(--font-weight__semibold);
@@ -3417,7 +3417,15 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
   --dropdown__border-color-highlight: var(--color__accent-mint);
   --dropdown__background-color-highlight: var(--color__accent-mint-light);
-  --message__margin: var(--indent__m) 0;
+  --notification__success-font-color: var(--color__primary-navy);
+  --notification__success-background-color: var(--color__semantic-success-light);
+  --notification__succss-border-color: var(--color__semantic-success);
+  --notification__error-font-color: var(--color__semantic-error);
+  --notification__error-background-color: var(--color__semantic-error-light);
+  --notification__error-border-color: var(--color__semantic-error);
+  --notification__border-weight: var(--base__border-weight-active);
+  --notification__border-radius: var(--base__border-radius);
+  --notification__margin: var(--indent__m) 0;
   --slide-up__background-color-closed: var(--color__primary-grey5);
   --slide-up__font-size-title-closed: var(--font__s);
   --slide-up__font-size-price-closed: var(--font__m);
@@ -3470,17 +3478,17 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
 #gene-better-checkout-root label.error input,
 #gene-better-checkout-root label.error select, #gene-better-checkout-root label.sanitise-error input,
 #gene-better-checkout-root label.sanitise-error select {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input:focus, #gene-better-checkout-root label.error input:hover,
 #gene-better-checkout-root label.error select:focus,
 #gene-better-checkout-root label.error select:hover, #gene-better-checkout-root label.sanitise-error input:focus, #gene-better-checkout-root label.sanitise-error input:hover,
 #gene-better-checkout-root label.sanitise-error select:focus,
 #gene-better-checkout-root label.sanitise-error select:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span, #gene-better-checkout-root label.sanitise-error span {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio] {
   width: var(--radio-input__width);
@@ -3693,11 +3701,11 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input:focus, #gene-better-checkout-root .custom-validation-error.field-valid input:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg,
@@ -3802,15 +3810,15 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text,
 #gene-better-checkout-root .error-message {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -3823,7 +3831,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached {
   border-top-left-radius: 0;
@@ -3831,14 +3839,14 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -3848,7 +3856,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -4493,17 +4501,17 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-d1f67e38],
 #gene-better-checkout-root label.error select[data-v-d1f67e38], #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38],
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-d1f67e38]:focus, #gene-better-checkout-root label.error input[data-v-d1f67e38]:hover,
 #gene-better-checkout-root label.error select[data-v-d1f67e38]:focus,
 #gene-better-checkout-root label.error select[data-v-d1f67e38]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-d1f67e38]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-d1f67e38]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-d1f67e38], #gene-better-checkout-root label.sanitise-error span[data-v-d1f67e38] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-d1f67e38] {
   width: var(--radio-input__width);
@@ -4716,11 +4724,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-d1f67e38]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-d1f67e38],
@@ -4825,15 +4833,15 @@ body.no-scrollable {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-d1f67e38],
 #gene-better-checkout-root .error-message[data-v-d1f67e38] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -4846,7 +4854,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-d1f67e38] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-d1f67e38] {
   border-top-left-radius: 0;
@@ -4854,14 +4862,14 @@ body.no-scrollable {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-d1f67e38] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -4871,7 +4879,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-d1f67e38] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -4923,17 +4931,17 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-4421e73e],
 #gene-better-checkout-root label.error select[data-v-4421e73e], #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e],
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-4421e73e]:focus, #gene-better-checkout-root label.error input[data-v-4421e73e]:hover,
 #gene-better-checkout-root label.error select[data-v-4421e73e]:focus,
 #gene-better-checkout-root label.error select[data-v-4421e73e]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-4421e73e]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-4421e73e]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-4421e73e], #gene-better-checkout-root label.sanitise-error span[data-v-4421e73e] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-4421e73e] {
   width: var(--radio-input__width);
@@ -5146,11 +5154,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-4421e73e]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-4421e73e],
@@ -5255,15 +5263,15 @@ body.no-scrollable {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-4421e73e],
 #gene-better-checkout-root .error-message[data-v-4421e73e] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -5276,7 +5284,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-4421e73e] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-4421e73e] {
   border-top-left-radius: 0;
@@ -5284,14 +5292,14 @@ body.no-scrollable {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-4421e73e] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -5301,7 +5309,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-4421e73e] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -5381,17 +5389,17 @@ body.no-scrollable {
 #gene-better-checkout-root label.error input[data-v-56a48e61],
 #gene-better-checkout-root label.error select[data-v-56a48e61], #gene-better-checkout-root label.sanitise-error input[data-v-56a48e61],
 #gene-better-checkout-root label.sanitise-error select[data-v-56a48e61] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-56a48e61]:focus, #gene-better-checkout-root label.error input[data-v-56a48e61]:hover,
 #gene-better-checkout-root label.error select[data-v-56a48e61]:focus,
 #gene-better-checkout-root label.error select[data-v-56a48e61]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-56a48e61]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-56a48e61]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-56a48e61]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-56a48e61]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-56a48e61], #gene-better-checkout-root label.sanitise-error span[data-v-56a48e61] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-56a48e61] {
   width: var(--radio-input__width);
@@ -5604,11 +5612,11 @@ body.no-scrollable {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-56a48e61] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-56a48e61]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-56a48e61]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-56a48e61],
@@ -5713,15 +5721,15 @@ body.no-scrollable {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-56a48e61],
 #gene-better-checkout-root .error-message[data-v-56a48e61] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -5734,7 +5742,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-56a48e61] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-56a48e61] {
   border-top-left-radius: 0;
@@ -5742,14 +5750,14 @@ body.no-scrollable {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-56a48e61] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -5759,7 +5767,7 @@ body.no-scrollable {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-56a48e61] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));
@@ -8134,7 +8142,7 @@ a[data-v-1e58dc70] {
   padding-left: 0;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__field-group--has-error .braintree-form__hosted-field {
-  border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__field-group label {
   display: flex;
@@ -8144,11 +8152,11 @@ a[data-v-1e58dc70] {
   flex: 1;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__field-error {
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  border-width: var(--error-message-border-width, var(--base__border-weight-active));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
+  color: var(--notification__error-font-color);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
   min-height: var(--messages-min-height, auto);
@@ -8600,17 +8608,17 @@ a[data-v-1e58dc70] {
 #gene-better-checkout-root label.error input[data-v-b90c1728],
 #gene-better-checkout-root label.error select[data-v-b90c1728], #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728],
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error input[data-v-b90c1728]:focus, #gene-better-checkout-root label.error input[data-v-b90c1728]:hover,
 #gene-better-checkout-root label.error select[data-v-b90c1728]:focus,
 #gene-better-checkout-root label.error select[data-v-b90c1728]:hover, #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728]:focus, #gene-better-checkout-root label.sanitise-error input[data-v-b90c1728]:hover,
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728]:focus,
 #gene-better-checkout-root label.sanitise-error select[data-v-b90c1728]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 }
 #gene-better-checkout-root label.error span[data-v-b90c1728], #gene-better-checkout-root label.sanitise-error span[data-v-b90c1728] {
-  color: var(--color__semantic-error);
+  color: var(--notification__error-font-color);
 }
 #gene-better-checkout-root input[type=radio][data-v-b90c1728] {
   width: var(--radio-input__width);
@@ -8823,11 +8831,11 @@ a[data-v-1e58dc70] {
   top: 25px;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728] {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728]:focus, #gene-better-checkout-root .custom-validation-error.field-valid input[data-v-b90c1728]:hover {
-  border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+  border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
   outline: none;
 }
 #gene-better-checkout-root .custom-validation-error.field-valid + svg[data-v-b90c1728],
@@ -8932,15 +8940,15 @@ a[data-v-1e58dc70] {
 #gene-better-checkout-root .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text[data-v-b90c1728],
 #gene-better-checkout-root .error-message[data-v-b90c1728] {
   align-items: center;
-  background: var(--color__semantic-error-light);
-  border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
-  color: var(--color__semantic-error);
+  background: var(--notification__error-background-color);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
+  color: var(--notification__error-font-color);
   display: flex;
   font-family: var(--font-family__copy);
   font-size: var(--error-message-font-size, var(--font__xs));
   font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   padding: var(--message-padding, var(--indent__xs));
   width: 100%;
@@ -8953,7 +8961,7 @@ a[data-v-1e58dc70] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .error-message[data-v-b90c1728] {
-  border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+  border-width: var(--error-message-border-width, var(--notification__border-weight));
 }
 #gene-better-checkout-root .error-message-attached[data-v-b90c1728] {
   border-top-left-radius: 0;
@@ -8961,14 +8969,14 @@ a[data-v-1e58dc70] {
   margin-top: -12px;
 }
 #gene-better-checkout-root .success-message[data-v-b90c1728] {
-  background: var(--color__semantic-success-light);
+  background: var(--notification__success-background-color);
   padding: var(--message-padding, var(--indent__xs));
-  border: 1px var(--base__border-style) var(--color__semantic-success);
+  border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
   width: 100%;
-  border-radius: var(--messages-border-radius, var(--input__border-radius));
+  border-radius: var(--messages-border-radius, var(--notification__border-radius));
   display: flex;
   align-items: center;
-  margin: var(--message__margin);
+  margin: var(--notification__margin);
   min-height: var(--messages-min-height, auto);
   word-break: break-word;
 }
@@ -8978,7 +8986,7 @@ a[data-v-1e58dc70] {
   display: var(--message-icon-visibility, block);
 }
 #gene-better-checkout-root .success-message p[data-v-b90c1728] {
-  color: var(--success__color, var(--color__primary-navy));
+  color: var(--success__color, var(--notification__success-font-color));
   font-family: var(--font-family__copy);
   font-size: var(--message-font-size, var(--font__xs));
   font-weight: var(--message-font-weight, var(--font-weight__semibold));

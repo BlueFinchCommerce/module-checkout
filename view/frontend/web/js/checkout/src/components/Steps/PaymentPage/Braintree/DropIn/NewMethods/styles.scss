@@ -50,7 +50,7 @@
 
             &--has-error {
               .braintree-form__hosted-field {
-                border: var(--input-error-border, var(--base__border-weight-active) var(--base__border-style) var(--color__semantic-error));
+                border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
               }
             }
 
@@ -64,11 +64,11 @@
             flex: 1;
 
             &-error {
-              background: var(--color__semantic-error-light);
-              border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-              border-radius: var(--messages-border-radius, var(--input__border-radius));
-              border-width: var(--error-message-border-width, var(--base__border-weight-active));
-              color: var(--color__semantic-error);
+              background: var(--notification__error-background-color);
+              border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+              border-radius: var(--messages-border-radius, var(--notification__border-radius));
+              border-width: var(--error-message-border-width, var(--notification__border-weight));
+              color: var(--notification__error-font-color);
               font-size: var(--error-message-font-size, var(--font__xs));
               font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
               min-height: var(--messages-min-height, auto);

@@ -58,16 +58,16 @@
 
       input,
       select {
-        border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+        border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 
         &:focus,
         &:hover {
-          border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+          border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
         }
       }
 
       span {
-        color: var(--color__semantic-error);
+        color: var(--notification__error-font-color);
       }
     }
   }
@@ -349,12 +349,12 @@
   //override valid class if custom validation shows error
   .custom-validation-error.field-valid {
     input {
-      border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+      border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
       outline: none;
 
       &:focus,
       &:hover {
-        border: var(--input-error-border, var(--input__border-weight-focus) var(--base__border-style) var(--color__semantic-error));
+        border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
         outline: none;
       }
     }
@@ -487,15 +487,15 @@
   .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text,
   .error-message {
     align-items: center;
-    background: var(--color__semantic-error-light);
-    border: var(--base__border-weight) var(--base__border-style) var(--color__semantic-error);
-    border-radius: var(--messages-border-radius, var(--input__border-radius));
-    color: var(--color__semantic-error);
+    background: var(--notification__error-background-color);
+    border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+    border-radius: var(--messages-border-radius, var(--notification__border-radius));
+    color: var(--notification__error-font-color);
     display: flex;
     font-family: var(--font-family__copy);
     font-size: var(--error-message-font-size, var(--font__xs));
     font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-    margin: var(--message__margin);
+    margin: var(--notification__margin);
     min-height: var(--messages-min-height, auto);
     padding: var(--message-padding, var(--indent__xs));
     width: 100%;
@@ -509,7 +509,7 @@
   }
 
   .error-message {
-    border-width: var(--error-message-border-width, var(--input__border-weight-focus));
+    border-width: var(--error-message-border-width, var(--notification__border-weight));
 
     &-attached {
       border-top-left-radius: 0;
@@ -519,14 +519,14 @@
   }
 
   .success-message {
-    background: var(--color__semantic-success-light);
+    background: var(--notification__success-background-color);
     padding: var(--message-padding, var(--indent__xs));
-    border: 1px var(--base__border-style) var(--color__semantic-success);
+    border: var(--notification__border-weight) var(--base__border-style) var(--notification__succss-border-color);
     width: 100%;
-    border-radius: var(--messages-border-radius, var(--input__border-radius));
+    border-radius: var(--messages-border-radius, var(--notification__border-radius));
     display: flex;
     align-items: center;
-    margin: var(--message__margin);
+    margin: var(--notification__margin);
     min-height: var(--messages-min-height, auto);
     word-break: break-word;
 
@@ -537,7 +537,7 @@
     }
 
     p {
-      color: var(--success__color, var(--color__primary-navy));
+      color: var(--success__color, var(--notification__success-font-color));
       font-family: var(--font-family__copy);
       font-size: var(--message-font-size, var(--font__xs));
       font-weight: var(--message-font-weight, var(--font-weight__semibold));

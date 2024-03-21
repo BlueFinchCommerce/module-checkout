@@ -834,6 +834,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
+                                        <label for="gene-bettercheckout-success-font-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Success Text Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-success-font-color" data-type="color-picker" data-css-variable="--notification__success-font-color" placeholder="#000b14"/>
+                                    </div>
+                                    <div class="fieldset">
                                         <label for="gene-bettercheckout-success-background-color">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Success Background Colour')) ?>
@@ -848,6 +856,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                         <input id="gene-bettercheckout-success-border-color" data-type="color-picker" data-css-variable="--notification__succss-border-color" placeholder="#24b53b"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-error-font-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Error Text Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-error-font-color" data-type="color-picker" data-css-variable="--notification__error-font-color" placeholder="#bd0005"/>
                                     </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-error-background-color">
@@ -880,7 +896,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                                 <?= $escaper->escapeHtml(__('Notification Border Radius')) ?>
                                             </span>
                                         </label>
-                                        <input class="pixel-input" id="gene-bettercheckout-notification-border-radius" type="number" placeholder="4" max="10"/>
+                                        <input class="pixel-input" id="gene-bettercheckout-notification-border-radius" type="number" placeholder="4" max="30"/>
                                         <input class="hidden" id="gene-bettercheckout-notification-border-radius_hidden" type="text" data-css-variable="--notification__border-radius" placeholder="4px" />
                                     </div>
                                 </div>

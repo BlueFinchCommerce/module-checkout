@@ -119,6 +119,7 @@
     --summary__background-color: var(--color__primary-white);
     --summary__border-radius--desktop: var(--base__border-radius-large);
 
+
     //
     // Base Borders
     //  ---------------------------------------------
@@ -292,11 +293,11 @@
     --button__link-text-decoration: underline;
     --button__link-padding: 0;
 
-    --button__link-font-color-hover: var(--color__primary-blue);
     --button__link-font-weight-hover: var(--font-weight__semibold);
+    --button__link-font-color-hover: var(--color__primary-blue);
 
-    --button__link-font-color-focus: var(--color__primary-blue);
     --button__link-font-weight-focus: var(--font-weight__semibold);
+    --button__link-font-color-focus: var(--color__primary-blue);
 
     //
     // Inputs
@@ -391,17 +392,15 @@
     //
     // Notifications
     //  ---------------------------------------------
+    --notification__success-font-color: var(--color__primary-navy);
     --notification__success-background-color: var(--color__semantic-success-light);
     --notification__succss-border-color: var(--color__semantic-success);
+    --notification__error-font-color: var(--color__semantic-error);
     --notification__error-background-color: var(--color__semantic-error-light);
     --notification__error-border-color: var(--color__semantic-error);
     --notification__border-weight: var(--base__border-weight-active);
     --notification__border-radius: var(--base__border-radius);
-
-    //
-    // Messages
-    //  ---------------------------------------------
-    --message__margin: var(--indent__m) 0;
+    --notification__margin: var(--indent__m) 0;
 
     //
     // Slide Up
