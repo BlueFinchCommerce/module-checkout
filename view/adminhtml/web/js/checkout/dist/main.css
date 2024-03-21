@@ -8244,7 +8244,7 @@ a[data-v-1e58dc70] {
   gap: var(--indent__base);
 }
 .braintree-vault .braintree-vaulted-methods-container {
-  margin: var(--indent__base) 0 var(--indent__xl);
+  margin: var(--indent__base) 0;
 }
 .braintree-vault .braintree-vaulted-methods-container:empty {
   margin: 0;
