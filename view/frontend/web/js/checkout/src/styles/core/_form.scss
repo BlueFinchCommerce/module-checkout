@@ -172,12 +172,6 @@
   }
 
   .agreement-container {
-    input[type="checkbox"] + span {
-      a {
-        margin-left: var(--indent__xs);
-      }
-    }
-
     .closer-container {
       display: flex;
       justify-content: var(--modal-header-justify-content, space-between);
@@ -207,6 +201,12 @@
       .button--primary {
         margin-left: var(--indent__s);
       }
+    }
+  }
+
+  .details-form {
+    .agreement-container {
+      margin-top: 0;
     }
   }
 
@@ -447,7 +447,7 @@
       margin-top: var(--select-margin-top, var(--indent__s));
       font-size: var(--font__m);
       font-family: var(--font-family__copy);
-      font-weight: var(--font-weight__medium);
+      font-weight: var(--font-weight__semibold);
       color: var(--input__font-color);
       border: var(--input__border-weight) var(--base__border-style) var(--input__border-color);
       appearance: none;
