@@ -367,11 +367,10 @@ export default {
 
     validateRegion(text) {
       // First check to see if region is even required.
+      const hasError = !text || (typeof text === 'string' && !text.trim());
+      this.regionValid = !hasError;
+
       if (this.getRegionRequired(this.address_type)) {
-        const hasError = !text || (typeof text === 'string' && !text.trim());
-
-        this.regionValid = !hasError;
-
         hasError
           ? this.addAddressError(this.address_type, 'State/Region')
           : this.removeAddressError(this.address_type, 'State/Region');

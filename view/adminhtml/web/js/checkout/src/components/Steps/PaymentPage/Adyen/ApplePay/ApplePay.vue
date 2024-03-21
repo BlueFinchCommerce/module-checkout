@@ -72,6 +72,7 @@ export default {
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
       return;
     }

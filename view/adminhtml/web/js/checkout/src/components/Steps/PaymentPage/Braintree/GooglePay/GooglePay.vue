@@ -77,6 +77,7 @@ export default {
     ));
 
     if (!googlePayConfig) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.googlePayLoaded = true;
       return; // Early return if Braintree Google Pay isn't enabled.
     }

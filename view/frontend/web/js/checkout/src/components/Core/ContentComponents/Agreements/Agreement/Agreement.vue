@@ -131,7 +131,7 @@ export default {
     },
     handleFocusIn(event) {
       const modal = document.querySelector('.agreement-container .modal');
-      if (!modal.contains(event.target)) {
+      if (modal && !modal.contains(event.target)) {
         // If the focused element is outside the modal, close the modal
         this.closeModal();
       }
