@@ -187,7 +187,6 @@ export default {
     },
   },
   async created() {
-    await this.getStoreConfig();
     this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
 
     document.addEventListener(this.payWithTextId, this.setPayWithText);
