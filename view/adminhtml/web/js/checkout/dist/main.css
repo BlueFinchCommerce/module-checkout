@@ -8460,6 +8460,15 @@ a[data-v-1e58dc70] {
   font-family: var(--payment-page-header-font-family, var(--font-family__copy));
   margin-left: var(--payment-page-title-left-margin, var(--indent__s));
   white-space: nowrap;
+}
+.mock-laptop .braintree-payment__header,
+.mock-desktop .braintree-payment__header {
+  font-size: var(--font__heading--desktop);
+}
+@media screen and (min-width: 768px) {
+.mock-full .braintree-payment__header {
+    font-size: var(--font__heading--desktop);
+}
 }.edit-shipping-button[data-v-20fb1068] {
   color: var(--edit-shipping-button-color, var(--color__primary-grey1));
   line-height: var(--remove-item-action-line-height, 6px);
