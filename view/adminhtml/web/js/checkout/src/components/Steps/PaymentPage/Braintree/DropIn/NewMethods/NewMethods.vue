@@ -362,6 +362,8 @@ export default {
             this.additionalComponents = 'div[data-braintree-id="paypal-button"]';
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
+          } else if (newViewId === 'applePay') {
+            this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'venmo') {
             this.additionalComponents = '.braintree-venmo .braintree-sheet__content';
           }
