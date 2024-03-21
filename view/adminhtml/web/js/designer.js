@@ -287,8 +287,8 @@ define([
             });
         },
 
-        setSystemValue: function (event) {
-            const value = $(event.target).val(),
+        setSystemValue: function () {
+            const value = this.designerValues.val() || this.customWording.val() || this.designerLogo.val(),
                 systemValue = this.designerValuesSystem.prop('checked');
 
             if (value && systemValue || !value && !systemValue) {

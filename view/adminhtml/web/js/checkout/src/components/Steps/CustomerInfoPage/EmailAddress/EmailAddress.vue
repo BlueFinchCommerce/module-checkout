@@ -21,7 +21,8 @@
         />
       </template>
 
-      <div :class="{ 'logged-in-email': isLoggedIn }">
+      <!-- <div :class="{ 'logged-in-email': isLoggedIn }"> -->
+        <div>
         <TextInput
           ref="email"
           v-model="customer.email"
