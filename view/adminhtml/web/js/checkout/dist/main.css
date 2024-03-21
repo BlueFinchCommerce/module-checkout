@@ -8151,18 +8151,21 @@ a[data-v-1e58dc70] {
   padding: 0;
   text-align: left;
 }
-#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button] button, #gene-better-checkout-root .braintree-drop-in .braintree-sheet__button--venmo {
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button] button,
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=apple-pay-button], #gene-better-checkout-root .braintree-drop-in .braintree-sheet__button--venmo {
   height: var(--button__height);
   width: 100%;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__button--paypal,
-#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button] {
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button],
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=apple-pay-button] {
   display: flex;
   flex-direction: column;
   margin: 0 0 var(--indent__m);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__button--paypal .braintree-store-method,
-#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button] .braintree-store-method {
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=google-pay-button] .braintree-store-method,
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet [data-braintree-id=apple-pay-button] .braintree-store-method {
   margin: var(--indent__s) 0 var(--indent__base);
   order: -1;
 }
