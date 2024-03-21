@@ -373,6 +373,7 @@ export default {
 
     // Map the address provided by ApplePay into something useable.
     mapAddress(address, email, telephone) {
+      const regionId = this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea);
       return {
         email,
         telephone,
@@ -381,10 +382,12 @@ export default {
         company: address.company || '',
         street: address.addressLines,
         city: address.locality,
-        region: address.administrativeArea,
-        region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
         country_code: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
+        region: {
+          ...(address.administrativeArea ? { region: address.administrativeArea } : {}),
+          ...(regionId ? { region_id: regionId } : {}),
+        },
       };
     },
 

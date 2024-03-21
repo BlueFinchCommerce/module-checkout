@@ -21,6 +21,7 @@ export default async () => {
         postcode
         region {
           region
+          region_code
           region_id
         }
         region_id

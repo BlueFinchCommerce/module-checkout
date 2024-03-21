@@ -12,14 +12,24 @@ export default async (shippingAddress) => {
 
   const tempShippingAddress = deepClone(shippingAddress);
 
+  // Format region.
+  tempShippingAddress.region_id = tempShippingAddress.region.region_id;
+  tempShippingAddress.region = tempShippingAddress.region.region_code || tempShippingAddress.region.region;
+
+  if (!tempShippingAddress.region_id) {
+    delete tempShippingAddress.region_id;
+  }
+
+  if (!tempShippingAddress.region) {
+    delete tempShippingAddress.region;
+  }
+
   delete tempShippingAddress.id;
   delete tempShippingAddress.email;
   delete tempShippingAddress.editing;
   delete tempShippingAddress.country_id;
   delete tempShippingAddress.same_as_billing;
   delete tempShippingAddress.region_code;
-  tempShippingAddress.region = tempShippingAddress.region_id;
-  delete tempShippingAddress.region_id;
   delete tempShippingAddress.default_shipping;
   delete tempShippingAddress.default_billing;
 

@@ -217,12 +217,16 @@ export default {
         street: [address.Line1, address.Line2],
         city: address.City,
         country_code: countryCode,
-        region: region ? region.option.name : address.ProvinceName,
-        region_id: region ? region.option.value : 0,
+        region: {
+          region: region ? region.option.code : address.ProvinceName,
+          ...(region ? { region_id: region.option.value } : {}),
+        },
         postcode: address.PostalCode,
       };
       this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
+      this.setAddressToStore(newAddress, this.address_type);
+
       const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
 
       // If the address we get back from AFD is not valid then open the form
