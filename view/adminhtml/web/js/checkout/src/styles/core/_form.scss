@@ -172,12 +172,6 @@
   }
 
   .agreement-container {
-    input[type="checkbox"] + span {
-      a {
-        margin-left: var(--indent__xs);
-      }
-    }
-
     .closer-container {
       display: flex;
       justify-content: var(--modal-header-justify-content, space-between);
@@ -207,6 +201,12 @@
       .button--primary {
         margin-left: var(--indent__s);
       }
+    }
+  }
+
+  .details-form {
+    .agreement-container {
+      margin-top: 0;
     }
   }
 

@@ -145,7 +145,7 @@ export default {
     addressFormErrorMessage: 'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postal code for',
     countryErrorMessage: 'Please choose your country',
-    streetErrorMessage: 'Please enter a valid address and use a maximum of 75 characters for your street address',
+    streetErrorMessage: 'Please enter a valid address',
     cityErrorMessage: 'Please enter a valid city',
     googlePayShippingError: 'The shipping method is missing. Please select the shipping method and try again.',
     googlePayNominatedDayError: 'Unfortunately we cannot offer Express Payment on orders with Nominated Day Delivery.',
