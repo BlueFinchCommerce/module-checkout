@@ -102,6 +102,11 @@
     --footer__border-top: none;
 
     //
+    // Instant Checkout
+    //  ---------------------------------------------
+    --instant-checkout__background-color: var(--color__primary-grey5);
+
+    //
     // Steps
     //  ---------------------------------------------
     --steps__background-color--desktop: var(--color__primary-white);
@@ -116,7 +121,7 @@
     //
     // Order Summary Desktop
     //  ---------------------------------------------
-    --summary__background-color: var(--color__primary-white);
+    --summary__background-color--desktop: var(--color__primary-white);
     --summary__border-radius--desktop: var(--base__border-radius-large);
 
 
