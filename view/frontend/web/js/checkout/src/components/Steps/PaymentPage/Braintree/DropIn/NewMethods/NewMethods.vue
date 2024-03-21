@@ -90,6 +90,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
+      'availableMethods',
       'paymentEmitter',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
@@ -112,10 +113,9 @@ export default {
       braintree_paypal: 'paypal',
     };
 
-    const sortedAvailableMethods = Object.keys(this.map).sort((a, b) => (
-      this.getPaymentPriority(a) - this.getPaymentPriority(b)
-    ));
-    this.paymentOptionPriority = sortedAvailableMethods.map((method) => this.map[method]);
+    const braintreeMethods = this.availableMethods.filter(({ code }) => code.startsWith('braintree'));
+
+    this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
 
     const options = {
       authorization: this.clientToken,
@@ -328,17 +328,12 @@ export default {
 
       this.attachEventListeners(instance);
       this.movePaymentContainers();
-      this.selectFirstPaymentOption();
+
+      // Open the first payment method.
+      [this.selectedMethod] = this.paymentOptionPriority;
+      this.setToCurrentViewId();
 
       this.paymentEmitter.emit('braintreeInitComplete');
-    },
-
-    selectFirstPaymentOption() {
-      const sheetContainer = this.$refs.braintreeContainer.querySelector('.braintree-sheet--active');
-      const firstOption = sheetContainer.querySelector('.braintree-option');
-      if (firstOption) {
-        firstOption.classList.add('braintree-option__selected');
-      }
     },
 
     attachEventListeners(instance) {
@@ -364,7 +359,7 @@ export default {
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'applePay') {
-            this.additionalComponents = 'div[data-braintree-id="apple-pay-button"]';
+            this.additionalComponents = '.braintree-applePay .braintree-sheet__content';
           } else if (newViewId === 'venmo') {
             this.additionalComponents = '.braintree-venmo .braintree-sheet__content';
           }
