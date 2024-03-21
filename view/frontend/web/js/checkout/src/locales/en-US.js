@@ -139,7 +139,7 @@ export default {
     addressFormErrorMessage: 'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postcode for',
     countryErrorMessage: 'Please choose your country',
-    streetErrorMessage: 'Please enter a valid address and use a maximum of 75 characters for your street address',
+    streetErrorMessage: 'Please enter a valid address',
     streetCharacterLimit: 'Please use a maximum of 75 characters for your street address',
     cityErrorMessage: 'Please enter a valid city',
     googlePayShippingError: 'The shipping method is missing. Please select the shipping method and try again.',
