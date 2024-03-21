@@ -16,6 +16,7 @@
     --color__primary-grey5: #e8edf3;
     --color__primary-grey6: #f5f9fe;
     --color__primary-grey7: #f5f5f5;
+    --color__primary-grey8: #D9D9D9;
     --color__primary-white: #ffffff;
 
     --color__accent-mint: #00b2ad;
@@ -296,11 +297,11 @@
     --button__link-text-decoration: underline;
     --button__link-padding: 0;
 
-    --button__link-font-color-hover: var(--color__primary-blue);
     --button__link-font-weight-hover: var(--font-weight__semibold);
+    --button__link-font-color-hover: var(--color__primary-blue);
 
-    --button__link-font-color-focus: var(--color__primary-blue);
     --button__link-font-weight-focus: var(--font-weight__semibold);
+    --button__link-font-color-focus: var(--color__primary-blue);
 
     //
     // Inputs
@@ -395,7 +396,7 @@
     //
     // Messages
     //  ---------------------------------------------
-    --message__margin: var(--indent__m) 0;
+    --message__margin: var(--indent__s) 0 var(--indent__m);
 
     //
     // Slide Up

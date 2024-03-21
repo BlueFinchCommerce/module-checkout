@@ -3189,6 +3189,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   --color__primary-grey5: #e8edf3;
   --color__primary-grey6: #f5f9fe;
   --color__primary-grey7: #f5f5f5;
+  --color__primary-grey8: #D9D9D9;
   --color__primary-white: #ffffff;
   --color__accent-mint: #00b2ad;
   --color__accent-mint-light: #ecfffe;
@@ -3338,10 +3339,10 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   --button__link-border: none;
   --button__link-text-decoration: underline;
   --button__link-padding: 0;
-  --button__link-font-color-hover: var(--color__primary-blue);
   --button__link-font-weight-hover: var(--font-weight__semibold);
-  --button__link-font-color-focus: var(--color__primary-blue);
+  --button__link-font-color-hover: var(--color__primary-blue);
   --button__link-font-weight-focus: var(--font-weight__semibold);
+  --button__link-font-color-focus: var(--color__primary-blue);
   --input__font-color: var(--color__primary-dark-blue);
   --input__font-size: var(--font__m);
   --input__font-weight: var(--font-weight__semibold);
@@ -3409,7 +3410,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-245a9829] {
   --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
   --dropdown__border-color-highlight: var(--color__accent-mint);
   --dropdown__background-color-highlight: var(--color__accent-mint-light);
-  --message__margin: var(--indent__m) 0;
+  --message__margin: var(--indent__s) 0 var(--indent__m);
   --slide-up__background-color-closed: var(--color__primary-grey5);
   --slide-up__font-size-title-closed: var(--font__s);
   --slide-up__font-size-price-closed: var(--font__m);
@@ -8246,7 +8247,8 @@ a[data-v-1e58dc70] {
   gap: var(--indent__base);
 }
 .braintree-vault .braintree-vaulted-methods-container {
-  margin: var(--indent__base) 0;
+  margin: var(--indent__base) 0 0;
+  padding-bottom: var(--indent__base);
 }
 .braintree-vault .braintree-vaulted-methods-container:empty {
   margin: 0;
@@ -8302,6 +8304,16 @@ a[data-v-1e58dc70] {
   grid-template-columns: unset;
   overflow-x: auto;
 }
+.braintree-vaulted-methods-container::-webkit-scrollbar {
+  height: var(--scroll-bar-height, 4px);
+}
+.braintree-vaulted-methods-container::-webkit-scrollbar-track {
+  background: var(--color__primary-grey5);
+}
+.braintree-vaulted-methods-container::-webkit-scrollbar-thumb {
+  background-color: var(--color__primary-grey2);
+  border-radius: var(--button__border-radius);
+}
 .braintree-vaulted-methods-container-1 {
   grid-auto-columns: 100%;
 }
@@ -8311,7 +8323,7 @@ a[data-v-1e58dc70] {
 .braintree-vaulted-methods-container .braintree-payment__payment-method__header__title {
   background: var(--braintree-saved-card__background-color-active);
   border: var(--braintree-saved-card__border-active);
-  border-radius: var(--base__border-radius);
+  border-radius: var(--base__border-radius-large);
   box-shadow: none;
   color: var(--braintree-saved-card__font-color);
   cursor: pointer;
@@ -8337,6 +8349,7 @@ a[data-v-1e58dc70] {
 }
 .braintree-vaulted-methods-container .braintree-payment__payment-method__card-number, .braintree-vaulted-methods-container .braintree-payment__payment-method__expiry-label {
   font-weight: var(--font-weight__regular);
+  padding-bottom: var(--indent__xs);
 }
 .braintree-vaulted-methods-container .braintree-payment__payment-method__name, .braintree-vaulted-methods-container .braintree-payment__payment-method__expiry {
   font-weight: var(--font-weight__semibold);
@@ -8350,6 +8363,7 @@ a[data-v-1e58dc70] {
   justify-self: flex-end;
 }
 .braintree-vaulted-methods-container .braintree-payment__payment-method-select {
+  font-weight: var(--font-weight__medium);
   align-self: flex-start;
   justify-self: flex-end;
   text-decoration: underline;
@@ -8367,6 +8381,9 @@ a[data-v-1e58dc70] {
   margin: 0 0 var(--indent__xl);
   padding: var(--indent__xs);
   width: 30%;
+  border: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey8);
+  border-radius: var(--base__border-radius);
+  min-height: 24px;
 }
 .braintree-vaulted-methods-container .braintree-payment__payment-method__image__wrapper svg {
   height: 100%;
