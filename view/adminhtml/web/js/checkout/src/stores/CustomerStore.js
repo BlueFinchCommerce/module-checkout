@@ -152,6 +152,13 @@ export default defineStore('customerStore', {
 
       this.setData({
         selected: {
+          [addressType]: {
+            region: {
+              region: '',
+              region_code: '',
+              region_id: 0,
+            },
+          },
           regionRequired: {
             [addressType]: {
               required: false,
@@ -276,6 +283,7 @@ export default defineStore('customerStore', {
           loadingCustomerInformation: true,
         });
         const data = await this.getCachedResponse(getCustomerInformation, 'getCustomerInformation');
+
         if (data) {
           this.setData({
             customer: {
@@ -284,7 +292,6 @@ export default defineStore('customerStore', {
             },
           });
           this.setEmailEntered();
-
           // If we have a matched shipping address then set it so it doesn't show as custom.
           const matchedShipping = data.addresses.findIndex((address) => (
             doAddressesMatch(address, this.selected.shipping)
@@ -540,12 +547,6 @@ export default defineStore('customerStore', {
       const foundAddress = data.addresses.find((address) => (
         typeof address[addressType] !== 'undefined' && address[addressType]
       ));
-
-      // The region can sometime be an object based on config so handle that.
-      if (foundAddress) {
-        const { region } = foundAddress;
-        foundAddress.region = region.region ? region.region : region;
-      }
 
       return foundAddress
         ? Object.assign(foundAddress, { editing: false })

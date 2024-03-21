@@ -232,9 +232,10 @@ export default {
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
           if (paymentError.name !== 'DropinError') {
-            this.clearSelectedPaymentMethod();
             this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
           }
+          this.clearSelectedPaymentMethod();
+          this.setToCurrentViewId();
           this.paymentEmitter.emit('braintreePaymentError');
         });
     },
@@ -363,7 +364,7 @@ export default {
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'applePay') {
-            this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
+            this.additionalComponents = 'div[data-braintree-id="apple-pay-button"]';
           } else if (newViewId === 'venmo') {
             this.additionalComponents = '.braintree-venmo .braintree-sheet__content';
           }
@@ -435,6 +436,10 @@ export default {
       this.instance.clearSelectedPaymentMethod();
 
       this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+    },
+
+    setToCurrentViewId() {
+      this.instance._mainView.setPrimaryView(this.selectedMethod);
     },
 
     redirectToSuccess() {

@@ -244,6 +244,7 @@ export default {
 
     mapAddress(address, email, telephone, billingFirstname, billingLastname) {
       const [firstname, ...lastname] = address.recipientName ? address.recipientName.split(' ') : [];
+      const regionId = this.getRegionId(address.countryCode, address.state);
       return {
         street: [
           address.line1,
@@ -257,8 +258,10 @@ export default {
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
         telephone,
-        region: address.state,
-        region_id: this.getRegionId(address.countryCode, address.state),
+        region: {
+          ...(address.state ? { region: address.state } : {}),
+          ...(regionId ? { region_id: regionId } : {}),
+        },
       };
     },
 
