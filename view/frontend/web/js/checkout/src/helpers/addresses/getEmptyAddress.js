@@ -3,7 +3,11 @@ export default (sameAsShipping = false) => {
     id: null,
     street: ['', ''],
     city: '',
-    region: '',
+    region: {
+      region: '',
+      region_id: '',
+      region_code: '',
+    },
     country_code: '',
     postcode: '',
     company: '',

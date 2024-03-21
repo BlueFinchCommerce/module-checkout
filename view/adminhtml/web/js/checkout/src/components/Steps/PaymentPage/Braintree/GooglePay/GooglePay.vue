@@ -326,6 +326,7 @@ export default {
         response.email,
         response.paymentMethodData.info.billingAddress.phoneNumber,
       );
+      billingAddress.region = billingAddress.region.region_code || billingAddress.region.region;
       const { email } = response;
       const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
 
@@ -419,6 +420,7 @@ export default {
 
     mapAddress(address, email, telephone) {
       const [firstname, ...lastname] = address.name.split(' ');
+      const regionId = this.getRegionId(address.countryCode, address.administrativeArea);
       return {
         street: [
           address.address1,
@@ -432,8 +434,10 @@ export default {
         lastname: lastname.length ? lastname.join(' ') : 'UNKNOWN',
         city: address.locality,
         telephone,
-        region: address.administrativeArea,
-        region_id: this.getRegionId(address.countryCode, address.administrativeArea),
+        region: {
+          ...(address.administrativeArea ? { region: address.administrativeArea } : {}),
+          ...(regionId ? { region_id: regionId } : {}),
+        },
       };
     },
   },

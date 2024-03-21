@@ -62,7 +62,7 @@ export default defineStore('configStore', {
         const country = state.getCountryByCode(countryCode);
         return country && country.available_regions
           ? country.available_regions.find(({ code }) => code === regionCode)?.id
-          : 0;
+          : undefined;
       }
     ),
   },
