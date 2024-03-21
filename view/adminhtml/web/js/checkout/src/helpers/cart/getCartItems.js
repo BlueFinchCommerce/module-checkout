@@ -1,7 +1,7 @@
 export default () => {
   const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));
 
-  if (!mageCache.cart.items) {
+  if (!mageCache.cart) {
     return [];
   }
   return mageCache.cart.items.map((item) => ({

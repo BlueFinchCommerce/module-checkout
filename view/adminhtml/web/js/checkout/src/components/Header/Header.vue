@@ -5,7 +5,7 @@
   >
     <div class="header-content">
       <a
-        :href="secureBaseUrl"
+        :href="secureBaseUrl + storeCode"
         aria-label="logo"
         class="header-logo"
         :class="custom.checkoutLogo ? 'logo-no-width' : ''"
@@ -17,11 +17,9 @@
           stroke="white"
           class="secure-logo"
         />
-        <div :class="headerText ? '' : 'text-loading'">
-          <h1 class="secure-text">
-            {{ headerText }}
-          </h1>
-        </div>
+        <h1 class="secure-text">
+          {{ headerText }}
+        </h1>
       </div>
     </div>
   </header>
@@ -55,14 +53,10 @@ export default {
     document.removeEventListener(this.headerTextId, this.setHeaderText);
   },
   computed: {
-    ...mapState(useConfigStore, ['secureBaseUrl']),
+    ...mapState(useConfigStore, ['secureBaseUrl', 'storeCode']),
   },
   methods: {
     ...mapActions(useConfigStore, ['custom', 'getStoreConfig']),
-
-    setHeaderText(event) {
-      this.headerText = event?.detail || this.$t('header.text');
-    },
   },
 };
 </script>
