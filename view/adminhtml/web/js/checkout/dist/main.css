@@ -7499,9 +7499,23 @@ a[data-v-1e58dc70] {
   grid-gap: var(--indent__s);
   grid-template-columns: unset;
   overflow-x: auto;
+  padding: 0 0 var(--indent__base);
 }
 #adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled-1 {
   grid-auto-columns: 100%;
+}
+#adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+  border-radius: var(--border-radius, 6px);
+}
+#adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled::-webkit-scrollbar {
+  height: 4px;
+  background-color: var(--color__primary-white);
+}
+#adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+  background-color: var(--color__primary-grey2);
+  border-radius: var(--border-radius, 6px);
 }
 #adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled .adyen-checkout__payment-method {
   border: none;

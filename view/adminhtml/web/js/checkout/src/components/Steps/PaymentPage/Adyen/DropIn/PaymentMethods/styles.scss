@@ -14,9 +14,26 @@
     grid-gap: var(--indent__s);
     grid-template-columns: unset;
     overflow-x: auto;
+    padding: 0 0 var(--indent__base);
 
     &-1 {
       grid-auto-columns: 100%;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+      border-radius: var(--border-radius, 6px);
+    }
+  
+    &::-webkit-scrollbar {
+      height: 4px;
+      background-color: var(--color__primary-white);
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
+      background-color: var(--color__primary-grey2);
+      border-radius: var(--border-radius, 6px);
     }
 
     .adyen-checkout__payment-method {
