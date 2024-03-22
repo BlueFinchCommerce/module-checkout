@@ -99,7 +99,6 @@ export default {
   },
   async created() {
     await this.getStoreConfig();
-    await this.getPaymentMethods();
     await this.getBraintreeConfig();
     await this.createClientToken();
 
@@ -221,7 +220,6 @@ export default {
       'getPayPalLineItems',
     ]),
     ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');

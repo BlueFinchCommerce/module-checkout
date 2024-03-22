@@ -3,17 +3,15 @@ import { defineStore } from 'pinia';
 import afdPostcode from '@/services/addresses/afdPostcode';
 import getStoreConfig from '@/services/getStoreConfig';
 import getBlock from '@/services/content/getBlock';
-import getCountries from '@/services/addresses/getCountries';
 import getStoreCode from '@/services/getStoreCode';
-import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getGeneralTermsServicesId from '@/helpers/content/getGeneralTermsServicesId';
 import getWithdrawTermsServicesId from '@/helpers/content/getWithdrawTermsServicesId';
-import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import getFallBackStaticPath from '@/helpers/storeConfigs/getFallBackStaticPath';
 import getStoreCodeFromLocalStorage from '@/helpers/storeConfigs/getStoreCode';
 import getLocale from '@/helpers/addresses/getLocale';
 import getCurrencyCode from '@/helpers/payment/getCurrencyCode';
+import getStoreConfigsAndCountries from '@/helpers/storeConfigs/getStoreConfigsAndCountries';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -82,90 +80,20 @@ export default defineStore('configStore', {
       });
       return data;
     },
+
     async getStoreCode() {
       const storeCode = await getStoreCode();
       this.setData({
         storeCode,
       });
     },
+
     async getStoreConfig() {
       if (!this.storeCode) {
         await this.getCachedResponse(this.getStoreCode, 'getStoreCode');
       }
 
-      const configs = [
-        'base_static_url',
-        'default_display_currency_code',
-        'code',
-        'secure_base_url',
-        'use_store_in_url',
-        'website_name',
-        'gene_better_checkout_newsletter_enabled',
-        'gene_better_checkout_newsletter_allow_guest',
-        'gene_better_checkout_country_state_required',
-        'gene_better_checkout_country_display_state',
-        'magento_reward_general_is_enabled',
-        'magento_reward_general_is_enabled_on_front',
-        'optional_zip_countries',
-        'tax_cart_display_price',
-        'tax_cart_display_shipping',
-        'tax_cart_display_full_summary',
-        'gene_better_checkout_copyright_text',
-        'gene_better_checkout_afd_enable',
-        'gene_better_checkout_progress_bar_visible',
-      ];
-
-      if (this.locale) {
-        this.setLocale(this.locale);
-      } else {
-        configs.push('locale');
-      }
-
-      const promises = [];
-
-      if (!this.countries.length) {
-        promises.push(this.getCachedResponse(this.getCountries, 'getCountries'));
-      }
-
-      const allConfigs = configs.concat(getCustomConfigs);
-
-      const getConfigRequest = this.getConfig(allConfigs).then(async (data) => {
-        this.setData({
-          staticUrl: data.base_static_url.replace(/\/+$/, ''),
-          currencyCode: data.default_display_currency_code,
-          storeCode: data.code,
-          useStoreInUrl: data.use_store_in_url,
-          websiteName: data.website_name || '',
-          secureBaseUrl: data.secure_base_url,
-          newsletterEnabled: data.gene_better_checkout_newsletter_enabled === '1',
-          newsletterAllowGuests: data.gene_better_checkout_newsletter_allow_guest === '1',
-          stateRequired: data.gene_better_checkout_country_state_required
-            ? data.gene_better_checkout_country_state_required.split(',') : [],
-          displayState: data.gene_better_checkout_country_display_state === '1',
-          rewardsEnabled: data.magento_reward_general_is_enabled === '1'
-            && data.magento_reward_general_is_enabled_on_front === '1',
-          optionalZipCountries: data.optional_zip_countries || '',
-          taxCartDisplayPrice: data.tax_cart_display_price === '2',
-          taxCartDisplayShipping: data.tax_cart_display_shipping === '2',
-          taxCartDisplayFullSummary: data.tax_cart_display_full_summary === '1',
-          copyrightText: data.gene_better_checkout_copyright_text,
-          afdStatus: data.gene_better_checkout_afd_enable,
-          progressBarVisible: data.gene_better_checkout_progress_bar_visible === true,
-        });
-
-        if (data.locale) {
-          this.setLocale(data.locale);
-        }
-
-        const customConfigs = await mapCustomConfigs(data);
-        this.setData({
-          custom: customConfigs,
-        });
-      });
-
-      promises.push(getConfigRequest);
-
-      await Promise.all(promises);
+      this.getCachedResponse(getStoreConfigsAndCountries, 'getStoreConfigsAndCountries');
     },
 
     setLocale(locale) {
@@ -252,10 +180,6 @@ export default defineStore('configStore', {
           withdrawTermsServices: data,
         });
       }
-    },
-    async getCountries() {
-      const { data } = await getCountries();
-      this.setData(data);
     },
 
     async getLoqateConfiguration() {
