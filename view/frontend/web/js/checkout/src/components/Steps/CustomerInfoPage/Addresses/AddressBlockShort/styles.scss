@@ -1,3 +1,5 @@
+@import '@/styles/global/_breakpoints';
+
 .address-block__address {
   font-size: var(--steps-complete__font-size-sub--mobile);
   font-family: var(--font-family__copy);
@@ -28,5 +30,16 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     max-width: var(--shipping-address-width, none);
+  }
+}
+
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .address-block__address {
+    p {
+      font-size: var(--steps-complete__font-size-sub--desktop);
+    }
   }
 }
