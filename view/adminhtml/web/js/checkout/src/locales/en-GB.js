@@ -60,7 +60,7 @@ export default {
     selectPlaceholder: 'Please select your country',
     showPassLabel: 'Show or hide password',
     phoneField: {
-      infoMessage: 'For delivery questions',
+      infoMessage: 'We will use this for delivery questions',
       placeholder: 'Enter your phone number',
       label: 'Phone number',
     },
@@ -70,7 +70,7 @@ export default {
       span: 'Email',
     },
     passwordField: {
-      placeholder: 'Enter you password',
+      placeholder: 'Enter your password',
       label: 'Your Password',
     },
     firstName: {
@@ -237,7 +237,9 @@ export default {
       routingNumber: 'Routing Number',
       terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
     },
-    localPayment: 'Local Payment',
+    lpm: {
+      noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
+    },
     storePayment: 'Save for later use.',
   },
   rvvup: {
@@ -246,6 +248,8 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'I confirm that I have read and accept the',
     errorMessage: 'This is a required field.',
     paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',

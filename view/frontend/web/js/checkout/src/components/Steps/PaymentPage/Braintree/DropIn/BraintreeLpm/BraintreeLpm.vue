@@ -44,20 +44,26 @@
         v-show="selectedMethod === 'braintree-lpm'"
         class="braintree-lpm-container"
       >
-        <Agreements id="braintreeLpm" />
-        <PrivacyPolicy />
-        <button
-          v-for="allowedMethod in lpm.allowedMethods"
-          v-show="!loading"
-          :key="allowedMethod"
-          class="button button--secondary braintree-lpm-method"
-          @click="initialiseLpm(allowedMethod)"
-        >
-          <img
-            :src="getIcon(allowedMethod)"
-            :alt="allowedMethod"
+        <template v-if="getFilteredLpmMethods.length">
+          <Agreements id="braintreeLpm" />
+          <PrivacyPolicy />
+          <button
+            v-for="allowedMethod in getFilteredLpmMethods"
+            v-show="!loading"
+            :key="allowedMethod"
+            class="button button--secondary braintree-lpm-method"
+            @click="initialiseLpm(allowedMethod)"
           >
-        </button>
+            <img
+              :src="getIcon(allowedMethod)"
+              :alt="allowedMethod"
+            >
+          </button>
+        </template>
+        <TextField
+          v-else
+          :text="$t('braintree.lpm.noMethods')"
+        />
       </div>
     </div>
   </teleport>
@@ -76,6 +82,7 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
 import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
@@ -98,6 +105,7 @@ export default {
   components: {
     Agreements,
     PrivacyPolicy,
+    TextField,
   },
   data() {
     return {
@@ -111,6 +119,7 @@ export default {
       'merchantAccountId',
       'clientInstance',
       'lpm',
+      'getFilteredLpmMethods',
     ]),
     ...mapState(useConfigStore, ['currencyCode']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'isItemRequiringDelivery']),

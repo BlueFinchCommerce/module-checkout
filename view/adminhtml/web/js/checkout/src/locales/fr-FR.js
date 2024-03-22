@@ -220,7 +220,9 @@ export default {
       routingNumber: 'Routing Number',
       terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
     },
-    localPayment: 'Local Payment',
+    lpm: {
+      noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
+    },
     storePayment: 'Save for later use.',
   },
   rvvup: {
@@ -229,6 +231,8 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Je confirme avoir lu et accepté les',
     errorMessage: 'C\'est un champ obligatoire.',
     paymentErrorMessage: "Les accords n'ont pas été acceptés. Veuillez vérifier les accords et réessayer.",

@@ -32,6 +32,7 @@ export default async (shippingAddress) => {
   delete tempShippingAddress.region_code;
   delete tempShippingAddress.default_shipping;
   delete tempShippingAddress.default_billing;
+  delete tempShippingAddress.country;
 
   tempShippingAddress.save_in_address_book = !!tempShippingAddress.save_in_address_book;
 

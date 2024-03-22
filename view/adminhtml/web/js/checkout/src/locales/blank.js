@@ -187,10 +187,14 @@ export default {
       routingNumber: ' ',
       terms: ' ',
     },
-    localPayment: ' ',
+    lpm: {
+      noMethods: ' ',
+    },
     storePayment: ' ',
   },
   agreements: {
+    acceptBtn: ' ',
+    title: ' ',
     label: ' ',
     errorMessage: ' ',
     paymentErrorMessage: ' ',
