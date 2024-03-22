@@ -10,13 +10,12 @@ import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmitt
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 import getDummyShippingMethods from '@/helpers/dummyContent/getDummyShippingMethods';
 
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
 import getShipping from '@/services/addresses/getShippingMethods';
 import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
@@ -205,14 +204,13 @@ export default defineStore('shippingMethodsStore', {
       });
     },
 
-    async setShippingAddressesOnCart() {
+    async setAddressesOnCart() {
       const customerStore = useCustomerStore();
       const cartStore = useCartStore();
 
-      await setBillingAddressOnCart(customerStore.selected.billing);
-      const response = await setShippingAddressesOnCart(customerStore.selected.shipping);
+      const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
 
-      cartStore.handleCartData(response.data.setShippingAddressesOnCart.cart);
+      cartStore.handleCartData(response.cart);
     },
 
     async submitShippingInfo(carrierCode, methodCode) {

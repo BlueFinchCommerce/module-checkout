@@ -9,6 +9,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
+import AdyenCheckout from '@adyen/adyen-web';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCartStore from '@/stores/CartStore';
@@ -17,7 +18,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
@@ -32,8 +32,7 @@ import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenGooglePay',
@@ -307,13 +306,7 @@ export default {
         const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
 
         try {
-          this.submitEmail(email)
-            .then(() => (
-              Promise.all([
-                setBillingAddressOnCart(mapBillingAddress),
-                setShippingAddressesOnCart(mapShippingAddress),
-              ])
-            ))
+          setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
             .then(() => {
               const stateData = JSON.stringify({
                 paymentMethod: {

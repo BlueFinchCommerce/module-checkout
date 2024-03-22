@@ -28,8 +28,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreeGooglePay',
@@ -296,13 +295,7 @@ export default {
         const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
 
         try {
-          this.submitEmail(email)
-            .then(() => (
-              Promise.all([
-                setBillingAddressOnCart(mapBillingAddress),
-                setShippingAddressesOnCart(mapShippingAddress),
-              ])
-            ))
+          setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
             .then(() => {
               resolve({
                 transactionState: 'SUCCESS',

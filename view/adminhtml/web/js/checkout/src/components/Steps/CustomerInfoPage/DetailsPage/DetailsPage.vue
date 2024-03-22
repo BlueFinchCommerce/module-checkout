@@ -390,7 +390,7 @@ export default {
       'clearShippingMethodCache',
       'setClickAndCollect',
       'setNotClickAndCollect',
-      'setShippingAddressesOnCart',
+      'setAddressesOnCart',
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
     expressPaymentsVisible(value) {
@@ -436,7 +436,7 @@ export default {
           this.setAddressToStore(clonedAddress, 'billing');
         }
 
-        await this.setShippingAddressesOnCart();
+        await this.setAddressesOnCart();
         this.goToShipping();
         continueToDeliveryDataLayer();
       } else {

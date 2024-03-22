@@ -29,8 +29,7 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreeApplePay',
@@ -215,13 +214,7 @@ export default {
         }
 
         try {
-          this.submitEmail(email)
-            .then(() => (
-              Promise.all([
-                setBillingAddressOnCart(billingAddress),
-                setShippingAddressesOnCart(shippingAddress),
-              ])
-            ))
+          setAddressesOnCart(shippingAddress, billingAddress, email)
             .then(() => {
               const payment = {
                 email,

@@ -28,8 +28,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreePayPal',
@@ -221,11 +220,8 @@ export default {
         payload.details.lastName,
       );
 
-      return Promise.all([
-        this.submitEmail(payload.details.email).then(() => ({ payload, email: payload.details.email })),
-        setBillingAddressOnCart(billingAddress),
-        setShippingAddressesOnCart(shippingAddress),
-      ]);
+      return setAddressesOnCart(shippingAddress, billingAddress, payload.details.email)
+        .then(() => ({ payload, email: payload.details.email }));
     },
 
     makePayment([{ payload, email }]) {
