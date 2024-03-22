@@ -229,6 +229,8 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Je confirme avoir lu et accepté les',
     errorMessage: 'C\'est un champ obligatoire.',
     paymentErrorMessage: "Les accords n'ont pas été acceptés. Veuillez vérifier les accords et réessayer.",
