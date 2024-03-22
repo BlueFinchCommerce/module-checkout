@@ -2,8 +2,8 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
-    padding: var(--promo-products-paddings, var(--indent__m) var(--indent__base));
+    border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
+    padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
     background: var(--dropdown__background-color-highlight);
     margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
     display: var(--promotion-visibility, flex);
@@ -35,7 +35,6 @@
       line-height: 1.5em;
 
       &.crosssells {
-        margin-left: var(--indent__m);
         width: 100%;
         display: flex;
         align-items: center;
@@ -186,7 +185,6 @@ div.dropdown.promo-dropdown {
 
   .dropdown-button {
     &.promotion-trigger {
-      padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
       order: var(--promo-triggers-order, 0);
       margin: var(--indent__s) 0 var(--indent__xs);
 
@@ -202,6 +200,10 @@ div.dropdown.promo-dropdown {
       .promo-title {
         div {
           margin: 0 var(--indent__s) 0 0;
+        }
+
+        &.crosssells {
+          margin-left: var(--indent__m);
         }
       }
 
