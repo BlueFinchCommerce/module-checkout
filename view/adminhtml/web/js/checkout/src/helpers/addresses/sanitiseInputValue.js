@@ -12,7 +12,7 @@ export default (input, type) => {
     /* eslint-disable max-len */
     allowedCharactersRegex = /^[\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_]*[^,#?][\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_]*$/;
   } else if (type === 'tel') {
-    allowedCharactersRegex = /^[\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.+,-]*$/;
+    allowedCharactersRegex = /^[0-9+\-]+$/;
   } else {
     /* eslint-disable max-len */
     allowedCharactersRegex = /^[\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.,\-áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÄËÏÖÜÿŸçÇ]*$/;
