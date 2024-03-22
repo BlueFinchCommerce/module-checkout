@@ -1735,7 +1735,7 @@ button .text-loading {
 .dropdown .text-input label input ::placeholder {
   font-size: var(--dropdown-input-font-size, var(--input__font-size));
 }.dropdown-button.promotion-trigger[data-v-3fed84c8] {
-  border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
+  border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
   padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
   background: var(--dropdown__background-color-highlight);
   margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
@@ -6791,6 +6791,29 @@ body.no-scrollable {
 }
 .fade-enter[data-v-55bffe12], .fade-leave-to[data-v-55bffe12] {
   opacity: 0;
+}
+.mock-laptop .modal[data-v-55bffe12],
+.mock-desktop .modal[data-v-55bffe12] {
+  margin: 0 auto;
+}
+.mock-laptop .amasty-modal[data-v-55bffe12],
+.mock-desktop .amasty-modal[data-v-55bffe12] {
+  max-height: var(--modal-desktop-max-height, none);
+}
+.mock-laptop .amasty-modal .modal-body[data-v-55bffe12],
+.mock-desktop .amasty-modal .modal-body[data-v-55bffe12] {
+  overflow: var(--modal-desktop-overflow, auto);
+}
+@media screen and (min-width: 768px) {
+.mock-full .modal[data-v-55bffe12] {
+    margin: 0 auto;
+}
+.mock-full .amasty-modal[data-v-55bffe12] {
+    max-height: var(--modal-desktop-max-height, none);
+}
+.mock-full .amasty-modal .modal-body[data-v-55bffe12] {
+    overflow: var(--modal-desktop-overflow, auto);
+}
 }.agreement-container {
   margin-top: var(--indent__base);
 }
@@ -7058,6 +7081,15 @@ body.no-scrollable {
   -webkit-box-orient: vertical;
   overflow: hidden;
   max-width: var(--shipping-address-width, none);
+}
+.mock-laptop .address-block__address p[data-v-79dd704d],
+.mock-desktop .address-block__address p[data-v-79dd704d] {
+  font-size: var(--steps-complete__font-size-sub--desktop);
+}
+@media screen and (min-width: 768px) {
+.mock-full .address-block__address p[data-v-79dd704d] {
+    font-size: var(--steps-complete__font-size-sub--desktop);
+}
 }.delivery-address[data-v-962edb12] {
   background: var(--delivery-address-section-background, var(--steps-complete__background-color));
   position: relative;
