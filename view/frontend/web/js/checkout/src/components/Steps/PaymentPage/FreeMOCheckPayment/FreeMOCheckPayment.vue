@@ -80,10 +80,6 @@ export default {
       }
     });
 
-    this.cartEmitter.on('cartUpdated', async () => {
-      await this.getPaymentMethods();
-    });
-
     this.paymentEmitter.on('changePaymentMethodDisplay', ({ visible }) => {
       this.paymentVisible = visible;
     });

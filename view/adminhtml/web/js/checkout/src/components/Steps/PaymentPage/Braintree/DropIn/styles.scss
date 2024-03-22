@@ -34,3 +34,7 @@
     white-space: nowrap;
   }
 }
+
+.braintree-vault + .braintree-payment__title {
+  margin-top: var(--indent__base);
+}

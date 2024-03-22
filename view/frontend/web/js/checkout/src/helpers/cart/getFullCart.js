@@ -1,7 +1,7 @@
 import useCustomerStore from '@/stores/CustomerStore';
 
 export default () => {
-  const { customer } = useCustomerStore();
+  const customerStore = useCustomerStore();
 
   return `
     email
@@ -180,7 +180,7 @@ export default () => {
         label
       }
     }
-    ${customer.isLoggedIn
+    ${customerStore.isLoggedIn
     ? `applied_store_credit {
           applied_balance {
             value
