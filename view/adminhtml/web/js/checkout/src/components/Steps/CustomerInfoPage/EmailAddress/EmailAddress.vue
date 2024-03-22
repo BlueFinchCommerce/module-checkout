@@ -21,7 +21,8 @@
         />
       </template>
 
-      <div :class="{ 'logged-in-email': isLoggedIn }">
+      <!-- <div :class="{ 'logged-in-email': isLoggedIn }"> -->
+        <div>
         <TextInput
           ref="email"
           v-model="customer.email"
@@ -257,8 +258,14 @@ export default {
       step: 1,
       description: 'login',
     });
-    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+
     document.addEventListener('keydown', this.handleKeyDown);
+
+    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    document.addEventListener(this.continueButtonTextId, this.setContinueButtonText);
+  },
+  unmounted() {
+    document.removeEventListener(this.continueButtonTextId, this.setContinueButtonText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
@@ -271,6 +278,10 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
+
+    setContinueButtonText(event) {
+      this.continueButtonText = event?.detail || this.$t('continueButton');
+    },
 
     toggleShowPassword() {
       this.showPassword = !this.showPassword;

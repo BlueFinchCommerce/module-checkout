@@ -54,7 +54,7 @@
         <MyButton
           v-if="cart.applied_gift_cards?.[0]"
           secondary
-          :label="$t('orderSummary.removeBtn')"
+          :label="removeButtonText"
           @click="removeGiftCardCode(giftCardCode)"
         />
         <div class="success">

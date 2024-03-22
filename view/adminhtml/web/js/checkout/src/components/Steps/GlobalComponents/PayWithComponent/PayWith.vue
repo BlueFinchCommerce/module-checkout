@@ -6,7 +6,7 @@
     <TextField
       v-if="isExpressPaymentsVisible"
       class="pay-with__message"
-      :text="payWithText"
+      :text="$t('payWithBlockTitle')"
     />
     <TextField
       v-else
@@ -145,12 +145,6 @@ export default {
       })),
     };
   },
-  data() {
-    return {
-      payWithText: '',
-      payWithTextId: 'gene-bettercheckout-paywith-text',
-    };
-  },
   computed: {
     ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
@@ -185,14 +179,6 @@ export default {
     VenmoPayIcon() {
       return `${getStaticUrl(VenmoPayIcon)}`;
     },
-  },
-  async created() {
-    this.payWithText = window.geneCheckout?.[this.payWithTextId] || this.$t('payWithBlockTitle');
-
-    document.addEventListener(this.payWithTextId, this.setPayWithText);
-  },
-  unmounted() {
-    document.removeEventListener(this.payWithTextId, this.setPayWithText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getStoreConfig']),
