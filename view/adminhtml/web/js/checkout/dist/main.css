@@ -8521,6 +8521,10 @@ a[data-v-1e58dc70] {
 .mock-desktop .saved-shipping[data-v-521fa4c1] {
   border-radius: var(--steps-complete__radius--desktop);
 }
+.mock-laptop .saved-shipping .shipping-method-title[data-v-521fa4c1],
+.mock-desktop .saved-shipping .shipping-method-title[data-v-521fa4c1] {
+  font-size: var(--steps-complete__font-size-sub--desktop);
+}
 .mock-laptop .saved-shipping__icon p[data-v-521fa4c1],
 .mock-desktop .saved-shipping__icon p[data-v-521fa4c1] {
   font-size: var(--steps-complete__font-size-title--desktop);
@@ -8528,6 +8532,9 @@ a[data-v-1e58dc70] {
 @media screen and (min-width: 768px) {
 .mock-full .saved-shipping[data-v-521fa4c1] {
     border-radius: var(--steps-complete__radius--desktop);
+}
+.mock-full .saved-shipping .shipping-method-title[data-v-521fa4c1] {
+    font-size: var(--steps-complete__font-size-sub--desktop);
 }
 .mock-full .saved-shipping__icon p[data-v-521fa4c1] {
     font-size: var(--steps-complete__font-size-title--desktop);

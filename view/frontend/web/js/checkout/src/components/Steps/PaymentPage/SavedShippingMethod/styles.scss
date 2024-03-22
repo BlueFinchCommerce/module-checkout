@@ -85,6 +85,9 @@
 @media screen and (min-width: $screen__m) {
   .saved-shipping {
     border-radius: var(--steps-complete__radius--desktop);
+    .shipping-method-title {
+      font-size: var(--steps-complete__font-size-sub--desktop);
+    }
     &__icon {
       p {
         font-size: var(--steps-complete__font-size-title--desktop);
