@@ -2,10 +2,9 @@
 
 .braintree-vault {
   display: grid;
-  gap: var(--indent__base);
 
   .braintree-vaulted-methods-container {
-    margin: var(--indent__base) 0;
+    margin-top: var(--indent__m);
 
     &:empty {
       margin: 0;
@@ -73,6 +72,19 @@
   grid-template-columns: unset;
   overflow-x: auto;
 
+  &::-webkit-scrollbar {
+    height: var(--scroll-bar-height, 4px);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color__primary-grey5);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color__primary-grey2);
+    border-radius: var(--button__border-radius);
+  }
+
   &-1 {
     grid-auto-columns: 100%;
   }
@@ -83,7 +95,7 @@
     &__header__title {
       background: var(--braintree-saved-card__background-color-active);
       border: var(--braintree-saved-card__border-active);
-      border-radius: var(--base__border-radius);
+      border-radius: var(--base__border-radius-large);
       box-shadow: none;
       color: var(--braintree-saved-card__font-color);
       cursor: pointer;
@@ -116,6 +128,7 @@
     &__card-number,
     &__expiry-label {
       font-weight: var(--font-weight__regular);
+      padding-bottom: var(--indent__xs);
     }
 
     &__name,
@@ -133,6 +146,7 @@
     }
 
     &-select {
+      font-weight: var(--font-weight__medium);
       align-self: flex-start;
       justify-self: flex-end;
       text-decoration: underline;
@@ -153,6 +167,9 @@
       margin: 0 0 var(--indent__xl);
       padding: var(--indent__xs);
       width: 30%;
+      border: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey7);
+      border-radius: var(--base__border-radius);
+      min-height: 24px;
 
       svg {
         height: 100%;

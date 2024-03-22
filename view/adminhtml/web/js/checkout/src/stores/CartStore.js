@@ -3,6 +3,7 @@ import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
@@ -164,8 +165,10 @@ export default defineStore('cartStore', {
       });
 
       const customerStore = useCustomerStore();
+      const paymentStore = usePaymentStore();
 
       customerStore.setEmailAddress(cart.email ?? '');
+      paymentStore.setPaymentMethods(cart.available_payment_methods);
     },
 
     async updateQuantity(updateItem, change) {

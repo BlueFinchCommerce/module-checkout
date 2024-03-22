@@ -37,6 +37,10 @@
   }
 }
 
+.braintree-vault + .braintree-payment__title {
+  margin-top: var(--indent__base);
+}
+
 @media screen and (min-width: $screen__m) {
   .braintree-payment {
     &__header {

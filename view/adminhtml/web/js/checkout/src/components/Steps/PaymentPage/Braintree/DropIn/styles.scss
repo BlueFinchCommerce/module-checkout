@@ -37,6 +37,10 @@
   }
 }
 
+.braintree-vault + .braintree-payment__title {
+  margin-top: var(--indent__base);
+}
+
 //Styles for desktop
 
 @mixin largeWidth() {
