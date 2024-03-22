@@ -27,6 +27,12 @@
     display: block;
     grid-row: var(--braintree-method-position);
 
+    &--loading {
+      .braintree-sheet--loading {
+        opacity: 1;
+      }
+    }
+
     &__header,
     &__content {
       display: none;

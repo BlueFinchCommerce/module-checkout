@@ -70,7 +70,6 @@
       "icon-discover-colour.svg",
       "icon-diners-colour.svg",
       "icon-jcb-colour.svg",
-      "shippingIcon.svg",
       "paymentIcon.svg",
       "bancontact.svg",
       "eps.svg",
@@ -219,7 +218,7 @@
   },
   "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
+    "src": "src/icons/shippingIcon.svg"
   },
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
     "file": "bancontact.svg",
@@ -398,7 +397,7 @@
     "src": "src/icons/rvvup-payment.svg"
   },
   "src/icons/shippingIcon.svg": {
-    "file": "shippingIcon.svg",
+    "file": "promo-icon.svg",
     "src": "src/icons/shippingIcon.svg"
   }
 }

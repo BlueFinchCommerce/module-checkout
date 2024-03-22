@@ -1,8 +1,9 @@
 <template>
   <Loader v-if="loadingShippingMethods" />
   <div class="details-form">
-    <div class="details-form-header">
-      <div class="instantCheckout-block" v-show="isExpressPaymentsVisible">
+    <div class="details-form-header"
+         v-show="isExpressPaymentsVisible !== 'false'">
+      <div class="instantCheckout-block">
         <TextField :text="instantCheckoutText" />
       </div>
       <Recaptcha id="placeOrder" />

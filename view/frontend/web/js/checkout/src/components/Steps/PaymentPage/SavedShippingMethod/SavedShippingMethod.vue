@@ -11,7 +11,7 @@
           <div class="total__row">
             <div class="saved-shipping__icon">
               <div class="saved-shipping__icon-image">
-                <Shipping fill="black" />
+                <Shipping />
               </div>
               <div class="title">
                 <TextField :text="shippingStepCompletedText" />

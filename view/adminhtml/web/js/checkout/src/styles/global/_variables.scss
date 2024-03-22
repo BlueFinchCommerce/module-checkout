@@ -296,11 +296,11 @@
     --button__link-text-decoration: underline;
     --button__link-padding: 0;
 
-    --button__link-font-color-hover: var(--color__primary-blue);
     --button__link-font-weight-hover: var(--font-weight__semibold);
+    --button__link-font-color-hover: var(--color__primary-blue);
 
-    --button__link-font-color-focus: var(--color__primary-blue);
     --button__link-font-weight-focus: var(--font-weight__semibold);
+    --button__link-font-color-focus: var(--color__primary-blue);
 
     //
     // Inputs
@@ -395,7 +395,7 @@
     //
     // Messages
     //  ---------------------------------------------
-    --message__margin: var(--indent__m) 0;
+    --message__margin: var(--indent__s) 0 var(--indent__m);
 
     //
     // Slide Up

@@ -39,7 +39,7 @@
               <TextField :text="$t('giftMessage.from')" />
               <TextField :text="item.sender_name" />
             </div>
-            <div class="gift-message__item">
+            <div class="gift-message__item" v-if="item.message.trim() !== ''">
               <TextField :text="$t('giftMessage.message')" />
               <TextField :text="item.message" />
             </div>

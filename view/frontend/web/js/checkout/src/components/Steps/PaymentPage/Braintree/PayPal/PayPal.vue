@@ -70,6 +70,7 @@ export default {
     ));
 
     if (!paypalConfig) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.paypalLoaded = true;
       return; // Early return if Braintree PayPal isn't enabled.
     }
