@@ -1,0 +1,40 @@
+.braintree-payment {
+  display: grid;
+  gap: var(--indent__base);
+  margin-bottom: var(--indent__base);
+
+  &__title {
+    display: flex;
+    padding-bottom: var(--indent__s);
+    margin-bottom: var(--braintree-payment-title-margin, 0);
+    align-items: center;
+
+    .divider-line {
+      border-bottom: var(--divider__border);
+      margin-left: var(--indent__base);
+      width: 100%;
+      display: var(--divider-line-display, block);
+    }
+  }
+
+  &__icon {
+    display: var(--braintree-payment-icon__display);
+
+    img {
+      width: 24px;
+    }
+  }
+
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--font__color);
+    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
+    font-family: var(--payment-page-header-font-family, var(--font-family__copy));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
+    white-space: nowrap;
+  }
+}
+
+.braintree-vault + .braintree-payment__title {
+  margin-top: var(--indent__base);
+}

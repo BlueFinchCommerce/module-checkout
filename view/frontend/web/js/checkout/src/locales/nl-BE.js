@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Verzendgegevens wijzigen',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ugyldig tegn angitt.',
     firstNameErrorMessage: 'Voer een geldige voornaam in',
     lastNameErrorMessage: 'Voer een geldige achternaam in',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Ik accepteer de',
     errorMessage: 'Dit is een verplicht veld',
   },

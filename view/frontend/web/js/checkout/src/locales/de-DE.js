@@ -131,6 +131,7 @@ export default {
   editDetailsButtonLabel: 'Informationen bearbeiten',
   editShippingButtonLabel: 'Versandinformationen bearbeiten',
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Bitte gültigen Vornamen eingeben',
     lastNameErrorMessage: 'Bitte gültigen Nachnamen eingeben',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Ich akzeptiere die',
     errorMessage: 'Dies ist ein Pflichtfeld',
   },

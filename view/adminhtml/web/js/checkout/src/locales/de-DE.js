@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Gib deine E-Mailadresse ein für eine Zahlung per Kredit- oder Bankkarte',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Anwenden',
     removeBtn: 'Entfernen',
     modalHeader: 'Bestellübersicht',
@@ -23,11 +24,15 @@ export default {
     plusOneItem: 'Ein Artikel mehr',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Promo Code eingeben',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Code eingeben',
       successMessage: 'Code erfolgreich eingegeben "{code}".',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'SKU Nr.:',
     supplierStockNumber: 'Lieferant Lager Nr.:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Deine Informationen',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Hierhin versenden',
       info: 'Wohin sollen wir versenden?',
       billingAddressTitle: 'Rechnungsadresse',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Lieferadresse',
       addressFinder: {
         title: 'Adressenfinder',
@@ -123,6 +131,7 @@ export default {
   editDetailsButtonLabel: 'Informationen bearbeiten',
   editShippingButtonLabel: 'Versandinformationen bearbeiten',
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Bitte gültigen Vornamen eingeben',
     lastNameErrorMessage: 'Bitte gültigen Nachnamen eingeben',
@@ -172,7 +181,9 @@ export default {
   addNewAddressBtn: '+ Neue Adresse hinzufügen',
   saveNewAddress: 'In Adressbuch speichern',
   paymentStep: {
-    title: 'Zahlungsart wählen',
+    titleGuest: 'Zahlungsart wählen',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Keine Zahlungsinformationen benötigt',
     payNow: 'Jetzt bezahlen',
     storedPayments: 'Deine gespeicherten Zahlungen',
@@ -184,8 +195,11 @@ export default {
   adyen: {
     applePayTotal: 'Gesamtsumme',
     applePayNoShippingMethods: 'Derzeit sind keine Versandoptionen für dich verfügbar. Bitte versuche es erneut oder nutze eine andere Zahlungsart',
+  },
+  paymentCard: {
     cardNumber: 'Kartennummer',
     expiry: 'Ablaufdatum',
+    select: 'Select',
     storedPaymentLabel: '{name} Gespeicherte Karte endet auf {lastFour}',
   },
   braintree: {

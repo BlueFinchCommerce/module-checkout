@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Modifica informazioni di spedizione',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'È stato immesso un carattere non valido.',
     firstNameErrorMessage: 'Inserisci un nome valido',
     lastNameErrorMessage: 'Inserisci un cognome valido',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Confermo di aver letto e accetto il/la',
     errorMessage: 'Questo campo è obbligatorio',
   },

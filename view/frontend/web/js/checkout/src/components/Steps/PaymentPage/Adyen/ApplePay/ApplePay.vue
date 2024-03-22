@@ -13,7 +13,6 @@ import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
@@ -73,6 +72,7 @@ export default {
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
       return;
     }
@@ -131,9 +131,6 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getStoreConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
-    ...mapActions(usePaymentStore, [
-      'setErrorMessage',
-    ]),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
@@ -177,7 +174,7 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        return this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
+        return false;
       }
 
       return expressPaymentOnClickDataLayer(resolve, reject, type);
@@ -360,17 +357,21 @@ export default {
 
     // Map the address provided by ApplePay into something useable.
     mapAddress(address, email, telephone) {
+      const regionId = this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea);
       return {
         email,
         telephone,
         firstname: address.givenName,
         lastname: address.familyName,
+        company: address.company || '',
         street: address.addressLines,
         city: address.locality,
-        region: address.administrativeArea,
-        region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
         country_code: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
+        region: {
+          ...(address.administrativeArea ? { region: address.administrativeArea } : {}),
+          ...(regionId ? { region_id: regionId } : {}),
+        },
       };
     },
   },

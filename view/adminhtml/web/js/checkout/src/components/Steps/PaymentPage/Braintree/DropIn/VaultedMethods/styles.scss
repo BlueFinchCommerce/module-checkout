@@ -1,0 +1,216 @@
+@import '@/styles/global/_breakpoints';
+
+.braintree-vault {
+  display: grid;
+
+  .braintree-vaulted-methods-container {
+    margin-top: var(--indent__m);
+
+    &:empty {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    display: flex;
+    padding-bottom: var(--indent__s);
+    margin-bottom: var(--braintree-payment-title-margin, 0);
+    align-items: center;
+
+    .divider-line {
+      border-bottom: var(--divider__border);
+      margin-left: var(--indent__base);
+      flex-grow: 1;
+      display: var(--divider-line-display, block);
+    }
+  }
+
+  &__icon {
+    display: var(--braintree-payment-icon__display);
+
+    img {
+      width: 24px;
+    }
+  }
+
+  &__header {
+    font-size: var(--payment-page-title-mobile-font, var(--font__heading--mobile));
+    color: var(--font__color);
+    font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
+    font-family: var(--payment-page-header-font-family, var(--font-family__copy));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
+    white-space: nowrap;
+  }
+
+  [name="braintree-hosted-field-cvv"],
+  [name="braintree-hosted-field=expirationDate"],
+  [name="braintree-hosted-field-number"] {
+    background: var(--braintree-payment-input__background-color, var(--color__primary-white));
+    border-radius: 4px;
+    border: var(--input-border, 1px solid var(--input__border-color)) !important;
+    height: var(--input__height) !important;
+    outline: none;
+    padding: var(--indent__s);
+    transition: none;
+  }
+
+  .braintree-hosted-fields-focused {
+    [name="braintree-hosted-field-cvv"],
+    [name="braintree-hosted-field=expirationDate"],
+    [name="braintree-hosted-field-number"] {
+      border: var(--input-border-focus, 2.5px solid var(--input__border-color-focus)) !important;
+      box-shadow: none;
+    }
+  }
+}
+
+.braintree-vaulted-methods-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 75%;
+  grid-gap: var(--indent__s);
+  grid-template-columns: unset;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: var(--scroll-bar-height, 4px);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--color__primary-grey5);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color__primary-grey2);
+    border-radius: var(--button__border-radius);
+  }
+
+  &-1 {
+    grid-auto-columns: 100%;
+  }
+
+  .braintree-payment__payment-method {
+    border: none;
+
+    &__header__title {
+      background: var(--braintree-saved-card__background-color-active);
+      border: var(--braintree-saved-card__border-active);
+      border-radius: var(--base__border-radius-large);
+      box-shadow: none;
+      color: var(--braintree-saved-card__font-color);
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, auto);
+      margin: 0;
+      padding: var(--indent__base);
+
+      &.braintree-payment__payment-method-disabled {
+        background: var(--braintree-saved-card__background-color);
+        border: var(--braintree-saved-card__border);
+      }
+    }
+
+    &__card-number,
+    &__name {
+      font-size: var(--font__xs);
+      grid-column: 1;
+      text-align: left;
+    }
+
+    &__expiry-label,
+    &__expiry {
+      font-size: var(--font__xs);
+      grid-column: 2;
+      text-align: right;
+    }
+
+    &__card-number,
+    &__expiry-label {
+      font-weight: var(--font-weight__regular);
+      padding-bottom: var(--indent__xs);
+    }
+
+    &__name,
+    &__expiry {
+      font-weight: var(--font-weight__semibold);
+    }
+
+    &-tick {
+      align-self: self-start;
+      display: flex;
+      fill: var(--braintree-saved-card-tick-color, var(--color__semantic-success));
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: flex-end;
+    }
+
+    &-select {
+      font-weight: var(--font-weight__medium);
+      align-self: flex-start;
+      justify-self: flex-end;
+      text-decoration: underline;
+    }
+
+    &__radio {
+      display: none;
+    }
+
+    &__expiry-label {
+      grid-row: 2;
+    }
+
+    &__image__wrapper {
+      grid-column: 1;
+      grid-row: 1;
+      height: var(--indent__base);
+      margin: 0 0 var(--indent__xl);
+      padding: var(--indent__xs);
+      width: 30%;
+      border: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey7);
+      border-radius: var(--base__border-radius);
+      min-height: 24px;
+
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .braintree-payment__card__exp-date__input--oneclick {
+    background-color: transparent;
+    border: none;
+    color: var(--color__primary-white);
+    grid-column: 2;
+    height: auto;
+    line-height: 1em;
+    padding: 0;
+    text-align: right;
+
+    &:active {
+      box-shadow: none
+    }
+  }
+}
+
+@mixin xlargeWidth() {
+  .braintree-vaulted-methods-container {
+    grid-auto-columns: 40%;
+
+    &-1,
+    &-2 {
+      grid-auto-columns: calc(50% - var(--indent__xs));
+    }
+  }
+}
+
+.mock-desktop {
+  @include xlargeWidth;
+}
+
+@media screen and (min-width: $screen__l) {
+  .mock-full {
+    @include xlargeWidth;
+  }
+}

@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Voer je e-mailadres in om met een creditcard/debetkaart te betalen',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Gebruiken',
     removeBtn: 'Verwijderen',
     modalHeader: 'Besteloverzicht',
@@ -23,11 +24,15 @@ export default {
     plusOneItem: 'Een artikel meer',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Kortingscode invoeren',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Code invoeren',
       successMessage: 'Code succesvol ingevoerd "{code}".',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'SKU-nr.:',
     supplierStockNumber: 'Leverancier Voorraadnr.',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Jouw informatie',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Hier verzenden',
       info: 'Waar moeten we naartoe verzenden?',
       billingAddressTitle: 'Factuuradres',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveringsadres',
       addressFinder: {
         title: 'Adres zoeken',
@@ -123,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Verzendgegevens wijzigen',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ugyldig tegn angitt.',
     firstNameErrorMessage: 'Voer een geldige voornaam in',
     lastNameErrorMessage: 'Voer een geldige achternaam in',
@@ -172,7 +181,9 @@ export default {
   addNewAddressBtn: 'Nieuw adres toevoegen',
   saveNewAddress: 'Opslaan in adresboek',
   paymentStep: {
-    title: 'Selecteer betaalmethode',
+    titleGuest: 'Selecteer betaalmethode',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Geen betalingsgegevens nodig',
     payNow: 'Nu betalen',
     storedPayments: 'Je opgeslagen betalingen',
@@ -184,8 +195,11 @@ export default {
   adyen: {
     applePayTotal: 'Totaal',
     applePayNoShippingMethods: 'Er zijn momenteel geen verzendmethoden beschikbaar. Probeer het opnieuw of gebruik een andere betaalmethode.',
+  },
+  paymentCard: {
     cardNumber: 'Kaartnummer',
     expiry: 'Vervaldatum',
+    select: 'Select',
     storedPaymentLabel: '{name} Opgeslagen kaart verloopt op {lastFour}',
   },
   braintree: {

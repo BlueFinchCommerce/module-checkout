@@ -1,0 +1,18 @@
+.braintree-lpm-container {
+  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+  border-bottom-left-radius: var(--base__border-radius-large);
+  border-bottom-right-radius: var(--base__border-radius-large);
+  border-top: 0;
+  display: grid;
+  gap: var(--indent__m);
+  padding: 0 var(--indent__base) var(--indent__base);
+}
+
+.braintree-lpm-method {
+  height: var(--button__height);
+
+  img {
+    height: 100%;
+    padding: var(--indent__xs);
+  }
+}

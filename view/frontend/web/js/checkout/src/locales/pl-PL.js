@@ -131,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Edytuj szczegóły wysyłki',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Wprowadzono nieprawidłowy znak.',
     firstNameErrorMessage: 'Wprowadź prawidłowe imię',
     lastNameErrorMessage: 'Wprowadź prawidłowe nazwisko',
@@ -219,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Potwierdzam, że przeczytałem i akceptuję',
     errorMessage: 'To pole jest wymagane.',
   },

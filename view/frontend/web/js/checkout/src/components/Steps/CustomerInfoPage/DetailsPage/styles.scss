@@ -54,7 +54,7 @@
     }
 
     .divider-line {
-      width: 100%;
+      flex-grow: 1;
     }
 
     img {
@@ -103,7 +103,7 @@
     display: flex;
 
     .divider-line {
-      width: 100%;
+      flex-grow: 1;
     }
 
     img {

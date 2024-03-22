@@ -142,6 +142,7 @@ export default {
     editShippingButtonLabel: 'Edit Your Shipping Details',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Invalid character entered',
     firstNameErrorMessage: 'Please enter a valid firstname',
     lastNameErrorMessage: 'Please enter a valid lastname',
@@ -153,7 +154,7 @@ export default {
     addressFormErrorMessage: 'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postcode for',
     countryErrorMessage: 'Please choose your country',
-    streetErrorMessage: 'Please enter a valid address and use a maximum of 75 characters for your street address',
+    streetErrorMessage: 'Please enter a valid address',
     streetCharacterLimit: 'Please use a maximum of 75 characters for your street address',
     cityErrorMessage: 'Please enter a valid city',
     regionErrorMessage: 'Please enter a valid county',
@@ -245,6 +246,8 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'I confirm that I have read and accept the',
     errorMessage: 'This is a required field.',
     paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',

@@ -19,7 +19,7 @@
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
     >
-      <Agreements />
+      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
       <PrivacyPolicy />
     </teleport>
     <teleport
@@ -329,6 +329,11 @@ export default {
       const paymentMethod = {
         code: state.data.paymentMethod.type === 'scheme' ? 'adyen_cc' : 'adyen_hpp',
       };
+
+      if (state.data?.paymentMethod?.storedPaymentMethodId) {
+        state.data.storePaymentMethod = true;
+      }
+
       const stateData = JSON.stringify(state.data);
 
       if (paymentMethod.code === 'adyen_cc') {
@@ -336,7 +341,7 @@ export default {
           cc_type: state.data.paymentMethod.brand,
           stateData,
           recurringProcessingModel: 'CardOnFile',
-          is_active_payment_token_enabler: true,
+          is_active_payment_token_enabler: !!state.data.storePaymentMethod,
         };
       } else {
         paymentMethod.adyen_additional_data_hpp = {

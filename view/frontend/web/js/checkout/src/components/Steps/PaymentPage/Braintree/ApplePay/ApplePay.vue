@@ -81,6 +81,7 @@ export default {
     ));
 
     if (!applePayConfig) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
       return; // Early return if Braintree Apple Pay isn't enabled.
     }
@@ -134,7 +135,6 @@ export default {
       const isValid = this.validateAgreements();
 
       if (!isValid) {
-        this.setErrorMessage(this.$t('agreements.paymentErrorMessage'));
         return;
       }
 
@@ -374,17 +374,21 @@ export default {
 
     // Map the address provided by ApplePay into something useable.
     mapAddress(address, email, telephone) {
+      const regionId = this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea);
       return {
         email,
         telephone,
         firstname: address.givenName,
         lastname: address.familyName,
+        company: address.company || '',
         street: address.addressLines,
         city: address.locality,
-        region: address.administrativeArea,
-        region_id: this.getRegionId(address.countryCode.toUpperCase(), address.administrativeArea),
         country_code: address.countryCode.toUpperCase(),
         postcode: address.postalCode,
+        region: {
+          ...(address.administrativeArea ? { region: address.administrativeArea } : {}),
+          ...(regionId ? { region_id: regionId } : {}),
+        },
       };
     },
 

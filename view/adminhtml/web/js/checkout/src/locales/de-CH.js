@@ -7,6 +7,7 @@ export default {
   signInDividerText: 'or',
   payNoExpressWithBlockTitle: 'Ange din e-postadress för att betala med kredit-/betalkort',
   orderSummary: {
+    crossSellsTitle: 'You may also like these items...',
     applyBtn: 'Tillämpa',
     removeBtn: 'Ta bort',
     modalHeader: 'Sammanfattning av beställningen',
@@ -23,11 +24,15 @@ export default {
     plusOneItem: 'plus en artikel',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
+      title: 'Coupon',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
+      title: 'Gift card {code}',
+      errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
     },
@@ -45,6 +50,7 @@ export default {
     skuNumber: 'SKU-nr:',
     supplierStockNumber: 'Leverantör Lager nr:',
     storeCreditTitle: 'Store Credit',
+    giftWrappingTitle: 'Gift Wrapping',
   },
   progressBar: {
     detailStepTitle: 'Din information',
@@ -84,6 +90,8 @@ export default {
       shipHere: 'Skicka här',
       info: 'Vart ska vi leverera den till?',
       billingAddressTitle: 'Faktureringsadress',
+      selectedBillingAddressTitle: 'Billing address',
+      newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveransadress',
       addressFinder: {
         title: 'Sök efter adress',
@@ -123,6 +131,7 @@ export default {
     editShippingButtonLabel: 'Redigera leveransinformation',
   },
   errorMessages: {
+    addressWrongError: 'Please check your address format.',
     sanitiseError: 'Ungültiges Zeichen eingegeben.',
     firstNameErrorMessage: 'Vänligen ange giltigt förnamn',
     lastNameErrorMessage: 'Vänligen ange giltigt efternamn',
@@ -172,7 +181,9 @@ export default {
   addNewAddressBtn: 'Lägg till ny adress',
   saveNewAddress: 'Spara i adressbok',
   paymentStep: {
-    title: 'Välj en betalningsmetod',
+    titleGuest: 'Välj en betalningsmetod',
+    titleStored: 'Your saved payment methods',
+    titleNew: 'Select new payment method',
     freePayment: 'Ingen betalningsinformation krävs',
     payNow: 'Betala nu',
     storedPayments: 'Dina sparade betalningar',
@@ -184,8 +195,11 @@ export default {
   adyen: {
     applePayTotal: 'Totalt',
     applePayNoShippingMethods: 'Det finns inga tillgängliga fraktmetoder för dig just nu. Försök igen eller använd en annan betalningsmetod.',
+  },
+  paymentCard: {
     cardNumber: 'Kortnummer',
     expiry: 'Förfallodag',
+    select: 'Select',
     storedPaymentLabel: '{namn} Lagrat kort upphör att gälla {sistaFjärde}',
   },
   braintree: {

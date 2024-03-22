@@ -15,6 +15,7 @@
     --color__primary-grey4: #ccd2da;
     --color__primary-grey5: #e8edf3;
     --color__primary-grey6: #f5f9fe;
+    --color__primary-grey7: #f5f5f5;
     --color__primary-white: #ffffff;
 
     --color__accent-mint: #00b2ad;
@@ -33,7 +34,7 @@
     //  Page
     //  ---------------------------------------------
     --page__background-color--mobile: var(--color__primary-white);
-    --page__background-color--desktop: var(--color__primary-grey6);
+    --page__background-color--desktop: var(--color__primary-grey7);
 
     //
     //  Skeleton Placeholder
@@ -84,7 +85,6 @@
 
     --font__color-light: var(--color__primary-blue);
     --font__color: var(--color__primary-dark-blue);
-    --font__color-dark: var(--color__primary-navy);
 
     //
     // Header
@@ -117,6 +117,7 @@
     // Order Summary Desktop
     //  ---------------------------------------------
     --summary__background-color: var(--color__primary-white);
+    --summary__border-radius--desktop: var(--base__border-radius-large);
 
 
     //
@@ -288,7 +289,7 @@
     //
     // Link Buttons
     //  ---------------------------------------------
-    --button__link-font-size: var(--font__xs);
+    --button__link-font-size: var(--font__s);
     --button__link-font-weight: var(--font-weight__medium);
     --button__link-font-color: var(--color__primary-blue);
     --button__link-background-color: var(--color__transparent);
@@ -299,8 +300,8 @@
     --button__link-font-weight-hover: var(--font-weight__semibold);
     --button__link-font-color-hover: var(--color__primary-blue);
 
-    --button__link-font-color-focus: var(--color__primary-blue);
     --button__link-font-weight-focus: var(--font-weight__semibold);
+    --button__link-font-color-focus: var(--color__primary-blue);
 
     //
     // Inputs
@@ -310,17 +311,16 @@
     --input__font-weight: var(--font-weight__semibold);
     --input__background-color: var(--color__primary-white);
     --input__border-color: var(--color__primary-grey2);
-    --input__border-color-hover: var(--color__primary-grey2); // Remove
-    --input__border-color-focus: var(--color__primary-grey2);
-    --input__border-color-active: var(--base__border-color-active);
+    --input__border-color-hover: var(--color__primary-grey2);
+    --input__border-color-focus: var(--input__border-color);
+    --input__border-color-valid: var(--base__border-color-active);
     --input__border-color-error: var(--color__semantic-error);
     --input__border-radius: var(--base__border-radius);
     --input__border-weight: var(--base__border-weight);
-    --input__border-weight-hover: 1px; // Remove
+    --input__border-weight-hover: var(--base__border-weight);
     --input__border-weight-focus: var(--base__border-weight-active);
-    --input__border-weight-active: var(--base__border-weight-active);
     --input__height: 55px;
-    --input__label-font-color: var(--font__color-dark);
+    --input__label-font-color: var(--color__primary-navy);
     --input__label-padding: var(--indent__s);
     --input__placeholder-font-color: var(--color__primary-grey1);
     --input__placeholder-font-weight: var(--font-weight__medium);
@@ -396,7 +396,7 @@
     //
     // Messages
     //  ---------------------------------------------
-    --message__margin: var(--indent__m) 0;
+    --message__margin: var(--indent__s) 0 var(--indent__m);
 
     //
     // Slide Up

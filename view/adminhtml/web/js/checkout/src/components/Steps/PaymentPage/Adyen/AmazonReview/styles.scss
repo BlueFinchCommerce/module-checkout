@@ -1,0 +1,32 @@
+@import '@/styles/global/_breakpoints';
+
+.payment-page {
+  padding: 0 var(--indent__base--mobile);
+
+  .payment-form {
+    background: var(--color__primary-grey6);
+    margin-top: var(--indent__base);
+  }
+}
+
+@mixin largeWidth() {
+  .payment-page {
+    padding: 0;
+
+    .payment-form {
+      background: var(--color__primary-white);
+      padding: var(--form-details-padding-desktop, 40px 40px 70px);
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

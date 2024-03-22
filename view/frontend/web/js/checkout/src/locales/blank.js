@@ -110,6 +110,7 @@ export default {
     editButton: ' ',
   },
   errorMessages: {
+    addressWrongError: ' ',
     sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
@@ -190,6 +191,8 @@ export default {
     storePayment: ' ',
   },
   agreements: {
+    acceptBtn: ' ',
+    title: ' ',
     label: ' ',
     errorMessage: ' ',
     paymentErrorMessage: ' ',

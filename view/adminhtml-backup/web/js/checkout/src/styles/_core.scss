@@ -1,0 +1,105 @@
+/*Gene Vue Checkout App*/
+/*---------------------------------------------*/
+
+/*Core Checkout Styles*/
+/*---------------------------------------------*/
+
+@import "core/_form.scss";
+@import "core/_button.scss";
+@import "core/_payment-method.scss";
+
+body {
+  &.no-scrollable {
+    overflow: hidden;
+  }
+}
+
+#gene-better-checkout-root {
+  color: var(--text__color);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-base);
+  font-size: var(--font__base);
+  line-height: 1.6;
+  height: calc(100% - 110px);
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  .root {
+    background: var(--page-background__color-mobile);
+    flex: 1;
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      margin-bottom: 0;
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: var(--disabled-buttons-opacity, 0.5);
+  }
+
+  @mixin largeWidth() {
+    .root {
+      background: var(--page-background__color-desktop);
+    }
+
+    .steps-container {
+      .container {
+        max-width: var(--layout__max-width);
+        padding: calc(var(--indent__base) * 4) var(--indent__base);
+        display: flex;
+        flex-direction: row-reverse;
+        margin: 0 auto;
+
+        .summary {
+          width: 40%;
+        }
+
+        .content {
+          margin-right: var(--column-gap);
+          width: 60%;
+        }
+      }
+    }
+
+    .is-hidden-desktop,
+    .is-hidden-tablet {
+      display: none !important;
+    }
+  }
+
+  .mock-laptop,
+  .mock-desktop {
+    @include largeWidth;
+  }
+
+  @media screen and (min-width: $screen__m) {
+    .mock-full {
+      @include largeWidth;
+    }
+  }
+
+  @mixin smallWidth() {
+    .is-hidden-mobile {
+      display: none !important;
+    }
+  }
+
+  .mock-mobile,
+  .mock-tablet {
+    @include smallWidth;
+  }
+
+  @media screen and (max-width: $screen__m) {
+    .mock-full {
+      @include smallWidth;
+    }
+  }
+}

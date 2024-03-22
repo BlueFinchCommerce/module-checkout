@@ -1,0 +1,43 @@
+.adyen-checkout__payment-method {
+  &-tick {
+    align-self: self-start;
+    display: flex;
+    fill: var(--adyen-saved-card-tick-color, var(--color__semantic-success));
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: flex-end;
+  }
+
+  &-select {
+    align-self: flex-start;
+    justify-self: flex-end;
+    text-decoration: underline;
+  }
+
+  &__card-number,
+  &__name {
+    font-size: var(--font__xs);
+    grid-column: 1;
+    text-align: left;
+  }
+
+  &__expiry-label,
+  &__expiry {
+    font-size: var(--font__xs);
+    grid-column: 2;
+    text-align: right;
+  }
+
+  &__name,
+  &__expiry {
+    font-weight: var(--font-weight__semibold);
+  }
+
+  &__expiry-label {
+    grid-row: 2;
+  }
+}
+
+.adyen-checkout__payment-stored-methods .adyen-checkout__payment-method__image__wrapper {
+  margin-right: var(--indent__s);
+}

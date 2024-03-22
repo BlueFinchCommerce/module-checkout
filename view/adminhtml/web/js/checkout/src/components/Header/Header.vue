@@ -4,36 +4,38 @@
     :style="style"
   >
     <div class="header-content">
-      <div class="header-logo">
-        <Logo alt="logo" />
-      </div>
+      <a
+        :href="secureBaseUrl + storeCode"
+        aria-label="logo"
+        class="header-logo"
+        :class="custom.checkoutLogo ? 'logo-no-width' : ''"
+      >
+        <Logo alt="logo"/>
+      </a>
       <div class="header-title">
         <Lock
           stroke="white"
           class="secure-logo"
         />
-        <TextField
-          class="secure-text"
-          :text="headerText"
-        />
+        <h1 class="secure-text">
+          {{ headerText }}
+        </h1>
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapActions } from 'pinia';
-import useConfigStore from '@/stores/ConfigStore';
-import Logo from '@/components/Core/Logo/Logo.vue';
+import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+import Logo from '@/components/Core/Icons/Logo/Logo.vue';
 import Lock from '@/components/Core/Icons/Lock/Lock.vue';
-import TextField from '@/components/Core/TextField/TextField.vue';
 
 export default {
   name: 'AppHeader',
   components: {
     Logo,
     Lock,
-    TextField,
   },
   data() {
     return {
@@ -50,12 +52,11 @@ export default {
   unmounted() {
     document.removeEventListener(this.headerTextId, this.setHeaderText);
   },
+  computed: {
+    ...mapState(useConfigStore, ['secureBaseUrl', 'storeCode']),
+  },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
-
-    setHeaderText(event) {
-      this.headerText = event?.detail || this.$t('header.text');
-    },
+    ...mapActions(useConfigStore, ['custom', 'getStoreConfig']),
   },
 };
 </script>

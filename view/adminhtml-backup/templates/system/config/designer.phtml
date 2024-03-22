@@ -1,0 +1,1337 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
+ */
+$assetViewModel = $block->getAssetViewModel();
+$jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
+$cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
+$fontUrl = $assetViewModel->getFontUrl();
+?>
+
+<?php if ($fontUrl !== null) : ?>
+    <style>
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
+    </style>
+<?php endif; ?>
+
+<?php foreach ($cssAssets as $cssAsset): ?>
+    <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+<?php endforeach; ?>
+
+<button data-mage-init='{"Gene_BetterCheckout/js/designer": {
+    "jsAssets": [
+        <?php foreach ($jsAssets['main'] as $jsAsset): ?>
+            <?= '"' . $escaper->escapeUrl($jsAsset->getUrl()) . '"'; ?>
+        <?php endforeach; ?>
+    ]
+}}'>
+    <?= $escaper->escapeHtml(__('Open Designer')) ?>
+</button>
+
+<div id="gene-bettercheckout-designer" style="display: none;" class="open">
+    <button class="toggle action-close"></button>
+    <div class="sidebar">
+        <div class="fields">
+            <div class="section-config"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <a data-role="title" class="main-heading">
+                        <?= $escaper->escapeHtml(__('Master Styles')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Header')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene_better_checkout_general_gene_better_checkout_logo">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Logo')) ?>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-header-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-header-text" data-type="checkout-wording" type="text" placeholder="Secure Checkout" />
+                                    </div>
+                                    <h2 data-role="title" class="heading">
+                                        <?= $escaper->escapeHtml(__('Header Styling')) ?>
+                                    </h2>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-header-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Header Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-header-color" data-type="color-picker" data-css-variable="--header-background-color" placeholder="#2b2b2b" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Body')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset mobile-specific-field">
+                                        <label for="gene-bettercheckout-page-background-color-mobile">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Main Background Colour (Small Screens - Mobile & Tablet Screens)')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-page-background-color-mobile" data-type="color-picker" data-css-variable="--page-background__color-mobile" placeholder="#ffffff" />
+                                    </div>
+                                    <div class="fieldset desktop-specific-field">
+                                        <label for="gene-bettercheckout-page-background-color-desktop">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Main Background Colour (Large Screens - Laptop Screens & Above)')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-page-background-color-desktop" data-type="color-picker" data-css-variable="--page-background__color-desktop" placeholder="#f8f8f8" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config desktop-specific-field"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Steps')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-steps-background-color-desktop">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Steps Background Colour (Large Screens - Laptop Screens & Above)')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-steps-background-color-desktop" data-type="color-picker" data-css-variable="--steps-background-desktop" placeholder="#ffffff" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-steps-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Steps Border Radius (Large Screens - Laptop Screens & Above)')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-steps-radius" type="number" placeholder="0" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-steps-radius_hidden" type="text" data-css-variable="--steps-border-radius-desktop" placeholder="0px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Typography')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-heading-text-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Header Text Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-heading-text-color" data-type="color-picker" data-css-variable="--text__color--heading" placeholder="#2b2b2b" />
+                                    </div>
+                                    <div class="fieldset desktop-specific-field">
+                                        <label for="gene-bettercheckout-text-size--heading-desktop">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Header Text Size (Large Screens - Laptop Screens & Above)')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-text-size--heading-desktop" type="number" placeholder="22" />
+                                        <input class="hidden" id="gene-bettercheckout-text-size--heading-desktop_hidden" type="text" data-css-variable="--font__heading--desktop" placeholder="22px" />
+                                    </div>
+                                    <div class="fieldset mobile-specific-field">
+                                        <label for="gene-bettercheckout-text-size--heading-mobile">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Header Text Size (Small Screens - Mobile & Tablet Screens)')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-text-size--heading-mobile" type="number" placeholder="18" />
+                                        <input class="hidden" id="gene-bettercheckout-text-size--heading-mobile_hidden" type="text" data-css-variable="--font__heading--mobile" placeholder="18px" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-text-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Base Text Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-text-color" data-type="color-picker" data-css-variable="--text__color" placeholder="#2b2b2b" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-text-size--base">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Base Text Size')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-text-size--base" type="number" placeholder="14" />
+                                        <input class="hidden" id="gene-bettercheckout-text-size--base_hidden" type="text" data-css-variable="--font__base" placeholder="14px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Input Fields')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Base Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-text-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-text-color" data-type="color-picker" data-css-variable="--input-font-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-placeholder-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Placeholder Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-placeholder-color" data-type="color-picker" data-css-variable="--input-placeholder-color" placeholder="#7a8086"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-background-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Background Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-background-color" data-type="color-picker" data-css-variable="--input-background-color" placeholder="#ffffff"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-border-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-border-color" data-type="color-picker" data-css-variable="--input-border-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-radius">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Radius')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-input-radius" type="number" placeholder="4" max="30"/>
+                                                    <input class="hidden" id="gene-bettercheckout-input-radius_hidden" type="text" data-css-variable="--input-border-radius" placeholder="4px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-stroke-weight">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight" type="number" placeholder="1" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight_hidden" type="text" data-css-variable="--input-border-weight" placeholder="1px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-text-size--input">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Text Size (based on base size as default)')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-text-size--input" type="number" placeholder="14" />
+                                                    <input class="hidden" id="gene-bettercheckout-text-size--input_hidden" type="text" data-css-variable="--input-font-size" placeholder="14px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Hover Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-border-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-border-color-hover" data-type="color-picker" data-css-variable="--input-border-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-stroke-weight-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Hover Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-hover" type="number" placeholder="1" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-hover_hidden" type="text" data-css-variable="--input-border-weight-hover" placeholder="1px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Focus Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-border-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-input-border-color-focus" data-type="color-picker" data-css-variable="--input-border-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-input-stroke-weight-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Input Border Focus Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-input-stroke-weight-focus" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-input-stroke-weight-focus_hidden" type="text" data-css-variable="--input-border-weight-focus" placeholder="2px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Button Styling')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-button-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Button Border Radius')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-button-radius" type="number" placeholder="4" max="30"/>
+                                        <input class="hidden" id="gene-bettercheckout-button-radius_hidden" type="text" data-css-variable="--button-border-radius" placeholder="4px" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-button-text-size">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Button Text Size')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-button-text-size" type="number" placeholder="14" />
+                                        <input class="hidden" id="gene-bettercheckout-button-text-size_hidden" type="text" data-css-variable="--button-font-medium" placeholder="14px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Base Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-color" data-type="color-picker" data-css-variable="--button-primary-background-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-border-color" data-type="color-picker" data-css-variable="--button-primary-border-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-stroke-weight">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-primary-border-weight" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-text-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-text-color" data-type="color-picker" data-css-variable="--button-primary-text-color" placeholder="#ffffff"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Hover Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-color-hover" data-type="color-picker" data-css-variable="--button-primary-background-color-hover" placeholder="#ffffff"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-primary-border-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-stroke-weight-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Hover Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight-hover" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-primary-border-weight-hover" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-text-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Text Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-primary-text-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                            data-mage-init='{"collapsible": {
+                                                "animate": 200,
+                                                "collapsible": true,
+                                                "openedState": "active"
+                                            }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Focus Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-color-focus" data-type="color-picker" data-css-variable="--button-primary-background-color-focus" placeholder="#ffffff"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-primary-border-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-border-stroke-weight-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Border Focus Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-primary-button-border-stroke-weight-focus" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-primary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-primary-border-weight-focus" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-button-text-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Button Text Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-primary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-primary-text-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Secondary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Base Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-color" data-type="color-picker" data-css-variable="--button-secondary-background-color" placeholder="transparent"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color" data-type="color-picker" data-css-variable="--button-secondary-border-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-stroke-weight">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight_hidden" type="text" data-css-variable="--button-secondary-border-weight" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-text-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color" data-type="color-picker" data-css-variable="--button-secondary-text-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Hover Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-color-hover" data-type="color-picker" data-css-variable="--button-secondary-background-color-hover" placeholder="transparent"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color-hover" data-type="color-picker" data-css-variable="--button-secondary-border-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-stroke-weight-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Hover Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight-hover" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button-secondary-border-weight-hover" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-text-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Text Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color-hover" data-type="color-picker" data-css-variable="--button-secondary-text-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Focus Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-color-focus" data-type="color-picker" data-css-variable="--button-secondary-background-color-focus" placeholder="transparent"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-border-color-focus" data-type="color-picker" data-css-variable="--button-secondary-border-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-border-stroke-weight-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Border Focus Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-secondary-button-border-stroke-weight-focus" type="number" placeholder="2" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-secondary-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button-secondary-border-weight-focus" placeholder="2px" />
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-secondary-button-text-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Secondary Button Text Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-secondary-button-text-color-focus" data-type="color-picker" data-css-variable="--button-secondary-text-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Text Link Buttons (underlined text)')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Base Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-removeitem-font-colour">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Text Link Button Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-removeitem-font-colour" data-type="color-picker" data-css-variable="--button-remove-item-font-color" placeholder="#2b2b2b"/>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-removeitem-font-size">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Text Link Button Text Size')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-removeitem-font-size" type="number" placeholder="12" />
+                                                    <input class="hidden" id="gene-bettercheckout-removeitem-font-size_hidden" type="text" data-css-variable="--button-remove-item-font-size" placeholder="12px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Hover Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-removeitem-font-colour-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Text Link Button Hover Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-removeitem-font-colour-hover" data-type="color-picker" data-css-variable="--button-remove-item-font-color-hover" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <a data-role="title" class="subheading">
+                                                <?= $escaper->escapeHtml(__('Focus Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-removeitem-font-colour-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Text Link Button Focus Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input id="gene-bettercheckout-removeitem-font-colour-focus" data-type="color-picker" data-css-variable="--button-remove-item-font-color-focus" placeholder="#2b2b2b"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-config"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <a data-role="title" class="main-heading">
+                        <?= $escaper->escapeHtml(__('Summary Section')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Headers')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-ordersummary-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Order Summary" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-ordersummary-text" data-type="checkout-wording" type="text" placeholder="Order Summary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Summary Price Text')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-subtotal-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Subtotal Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-subtotal-text" data-type="checkout-wording" type="text" placeholder="Subtotal" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-grandtotal-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Total To Pay Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-grandtotal-text" data-type="checkout-wording" type="text" placeholder="Total to Pay" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Quantity Inputs')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-qty-background-colour">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Quantity Input Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-qty-background-colour" data-type="color-picker" data-css-variable="--qty-input-background-color" placeholder="#ffffff"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-qty-text-colour">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Quantity Input Text Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-qty-text-colour" data-type="color-picker" data-css-variable="--qty-input-font-color" placeholder="#2b2b2b"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Dropdowns')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-freeshipping-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Free Shipping" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-freeshipping-text" data-type="checkout-wording" type="text" placeholder="Good news: your order will be delivered for Free." />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-giftcard-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Gift Card" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-giftcard-text" data-type="checkout-wording" type="text" placeholder="Apply Gift Card Code" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-coupondiscount-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Coupon Code" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-coupondiscount-text" data-type="checkout-wording" type="text" placeholder="Apply Coupon Code" />
+                                    </div>
+                                    <h2 data-role="title" class="heading">
+                                        <?= $escaper->escapeHtml(__('Dropdowns Styling')) ?>
+                                    </h2>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-dropdown-background-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Dropdown Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-dropdown-background-color" data-type="color-picker" data-css-variable="--dropdown-background-color" placeholder="#ffffff"/>
+                                    </div>
+                                    <div class="fieldset mobile-specific-field">
+                                        <label for="gene-bettercheckout-dropdown-border-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Dropdown Border Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-dropdown-border-color" data-type="color-picker" data-css-variable="--dropdown-border-color" placeholder="#B9BCBF"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-dropdown-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Dropdown Border Radius')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-dropdown-radius" type="number" placeholder="4" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-dropdown-radius_hidden" type="text" data-css-variable="--dropdown-border-radius" placeholder="4px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Input Text')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-giftcardplaceholder-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Gift Card Placeholder Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-giftcardplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter gift card code" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-coupondiscountplaceholder-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Coupon Code Placeholder Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-coupondiscountplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter coupon code" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-removeitem-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Remove Item" Link Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-removeitem-text" data-type="checkout-wording" type="text" placeholder="remove item" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-applybutton-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Apply Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-applybutton-text" data-type="checkout-wording" type="text" placeholder="Apply" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-removebutton-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Remove Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-removebutton-text" data-type="checkout-wording" type="text" placeholder="Remove" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config mobile-specific-field"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Mobile / Tablet Slide Up')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-mobile-summary-background-colour">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Slide Up Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-mobile-summary-background-colour" data-type="color-picker" data-css-variable="--summary-background" placeholder="#f3f3f3"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-mobile-summary-background-colour-open">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Slide Up Open Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-mobile-summary-background-colour-open" data-type="color-picker" data-css-variable="--slide-up-background-color-open" placeholder="#ffffff"/>
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-ordersummarydescription-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Slide Up Sub Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-ordersummarydescription-text" data-type="checkout-wording" type="text" placeholder="Or add a discount code" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-config details-specific-field"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <a data-role="title" class="main-heading">
+                        <?= $escaper->escapeHtml(__('Step 1 - Your Details')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Headers')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-instantcheckout-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Instant Checkout" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-instantcheckout-text" data-type="checkout-wording" type="text" placeholder="Instant Checkout" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-paywith-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Pay With" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-paywith-text" data-type="checkout-wording" type="text" placeholder="Pay With" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config" data-role="content">
+                            <div class="section-config"
+                                data-mage-init='{"collapsible": {
+                                    "animate": 200,
+                                    "collapsible": true,
+                                    "openedState": "active"
+                                }}'
+                            >
+                                <div class="admin__collapsible-block">
+                                    <a data-role="title">
+                                        <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                    </a>
+                                    <div class="config" data-role="content">
+                                        <div class="fieldset">
+                                            <label for="gene-bettercheckout-continuebutton-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('Continue Button Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-config shipping-specific-field"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <a data-role="title" class="main-heading">
+                        <?= $escaper->escapeHtml(__('Step 2 - Shipping')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Headers')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-shippingstep-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Select Shipping Method" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-shippingstep-text" data-type="checkout-wording" type="text" placeholder="Select a shipping method" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config" data-role="content">
+                            <div class="section-config"
+                                data-mage-init='{"collapsible": {
+                                    "animate": 200,
+                                    "collapsible": true,
+                                    "openedState": "active"
+                                }}'
+                            >
+                                <div class="admin__collapsible-block">
+                                    <a data-role="title">
+                                        <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                    </a>
+                                    <div class="config" data-role="content">
+                                        <div class="fieldset">
+                                            <label for="gene-bettercheckout-proceedtopay-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('Proceed To Payment Button Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="gene-bettercheckout-proceedtopay-text" data-type="checkout-wording" type="text" placeholder="Proceed to payment" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-config payment-specific-field"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <a data-role="title" class="main-heading">
+                        <?= $escaper->escapeHtml(__('Step 3 - Payment')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Completed Steps')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-detailstep-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Your Details" Completed Step Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-detailstep-text" data-type="checkout-wording" type="text" placeholder="Your details" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-shippingstepcompleted-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Shipping" Completed Step Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-shippingstepcompleted-text" data-type="checkout-wording" type="text" placeholder="Shipping" />
+                                    </div>
+                                    <h2 data-role="title" class="heading">
+                                        <?= $escaper->escapeHtml(__('Completed Steps Styling')) ?>
+                                    </h2>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-steps-completed-background-colour">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Completed Step Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-steps-completed-background-colour" data-type="color-picker" data-css-variable="--steps-completed-background" placeholder="#f3f3f3"/>
+                                    </div>
+                                    <div class="fieldset desktop-specific-field">
+                                        <label for="gene-bettercheckout-steps-completed-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Completed Step Radius (Large Screens - Laptop Screens & Above)')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-steps-completed-radius" type="number" placeholder="0" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-steps-completed-radius_hidden" type="text" data-css-variable="--steps-completed-radius" placeholder="0px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <a data-role="title">
+                                    <?= $escaper->escapeHtml(__('Headers')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-paymentstep-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Payment Step Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-paymentstep-text" data-type="checkout-wording" type="text" placeholder="Select a payment method" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="config" data-role="content">
+                            <div class="section-config"
+                                data-mage-init='{"collapsible": {
+                                    "animate": 200,
+                                    "collapsible": true,
+                                    "openedState": "active"
+                                }}'
+                            >
+                                <div class="admin__collapsible-block">
+                                    <a data-role="title">
+                                        <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                    </a>
+                                    <div class="config" data-role="content">
+                                    <!-- ToDo Payment Button Text -->
+                                    <p>ToDo Payment Button Text</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div id="gene-better-checkout-root"></div>
+    </div>
+</div>
