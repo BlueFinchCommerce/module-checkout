@@ -8244,10 +8244,9 @@ a[data-v-1e58dc70] {
   display: none;
 }.braintree-vault {
   display: grid;
-  gap: var(--indent__base);
 }
 .braintree-vault .braintree-vaulted-methods-container {
-  margin: var(--indent__base) 0;
+  margin-top: var(--indent__m);
 }
 .braintree-vault .braintree-vaulted-methods-container:empty {
   margin: 0;
@@ -8429,6 +8428,9 @@ a[data-v-1e58dc70] {
   font-family: var(--payment-page-header-font-family, var(--font-family__copy));
   margin-left: var(--payment-page-title-left-margin, var(--indent__s));
   white-space: nowrap;
+}
+.braintree-vault + .braintree-payment__title {
+  margin-top: var(--indent__base);
 }.edit-shipping-button[data-v-20fb1068] {
   color: var(--edit-shipping-button-color, var(--color__primary-grey1));
   line-height: var(--remove-item-action-line-height, 6px);
