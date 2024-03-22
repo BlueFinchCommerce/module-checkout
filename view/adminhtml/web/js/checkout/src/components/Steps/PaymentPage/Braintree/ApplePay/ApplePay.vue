@@ -84,6 +84,7 @@ export default {
     ));
 
     if (!applePayConfig) {
+      this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
       return; // Early return if Braintree Apple Pay isn't enabled.
     }
