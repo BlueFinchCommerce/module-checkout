@@ -6,6 +6,7 @@ import getStoreConfig from '@/services/getStoreConfig';
 
 import createClientToken from '@/services/braintree/createClientToken';
 import getVaultedMethods from '@/services/braintree/getVaultedMethods';
+import getFilteredLpmMethods from '@/helpers/payment/getFilteredLpmMethods';
 
 export default defineStore('brainteeStore', {
   state: () => ({
@@ -47,6 +48,9 @@ export default defineStore('brainteeStore', {
   getters: {
     selectedVaultMethod: (state) => (
       Object.values(state.vaultedMethods).find(({ selected }) => selected)
+    ),
+    getFilteredLpmMethods: (state) => (
+      getFilteredLpmMethods(state.lpm.allowedMethods)
     ),
   },
   actions: {

@@ -223,7 +223,9 @@ export default {
       routingNumber: 'Routing Number',
       terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
     },
-    localPayment: 'Local Payment',
+    lpm: {
+      noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
+    },
     storePayment: 'Save for later use.',
   },
   rvvup: {
