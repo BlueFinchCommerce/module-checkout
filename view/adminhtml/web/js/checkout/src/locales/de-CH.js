@@ -220,6 +220,8 @@ export default {
     storePayment: 'Save for later use.',
   },
   agreements: {
+    acceptBtn: 'Accept',
+    title: 'Terms & Conditions',
     label: 'Jag bekräftar att jag har läst och accepterar',
     errorMessage: 'Detta är ett obligatoriskt fält.',
   },

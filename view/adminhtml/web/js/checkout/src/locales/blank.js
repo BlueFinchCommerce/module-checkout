@@ -191,6 +191,8 @@ export default {
     storePayment: ' ',
   },
   agreements: {
+    acceptBtn: ' ',
+    title: ' ',
     label: ' ',
     errorMessage: ' ',
     paymentErrorMessage: ' ',
