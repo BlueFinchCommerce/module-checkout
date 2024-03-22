@@ -2,7 +2,7 @@
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import useGtmStore from '@/stores/ConfigStores/GtmStore';;
+import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import addCartItem from '@/services/cart/addCartItem';
