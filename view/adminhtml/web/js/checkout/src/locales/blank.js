@@ -187,7 +187,9 @@ export default {
       routingNumber: ' ',
       terms: ' ',
     },
-    localPayment: ' ',
+    lpm: {
+      noMethods: ' ',
+    },
     storePayment: ' ',
   },
   agreements: {

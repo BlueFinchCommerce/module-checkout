@@ -168,6 +168,15 @@ export default defineStore('cartStore', {
       const paymentStore = usePaymentStore();
 
       customerStore.setEmailAddress(cart.email ?? '');
+
+      if (cart.billing_address) {
+        customerStore.setAddressToStore(cart.billing_address, 'billing');
+      }
+
+      if (cart.shipping_addresses.length) {
+        customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
+      }
+
       paymentStore.setPaymentMethods(cart.available_payment_methods);
     },
 

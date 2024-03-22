@@ -27,6 +27,7 @@ const formatAddress = (address) => {
   delete clonedAddress.region_code;
   delete clonedAddress.default_shipping;
   delete clonedAddress.default_billing;
+  delete clonedAddress.country;
 
   clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
 
