@@ -53,7 +53,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
           }
         ) {
           cart {
-            ${getFullCart()}
+            id
           }
         }` : ''}
 
