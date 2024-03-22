@@ -1,5 +1,8 @@
 <template>
-  <div class="braintree-vault">
+  <div
+    v-if="Object.values(vaultedMethods).length"
+    class="braintree-vault"
+  >
     <div
       v-show="!loading && clientInstance"
       class="braintree-vaulted-methods-container"
