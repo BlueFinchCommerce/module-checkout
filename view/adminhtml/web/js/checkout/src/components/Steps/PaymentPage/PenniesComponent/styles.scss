@@ -41,7 +41,7 @@
   }
 
   &__divider {
-    border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
+    border: var(--divider__weight) var(--base__border-style) var(--divider__color);
     margin: var(--indent__s) auto var(--indent__s);
     max-width: 130px;
   }

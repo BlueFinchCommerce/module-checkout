@@ -16,13 +16,6 @@
   position: relative;
 }
 
-html,
-body,
-#gene-better-checkout-container,
-#gene-better-checkout-root {
-  height: 100%;
-}
-
 body {
   margin: 0;
 }
@@ -44,6 +37,7 @@ p {
   -moz-osx-font-smoothing: grayscale;
 
   .root {
+    height: 100%;
     background: var(--page__background-color--mobile);
     flex: 1;
 

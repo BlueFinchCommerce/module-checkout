@@ -29,6 +29,7 @@ import getDummyCartItems from '@/helpers/dummyContent/getDummyCartItems';
 import getDummyGiftCards from '@/helpers/dummyContent/getDummyGiftCards';
 import getDummyCartPrices from '@/helpers/dummyContent/getDummyCartPrices';
 import getDummyShippingAddresses from '@/helpers/dummyContent/getDummyShippingAddresses';
+import getDummyCrossSellItems from '@/helpers/dummyContent/getDummyCrossSellItems';
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getMaskedId from '@/helpers/cart/getMaskedId';
@@ -54,7 +55,7 @@ export default defineStore('cartStore', {
     discountErrorMessage: "The code isn't valid. Verify the code and try again.",
     giftCardErrorMessage: null,
     data: {},
-    crosssells: [],
+    crosssells: getDummyCrossSellItems(),
     amastyData: {},
     amastyEnabled: false,
     freeShipping: null,

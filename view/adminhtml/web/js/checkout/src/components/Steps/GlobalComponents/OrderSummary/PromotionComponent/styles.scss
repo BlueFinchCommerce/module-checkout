@@ -2,7 +2,7 @@
 
 .dropdown-button {
   &.promotion-trigger {
-    border: var(--drop-down-border, var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
+    border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
     padding: var(--promo-products-paddings, var(--indent__m) var(--indent__base));
     background: var(--dropdown__background-color-highlight);
     margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
@@ -72,7 +72,7 @@
 div.dropdown.promo-dropdown {
   background: var(--dropdown__background-color);
   padding: var(--promo-products-paddings, var(--indent__s) var(--indent__base) var(--indent__base) var(--indent__base));
-  border: var(--base__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight);
+  border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight);
   margin: 0;
   max-width: none;
   order: var(--promo-dropdown-order, 6);
@@ -148,7 +148,6 @@ div.dropdown.promo-dropdown {
 
   .product-actions {
     button {
-      font-size: var(--font__xs);
       padding: var(--indent__s) var(--indent__xs);
       word-break: break-word;
     }
@@ -190,6 +189,11 @@ div.dropdown.promo-dropdown {
       padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
       order: var(--promo-triggers-order, 0);
       margin: var(--indent__s) 0 var(--indent__xs);
+
+      &.opened {
+        margin-bottom: 0;
+        border-bottom: none;
+      }
 
       svg {
         position: relative;
