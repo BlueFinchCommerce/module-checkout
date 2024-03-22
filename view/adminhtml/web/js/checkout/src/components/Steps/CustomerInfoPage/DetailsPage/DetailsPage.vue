@@ -2,7 +2,7 @@
   <Loader v-if="loadingShippingMethods" />
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible !== 'false'">
+         v-show="isExpressPaymentsVisible">
       <div class="instantCheckout-block">
         <TextField :text="instantCheckoutText" />
       </div>
