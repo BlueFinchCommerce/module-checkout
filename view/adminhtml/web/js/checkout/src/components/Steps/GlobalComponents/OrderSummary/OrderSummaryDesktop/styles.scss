@@ -1,12 +1,12 @@
 .order-summary-desktop {
-  background: var(--summary__background-color);
+  background: var(--summary__background-color--desktop);
   padding: var(--indent__base) var(--indent__base--desktop);
-  border-radius: var(--steps__border-radius--desktop);
+  border-radius: var(--summary__border-radius--desktop);
   display: grid;
   min-height: 500px;
 
   .order-total-container {
-    background: var(--order-total-container__background-colour, var(--summary__background-color));
+    background: var(--order-total-container__background-colour, var(--summary__background-color--desktop));
     padding: var(--container-padding, var(--indent__xl) var(--indent__l));
     font-family: var(--order-total-container__font-family, unset);
   }
