@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
-import getStoreConfig from '@/services/getStoreConfig';
 import getAdyenPaymentMethods from '@/services/adyen/getAdyenPaymentMethods';
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 

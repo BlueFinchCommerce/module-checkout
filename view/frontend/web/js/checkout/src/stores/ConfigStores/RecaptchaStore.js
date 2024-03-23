@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import getStoreConfig from '@/services/getStoreConfig';
 
 import recapchaTypes from '@/helpers/types/getRecaptchaTypes';
 

@@ -29,7 +29,7 @@
 
 <script>
 // Stores
-import { mapActions, mapState } from 'pinia';
+import { mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';

@@ -2,8 +2,6 @@ import { markRaw } from 'vue';
 import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 
-import getStoreConfig from '@/services/getStoreConfig';
-
 import createClientToken from '@/services/braintree/createClientToken';
 import getVaultedMethods from '@/services/braintree/getVaultedMethods';
 import getFilteredLpmMethods from '@/helpers/payment/getFilteredLpmMethods';
