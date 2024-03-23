@@ -186,7 +186,6 @@ export default {
     ...mapActions(useShippingMethodsStore, [
       'submitShippingInfo',
       'selectShippingMethod',
-      'setShippingMethodTitle',
     ]),
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useStepsStore, ['goToPayment']),

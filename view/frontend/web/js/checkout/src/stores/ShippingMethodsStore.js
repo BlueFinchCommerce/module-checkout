@@ -234,37 +234,6 @@ export default defineStore('shippingMethodsStore', {
       this.loadingShippingMethods = false;
     },
 
-    setShippingMethodTitle() {
-      const cartStore = useCartStore();
-      const { totalSegments } = cartStore;
-      const shippingIndex = totalSegments.findIndex((segment) => segment.code === 'shipping');
-
-      // Early return if we have no found index for the shipping method.
-      if (shippingIndex === -1) {
-        return;
-      }
-
-      if (this.selectedMethod.method_title) {
-        // Get the part of the shipping title between the first set of () if it exists.
-        // Default to the whole title if it doesn't.
-        const matchingShippingTitle = totalSegments[shippingIndex].title.match(/\(([^]+)\)/);
-        const formattedShippingTitle = matchingShippingTitle
-          ? matchingShippingTitle[1]
-          : totalSegments[shippingIndex].title;
-
-        // If the selected method is nominated day we need to format it slightly differently.
-        const title = this.selectedMethod.method_code === 'nominated_delivery'
-          ? `${this.nominatedSelectedDateFormatted}`
-          : formattedShippingTitle;
-
-        this.selectShippingMethod({ method_title: title });
-      } else {
-        const title = totalSegments[shippingIndex].title
-          .replace(/\([^)].+ - */g, '(');
-        this.selectShippingMethod({ method_title: title });
-      }
-    },
-
     /**
      * Set the method to click and collect.
      */
