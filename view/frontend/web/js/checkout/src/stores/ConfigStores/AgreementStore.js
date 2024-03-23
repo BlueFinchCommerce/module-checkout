@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 
 export default defineStore('agreementStore', {
   state: () => ({
-    cache: {},
     agreements: {},
     showError: false,
   }),
@@ -89,36 +88,6 @@ export default defineStore('agreementStore', {
       }
 
       return !unaprovedAgreements;
-    },
-
-    createCacheKey(configs) {
-      return configs.join('-');
-    },
-
-    getCachedResponse(request, cacheKey, args = {}) {
-      if (typeof this.$state.cache[cacheKey] !== 'undefined') {
-        return this.$state.cache[cacheKey];
-      }
-
-      const data = request(args);
-      this.$patch({
-        cache: {
-          [cacheKey]: data,
-        },
-      });
-      return data;
-    },
-
-    clearCaches(cacheKeys) {
-      if (cacheKeys.length) {
-        cacheKeys.forEach((cacheKey) => {
-          this.setData({
-            cache: {
-              [cacheKey]: undefined,
-            },
-          });
-        });
-      }
     },
   },
 });

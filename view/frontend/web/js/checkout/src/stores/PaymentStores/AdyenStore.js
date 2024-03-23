@@ -85,10 +85,6 @@ export default defineStore('adyenStore', {
       return paymentMethodsResponse;
     },
 
-    createCacheKey(configs) {
-      return configs.join('-');
-    },
-
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];

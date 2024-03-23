@@ -311,9 +311,6 @@ export default defineStore('brainteeStore', {
       });
     },
 
-    createCacheKey(configs) {
-      return configs.join('-');
-    },
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];

@@ -37,7 +37,6 @@ export default defineStore('RecaptchaStore', {
     },
 
     handleInitialConfig({ storeConfig }) {
-      console.log(storeConfig);
       this.setData({
         v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
         v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
@@ -74,10 +73,6 @@ export default defineStore('RecaptchaStore', {
       });
     },
 
-    createCacheKey(configs) {
-      return configs.join('-');
-    },
-
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];
@@ -90,18 +85,6 @@ export default defineStore('RecaptchaStore', {
         },
       });
       return data;
-    },
-
-    clearCaches(cacheKeys) {
-      if (cacheKeys.length) {
-        cacheKeys.forEach((cacheKey) => {
-          this.setData({
-            cache: {
-              [cacheKey]: undefined,
-            },
-          });
-        });
-      }
     },
   },
 });
