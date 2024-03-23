@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 
 import mitt from 'mitt';
 
-import getPaymentInformation from '@/services/payments/getPaymentInformation';
-
 export default defineStore('paymentStore', {
   state: () => ({
     methodsResponse: [],

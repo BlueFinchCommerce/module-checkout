@@ -431,8 +431,6 @@ export default defineStore('cartStore', {
     },
 
     async emitUpdate() {
-      this.clearCaches(['getPaymentInformation']);
-
       this.$state.cartEmitter.emit('cartUpdated');
 
       // Also trigger refresh of User's cart data.
