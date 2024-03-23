@@ -63,13 +63,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getBraintreeConfig();
-    await this.getPaymentMethods();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const googlePayConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_googlepay'
@@ -128,11 +123,11 @@ export default {
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
+    ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
+    ...mapActions(usePaymentStore, ['setErrorMessage']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {

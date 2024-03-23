@@ -98,8 +98,7 @@ export default {
     ]),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
     await this.createClientToken();
 
     const total = (this.cartGrandTotal / 100).toString();
@@ -209,7 +208,6 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
-      'getBraintreeConfig',
       'createClientToken',
       'unselectVaultedMethods',
       'setClientInstance',
@@ -219,7 +217,7 @@ export default {
       'escapeNonAsciiCharacters',
       'getPayPalLineItems',
     ]),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');

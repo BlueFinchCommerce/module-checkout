@@ -85,7 +85,6 @@ export default {
     });
   },
   methods: {
-    ...mapActions(usePaymentStore, ['getPaymentMethods']),
     async selectPaymentMethod() {
       this.isMethodSelected = true;
 

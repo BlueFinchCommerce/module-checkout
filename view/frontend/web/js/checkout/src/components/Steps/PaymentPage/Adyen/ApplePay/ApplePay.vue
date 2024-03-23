@@ -62,12 +62,8 @@ export default {
       return;
     }
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getIsAdyenAvailable();
+    await this.getInitialConfig();
+    await this.getCart();
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
@@ -76,7 +72,6 @@ export default {
       return;
     }
 
-    await this.getAdyenConfig();
     const clientKey = await this.getAdyenClientKey();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -122,13 +117,11 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
       'getPaymentMethodsResponse',
       'getAdyenClientKey',
-      'getIsAdyenAvailable',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
 
     getApplePayMethod(paymentMethodsResponse) {

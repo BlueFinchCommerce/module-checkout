@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
@@ -114,9 +115,7 @@ export default defineStore('cartStore', {
         this.setData({ maskedId });
       }
 
-      const cart = await this.getCachedResponse(getCart, 'getCart');
-
-      this.handleCartData(cart);
+      await this.getCachedResponse(() => getCart().then(this.handleCartData), 'getCart');
     },
 
     async getCartData() {
@@ -158,6 +157,7 @@ export default defineStore('cartStore', {
 
       const customerStore = useCustomerStore();
       const paymentStore = usePaymentStore();
+      const shippingMethodsStore = useShippingMethodsStore();
 
       customerStore.setEmailAddress(cart.email ?? '');
 
@@ -170,6 +170,8 @@ export default defineStore('cartStore', {
       }
 
       paymentStore.setPaymentMethods(cart.available_payment_methods);
+
+      shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
     },
 
     async updateQuantity(updateItem, change) {

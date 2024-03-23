@@ -100,12 +100,8 @@ export default {
     // Get the Amazon checkout sessionID.
     const amazonCheckoutSessionId = getUrlQuery('amazonCheckoutSessionId');
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getAdyenConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const clientKey = await this.getAdyenClientKey();
@@ -160,9 +156,9 @@ export default {
     amazonPayComponent.submit();
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getAdyenConfig', 'getAdyenClientKey', 'getPaymentMethodsResponse']),
+    ...mapActions(useAdyenStore, ['getAdyenClientKey', 'getPaymentMethodsResponse']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderId(orderId) {
       this.orderId = orderId;

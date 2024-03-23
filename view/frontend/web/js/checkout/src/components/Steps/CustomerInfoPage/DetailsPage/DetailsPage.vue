@@ -329,7 +329,6 @@ export default {
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
-      // await this.getPaymentMethodsResponse();
       this.storedKey += 1;
     });
 
@@ -344,10 +343,8 @@ export default {
     this.updateButtonState();
   },
   async mounted() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
+    await this.getInitialConfig();
+    await this.getCart();
 
     const types = {
       shipping: 'customerInfoValidation',
@@ -367,7 +364,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressAsCustom',
       'setAddressAsEditing',
@@ -378,7 +375,7 @@ export default {
       'validatePostcode',
       'setAddressToStore',
     ]),
-    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse', 'clearPaymentReponseCache']),
+    ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
     ...mapActions(useShippingMethodsStore, [
       'clearShippingMethodCache',
       'setClickAndCollect',

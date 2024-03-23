@@ -28,9 +28,13 @@ const formatAddress = (address) => {
   delete clonedAddress.default_shipping;
   delete clonedAddress.default_billing;
   delete clonedAddress.country;
+  delete clonedAddress.available_shipping_methods;
+  delete clonedAddress.save_in_address_book;
+  delete clonedAddress.selected_shipping_method;
 
   clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
 
+  console.log(clonedAddress);
   return clonedAddress;
 };
 

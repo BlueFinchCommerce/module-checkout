@@ -6,6 +6,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Types
@@ -24,7 +25,7 @@ export default {
     ...mapState(useRecaptchaStore, ['v2CheckboxKey', 'v2InvisibleKey', 'v3Invisible']),
   },
   async created() {
-    await this.getRecaptchaConfiguration();
+    await this.getInitialConfig();
 
     const recapchaType = this.getTypeByPlacement(this.id);
 
@@ -44,7 +45,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getRecaptchaConfiguration', 'getTypeByPlacement', 'setToken']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken']),
 
     renderV2() {
       window.grecaptcha.render(this.id, {

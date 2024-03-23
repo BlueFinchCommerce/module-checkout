@@ -4,6 +4,7 @@ import afdPostcode from '@/services/addresses/afdPostcode';
 import getStoreConfig from '@/services/getStoreConfig';
 import getBlock from '@/services/content/getBlock';
 import getStoreCode from '@/services/getStoreCode';
+
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getGeneralTermsServicesId from '@/helpers/content/getGeneralTermsServicesId';
 import getWithdrawTermsServicesId from '@/helpers/content/getWithdrawTermsServicesId';
@@ -11,7 +12,10 @@ import getFallBackStaticPath from '@/helpers/storeConfigs/getFallBackStaticPath'
 import getStoreCodeFromLocalStorage from '@/helpers/storeConfigs/getStoreCode';
 import getLocale from '@/helpers/addresses/getLocale';
 import getCurrencyCode from '@/helpers/payment/getCurrencyCode';
-import getStoreConfigsAndCountries from '@/helpers/storeConfigs/getStoreConfigsAndCountries';
+import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
+import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
+import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
+import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -88,12 +92,121 @@ export default defineStore('configStore', {
       });
     },
 
-    async getStoreConfig() {
+    /**
+     * Very initial request to get all of the stores configuration.
+     */
+    async getInitialConfig() {
       if (!this.storeCode) {
         await this.getCachedResponse(this.getStoreCode, 'getStoreCode');
       }
 
-      this.getCachedResponse(getStoreConfigsAndCountries, 'getStoreConfigsAndCountries');
+      const request = () => getInitialConfig().then(handleInitialConfig);
+      await this.getCachedResponse(request, 'getInitialConfig');
+    },
+
+    /**
+     * Get the values for the initial configuration.
+     */
+    getInitialConfigValues() {
+      const configs = [
+        'base_static_url',
+        'default_display_currency_code',
+        'code',
+        'secure_base_url',
+        'use_store_in_url',
+        'website_name',
+        'gene_better_checkout_newsletter_enabled',
+        'gene_better_checkout_newsletter_allow_guest',
+        'gene_better_checkout_country_state_required',
+        'gene_better_checkout_country_display_state',
+        'magento_reward_general_is_enabled',
+        'magento_reward_general_is_enabled_on_front',
+        'optional_zip_countries',
+        'tax_cart_display_price',
+        'tax_cart_display_shipping',
+        'tax_cart_display_full_summary',
+        'gene_better_checkout_copyright_text',
+        'gene_better_checkout_afd_enable',
+        'gene_better_checkout_progress_bar_visible',
+        'gene_better_checkout_loqate_api_key',
+        'gene_better_checkout_loqate_enabled',
+        'gene_better_checkout_afd_enable',
+      ];
+
+      if (this.locale) {
+        this.setLocale(this.locale);
+      } else {
+        configs.push('locale');
+      }
+
+      const allConfigs = configs.concat(getCustomConfigs);
+
+      return `
+        storeConfig {
+          ${allConfigs.join(' ')}
+        }
+
+        countries {
+          id
+          two_letter_abbreviation
+          three_letter_abbreviation
+          full_name_locale
+          available_regions {
+            id
+            code
+            name
+          }
+        }
+      `;
+    },
+
+    async handleInitialConfig({ countries, storeConfig }) {
+      this.setData({
+        staticUrl: storeConfig.base_static_url.replace(/\/+$/, ''),
+        currencyCode: storeConfig.default_display_currency_code,
+        storeCode: storeConfig.code,
+        useStoreInUrl: storeConfig.use_store_in_url,
+        websiteName: storeConfig.website_name || '',
+        secureBaseUrl: storeConfig.secure_base_url,
+        newsletterEnabled: storeConfig.gene_better_checkout_newsletter_enabled === '1',
+        newsletterAllowGuests: storeConfig.gene_better_checkout_newsletter_allow_guest === '1',
+        stateRequired: storeConfig.gene_better_checkout_country_state_required
+          ? storeConfig.gene_better_checkout_country_state_required.split(',') : [],
+        displayState: storeConfig.gene_better_checkout_country_display_state === '1',
+        rewardsEnabled: storeConfig.magento_reward_general_is_enabled === '1'
+          && storeConfig.magento_reward_general_is_enabled_on_front === '1',
+        optionalZipCountries: storeConfig.optional_zip_countries || '',
+        taxCartDisplayPrice: storeConfig.tax_cart_display_price === '2',
+        taxCartDisplayShipping: storeConfig.tax_cart_display_shipping === '2',
+        taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
+        copyrightText: storeConfig.gene_better_checkout_copyright_text,
+        progressBarVisible: storeConfig.gene_better_checkout_progress_bar_visible === true,
+        addressFinder: {
+          enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
+          loqate: {
+            enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
+            apiKey: storeConfig.gene_better_checkout_loqate_api_key,
+          },
+          afd: {
+            enabled: storeConfig.gene_better_checkout_afd_enable,
+          },
+        },
+      });
+
+      if (storeConfig.locale) {
+        this.setLocale(storeConfig.locale);
+      }
+
+      countries.sort((a, b) => a.full_name_locale.toUpperCase()
+        .localeCompare(b.full_name_locale.toUpperCase()));
+
+      this.setData({ countries });
+
+      const customConfigs = await mapCustomConfigs(storeConfig);
+
+      this.setData({
+        custom: customConfigs,
+      });
     },
 
     setLocale(locale) {
@@ -182,21 +295,6 @@ export default defineStore('configStore', {
       }
     },
 
-    async getLoqateConfiguration() {
-      const configApi = await this.getConfig(['gene_better_checkout_loqate_api_key']);
-      const configStatus = await this.getConfig(['gene_better_checkout_loqate_enabled']);
-
-      this.setData({
-        addressFinder: {
-          enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
-          loqate: {
-            enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
-            apiKey: configApi.gene_better_checkout_loqate_api_key,
-          },
-        },
-      });
-    },
-
     async getAfdConfiguration() {
       const config = await this.getCachedResponse(
         afdPostcode.getAfdConfiguration,
@@ -214,18 +312,6 @@ export default defineStore('configStore', {
             id: config.afd_general_account_id,
             token: config.afd_general_account_token,
             maxQuantity: config.afd_response_max_quantity || '5',
-          },
-        },
-      });
-    },
-
-    async getAfdStatus() {
-      const configStatus = await this.getConfig(['gene_better_checkout_afd_enable']);
-
-      this.setData({
-        addressFinder: {
-          afd: {
-            enabled: configStatus.gene_better_checkout_afd_enable,
           },
         },
       });

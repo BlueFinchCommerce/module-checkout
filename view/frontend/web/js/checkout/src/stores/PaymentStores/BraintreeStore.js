@@ -59,81 +59,72 @@ export default defineStore('brainteeStore', {
       this.$patch(data);
     },
 
-    async getConfig(configs) {
-      const cacheKey = this.createCacheKey(configs);
-
-      const data = await this.getCachedResponse(getStoreConfig, cacheKey, configs);
-
-      this.$patch({
-        cache: {
-          [cacheKey]: data,
-        },
-      });
-      return data;
+    getInitialConfigValues() {
+      return `
+        storeConfig {
+          braintree_environment
+          braintree_merchant_account_id
+          braintree_cc_types
+          braintree_cc_vault_active
+          braintree_cc_vault_cvv
+          braintree_send_line_items
+          braintree_3dsecure_threshold_amount
+          braintree_3dsecure_verify_3dsecure
+          braintree_3dsecure_always_request_3ds
+          braintree_googlepay_merchant_id
+          braintree_googlepay_cctypes
+          braintree_googlepay_btn_color
+          braintree_googlepay_vault_active
+          braintree_paypal_merchant_name_override
+          braintree_paypal_merchant_country
+          braintree_paypal_require_billing_address
+          braintree_paypal_button_location_checkout_type_paypal_label
+          braintree_paypal_button_location_checkout_type_paypal_color
+          braintree_paypal_button_location_checkout_type_paypal_shape
+          braintree_paypal_vault_active
+          braintree_local_payment_fallback_button_text
+          braintree_local_payment_redirect_on_fail
+          braintree_local_payment_allowed_methods
+        }
+      `;
     },
 
-    async getBraintreeConfig() {
-      const configs = [
-        'braintree_environment',
-        'braintree_merchant_account_id',
-        'braintree_cc_types',
-        'braintree_cc_vault_active',
-        'braintree_cc_vault_cvv',
-        'braintree_send_line_items',
-        'braintree_3dsecure_threshold_amount',
-        'braintree_3dsecure_verify_3dsecure',
-        'braintree_3dsecure_always_request_3ds',
-        'braintree_googlepay_merchant_id',
-        'braintree_googlepay_cctypes',
-        'braintree_googlepay_btn_color',
-        'braintree_googlepay_vault_active',
-        'braintree_paypal_merchant_name_override',
-        'braintree_paypal_merchant_country',
-        'braintree_paypal_require_billing_address',
-        'braintree_paypal_button_location_checkout_type_paypal_label',
-        'braintree_paypal_button_location_checkout_type_paypal_color',
-        'braintree_paypal_button_location_checkout_type_paypal_shape',
-        'braintree_paypal_vault_active',
-        'braintree_local_payment_fallback_button_text',
-        'braintree_local_payment_redirect_on_fail',
-        'braintree_local_payment_allowed_methods',
-      ];
-      const data = await this.getCachedResponse(this.getConfig, 'getBraintreeConfig', configs);
-
-      if (data) {
+    handleInitialConfig({ storeConfig }) {
+      if (storeConfig) {
         this.setData({
-          environment: data.braintree_environment,
-          merchantAccountId: data.braintree_merchant_account_id,
-          cCTypes: data.braintree_cc_types.split(','),
-          vaultActive: data.braintree_cc_vault_active === '1',
-          vaultVerifyCvv: data.braintree_cc_vault_cvv,
-          sendCartLineItems: data.braintree_send_line_items,
-          threeDSThresholdAmount: data.braintree_3dsecure_threshold_amount
-            ? parseFloat(data.braintree_3dsecure_threshold_amount)
+          environment: storeConfig.braintree_environment,
+          merchantAccountId: storeConfig.braintree_merchant_account_id,
+          cCTypes: storeConfig.braintree_cc_types.split(','),
+          vaultActive: storeConfig.braintree_cc_vault_active === '1',
+          vaultVerifyCvv: storeConfig.braintree_cc_vault_cvv,
+          sendCartLineItems: storeConfig.braintree_send_line_items,
+          threeDSThresholdAmount: storeConfig.braintree_3dsecure_threshold_amount
+            ? parseFloat(storeConfig.braintree_3dsecure_threshold_amount)
             : 0,
-          threeDSEnabled: data.braintree_3dsecure_verify_3dsecure,
-          alwaysRequestThreeDS: data.braintree_3dsecure_always_request_3ds,
+          threeDSEnabled: storeConfig.braintree_3dsecure_verify_3dsecure,
+          alwaysRequestThreeDS: storeConfig.braintree_3dsecure_always_request_3ds,
           google: {
-            buttonColor: data.braintree_googlepay_btn_color === '0' ? 'white' : 'black',
-            cCTypes: data.braintree_googlepay_cctypes ? markRaw(data.braintree_googlepay_cctypes.split(',')) : [],
-            merchantId: data.braintree_googlepay_merchant_id,
-            vaultActive: data.braintree_googlepay_vault_active,
+            buttonColor: storeConfig.braintree_googlepay_btn_color === '0' ? 'white' : 'black',
+            cCTypes: storeConfig.braintree_googlepay_cctypes
+              ? markRaw(storeConfig.braintree_googlepay_cctypes.split(',')) : [],
+            merchantId: storeConfig.braintree_googlepay_merchant_id,
+            vaultActive: storeConfig.braintree_googlepay_vault_active,
           },
           lpm: {
-            allowedMethods: data.braintree_local_payment_allowed_methods
-              ? data.braintree_local_payment_allowed_methods.split(',')
+            allowedMethods: storeConfig.braintree_local_payment_allowed_methods
+              ? storeConfig.braintree_local_payment_allowed_methods.split(',')
               : [],
-            fallbackText: data.braintree_local_payment_fallback_button_text,
-            redirectOnFail: data.braintree_local_payment_redirect_on_fail,
+            fallbackText: storeConfig.braintree_local_payment_fallback_button_text,
+            redirectOnFail: storeConfig.braintree_local_payment_redirect_on_fail,
           },
           paypal: {
-            merchantNameOverride: data.braintree_paypal_merchant_name_override,
-            merchantCountry: data.braintree_paypal_merchant_country,
-            requireBillingAddress: data.braintree_paypal_require_billing_address,
-            buttonLabel: data.braintree_paypal_button_location_checkout_type_paypal_label,
-            buttonColor: data.braintree_paypal_button_location_checkout_type_paypal_color,
-            buttonShape: data.braintree_paypal_button_location_checkout_type_paypal_shape,
-            vaultActive: data.braintree_paypal_vault_active,
+            merchantNameOverride: storeConfig.braintree_paypal_merchant_name_override,
+            merchantCountry: storeConfig.braintree_paypal_merchant_country,
+            requireBillingAddress: storeConfig.braintree_paypal_require_billing_address,
+            buttonLabel: storeConfig.braintree_paypal_button_location_checkout_type_paypal_label,
+            buttonColor: storeConfig.braintree_paypal_button_location_checkout_type_paypal_color,
+            buttonShape: storeConfig.braintree_paypal_button_location_checkout_type_paypal_shape,
+            vaultActive: storeConfig.braintree_paypal_vault_active,
           },
         });
       }

@@ -126,12 +126,8 @@ export default {
   },
 
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getAdyenConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -303,13 +299,13 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
       'getAdyenClientKey',
       'getPaymentMethodsResponse',
       'clearPaymentReponseCache',
     ]),
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useCartStore, ['getCart']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     setOrderId(orderId) {
       this.orderId = orderId;
       return orderId;

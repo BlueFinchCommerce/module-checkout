@@ -25,24 +25,27 @@ export default defineStore('RecaptchaStore', {
       this.$patch(data);
     },
 
-    async getRecaptchaConfiguration() {
-      const configs = [
-        'recaptcha_v2_checkbox_key',
-        'recaptcha_v2_invisible_key',
-        'recaptcha_v3_invisible_key',
-        'recaptcha_customer_login',
-        'recaptcha_place_order',
-      ];
+    getInitialConfigValues() {
+      return `
+        storeConfig {
+          recaptcha_v2_checkbox_key
+          recaptcha_v2_invisible_key
+          recaptcha_v3_invisible_key
+          recaptcha_customer_login
+          recaptcha_place_order
+        }
+      `;
+    },
 
-      const cacheKey = this.createCacheKey(configs);
-      const data = await this.getCachedResponse(getStoreConfig, cacheKey, configs);
+    handleInitialConfig({ storeConfig }) {
+      console.log(storeConfig);
       this.setData({
-        v2CheckboxKey: data.recaptcha_v2_checkbox_key,
-        v2InvisibleKey: data.recaptcha_v2_invisible_key,
-        v3Invisible: data.recaptcha_v3_invisible_key,
+        v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
+        v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
+        v3Invisible: storeConfig.recaptcha_v3_invisible_key,
         enabled: {
-          customerLogin: data.recaptcha_customer_login,
-          placeOrder: data.recaptcha_place_order,
+          customerLogin: storeConfig.recaptcha_customer_login,
+          placeOrder: storeConfig.recaptcha_place_order,
         },
       });
     },
