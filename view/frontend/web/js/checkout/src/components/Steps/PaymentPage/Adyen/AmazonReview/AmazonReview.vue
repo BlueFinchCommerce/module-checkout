@@ -89,6 +89,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(useAdyenStore, ['getAdyenClientKey']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
@@ -104,11 +105,10 @@ export default {
     await this.getCart();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
-    const clientKey = await this.getAdyenClientKey();
     const extensionAttributes = getPaymentExtensionAttributes();
     const configuration = {
       paymentMethodsResponse,
-      clientKey,
+      clientKey: this.getAdyenClientKey,
       amount: {
         value: this.cartGrandTotal,
         currency: this.currencyCode,
@@ -156,7 +156,7 @@ export default {
     amazonPayComponent.submit();
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getAdyenClientKey', 'getPaymentMethodsResponse']),
+    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
 

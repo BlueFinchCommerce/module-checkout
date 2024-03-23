@@ -14,12 +14,17 @@ export default defineStore('adyenStore', {
     adyenEnvironmentMode: 'live',
     adyenVaultEnabled: false,
     loadingPaymentMethods: true,
+    adyen_client_key_live: '',
+    adyen_client_key_test: '',
   }),
   getters: {
     isAdyenAvailable: () => {
       const { availableMethods } = usePaymentStore();
       return availableMethods.some(({ code }) => code.includes('adyen'));
     },
+    getAdyenClientKey: (state) => (
+      getAdyenProductionMode() ? state.adyen_client_key_live : state.adyen_client_key_test
+    ),
   },
   actions: {
     setData(data) {
@@ -31,6 +36,8 @@ export default defineStore('adyenStore', {
         storeConfig {
           adyen_environment_mode
           adyen_vault_enabled
+          adyen_client_key_live
+          adyen_client_key_test
         }
       `;
     },
@@ -77,24 +84,6 @@ export default defineStore('adyenStore', {
 
       this.loadingPaymentMethods = false;
       return paymentMethodsResponse;
-    },
-
-    async getAdyenClientKey() {
-      // Early return if we already have this information.
-      if (this.clientKey) {
-        return this.clientKey;
-      }
-
-      this.loadingPaymentMethods = true;
-      const config = getAdyenProductionMode() ? 'adyen_client_key_live' : 'adyen_client_key_test';
-      const getPaymentMethodsResponse = await this.getCachedResponse(
-        getStoreConfig,
-        'getAdyenClientKey',
-        [config],
-      );
-      this.$patch({ clientKey: getPaymentMethodsResponse[config] });
-      this.loadingPaymentMethods = false;
-      return getPaymentMethodsResponse[config];
     },
 
     createCacheKey(configs) {

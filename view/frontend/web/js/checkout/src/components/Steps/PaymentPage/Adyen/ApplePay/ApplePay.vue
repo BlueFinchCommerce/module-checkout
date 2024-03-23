@@ -41,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable']),
+    ...mapState(useAdyenStore, ['isAdyenAvailable', 'getAdyenClientKey']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartDiscountTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
     ...mapState(useConfigStore, [
@@ -72,7 +72,6 @@ export default {
       return;
     }
 
-    const clientKey = await this.getAdyenClientKey();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
     const applePayMethod = this.getApplePayMethod(paymentMethodsResponse);
@@ -93,7 +92,7 @@ export default {
       risk: {
         enabled: false,
       },
-      clientKey,
+      clientKey: this.getAdyenClientKey,
     };
     const checkout = await AdyenCheckout(configuration);
     const applePayComponent = checkout.create('applepay', applePayConfiguration);
@@ -118,7 +117,6 @@ export default {
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(useAdyenStore, [
       'getPaymentMethodsResponse',
-      'getAdyenClientKey',
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
