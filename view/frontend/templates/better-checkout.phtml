@@ -11,11 +11,11 @@ $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
 $customWordings = $assetViewModel->getCustomWording();
-
 ?>
 
 <script>
     window.geneCheckout = window.geneCheckout || {
+        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
         logo: "<?= $escaper->escapeJs($logo); ?>",
         paymentMethods: [],
         shippingMethods: [],

@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node rename-assets.js",
-    "build-dev": "vite build && node rename-assets.js --dev",
+    "build": "vite build",
+    "build-dev": "vite build --dev",
     "preview": "vite preview",
     "lint": "eslint --quiet --ext .js,.vue src",
     "lint-fix": "eslint --quiet --ext .js,.vue src --fix"
