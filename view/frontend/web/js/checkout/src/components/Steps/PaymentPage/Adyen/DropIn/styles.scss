@@ -130,9 +130,9 @@
     }
 
     &__payment-method {
-      background: transparent;
-      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-      border-radius: var(--base__border-radius-large);
+      background: var(selectable__background-color);
+      border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+      border-radius: var(--selectable__border-radius);
       padding: var(--indent__base);
       position: relative;
       margin-bottom: var(--indent__base);
@@ -175,8 +175,8 @@
     }
 
     &__payment-method--selected {
-      background: var(--adyen-drop-in-selected__background, transparent);
-      border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+      background: var(--adyen-drop-in-selected__background, var(--selectable__background-color));
+      border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
 
       .adyen-checkout__payment-method__header:before {
         border: var(--radio-input__border-checked);

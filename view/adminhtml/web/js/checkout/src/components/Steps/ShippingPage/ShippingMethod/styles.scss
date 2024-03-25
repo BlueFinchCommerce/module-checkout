@@ -62,8 +62,8 @@
         flex-wrap: wrap;
         font-family: var(--shipping-methods-font-family, unset);
         padding: var(--indent__base);
-        border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-        border-radius: var(--base__border-radius-large);
+        border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+        border-radius: var(--selectable__border-radius);
 
         input {
           cursor: pointer;
@@ -75,7 +75,7 @@
         }
       }
       .selected {
-        border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+        border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
       }
     }
 

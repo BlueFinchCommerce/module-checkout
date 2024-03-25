@@ -7,8 +7,8 @@
     margin-top: var(--indent__base);
 
     .braintree-upper-container:before {
-      border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-      border-radius: var(--base__border-radius-large);
+      border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+      border-radius: var(--selectable__border-radius);
     }
 
     .braintree-sheet__container {
@@ -156,9 +156,9 @@
   }
 
   .braintree-option {
-    background-color: transparent;
-    border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    border-radius: var(--base__border-radius-large);
+    background-color: var(--selectable__background-color);
+    border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    border-radius: var(--selectable__border-radius);
     flex-wrap: wrap;
     line-height: 1;
     margin-top: var(--indent__base);
@@ -178,8 +178,8 @@
       border-bottom: none;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      border-color: var(--base__border-color-active);
-      border-width: var(--base__border-weight-active);
+      border-color: var(--selectable__border-color-active);
+      border-width: var(--selectable__border-weight-active);
 
       &:before {
         border: var(--radio-input__border-checked);
@@ -187,10 +187,9 @@
       }
 
       ~.braintree-sheet__content {
-        border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color);
-        border-bottom-left-radius: var(--base__border-radius-large);
-        border-bottom-right-radius: var(--base__border-radius-large);
-        border-color: var(--base__border-color-active);
+        border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+        border-bottom-left-radius: var(--selectable__border-radius);
+        border-bottom-right-radius: var(--selectable__border-radius);
         border-top: 0;
         display: block;
         padding: 0 var(--indent__base) var(--indent__base);

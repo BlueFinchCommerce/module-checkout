@@ -137,6 +137,17 @@
     --base__border-color-active: var(--color__primary-blue);
 
     //
+    // Selectable Components
+    //  ---------------------------------------------
+    --selectable__border-radius: var(--base__border-radius-large);
+    --selectable__border-weight: var(--base__border-weight);
+    --selectable__border-weight-active: var(--base__border-weight-active);
+    --selectable__border-color: var(--base__border-color);
+    --selectable__border-color-active: var(--base__border-color-active);
+    --selectable__background-color: var(--color__primary-white);
+    --selectable__background-color-active: var(--color__primary-grey5);
+
+    //
     // Buttons
     //  ---------------------------------------------
     --button__font-family: var(--font-family__copy);
@@ -186,22 +197,22 @@
     //
     // Adyen Cards
     //  ---------------------------------------------
-    --adyen-saved-card__background-color: var(--color__transparent);
-    --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    --adyen-saved-card__font-color: var(--color__primary-blue);
-    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    --adyen-saved-card__background-color-active: var(--color__primary-grey5);
-    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --adyen-saved-card__background-color: var(--selectable__background-color);
+    --adyen-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --adyen-saved-card__font-color: var(--font__color-light);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --adyen-saved-card__background-color-active: var(--selectable__background-color-active);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
 
     //
-    // Adyen Cards
+    // Braintree Cards
     //  ---------------------------------------------
-    --braintree-saved-card__background-color: var(--color__transparent);
-    --braintree-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    --braintree-saved-card__font-color: var(--color__primary-blue);
-    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    --braintree-saved-card__background-color-active: var(--color__primary-grey5);
-    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --braintree-saved-card__background-color: var(--selectable__background-color);
+    --braintree-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --braintree-saved-card__font-color: var(--font__color-light);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --braintree-saved-card__background-color-active: var(--selectable__background-color-active);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
 
     //
     // Adyen Icons

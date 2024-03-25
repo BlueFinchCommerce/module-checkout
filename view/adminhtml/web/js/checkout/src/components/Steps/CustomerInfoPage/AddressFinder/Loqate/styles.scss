@@ -89,13 +89,13 @@
   }
 
   &.saved-address-active {
-    border-radius: var(--base__border-radius-large);
+    border-radius: var(--selectable__border-radius);
     padding: var(--indent__m) var(--indent__base);
     font-size: var(--font__s);
     margin-bottom: var(--indent__base);
     font-weight: var(--font-weight__semibold);
-    background: var(--address-list-selected-background, var(--color__primary-grey5));
-    border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+    background: var(--address-list-selected-background, var(--selectable__background-color-active));
+    border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
     box-shadow: var(--selected-address-box-shadow, none);
 
     .address-block__edit {

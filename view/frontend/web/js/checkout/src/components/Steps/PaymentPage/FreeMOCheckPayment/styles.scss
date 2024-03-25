@@ -1,7 +1,7 @@
 #gene-better-checkout-root {
   .free-payment {
-    border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    border-radius: var(--base__border-radius-large);
+    border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    border-radius: var(--selectable__border-radius);
     margin-top: var(--indent__base);
     padding: var(--indent__base);
 
@@ -10,7 +10,7 @@
     }
 
     &.active {
-      border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+      border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
     }
 
     &-button {

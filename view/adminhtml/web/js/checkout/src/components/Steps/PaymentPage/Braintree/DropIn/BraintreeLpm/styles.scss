@@ -1,7 +1,7 @@
 .braintree-lpm-container {
-  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  border-bottom-left-radius: var(--base__border-radius-large);
-  border-bottom-right-radius: var(--base__border-radius-large);
+  border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+  border-bottom-left-radius: var(--selectable__border-radius);
+  border-bottom-right-radius: var(--selectable__border-radius);
   border-top: 0;
   display: grid;
   gap: var(--indent__m);
