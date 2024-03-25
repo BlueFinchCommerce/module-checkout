@@ -58,11 +58,11 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.logo = window.geneCheckout?.logo || getStaticUrl(logoSvg);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

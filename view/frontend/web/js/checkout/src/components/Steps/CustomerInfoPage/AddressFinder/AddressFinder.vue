@@ -19,11 +19,10 @@ export default {
     ...mapState(useConfigStore, ['addressFinder']),
   },
   async created() {
-    await this.getLoqateConfiguration();
-    await this.getAfdStatus();
+    await this.getInitialConfig();
   },
   methods: {
-    ...mapActions(useConfigStore, ['getLoqateConfiguration', 'getAfdStatus']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

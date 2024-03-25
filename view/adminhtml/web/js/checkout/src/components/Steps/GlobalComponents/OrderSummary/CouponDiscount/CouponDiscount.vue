@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['addDiscountCode', 'removeDiscountCode']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setApplyButtonText(event) {
       this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');

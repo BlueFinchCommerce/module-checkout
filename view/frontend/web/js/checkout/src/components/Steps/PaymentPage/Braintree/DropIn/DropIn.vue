@@ -20,7 +20,7 @@
     <div class="divider-line" />
   </div>
 
-  <VaultedMethods v-if="isPaymentMethodAvailable('braintree_cc_vault')" />
+  <VaultedMethods v-if="isPaymentMethodAvailable('braintree_cc_vault') && isLoggedIn" />
 
   <div
     class="braintree-payment__title"
@@ -44,6 +44,7 @@
 // Stores
 import { mapState } from 'pinia';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
+import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
@@ -77,6 +78,7 @@ export default {
       'errorMessage',
       'vaultedMethods',
     ]),
+    ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(usePaymentStore, [
       'isPaymentMethodAvailable',
     ]),

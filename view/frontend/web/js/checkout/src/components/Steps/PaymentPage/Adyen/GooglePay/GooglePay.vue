@@ -9,6 +9,7 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
+import AdyenCheckout from '@adyen/adyen-web';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCartStore from '@/stores/CartStore';
@@ -17,7 +18,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
-import AdyenCheckout from '@adyen/adyen-web';
 import '@adyen/adyen-web/dist/adyen.css';
 
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
@@ -32,8 +32,7 @@ import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenGooglePay',
@@ -64,12 +63,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getIsAdyenAvailable();
+    await this.getInitialConfig();
+    await this.getCart();
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
@@ -78,7 +73,6 @@ export default {
       return;
     }
 
-    await this.getAdyenConfig();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
     if (!googlePayMethod) {
@@ -125,16 +119,14 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
       'getIsAdyenAvailable',
       'getPaymentMethodsResponse',
     ]),
     ...mapActions(usePaymentStore, [
-      'getPaymentMethods',
       'setErrorMessage',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
@@ -307,13 +299,7 @@ export default {
         const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
 
         try {
-          this.submitEmail(email)
-            .then(() => (
-              Promise.all([
-                setBillingAddressOnCart(mapBillingAddress),
-                setShippingAddressesOnCart(mapShippingAddress),
-              ])
-            ))
+          setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
             .then(() => {
               const stateData = JSON.stringify({
                 paymentMethod: {

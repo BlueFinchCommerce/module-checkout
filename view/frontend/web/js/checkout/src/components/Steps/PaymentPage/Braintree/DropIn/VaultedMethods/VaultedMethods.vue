@@ -105,7 +105,7 @@ import updatePayment from '@/services/braintree/updatePayment';
 import braintree from 'braintree-web';
 
 export default {
-  name: 'BraintreeNewMethods',
+  name: 'BrainteeVaultMethods',
   components: {
     Agreements,
     MyButton,
@@ -139,9 +139,7 @@ export default {
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getPaymentMethods();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
     await this.getVaultedMethods();
 
     this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
@@ -153,7 +151,6 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
-      'getBraintreeConfig',
       'createClientToken',
       'getVaultedMethods',
       'selectVaultedMethod',
@@ -162,8 +159,7 @@ export default {
       'escapeNonAsciiCharacters',
       'mapCartTypes',
     ]),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     async selectPaymentCard(vaultedMethod) {
       // If the method is the same as the one already selected then we can return early.

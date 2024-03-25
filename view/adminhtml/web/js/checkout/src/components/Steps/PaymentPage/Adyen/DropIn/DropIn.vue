@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

@@ -103,12 +103,12 @@ export default {
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

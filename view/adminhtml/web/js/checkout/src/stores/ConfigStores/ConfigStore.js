@@ -3,17 +3,19 @@ import { defineStore } from 'pinia';
 import afdPostcode from '@/services/addresses/afdPostcode';
 import getStoreConfig from '@/services/getStoreConfig';
 import getBlock from '@/services/content/getBlock';
-import getCountries from '@/services/addresses/getCountries';
 import getStoreCode from '@/services/getStoreCode';
-import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
+
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getGeneralTermsServicesId from '@/helpers/content/getGeneralTermsServicesId';
 import getWithdrawTermsServicesId from '@/helpers/content/getWithdrawTermsServicesId';
-import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import getFallBackStaticPath from '@/helpers/storeConfigs/getFallBackStaticPath';
 import getStoreCodeFromLocalStorage from '@/helpers/storeConfigs/getStoreCode';
 import getLocale from '@/helpers/addresses/getLocale';
 import getCurrencyCode from '@/helpers/payment/getCurrencyCode';
+import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
+import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
+import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
+import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -82,17 +84,30 @@ export default defineStore('configStore', {
       });
       return data;
     },
+
     async getStoreCode() {
       const storeCode = await getStoreCode();
       this.setData({
         storeCode,
       });
     },
-    async getStoreConfig() {
+
+    /**
+     * Very initial request to get all of the stores configuration.
+     */
+    async getInitialConfig() {
       if (!this.storeCode) {
         await this.getCachedResponse(this.getStoreCode, 'getStoreCode');
       }
 
+      const request = () => getInitialConfig().then(handleInitialConfig);
+      await this.getCachedResponse(request, 'getInitialConfig');
+    },
+
+    /**
+     * Get the values for the initial configuration.
+     */
+    getInitialConfigValues() {
       const configs = [
         'base_static_url',
         'default_display_currency_code',
@@ -113,6 +128,9 @@ export default defineStore('configStore', {
         'gene_better_checkout_copyright_text',
         'gene_better_checkout_afd_enable',
         'gene_better_checkout_progress_bar_visible',
+        'gene_better_checkout_loqate_api_key',
+        'gene_better_checkout_loqate_enabled',
+        'gene_better_checkout_afd_enable',
       ];
 
       if (this.locale) {
@@ -121,51 +139,74 @@ export default defineStore('configStore', {
         configs.push('locale');
       }
 
-      const promises = [];
-
-      if (!this.countries.length) {
-        promises.push(this.getCachedResponse(this.getCountries, 'getCountries'));
-      }
-
       const allConfigs = configs.concat(getCustomConfigs);
 
-      const getConfigRequest = this.getConfig(allConfigs).then(async (data) => {
-        this.setData({
-          staticUrl: data.base_static_url.replace(/\/+$/, ''),
-          currencyCode: data.default_display_currency_code,
-          storeCode: data.code,
-          useStoreInUrl: data.use_store_in_url,
-          websiteName: data.website_name || '',
-          secureBaseUrl: data.secure_base_url,
-          newsletterEnabled: data.gene_better_checkout_newsletter_enabled === '1',
-          newsletterAllowGuests: data.gene_better_checkout_newsletter_allow_guest === '1',
-          stateRequired: data.gene_better_checkout_country_state_required
-            ? data.gene_better_checkout_country_state_required.split(',') : [],
-          displayState: data.gene_better_checkout_country_display_state === '1',
-          rewardsEnabled: data.magento_reward_general_is_enabled === '1'
-            && data.magento_reward_general_is_enabled_on_front === '1',
-          optionalZipCountries: data.optional_zip_countries || '',
-          taxCartDisplayPrice: data.tax_cart_display_price === '2',
-          taxCartDisplayShipping: data.tax_cart_display_shipping === '2',
-          taxCartDisplayFullSummary: data.tax_cart_display_full_summary === '1',
-          copyrightText: data.gene_better_checkout_copyright_text,
-          afdStatus: data.gene_better_checkout_afd_enable,
-          progressBarVisible: data.gene_better_checkout_progress_bar_visible === true,
-        });
-
-        if (data.locale) {
-          this.setLocale(data.locale);
+      return `
+        storeConfig {
+          ${allConfigs.join(' ')}
         }
 
-        const customConfigs = await mapCustomConfigs(data);
-        this.setData({
-          custom: customConfigs,
-        });
+        countries {
+          id
+          two_letter_abbreviation
+          three_letter_abbreviation
+          full_name_locale
+          available_regions {
+            id
+            code
+            name
+          }
+        }
+      `;
+    },
+
+    async handleInitialConfig({ countries, storeConfig }) {
+      this.setData({
+        staticUrl: storeConfig.base_static_url.replace(/\/+$/, ''),
+        currencyCode: storeConfig.default_display_currency_code,
+        storeCode: storeConfig.code,
+        useStoreInUrl: storeConfig.use_store_in_url,
+        websiteName: storeConfig.website_name || '',
+        secureBaseUrl: storeConfig.secure_base_url,
+        newsletterEnabled: storeConfig.gene_better_checkout_newsletter_enabled === '1',
+        newsletterAllowGuests: storeConfig.gene_better_checkout_newsletter_allow_guest === '1',
+        stateRequired: storeConfig.gene_better_checkout_country_state_required
+          ? storeConfig.gene_better_checkout_country_state_required.split(',') : [],
+        displayState: storeConfig.gene_better_checkout_country_display_state === '1',
+        rewardsEnabled: storeConfig.magento_reward_general_is_enabled === '1'
+          && storeConfig.magento_reward_general_is_enabled_on_front === '1',
+        optionalZipCountries: storeConfig.optional_zip_countries || '',
+        taxCartDisplayPrice: storeConfig.tax_cart_display_price === '2',
+        taxCartDisplayShipping: storeConfig.tax_cart_display_shipping === '2',
+        taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
+        copyrightText: storeConfig.gene_better_checkout_copyright_text,
+        progressBarVisible: storeConfig.gene_better_checkout_progress_bar_visible === true,
+        addressFinder: {
+          enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
+          loqate: {
+            enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
+            apiKey: storeConfig.gene_better_checkout_loqate_api_key,
+          },
+          afd: {
+            enabled: storeConfig.gene_better_checkout_afd_enable,
+          },
+        },
       });
 
-      promises.push(getConfigRequest);
+      if (storeConfig.locale) {
+        this.setLocale(storeConfig.locale);
+      }
 
-      await Promise.all(promises);
+      countries.sort((a, b) => a.full_name_locale.toUpperCase()
+        .localeCompare(b.full_name_locale.toUpperCase()));
+
+      this.setData({ countries });
+
+      const customConfigs = await mapCustomConfigs(storeConfig);
+
+      this.setData({
+        custom: customConfigs,
+      });
     },
 
     setLocale(locale) {
@@ -253,25 +294,6 @@ export default defineStore('configStore', {
         });
       }
     },
-    async getCountries() {
-      const { data } = await getCountries();
-      this.setData(data);
-    },
-
-    async getLoqateConfiguration() {
-      const configApi = await this.getConfig(['gene_better_checkout_loqate_api_key']);
-      const configStatus = await this.getConfig(['gene_better_checkout_loqate_enabled']);
-
-      this.setData({
-        addressFinder: {
-          enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
-          loqate: {
-            enabled: !!+configStatus.gene_better_checkout_loqate_enabled,
-            apiKey: configApi.gene_better_checkout_loqate_api_key,
-          },
-        },
-      });
-    },
 
     async getAfdConfiguration() {
       const config = await this.getCachedResponse(
@@ -290,18 +312,6 @@ export default defineStore('configStore', {
             id: config.afd_general_account_id,
             token: config.afd_general_account_token,
             maxQuantity: config.afd_response_max_quantity || '5',
-          },
-        },
-      });
-    },
-
-    async getAfdStatus() {
-      const configStatus = await this.getConfig(['gene_better_checkout_afd_enable']);
-
-      this.setData({
-        addressFinder: {
-          afd: {
-            enabled: configStatus.gene_better_checkout_afd_enable,
           },
         },
       });

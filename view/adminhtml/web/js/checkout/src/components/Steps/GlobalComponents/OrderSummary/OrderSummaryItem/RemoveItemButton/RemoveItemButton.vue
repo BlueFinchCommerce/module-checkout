@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['removeItem']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setRemoveItemText(event) {
       this.removeItemText = event?.detail || this.$t('orderSummary.removeItemButton');

@@ -29,10 +29,9 @@ export default {
     ...mapState(useConfigStore, ['storeCode']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
+    await this.getInitialConfig();
+    await this.getCart();
+
     this.setDefaultShippingMethod();
 
     this.trackStep({
@@ -42,7 +41,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useShippingMethodsStore, ['setDefaultShippingMethod']),
     ...mapActions(useGtmStore, ['trackStep']),
   },

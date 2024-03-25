@@ -15,6 +15,7 @@ export default defineConfig({
         chunkFileNames: '[name].min.js',
         assetFileNames: '[name].[ext]',
       },
+      preserveEntrySignatures: 'allow-extension',
     },
   },
   esbuild: {

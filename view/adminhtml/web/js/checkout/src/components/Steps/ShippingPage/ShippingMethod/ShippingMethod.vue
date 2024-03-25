@@ -193,11 +193,10 @@ export default {
     ...mapActions(useShippingMethodsStore, [
       'submitShippingInfo',
       'selectShippingMethod',
-      'setShippingMethodTitle',
     ]),
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useStepsStore, ['goToPayment']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setShippingStepText(event) {
       this.shippingStepText = event?.detail || this.$t('shippingStep.stepTitle');
@@ -221,6 +220,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./styles.scss";
 </style>

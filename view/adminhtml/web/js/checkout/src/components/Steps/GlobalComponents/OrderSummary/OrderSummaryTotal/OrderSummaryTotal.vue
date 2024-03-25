@@ -114,7 +114,7 @@ export default {
     document.removeEventListener(this.grandTotalTextId, this.setGrandTotalText);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderSummaryText(event) {
       this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');

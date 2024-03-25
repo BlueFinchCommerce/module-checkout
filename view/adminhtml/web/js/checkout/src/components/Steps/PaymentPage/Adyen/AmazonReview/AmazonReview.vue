@@ -83,6 +83,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(useAdyenStore, ['getAdyenClientKey']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
@@ -91,9 +92,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getAdyenConfig', 'getAdyenClientKey', 'getPaymentMethodsResponse']),
+    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderId(orderId) {
       this.orderId = orderId;

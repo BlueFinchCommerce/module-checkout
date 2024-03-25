@@ -49,7 +49,7 @@ export default {
     ...mapState(useConfigStore, ['currencyCode', 'locale']),
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
 
     this.cartEmitter.on('cartUpdated', () => {
       this.clearPaymentReponseCache();
@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

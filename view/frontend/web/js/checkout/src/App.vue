@@ -32,7 +32,7 @@ export default {
   async created() {
     document.querySelector('html').classList.add('vue-checkout-active');
     document.getElementById('gene-better-checkout-root').setAttribute('role', 'main');
-    await this.getStoreConfig();
+    await this.getInitialConfig();
 
     this.setInitialStepState();
     // If we have a Amazon redirect URL then go to that page.
@@ -44,7 +44,7 @@ export default {
     beginCheckoutDataLayer();
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['setInitialStepState', 'goToAdyenAmazonReviw']),
   },
 };

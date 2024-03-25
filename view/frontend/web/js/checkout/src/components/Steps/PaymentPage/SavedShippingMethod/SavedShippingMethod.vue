@@ -73,7 +73,7 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
       || this.$t('shippingStep.stepCompleteTitle');
   },
@@ -82,7 +82,7 @@ export default {
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToShipping']),
 
     setDetailsStepActive() {

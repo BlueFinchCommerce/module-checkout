@@ -122,7 +122,7 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId]
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['addDiscountCode', 'removeDiscountCode']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     async dispatchDiscountCode(discountCode) {
       this.loadingDiscountCode = true;

@@ -17,13 +17,14 @@ export default defineConfig({
           adyen: ['@adyen/adyen-web'],
         },
       },
+      preserveEntrySignatures: 'allow-extension',
     },
   },
   resolve: {
     alias: {
-      '@local': fileURLToPath(new URL("./", import.meta.url)),
+      '@local': fileURLToPath(new URL('./', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-    dedupe: ['vue']
+    dedupe: ['vue'],
   },
 });

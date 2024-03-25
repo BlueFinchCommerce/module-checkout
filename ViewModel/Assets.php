@@ -122,7 +122,7 @@ class Assets implements ArgumentInterface
     {
         $params = ['area' => $area];
         return $this->assetRepository->createAsset(
-            self::ASSETS_BASE_DIR .  $fileName,
+            self::ASSETS_BASE_DIR . $fileName,
             $params
         );
     }

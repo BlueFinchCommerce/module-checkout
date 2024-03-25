@@ -86,7 +86,7 @@ export default {
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToShipping']),
 
     setShippingStepText(event) {
