@@ -10,6 +10,12 @@ $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
 ?>
 
+<script>
+    window.geneCheckout = window.geneCheckout || {
+        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
+    };
+</script>
+
 <?php if ($fontUrl !== null) : ?>
     <style>
         @font-face {

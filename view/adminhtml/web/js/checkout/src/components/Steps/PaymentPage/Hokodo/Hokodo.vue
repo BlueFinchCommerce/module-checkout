@@ -83,7 +83,7 @@ export default {
     ...mapState(useHokodoStore, ['hokodo', 'offer', 'companyId']),
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     await this.getPaymentMethods();
     await this.getHokodoConfigs();
 
@@ -124,7 +124,7 @@ export default {
     this.unmountSearch();
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useHokodoStore, ['getHokodoConfigs', 'getHokodoCompanyId', 'setOffer', 'setCompanyId']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
 

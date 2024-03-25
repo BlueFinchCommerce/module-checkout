@@ -25,8 +25,7 @@ import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOn
 import createPayment from '@/services/payments/createPaymentGraphQl';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenApplePay',
@@ -42,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable']),
+    ...mapState(useAdyenStore, ['isAdyenAvailable', 'getAdyenClientKey']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartDiscountTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
     ...mapState(useConfigStore, [
@@ -63,12 +62,8 @@ export default {
       return;
     }
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getIsAdyenAvailable();
+    await this.getInitialConfig();
+    await this.getCart();
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
@@ -77,8 +72,6 @@ export default {
       return;
     }
 
-    await this.getAdyenConfig();
-    const clientKey = await this.getAdyenClientKey();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
     const applePayMethod = this.getApplePayMethod(paymentMethodsResponse);
@@ -99,7 +92,7 @@ export default {
       risk: {
         enabled: false,
       },
-      clientKey,
+      clientKey: this.getAdyenClientKey,
     };
     const checkout = await AdyenCheckout(configuration);
     const applePayComponent = checkout.create('applepay', applePayConfiguration);
@@ -123,13 +116,10 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
       'getPaymentMethodsResponse',
-      'getAdyenClientKey',
-      'getIsAdyenAvailable',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
 
     getApplePayMethod(paymentMethodsResponse) {
@@ -193,13 +183,7 @@ export default {
       }
 
       try {
-        this.submitEmail(email)
-          .then(() => (
-            Promise.all([
-              setBillingAddressOnCart(billingAddress),
-              setShippingAddressesOnCart(shippingAddress),
-            ])
-          ))
+        setAddressesOnCart(shippingAddress, billingAddress, email)
           .then(() => {
             const stateData = JSON.stringify({
               paymentMethod: {

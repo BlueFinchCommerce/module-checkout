@@ -75,7 +75,7 @@ export default {
     document.removeEventListener(this.detailStepTextId, this.setDetailStepText);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToYouDetails']),
     setDetailStepText(event) {
       this.detailStepText = event?.detail || this.$t('yourDetailsSection.title');

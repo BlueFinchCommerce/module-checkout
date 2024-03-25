@@ -27,11 +27,11 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

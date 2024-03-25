@@ -28,8 +28,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreePayPal',
@@ -57,13 +56,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getPaymentMethods();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paypalConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_paypal'
@@ -195,11 +189,11 @@ export default {
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
+    ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
+    ...mapActions(usePaymentStore, ['setErrorMessage']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
@@ -221,11 +215,8 @@ export default {
         payload.details.lastName,
       );
 
-      return Promise.all([
-        this.submitEmail(payload.details.email).then(() => ({ payload, email: payload.details.email })),
-        setBillingAddressOnCart(billingAddress),
-        setShippingAddressesOnCart(shippingAddress),
-      ]);
+      return setAddressesOnCart(shippingAddress, billingAddress, payload.details.email)
+        .then(() => ({ payload, email: payload.details.email }));
     },
 
     makePayment([{ payload, email }]) {

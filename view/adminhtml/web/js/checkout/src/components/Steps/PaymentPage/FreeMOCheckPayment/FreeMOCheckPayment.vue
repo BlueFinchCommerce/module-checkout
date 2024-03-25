@@ -29,7 +29,7 @@
 
 <script>
 // Stores
-import { mapActions, mapState } from 'pinia';
+import { mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
@@ -85,7 +85,6 @@ export default {
     });
   },
   methods: {
-    ...mapActions(usePaymentStore, ['getPaymentMethods']),
     async selectPaymentMethod() {
       this.isMethodSelected = true;
 

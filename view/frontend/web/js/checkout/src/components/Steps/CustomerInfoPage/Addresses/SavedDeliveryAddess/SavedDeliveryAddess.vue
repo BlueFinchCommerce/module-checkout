@@ -67,11 +67,11 @@ export default {
     ...mapState(useCartStore, ['cart', 'isItemRequiringDelivery']),
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {

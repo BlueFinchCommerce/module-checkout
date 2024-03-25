@@ -4,15 +4,14 @@ import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
 import addDiscountCode from '@/services/discount/addDiscountCode';
 import getAmastyShippingInfo from '@/services/shipping/getAmastyShippingInfo';
-import getCart from '@/services/cart/getCart';
 import getCartData from '@/services/cart/getCartData';
 import getCrosssells from '@/services/cart/getCrosssells';
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import mergeGuestCart from '@/services/cart/mergeGuestCart';
 import removeCartItem from '@/services/cart/removeCartItem';
 import removeGiftCardCode from '@/services/giftCard/removeGiftCardCode';
@@ -117,14 +116,7 @@ export default defineStore('cartStore', {
     },
 
     async getCart() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
-
-      const cart = await this.getCachedResponse(getCart, 'getCart');
-
-      this.handleCartData(cart);
+      // Prevent this from running within the admin.
     },
 
     async getCartData() {
@@ -166,6 +158,7 @@ export default defineStore('cartStore', {
 
       const customerStore = useCustomerStore();
       const paymentStore = usePaymentStore();
+      const shippingMethodsStore = useShippingMethodsStore();
 
       customerStore.setEmailAddress(cart.email ?? '');
 
@@ -178,6 +171,8 @@ export default defineStore('cartStore', {
       }
 
       paymentStore.setPaymentMethods(cart.available_payment_methods);
+
+      shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
     },
 
     async updateQuantity(updateItem, change) {
@@ -437,8 +432,6 @@ export default defineStore('cartStore', {
     },
 
     async emitUpdate() {
-      this.clearCaches(['getPaymentInformation']);
-
       this.$state.cartEmitter.emit('cartUpdated');
 
       // Also trigger refresh of User's cart data.

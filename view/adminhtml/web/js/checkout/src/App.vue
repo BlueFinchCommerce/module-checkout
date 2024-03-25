@@ -84,14 +84,14 @@ export default {
   },
   async created() {
     this.goToYouDetails();
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
 
     document.dispatchEvent(new Event('gene-better-checkout-loaded'));
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToYouDetails', 'goToShipping', 'goToPayment']),
 
     switchDevice(device) {

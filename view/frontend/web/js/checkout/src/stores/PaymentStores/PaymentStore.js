@@ -2,8 +2,6 @@ import { defineStore } from 'pinia';
 
 import mitt from 'mitt';
 
-import getPaymentInformation from '@/services/payments/getPaymentInformation';
-
 export default defineStore('paymentStore', {
   state: () => ({
     methodsResponse: [],
@@ -46,23 +44,10 @@ export default defineStore('paymentStore', {
       });
     },
 
-    async getPaymentMethods() {
-      const paymentMethods = await this.getCachedResponse(
-        getPaymentInformation,
-        'getPaymentInformation',
-      );
-      this.setPaymentMethods(paymentMethods);
-    },
-
     setPaymentMethods(paymentMethods) {
       this.setData({
         availableMethods: paymentMethods,
       });
-    },
-
-    refreshPaymentMethods() {
-      this.clearCaches(['getPaymentInformation']);
-      return this.getPaymentMethods();
     },
 
     getCachedResponse(request, cacheKey, args = {}) {

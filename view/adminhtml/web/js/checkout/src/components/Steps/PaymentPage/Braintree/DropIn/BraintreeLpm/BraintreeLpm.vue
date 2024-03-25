@@ -127,9 +127,7 @@ export default {
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getPaymentMethods();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
     await this.createClientToken();
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
@@ -143,13 +141,12 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
-      'getBraintreeConfig',
       'createClientToken',
       'setErrorMessage',
       'clearErrorMessage',
     ]),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'getPaymentMethodTitle']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(usePaymentStore, ['getPaymentMethodTitle']),
 
     getIcon(method) {
       return getStaticUrl(images[method]);

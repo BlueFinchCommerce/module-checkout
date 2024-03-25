@@ -146,10 +146,8 @@ export default {
   async created() {
     this.checkForGuestUser();
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
+    await this.getInitialConfig();
+    await this.getCart();
 
     await this.getCustomerInformation();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
@@ -157,7 +155,7 @@ export default {
       || this.$t('orderSummary.mobileDiscountText');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['getCustomerInformation', 'checkForGuestUser']),
     ...mapActions(useCartStore, ['getCart']),
     toggleSummary() {

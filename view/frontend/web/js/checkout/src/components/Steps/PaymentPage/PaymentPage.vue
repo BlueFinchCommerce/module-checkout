@@ -105,12 +105,9 @@ export default {
     ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
+    await this.getInitialConfig();
+    await this.getCart();
 
-    await this.getIsAdyenAvailable();
     await this.getRvvupConfig();
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());
@@ -126,9 +123,8 @@ export default {
     });
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getIsAdyenAvailable']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig', 'getRvvupConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');

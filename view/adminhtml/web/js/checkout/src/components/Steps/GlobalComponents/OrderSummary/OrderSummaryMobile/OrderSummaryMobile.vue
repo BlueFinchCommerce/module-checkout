@@ -156,7 +156,7 @@ export default {
     document.removeEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['getCustomerInformation', 'checkForGuestUser']),
     ...mapActions(useCartStore, ['getCart']),
     toggleSummary() {

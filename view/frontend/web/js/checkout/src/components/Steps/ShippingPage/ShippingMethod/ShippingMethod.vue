@@ -178,7 +178,7 @@ export default {
   },
   async created() {
     this.additionalShippingMethods = Object.keys(shippingMethods());
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
   },
@@ -186,11 +186,10 @@ export default {
     ...mapActions(useShippingMethodsStore, [
       'submitShippingInfo',
       'selectShippingMethod',
-      'setShippingMethodTitle',
     ]),
     ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useStepsStore, ['goToPayment']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     formatPrice(price) {
       if (price === 0) {
@@ -207,6 +206,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "./styles.scss";
 </style>

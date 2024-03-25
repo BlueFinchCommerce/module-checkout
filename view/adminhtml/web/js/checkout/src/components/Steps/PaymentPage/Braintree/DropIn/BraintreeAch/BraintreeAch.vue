@@ -178,9 +178,7 @@ export default {
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
   async created() {
-    await this.getStoreConfig();
-    await this.getPaymentMethods();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
     await this.createClientToken();
 
     if (this.clientInstance) {
@@ -205,13 +203,11 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
-      'getBraintreeConfig',
       'createClientToken',
       'setErrorMessage',
       'clearErrorMessage',
     ]),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     selectMethod() {
       this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-ach' });

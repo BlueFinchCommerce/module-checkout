@@ -122,7 +122,7 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setApplyButtonText(event) {
       this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');

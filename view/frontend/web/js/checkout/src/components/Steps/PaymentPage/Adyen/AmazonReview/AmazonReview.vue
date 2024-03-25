@@ -89,6 +89,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(useAdyenStore, ['getAdyenClientKey']),
     ...mapState(useCartStore, ['cartGrandTotal']),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
@@ -100,19 +101,14 @@ export default {
     // Get the Amazon checkout sessionID.
     const amazonCheckoutSessionId = getUrlQuery('amazonCheckoutSessionId');
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getAdyenConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
-    const clientKey = await this.getAdyenClientKey();
     const extensionAttributes = getPaymentExtensionAttributes();
     const configuration = {
       paymentMethodsResponse,
-      clientKey,
+      clientKey: this.getAdyenClientKey,
       amount: {
         value: this.cartGrandTotal,
         currency: this.currencyCode,
@@ -160,9 +156,9 @@ export default {
     amazonPayComponent.submit();
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getAdyenConfig', 'getAdyenClientKey', 'getPaymentMethodsResponse']),
+    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderId(orderId) {
       this.orderId = orderId;

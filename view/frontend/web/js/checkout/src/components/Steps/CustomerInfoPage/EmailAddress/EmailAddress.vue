@@ -248,10 +248,8 @@ export default {
     },
   },
   async mounted() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
+    await this.getInitialConfig();
+    await this.getCart();
 
     this.trackStep({
       step: 1,
@@ -261,7 +259,7 @@ export default {
     document.addEventListener('keydown', this.handleKeyDown);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, [
       'login',
       'submitEmail',

@@ -28,8 +28,7 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setBillingAddressOnCart from '@/services/addresses/setBillingAddressOnCart';
-import setShippingAddressesOnCart from '@/services/addresses/setShippingAddressesOnCart';
+import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreeGooglePay',
@@ -64,13 +63,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getBraintreeConfig();
-    await this.getPaymentMethods();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const googlePayConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_googlepay'
@@ -129,11 +123,11 @@ export default {
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
+    ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
+    ...mapActions(usePaymentStore, ['setErrorMessage']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {
@@ -296,13 +290,7 @@ export default {
         const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
 
         try {
-          this.submitEmail(email)
-            .then(() => (
-              Promise.all([
-                setBillingAddressOnCart(mapBillingAddress),
-                setShippingAddressesOnCart(mapShippingAddress),
-              ])
-            ))
+          setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
             .then(() => {
               resolve({
                 transactionState: 'SUCCESS',

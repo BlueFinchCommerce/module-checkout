@@ -145,7 +145,7 @@ export default {
     },
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     await this.getCart();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
@@ -156,7 +156,7 @@ export default {
      || this.$t('orderSummary.crossSellsTitle');
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCartStore, [
       'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
