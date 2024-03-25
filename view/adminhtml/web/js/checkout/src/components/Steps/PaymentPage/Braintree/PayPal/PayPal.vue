@@ -56,13 +56,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getPaymentMethods();
-    await this.getBraintreeConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paypalConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_paypal'
@@ -194,11 +189,11 @@ export default {
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken', 'getPayPalLineItems']),
+    ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['getPaymentMethods', 'setErrorMessage']),
+    ...mapActions(usePaymentStore, ['setErrorMessage']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {

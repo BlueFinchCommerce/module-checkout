@@ -35,7 +35,7 @@ export default {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderSummaryText(event) {
       this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');

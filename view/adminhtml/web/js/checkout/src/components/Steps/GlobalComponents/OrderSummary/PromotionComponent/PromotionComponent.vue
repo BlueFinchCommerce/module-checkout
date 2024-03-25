@@ -153,7 +153,7 @@ export default {
     document.removeEventListener(this.freeShippingTextId, this.setFreeShippingText);
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCartStore, [
       'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),

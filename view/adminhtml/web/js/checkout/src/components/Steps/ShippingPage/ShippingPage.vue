@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useShippingMethodsStore, ['setDefaultShippingMethod']),
     ...mapActions(useGtmStore, ['trackStep']),
   },

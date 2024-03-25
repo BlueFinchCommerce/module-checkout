@@ -44,7 +44,7 @@ export default {
     };
   },
   async created() {
-    await this.getStoreConfig();
+    await this.getInitialConfig();
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
 
     document.addEventListener(this.headerTextId, this.setHeaderText);
@@ -56,7 +56,7 @@ export default {
     ...mapState(useConfigStore, ['secureBaseUrl', 'storeCode']),
   },
   methods: {
-    ...mapActions(useConfigStore, ['custom', 'getStoreConfig']),
+    ...mapActions(useConfigStore, ['custom', 'getInitialConfig']),
   },
 };
 </script>

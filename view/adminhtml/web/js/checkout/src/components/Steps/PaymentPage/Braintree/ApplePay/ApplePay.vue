@@ -71,12 +71,8 @@ export default {
       return;
     }
 
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getPaymentMethods();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const applePayConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_applepay'
@@ -117,15 +113,14 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'setShippingMethods', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(usePaymentStore, [
-      'getPaymentMethods',
       'setErrorMessage',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
-    ...mapActions(useBraintreeStore, ['getBraintreeConfig', 'createClientToken']),
+    ...mapActions(useBraintreeStore, ['createClientToken']),
 
     click(event) {
       event.preventDefault();

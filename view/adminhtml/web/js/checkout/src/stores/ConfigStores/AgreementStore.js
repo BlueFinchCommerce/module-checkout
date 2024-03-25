@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia';
 
-import getAgreements from '@/services/agreements/getAgreements';
-
 export default defineStore('agreementStore', {
   state: () => ({
-    cache: {},
     agreements: {},
     showError: false,
   }),
@@ -19,11 +16,21 @@ export default defineStore('agreementStore', {
       this.$patch(data);
     },
 
-    async getAgreements() {
-      const agreements = await this.getCachedResponse(getAgreements, 'getAgreements');
+    getInitialConfigValues() {
+      return `
+        checkoutAgreements {
+          agreement_id
+          name
+          content
+          checkbox_text
+          mode
+        }
+      `;
+    },
 
+    handleInitialConfig({ checkoutAgreements }) {
       // Map the agreements to an object so we can call it using IDs.
-      const formattedAgreements = agreements.reduce((prev, curr) => {
+      const formattedAgreements = checkoutAgreements.reduce((prev, curr) => {
         const allAgreements = prev;
 
         allAgreements[curr.agreement_id] = curr;
@@ -81,36 +88,6 @@ export default defineStore('agreementStore', {
       }
 
       return !unaprovedAgreements;
-    },
-
-    createCacheKey(configs) {
-      return configs.join('-');
-    },
-
-    getCachedResponse(request, cacheKey, args = {}) {
-      if (typeof this.$state.cache[cacheKey] !== 'undefined') {
-        return this.$state.cache[cacheKey];
-      }
-
-      const data = request(args);
-      this.$patch({
-        cache: {
-          [cacheKey]: data,
-        },
-      });
-      return data;
-    },
-
-    clearCaches(cacheKeys) {
-      if (cacheKeys.length) {
-        cacheKeys.forEach((cacheKey) => {
-          this.setData({
-            cache: {
-              [cacheKey]: undefined,
-            },
-          });
-        });
-      }
     },
   },
 });

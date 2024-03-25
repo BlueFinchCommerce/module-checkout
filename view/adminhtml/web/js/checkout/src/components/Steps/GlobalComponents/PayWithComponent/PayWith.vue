@@ -181,7 +181,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     generateClass(paymentName) {
       // Convert paymentType.name to lowercase and replace spaces with underscores
       return paymentName.toLowerCase().replace(/\s+/g, '_');

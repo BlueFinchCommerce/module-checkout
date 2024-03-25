@@ -63,12 +63,8 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getIsAdyenAvailable();
+    await this.getInitialConfig();
+    await this.getCart();
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
@@ -77,7 +73,6 @@ export default {
       return;
     }
 
-    await this.getAdyenConfig();
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
     if (!googlePayMethod) {
@@ -124,16 +119,14 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
       'getIsAdyenAvailable',
       'getPaymentMethodsResponse',
     ]),
     ...mapActions(usePaymentStore, [
-      'getPaymentMethods',
       'setErrorMessage',
     ]),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
     expressPaymentsLoad() {

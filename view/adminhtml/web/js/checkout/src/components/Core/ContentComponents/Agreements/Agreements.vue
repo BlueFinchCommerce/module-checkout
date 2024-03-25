@@ -18,6 +18,7 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // Components
 import Agreement from '@/components/Core/ContentComponents/Agreements/Agreement/Agreement.vue';
@@ -39,10 +40,10 @@ export default {
     ...mapState(useAgreementStore, ['agreements', 'showError']),
   },
   created() {
-    this.getAgreements();
+    this.getInitialConfig();
   },
   methods: {
-    ...mapActions(useAgreementStore, ['getAgreements']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
   },
 };
 </script>

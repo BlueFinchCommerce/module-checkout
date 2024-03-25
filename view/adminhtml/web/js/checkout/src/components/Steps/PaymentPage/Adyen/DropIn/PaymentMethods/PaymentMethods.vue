@@ -118,7 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods', 'getAdyenClientKey']),
     ...mapState(usePaymentStore, ['paymentEmitter']),
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [
@@ -129,12 +129,8 @@ export default {
   },
 
   async created() {
-    if (!this.storeCode) {
-      await this.getStoreConfig();
-      await this.getCart();
-    }
-
-    await this.getAdyenConfig();
+    await this.getInitialConfig();
+    await this.getCart();
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -164,11 +160,10 @@ export default {
 
     this.storedPaymentSelected = true;
 
-    const clientKey = await this.getAdyenClientKey();
     const extensionAttributes = getPaymentExtensionAttributes();
     const configuration = {
       paymentMethodsResponse,
-      clientKey,
+      clientKey: this.getAdyenClientKey,
       locale: this.locale,
       environment: getAdyenProductionMode() ? 'live' : 'test',
       analytics: {
@@ -310,13 +305,12 @@ export default {
   },
   methods: {
     ...mapActions(useAdyenStore, [
-      'getAdyenConfig',
-      'getAdyenClientKey',
       'getPaymentMethodsResponse',
       'clearPaymentReponseCache',
     ]),
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useConfigStore, ['getStoreConfig']),
+    ...mapActions(useCartStore, ['getCart']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setPaymentStepText(event) {
       if (event?.detail) {
