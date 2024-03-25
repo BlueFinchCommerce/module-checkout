@@ -10,10 +10,8 @@ import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
 import addDiscountCode from '@/services/discount/addDiscountCode';
 import getAmastyShippingInfo from '@/services/shipping/getAmastyShippingInfo';
-import getCart from '@/services/cart/getCart';
 import getCartData from '@/services/cart/getCartData';
 import getCrosssells from '@/services/cart/getCrosssells';
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import mergeGuestCart from '@/services/cart/mergeGuestCart';
 import removeCartItem from '@/services/cart/removeCartItem';
 import removeGiftCardCode from '@/services/giftCard/removeGiftCardCode';
@@ -118,12 +116,7 @@ export default defineStore('cartStore', {
     },
 
     async getCart() {
-      if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
-        this.setData({ maskedId });
-      }
-
-      await this.getCachedResponse(() => getCart().then(this.handleCartData), 'getCart');
+      // Prevent this from running within the admin.
     },
 
     async getCartData() {

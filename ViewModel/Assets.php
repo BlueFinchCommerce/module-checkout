@@ -118,11 +118,11 @@ class Assets implements ArgumentInterface
      * @return File
      * @throws LocalizedException
      */
-    public function createAsset(string $fileName, $area = 'frontend', $baseDir = self::ASSETS_BASE_DIR): File
+    public function createAsset(string $fileName, $area = 'frontend'): File
     {
         $params = ['area' => $area];
         return $this->assetRepository->createAsset(
-            $baseDir . $fileName,
+            self::ASSETS_BASE_DIR . $fileName,
             $params
         );
     }
