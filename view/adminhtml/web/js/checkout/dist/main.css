@@ -441,6 +441,7 @@ button .text-loading {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-bb500480] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -1996,6 +1997,7 @@ div.dropdown.promo-dropdown.active p[data-v-16ac6e3f] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-1fbb8afe] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -2426,6 +2428,7 @@ div.dropdown.promo-dropdown.active p[data-v-16ac6e3f] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-3c631fa8] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -3432,6 +3435,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --checkbox-input__tick-left: 7px;
   --checkbox-input__tick-thickness: 0 2px 2px 0;
   --checkbox-input__border-weight-focus: var(--base__border-weight-active);
+  --checkbox-input__background-color: var(--color__primary-white);
   --checkbox-input__background-color-checked: var(--color__primary-blue);
   --checkbox-input__border-color-checked: var(--checkbox-input__background-color-checked);
   --dropdown__background-color: var(--color__primary-white);
@@ -3532,6 +3536,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -4546,6 +4551,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-d1f67e38] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -4976,6 +4982,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-4421e73e] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -5434,6 +5441,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-40f65fe0] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -8722,6 +8730,7 @@ a {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-b90c1728] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);

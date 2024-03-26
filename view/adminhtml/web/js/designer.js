@@ -259,9 +259,22 @@ define([
         },
 
         setupColorPickers: function () {
-            this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
+            // this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
+            //     console.log(element)
+            //     $(element).ColorPicker({
+            //         onChange: function (hsb, hex) {
+            //             $(element).val('#' + hex).trigger('change');
+            //         },
+
+            //         onShow: function () {
+            //             $(element).ColorPickerSetColor($(element).val());
+            //         }
+            //     });
+            // });
+            this.designerModal.find('[type="color"]').each((index, element) => {
                 $(element).ColorPicker({
                     onChange: function (hsb, hex) {
+                        console.log(hex)
                         $(element).val('#' + hex).trigger('change');
                     },
 
