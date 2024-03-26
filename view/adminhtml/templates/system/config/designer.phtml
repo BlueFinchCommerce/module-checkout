@@ -940,9 +940,92 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
+                                <span id="master-styles-radios-tab"></span>
+                                <a data-role="title" href="#master-styles-radios-tab">
+                                    <?= $escaper->escapeHtml(__('Radio Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-radio-input-color" data-type="color-picker" data-css-variable="--radio-input__color" placeholder="#8193a6" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-color-active">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Active Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-radio-input-color-active" data-type="color-picker" data-css-variable="--radio-input__color-checked" placeholder="#063967" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-border-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Border Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-radio-input-wrapper-border-color" data-type="color-picker" data-css-variable="--radio-input-wrapper__border-color" placeholder="#ccd2da" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-background-color">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-radio-input-wrapper-background-color" data-type="color-picker" data-css-variable="--radio-input-wrapper__background-color" placeholder="#ffffff" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-background-color-active">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Background Active Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-radio-input-wrapper-background-color-active" data-type="color-picker" data-css-variable="--radio-input-wrapper__background-color-active" placeholder="#ffffff" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-border-weight">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Border Stroke Weight')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-radio-input-wrapper-border-weight" type="number" placeholder="1" max="10"/>
+                                        <input class="hidden" id="gene-bettercheckout-radio-input-wrapper-border-weight_hidden" type="text" data-css-variable="--radio-input-wrapper__border-weight" placeholder="1px" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-border-weight-active">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Border Active Stroke Weight')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-radio-input-wrapper-border-weight-active" type="number" placeholder="2" max="10"/>
+                                        <input class="hidden" id="gene-bettercheckout-radio-input-wrapper-border-weight-active_hidden" type="text" data-css-variable="--radio-input-wrapper__border-weight-active" placeholder="2px" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-radio-input-wrapper-border-radius">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Radio Input Wrapper Border Radius')) ?>
+                                            </span>
+                                        </label>
+                                        <input class="pixel-input" id="gene-bettercheckout-radio-input-wrapper-border-radius" type="number" placeholder="8" max="60"/>
+                                        <input class="hidden" id="gene-bettercheckout-radio-input-wrapper-border-radius_hidden" type="text" data-css-variable="--radio-input-wrapper__border-radius" placeholder="8px" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
                                 <span id="master-styles-selectables-tab"></span>
                                 <a data-role="title" href="#master-styles-selectables-tab">
-                                    <?= $escaper->escapeHtml(__('Selectables')) ?>
+                                    <?= $escaper->escapeHtml(__('Selectables (Stored Addresses & Stored Payment Cards')) ?>
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">

@@ -131,8 +131,8 @@
 
     &__payment-method {
       background: var(--selectable__background-color);
-      border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-      border-radius: var(--selectable__border-radius);
+      border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(radio-input-wrapper__border-color);
+      border-radius: var(--radio-input-wrapper__border-radius);
       padding: var(--indent__base);
       position: relative;
       margin-bottom: var(--indent__base);
@@ -175,8 +175,8 @@
     }
 
     &__payment-method--selected {
-      background: var(--adyen-drop-in-selected__background, var(--selectable__background-color));
-      border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
+      background: var(--adyen-drop-in-selected__background, var(--radio-input-wrapper__background-color-active));
+      border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
 
       .adyen-checkout__payment-method__header:before {
         border: var(--radio-input__border-checked);

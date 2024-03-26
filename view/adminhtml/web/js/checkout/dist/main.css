@@ -3407,12 +3407,20 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --qty-button__font-size: 22px;
   --radio-input__width: 24px;
   --radio-input__height: 24px;
-  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--color__primary-grey2);
+  --radio-input__color: var(--color__primary-grey2);
+  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input);
   --radio-input__border-radius: 50%;
   --radio-input__color-checked: var(--color__primary-blue);
   --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
   --radio-input__box-shadow-checked: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__color-checked);
   --radio-input__border-checked: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__color-checked);
+  --radio-input-wrapper__border-radius: var(--base__border-radius-large);
+  --radio-input-wrapper__border-weight: var(--base__border-weight);
+  --radio-input-wrapper__border-weight-active: var(--base__border-weight-active);
+  --radio-input-wrapper__border-color: var(--base__border-color);
+  --radio-input-wrapper__border-color-active: var(--radio-input__color-checked);
+  --radio-input-wrapper__background-color: var(--color__primary-white);
+  --radio-input-wrapper__background-color-active: var(--color__primary-white);
   --checkbox-input__height: 24px;
   --checkbox-input__width: 24px;
   --checkbox-input__border-color: var(--color__primary-grey2);
@@ -7568,6 +7576,7 @@ body.no-scrollable {
   margin-bottom: var(--shipping-methods-margin-bottom, 0);
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .shipping-method__label {
+  background: var(--radio-input-wrapper__background-color);
   margin-bottom: var(--indent__base);
   display: flex;
   align-items: var(--shipping-methods-align-items, flex-start);
@@ -7575,8 +7584,8 @@ body.no-scrollable {
   flex-wrap: wrap;
   font-family: var(--shipping-methods-font-family, unset);
   padding: var(--indent__base);
-  border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-  border-radius: var(--selectable__border-radius);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .shipping-method__label input {
   cursor: pointer;
@@ -7586,7 +7595,8 @@ body.no-scrollable {
   font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .selected {
-  border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+  background: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
 }
 .checkout-shipping-methods .shipping-method__container .shipping-method__input {
   padding: 0;
@@ -8018,8 +8028,8 @@ a {
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method {
   background: var(--selectable__background-color);
-  border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-  border-radius: var(--selectable__border-radius);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   padding: var(--indent__base);
   position: relative;
   margin-bottom: var(--indent__base);
@@ -8051,8 +8061,8 @@ a {
   display: none;
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method--selected {
-  background: var(--adyen-drop-in-selected__background, var(--selectable__background-color));
-  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
+  background: var(--adyen-drop-in-selected__background, var(--radio-input-wrapper__background-color-active));
+  border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method--selected .adyen-checkout__payment-method__header:before {
   border: var(--radio-input__border-checked);
@@ -8089,9 +8099,9 @@ a {
 }
 }.mock-laptop .braintree-ach-container[data-v-7c593895],
 .mock-desktop .braintree-ach-container[data-v-7c593895] {
-  border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
-  border-bottom-left-radius: var(--selectable__border-radius);
-  border-bottom-right-radius: var(--selectable__border-radius);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   column-gap: var(--indent__base);
   display: grid;
@@ -8112,9 +8122,9 @@ a {
 }
 @media screen and (min-width: 768px) {
 .mock-full .braintree-ach-container[data-v-7c593895] {
-    border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
-    border-bottom-left-radius: var(--selectable__border-radius);
-    border-bottom-right-radius: var(--selectable__border-radius);
+    border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+    border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+    border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
     border-top: 0;
     column-gap: var(--indent__base);
     display: grid;
@@ -8131,9 +8141,9 @@ a {
     margin-top: var(--indent__m);
 }
 }.braintree-lpm-container[data-v-fa18fae6] {
-  border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
-  border-bottom-left-radius: var(--selectable__border-radius);
-  border-bottom-right-radius: var(--selectable__border-radius);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   display: grid;
   gap: var(--indent__m);
@@ -8152,8 +8162,8 @@ a {
   margin-top: var(--indent__base);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-loading .braintree-upper-container:before {
-  border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-  border-radius: var(--selectable__border-radius);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-loading .braintree-sheet__container {
   display: none;
@@ -8264,9 +8274,9 @@ a {
   display: none;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option {
-  background-color: var(--selectable__background-color);
-  border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-  border-radius: var(--selectable__border-radius);
+  background-color: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   flex-wrap: wrap;
   line-height: 1;
   margin-top: var(--indent__base);
@@ -8282,20 +8292,22 @@ a {
   border-radius: 50%;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected {
+  background-color: var(--radio-input-wrapper__background-color-active);
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-color: var(--selectable__border-color-active);
-  border-width: var(--selectable__border-weight-active);
+  border-color: var(--radio-input-wrapper__border-color-active);
+  border-width: var(--radio-input-wrapper__border-weight-active);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected:before {
   border: var(--radio-input__border-checked);
   box-shadow: var(--radio-input__box-shadow-checked);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected ~ .braintree-sheet__content {
-  border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
-  border-bottom-left-radius: var(--selectable__border-radius);
-  border-bottom-right-radius: var(--selectable__border-radius);
+  background-color: var(--radio-input-wrapper__background-color-active);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   display: block;
   padding: 0 var(--indent__base) var(--indent__base);
@@ -9085,8 +9097,9 @@ a {
     background-color: var(--input-span__background-colour, var(--input__background-color));
 }
 }#gene-better-checkout-root .free-payment {
-  border: var(--selectable__border-weight) var(--selectable__border-style) var(--selectable__border-color);
-  border-radius: var(--selectable__border-radius);
+  background-color: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   margin-top: var(--indent__base);
   padding: var(--indent__base);
 }
@@ -9094,7 +9107,8 @@ a {
   font-size: var(--font-size__s);
 }
 #gene-better-checkout-root .free-payment.active {
-  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
+  background-color: var(--radio-input-wrapper__background-color-active);
+  border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
 }
 #gene-better-checkout-root .free-payment-button {
   margin-top: var(--indent__base);

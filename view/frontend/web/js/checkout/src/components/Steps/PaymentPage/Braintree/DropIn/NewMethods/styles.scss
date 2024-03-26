@@ -7,8 +7,8 @@
     margin-top: var(--indent__base);
 
     .braintree-upper-container:before {
-      border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-      border-radius: var(--selectable__border-radius);
+      border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+      border-radius: var(--radio-input-wrapper__border-radius);
     }
 
     .braintree-sheet__container {
@@ -156,9 +156,9 @@
   }
 
   .braintree-option {
-    background-color: var(--selectable__background-color);
-    border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
-    border-radius: var(--selectable__border-radius);
+    background-color: var(--radio-input-wrapper__background-color);
+    border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+    border-radius: var(--radio-input-wrapper__border-radius);
     flex-wrap: wrap;
     line-height: 1;
     margin-top: var(--indent__base);
@@ -175,11 +175,12 @@
     }
 
     &__selected {
+      background-color: var(--radio-input-wrapper__background-color-active);
       border-bottom: none;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      border-color: var(--selectable__border-color-active);
-      border-width: var(--selectable__border-weight-active);
+      border-color: var(--radio-input-wrapper__border-color-active);
+      border-width: var(--radio-input-wrapper__border-weight-active);
 
       &:before {
         border: var(--radio-input__border-checked);
@@ -187,9 +188,10 @@
       }
 
       ~.braintree-sheet__content {
-        border: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
-        border-bottom-left-radius: var(--selectable__border-radius);
-        border-bottom-right-radius: var(--selectable__border-radius);
+        background-color: var(--radio-input-wrapper__background-color-active);
+        border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+        border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+        border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
         border-top: 0;
         display: block;
         padding: 0 var(--indent__base) var(--indent__base);
