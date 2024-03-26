@@ -205,6 +205,10 @@ export default {
     braintreeWebDropIn.create(options, this.afterBraintreeInit);
   },
 
+  unmounted() {
+    this.removeEventListeners();
+  },
+
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
@@ -385,6 +389,14 @@ export default {
       this.paymentEmitter.on('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.on('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.on('braintreePaymentError', this.hideLoader);
+    },
+
+    removeEventListeners() {
+      this.paymentEmitter.off('paymentMethodSelected', this.clearSelectedMethod);
+      this.paymentEmitter.off('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
+      this.paymentEmitter.off('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
+      this.paymentEmitter.off('braintreePaymentStart', this.showLoader);
+      this.paymentEmitter.off('braintreePaymentError', this.hideLoader);
     },
 
     clearSelectedMethod({ id }) {
