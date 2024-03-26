@@ -269,9 +269,9 @@ export default {
     klarna: 'betalen met Klarna',
   },
   giftMessage: {
-    to: 'Naar:',
-    from: 'Van:',
-    message: 'Boodschap:',
+    to: 'Naar',
+    from: 'Van',
+    message: 'Boodschap',
   },
   inflatableBalloons: {
     title: 'Levering van ballonnen',
