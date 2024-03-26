@@ -3408,7 +3408,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --radio-input__width: 24px;
   --radio-input__height: 24px;
   --radio-input__color: var(--color__primary-grey2);
-  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input);
+  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input__color);
   --radio-input__border-radius: 50%;
   --radio-input__color-checked: var(--color__primary-blue);
   --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
