@@ -7595,7 +7595,7 @@ body.no-scrollable {
   font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .selected {
-  background: var(--radio-input-wrapper__background-color);
+  background: var(--radio-input-wrapper__background-color-active);
   border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
 }
 .checkout-shipping-methods .shipping-method__container .shipping-method__input {

@@ -76,7 +76,7 @@
         }
       }
       .selected {
-        background: var(--radio-input-wrapper__background-color);
+        background: var(--radio-input-wrapper__background-color-active);
         border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
       }
     }
