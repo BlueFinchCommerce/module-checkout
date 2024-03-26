@@ -269,9 +269,9 @@ export default {
     klarna: 'Betal med Klarna',
   },
   giftMessage: {
-    to: 'Til:',
-    from: 'Fra:',
-    message: 'Besked:',
+    to: 'Til',
+    from: 'Fra',
+    message: 'Besked',
   },
   inflatableBalloons: {
     title: 'Levering af balloner',

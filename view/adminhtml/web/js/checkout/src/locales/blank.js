@@ -220,6 +220,11 @@ export default {
     removeStoreCredit: ' ',
     removeButton: ' ',
   },
+  giftMessage: {
+    to: ' ',
+    from: ' ',
+    message: ' ',
+  },
   days: {
     monday: ' ',
     tuesday: ' ',

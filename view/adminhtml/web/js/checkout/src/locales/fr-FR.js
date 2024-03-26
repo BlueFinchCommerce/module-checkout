@@ -272,8 +272,8 @@ export default {
     klarna: 'payer avec klarna',
   },
   giftMessage: {
-    to: 'À :',
-    from: 'De:',
-    message: 'Message:',
+    to: 'À',
+    from: 'De',
+    message: 'Message',
   },
 };
