@@ -4,7 +4,7 @@
     class="footer-icons"
   >
     <template v-if="isAdyenAvailable">
-      <div :class="(Object.keys(paymentTypes).length === 0) ? 'text-loading' : ''">
+      <div>
         <ul v-if="Object.keys(paymentTypes).length > 0">
           <li
             v-for="(paymentType, index) in paymentTypes"
@@ -29,7 +29,7 @@
         </ul>
       </div>
     </template>
-    <div :class="!isAdyenAvailable && availableMethods.length === 0 ? 'text-loading' : ''">
+    <div>
       <ul v-if="!isAdyenAvailable && availableMethods.length > 0">
         <template
           v-for="(paymentType, index) in availableMethods"

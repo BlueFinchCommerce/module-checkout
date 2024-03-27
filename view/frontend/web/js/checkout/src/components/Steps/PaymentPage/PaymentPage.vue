@@ -31,7 +31,8 @@
         <FreeMOCheckPayment
           v-else
           :payment-type="'free'"
-          :title="getPaymentMethodTitle('free')"
+          :title="getPaymentMethodTitle('free')
+          ? getPaymentMethodTitle('free') : $t('paymentStep.freePaymentLabel')"
         />
       </div>
     </div>

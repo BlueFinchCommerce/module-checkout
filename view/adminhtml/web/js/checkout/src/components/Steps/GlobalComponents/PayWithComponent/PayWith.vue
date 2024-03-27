@@ -14,10 +14,7 @@
       :text="$t('payNoExpressWithBlockTitle')"
     />
     <template v-if="isAdyenAvailable">
-      <div
-        :class="(Object.keys(paymentTypes).length === 0)
-          ? 'text-loading' : ''"
-      >
+      <div>
         <ul
           v-if="Object.keys(paymentTypes).length > 0"
           class="pay-with__column"
@@ -45,7 +42,7 @@
         </ul>
       </div>
     </template>
-    <div :class="availableMethods.length === 0 ? 'text-loading' : ''">
+    <div>
       <ul class="pay-with__column"
       v-if="availableMethods.length > 0">
         <template
