@@ -262,24 +262,21 @@ define([
             const designerValuesArray = this.designerValues.val().split(';');
 
             this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
-                const swatchId = $(element).data('css-variable') + '-swatch',
+                const cssVariable = $(element).data('css-variable'),
+                    swatchId = cssVariable + '-swatch',
                     defaultValue = $(element).attr('placeholder'),
-                    savedValue = designerValuesArray.find(function (item) {
-                        return item.split(':')[0] === $(element).data('css-variable');
-                    });
+                    savedValue = designerValuesArray.find(item => item.split(':')[0] === cssVariable),
+                    setSwatchColor = color => {
+                        $('#' + swatchId).css('background-color', color);
+                    };
 
-                // If saved value is found, set it as the element value
-                if (savedValue) {
-                    $('#' + swatchId).css('background-color', savedValue.split(':')[1]);
-                } else {
-                    // Set the placeholder as the default value
-                    $('#' + swatchId).css('background-color', defaultValue);
-                }
+                // If saved value is found, set swatch colour to that otherwise set to placeholder value
+                savedValue ? setSwatchColor(savedValue.split(':')[1]) : setSwatchColor(defaultValue);
 
                 $(element).ColorPicker({
                     onChange: function (hsb, hex) {
                         $(element).val('#' + hex).trigger('change');
-                        $('#' + swatchId).css('background-color', '#' + hex);
+                        setSwatchColor('#' + hex);
                     },
 
                     onShow: function () {
