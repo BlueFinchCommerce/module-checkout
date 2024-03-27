@@ -4116,6 +4116,7 @@ p {
 }
 #gene-better-checkout-root .mock-laptop .root,
 #gene-better-checkout-root .mock-desktop .root {
+  height: initial;
   background: var(--page__background-color--desktop);
 }
 #gene-better-checkout-root .mock-laptop .steps-container .container,
@@ -4143,6 +4144,7 @@ p {
 }
 @media screen and (min-width: 768px) {
 #gene-better-checkout-root .mock-full .root {
+    height: initial;
     background: var(--page__background-color--desktop);
 }
 #gene-better-checkout-root .mock-full .steps-container .container {

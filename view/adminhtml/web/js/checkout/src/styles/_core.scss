@@ -53,6 +53,7 @@ p {
 
   @mixin largeWidth() {
     .root {
+      height: initial;
       background: var(--page__background-color--desktop);
     }
 
