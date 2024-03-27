@@ -34,7 +34,6 @@ const formatAddress = (address) => {
 
   clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
 
-  console.log(clonedAddress);
   return clonedAddress;
 };
 

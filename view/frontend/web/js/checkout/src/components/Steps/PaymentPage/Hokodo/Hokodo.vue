@@ -111,7 +111,6 @@ export default {
 
     // On payment selected if it's not Hokodo then close.
     this.paymentEmitter.on('adyenPaymentDisplayingError', ({ isDisplaying }) => {
-      console.log('gello1');
       this.isHokodoActive = !isDisplaying;
     });
   },

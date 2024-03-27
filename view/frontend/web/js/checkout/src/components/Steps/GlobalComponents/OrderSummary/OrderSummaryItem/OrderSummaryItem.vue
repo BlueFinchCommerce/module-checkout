@@ -31,18 +31,24 @@
             v-if="item.__typename === 'GiftCardCartItem'"
             class="gift-message"
           >
-            <div class="gift-message__item">
-              <TextField :text="$t('giftMessage.to')" />
-              <TextField :text="item.recipient_name" />
-            </div>
-            <div class="gift-message__item">
-              <TextField :text="$t('giftMessage.from')" />
-              <TextField :text="item.sender_name" />
-            </div>
-            <div class="gift-message__item" v-if="item.message.trim() !== ''">
-              <TextField :text="$t('giftMessage.message')" />
-              <TextField :text="item.message" />
-            </div>
+            <ProductOptions
+              :item="{
+                configurable_options: [
+                  {
+                    option_label: $t('giftMessage.to'),
+                    value_label: item.recipient_name
+                  },
+                  {
+                    option_label: $t('giftMessage.from'),
+                    value_label: item.sender_name
+                  },
+                  {
+                    option_label: $t('giftMessage.message'),
+                    value_label: item.message
+                  },
+                ]
+              }"
+            />
           </div>
           <div
             v-if="item?.errors"

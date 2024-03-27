@@ -5,6 +5,7 @@
 
   .braintree-vaulted-methods-container {
     margin-top: var(--indent__m);
+    padding-bottom: var(--indent__m);
 
     &:empty {
       margin: 0;
