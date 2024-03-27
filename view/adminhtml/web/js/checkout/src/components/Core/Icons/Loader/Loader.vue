@@ -10,6 +10,8 @@
         :style="style"
         :src="Loader"
         alt="loader"
+        width="50px"
+        height="50px"
       >
     </div>
   </div>
