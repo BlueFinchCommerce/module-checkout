@@ -61,7 +61,7 @@ define([
                 modalClass: 'gene-bettercheckout-designer-modal'
             });
 
-            this.designerModal.find('input').on('change keyup', this.triggerChange.bind(this));
+            this.designerModal.find('input').on('input change keyup', this.triggerChange.bind(this));
             this.designerModal.find('.toggle').on('click', this.toggleSidebar.bind(this));
             this.designerValues.on('change', this.setSystemValue.bind(this));
             this.customWording.on('change', this.setSystemValue.bind(this));
@@ -259,29 +259,13 @@ define([
         },
 
         setupColorPickers: function () {
-            // this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
-            //     console.log(element)
-            //     $(element).ColorPicker({
-            //         onChange: function (hsb, hex) {
-            //             $(element).val('#' + hex).trigger('change');
-            //         },
+            const designerValuesArray = this.designerValues.val().split(';');
 
-            //         onShow: function () {
-            //             $(element).ColorPickerSetColor($(element).val());
-            //         }
-            //     });
-            // });
-            this.designerModal.find('[type="color"]').each((index, element) => {
-                $(element).ColorPicker({
-                    onChange: function (hsb, hex) {
-                        console.log(hex)
-                        $(element).val('#' + hex).trigger('change');
-                    },
+            designerValuesArray.forEach((designerValue) => {
+                const [cssVariable, value] = designerValue.split(':'),
+                    input = this.designerModal.find(`[type="color"][data-css-variable="${cssVariable}]`);
 
-                    onShow: function () {
-                        $(element).ColorPickerSetColor($(element).val());
-                    }
-                });
+                input.val(value);
             });
         },
 
@@ -293,8 +277,14 @@ define([
                     confirm: function () {
                         this.designerModal.find('input').each(function (index, input) {
                             $(input).val('').trigger('change');
+                            // if (input.type === 'color') {
+                            //     $(input).val(input.placeholder).trigger('change');
+                            // } else {
+                            //     $(input).val('').trigger('change');
+                            // }
                         });
                         this.designerLogoDelete.trigger('click');
+                        // this.designerValues.val(' ').trigger('change');
                     }.bind(this)
                 }
             });
