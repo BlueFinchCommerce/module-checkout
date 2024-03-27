@@ -5,7 +5,7 @@
   >
     <div class="header-content">
       <a
-        :href="secureBaseUrl + storeCode"
+        :href="secureBaseLinkUrl"
         aria-label="logo"
         class="header-logo"
         :class="custom.checkoutLogo ? 'logo-no-width' : ''"
@@ -53,7 +53,7 @@ export default {
     document.removeEventListener(this.headerTextId, this.setHeaderText);
   },
   computed: {
-    ...mapState(useConfigStore, ['secureBaseUrl', 'storeCode']),
+    ...mapState(useConfigStore, ['secureBaseLinkUrl']),
   },
   methods: {
     ...mapActions(useConfigStore, ['custom', 'getInitialConfig']),

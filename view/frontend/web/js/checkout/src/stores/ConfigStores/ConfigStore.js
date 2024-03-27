@@ -31,6 +31,7 @@ export default defineStore('configStore', {
     withdrawTermsServices: {},
     countries: [],
     secureBaseUrl: undefined,
+    secureBaseLinkUrl: undefined,
     useStoreInUrl: false,
     newsletterEnabled: false,
     newsletterAllowGuests: false,
@@ -113,6 +114,7 @@ export default defineStore('configStore', {
         'default_display_currency_code',
         'code',
         'secure_base_url',
+        'secure_base_link_url',
         'use_store_in_url',
         'website_name',
         'gene_better_checkout_newsletter_enabled',
@@ -168,6 +170,7 @@ export default defineStore('configStore', {
         useStoreInUrl: storeConfig.use_store_in_url,
         websiteName: storeConfig.website_name || '',
         secureBaseUrl: storeConfig.secure_base_url,
+        secureBaseLinkUrl: storeConfig.secure_base_link_url,
         newsletterEnabled: storeConfig.gene_better_checkout_newsletter_enabled === '1',
         newsletterAllowGuests: storeConfig.gene_better_checkout_newsletter_allow_guest === '1',
         stateRequired: storeConfig.gene_better_checkout_country_state_required

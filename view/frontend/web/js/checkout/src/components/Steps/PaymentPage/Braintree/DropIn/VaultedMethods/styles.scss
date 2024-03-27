@@ -4,7 +4,7 @@
   display: grid;
 
   .braintree-vaulted-methods-container {
-    margin-top: var(--indent__m);
+    margin: var(--indent__m) 0;
     padding-bottom: var(--indent__m);
 
     &:empty {

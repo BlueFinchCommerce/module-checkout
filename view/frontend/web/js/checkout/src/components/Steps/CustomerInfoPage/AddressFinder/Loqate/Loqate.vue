@@ -141,9 +141,13 @@ export default {
     },
     getSuggestions(containerQuery) {
       this.resetAddressData();
-      loqate.getSuggestions(containerQuery, this.query, this.address_type).then((addresses) => {
-        this.addressList = addresses;
-      });
+      if (this.query !== '') {
+        loqate.getSuggestions(containerQuery, this.query, this.address_type).then((addresses) => {
+          this.addressList = addresses;
+        });
+      } else {
+        this.displayResults = false;
+      }
     },
     selectSuggestion(item) {
       this.arrowCounter = -1;
