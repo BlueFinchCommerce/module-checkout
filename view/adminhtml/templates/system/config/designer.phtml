@@ -69,200 +69,239 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     <?= $escaper->escapeHtml(__('Theme Colours')) ?>
                                 </a>
                                 <div class="config" data-role="content">
-                                    <h2 data-role="title" class="heading">
-                                        <?= $escaper->escapeHtml(__('Primary Colours')) ?>
-                                    </h2>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-navy">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Navy')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-navy" data-type="color-picker" data-css-variable="--color__primary-navy" placeholder="#000b14" />
-                                            <div id="--color__primary-navy-swatch" class="color-input-swatch"></div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-primary-colors-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-primary-colors-tab">
+                                                <?= $escaper->escapeHtml(__('Primary Colours')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-navy">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Navy')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-navy" data-type="color-picker" data-css-variable="--color__primary-navy" placeholder="#000b14" />
+                                                        <div id="--color__primary-navy-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-dark-blue">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Dark Blue')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-dark-blue" data-type="color-picker" data-css-variable="--color__primary-dark-blue" placeholder="#042138" />
+                                                        <div id="--color__primary-dark-blue-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-blue">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Blue')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-blue" data-type="color-picker" data-css-variable="--color__primary-blue" placeholder="#063967" />
+                                                        <div id="--color__primary-blue-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey1">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 1')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey1" data-type="color-picker" data-css-variable="--color__primary-grey1" placeholder="#3f5d7c" />
+                                                        <div id="--color__primary-grey1-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey2">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 2')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey2" data-type="color-picker" data-css-variable="--color__primary-grey2" placeholder="#8193a6" />
+                                                        <div id="--color__primary-grey2-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey3">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 3')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey3" data-type="color-picker" data-css-variable="--color__primary-grey3" placeholder="#abb4bf" />
+                                                        <div id="--color__primary-grey3-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey4">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 4')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey4" data-type="color-picker" data-css-variable="--color__primary-grey4" placeholder="#ccd2da" />
+                                                        <div id="--color__primary-grey4-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey5">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 5')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey5" data-type="color-picker" data-css-variable="--color__primary-grey5" placeholder="#e8edf3" />
+                                                        <div id="--color__primary-grey5-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey6">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 6')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey6" data-type="color-picker" data-css-variable="--color__primary-grey6" placeholder="#f5f9fe" />
+                                                        <div id="--color__primary-grey6-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-grey7">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour Grey 7')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-grey7" data-type="color-picker" data-css-variable="--color__primary-grey7" placeholder="#f5f5f5" />
+                                                        <div id="--color__primary-grey7-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-primary-color-white">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Primary Colour White')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-primary-color-white" data-type="color-picker" data-css-variable="--color__primary-white" placeholder="#ffffff" />
+                                                        <div id="--color__primary-white-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-dark-blue">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Dark Blue')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-dark-blue" data-type="color-picker" data-css-variable="--color__primary-dark-blue" placeholder="#042138" />
-                                            <div id="--color__primary-dark-blue-swatch" class="color-input-swatch"></div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-accent-colors-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-accent-colors-tab">
+                                                <?= $escaper->escapeHtml(__('Accent Colours')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-accent-color-mint">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Accent Colour Mint')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-accent-color-mint" data-type="color-picker" data-css-variable="--color__accent-mint" placeholder="#00b2ad" />
+                                                        <div id="--color__accent-mint-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-accent-color-mint-light">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Accent Colour Mint Light')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-accent-color-mint-light" data-type="color-picker" data-css-variable="--color__accent-mint-light" placeholder="#ecfffe" />
+                                                        <div id="--color__accent-mint-light-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-blue">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Blue')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-blue" data-type="color-picker" data-css-variable="--color__primary-blue" placeholder="#063967" />
-                                            <div id="--color__primary-blue-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey1">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 1')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey1" data-type="color-picker" data-css-variable="--color__primary-grey1" placeholder="#3f5d7c" />
-                                            <div id="--color__primary-grey1-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey2">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 2')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey2" data-type="color-picker" data-css-variable="--color__primary-grey2" placeholder="#8193a6" />
-                                            <div id="--color__primary-grey2-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey3">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 3')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey3" data-type="color-picker" data-css-variable="--color__primary-grey3" placeholder="#abb4bf" />
-                                            <div id="--color__primary-grey3-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey4">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 4')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey4" data-type="color-picker" data-css-variable="--color__primary-grey4" placeholder="#ccd2da" />
-                                            <div id="--color__primary-grey4-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey5">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 5')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey5" data-type="color-picker" data-css-variable="--color__primary-grey5" placeholder="#e8edf3" />
-                                            <div id="--color__primary-grey5-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey6">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 6')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey6" data-type="color-picker" data-css-variable="--color__primary-grey6" placeholder="#f5f9fe" />
-                                            <div id="--color__primary-grey6-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-grey7">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour Grey 7')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-grey7" data-type="color-picker" data-css-variable="--color__primary-grey7" placeholder="#f5f5f5" />
-                                            <div id="--color__primary-grey7-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-primary-color-white">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Primary Colour White')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-primary-color-white" data-type="color-picker" data-css-variable="--color__primary-white" placeholder="#ffffff" />
-                                            <div id="--color__primary-white-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <h2 data-role="title" class="heading">
-                                        <?= $escaper->escapeHtml(__('Accent Colours')) ?>
-                                    </h2>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-accent-color-mint">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Accent Colour Mint')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-accent-color-mint" data-type="color-picker" data-css-variable="--color__accent-mint" placeholder="#00b2ad" />
-                                            <div id="--color__accent-mint-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-accent-color-mint-light">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Accent Colour Mint Light')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-accent-color-mint-light" data-type="color-picker" data-css-variable="--color__accent-mint-light" placeholder="#ecfffe" />
-                                            <div id="--color__accent-mint-light-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <h2 data-role="title" class="heading">
-                                        <?= $escaper->escapeHtml(__('Semantic Colours')) ?>
-                                    </h2>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-semantic-color-error">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Semantic Colour Error')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-semantic-color-error" data-type="color-picker" data-css-variable="--color__semantic-error" placeholder="#bd0005" />
-                                            <div id="--color__semantic-error-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-semantic-color-error-light">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Semantic Colour Error Light')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-semantic-color-error-light" data-type="color-picker" data-css-variable="--color__semantic-error-light" placeholder="#f8e6e6" />
-                                            <div id="--color__semantic-error-light-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-semantic-color-success">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Semantic Colour Success')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-semantic-color-success" data-type="color-picker" data-css-variable="--color__semantic-success" placeholder="#24b53b" />
-                                            <div id="--color__semantic-success-swatch" class="color-input-swatch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-semantic-color-success-light">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Semantic Colour Success Light')) ?>
-                                            </span>
-                                        </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-semantic-color-success-light" data-type="color-picker" data-css-variable="--color__semantic-success-light" placeholder="#e9f8eb" />
-                                            <div id="--color__semantic-success-light-swatch" class="color-input-swatch"></div>
+                                    <div class="section-config"
+                                        data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-semantic-colors-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-semantic-colors-tab">
+                                                <?= $escaper->escapeHtml(__('Semantic Colours')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-semantic-color-error">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Semantic Colour Error')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-semantic-color-error" data-type="color-picker" data-css-variable="--color__semantic-error" placeholder="#bd0005" />
+                                                        <div id="--color__semantic-error-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-semantic-color-error-light">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Semantic Colour Error Light')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-semantic-color-error-light" data-type="color-picker" data-css-variable="--color__semantic-error-light" placeholder="#f8e6e6" />
+                                                        <div id="--color__semantic-error-light-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-semantic-color-success">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Semantic Colour Success')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-semantic-color-success" data-type="color-picker" data-css-variable="--color__semantic-success" placeholder="#24b53b" />
+                                                        <div id="--color__semantic-success-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-semantic-color-success-light">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Semantic Colour Success Light')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-semantic-color-success-light" data-type="color-picker" data-css-variable="--color__semantic-success-light" placeholder="#e9f8eb" />
+                                                        <div id="--color__semantic-success-light-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -288,17 +327,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                     </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-header-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Header Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-header-text" data-type="checkout-wording" type="text" placeholder="Secure Checkout" />
-                                    </div>
-                                    <h2 data-role="title" class="heading">
-                                        <?= $escaper->escapeHtml(__('Header Styling')) ?>
-                                    </h2>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-header-color">
                                             <span>
