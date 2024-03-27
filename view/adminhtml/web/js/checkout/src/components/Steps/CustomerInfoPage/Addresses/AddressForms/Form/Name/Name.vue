@@ -41,7 +41,7 @@
   </div>
   <div>
     <!-- Phone Number Input -->
-    <div className="phone-field">
+    <div class="phone-field">
       <TextInput
         v-model="selectedAddressType.telephone"
         :class="{'field-valid': phoneValid && !getAddressFieldHasError(address_type, 'Telephone'),
