@@ -61,7 +61,7 @@ define([
                 modalClass: 'gene-bettercheckout-designer-modal'
             });
 
-            this.designerModal.find('input').on('change keyup', this.triggerChange.bind(this));
+            this.designerModal.find('input').on('input change keyup', this.triggerChange.bind(this));
             this.designerModal.find('.toggle').on('click', this.toggleSidebar.bind(this));
             this.designerValues.on('change', this.setSystemValue.bind(this));
             this.customWording.on('change', this.setSystemValue.bind(this));
@@ -259,10 +259,24 @@ define([
         },
 
         setupColorPickers: function () {
+            const designerValuesArray = this.designerValues.val().split(';');
+
             this.designerModal.find('[data-type="color-picker"]').each((index, element) => {
+                const cssVariable = $(element).data('css-variable'),
+                    swatchId = cssVariable + '-swatch',
+                    defaultValue = $(element).attr('placeholder'),
+                    savedValue = designerValuesArray.find(item => item.split(':')[0] === cssVariable),
+                    setSwatchColor = color => {
+                        $('#' + swatchId).css('background-color', color);
+                    };
+
+                // If saved value is found, set swatch colour to that otherwise set to placeholder value
+                savedValue ? setSwatchColor(savedValue.split(':')[1]) : setSwatchColor(defaultValue);
+
                 $(element).ColorPicker({
                     onChange: function (hsb, hex) {
                         $(element).val('#' + hex).trigger('change');
+                        setSwatchColor('#' + hex);
                     },
 
                     onShow: function () {
@@ -282,6 +296,8 @@ define([
                             $(input).val('').trigger('change');
                         });
                         this.designerLogoDelete.trigger('click');
+                        this.designerValues.val('').trigger('change');
+                        this.setupColorPickers();
                     }.bind(this)
                 }
             });

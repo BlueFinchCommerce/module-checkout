@@ -137,6 +137,17 @@
     --base__border-color-active: var(--color__primary-blue);
 
     //
+    // Selectable Components (Saved Addresses & Stored Cards)
+    //  ---------------------------------------------
+    --selectable__border-radius: var(--base__border-radius-large);
+    --selectable__border-weight: var(--base__border-weight);
+    --selectable__border-weight-active: var(--base__border-weight-active);
+    --selectable__border-color: var(--base__border-color);
+    --selectable__border-color-active: var(--base__border-color-active);
+    --selectable__background-color: var(--color__primary-white);
+    --selectable__background-color-active: var(--color__primary-grey5);
+
+    //
     // Buttons
     //  ---------------------------------------------
     --button__font-family: var(--font-family__copy);
@@ -186,22 +197,22 @@
     //
     // Adyen Cards
     //  ---------------------------------------------
-    --adyen-saved-card__background-color: var(--color__transparent);
-    --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    --adyen-saved-card__font-color: var(--color__primary-blue);
-    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    --adyen-saved-card__background-color-active: var(--color__primary-grey5);
-    --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --adyen-saved-card__background-color: var(--selectable__background-color);
+    --adyen-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --adyen-saved-card__font-color: var(--font__color-light);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --adyen-saved-card__background-color-active: var(--selectable__background-color-active);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
 
     //
-    // Adyen Cards
+    // Braintree Cards
     //  ---------------------------------------------
-    --braintree-saved-card__background-color: var(--color__transparent);
-    --braintree-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-    --braintree-saved-card__font-color: var(--color__primary-blue);
-    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    --braintree-saved-card__background-color-active: var(--color__primary-grey5);
-    --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+    --braintree-saved-card__background-color: var(--selectable__background-color);
+    --braintree-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --braintree-saved-card__font-color: var(--font__color-light);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --braintree-saved-card__background-color-active: var(--selectable__background-color-active);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
 
     //
     // Adyen Icons
@@ -358,12 +369,21 @@
     //  ---------------------------------------------
     --radio-input__width: 24px;
     --radio-input__height: 24px;
-    --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--color__primary-grey2);
+    --radio-input__color: var(--color__primary-grey2);
+    --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input__color);
     --radio-input__border-radius: 50%;
     --radio-input__color-checked: var(--color__primary-blue);
     --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
     --radio-input__box-shadow-checked: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__color-checked);
     --radio-input__border-checked: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__color-checked);
+
+    --radio-input-wrapper__border-radius: var(--base__border-radius-large);
+    --radio-input-wrapper__border-weight: var(--base__border-weight);
+    --radio-input-wrapper__border-weight-active: var(--base__border-weight-active);
+    --radio-input-wrapper__border-color: var(--base__border-color);
+    --radio-input-wrapper__border-color-active: var(--radio-input__color-checked);
+    --radio-input-wrapper__background-color: var(--color__primary-white);
+    --radio-input-wrapper__background-color-active: var(--color__primary-white);
 
     //
     // Checkbox Inputs
@@ -379,6 +399,7 @@
     --checkbox-input__tick-left: 7px;
     --checkbox-input__tick-thickness: 0 2px 2px 0;
     --checkbox-input__border-weight-focus: var(--base__border-weight-active);
+    --checkbox-input__background-color: var(--color__primary-white);
     --checkbox-input__background-color-checked: var(--color__primary-blue);
     --checkbox-input__border-color-checked: var(--checkbox-input__background-color-checked);
 

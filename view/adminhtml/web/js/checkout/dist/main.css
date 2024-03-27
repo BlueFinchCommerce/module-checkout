@@ -443,6 +443,7 @@ button .text-loading {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-bb500480] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -1998,6 +1999,7 @@ div.dropdown.promo-dropdown.active p[data-v-16ac6e3f] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-1fbb8afe] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -2428,6 +2430,7 @@ div.dropdown.promo-dropdown.active p[data-v-16ac6e3f] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-3c631fa8] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -3273,6 +3276,13 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --base__border-style: solid;
   --base__border-color: var(--color__primary-grey4);
   --base__border-color-active: var(--color__primary-blue);
+  --selectable__border-radius: var(--base__border-radius-large);
+  --selectable__border-weight: var(--base__border-weight);
+  --selectable__border-weight-active: var(--base__border-weight-active);
+  --selectable__border-color: var(--base__border-color);
+  --selectable__border-color-active: var(--base__border-color-active);
+  --selectable__background-color: var(--color__primary-white);
+  --selectable__background-color-active: var(--color__primary-grey5);
   --button__font-family: var(--font-family__copy);
   --button__font-weight: var(--font-weight__bold);
   --button__border-weight: 2px;
@@ -3300,18 +3310,18 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --button-adyen-pay__background-color-hover: var(--color__adyen-gradient-green);
   --button-adyen-pay__border-color-hover: var(--color__adyen-gradient-green);
   --button-adyen-pay__border-radius: var(--button__border-radius);
-  --adyen-saved-card__background-color: var(--color__transparent);
-  --adyen-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  --adyen-saved-card__font-color: var(--color__primary-blue);
-  --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  --adyen-saved-card__background-color-active: var(--color__primary-grey5);
-  --adyen-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  --braintree-saved-card__background-color: var(--color__transparent);
-  --braintree-saved-card__border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  --braintree-saved-card__font-color: var(--color__primary-blue);
-  --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  --braintree-saved-card__background-color-active: var(--color__primary-grey5);
-  --braintree-saved-card__border-active: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+  --adyen-saved-card__background-color: var(--selectable__background-color);
+  --adyen-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+  --adyen-saved-card__font-color: var(--font__color-light);
+  --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+  --adyen-saved-card__background-color-active: var(--selectable__background-color-active);
+  --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+  --braintree-saved-card__background-color: var(--selectable__background-color);
+  --braintree-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+  --braintree-saved-card__font-color: var(--font__color-light);
+  --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+  --braintree-saved-card__background-color-active: var(--selectable__background-color-active);
+  --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
   --adyen-payment-icon__display: block;
   --adyen-payment-threeds__max-height: 650px;
   --adyen-payment-threeds__max-width: 450px;
@@ -3402,12 +3412,20 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --qty-button__font-size: 22px;
   --radio-input__width: 24px;
   --radio-input__height: 24px;
-  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--color__primary-grey2);
+  --radio-input__color: var(--color__primary-grey2);
+  --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input__color);
   --radio-input__border-radius: 50%;
   --radio-input__color-checked: var(--color__primary-blue);
   --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
   --radio-input__box-shadow-checked: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__color-checked);
   --radio-input__border-checked: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__color-checked);
+  --radio-input-wrapper__border-radius: var(--base__border-radius-large);
+  --radio-input-wrapper__border-weight: var(--base__border-weight);
+  --radio-input-wrapper__border-weight-active: var(--base__border-weight-active);
+  --radio-input-wrapper__border-color: var(--base__border-color);
+  --radio-input-wrapper__border-color-active: var(--radio-input__color-checked);
+  --radio-input-wrapper__background-color: var(--color__primary-white);
+  --radio-input-wrapper__background-color-active: var(--color__primary-white);
   --checkbox-input__height: 24px;
   --checkbox-input__width: 24px;
   --checkbox-input__border-color: var(--color__primary-grey2);
@@ -3419,6 +3437,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   --checkbox-input__tick-left: 7px;
   --checkbox-input__tick-thickness: 0 2px 2px 0;
   --checkbox-input__border-weight-focus: var(--base__border-weight-active);
+  --checkbox-input__background-color: var(--color__primary-white);
   --checkbox-input__background-color-checked: var(--color__primary-blue);
   --checkbox-input__border-color-checked: var(--checkbox-input__background-color-checked);
   --dropdown__background-color: var(--color__primary-white);
@@ -3519,6 +3538,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-859e70e8] {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -4098,6 +4118,7 @@ p {
 }
 #gene-better-checkout-root .mock-laptop .root,
 #gene-better-checkout-root .mock-desktop .root {
+  height: initial;
   background: var(--page__background-color--desktop);
 }
 #gene-better-checkout-root .mock-laptop .steps-container .container,
@@ -4125,6 +4146,7 @@ p {
 }
 @media screen and (min-width: 768px) {
 #gene-better-checkout-root .mock-full .root {
+    height: initial;
     background: var(--page__background-color--desktop);
 }
 #gene-better-checkout-root .mock-full .steps-container .container {
@@ -4356,13 +4378,13 @@ body.no-scrollable {
   font-size: var(--font__s);
 }
 .address-block.saved-address-active[data-v-261155fc] {
-  border-radius: var(--base__border-radius-large);
+  border-radius: var(--selectable__border-radius);
   padding: var(--indent__m) var(--indent__base);
   font-size: var(--font__s);
   margin-bottom: var(--indent__base);
   font-weight: var(--font-weight__semibold);
-  background: var(--address-list-selected-background, var(--color__primary-grey5));
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--address-list-selected-background, var(--selectable__background-color-active));
+  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
   box-shadow: var(--selected-address-box-shadow, none);
 }
 .address-block.saved-address-active .address-block__edit[data-v-261155fc] {
@@ -4433,13 +4455,13 @@ body.no-scrollable {
   font-size: var(--font__s);
 }
 .address-block.saved-address-active[data-v-517c7242] {
-  border-radius: var(--base__border-radius-large);
+  border-radius: var(--selectable__border-radius);
   padding: var(--indent__m) var(--indent__base);
   font-size: var(--font__s);
   margin-bottom: var(--indent__base);
   font-weight: var(--font-weight__semibold);
-  background: var(--address-list-selected-background, var(--color__primary-grey5));
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--address-list-selected-background, var(--selectable__background-color-active));
+  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
   box-shadow: var(--selected-address-box-shadow, none);
 }
 .address-block.saved-address-active .address-block__edit[data-v-517c7242] {
@@ -4530,6 +4552,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-d1f67e38] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -4960,6 +4983,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-4421e73e] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -5418,6 +5442,7 @@ body.no-scrollable {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-40f65fe0] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -6095,9 +6120,9 @@ body.no-scrollable {
 }
 .address-list__item[data-v-39c8b27a] {
   position: relative;
-  background: var(--color__primary-white);
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  background: var(--selectable__background-color);
+  border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+  border-radius: var(--selectable__border-radius);
   padding: var(--indent__m) var(--indent__base);
   font-size: var(--font__s);
   margin-bottom: var(--indent__base);
@@ -6106,8 +6131,8 @@ body.no-scrollable {
   list-style: none;
 }
 .address-list__item.active[data-v-39c8b27a] {
-  background: var(--address-list-selected-background, var(--color__primary-grey5));
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--address-list-selected-background, var(--selectable__background-color-active));
+  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
   box-shadow: var(--selected-address-box-shadow, none);
 }
 .address-list__item.active svg[data-v-39c8b27a] {
@@ -6396,13 +6421,13 @@ body.no-scrollable {
   cursor: pointer;
 }
 .address-block.saved-address-active[data-v-3ec06dbe] {
-  border-radius: var(--base__border-radius-large);
+  border-radius: var(--selectable__border-radius);
   padding: var(--indent__m) var(--indent__base);
   font-size: var(--font__s);
   margin-bottom: var(--indent__base);
   font-weight: var(--font-weight__semibold);
-  background: var(--address-list-selected-background, var(--color__primary-grey5));
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--address-list-selected-background, var(--selectable__background-color-active));
+  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
   box-shadow: var(--selected-address-box-shadow, none);
 }
 .address-block.saved-address-active .address-block__edit[data-v-3ec06dbe] {
@@ -6935,6 +6960,8 @@ body.no-scrollable {
   white-space: nowrap;
 }
 .address-list[data-v-e2035848] {
+  float: none;
+  width: 100%;
   margin-top: var(--indent__base);
 }
 .address-block[data-v-e2035848] {
@@ -6968,13 +6995,13 @@ body.no-scrollable {
   padding: 0;
 }
 .address-block.saved-address-active[data-v-e2035848] {
-  border-radius: var(--base__border-radius-large);
+  border-radius: var(--selectable__border-radius);
   padding: var(--indent__m) var(--indent__base);
   font-size: var(--font__s);
   margin-bottom: var(--indent__base);
   font-weight: var(--font-weight__semibold);
-  background: var(--address-list-selected-background, var(--color__primary-grey5));
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--address-list-selected-background, var(--selectable__background-color-active));
+  border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
   box-shadow: var(--selected-address-box-shadow, none);
 }
 .address-block.saved-address-active .address-block__edit[data-v-e2035848] {
@@ -7562,6 +7589,7 @@ body.no-scrollable {
   margin-bottom: var(--shipping-methods-margin-bottom, 0);
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .shipping-method__label {
+  background: var(--radio-input-wrapper__background-color);
   margin-bottom: var(--indent__base);
   display: flex;
   align-items: var(--shipping-methods-align-items, flex-start);
@@ -7569,8 +7597,8 @@ body.no-scrollable {
   flex-wrap: wrap;
   font-family: var(--shipping-methods-font-family, unset);
   padding: var(--indent__base);
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .shipping-method__label input {
   cursor: pointer;
@@ -7580,7 +7608,8 @@ body.no-scrollable {
   font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .selected {
-  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
+  background: var(--radio-input-wrapper__background-color-active);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
 }
 .checkout-shipping-methods .shipping-method__container .shipping-method__input {
   padding: 0;
@@ -8011,9 +8040,9 @@ a {
   color: var(--adyen-font-color, var(--font__color));
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method {
-  background: transparent;
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  background: var(--selectable__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   padding: var(--indent__base);
   position: relative;
   margin-bottom: var(--indent__base);
@@ -8045,8 +8074,8 @@ a {
   display: none;
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method--selected {
-  background: var(--adyen-drop-in-selected__background, transparent);
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background: var(--adyen-drop-in-selected__background, var(--radio-input-wrapper__background-color-active));
+  border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method--selected .adyen-checkout__payment-method__header:before {
   border: var(--radio-input__border-checked);
@@ -8083,9 +8112,9 @@ a {
 }
 }.mock-laptop .braintree-ach-container[data-v-7c593895],
 .mock-desktop .braintree-ach-container[data-v-7c593895] {
-  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  border-bottom-left-radius: var(--base__border-radius-large);
-  border-bottom-right-radius: var(--base__border-radius-large);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   column-gap: var(--indent__base);
   display: grid;
@@ -8106,9 +8135,9 @@ a {
 }
 @media screen and (min-width: 768px) {
 .mock-full .braintree-ach-container[data-v-7c593895] {
-    border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-    border-bottom-left-radius: var(--base__border-radius-large);
-    border-bottom-right-radius: var(--base__border-radius-large);
+    border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+    border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+    border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
     border-top: 0;
     column-gap: var(--indent__base);
     display: grid;
@@ -8125,9 +8154,9 @@ a {
     margin-top: var(--indent__m);
 }
 }.braintree-lpm-container[data-v-fa18fae6] {
-  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active);
-  border-bottom-left-radius: var(--base__border-radius-large);
-  border-bottom-right-radius: var(--base__border-radius-large);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   display: grid;
   gap: var(--indent__m);
@@ -8146,8 +8175,8 @@ a {
   margin-top: var(--indent__base);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-loading .braintree-upper-container:before {
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-loading .braintree-sheet__container {
   display: none;
@@ -8258,9 +8287,9 @@ a {
   display: none;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option {
-  background-color: transparent;
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  background-color: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   flex-wrap: wrap;
   line-height: 1;
   margin-top: var(--indent__base);
@@ -8276,21 +8305,22 @@ a {
   border-radius: 50%;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected {
+  background-color: var(--radio-input-wrapper__background-color-active);
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  border-color: var(--base__border-color-active);
-  border-width: var(--base__border-weight-active);
+  border-color: var(--radio-input-wrapper__border-color-active);
+  border-width: var(--radio-input-wrapper__border-weight-active);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected:before {
   border: var(--radio-input__border-checked);
   box-shadow: var(--radio-input__box-shadow-checked);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-option__selected ~ .braintree-sheet__content {
-  border: var(--base__border-weight-active) var(--base__border-style) var(--base__border-color);
-  border-bottom-left-radius: var(--base__border-radius-large);
-  border-bottom-right-radius: var(--base__border-radius-large);
-  border-color: var(--base__border-color-active);
+  background-color: var(--radio-input-wrapper__background-color-active);
+  border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+  border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+  border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
   border-top: 0;
   display: block;
   padding: 0 var(--indent__base) var(--indent__base);
@@ -8390,7 +8420,7 @@ a {
 .braintree-vaulted-methods-container .braintree-payment__payment-method__header__title {
   background: var(--braintree-saved-card__background-color-active);
   border: var(--braintree-saved-card__border-active);
-  border-radius: var(--base__border-radius-large);
+  border-radius: var(--selectable__border-radius);
   box-shadow: none;
   color: var(--braintree-saved-card__font-color);
   cursor: pointer;
@@ -8706,6 +8736,7 @@ a {
   opacity: var(--opacity__light);
 }
 #gene-better-checkout-root input[type=checkbox][data-v-b90c1728] {
+  background: var(--checkbox-input__background-color);
   appearance: none;
   border: var(--checkbox-input__border-weight) var(--base__border-style) var(--checkbox-input__border-color);
   border-radius: var(--checkbox-input__border-radius);
@@ -9081,8 +9112,9 @@ a {
     background-color: var(--input-span__background-colour, var(--input__background-color));
 }
 }#gene-better-checkout-root .free-payment {
-  border: var(--base__border-weight) var(--base__border-style) var(--base__border-color);
-  border-radius: var(--base__border-radius-large);
+  background-color: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+  border-radius: var(--radio-input-wrapper__border-radius);
   margin-top: var(--indent__base);
   padding: var(--indent__base);
 }
@@ -9090,7 +9122,8 @@ a {
   font-size: var(--font-size__s);
 }
 #gene-better-checkout-root .free-payment.active {
-  border: var(--selected-border, var(--base__border-weight-active) var(--base__border-style) var(--base__border-color-active));
+  background-color: var(--radio-input-wrapper__background-color-active);
+  border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
 }
 #gene-better-checkout-root .free-payment-button {
   margin-top: var(--indent__base);
