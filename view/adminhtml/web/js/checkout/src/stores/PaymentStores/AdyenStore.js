@@ -13,8 +13,8 @@ export default defineStore('adyenStore', {
     adyenEnvironmentMode: 'live',
     adyenVaultEnabled: false,
     loadingPaymentMethods: true,
-    adyen_client_key_live: '',
-    adyen_client_key_test: '',
+    keyLive: '',
+    keyTest: '',
   }),
   getters: {
     isAdyenAvailable: () => {
@@ -22,7 +22,7 @@ export default defineStore('adyenStore', {
       return availableMethods.some(({ code }) => code.includes('adyen'));
     },
     getAdyenClientKey: (state) => (
-      getAdyenProductionMode() ? state.adyen_client_key_live : state.adyen_client_key_test
+      getAdyenProductionMode() ? state.keyLive : state.keyTest
     ),
   },
   actions: {
@@ -47,6 +47,8 @@ export default defineStore('adyenStore', {
           // Adyen's modes are '0' = live, '1' = test.
           adyenEnvironmentMode: storeConfig.adyen_environment_mode === '0' ? 'live' : 'test',
           adyenVaultEnabled: storeConfig.adyen_vault_enabled,
+          keyLive: storeConfig.adyen_client_key_live,
+          keyTest: storeConfig.adyen_client_key_test,
         });
       }
     },
