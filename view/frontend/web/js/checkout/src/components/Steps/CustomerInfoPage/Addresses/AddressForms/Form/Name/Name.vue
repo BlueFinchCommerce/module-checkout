@@ -44,7 +44,7 @@
     <div class="phone-field">
       <TextInput
         v-model="selectedAddressType.telephone"
-        :class="{'field-valid': isFieldValid('telephone', 'Telephone'),
+        :class="{'field-valid': phoneValid && !getAddressFieldHasError(address_type, 'Telephone'),
         'field-error': phoneValidError}"
         :error="phoneValidError || getAddressFieldHasError(address_type, 'Telephone')"
         :error-message="phoneValidError || getAddressFieldHasError(address_type, 'Telephone')
@@ -58,7 +58,7 @@
         @keyup="phoneChange($event)"
         @focusout="validateField('telephone', 'Telephone')"
       />
-      <ValidIcon v-if="isFieldValid('telephone', 'Telephone')"/>
+      <ValidIcon v-if="phoneValid && !getAddressFieldHasError(address_type, 'Telephone')"/>
       <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Telephone') || phoneValidError"/>
       <TextField v-if="!phoneErrorClass" :text="$t('yourDetailsSection.phoneField.infoMessage')"/>
     </div>
@@ -96,6 +96,7 @@ export default {
   data() {
     return {
       phoneValidError: false,
+      phoneValid: false,
     };
   },
   setup() {
@@ -129,7 +130,8 @@ export default {
 
       this.nameValid = !!first;
       this.lastNameValid = !!last;
-      this.phoneValidError = this.selectedAddressType.telephone.length > 20;
+      this.phoneValidError = this.selectedAddressType.telephone.length > 32;
+      this.phoneValid = this.selectedAddressType.telephone.length === 8;
 
       const fullDetails = first && last && phone;
       this.$emit('isCustomerInfoFull', fullDetails);
