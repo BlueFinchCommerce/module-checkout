@@ -165,11 +165,14 @@ export default defineStore('brainteeStore', {
       } = useCartStore();
 
       Object.values(cartItems).forEach((cartItem) => {
+        const unitAmount = cartItem.__typename === 'GiftCardCartItem'
+          ? cartItem.amount.value
+          : cartItem.product.price_range.minimum_price.final_price.value;
         items.push({
           name: cartItem.product.name,
           kind: 'debit',
           quantity: cartItem.quantity,
-          unitAmount: cartItem.product.price_range.minimum_price.final_price.value,
+          unitAmount,
           productCode: cartItem.product.sku,
           description: '',
         });
