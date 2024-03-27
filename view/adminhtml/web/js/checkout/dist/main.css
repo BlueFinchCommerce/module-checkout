@@ -4163,19 +4163,16 @@ body.no-scrollable {
 }
 #gene-better-checkout-root[data-v-6fcdedc4] {
   margin: 20px 0;
-}.text-loading .pay-with__column[data-v-26bbf998] {
-  opacity: 0;
-}
-.pay-with__container[data-v-26bbf998] {
+}.pay-with__container[data-v-e432b776] {
   align-items: var(--pay-with__align-items);
   display: flex;
   flex-direction: var(--pay-with__flex-direction);
   flex-wrap: wrap;
   margin: var(--indent__s) var(--indent__s);
-  min-height: var(--pay-with-container-min-height, auto);
+  min-height: var(--pay-with-container-min-height, 55px);
   justify-content: var(--pay-with-justify-content, center);
 }
-.pay-with__message[data-v-26bbf998] {
+.pay-with__message[data-v-e432b776] {
   font-size: var(--font__heading--mobile);
   font-weight: var(--font-weight__medium);
   color: var(--font__color);
@@ -4189,7 +4186,7 @@ body.no-scrollable {
   line-height: var(--pay-with-line-height, unset);
   min-height: var(--pay-with-message-height, 65px);
 }
-.pay-with__column[data-v-26bbf998] {
+.pay-with__column[data-v-e432b776] {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -4198,43 +4195,43 @@ body.no-scrollable {
   padding-left: 0;
   margin: var(--pay-with-column-margin, unset);
 }
-.pay-with__column img[data-v-26bbf998] {
+.pay-with__column img[data-v-e432b776] {
   width: var(--pay-with-image-max-width, 35px);
   height: var(--pay-with-image-max-height, 24px);
 }
-.pay-with__column img.card[data-v-26bbf998] {
+.pay-with__column img.card[data-v-e432b776] {
   border: 1px solid var(--color__primary-dark-blue);
 }
-.pay-with__content[data-v-26bbf998] {
+.pay-with__content[data-v-e432b776] {
   padding: 0 0 0 8px;
   margin: 0;
   height: 35px;
   display: flex;
   align-items: center;
 }
-.pay-with__content[data-v-26bbf998]:last-of-type {
+.pay-with__content[data-v-e432b776]:last-of-type {
   padding-right: 0;
 }
-.mock-laptop .pay-with__container[data-v-26bbf998],
-.mock-desktop .pay-with__container[data-v-26bbf998] {
+.mock-laptop .pay-with__container[data-v-e432b776],
+.mock-desktop .pay-with__container[data-v-e432b776] {
   margin: var(--indent__base) var(--indent__base) 0;
 }
-.mock-laptop .pay-with__column[data-v-26bbf998],
-.mock-desktop .pay-with__column[data-v-26bbf998] {
+.mock-laptop .pay-with__column[data-v-e432b776],
+.mock-desktop .pay-with__column[data-v-e432b776] {
   padding: var(--indent__s);
 }
-.mock-laptop .pay-with__message[data-v-26bbf998],
-.mock-desktop .pay-with__message[data-v-26bbf998] {
+.mock-laptop .pay-with__message[data-v-e432b776],
+.mock-desktop .pay-with__message[data-v-e432b776] {
   font-size: var(--font__heading--desktop);
 }
 @media screen and (min-width: 768px) {
-.mock-full .pay-with__container[data-v-26bbf998] {
+.mock-full .pay-with__container[data-v-e432b776] {
     margin: var(--indent__base) var(--indent__base) 0;
 }
-.mock-full .pay-with__column[data-v-26bbf998] {
+.mock-full .pay-with__column[data-v-e432b776] {
     padding: var(--indent__s);
 }
-.mock-full .pay-with__message[data-v-26bbf998] {
+.mock-full .pay-with__message[data-v-e432b776] {
     font-size: var(--font__heading--desktop);
 }
 }.divider[data-v-fd6ac988] {
@@ -6329,6 +6326,10 @@ body.no-scrollable {
   display: none;
 }#adyen-apple-pay {
   line-height: var(--button__line-height);
+}
+#adyen-apple-pay.text-loading {
+  border-radius: var(--button__text-placeholder-bg-radius);
+  height: var(--braintree-express-button-height, 48px);
 }
 #adyen-apple-pay > button {
   border-radius: var(--button__border-radius);
@@ -9127,46 +9128,46 @@ a {
 }
 .rvvup-button img[data-v-a70e0c4c] {
   max-width: 180px;
-}.payment-page[data-v-e1abfbbe] {
+}.payment-page[data-v-f7ac3a0a] {
   padding: var(--indent__base--mobile) var(--payment-page-mobile-padding, var(--indent__base--mobile));
   font-family: var(--payment-page-font-family, unset);
 }
-.payment-page .payment-form[data-v-e1abfbbe] {
+.payment-page .payment-form[data-v-f7ac3a0a] {
   background: var(--page__background-color--mobile);
   margin-top: var(--indent__base);
   min-height: var(--payment-form-min-height, 600px);
 }
-.payment-page .payment-form .address-block__edit[data-v-e1abfbbe] {
+.payment-page .payment-form .address-block__edit[data-v-f7ac3a0a] {
   cursor: pointer;
   position: absolute;
   bottom: var(--indent__base);
   right: var(--indent__base);
 }
-.payment-page .payment-form .billing-address[data-v-e1abfbbe] {
+.payment-page .payment-form .billing-address[data-v-f7ac3a0a] {
   padding: var(--indent__base);
   background: var(--color__primary-white);
 }
-.payment-page .payment-form .billing-address .details-title-section[data-v-e1abfbbe] {
+.payment-page .payment-form .billing-address .details-title-section[data-v-f7ac3a0a] {
   display: flex;
 }
-.payment-page .payment-form .billing-address .details-title-section svg[data-v-e1abfbbe] {
+.payment-page .payment-form .billing-address .details-title-section svg[data-v-f7ac3a0a] {
   margin-right: var(--indent__base);
 }
-.mock-laptop .payment-page[data-v-e1abfbbe],
-.mock-desktop .payment-page[data-v-e1abfbbe] {
+.mock-laptop .payment-page[data-v-f7ac3a0a],
+.mock-desktop .payment-page[data-v-f7ac3a0a] {
   padding: var(--indent__base) 0 0;
 }
-.mock-laptop .payment-page .payment-form[data-v-e1abfbbe],
-.mock-desktop .payment-page .payment-form[data-v-e1abfbbe] {
+.mock-laptop .payment-page .payment-form[data-v-f7ac3a0a],
+.mock-desktop .payment-page .payment-form[data-v-f7ac3a0a] {
   background: var(--payment-form-background, var(--steps__background-color--desktop));
   border-radius: var(--steps__border-radius--desktop);
   padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
 }
 @media screen and (min-width: 768px) {
-.mock-full .payment-page[data-v-e1abfbbe] {
+.mock-full .payment-page[data-v-f7ac3a0a] {
     padding: var(--indent__base) 0 0;
 }
-.mock-full .payment-page .payment-form[data-v-e1abfbbe] {
+.mock-full .payment-page .payment-form[data-v-f7ac3a0a] {
     background: var(--payment-form-background, var(--steps__background-color--desktop));
     border-radius: var(--steps__border-radius--desktop);
     padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
