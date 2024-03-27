@@ -38,6 +38,8 @@
 
       img {
         top: -2px;
+        width: 24px;
+        height: 24px;
       }
 
       .secure-text {
@@ -47,6 +49,7 @@
         color: var(--secure-header-text-color, var(--color__primary-white));
         margin: 0 0 0 var(--indent__xs);
         font-family: var(--font-family__copy);
+        min-width: 100px; //prevent cls jump
       }
     }
   }
@@ -61,10 +64,6 @@
 
       .header-logo {
         width: var(--header-logo__width--desktop);
-      }
-
-      .secure-text {
-        min-width: 100px; //prevent cls jump on desktop
       }
     }
   }

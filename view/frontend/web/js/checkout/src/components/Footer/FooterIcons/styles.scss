@@ -1,17 +1,12 @@
 @import '@/styles/global/_breakpoints';
 
-.text-loading {
-  ul {
-    opacity: 0;
-  }
-}
-
 .footer-icons {
   width: var(--footer-icons-width-mobile, auto);
+  min-height: var(--footer-icons-min-height, 65px); //prevent cls jump
 
   ul {
     padding: 0;
-    margin: var(--footer-icons-margin-mobile, 30px 0 35px);
+    margin: var(--footer-icons-margin-mobile, var(--indent__s) 0);
     display: flex;
     flex-wrap: wrap;
     align-items: var(--footer-icons-align-items, center);
@@ -41,6 +36,7 @@
 @media (min-width: $screen__m) {
   .footer-icons {
     width: var(--footer-icons-width-desktop, auto);
+    min-height: var(--footer-icons-min-height, 25px); //prevent cls jump
 
     ul {
       margin: 0 0 0;

@@ -1,11 +1,5 @@
 @import '@/styles/global/_breakpoints';
 
-.text-loading {
-  .pay-with__column {
-    opacity: 0;
-  }
-}
-
 .pay-with {
   &__container {
     align-items: var(--pay-with__align-items);
@@ -13,7 +7,7 @@
     flex-direction: var(--pay-with__flex-direction);
     flex-wrap: wrap;
     margin: var(--indent__s) var(--indent__s) var(--indent__m);
-    min-height: var(--pay-with-container-min-height, auto);
+    min-height: var(--pay-with-container-min-height, 55px);
     justify-content: var(--pay-with-justify-content, center);
   }
 

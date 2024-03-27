@@ -21,6 +21,7 @@
     margin: var(--footer-mobile-container-margin, 0 auto);
     font-size: var(--footer-copy-font-size, var(--font__xs));
     font-family: var(--font-family__copy);
+    min-height: var(--footer-copy-min-height, 35px); //prevent cls jump
   }
 }
 

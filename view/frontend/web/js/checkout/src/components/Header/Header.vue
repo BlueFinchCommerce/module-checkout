@@ -5,7 +5,7 @@
   >
     <div class="header-content">
       <a
-        :href="secureBaseUrl + storeCode"
+        :href="secureBaseLinkUrl"
         aria-label="logo"
         class="header-logo"
         :class="custom.checkoutLogo ? 'logo-no-width' : ''"
@@ -48,7 +48,7 @@ export default {
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
   },
   computed: {
-    ...mapState(useConfigStore, ['secureBaseUrl', 'storeCode']),
+    ...mapState(useConfigStore, ['secureBaseLinkUrl']),
   },
   methods: {
     ...mapActions(useConfigStore, ['custom', 'getInitialConfig']),
