@@ -7,7 +7,7 @@
         class="address-block__checkbox"
       >
         <CheckboxComponent
-          v-if="showCheckbox && isItemRequiringDelivery"
+          v-if="showCheckbox && !cart.is_virtual"
           :checked="selected[address_type].same_as_shipping"
           :text="$t('billingForm.notSameAddress')"
           @change="toggleBillingAddress"
@@ -17,7 +17,7 @@
       <div class="address-block__title"
            v-if="customer.addresses.length > 0
            && (!selected[address_type].same_as_shipping && !isClickAndCollect)
-           || !isItemRequiringDelivery">
+           || cart.is_virtual">
        <div class="address-block__title-with-icon">
          <BillingAddressIcon/>
          <TextField
@@ -30,14 +30,14 @@
 
       <AddressList
         v-if="emailEntered && customer.addresses.length
-          && (!selected[address_type].same_as_shipping || !isItemRequiringDelivery)"
+          && (!selected[address_type].same_as_shipping || cart.is_virtual)"
         :display-title="false"
         address-type="billing"
       />
 
       <div
         v-if="!selected[address_type].editing
-          && (!selected[address_type].same_as_shipping || isClickAndCollect || !isItemRequiringDelivery)
+          && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)
           && selected[address_type].id
           && !isUsingSavedBillingAddress"
         class="address-block"
@@ -71,7 +71,7 @@
        ((customer.addresses.length > 0
        ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
       || (selected[address_type].id === 'custom' && selected[address_type].editing))
-      && (!selected[address_type].same_as_shipping || isClickAndCollect || !isItemRequiringDelivery)">
+      && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)">
 
       <div class="address-block__title-with-icon billing">
         <Locate />
@@ -160,7 +160,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['isLoggedIn', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart', 'isLoggedIn']),
     ...mapState(useConfigStore, ['addressFinder']),
     ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),

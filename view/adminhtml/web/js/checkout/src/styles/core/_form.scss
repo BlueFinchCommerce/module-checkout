@@ -237,6 +237,12 @@
       border-radius: var(--base__border-radius);
       color: var(--input__label-font-color);
     }
+
+    button {
+      span {
+        background: transparent;
+      }
+    }
   }
 
   .text-input {
@@ -259,6 +265,11 @@
       &:active {
         outline: var(--input__border-weight) var(--base__border-style) var(--input__border-color-focus);
         box-shadow: none;
+
+        &::placeholder {
+          display: none;
+          font-size: 0;
+        }
       }
 
       &:hover {
@@ -414,7 +425,7 @@
     > p {
       font-family: var(--phone-field-text__font-family, unset);
       font-weight: var(--phone-field-text__font-weight, var(--font-weight__medium));
-      padding-top: var(--phone-field-text__padding-top, var(--indent__m));
+      padding-top: var(--phone-field-text__padding-top, var(--indent__s));
       color: var(--font__color-light);
     }
 
@@ -547,6 +558,45 @@
   }
 
   .item-qty-container {
+    label {
+      input {
+        &:disabled {
+          opacity: 1 !important; // override root style
+        }
+      }
+    }
+
+    .text-input {
+      margin: 0;
+
+
+      input {
+        background-color: var(--qty-button__background-color);
+        border: var(--qty-input__border);
+        border-bottom: var(--qty-input__border-bottom);
+        border-top: var(--qty-input__border-top);
+        border-radius: var(--qty-input__border-radius);
+        color: var(--qty-input__font-color);
+        font-family: var(--font-family__copy);
+        font-size: var(--qty-input__font-size);
+        font-weight: var(--qty-input__font-weight);
+        height: var(--qty__height);
+        max-width: var(--qty-button-width, 40px);
+        text-align: center;
+        margin: 0;
+
+        &:disabled {
+          color: var(--qty-input__font-color);
+        }
+
+        &:focus-visible,
+        &:focus,
+        &:active {
+          outline: none;
+        }
+      }
+    }
+
     button {
       p {
         margin: 0;

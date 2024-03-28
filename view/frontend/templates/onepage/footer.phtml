@@ -75,17 +75,21 @@ if ($orderViewViewModel) {
       <?php endforeach; ?>
     </div>
 
-    <div class="checkout-success-summary-columns checkout-success-delivery-container">
-        <div>
-            <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Address')) ?></p>
-          <?= $orderViewViewModel->getFormattedAddress($order->getShippingAddress()); ?>
+    <?php if ($order->getShippingAddress()): ?>
+        <div class="checkout-success-summary-columns checkout-success-delivery-container">
+            <div>
+                <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Address')) ?></p>
+            <?= $orderViewViewModel->getFormattedAddress($order->getShippingAddress()); ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 
-    <div class="checkout-success-summary-columns checkout-success-shipping-container">
-        <div>
-            <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Method')) ?></p>
-            <p><?= $order->getShippingDescription() ?></p>
+    <?php if ($order->getShippingDescription()): ?>
+        <div class="checkout-success-summary-columns checkout-success-shipping-container">
+            <div>
+                <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Method')) ?></p>
+                <p><?= $order->getShippingDescription() ?></p>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 </div>

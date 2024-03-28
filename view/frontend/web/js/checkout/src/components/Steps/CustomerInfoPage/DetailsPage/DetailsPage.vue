@@ -32,7 +32,7 @@
       <Newsletter v-if="emailEntered" />
 
       <div
-        v-if="custom.clickandcollectEnabled && emailEntered && isItemRequiringDelivery"
+        v-if="custom.clickandcollectEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
         <MyButton
@@ -68,7 +68,7 @@
       </div>
 
       <AddressList
-        v-if="emailEntered && customer.addresses.length && !isClickAndCollect && isItemRequiringDelivery"
+        v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
         @passSelectedItemId = "passSelectedItemId"
@@ -83,7 +83,7 @@
       <div
         v-if="emailEntered && (!selected[address_type].id
           || (selected[address_type].id === 'custom' && selected[address_type].editing))
-          && !isClickAndCollect && isItemRequiringDelivery"
+          && !isClickAndCollect && !cart.is_virtual"
         class="additional-detail-form"
       >
         <div
@@ -151,7 +151,7 @@
           && selected[address_type].id
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
-          && isItemRequiringDelivery"
+          && !cart.is_virtual"
         class="address-block"
         :class="customer.addresses.length > 0 ? 'saved-address-active' : ''"
       >
@@ -192,7 +192,7 @@
       />
 
       <MyButton
-        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && isItemRequiringDelivery"
+        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
         :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
@@ -200,12 +200,12 @@
         @click="submitShippingOption();"
       />
       <MyButton
-        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !isItemRequiringDelivery"
+        v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && cart.is_virtual"
         type="submit"
         primary
         :label="proceedToPayText"
         :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
-        @click="goToPayment();"
+        @click="submitBillingInfo();"
       />
     </div>
   </div>
@@ -313,7 +313,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cartEmitter', 'subtotalInclTax', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
     ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
@@ -438,6 +438,13 @@ export default {
         this.addressInfoWrong = true;
       }
     },
+
+    async submitBillingInfo() {
+      await this.setAddressesOnCart();
+
+      this.goToPayment();
+    },
+
     editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);

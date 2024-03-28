@@ -44,7 +44,7 @@
         v-show="selectedMethod === 'braintree-lpm'"
         class="braintree-lpm-container"
       >
-        <template v-if="getFilteredLpmMethods.length">
+        <template v-if="getFilteredLpmMethods?.length">
           <Agreements id="braintreeLpm" />
           <PrivacyPolicy />
           <button
@@ -122,7 +122,7 @@ export default {
       'getFilteredLpmMethods',
     ]),
     ...mapState(useConfigStore, ['currencyCode']),
-    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
@@ -169,7 +169,7 @@ export default {
         client: this.clientInstance,
         merchantAccountId: this.merchantAccountId,
       });
-      const isVirtual = !this.isItemRequiringDelivery;
+      const isVirtual = this.cart.is_virtual;
 
       const shippingAddress = this.cart.shipping_addresses[0];
       const address = {};

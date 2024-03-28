@@ -180,6 +180,7 @@ export default () => {
         label
       }
     }
+    is_virtual
     ${customerStore.isLoggedIn
     ? `applied_store_credit {
           applied_balance {
