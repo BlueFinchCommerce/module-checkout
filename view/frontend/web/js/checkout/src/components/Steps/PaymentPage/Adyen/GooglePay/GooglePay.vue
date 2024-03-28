@@ -85,6 +85,7 @@ export default {
     ));
 
     const googlePayConfiguration = this.getGooglePayConfiguration(googlePayConfig);
+    console.log(googlePayConfiguration);
     const configuration = {
       paymentMethodsResponse,
       locale: this.locale,
@@ -162,6 +163,12 @@ export default {
     },
 
     getGooglePayConfiguration(googlePayConfig) {
+      const callbackIntents = ['PAYMENT_AUTHORIZATION'];
+
+      if (!this.cart.is_virtual) {
+        callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
+      }
+
       return {
         amount: {
           value: this.cartGrandTotal,
@@ -170,21 +177,21 @@ export default {
         countryCode: this.countryCode,
         environment: getAdyenProductionMode() ? 'LIVE' : 'TEST',
         paymentDataCallbacks: {
-          onPaymentDataChanged: this.onPaymentDataChanged,
           onPaymentAuthorized: this.onPaymentAuthorized,
+          ...(this.cart.is_virtual ? {} : { onPaymentDataChanged: this.onPaymentDataChanged }),
         },
         emailRequired: true,
-        shippingAddressRequired: true,
+        shippingAddressRequired: !this.cart.is_virtual,
         shippingAddressParameters: {
-          phoneNumberRequired: true,
+          phoneNumberRequired: !this.cart.is_virtual,
         },
         billingAddressRequired: true,
         billingAddressParameters: {
           format: 'FULL',
           phoneNumberRequired: true,
         },
-        shippingOptionRequired: true,
-        callbackIntents: ['SHIPPING_ADDRESS', 'SHIPPING_OPTION', 'PAYMENT_AUTHORIZATION'],
+        shippingOptionRequired: !this.cart.is_virtual,
+        callbackIntents,
         configuration: {
           gatewayMerchantId: googlePayConfig.configuration.gatewayMerchantId,
           merchantId: googlePayConfig.configuration.merchantId,
@@ -278,7 +285,7 @@ export default {
     onPaymentAuthorized(data) {
       return new Promise((resolve) => {
         // If there is no select shipping method at this point display an error.
-        if (!this.cart.shipping_addresses[0].selected_shipping_method) {
+        if (!this.cart.is_virtual && !this.cart.shipping_addresses[0].selected_shipping_method) {
           resolve({
             error: {
               reason: 'SHIPPING_OPTION_INVALID',
@@ -294,9 +301,13 @@ export default {
         const { phoneNumber: billingPhoneNumber } = billingAddress;
         const mapBillingAddress = this.mapAddress(billingAddress, email, billingPhoneNumber);
 
-        const { shippingAddress } = data;
-        const { phoneNumber: shippingPhoneNumber } = shippingAddress;
-        const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
+        let mapShippingAddress = null;
+
+        if (!this.cart.is_virtual) {
+          const { shippingAddress } = data;
+          const { phoneNumber: shippingPhoneNumber } = shippingAddress;
+          mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
+        }
 
         try {
           setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)

@@ -1,7 +1,7 @@
 <template>
   <div class="payment-step">
     <SavedDeliveryAddress />
-    <SavedShippingMethod v-if="isItemRequiringDelivery" />
+    <SavedShippingMethod v-if="!cart.is_virtual" />
     <Rewards v-if="rewardsEnabled" />
     <StoreCredit />
     <div class="payment-page">
@@ -98,7 +98,7 @@ export default {
       'getPaymentMethodTitle',
       'rvvupErrorMessage',
     ]),
-    ...mapState(useCartStore, ['cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cartGrandTotal']),
   },
   async created() {
     this.additionalPaymentMethods = Object.keys(paymentMethods());

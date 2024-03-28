@@ -30,9 +30,9 @@ export default defineStore('stepsStore', {
     },
     goToShipping() {
       // If all products within the cart do not require shipping then whenever this is called go directly to payment.
-      const { isItemRequiringDelivery } = useCartStore();
+      const { cart } = useCartStore();
 
-      if (isItemRequiringDelivery) {
+      if (!cart.is_virtual) {
         this.setData({
           yourDetailsActive: true,
           shippingActive: true,

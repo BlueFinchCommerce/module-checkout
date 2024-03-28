@@ -106,7 +106,7 @@ export default {
             amount: this.cartGrandTotal / 100,
             flow: 'checkout',
             currency: this.currencyCode,
-            enableShippingAddress: true,
+            enableShippingAddress: !this.cart.is_virtual,
             intent: 'capture',
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
@@ -202,11 +202,11 @@ export default {
     },
 
     setInformationToQuote(payload) {
-      const shippingAddress = this.mapAddress(
+      const shippingAddress = !this.cart.is_virtual ? this.mapAddress(
         payload.details.shippingAddress,
         payload.details.email,
         payload.details.phone,
-      );
+      ) : null;
       const billingAddress = this.mapAddress(
         payload.details.billingAddress,
         payload.details.email,
