@@ -283,6 +283,14 @@ define([
                         $(element).ColorPickerSetColor($(element).val());
                     }
                 });
+
+                // Update swatch color when input is typed in
+                $(element).on('input', function () {
+                    const inputValue = $(element).val(),
+                        colorToSetSwatch = inputValue ? inputValue : defaultValue;
+
+                    setSwatchColor(colorToSetSwatch);
+                });
             });
         },
 
