@@ -5,6 +5,7 @@
         id="radio-input"
         type="radio"
         :disabled="disabled"
+        :name="name"
         :checked="checked"
         :aria-checked="ariaChecked"
         :role="role"
@@ -26,6 +27,9 @@ export default {
   name: 'RadioButton',
   props: {
     text: {
+      type: String,
+    },
+    name: {
       type: String,
     },
     dataCy: {

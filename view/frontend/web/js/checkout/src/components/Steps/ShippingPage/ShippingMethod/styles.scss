@@ -65,10 +65,7 @@
         padding: var(--indent__base);
         border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
         border-radius: var(--radio-input-wrapper__border-radius);
-
-        input {
-          cursor: pointer;
-        }
+        cursor: pointer;
 
         .shipping-method__price {
           font-size: var(--shipping-cost-font-size, var(--font__s));
