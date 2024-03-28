@@ -24,12 +24,12 @@
       -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
       border-radius: var(--border-radius, 6px);
     }
-  
+
     &::-webkit-scrollbar {
       height: 4px;
       background-color: var(--color__primary-white);
     }
-  
+
     &::-webkit-scrollbar-thumb {
       -webkit-box-shadow: inset 0 0 6px var(--color__primary-grey5);
       background-color: var(--color__primary-grey2);
@@ -43,7 +43,7 @@
     .adyen-checkout__payment-method__header__title {
       background: var(--adyen-saved-card__background-color);
       border: var(--adyen-saved-card__border);
-      border-radius: var(--base__border-radius);
+      border-radius: var(--selectable__border-radius);
       box-shadow: none;
       color: var(--adyen-saved-card__font-color);
       display: grid;
