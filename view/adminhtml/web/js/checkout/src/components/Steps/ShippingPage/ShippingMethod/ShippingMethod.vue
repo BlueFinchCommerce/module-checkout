@@ -27,9 +27,10 @@
             v-for="(item) in cart.shipping_addresses?.[0]?.available_shipping_methods"
             :key="item.carrier_code"
           >
-            <label
-              :for="item.method_code"
+            <span
               class="shipping-method__label"
+              @click="handleChange(item)"
+              @keydown.enter="handleChange(item)"
               :class="{
                 'selected': (
                   item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
@@ -38,14 +39,11 @@
             >
               <template v-if="item.method_code !== nominatedId">
                 <span class="shipping-method__input">
-                  <input
+                  <RadioButton
                     :id="item.method_code"
                     :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                    data-cy="radio-button"
-                    type="radio"
                     name="shipping-option"
-                    @change="handleChange(item)"
-                  >
+                  />
                 </span>
                 <span class="shipping-method__content">
                   <TextField :text="item.method_title" />
@@ -55,14 +53,11 @@
 
               <template v-else>
                 <span class="shipping-method__input">
-                  <input
+                  <RadioButton
                     :id="nominatedId"
                     :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                    type="radio"
-                    radio-button
                     name="shipping-option"
-                    @change="handleChange(item)"
-                  >
+                  />
                 </span>
                 <span class="shipping-method__content">
                   <TextField :text="item.method_title" />
@@ -80,7 +75,7 @@
                   && nominatedDayEnabled && selectedMethod.carrier_code === nominatedId"
                 :item="item"
               />
-            </label>
+            </span>
           </template>
           <component
             :is="additionalShippingMethod"
@@ -128,6 +123,7 @@ import NominatedDay from
   '@/components/Steps/ShippingPage/ShippingMethod/NominatedDay/NominatedDay.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
+import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
 
 // Icons
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
@@ -145,6 +141,7 @@ export default {
     NominatedDay,
     MyButton,
     ProgressBar,
+    RadioButton,
     ...shippingMethods(),
   },
   props: {

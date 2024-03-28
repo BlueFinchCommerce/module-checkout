@@ -10,17 +10,16 @@
       label=" - "
       @click="item.quantity === 1 ? false : updateQuantity(item, -1)"
     />
-    <label :for="`input-qty-${item.item_id}`">
+    <span>
       <!--  eslint-disable vue/no-mutating-props -->
-      <input
-        v-model="item.quantity"
+      <TextInput
+        :modelValue="item.quantity"
         :name="`input-qty-${item.id}`"
-        data-cy="qty-input-"
-        type="text"
-        disabled
+        data-cy="qty-input"
         :placeholder="item.quantity"
-      >
-    </label>
+        :disabled="true"
+      />
+    </span>
     <MyButton
       :primary="false"
       :aria-label="$t('orderSummary.plusOneItem')"
@@ -33,6 +32,7 @@
 <script>
 // components
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
+import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 
 // stores
 import { mapActions } from 'pinia';
@@ -42,6 +42,7 @@ export default {
   name: 'QtyButton',
   components: {
     MyButton,
+    TextInput,
   },
   props: {
     item: {
