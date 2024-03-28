@@ -14,6 +14,7 @@
             :message="rvvupErrorMessage"
           />
           <AdyenDropIn v-if="isAdyenAvailable" />
+          <BraintreeDropIn />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
               :payment-type="'checkmo'"
