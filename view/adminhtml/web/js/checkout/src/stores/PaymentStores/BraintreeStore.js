@@ -164,7 +164,9 @@ export default defineStore('brainteeStore', {
         getGiftWrappingTotal,
       } = useCartStore();
 
-      Object.values(cartItems).forEach((cartItem) => {
+      Object.keys(cartItems).forEach((key) => {
+        const cartItem = cartItems[key];
+
         const unitAmount = cartItem.__typename === 'GiftCardCartItem'
           ? cartItem.amount.value
           : cartItem.product.price_range.minimum_price.final_price.value;
