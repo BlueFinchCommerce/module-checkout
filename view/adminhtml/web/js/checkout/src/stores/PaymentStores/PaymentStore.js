@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import mitt from 'mitt';
+import getDummyPaymentMethods from '@/helpers/dummyContent/getDummyPaymentMethods';
 
 export default defineStore('paymentStore', {
   state: () => ({
@@ -10,7 +11,7 @@ export default defineStore('paymentStore', {
     errorMessage: '',
     rvvupErrorMessage: '',
     paymentEmitter: mitt(),
-    availableMethods: [],
+    availableMethods: getDummyPaymentMethods(),
   }),
   getters: {
     methodsResponse: (state) => state.methodsResponse,
