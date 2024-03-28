@@ -1,1 +1,0 @@
-import{_ as t}from"./adyen.min.js";var o={docs:{renderer:async()=>{let{DocsRenderer:r}=await t(()=>import("./DocsRenderer-NNNQARDV.min.js").then(e=>e.D),["./DocsRenderer-NNNQARDV.min.js","./adyen.min.js","./_commonjs-dynamic-modules.min.js","./index.min.js","./index.min2.js","./index.min3.js"],import.meta.url);return new r}}};export{o as parameters};
