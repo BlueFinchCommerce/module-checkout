@@ -158,14 +158,6 @@
   margin: 0;
   overflow: hidden;
 
-  label {
-    input {
-      &:disabled {
-        opacity: 1 !important; // override root style
-      }
-    }
-  }
-
   button {
     background: var(--item-qty-button__background, var(--qty-input__background-color));
     border: var(--qty-button__border);
@@ -180,24 +172,5 @@
     box-shadow: var(--qty__box-shadow);
     font-weight: var(--qty-button__font-weight, var(--font-weight__medium));
     color: var(--item-qty-button-colour, var(--qty-button__font-color));
-  }
-
-  input {
-    background-color: var(--qty-input__background-color);
-    border: var(--qty-input__border);
-    border-bottom: var(--qty-input__border-bottom);
-    border-top: var(--qty-input__border-top);
-    border-radius: var(--qty-input__border-radius);
-    color: var(--qty-input__font-color);
-    font-family: var(--font-family__copy);
-    font-size: var(--qty-input__font-size);
-    font-weight: var(--qty-input__font-weight);
-    height: var(--qty__height);
-    max-width: var(--qty-button-width, 40px);
-    text-align: center;
-
-    &:disabled {
-      color: var(--qty-input__font-color);
-    }
   }
 }
