@@ -11,6 +11,7 @@
       <input
         :id="identifier"
         ref="input"
+        :name="name"
         :autocomplete="autocomplete"
         :style="style"
         :type="type"
@@ -51,6 +52,9 @@ export default {
       default: '',
     },
     dataCy: {
+      type: String,
+    },
+    name: {
       type: String,
     },
     placeholder: {

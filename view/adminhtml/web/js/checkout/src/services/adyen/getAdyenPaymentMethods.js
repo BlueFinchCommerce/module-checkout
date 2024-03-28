@@ -1,4 +1,4 @@
-import getDummyPaymentMethods from '@/helpers/dummyContent/getDummyPaymentMethods';
+import getDummyAdyenPaymentMethods from '@/helpers/dummyContent/getDummyAdyenPaymentMethods';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
   const transformedData = paymentMethodsExtraDetails?.map((item) => ({
@@ -14,8 +14,8 @@ function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
 
 export default async () => Promise.resolve({
   paymentMethodsExtraDetails:
-      transformGraphqlExtraDetails(getDummyPaymentMethods.adyenPaymentMethods.paymentMethodsExtraDetails),
-  paymentMethodsResponse: getDummyPaymentMethods.adyenPaymentMethods.paymentMethodsResponse || {
+      transformGraphqlExtraDetails(getDummyAdyenPaymentMethods.adyenPaymentMethods.paymentMethodsExtraDetails),
+  paymentMethodsResponse: getDummyAdyenPaymentMethods.adyenPaymentMethods.paymentMethodsResponse || {
     paymentMethods: [],
   },
 });
