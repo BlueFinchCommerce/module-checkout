@@ -134,9 +134,15 @@ export default {
     },
 
     getApplePayConfiguration(applePayMethod) {
+      const requiredShippingContactFields = ['name', 'email', 'phone'];
+
+      if (!this.cart.is_virtual) {
+        requiredShippingContactFields.push('postalAddress');
+      }
+
       return {
         amount: {
-          valie: parseFloat(this.cartGrandTotal / 100).toFixed(2),
+          value: parseFloat(this.cartGrandTotal).toFixed(2),
           currency: this.currencyCode,
         },
         currencyCode: this.currencyCode,
@@ -148,12 +154,14 @@ export default {
           merchantName: applePayMethod.configuration.merchantName,
           merchantId: applePayMethod.configuration.merchantId,
         },
-        requiredShippingContactFields: ['postalAddress', 'name', 'email', 'phone'],
+        requiredShippingContactFields,
         requiredBillingContactFields: ['postalAddress', 'name'],
-        shippingMethods: [],
         onAuthorized: this.onAuthorized.bind(this),
-        onShippingContactSelected: this.onShippingContactSelect.bind(this),
-        onShippingMethodSelected: this.onShippingMethodSelect.bind(this),
+        ...(this.cart.is_virtual ? {} : {
+          onShippingContactSelected: this.onShippingContactSelect.bind(this),
+          onShippingMethodSelected: this.onShippingMethodSelect.bind(this),
+          shippingMethods: [],
+        }),
         onClick: (resolve, reject) => this.onClick(resolve, reject, applePayMethod.type),
         onSubmit: () => {},
       };
@@ -172,9 +180,16 @@ export default {
 
     async onAuthorized(resolve, reject, data) {
       const { shippingContact, billingContact } = data.payment;
+
       const email = shippingContact.emailAddress;
       const telephone = shippingContact.phoneNumber;
-      const shippingAddress = this.mapAddress(shippingContact, email, telephone);
+
+      let shippingAddress = null;
+
+      if (!this.cart.is_virtual) {
+        shippingAddress = this.mapAddress(shippingContact, email, telephone);
+      }
+
       const billingAddress = this.mapAddress(billingContact, email, telephone);
 
       if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {

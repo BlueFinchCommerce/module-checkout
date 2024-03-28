@@ -173,7 +173,7 @@ export default {
       'ach',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
-    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
   },
