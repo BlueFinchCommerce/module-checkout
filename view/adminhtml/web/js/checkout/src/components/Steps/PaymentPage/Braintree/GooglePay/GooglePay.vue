@@ -78,6 +78,12 @@ export default {
 
     await this.createClientToken();
 
+    if (!this.clientToken) {
+      this.$emit('expressPaymentsLoad', 'false');
+      this.googlePayLoaded = true;
+      return; // Early return if Braintree PayPal isn't enabled.
+    }
+
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
       environment: this.environment === 'sandbox' ? 'TEST' : 'LIVE',
       paymentDataCallbacks: {
