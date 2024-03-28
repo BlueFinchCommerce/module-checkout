@@ -16,8 +16,8 @@
       </div>
       <AddressBlockShort
         class="shipping-billing-steps"
-        :address_type="isItemRequiringDelivery ? `shipping` : `billing`"
-        :address="isItemRequiringDelivery ? cart.shipping_addresses?.[0] : cart.billing_address"
+        :address_type="!cart.is_virtual ? `shipping` : `billing`"
+        :address="!cart.is_virtual ? cart.shipping_addresses?.[0] : cart.billing_address"
       />
       <div class="address-block__edit proceed-to-details">
         <button
@@ -64,7 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cart', 'isItemRequiringDelivery']),
+    ...mapState(useCartStore, ['cart']),
   },
   async created() {
     this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');

@@ -66,11 +66,6 @@ export default defineStore('cartStore', {
     hasPenniesDonation: (state) => (
       state.totalSegments.some((segment) => segment.code === 'penniesdonation' && segment.value > 0)
     ),
-    isItemRequiringDelivery: (state) => (
-      Object.values(state.cartItems).some(({ product_type: productType }) => (
-        productType !== 'giftcard' && productType !== 'virtual'
-      ))
-    ),
     getTotalSegment: (state) => (
       (segment) => state.totalSegments.find(({ code }) => code === segment)
     ),

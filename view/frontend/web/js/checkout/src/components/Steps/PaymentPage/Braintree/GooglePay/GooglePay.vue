@@ -81,7 +81,7 @@ export default {
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
       environment: this.environment === 'sandbox' ? 'TEST' : 'LIVE',
       paymentDataCallbacks: {
-        onPaymentDataChanged: this.onPaymentDataChanged,
+        ...(this.cart.is_virtual ? {} : { onPaymentDataChanged: this.onPaymentDataChanged }),
         onPaymentAuthorized: this.onPaymentAuthorized,
       },
     }));
@@ -143,6 +143,12 @@ export default {
         return false;
       }
 
+      const callbackIntents = ['PAYMENT_AUTHORIZATION'];
+
+      if (!this.cart.is_virtual) {
+        callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
+      }
+
       const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
         transactionInfo: {
           countryCode: this.countryCode,
@@ -151,12 +157,12 @@ export default {
           totalPrice: (this.cartGrandTotal / 100).toString(),
         },
         emailRequired: true,
-        shippingAddressRequired: true,
+        shippingAddressRequired: !this.cart.is_virtual,
         shippingAddressParameters: {
-          phoneNumberRequired: true,
+          phoneNumberRequired: !this.cart.is_virtual,
         },
-        shippingOptionRequired: true,
-        callbackIntents: ['SHIPPING_ADDRESS', 'SHIPPING_OPTION', 'PAYMENT_AUTHORIZATION'],
+        shippingOptionRequired: !this.cart.is_virtual,
+        callbackIntents,
       });
 
       const cardPaymentMethod = paymentDataRequest.allowedPaymentMethods[0];
@@ -256,7 +262,7 @@ export default {
     onPaymentAuthorized(data) {
       return new Promise((resolve) => {
         // If there is no select shipping method at this point display an error.
-        if (!this.cart.shipping_addresses[0].selected_shipping_method) {
+        if (!this.cart.is_virtual && !this.cart.shipping_addresses[0].selected_shipping_method) {
           resolve({
             error: {
               reason: 'SHIPPING_OPTION_INVALID',
@@ -285,9 +291,13 @@ export default {
         const { phoneNumber } = billingAddress;
         const mapBillingAddress = this.mapAddress(billingAddress, email, phoneNumber);
 
-        const { shippingAddress } = data;
-        const { phoneNumber: shippingPhoneNumber } = shippingAddress;
-        const mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
+        let mapShippingAddress = null;
+
+        if (!this.cart.is_virtual) {
+          const { shippingAddress } = data;
+          const { phoneNumber: shippingPhoneNumber } = shippingAddress;
+          mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
+        }
 
         try {
           setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)

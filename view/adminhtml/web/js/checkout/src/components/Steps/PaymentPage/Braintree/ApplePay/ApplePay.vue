@@ -139,20 +139,29 @@ export default {
       }
 
       try {
+        const requiredShippingContactFields = ['name', 'email', 'phone'];
+
+        if (!this.cart.is_virtual) {
+          requiredShippingContactFields.push('postalAddress');
+        }
+
         const paymentRequest = this.applePayInstance.createPaymentRequest({
           total: {
             label: this.websiteName,
             amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
           },
-          requiredShippingContactFields: ['postalAddress', 'name', 'email', 'phone'],
+          requiredShippingContactFields,
           requiredBillingContactFields: ['postalAddress', 'name'],
         });
         const session = new window.ApplePaySession(3, paymentRequest);
 
         session.onvalidatemerchant = (validateEvent) => this.onValidateMerchant(validateEvent, session);
-        session.onshippingcontactselected = (data) => this.onShippingContactSelect(data, session);
-        session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
         session.onpaymentauthorized = (data) => this.onAuthorized(data, session);
+
+        if (!this.cart.is_virtual) {
+          session.onshippingcontactselected = (data) => this.onShippingContactSelect(data, session);
+          session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
+        }
 
         session.begin();
       } catch (err) {
@@ -197,8 +206,13 @@ export default {
       const { shippingContact, billingContact } = data.payment;
       const email = shippingContact.emailAddress;
       const telephone = shippingContact.phoneNumber;
-      const shippingAddress = this.mapAddress(shippingContact, email, telephone);
       const billingAddress = this.mapAddress(billingContact, email, telephone);
+
+      let shippingAddress = null;
+
+      if (!this.cart.is_virtual) {
+        shippingAddress = this.mapAddress(shippingContact, email, telephone);
+      }
 
       if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {
         session.completePayment(window.ApplePaySession.STATUS_FAILURE);
