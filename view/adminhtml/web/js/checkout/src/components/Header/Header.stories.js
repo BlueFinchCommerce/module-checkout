@@ -1,19 +1,26 @@
-import Header from './Header.vue';
+import HeaderStoryBook from './HeaderStoryBook/HeaderStoryBook.vue';
 
 export default {
   title: 'Checkout Structure Components/App/Header',
-  component: Header,
+  component: HeaderStoryBook,
   argTypes: {
     backgroundColor: { control: 'color' },
+    color: { control: 'color' },
   },
 };
 
 const Template = (args) => ({
-  components: { Header },
+  components: { HeaderStoryBook },
   setup() {
     return { args };
   },
-  template: '<Header v-bind="args"/>',
+  template: '<HeaderStoryBook v-bind="args"/>',
 });
 
 export const HeaderComponent = Template.bind({});
+
+HeaderComponent.args = {
+  backgroundColor: '#000',
+  color: '#fff',
+  headerText: 'Secure Checkout',
+};

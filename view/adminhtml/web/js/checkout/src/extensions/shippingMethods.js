@@ -6,7 +6,10 @@ export default () => {
   if (window.geneCheckout?.shippingMethods) {
     Object.keys(window.geneCheckout.shippingMethods).forEach((shippingMethod) => {
       shippingMethods[shippingMethod] = defineAsyncComponent(() => (
-        import(window.geneCheckout.shippingMethods[shippingMethod])));
+        import(
+          /* @vite-ignore */
+          window.geneCheckout.shippingMethods[shippingMethod]
+        )));
     });
   }
 

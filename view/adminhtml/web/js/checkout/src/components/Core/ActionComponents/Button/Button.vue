@@ -7,7 +7,6 @@
     :aria-label="ariaLabel"
     :disabled="disabled"
     :data-cy="dataCy ? dataCy : type"
-    @click="onClick"
   >
     <TextField :text="label" />
   </button>
@@ -46,13 +45,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    size: {
-      type: String,
-      validator(value) {
-        return ['small', 'medium', 'large'].indexOf(value) !== -1;
-      },
-      default: 'medium',
-    },
     backgroundColor: {
       type: String,
     },
@@ -70,7 +62,7 @@ export default {
 
   emits: ['click'],
 
-  setup(props, { emit }) {
+  setup(props) {
     const reactiveProps = reactive(props);
     return {
       classes: computed(() => ({
@@ -78,14 +70,10 @@ export default {
         'button--primary': reactiveProps.primary,
         'button--secondary': reactiveProps.secondary,
         'button--tertiary': reactiveProps.tertiary,
-        [`button--${reactiveProps.size || 'medium'}`]: true,
       })),
       style: computed(() => ({
         backgroundColor: reactiveProps.backgroundColor,
       })),
-      onClick() {
-        emit('click');
-      },
     };
   },
 };

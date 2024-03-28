@@ -88,6 +88,52 @@
         }
       }
     }
+
+    &.story-book {
+      .details,
+      .shipping,
+      .payment {
+        align-items: center;
+
+        p {
+          font-weight: 500;
+          white-space: pre;
+          text-decoration: underline;
+        }
+
+        svg {
+          margin-right: 10px;
+        }
+      }
+
+      .number {
+        margin-right: 10px;
+        border: 1px solid #042138;
+        background: transparent;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        text-align: center;
+
+        span {
+          margin-top: 3px;
+          display: block;
+        }
+
+        p {
+          color: #042138;
+          font-weight: 500;
+        }
+
+        &.active {
+          background: #042138;
+
+          p {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 
   &-arrow {

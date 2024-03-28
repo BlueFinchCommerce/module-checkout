@@ -1,19 +1,23 @@
-import Footer from './Footer.vue';
+import FooterStoryBook from './FooterStoryBook/FooterStoryBook.vue';
 
 export default {
   title: 'Checkout Structure Components/App/Footer',
-  component: Footer,
+  component: FooterStoryBook,
   argTypes: {
     backgroundColor: { control: 'color' },
   },
 };
 
 const Template = (args) => ({
-  components: { Footer },
+  components: { FooterStoryBook },
   setup() {
     return { args };
   },
-  template: '<Footer v-bind="args"/>',
+  template: '<FooterStoryBook v-bind="args"/>',
 });
 
 export const FooterComponent = Template.bind({});
+
+FooterComponent.args = {
+  copyrightText: '@COPYRIGHT 2024',
+};
