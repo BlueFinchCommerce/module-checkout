@@ -19,6 +19,10 @@
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
     >
+      <Recaptcha
+        id="placeOrder"
+        location="adyenDropIn"
+      />
       <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
       <PrivacyPolicy />
     </teleport>
@@ -61,6 +65,7 @@ import Agreements from '@/components/Core/ContentComponents/Agreements/Agreement
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Services
@@ -84,6 +89,7 @@ export default {
     Loader,
     PrivacyPolicy,
     Payment,
+    Recaptcha,
     TextField,
   },
   props: {
@@ -183,7 +189,7 @@ export default {
             .then(getAdyenPaymentStatus)
             .then((response) => this.handlePaymentStatus(response, dropin))
             .catch((error) => {
-              this.displayError(dropin, error.response?.data?.message).bind(this);
+              this.displayError(dropin, error.message).bind(this);
               throw Error(error);
             });
         } else {

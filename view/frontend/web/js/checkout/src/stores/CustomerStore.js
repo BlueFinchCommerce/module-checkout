@@ -15,7 +15,7 @@ import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
 import formatAddress from '@/helpers/addresses/formatAddress';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getEmptyAddress from '@/helpers/addresses/getEmptyAddress';
-import getMaskedId from '@/helpers/cart/getMaskedId';
+import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
@@ -358,7 +358,7 @@ export default defineStore('customerStore', {
     },
 
     checkForGuestUser() {
-      const maskedId = getMaskedId();
+      const maskedId = getLocalMaskedId();
       if (maskedId) {
         this.setMaskedId(maskedId);
       }

@@ -3,6 +3,8 @@
     background: var(--radio-input-wrapper__background-color);
     border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
     border-radius: var(--radio-input-wrapper__border-radius);
+    display: grid;
+    gap: var(--indent__base);
     margin-top: var(--indent__base);
     padding: var(--indent__base);
 
@@ -13,10 +15,6 @@
     &.active {
       background: var(--radio-input-wrapper__background-color-active);
       border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
-    }
-
-    &-button {
-      margin-top: var(--indent__base);
     }
   }
 }

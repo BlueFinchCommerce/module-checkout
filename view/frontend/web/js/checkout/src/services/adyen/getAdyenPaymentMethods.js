@@ -1,6 +1,5 @@
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 
 function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
@@ -16,12 +15,12 @@ function transformGraphqlExtraDetails(paymentMethodsExtraDetails) {
 }
 
 export default async () => {
-  const { maskedId } = useCartStore();
+  const { maskedId, getMaskedId } = useCartStore();
   const { storeCode } = useConfigStore();
 
   let cartId;
   if (!maskedId) {
-    cartId = await getMaskedIdFromGraphQl();
+    cartId = await getMaskedId();
   } else {
     cartId = maskedId;
   }

@@ -1,12 +1,14 @@
 <template>
   <div
     v-if="getTypeByPlacement(id)"
-    :id="id"
+    :id="location"
+    class="recaptcha-container"
   />
 </template>
 <script>
 import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Types
@@ -20,8 +22,14 @@ export default {
       required: true,
       default: '',
     },
+    location: {
+      type: String,
+      required: true,
+      default: '',
+    },
   },
   computed: {
+    ...mapState(usePaymentStore, ['paymentEmitter']),
     ...mapState(useRecaptchaStore, ['v2CheckboxKey', 'v2InvisibleKey', 'v3Invisible']),
   },
   async created() {
@@ -43,13 +51,18 @@ export default {
     } else if (recapchaType === recapchaTypes.recaptchaV3) {
       this.renderV3();
     }
+
+    this.paymentEmitter.on('paymentMethodSelected', () => this.resetToken(this.id));
+  },
+  unmounted() {
+    this.paymentEmitter.off('paymentMethodSelected', () => this.resetToken(this.id));
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken']),
+    ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken', 'resetToken']),
 
     renderV2() {
-      window.grecaptcha.render(this.id, {
+      window.grecaptcha.render(this.location, {
         sitekey: this.v2CheckboxKey,
         callback: (token) => {
           this.setToken(this.id, token);
@@ -61,7 +74,7 @@ export default {
     },
 
     renderV2Invisible() {
-      window.grecaptcha.render(this.id, {
+      window.grecaptcha.render(this.location, {
         sitekey: this.v2InvisibleKey,
         size: 'invisible',
         callback: (token) => {
@@ -84,3 +97,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/components/Steps/PaymentPage/Recaptcha/styles";
+</style>
