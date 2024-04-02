@@ -4,7 +4,10 @@ export default (sameAsShipping = false) => {
     street: ['20 Middle St', ''],
     city: 'Brighton and Hove',
     region: '',
-    country_id: '',
+    country: {
+      code: 'GB',
+      label: 'GB',
+    },
     postcode: 'BN1 1AL',
     company: '',
     telephone: '01273 030390',

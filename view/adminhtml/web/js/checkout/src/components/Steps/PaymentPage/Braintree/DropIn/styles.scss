@@ -8,6 +8,7 @@
   &__title {
     display: flex;
     padding-bottom: var(--indent__s);
+    margin-top: var(--indent__base); // Only for UI designer
     margin-bottom: var(--braintree-payment-title-margin, 0);
     align-items: center;
 

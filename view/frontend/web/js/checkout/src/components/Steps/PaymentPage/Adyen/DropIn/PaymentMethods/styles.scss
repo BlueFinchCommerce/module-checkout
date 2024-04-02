@@ -43,7 +43,7 @@
     .adyen-checkout__payment-method__header__title {
       background: var(--adyen-saved-card__background-color);
       border: var(--adyen-saved-card__border);
-      border-radius: var(--base__border-radius);
+      border-radius: var(--selectable__border-radius);
       box-shadow: none;
       color: var(--adyen-saved-card__font-color);
       display: grid;
