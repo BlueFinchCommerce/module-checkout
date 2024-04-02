@@ -8402,7 +8402,7 @@ a {
 #adyen-dropin-container-stored .adyen-checkout__payment-methods-list-styled .adyen-checkout__payment-method__header__title {
   background: var(--adyen-saved-card__background-color);
   border: var(--adyen-saved-card__border);
-  border-radius: var(--base__border-radius);
+  border-radius: var(--selectable__border-radius);
   box-shadow: none;
   color: var(--adyen-saved-card__font-color);
   display: grid;
@@ -8669,8 +8669,8 @@ a {
   color: var(--adyen-font-color, var(--font__color));
 }
 #adyen-dropin-container-new .adyen-checkout__payment-method {
-  background: var(--selectable__background-color);
-  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(radio-input-wrapper__border-color);
+  background: var(--radio-input-wrapper__background-color);
+  border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
   border-radius: var(--radio-input-wrapper__border-radius);
   padding: var(--indent__base);
   position: relative;
@@ -9149,6 +9149,7 @@ a {
 .braintree-payment__title {
   display: flex;
   padding-bottom: var(--indent__s);
+  margin-top: var(--indent__base);
   margin-bottom: var(--braintree-payment-title-margin, 0);
   align-items: center;
 }
