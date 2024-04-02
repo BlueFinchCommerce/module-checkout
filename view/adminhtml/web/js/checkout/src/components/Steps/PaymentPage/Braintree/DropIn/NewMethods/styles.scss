@@ -118,9 +118,8 @@
     &__button--paypal,
     [data-braintree-id="google-pay-button"],
     [data-braintree-id="apple-pay-button"] {
-      display: flex;
-      flex-direction: column;
-      margin: 0 0 var(--indent__m);
+      display: grid;
+      gap: var(--indent__base);
 
       .braintree-store-method {
         margin: var(--indent__s) 0 var(--indent__base);
