@@ -24,6 +24,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import formatPrice from '@/helpers/payment/formatPrice';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
+import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
@@ -108,7 +109,7 @@ export default {
               buttonColor: this.google.buttonColor,
               buttonType: 'buy',
               buttonSizeMode: 'fill',
-              onClick: () => this.onClick(),
+              onClick: () => this.onClick(googlePayConfig.code),
             });
             this.$refs.braintreeGooglePay.append(button);
             this.expressPaymentsLoad();
@@ -135,7 +136,7 @@ export default {
       this.googlePayLoaded = true;
     },
 
-    onClick() {
+    onClick(type) {
       // Check that the agreements (if any) are valid.
       const isValid = this.validateAgreements();
 
@@ -171,6 +172,8 @@ export default {
         format: 'FULL',
         phoneNumberRequired: true,
       };
+
+      expressPaymentOnClickDataLayer(type);
 
       return this.googleClient.loadPaymentData(paymentDataRequest)
         .then(this.handleThreeDs)
