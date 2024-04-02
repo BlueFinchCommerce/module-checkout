@@ -21,7 +21,7 @@
     >
       <Recaptcha
         id="placeOrder"
-        location="adyenDropIn"
+        :location="`adyenDropIn${storedPayments ? 'stored' : 'new'}`"
       />
       <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
       <PrivacyPolicy />
