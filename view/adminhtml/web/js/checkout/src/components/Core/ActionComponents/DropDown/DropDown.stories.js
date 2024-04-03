@@ -1,7 +1,7 @@
 import StoryBookDropDownTrigger from './StoryBookDropDownTrigger.vue';
 
 export default {
-  title: 'Checkout Structure Components/App/DropDown',
+  title: 'Global/Components/Inputs/DropDown',
   component: StoryBookDropDownTrigger,
 };
 

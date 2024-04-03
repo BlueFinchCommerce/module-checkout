@@ -6,7 +6,10 @@ export default () => {
   if (window.geneCheckout?.paymentMethods) {
     Object.keys(window.geneCheckout.paymentMethods).forEach((paymentMethod) => {
       paymentMethods[paymentMethod] = defineAsyncComponent(() => (
-        import(window.geneCheckout.paymentMethods[paymentMethod])));
+        import(
+          /* @vite-ignore */
+          window.geneCheckout.paymentMethods[paymentMethod]
+        )));
     });
   }
 

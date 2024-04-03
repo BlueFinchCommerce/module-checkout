@@ -2,7 +2,7 @@ import Button from '@/components/Core/ActionComponents/Button/Button.vue';
 import Fixed from './Fixed.vue';
 
 export default {
-  title: 'Checkout Structure Components/App/Fixed',
+  title: 'Global/Components/Inputs/Fixed',
   component: Fixed,
   subcomponents: { Button },
   argTypes: {

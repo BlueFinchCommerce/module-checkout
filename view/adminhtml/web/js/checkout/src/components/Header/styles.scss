@@ -66,6 +66,12 @@
         width: var(--header-logo__width--desktop);
       }
     }
+
+    &.story-book {
+      .header-content {
+        padding: 20px;
+      }
+    }
   }
 }
 

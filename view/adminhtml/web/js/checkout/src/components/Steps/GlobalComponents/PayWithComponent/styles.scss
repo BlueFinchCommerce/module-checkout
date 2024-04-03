@@ -9,6 +9,17 @@
     margin: var(--indent__s) var(--indent__s);
     min-height: var(--pay-with-container-min-height, 55px);
     justify-content: var(--pay-with-justify-content, center);
+
+    &.story-book {
+      display: block;
+      text-align: center;
+
+      .pay-with__message {
+        display: block;
+        min-height: auto;
+        margin-bottom: 20px;
+      }
+    }
   }
 
   &__message {

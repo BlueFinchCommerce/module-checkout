@@ -1,27 +1,20 @@
-import PayWith from './PayWith.vue';
+import PayWithStoryBook from './StoryBookPayWith/StoryBookPayWith.vue';
 
 export default {
   title: 'Checkout Structure Components/App/Steps/PayWith',
-  component: PayWith,
-  argTypes: {
-    background: { control: 'color' },
-    width: { input: 'width' },
-    height: { input: 'height' },
-  },
+  component: PayWithStoryBook,
 };
 
 const Template = (args) => ({
-  components: { PayWith },
+  components: { PayWithStoryBook },
   setup() {
     return { args };
   },
-  template: '<PayWith v-bind="args"/>',
+  template: '<PayWithStoryBook v-bind="args"/>',
 });
 
 export const PayWithComponent = Template.bind({});
 
 PayWithComponent.args = {
-  width: '',
-  height: '',
-  background: '',
+  payWithMessage: 'pay with message',
 };
