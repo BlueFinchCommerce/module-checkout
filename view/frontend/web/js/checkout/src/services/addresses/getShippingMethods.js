@@ -1,7 +1,6 @@
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 import formatAddress from '@/helpers/addresses/formatAddress';
 import getFullCart from '@/helpers/cart/getFullCart';
@@ -37,12 +36,12 @@ const mapShippingMethods = (response) => (
 );
 
 export default async (shippingAddress) => {
-  const { maskedId } = useCartStore();
+  const { maskedId, getMaskedId } = useCartStore();
   const formattedShippingAddress = formatAddress(shippingAddress);
 
   let cartId;
   if (!maskedId) {
-    cartId = await getMaskedIdFromGraphQl();
+    cartId = await getMaskedId();
   } else {
     cartId = maskedId;
   }

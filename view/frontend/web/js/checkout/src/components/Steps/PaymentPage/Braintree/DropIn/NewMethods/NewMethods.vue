@@ -8,6 +8,11 @@
     v-if="additionalComponents !== ''"
     :to="additionalComponents"
   >
+    <ErrorMessage
+      v-if="errorMessage"
+      :message="errorMessage"
+      :attached="false"
+    />
     <CheckboxComponent
       v-if="isLoggedIn && (
         (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
@@ -19,8 +24,13 @@
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
     />
+    <Recaptcha
+      id="placeOrder"
+      location="braintreeNewMethods"
+    />
     <Agreements id="braintreeNew" />
     <PrivacyPolicy />
+
     <MyButton
       v-if="selectedMethod === 'card'"
       label="Pay"
@@ -43,8 +53,10 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 
 // Helpers
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
@@ -62,8 +74,10 @@ export default {
   components: {
     Agreements,
     CheckboxComponent,
+    ErrorMessage,
     MyButton,
     PrivacyPolicy,
+    Recaptcha,
   },
   data() {
     return {
@@ -85,6 +99,7 @@ export default {
       'google',
       'paypal',
       'vaultedMethods',
+      'errorMessage',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
@@ -231,11 +246,13 @@ export default {
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
+          this.clearSelectedPaymentMethod();
+          this.setToCurrentViewId();
+
           if (paymentError.name !== 'DropinError') {
             this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
           }
-          this.clearSelectedPaymentMethod();
-          this.setToCurrentViewId();
+
           this.paymentEmitter.emit('braintreePaymentError');
         });
     },

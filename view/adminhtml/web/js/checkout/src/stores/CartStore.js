@@ -31,7 +31,7 @@ import getDummyShippingAddresses from '@/helpers/dummyContent/getDummyShippingAd
 import getDummyCrossSellItems from '@/helpers/dummyContent/getDummyCrossSellItems';
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getMaskedId from '@/helpers/cart/getMaskedId';
+import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
@@ -44,6 +44,7 @@ export default defineStore('cartStore', {
       items: getDummyCartItems(),
       prices: getDummyCartPrices(),
       shipping_addresses: getDummyShippingAddresses(),
+      is_virtual: false,
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -60,7 +61,7 @@ export default defineStore('cartStore', {
     freeShipping: null,
     cache: {},
     cartEmitter: mitt(),
-    maskedId: getMaskedId(),
+    maskedId: getLocalMaskedId(),
     penniesDonation: {
       logo: null,
       amount: null,

@@ -89,6 +89,15 @@
           autocomplete="off"
         />
         <div class="braintree-ach-mandate">
+          <ErrorMessage
+            v-if="errorMessage"
+            :message="errorMessage"
+            :attached="false"
+          />
+          <Recaptcha
+            id="placeOrder"
+            location="braintreeAch"
+          />
           <CheckboxComponent
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
@@ -121,8 +130,10 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import SelectInput from '@/components/Core/ActionComponents/Inputs/Select/Select.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
@@ -144,8 +155,10 @@ export default {
   components: {
     Agreements,
     CheckboxComponent,
+    ErrorMessage,
     MyButton,
     PrivacyPolicy,
+    Recaptcha,
     SelectInput,
     TextField,
     TextInput,
@@ -168,9 +181,10 @@ export default {
   },
   computed: {
     ...mapState(useBraintreeStore, [
-      'merchantAccountId',
-      'clientInstance',
       'ach',
+      'clientInstance',
+      'errorMessage',
+      'merchantAccountId',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
@@ -305,6 +319,7 @@ export default {
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
+          console.log(paymentError);
           this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
           this.paymentEmitter.emit('braintreePaymentError');
         });

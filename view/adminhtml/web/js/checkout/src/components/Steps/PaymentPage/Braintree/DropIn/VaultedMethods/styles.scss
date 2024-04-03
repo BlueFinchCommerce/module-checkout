@@ -2,14 +2,10 @@
 
 .braintree-vault {
   display: grid;
+  gap: var(--indent__base);
 
   .braintree-vaulted-methods-container {
-    margin: var(--indent__m) 0;
     padding-bottom: var(--indent__m);
-
-    &:empty {
-      margin: 0;
-    }
   }
 
   &__title {

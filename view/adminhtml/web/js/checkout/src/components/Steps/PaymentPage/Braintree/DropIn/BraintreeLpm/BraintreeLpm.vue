@@ -45,6 +45,15 @@
         class="braintree-lpm-container"
       >
         <template v-if="getFilteredLpmMethods?.length">
+          <ErrorMessage
+            v-if="errorMessage"
+            :message="errorMessage"
+            :attached="false"
+          />
+          <Recaptcha
+            id="placeOrder"
+            location="braintreeLpm"
+          />
           <Agreements id="braintreeLpm" />
           <PrivacyPolicy />
           <button
@@ -81,7 +90,9 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Helpers
@@ -111,7 +122,9 @@ export default {
   },
   components: {
     Agreements,
+    ErrorMessage,
     PrivacyPolicy,
+    Recaptcha,
     TextField,
   },
   computed: {
@@ -120,6 +133,7 @@ export default {
       'clientInstance',
       'lpm',
       'getFilteredLpmMethods',
+      'errorMessage',
     ]),
     ...mapState(useConfigStore, ['currencyCode']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),

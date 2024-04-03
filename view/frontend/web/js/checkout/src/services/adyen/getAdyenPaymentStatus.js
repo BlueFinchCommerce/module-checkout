@@ -1,13 +1,12 @@
 import useCartStore from '@/stores/CartStore';
-import getMaskedIdFromGraphQl from '@/services/getMaskedIdFromGraphQl';
 import graphQlRequest from '@/services/graphQlRequest';
 
 export default async (orderId) => {
-  const { maskedId } = useCartStore();
+  const { maskedId, getMaskedId } = useCartStore();
 
   let cartId;
   if (!maskedId) {
-    cartId = await getMaskedIdFromGraphQl();
+    cartId = await getMaskedId();
   } else {
     cartId = maskedId;
   }

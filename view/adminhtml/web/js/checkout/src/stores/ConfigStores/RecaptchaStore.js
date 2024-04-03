@@ -73,6 +73,14 @@ export default defineStore('RecaptchaStore', {
       });
     },
 
+    resetToken(id) {
+      this.setData({
+        tokens: {
+          [id]: null,
+        },
+      });
+    },
+
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];

@@ -85,7 +85,6 @@ export default {
     ));
 
     const googlePayConfiguration = this.getGooglePayConfiguration(googlePayConfig);
-    console.log(googlePayConfiguration);
     const configuration = {
       paymentMethodsResponse,
       locale: this.locale,
@@ -309,43 +308,42 @@ export default {
           mapShippingAddress = this.mapAddress(shippingAddress, email, shippingPhoneNumber);
         }
 
-        try {
-          setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
-            .then(() => {
-              const stateData = JSON.stringify({
-                paymentMethod: {
-                  googlePayCardNetwork: data.paymentMethodData.info.cardNetwork,
-                  googlePayToken: data.paymentMethodData.tokenizationData.token,
-                  type: 'googlepay',
-                },
-                browserInfo: this.browserInfo,
-              });
-
-              const paymentMethod = {
-                code: 'adyen_hpp',
-                adyen_additional_data_hpp: {
-                  brand_code: 'googlepay',
-                  stateData,
-                },
-              };
-
-              return createPayment(paymentMethod)
-                .then((orderNumber) => {
-                  this.setOrderId(orderNumber);
-                  resolve({
-                    transactionState: 'SUCCESS',
-                  });
-                });
+        setAddressesOnCart(mapShippingAddress, mapBillingAddress, email)
+          .then(() => {
+            const stateData = JSON.stringify({
+              paymentMethod: {
+                googlePayCardNetwork: data.paymentMethodData.info.cardNetwork,
+                googlePayToken: data.paymentMethodData.tokenizationData.token,
+                type: 'googlepay',
+              },
+              browserInfo: this.browserInfo,
             });
-        } catch (error) {
-          resolve({
-            error: {
-              reason: 'PAYMENT_DATA_INVALID',
-              message: error.message,
-              intent: 'PAYMENT_AUTHORIZATION',
-            },
+
+            const paymentMethod = {
+              code: 'adyen_hpp',
+              adyen_additional_data_hpp: {
+                brand_code: 'googlepay',
+                stateData,
+              },
+            };
+            return paymentMethod;
+          })
+          .then(createPayment)
+          .then((orderNumber) => {
+            this.setOrderId(orderNumber);
+            resolve({
+              transactionState: 'SUCCESS',
+            });
+          })
+          .catch((error) => {
+            resolve({
+              error: {
+                reason: 'PAYMENT_DATA_INVALID',
+                message: error.message,
+                intent: 'PAYMENT_AUTHORIZATION',
+              },
+            });
           });
-        }
       });
     },
 
