@@ -140,8 +140,11 @@ export default {
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
+    console.log(paymentMethodsResponse);
+
     this.storedPaymentMethods = this.getFilteredStoredMethods(paymentMethodsResponse);
 
+    console.log(this.storedPaymentMethods);
     // If we are on a stored payment component but have no stored payments
     // available then we can return early.
     if (this.storedPayments && !this.storedPaymentMethods.length) {
@@ -242,6 +245,7 @@ export default {
         const isReady = mutationList.some((mutation) => (
           mutation.target.classList.contains('adyen-checkout__dropin--ready')
         ));
+        console.log('isReady', isReady);
         if (isReady) {
           this.modifyStoredPayments();
           observer.disconnect();
@@ -489,10 +493,7 @@ export default {
 
         this.storedPaymentMethods = this.storedPaymentMethods.map((method, index) => {
           const updatedMethod = method;
-
-          if (!updatedMethod.originalId) {
-            updatedMethod.originalId = paymentMethods[index].id;
-          }
+          updatedMethod.originalId = paymentMethods[index].id;
           return updatedMethod;
         });
 
