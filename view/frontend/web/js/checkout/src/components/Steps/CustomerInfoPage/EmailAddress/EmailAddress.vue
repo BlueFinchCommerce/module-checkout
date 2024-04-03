@@ -123,7 +123,10 @@
           v-if="!emailEntered"
           class="actions"
         >
-          <Recaptcha id="customerLogin" />
+          <Recaptcha
+            id="customerLogin"
+            location="emailAddress"
+          />
 
           <ErrorMessage
             v-if="loginErrorMessage"

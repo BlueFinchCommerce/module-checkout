@@ -7,7 +7,6 @@
     <div class="payment-page">
       <div class="payment-form">
         <ProgressBar />
-        <Recaptcha id="placeOrder" />
         <template v-if="cartGrandTotal">
           <ErrorMessage
             v-if="rvvupErrorMessage !== ''"
@@ -59,7 +58,6 @@ import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.
 import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
-import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 
 // Helpers
@@ -80,7 +78,6 @@ export default {
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
-    Recaptcha,
     ProgressBar,
     ...paymentMethods(),
   },

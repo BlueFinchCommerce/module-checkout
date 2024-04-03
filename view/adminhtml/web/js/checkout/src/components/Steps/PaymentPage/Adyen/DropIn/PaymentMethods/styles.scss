@@ -118,8 +118,13 @@
     }
 
     .adyen-checkout__payment-method__details {
-      display: block;
+      display: grid;
+      gap: var(--indent__base);
       padding: 0;
+
+      &__content {
+        margin: 0;
+      }
     }
 
     .adyen-checkout__field--securityCode {

@@ -11,8 +11,6 @@
 }
 
 .instantCheckout-block {
-  padding-bottom: var(--indent__base);
-
   p {
     font-size: var(--font__heading--mobile);
     font-weight: var(--font-weight__semibold);
@@ -25,13 +23,14 @@
 .instant-payment-buttons {
   display: grid;
   grid-gap: var(--indent__xs);
-  margin-top: var(--indent__base);
 }
 
 .details-form {
   &-header {
-    padding: var(--indent__base--mobile);
     background-color: var(--instant-checkout__background-color);
+    display: grid;
+    gap: var(--indent__base);
+    padding: var(--indent__base--mobile);
   }
 
   &-body {

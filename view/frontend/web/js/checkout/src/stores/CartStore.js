@@ -28,7 +28,7 @@ import pennies from '@/services/payments/penniesCharityBox';
 
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getMaskedId from '@/helpers/cart/getMaskedId';
+import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
@@ -54,7 +54,7 @@ export default defineStore('cartStore', {
     freeShipping: null,
     cache: {},
     cartEmitter: mitt(),
-    maskedId: getMaskedId(),
+    maskedId: getLocalMaskedId(),
     penniesDonation: {
       logo: null,
       amount: null,
@@ -106,11 +106,16 @@ export default defineStore('cartStore', {
 
     async getCart() {
       if (!this.maskedId) {
-        const maskedId = await getMaskedIdFromGraphQl();
+        const maskedId = await this.getMaskedId();
         this.setData({ maskedId });
       }
 
       await this.getCachedResponse(() => getCart().then(this.handleCartData), 'getCart');
+    },
+
+    async getMaskedId() {
+      const maskedId = await this.getCachedResponse(getMaskedIdFromGraphQl, 'getMaskedIdFromGraphQl');
+      return maskedId;
     },
 
     async getCartData() {

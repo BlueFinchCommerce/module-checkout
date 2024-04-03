@@ -11,6 +11,16 @@
       @click="selectPaymentMethod"
       @keydown="selectPaymentMethod"
     />
+    <ErrorMessage
+      v-if="errorMessage && isMethodSelected"
+      :message="errorMessage"
+      :attached="false"
+    />
+    <Recaptcha
+      v-if="isMethodSelected"
+      id="placeOrder"
+      location="freeMoCheckPayment"
+    />
     <Agreements
       v-if="isMethodSelected"
       id="freeMoPayment"
@@ -29,16 +39,19 @@
 
 <script>
 // Stores
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
+import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 
 // Services
 import createPayment from '@/services/payments/createPaymentGraphQl';
@@ -51,9 +64,11 @@ export default {
   name: 'FreePayment',
   components: {
     Agreements,
+    ErrorMessage,
     MyButton,
     PrivacyPolicy,
     RadioButton,
+    Recaptcha,
   },
   props: {
     paymentType: String,
@@ -85,6 +100,8 @@ export default {
     });
   },
   methods: {
+    ...mapActions(useAgreementStore, ['validateAgreements']),
+
     async selectPaymentMethod() {
       this.isMethodSelected = true;
 
@@ -99,15 +116,22 @@ export default {
       };
       this.buttonDisabled = true;
 
+      // Check that the agreements (if any) are valid.
+      const isValid = this.validateAgreements();
+
+      if (!isValid) {
+        this.buttonDisabled = false;
+        return;
+      }
+
       createPayment(paymentMethod)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((error) => {
-          if (error.response && error.response.data && error.response.data.message) {
-            this.errorMessage = error.response.data.message;
+          if (error.message) {
+            this.errorMessage = error.message;
           }
           this.buttonDisabled = false;
-          throw Error(error);
         });
     },
 

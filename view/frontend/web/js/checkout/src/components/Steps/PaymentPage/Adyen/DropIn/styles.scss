@@ -184,6 +184,8 @@
       }
 
       .adyen-checkout__payment-method__details {
+        display: grid;
+        gap: var(--indent__base);
         margin-right: var(--payment-method-detail-margin, 0);
 
         &__content {
