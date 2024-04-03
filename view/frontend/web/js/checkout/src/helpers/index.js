@@ -29,7 +29,7 @@ import getFallBackStaticPath from '@/helpers/storeConfigs/getFallBackStaticPath'
 import getGeneralTermsServicesId from '@/helpers/content/getGeneralTermsServicesId';
 import getLocale from '@/helpers/addresses/getLocale';
 import * as getLoqateUrls from '@/helpers/addresses/getLoqateUrls';
-import getMaskedId from '@/helpers/cart/getMaskedId';
+import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import * as getPenniesUrl from '@/helpers/payment/getPenniesUrl';
 import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
@@ -88,7 +88,7 @@ export default {
   getGeneralTermsServicesId,
   getLocale,
   getLoqateUrls,
-  getMaskedId,
+  getLocalMaskedId,
   getPaymentExtensionAttributes,
   getPenniesUrl,
   getPhoneValidation,

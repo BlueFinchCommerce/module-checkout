@@ -175,7 +175,9 @@ export default {
         return false;
       }
 
-      return expressPaymentOnClickDataLayer(resolve, reject, type);
+      expressPaymentOnClickDataLayer(type);
+
+      return resolve();
     },
 
     async onAuthorized(resolve, reject, data) {

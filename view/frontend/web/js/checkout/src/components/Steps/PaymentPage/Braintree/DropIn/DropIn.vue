@@ -1,10 +1,4 @@
 <template>
-  <ErrorMessage
-    v-if="errorMessage"
-    :message="errorMessage"
-    :attached="false"
-  />
-
   <div
     v-if="Object.values(vaultedMethods).length"
     class="braintree-payment__title"
@@ -51,7 +45,6 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import BraintreeAch from '@/components/Steps/PaymentPage/Braintree/DropIn/BraintreeAch/BraintreeAch.vue';
 import BraintreeLpm from '@/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/BraintreeLpm.vue';
 import BraintreeNewMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/NewMethods/NewMethods.vue';
-import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -62,7 +55,6 @@ export default {
     BraintreeAch,
     BraintreeLpm,
     BraintreeNewMethods,
-    ErrorMessage,
     VaultedMethods,
     Payment,
     TextField,
@@ -74,10 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useBraintreeStore, [
-      'errorMessage',
-      'vaultedMethods',
-    ]),
+    ...mapState(useBraintreeStore, ['vaultedMethods']),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(usePaymentStore, [
       'isPaymentMethodAvailable',
