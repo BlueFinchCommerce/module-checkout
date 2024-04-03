@@ -3,7 +3,7 @@ import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 export default (query, variables = {}, customHeaders = {}) => {
-  const { storeCode } = useConfigStore();
+  const { secureBaseLinkUrl, storeCode } = useConfigStore();
   const headers = {
     'content-type': 'application/json',
     ...customHeaders,
@@ -13,8 +13,10 @@ export default (query, variables = {}, customHeaders = {}) => {
     headers.Store = storeCode;
   }
 
+  const base = secureBaseLinkUrl || `${getBaseUrl()}/`;
+
   return axios({
-    url: `${getBaseUrl()}/graphql`,
+    url: `${base}graphql`,
     method: 'post',
     data: { query, variables },
     headers,
