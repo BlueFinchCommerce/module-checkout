@@ -37,7 +37,7 @@ p {
   -moz-osx-font-smoothing: grayscale;
 
   .root {
-    height: 100%;
+    min-height: -webkit-fill-available;
     background: var(--page__background-color--mobile);
     flex: 1;
 

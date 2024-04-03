@@ -23,6 +23,7 @@
   }
 
   .braintree-sheet {
+    background: var(--color__transparent);
     border: none;
     display: block;
     grid-row: var(--braintree-method-position);
