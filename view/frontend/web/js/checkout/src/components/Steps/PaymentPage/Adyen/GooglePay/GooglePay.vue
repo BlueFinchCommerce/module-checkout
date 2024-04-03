@@ -85,6 +85,7 @@ export default {
     ));
 
     const googlePayConfiguration = this.getGooglePayConfiguration(googlePayConfig);
+
     const configuration = {
       paymentMethodsResponse,
       locale: this.locale,
@@ -209,7 +210,9 @@ export default {
         return false;
       }
 
-      return expressPaymentOnClickDataLayer(resolve, reject, type);
+      expressPaymentOnClickDataLayer(type);
+
+      return resolve();
     },
 
     onPaymentDataChanged(data) {

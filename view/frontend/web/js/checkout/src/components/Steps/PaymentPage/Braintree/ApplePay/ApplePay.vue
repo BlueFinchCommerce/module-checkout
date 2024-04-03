@@ -25,6 +25,7 @@ import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
@@ -43,6 +44,7 @@ export default {
       dataCollectorInstance: null,
       applePayLoaded: true,
       shippingMethods: [],
+      applePayConfig: null,
     };
   },
 
@@ -71,11 +73,11 @@ export default {
     await this.getInitialConfig();
     await this.getCart();
 
-    const applePayConfig = this.availableMethods.find((method) => (
+    this.applePayConfig = this.availableMethods.find((method) => (
       method.code === 'braintree_applepay'
     ));
 
-    if (!applePayConfig) {
+    if (!this.applePayConfig) {
       this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
       return; // Early return if Braintree Apple Pay isn't enabled.
@@ -131,6 +133,8 @@ export default {
       if (!isValid) {
         return;
       }
+
+      expressPaymentOnClickDataLayer(this.applePayConfig.code);
 
       try {
         const requiredShippingContactFields = ['name', 'email', 'phone'];
