@@ -70,7 +70,6 @@
       "icon-diners-colour.svg",
       "icon-jcb-colour.svg",
       "shippingIcon.svg",
-      "paymentIcon.svg",
       "bancontact.svg",
       "eps.svg",
       "giropay.svg",
@@ -79,7 +78,8 @@
       "p24.svg",
       "sepa.svg",
       "sofort.svg",
-      "rvvup-payment.svg"
+      "rvvup-payment.svg",
+      "paymentIcon.svg"
     ]
   },
   "node_modules/@adyen/adyen-web/dist/es/ar.js": {

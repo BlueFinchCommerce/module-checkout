@@ -40,6 +40,7 @@ export default {
       googleClient: null,
       googlePaymentInstance: null,
       googlePayLoaded: false,
+      key: 'braintreeGooglePay',
     };
   },
   computed: {
@@ -64,6 +65,7 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
+    this.addExpressMethod(this.key);
     await this.getInitialConfig();
     await this.getCart();
 
@@ -72,17 +74,19 @@ export default {
     ));
 
     if (!googlePayConfig) {
-      this.$emit('expressPaymentsLoad', 'false');
+      // Early return if Braintree Google Pay isn't enabled.
+      this.removeExpressMethod(this.key);
       this.googlePayLoaded = true;
-      return; // Early return if Braintree Google Pay isn't enabled.
+      return;
     }
 
     await this.createClientToken();
 
     if (!this.clientToken) {
-      this.$emit('expressPaymentsLoad', 'false');
+      // Early return if Braintree PayPal isn't enabled.
+      this.removeExpressMethod(this.key);
       this.googlePayLoaded = true;
-      return; // Early return if Braintree PayPal isn't enabled.
+      return;
     }
 
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
@@ -118,7 +122,6 @@ export default {
               onClick: () => this.onClick(),
             });
             this.$refs.braintreeGooglePay.append(button);
-            this.expressPaymentsLoad();
           }
         });
     });
@@ -132,15 +135,14 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['setErrorMessage']),
+    ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
+      'setErrorMessage',
+    ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.googlePayLoaded = true;
-    },
 
     onClick() {
       // Check that the agreements (if any) are valid.

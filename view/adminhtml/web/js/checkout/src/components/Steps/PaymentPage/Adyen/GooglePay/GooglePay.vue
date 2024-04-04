@@ -42,10 +42,11 @@ export default {
   data() {
     return {
       browserInfo: {},
-      googlePayNoShippingMethods: '',
-      orderId: null,
-      loading: false,
       googlePayLoaded: false,
+      googlePayNoShippingMethods: '',
+      key: 'adyenGooglePay',
+      loading: false,
+      orderId: null,
     };
   },
   computed: {
@@ -63,26 +64,36 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
+    this.addExpressMethod(this.key);
+
     await this.getInitialConfig();
     await this.getCart();
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
-      this.$emit('expressPaymentsLoad', 'false');
       this.googlePayLoaded = true;
+      this.removeExpressMethod(this.key);
       return;
     }
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
     if (!googlePayMethod) {
-      this.googlePayLoaded = true;
       // Return early if Google Pay isn't enabled in Adyen.
+      this.googlePayLoaded = true;
+      this.removeExpressMethod(this.key);
       return;
     }
     const googlePayConfig = paymentMethodsResponse.paymentMethods.find((method) => (
       method.type === 'paywithgoogle' || method.type === 'googlepay'
     ));
+
+    // Early return is Google Pay isn't available.
+    if (!googlePayConfig) {
+      this.removeExpressMethod(this.key);
+      this.googlePayLoaded = true;
+      return;
+    }
 
     const googlePayConfiguration = this.getGooglePayConfiguration(googlePayConfig);
     const configuration = {
@@ -100,9 +111,10 @@ export default {
       .isAvailable()
       .then(() => {
         googlePayComponent.mount('#adyen-google-pay');
-        this.expressPaymentsLoad();
+        this.googlePayLoaded = true;
       })
       .catch(() => {
+        this.removeExpressMethod(this.key);
         console.warn('Google Pay is not available');
       });
 
@@ -123,16 +135,13 @@ export default {
       'getPaymentMethodsResponse',
     ]),
     ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
       'setErrorMessage',
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.googlePayLoaded = true;
-    },
 
     setOrderId(orderId) {
       this.orderId = orderId;

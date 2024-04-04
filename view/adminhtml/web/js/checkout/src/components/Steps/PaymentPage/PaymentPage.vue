@@ -12,8 +12,54 @@
             v-if="rvvupErrorMessage !== ''"
             :message="rvvupErrorMessage"
           />
-          <AdyenDropIn v-if="isAdyenAvailable" />
-          <BraintreeDropIn />
+          <template v-if="isLoggedIn && hasVaultedMethods">
+            <div
+              class="braintree-payment__title"
+            >
+              <Payment
+                class="braintree-payment__icon"
+                fill="black"
+              />
+              <TextField
+                class="braintree-payment__header"
+                :text="storedStepText"
+              />
+              <div class="divider-line" />
+            </div>
+            <VaultedMethods
+              v-if="isPaymentMethodAvailable('braintree_cc_vault')"
+              :key="`braintreeStoredMethods-${paymentKey}`"
+            />
+            <AdyenPaymentMethods
+              v-if="adyenVaultEnabled"
+              id="adyen-dropin-container-stored"
+              :key="`adyenStoredMethods-${paymentKey}`"
+              :stored-payments="true"
+            />
+          </template>
+
+          <div
+            class="braintree-payment__title"
+          >
+            <Payment
+              class="braintree-payment__icon"
+              fill="black"
+            />
+            <TextField
+              class="braintree-payment__header"
+              :text="paymentStepText"
+            />
+            <div class="divider-line" />
+          </div>
+          <AdyenDropIn
+            v-if="isAdyenAvailable"
+            :key="`adyenNewMethods-${paymentKey}`"
+          />
+          <BraintreeDropIn :key="`braintreeNewMethods-${paymentKey}`" />
+          <RvvupPayByBank
+            v-if="rvvupPaymentsActive"
+            :key="`rvvupNewMethods-${paymentKey}`"
+          />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
               :payment-type="'checkmo'"
@@ -30,7 +76,7 @@
           v-else
           :payment-type="'free'"
           :title="getPaymentMethodTitle('free')
-          ? getPaymentMethodTitle('free') : $t('paymentStep.freePaymentLabel')"
+            ? getPaymentMethodTitle('free') : $t('paymentStep.freePaymentLabel')"
         />
       </div>
     </div>
@@ -42,6 +88,7 @@ import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
+import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
@@ -49,6 +96,7 @@ import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import SavedDeliveryAddress from
   '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
 import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
+import AdyenPaymentMethods from '@/components/Steps/PaymentPage/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
 import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
@@ -57,7 +105,10 @@ import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.
 import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
@@ -68,18 +119,28 @@ export default {
     SavedDeliveryAddress,
     SavedShippingMethod,
     AdyenDropIn,
+    AdyenPaymentMethods,
     Rewards,
     FreeMOCheckPayment,
     RvvupPayByBank,
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
+    Payment,
     ProgressBar,
+    TextField,
+    VaultedMethods,
     ...paymentMethods(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
+      storedStepText: '',
+      paymentStepText: '',
+      paymentKey: 0,
+      paymentStepTextStoredId: 'gene-bettercheckout-paymentstep-text-stored',
+      paymentStepTextNewId: 'gene-bettercheckout-paymentstep-text-new',
+      paymentStepTextGuestId: 'gene-bettercheckout-paymentstep-text-guest',
     };
   },
   computed: {
@@ -89,16 +150,34 @@ export default {
       'rewardsEnabled',
       'rvvupPaymentsActive',
     ]),
-    ...mapState(useAdyenStore, ['isAdyenAvailable']),
+    ...mapState(useCustomerStore, ['isLoggedIn']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
+      'hasVaultedMethods',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
       'rvvupErrorMessage',
     ]),
-    ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
+    ...mapState(useCartStore, ['cart', 'cartEmitter', 'cartGrandTotal']),
   },
   async created() {
+    // The titles need to be reflective of the state we're in.
+    this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+        || this.$t('paymentStep.titleStored');
+
+    if (this.hasVaultedMethods) {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
+        || this.$t('paymentStep.titleNew');
+    } else {
+      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
+          || this.$t('paymentStep.titleGuest');
+    }
+
+    document.addEventListener(this.paymentStepTextStoredId, this.setPaymentStepText);
+    document.addEventListener(this.paymentStepTextNewId, this.setPaymentStepText);
+    document.addEventListener(this.paymentStepTextGuestId, this.setPaymentStepText);
+
     this.additionalPaymentMethods = Object.keys(paymentMethods());
   },
   methods: {
@@ -106,6 +185,25 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
+
+    setPaymentStepText(event) {
+      if (event?.detail?.value) {
+        if (event.detail.customEventId === this.paymentStepTextStoredId) {
+          this.storedStepText = event.detail.value;
+        } else {
+          this.paymentStepText = event.detail.value;
+        }
+        return;
+      }
+
+      if (this.hasVaultedMethods) {
+        this.storedStepText = this.$t('paymentStep.titleStored');
+        this.paymentStepText = this.$t('paymentStep.titleNew');
+      } else {
+        this.paymentStepText = this.$t('paymentStep.titleGuest');
+      }
+    },
+
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
       element.classList.add('details-active');

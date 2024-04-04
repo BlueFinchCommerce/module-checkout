@@ -87,6 +87,13 @@ export default {
       return;
     }
 
+    if (!this.clientToken) {
+      // Early return if Braintree PayPal isn't enabled.
+      this.paypalLoaded = true;
+      this.removeExpressMethod(this.key);
+      return;
+    }
+
     this.applePayAvailable = true;
     this.applePayLoaded = false;
 

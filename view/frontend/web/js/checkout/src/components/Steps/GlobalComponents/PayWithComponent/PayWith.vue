@@ -86,8 +86,6 @@ import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
-
 // Icons
 import ApplePaySvg from '@/icons/payments/colour/icon-applepay-colour.svg';
 import GooglePaySvg from '@/icons/payments/colour/icon-googlepay-colour.svg';
@@ -105,9 +103,6 @@ import JCBSvg from '@/icons/payments/colour/icon-jcb-colour.svg';
 
 export default {
   name: 'PayWith',
-  components: {
-    TextField,
-  },
   props: {
     width: {
       type: String,

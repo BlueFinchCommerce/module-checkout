@@ -8,7 +8,6 @@ export default defineStore('adyenStore', {
   state: () => ({
     cache: {},
     clientToken: null,
-    vaultActive: false,
     paymentTypes: [],
     adyenEnvironmentMode: 'live',
     adyenVaultEnabled: false,
@@ -82,6 +81,12 @@ export default defineStore('adyenStore', {
           paymentTypes,
         });
       });
+
+      if (paymentMethodsResponse.storedPaymentMethods) {
+        const paymentStore = usePaymentStore();
+
+        paymentStore.setHasVaultedMethods();
+      }
 
       this.loadingPaymentMethods = false;
       return paymentMethodsResponse;
