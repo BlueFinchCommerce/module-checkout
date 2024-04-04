@@ -3,16 +3,6 @@
     :style="style"
     class="pay-with__container"
   >
-    <TextField
-      v-if="isExpressPaymentsVisible"
-      class="pay-with__message"
-      :text="$t('payWithBlockTitle')"
-    />
-    <TextField
-      v-else
-      class="pay-with__message"
-      :text="$t('payNoExpressWithBlockTitle')"
-    />
     <template v-if="isAdyenAvailable">
       <div>
         <ul
@@ -128,9 +118,6 @@ export default {
     background: {
       type: String,
     },
-    isExpressPaymentsVisible: {
-      type: Boolean,
-    },
   },
   setup(props) {
     const reactiveProps = reactive(props);
@@ -145,7 +132,7 @@ export default {
   computed: {
     ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
-    ...mapState(usePaymentStore, ['availableMethods', 'getPaymentPriority', 'isPaymentMethodAvailable']),
+    ...mapState(usePaymentStore, ['availableMethods']),
     ApplePayIcon() {
       return `${getStaticUrl(ApplePaySvg)}`;
     },

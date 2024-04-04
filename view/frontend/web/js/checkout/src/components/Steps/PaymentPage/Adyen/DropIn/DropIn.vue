@@ -1,12 +1,6 @@
 <template>
   <div :class="loadingPaymentMethods ? 'text-loading' : ''">
     <AdyenPaymentMethods
-      v-if="isLoggedIn && adyenVaultEnabled"
-      :id="storedPaymentsId"
-      :key="`storePayments-${storedKey}`"
-      :stored-payments="true"
-    />
-    <AdyenPaymentMethods
       id="adyen-dropin-container-new"
       :key="`adyenPayments-${adyenKey}`"
     />
@@ -17,7 +11,6 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
-import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
@@ -32,16 +25,11 @@ export default {
   },
   data() {
     return {
-      errorMessage: '',
-      orderId: null,
-      storedPaymentsId: 'adyen-dropin-container-stored',
       adyenKey: 0,
-      storedKey: 0,
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods']),
-    ...mapState(useCartStore, ['cartEmitter']),
+    ...mapState(useAdyenStore, ['loadingPaymentMethods']),
     ...mapState(useCustomerStore, [
       'customer',
       'isLoggedIn',
@@ -50,12 +38,6 @@ export default {
   },
   async created() {
     await this.getInitialConfig();
-
-    this.cartEmitter.on('cartUpdated', () => {
-      this.clearPaymentReponseCache();
-      this.storedKey += 1;
-      this.adyenKey += 1;
-    });
 
     const gtmStore = useGtmStore();
     gtmStore.trackGtmEvent({

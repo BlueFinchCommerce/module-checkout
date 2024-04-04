@@ -41,7 +41,6 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
-import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
@@ -82,7 +81,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cartEmitter']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
     ...mapState(useCustomerStore, [
       'customer',

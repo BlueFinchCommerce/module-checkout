@@ -45,6 +45,7 @@ export default {
       applePayLoaded: true,
       shippingMethods: [],
       applePayConfig: null,
+      key: 'braintreeApplePay',
     };
   },
 
@@ -70,6 +71,8 @@ export default {
       return;
     }
 
+    this.addExpressMethod(this.key);
+
     await this.getInitialConfig();
     await this.getCart();
 
@@ -78,9 +81,10 @@ export default {
     ));
 
     if (!this.applePayConfig) {
-      this.$emit('expressPaymentsLoad', 'false');
+      // Early return if Braintree Apple Pay isn't enabled.
       this.applePayLoaded = true;
-      return; // Early return if Braintree Apple Pay isn't enabled.
+      this.removeExpressMethod(this.key);
+      return;
     }
 
     this.applePayAvailable = true;
@@ -101,8 +105,7 @@ export default {
         applePayInstance.merchantIdentifier,
       ).then(() => {
         this.applePayInstance = markRaw(applePayInstance);
-
-        this.expressPaymentsLoad();
+        this.applePayLoaded = true;
       });
     });
 
@@ -117,6 +120,8 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
       'setErrorMessage',
     ]),
     ...mapActions(useCartStore, ['getCart']),
@@ -193,11 +198,6 @@ export default {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
         type === 'applepay'
       ));
-    },
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.applePayLoaded = true;
     },
 
     async onAuthorized(data, session) {

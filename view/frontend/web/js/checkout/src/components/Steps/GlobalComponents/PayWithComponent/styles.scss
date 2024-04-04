@@ -22,21 +22,6 @@
     }
   }
 
-  &__message {
-    font-size: var(--font__heading--mobile);
-    font-weight: var(--font-weight__medium);
-    color: var(--font__color);
-    font-family: var(--font-family__header);
-    position: relative;
-    display: var(--pay-with-message-display, none);
-    align-items: center;
-    margin-bottom: var(--pay-with-text-margin-bottom, 0);
-    max-width: var(--pay-with-width, unset);
-    text-align: var(--pay-with-text-align, unset);
-    line-height: var(--pay-with-line-height, unset);
-    min-height: var(--pay-with-message-height, 65px);
-  }
-
   &__column {
     align-items: center;
     display: flex;
