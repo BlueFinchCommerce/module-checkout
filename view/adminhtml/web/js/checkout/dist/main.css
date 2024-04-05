@@ -8985,7 +8985,18 @@ a {
   margin-left: 0;
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__notice-of-collection {
+  pointer-events: none;
   flex: 100%;
+}
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__notice-of-collection a {
+  color: var(--button__link-font-color);
+  font-size: var(--button__link-font-size);
+  font-weight: var(--button__link-font-weight);
+  text-decoration: var(--button__link-text-decoration);
+}
+#gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__notice-of-collection a:hover, #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__notice-of-collection a:focus, #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--form .braintree-form__notice-of-collection a:focus-visible {
+  font-weight: var(--button__link-font-weight-focus);
+  color: var(--button__link-font-color-hover);
 }
 #gene-better-checkout-root .braintree-drop-in .braintree-sheet__content--button {
   min-height: 0;

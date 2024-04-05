@@ -101,7 +101,21 @@
           }
 
           &__notice-of-collection {
+            pointer-events: none; // Disabled buttons for UI designer only
             flex: 100%;
+            a {
+              color: var(--button__link-font-color);
+              font-size: var(--button__link-font-size);
+              font-weight: var(--button__link-font-weight);
+              text-decoration: var(--button__link-text-decoration);
+
+              &:hover,
+              &:focus,
+              &:focus-visible {
+                font-weight: var(--button__link-font-weight-focus);
+                color: var(--button__link-font-color-hover);
+              }
+            }
           }
         }
       }
