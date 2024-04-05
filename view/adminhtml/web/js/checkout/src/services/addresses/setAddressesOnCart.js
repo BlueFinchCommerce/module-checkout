@@ -1,9 +1,14 @@
 import useCartStore from '@/stores/CartStore';
+import useCustomerStore from '@/stores/CustomerStore';
 import graphQlRequest from '@/services/graphQlRequest';
 import getFullCart from '@/helpers/cart/getFullCart';
 import deepClone from '@/helpers/addresses/deepClone';
 
 const formatAddress = (address) => {
+  if (!address) {
+    return address;
+  }
+
   const clonedAddress = deepClone(address);
 
   // Format region.
@@ -28,6 +33,9 @@ const formatAddress = (address) => {
   delete clonedAddress.default_shipping;
   delete clonedAddress.default_billing;
   delete clonedAddress.country;
+  delete clonedAddress.available_shipping_methods;
+  delete clonedAddress.save_in_address_book;
+  delete clonedAddress.selected_shipping_method;
 
   clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
 
@@ -36,16 +44,21 @@ const formatAddress = (address) => {
 
 export default async (shippingAddress, billingAddress, email = false) => {
   const { maskedId } = useCartStore();
+  const { isLoggedIn } = useCustomerStore();
 
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-      $shippingAddresses: [ShippingAddressInput]!,
+
+      ${shippingAddress && shippingAddress.firstname ? `
+        $shippingAddresses: [ShippingAddressInput]!,
+        ` : ''}
+
       $billingAddress: BillingAddressInput!
-      ${email ? '$email: String!' : ''}
+      ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
 
-      ${email ? `
+      ${email && !isLoggedIn ? `
         setGuestEmailOnCart(
           input: {
             cart_id: $cartId
@@ -57,16 +70,17 @@ export default async (shippingAddress, billingAddress, email = false) => {
           }
         }` : ''}
 
-      setShippingAddressesOnCart(
-        input: {
-          cart_id: $cartId
-          shipping_addresses: $shippingAddresses
-        }
-      ) {
-        cart {
-          ${getFullCart()}
-        }
-      }
+      ${shippingAddress && shippingAddress.firstname ? `
+        setShippingAddressesOnCart(
+          input: {
+            cart_id: $cartId
+            shipping_addresses: $shippingAddresses
+          }
+        ) {
+          cart {
+            id
+          }
+        }` : ''}
 
       setBillingAddressOnCart(
         input: {
@@ -75,7 +89,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
         }
       ) {
         cart {
-          id
+          ${getFullCart()}
         }
       }
     }`;
@@ -97,6 +111,6 @@ export default async (shippingAddress, billingAddress, email = false) => {
         throw new Error(response.errors[0].message);
       }
 
-      return response.data.setShippingAddressesOnCart;
+      return response.data.setBillingAddressOnCart;
     });
 };

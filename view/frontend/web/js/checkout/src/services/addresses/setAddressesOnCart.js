@@ -1,4 +1,5 @@
 import useCartStore from '@/stores/CartStore';
+import useCustomerStore from '@/stores/CustomerStore';
 import graphQlRequest from '@/services/graphQlRequest';
 import getFullCart from '@/helpers/cart/getFullCart';
 import deepClone from '@/helpers/addresses/deepClone';
@@ -43,6 +44,7 @@ const formatAddress = (address) => {
 
 export default async (shippingAddress, billingAddress, email = false) => {
   const { maskedId } = useCartStore();
+  const { isLoggedIn } = useCustomerStore();
 
   const request = `
     mutation SetAddresses(
@@ -53,10 +55,10 @@ export default async (shippingAddress, billingAddress, email = false) => {
         ` : ''}
 
       $billingAddress: BillingAddressInput!
-      ${email ? '$email: String!' : ''}
+      ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
 
-      ${email ? `
+      ${email && !isLoggedIn ? `
         setGuestEmailOnCart(
           input: {
             cart_id: $cartId
