@@ -11,6 +11,7 @@
     -webkit-appearance: -apple-pay-button;
     border-radius: var(--button__border-radius);
     height: var(--braintree-express-button-height, 48px);
+    cursor: pointer;
   }
   .braintree-apple-pay-black {
     -apple-pay-button-style: black;
