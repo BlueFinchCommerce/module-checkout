@@ -53,6 +53,7 @@
 }
 
 .adyen-checkout__button {
+  pointer-events: none; // Disabled buttons for UI designer only
   background: var(--button-adyen-pay__background-color);
   border-radius: var(--button-adyen-pay__border-radius);
   box-shadow: var(--button-primary__border-box-shadow);
@@ -189,6 +190,7 @@
         margin-right: var(--payment-method-detail-margin, 0);
 
         &__content {
+          pointer-events: none; // Disabled buttons for UI designer only
           display: block;
           margin: var(--indent__base) 0 0;
         }

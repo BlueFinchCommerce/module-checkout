@@ -1,10 +1,14 @@
 <template>
-  <div
-    id="braintree-paypal"
-    ref="braintreePayPal"
-    :class="!paypalLoaded ? 'text-loading' : ''"
-  />
-  <div id="braintree-threeds-container" />
+  <div>
+    <!-- For UI designer only fake button and classes added to top functionality -->
+    <div :class="'fake-button'" />
+    <div
+      id="braintree-paypal"
+      ref="braintreePayPal"
+      :class="!paypalLoaded ? 'text-loading' : 'ui-designer-disabled'"
+    />
+    <div id="braintree-threeds-container" />
+  </div>
 </template>
 
 <script>

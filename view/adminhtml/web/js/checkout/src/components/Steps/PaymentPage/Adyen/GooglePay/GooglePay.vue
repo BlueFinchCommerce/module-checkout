@@ -22,15 +22,15 @@ import '@adyen/adyen-web/dist/adyen.css';
 
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
-import formatPrice from '@/helpers/payment/formatPrice';
+// import formatPrice from '@/helpers/payment/formatPrice';
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
-import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
+// import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
-import getShippingMethods from '@/services/addresses/getShippingMethods';
+// import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
@@ -196,90 +196,91 @@ export default {
           merchantId: googlePayConfig.configuration.merchantId,
         },
         onAuthorized: this.handeOnAuthorized,
-        onClick: (resolve, reject) => this.onClick(resolve, reject, googlePayConfig.type),
+        // onClick: (resolve, reject) => this.onClick(resolve, reject, googlePayConfig.type),
         onSubmit: () => {},
       };
     },
 
-    onClick(resolve, reject, type) {
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+    // Removed functionality for UI designer
+    // onClick(resolve, reject, type) {
+    //   // Check that the agreements (if any) are valid.
+    //   const isValid = this.validateAgreements();
 
-      if (!isValid) {
-        return false;
-      }
+    //   if (!isValid) {
+    //     return false;
+    //   }
 
-      return expressPaymentOnClickDataLayer(resolve, reject, type);
-    },
+    //   return expressPaymentOnClickDataLayer(resolve, reject, type);
+    // },
 
-    onPaymentDataChanged(data) {
-      return new Promise((resolve) => {
-        const address = {
-          country_code: data.shippingAddress.countryCode,
-          postcode: data.shippingAddress.postalCode,
-          region: data.shippingAddress.administrativeArea,
-          region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
-          street: ['0'],
-        };
+    // onPaymentDataChanged(data) {
+    //   return new Promise((resolve) => {
+    //     const address = {
+    //       country_code: data.shippingAddress.countryCode,
+    //       postcode: data.shippingAddress.postalCode,
+    //       region: data.shippingAddress.administrativeArea,
+    //       region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
+    //       street: ['0'],
+    //     };
 
-        getShippingMethods(address).then(async (response) => {
-          const shippingMethods = response.map((shippingMethod) => {
-            const description = shippingMethod.carrier_title
-              ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
-              : formatPrice(shippingMethod.price_incl_tax.value);
+    //     getShippingMethods(address).then(async (response) => {
+    //       const shippingMethods = response.map((shippingMethod) => {
+    //         const description = shippingMethod.carrier_title
+    //           ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
+    //           : formatPrice(shippingMethod.price_incl_tax.value);
 
-            return {
-              id: shippingMethod.method_code,
-              label: shippingMethod.method_title,
-              description,
-            };
-          });
+    //         return {
+    //           id: shippingMethod.method_code,
+    //           label: shippingMethod.method_title,
+    //           description,
+    //         };
+    //       });
 
-          // Filter out nominated day as this isn't available inside of Google Pay.
-          const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+    //       // Filter out nominated day as this isn't available inside of Google Pay.
+    //       const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
 
-          // Any error message means we need to exit by resolving with an error state.
-          if (!fShippingMethods.length) {
-            resolve({
-              error: {
-                reason: 'SHIPPING_ADDRESS_UNSERVICEABLE',
-                message: this.googlePayNoShippingMethods,
-                intent: 'SHIPPING_ADDRESS',
-              },
-            });
-            return;
-          }
+    //       // Any error message means we need to exit by resolving with an error state.
+    //       if (!fShippingMethods.length) {
+    //         resolve({
+    //           error: {
+    //             reason: 'SHIPPING_ADDRESS_UNSERVICEABLE',
+    //             message: this.googlePayNoShippingMethods,
+    //             intent: 'SHIPPING_ADDRESS',
+    //           },
+    //         });
+    //         return;
+    //       }
 
-          const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? response[0]
-            : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
+    //       const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
+    //         ? response[0]
+    //         : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
 
-          await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
-          const paymentDataRequestUpdate = {
-            newShippingOptionParameters: {
-              defaultSelectedOptionId: selectedShipping.method_code,
-              shippingOptions: fShippingMethods,
-            },
-            newTransactionInfo: {
-              displayItems: [
-                {
-                  label: 'Shipping',
-                  type: 'LINE_ITEM',
-                  price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
-                  status: 'FINAL',
-                },
-              ],
-              currencyCode: this.cart.prices.grand_total.currency,
-              totalPriceStatus: 'FINAL',
-              totalPrice: this.cart.prices.grand_total.value.toString(),
-              totalPriceLabel: 'Total',
-              countryCode: this.countryCode,
-            },
-          };
-          resolve(paymentDataRequestUpdate);
-        });
-      });
-    },
+    //       await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+    //       const paymentDataRequestUpdate = {
+    //         newShippingOptionParameters: {
+    //           defaultSelectedOptionId: selectedShipping.method_code,
+    //           shippingOptions: fShippingMethods,
+    //         },
+    //         newTransactionInfo: {
+    //           displayItems: [
+    //             {
+    //               label: 'Shipping',
+    //               type: 'LINE_ITEM',
+    //               price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
+    //               status: 'FINAL',
+    //             },
+    //           ],
+    //           currencyCode: this.cart.prices.grand_total.currency,
+    //           totalPriceStatus: 'FINAL',
+    //           totalPrice: this.cart.prices.grand_total.value.toString(),
+    //           totalPriceLabel: 'Total',
+    //           countryCode: this.countryCode,
+    //         },
+    //       };
+    //       resolve(paymentDataRequestUpdate);
+    //     });
+    //   });
+    // },
 
     onPaymentAuthorized(data) {
       return new Promise((resolve) => {

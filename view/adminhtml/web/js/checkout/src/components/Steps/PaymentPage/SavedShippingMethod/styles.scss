@@ -18,6 +18,7 @@
   min-height: var(--saved-shipping-min-height, 75px); //prevent jumping on page load
 
   &-link {
+    cursor: pointer;
     color: var(--details-title-color, var(--color__primary-dark-blue));
     display: block;
     text-decoration: none;

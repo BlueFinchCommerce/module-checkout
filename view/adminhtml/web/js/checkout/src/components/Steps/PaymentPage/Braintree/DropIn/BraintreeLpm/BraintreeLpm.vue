@@ -81,6 +81,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
+// import braintree from 'braintree-web';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
@@ -102,30 +103,29 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Services
-import createPayment from '@/services/payments/createPaymentRest';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import createPayment from '@/services/payments/createPaymentRest';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // Images
 import images from '@/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons';
 
 // External
-import braintree from 'braintree-web';
 
 export default {
   name: 'BraintreeLpm',
-  data() {
-    return {
-      loading: false,
-      selectedMethod: null,
-      lpmLocation: null,
-    };
-  },
   components: {
     Agreements,
     ErrorMessage,
     PrivacyPolicy,
     Recaptcha,
     TextField,
+  },
+  data() {
+    return {
+      loading: false,
+      selectedMethod: null,
+      lpmLocation: null,
+    };
   },
   computed: {
     ...mapState(useBraintreeStore, [
@@ -170,101 +170,101 @@ export default {
       this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-lpm' });
     },
 
-    async initialiseLpm(allowedMethod) {
+    async initialiseLpm() {
       this.clearErrorMessage();
-      this.paymentEmitter.emit('braintreePaymentStart');
+      //   this.paymentEmitter.emit('braintreePaymentStart');
 
-      if (!this.validateAgreements()) {
-        this.paymentEmitter.emit('braintreePaymentError');
-        return;
-      }
+      //   if (!this.validateAgreements()) {
+      //     this.paymentEmitter.emit('braintreePaymentError');
+      //     return;
+      //   }
 
-      const lpmInstance = await braintree.localPayment.create({
-        client: this.clientInstance,
-        merchantAccountId: this.merchantAccountId,
-      });
-      const isVirtual = this.cart.is_virtual;
+      //   const lpmInstance = await braintree.localPayment.create({
+      //     client: this.clientInstance,
+      //     merchantAccountId: this.merchantAccountId,
+      //   });
+      //   const isVirtual = this.cart.is_virtual;
 
-      const shippingAddress = this.cart.shipping_addresses[0];
-      const address = {};
+      //   const shippingAddress = this.cart.shipping_addresses[0];
+      //   const address = {};
 
-      address.countryCode = shippingAddress.country.code;
+      //   address.countryCode = shippingAddress.country.code;
 
-      if (!isVirtual) {
-        const [streetAddress, extendedAddress] = shippingAddress.street;
-        address.streetAddress = streetAddress;
-        address.extendedAddress = extendedAddress;
-        address.locality = shippingAddress.city;
-        address.postalCode = shippingAddress.postcode;
-        address.region = shippingAddress.region.code;
-      }
+      //   if (!isVirtual) {
+      //     const [streetAddress, extendedAddress] = shippingAddress.street;
+      //     address.streetAddress = streetAddress;
+      //     address.extendedAddress = extendedAddress;
+      //     address.locality = shippingAddress.city;
+      //     address.postalCode = shippingAddress.postcode;
+      //     address.region = shippingAddress.region.code;
+      //   }
 
-      const billingAddress = this.cart.billing_address;
+      //   const billingAddress = this.cart.billing_address;
 
-      const paymentOptions = {
-        amount: (this.cartGrandTotal / 100).toString(),
-        currencyCode: this.currencyCode,
-        email: this.cart.email,
-        phone: billingAddress.telephone,
-        givenName: billingAddress.firstname,
-        surname: billingAddress.lastname,
-        shippingAddressRequired: !isVirtual,
-        address,
-        paymentType: allowedMethod,
-        paymentTypeCountryCode: billingAddress.country.code,
-        recurrent: false,
-        customerId: null,
-        onPaymentStart(data, start) {
-          start();
-        },
-        fallback: {
-          url: 'N/A',
-          buttonText: 'N/A',
-          cancelButtonText: 'N/A',
-          cancelUrl: 'https://google.com',
-        },
-      };
+      //   const paymentOptions = {
+      //     amount: (this.cartGrandTotal / 100).toString(),
+      //     currencyCode: this.currencyCode,
+      //     email: this.cart.email,
+      //     phone: billingAddress.telephone,
+      //     givenName: billingAddress.firstname,
+      //     surname: billingAddress.lastname,
+      //     shippingAddressRequired: !isVirtual,
+      //     address,
+      //     paymentType: allowedMethod,
+      //     paymentTypeCountryCode: billingAddress.country.code,
+      //     recurrent: false,
+      //     customerId: null,
+      //     onPaymentStart(data, start) {
+      //       start();
+      //     },
+      //     fallback: {
+      //       url: 'N/A',
+      //       buttonText: 'N/A',
+      //       cancelButtonText: 'N/A',
+      //       cancelUrl: 'https://google.com',
+      //     },
+      //   };
 
-      lpmInstance.startPayment(paymentOptions, this.paymentCallback);
-    },
+      //   lpmInstance.startPayment(paymentOptions, this.paymentCallback);
+      // },
 
-    paymentCallback(paymentError, payload) {
-      if (paymentError) {
-        switch (paymentError.code) {
-          case 'LOCAL_PAYMENT_POPUP_CLOSED':
-            this.setErrorMessage(this.$t('Local Payment popup was closed unexpectedly.'));
-            break;
-          case 'LOCAL_PAYMENT_WINDOW_OPEN_FAILED':
-            this.setErrorMessage(this.$t('Local Payment popup failed to open.'));
-            break;
-          case 'LOCAL_PAYMENT_WINDOW_CLOSED':
-            this.setErrorMessage(this.$t('Local Payment popup was closed. Payment cancelled.'));
-            break;
-          case 'LOCAL_PAYMENT_INVALID_PAYMENT_OPTION':
-            this.setErrorMessage(this.$t('Local payment options are invalid.'));
-            break;
-          case 'LOCAL_PAYMENT_CANCELED':
-            this.setErrorMessage(this.$t('Local payment was cancelled.'));
-            break;
-          default:
-            this.setErrorMessage(paymentError.message);
-            break;
-        }
+      // paymentCallback(paymentError, payload) {
+      //   if (paymentError) {
+      //     switch (paymentError.code) {
+      //       case 'LOCAL_PAYMENT_POPUP_CLOSED':
+      //         this.setErrorMessage(this.$t('Local Payment popup was closed unexpectedly.'));
+      //         break;
+      //       case 'LOCAL_PAYMENT_WINDOW_OPEN_FAILED':
+      //         this.setErrorMessage(this.$t('Local Payment popup failed to open.'));
+      //         break;
+      //       case 'LOCAL_PAYMENT_WINDOW_CLOSED':
+      //         this.setErrorMessage(this.$t('Local Payment popup was closed. Payment cancelled.'));
+      //         break;
+      //       case 'LOCAL_PAYMENT_INVALID_PAYMENT_OPTION':
+      //         this.setErrorMessage(this.$t('Local payment options are invalid.'));
+      //         break;
+      //       case 'LOCAL_PAYMENT_CANCELED':
+      //         this.setErrorMessage(this.$t('Local payment was cancelled.'));
+      //         break;
+      //       default:
+      //         this.setErrorMessage(paymentError.message);
+      //         break;
+      //     }
 
-        this.paymentEmitter.emit('braintreePaymentError');
-        return;
-      }
+      //     this.paymentEmitter.emit('braintreePaymentError');
+      //     return;
+      //   }
 
-      const paymentData = this.getPaymentData(payload);
+      //   const paymentData = this.getPaymentData(payload);
 
-      createPayment(paymentData)
-        .then(() => refreshCustomerData(['cart']))
-        .then(this.redirectToSuccess)
-        .catch((error) => {
-          const message = error?.response?.data?.message || error.message;
-          this.setErrorMessage(message);
-          this.paymentEmitter.emit('braintreePaymentError');
-        });
+    //   createPayment(paymentData)
+    //     .then(() => refreshCustomerData(['cart']))
+    //     .then(this.redirectToSuccess)
+    //     .catch((error) => {
+    //       const message = error?.response?.data?.message || error.message;
+    //       this.setErrorMessage(message);
+    //       this.paymentEmitter.emit('braintreePaymentError');
+    //     });
     },
 
     getPaymentData(payload) {
