@@ -1,35 +1,43 @@
 export default () => (
   [
     {
-      carrier_code: 'freeshipping',
-      method_code: 'freeshipping',
-      carrier_title: 'Free Shipping',
-      method_title: 'Free',
-      amount: 0,
-      base_amount: 0,
+      amount: {
+        currency: 'USD',
+        value: 0,
+      },
       available: true,
+      carrier_code: 'freeshipping',
+      carrier_title: '1 Working Day',
       error_message: '',
+      method_code: 'freeshipping',
+      method_title: 'Free Delivery',
       price_excl_tax: {
         value: 0,
+        currency: 'USD',
       },
       price_incl_tax: {
         value: 0,
+        currency: 'USD',
       },
     },
     {
-      carrier_code: 'flatrate',
-      method_code: 'flatrate',
-      carrier_title: 'Flat Rate',
-      method_title: 'Fixed',
-      amount: 15,
-      base_amount: 15,
+      amount: {
+        currency: 'USD',
+        value: 10,
+      },
       available: true,
+      carrier_code: 'flatrate',
+      carrier_title: '2-3 Working Days',
       error_message: '',
+      method_code: 'flatrate',
+      method_title: 'Standard Delivery',
       price_excl_tax: {
-        value: 15,
+        value: 10,
+        currency: 'USD',
       },
       price_incl_tax: {
-        value: 15,
+        value: 10,
+        currency: 'USD',
       },
     },
   ]

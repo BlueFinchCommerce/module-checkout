@@ -45,7 +45,7 @@ export default () => [
     recipient_email: 'better@gene.co.uk',
     sender_name: 'Gene Commerce',
     sender_email: 'hello@gene.co.uk',
-    message: '                        ',
+    message: 'Thanks for using Better Checkout',
     amount: {
       value: 25,
     },
@@ -60,7 +60,7 @@ export default () => [
       price_range: {
         minimum_price: {
           final_price: {
-            value: 0,
+            value: 25,
           },
         },
       },
