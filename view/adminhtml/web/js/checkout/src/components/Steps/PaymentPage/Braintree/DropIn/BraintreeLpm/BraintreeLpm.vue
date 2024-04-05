@@ -81,7 +81,7 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import braintree from 'braintree-web';
+// import braintree from 'braintree-web';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
@@ -103,8 +103,8 @@ import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Services
-import createPayment from '@/services/payments/createPaymentRest';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import createPayment from '@/services/payments/createPaymentRest';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // Images
 import images from '@/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons';

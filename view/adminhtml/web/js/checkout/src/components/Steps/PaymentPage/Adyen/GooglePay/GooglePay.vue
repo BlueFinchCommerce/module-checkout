@@ -22,15 +22,15 @@ import '@adyen/adyen-web/dist/adyen.css';
 
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
-import formatPrice from '@/helpers/payment/formatPrice';
+// import formatPrice from '@/helpers/payment/formatPrice';
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
-import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
+// import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
 import createPayment from '@/services/payments/createPaymentGraphQl';
 import getAdyenPaymentStatus from '@/services/adyen/getAdyenPaymentStatus';
-import getShippingMethods from '@/services/addresses/getShippingMethods';
+// import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 

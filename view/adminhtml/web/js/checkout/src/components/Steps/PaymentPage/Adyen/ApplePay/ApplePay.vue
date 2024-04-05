@@ -18,14 +18,14 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import '@adyen/adyen-web/dist/adyen.css';
 
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
-import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
-import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
+// import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+// import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+// import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
-import createPayment from '@/services/payments/createPaymentGraphQl';
+// import createPayment from '@/services/payments/createPaymentGraphQl';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenApplePay',

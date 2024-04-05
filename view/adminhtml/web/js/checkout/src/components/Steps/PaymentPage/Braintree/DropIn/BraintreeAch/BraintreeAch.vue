@@ -144,8 +144,8 @@ import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtension
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 
 // Services
-import createPayment from '@/services/payments/createPaymentRest';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import createPayment from '@/services/payments/createPaymentRest';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
 // External
 import braintree from 'braintree-web';

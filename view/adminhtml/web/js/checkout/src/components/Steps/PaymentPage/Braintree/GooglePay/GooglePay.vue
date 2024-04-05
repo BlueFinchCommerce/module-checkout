@@ -22,13 +22,13 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import formatPrice from '@/helpers/payment/formatPrice';
-import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+// import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
-import handleServiceError from '@/helpers/validation/handleServiceError';
+// import handleServiceError from '@/helpers/validation/handleServiceError';
 
 import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
