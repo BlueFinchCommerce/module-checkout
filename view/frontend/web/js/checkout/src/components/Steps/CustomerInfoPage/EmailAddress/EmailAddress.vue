@@ -24,7 +24,6 @@
       <div :class="{ 'logged-in-email': isLoggedIn }">
         <TextInput
           ref="email"
-          v-model="customer.email"
           :error="emailError"
           :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
           data-cy="email"
@@ -38,6 +37,7 @@
           :disabled="emailEntered"
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
+          :modelValue="customer.email"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
@@ -57,6 +57,8 @@
           </button>
         </div>
       </div>
+
+      <Fastlane />
 
       <div>
         <MyButton
@@ -181,6 +183,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 
 // components
+import Fastlane from '@/components/Steps/PaymentPage/Fastlane/Fastlane.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -205,6 +208,7 @@ import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLay
 export default {
   name: 'EmailAddress',
   components: {
+    Fastlane,
     ErrorIcon,
     TextInput,
     MyButton,
@@ -269,6 +273,7 @@ export default {
       'setEmailEntered',
       'isEmailAvailable',
       'editEmail',
+      'setData',
     ]),
     ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
@@ -378,7 +383,10 @@ export default {
       this.tabKeyPressed = false;
     },
 
-    async emailAddressChange() {
+    async emailAddressChange(event) {
+      if (event) {
+        this.setData({ customer: { email: event.target.value } });
+      }
       // On changing the email address we must be focused on the element so
       // hide the error.
       this.setEmailErrorState(false);
