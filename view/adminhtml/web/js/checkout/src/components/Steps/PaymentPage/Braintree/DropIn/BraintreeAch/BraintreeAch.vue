@@ -268,61 +268,61 @@ export default {
         },
       ];
     },
-
+    // Functionality removed for UI designer only
     async startPayment() {
       this.clearErrorMessage();
-      this.paymentEmitter.emit('braintreePaymentStart');
+      // this.paymentEmitter.emit('braintreePaymentStart');
 
-      if (!this.achMandate) {
-        this.setErrorMessage('You must accept proof of authorization.');
-        this.paymentEmitter.emit('braintreePaymentError');
-        return false;
-      }
+      // if (!this.achMandate) {
+      //   this.setErrorMessage('You must accept proof of authorization.');
+      //   this.paymentEmitter.emit('braintreePaymentError');
+      //   return false;
+      // }
 
-      if (!this.validateAgreements()) {
-        this.paymentEmitter.emit('braintreePaymentError');
-        return false;
-      }
+      // if (!this.validateAgreements()) {
+      //   this.paymentEmitter.emit('braintreePaymentError');
+      //   return false;
+      // }
 
-      const mandateText = this.$t('braintree.achTerms', { websiteName: this.websiteName });
+      // const mandateText = this.$t('braintree.achTerms', { websiteName: this.websiteName });
 
-      const billingAddress = this.cart.billing_address;
+      // const billingAddress = this.cart.billing_address;
 
-      const bankDetails = {
-        routingNumber: this.routingNumber,
-        accountNumber: this.accountNumber,
-        accountType: this.accountType,
-        ownershipType: this.ownershipType,
-        billingAddress: {
-          streetAddress: billingAddress.street[0],
-          extendedAddress: billingAddress.street[1],
-          locality: billingAddress.city,
-          region: billingAddress.region.code,
-          postalCode: billingAddress.postcode,
-        },
-      };
+      // const bankDetails = {
+      //   routingNumber: this.routingNumber,
+      //   accountNumber: this.accountNumber,
+      //   accountType: this.accountType,
+      //   ownershipType: this.ownershipType,
+      //   billingAddress: {
+      //     streetAddress: billingAddress.street[0],
+      //     extendedAddress: billingAddress.street[1],
+      //     locality: billingAddress.city,
+      //     region: billingAddress.region.code,
+      //     postalCode: billingAddress.postcode,
+      //   },
+      // };
 
-      if (bankDetails.ownershipType === 'personal') {
-        bankDetails.firstName = this.firstname;
-        bankDetails.lastName = this.lastname;
-      } else {
-        bankDetails.businessName = this.businessName;
-      }
+      // if (bankDetails.ownershipType === 'personal') {
+      //   bankDetails.firstName = this.firstname;
+      //   bankDetails.lastName = this.lastname;
+      // } else {
+      //   bankDetails.businessName = this.businessName;
+      // }
 
-      return this.usBankAccount
-        .tokenize({
-          bankDetails,
-          mandateText,
-        })
-        .then(this.getPaymentData)
-        .then(createPayment)
-        .then(() => refreshCustomerData(['cart']))
-        .then(this.redirectToSuccess)
-        .catch((paymentError) => {
-          console.log(paymentError);
-          this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
-          this.paymentEmitter.emit('braintreePaymentError');
-        });
+      // return this.usBankAccount
+      //   .tokenize({
+      //     bankDetails,
+      //     mandateText,
+      //   })
+      //   .then(this.getPaymentData)
+      //   .then(createPayment)
+      //   .then(() => refreshCustomerData(['cart']))
+      //   .then(this.redirectToSuccess)
+      //   .catch((paymentError) => {
+      //     console.log(paymentError);
+      //     this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
+      //     this.paymentEmitter.emit('braintreePaymentError');
+      //   });
     },
 
     getPaymentData(payload) {

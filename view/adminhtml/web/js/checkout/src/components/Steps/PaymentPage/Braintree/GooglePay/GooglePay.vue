@@ -142,55 +142,57 @@ export default {
       this.googlePayLoaded = true;
     },
 
+    // Removed functionality for UI designer
     onClick() {
       // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
 
-      if (!isValid) {
-        return false;
-      }
+      // const isValid = this.validateAgreements();
 
-      const callbackIntents = ['PAYMENT_AUTHORIZATION'];
+      // if (!isValid) {
+      //   return false;
+      // }
 
-      if (!this.cart.is_virtual) {
-        callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
-      }
+      // const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 
-      const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
-        transactionInfo: {
-          countryCode: this.countryCode,
-          currencyCode: this.currencyCode,
-          totalPriceStatus: 'FINAL',
-          totalPrice: (this.cartGrandTotal / 100).toString(),
-        },
-        emailRequired: true,
-        shippingAddressRequired: !this.cart.is_virtual,
-        shippingAddressParameters: {
-          phoneNumberRequired: !this.cart.is_virtual,
-        },
-        shippingOptionRequired: !this.cart.is_virtual,
-        callbackIntents,
-      });
+      // if (!this.cart.is_virtual) {
+      //   callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
+      // }
 
-      const cardPaymentMethod = paymentDataRequest.allowedPaymentMethods[0];
-      cardPaymentMethod.parameters.billingAddressRequired = true;
-      cardPaymentMethod.parameters.billingAddressParameters = {
-        format: 'FULL',
-        phoneNumberRequired: true,
-      };
+      // const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
+      //   transactionInfo: {
+      //     countryCode: this.countryCode,
+      //     currencyCode: this.currencyCode,
+      //     totalPriceStatus: 'FINAL',
+      //     totalPrice: (this.cartGrandTotal / 100).toString(),
+      //   },
+      //   emailRequired: true,
+      //   shippingAddressRequired: !this.cart.is_virtual,
+      //   shippingAddressParameters: {
+      //     phoneNumberRequired: !this.cart.is_virtual,
+      //   },
+      //   shippingOptionRequired: !this.cart.is_virtual,
+      //   callbackIntents,
+      // });
 
-      return this.googleClient.loadPaymentData(paymentDataRequest)
-        .then(this.handleThreeDs)
-        .then(this.makePayment)
-        .then(() => refreshCustomerData(['cart']))
-        .then(() => { window.location.href = getSuccessPageUrl(); })
-        .catch((err) => {
-          try {
-            handleServiceError(err);
-          } catch (formattedError) {
-            this.setErrorMessage(formattedError);
-          }
-        });
+      // const cardPaymentMethod = paymentDataRequest.allowedPaymentMethods[0];
+      // cardPaymentMethod.parameters.billingAddressRequired = true;
+      // cardPaymentMethod.parameters.billingAddressParameters = {
+      //   format: 'FULL',
+      //   phoneNumberRequired: true,
+      // };
+
+      // return this.googleClient.loadPaymentData(paymentDataRequest)
+      //   .then(this.handleThreeDs)
+      //   .then(this.makePayment)
+      //   .then(() => refreshCustomerData(['cart']))
+      //   .then(() => { window.location.href = getSuccessPageUrl(); })
+      //   .catch((err) => {
+      //     try {
+      //       handleServiceError(err);
+      //     } catch (formattedError) {
+      //       this.setErrorMessage(formattedError);
+      //     }
+      //   });
     },
 
     getGooglePayMethod(paymentMethodsResponse) {

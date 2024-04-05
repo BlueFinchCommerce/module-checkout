@@ -49,6 +49,10 @@
           &__flexible-fields {
             gap: var(--indent__base);
             margin-top: var(--indent__base);
+
+            button {
+              pointer-events: none; // Disabled buttons for UI designer only
+            }
           }
 
           &__field-group {
@@ -112,6 +116,7 @@
     [data-braintree-id="google-pay-button"] button,
     [data-braintree-id="apple-pay-button"],
     &__button--venmo {
+      pointer-events: none; // Disabled buttons for UI designer only
       height: var(--button__height);
       width: 100%;
     }
@@ -119,6 +124,7 @@
     &__button--paypal,
     [data-braintree-id="google-pay-button"],
     [data-braintree-id="apple-pay-button"] {
+      pointer-events: none; // Disabled buttons for UI designer only
       display: grid;
       gap: var(--indent__base);
 

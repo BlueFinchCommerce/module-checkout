@@ -9,14 +9,14 @@ export default () => (
       city: 'Brighton and Hove',
       postcode: 'BN1 1AL',
       region: {
-        code: 'undefined',
-        label: 'undefined',
+        code: null,
+        label: null,
       },
       country: {
         code: 'GB',
         label: 'GB',
       },
-      telephone: '01273 030390',
+      telephone: '01273030390',
       available_shipping_methods: [
         {
           amount: {
@@ -25,10 +25,10 @@ export default () => (
           },
           available: true,
           carrier_code: 'freeshipping',
-          carrier_title: 'Free Shipping',
+          carrier_title: '1 Working Day',
           error_message: '',
           method_code: 'freeshipping',
-          method_title: 'Free',
+          method_title: 'Free Delivery',
           price_excl_tax: {
             value: 0,
             currency: 'USD',
@@ -45,10 +45,10 @@ export default () => (
           },
           available: true,
           carrier_code: 'flatrate',
-          carrier_title: 'Flat Rate',
+          carrier_title: '2-3 Working Days',
           error_message: '',
           method_code: 'flatrate',
-          method_title: 'Fixed',
+          method_title: 'Standard Delivery',
           price_excl_tax: {
             value: 10,
             currency: 'USD',
@@ -65,9 +65,9 @@ export default () => (
           currency: 'USD',
         },
         carrier_code: 'freeshipping',
-        carrier_title: 'Free Shipping',
+        carrier_title: '1 Working Days',
         method_code: 'freeshipping',
-        method_title: 'Free',
+        method_title: 'Free Delivery',
       },
     },
   ]
