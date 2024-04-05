@@ -58,8 +58,8 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.logo = window.geneCheckout?.logo || getStaticUrl(logoSvg);
+    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

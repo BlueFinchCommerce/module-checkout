@@ -135,8 +135,8 @@ export default defineStore('configStore', {
         'gene_better_checkout_afd_enable',
       ];
 
-      if (this.locale) {
-        this.setLocale(this.locale);
+      if (this.$state.locale) {
+        this.setLocale(this.$state.locale);
       } else {
         configs.push('locale');
       }

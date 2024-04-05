@@ -48,8 +48,8 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
+    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useCartStore, ['removeItem']),
