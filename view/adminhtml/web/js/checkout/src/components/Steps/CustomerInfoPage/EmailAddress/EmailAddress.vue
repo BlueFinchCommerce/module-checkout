@@ -281,7 +281,7 @@ export default {
     ...mapActions(useGtmStore, ['trackStep']),
 
     setContinueButtonText(event) {
-      this.continueButtonText = event?.detail || this.$t('continueButton');
+      this.continueButtonText = event?.detail?.value || this.$t('continueButton');
     },
 
     toggleShowPassword() {

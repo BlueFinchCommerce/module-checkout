@@ -172,10 +172,10 @@ export default {
       this.isModalVisible = false;
     },
     setOrderSummaryText(event) {
-      this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');
+      this.orderSummaryText = event?.detail?.value || this.$t('orderSummary.modalHeader');
     },
     setOrderSummaryDescriptionText(event) {
-      this.orderSummaryDescriptionText = event?.detail || this.$t('orderSummary.mobileDiscountText');
+      this.orderSummaryDescriptionText = event?.detail?.value || this.$t('orderSummary.mobileDiscountText');
     },
   },
 };

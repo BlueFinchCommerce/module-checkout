@@ -37,11 +37,9 @@
     <template #content>
       <div class="field gift-code-field">
         <TextInput
-          v-model="giftCardCode"
           :error="giftCardErrorMessage"
           name="gift-code"
           :placeholder="giftCardPlaceholderText"
-          :disabled="cart.applied_gift_cards?.[0]"
           autocomplete="off"
         />
         <MyButton
@@ -152,16 +150,16 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setApplyButtonText(event) {
-      this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');
+      this.applyButtonText = event?.detail?.value || this.$t('orderSummary.applyBtn');
     },
     setRemoveButtonText(event) {
-      this.removeButtonText = event?.detail || this.$t('orderSummary.removeBtn');
+      this.removeButtonText = event?.detail?.value || this.$t('orderSummary.removeBtn');
     },
     setGiftCardText(event) {
-      this.giftCardText = event?.detail || this.$t('orderSummary.giftDiscountTitle');
+      this.giftCardText = event?.detail?.value || this.$t('orderSummary.giftDiscountTitle');
     },
     setGiftCardPlaceholderText(event) {
-      this.giftCardPlaceholderText = event?.detail || this.$t('orderSummary.giftCardDiscount.placeholder');
+      this.giftCardPlaceholderText = event?.detail?.value || this.$t('orderSummary.giftCardDiscount.placeholder');
     },
 
     async dispatchDiscountCode() {

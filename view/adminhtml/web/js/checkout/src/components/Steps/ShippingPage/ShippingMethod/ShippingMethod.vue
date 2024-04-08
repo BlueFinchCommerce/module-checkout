@@ -196,10 +196,10 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setShippingStepText(event) {
-      this.shippingStepText = event?.detail || this.$t('shippingStep.stepTitle');
+      this.shippingStepText = event?.detail?.value || this.$t('shippingStep.stepTitle');
     },
     setProceedToPayText(event) {
-      this.proceedToPayText = event?.detail || this.$t('shippingStep.proceedToPay');
+      this.proceedToPayText = event?.detail?.value || this.$t('shippingStep.proceedToPay');
     },
 
     formatPrice(price) {

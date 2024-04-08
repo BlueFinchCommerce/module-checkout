@@ -117,10 +117,10 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderSummaryText(event) {
-      this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');
+      this.orderSummaryText = event?.detail?.value || this.$t('orderSummary.modalHeader');
     },
     setGrandTotalText(event) {
-      this.grandTotalText = event?.detail || this.$t('orderSummary.grandTotalTitle');
+      this.grandTotalText = event?.detail?.value || this.$t('orderSummary.grandTotalTitle');
     },
   },
 };

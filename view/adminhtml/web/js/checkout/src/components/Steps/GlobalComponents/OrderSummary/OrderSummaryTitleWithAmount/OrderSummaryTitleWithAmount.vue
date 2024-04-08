@@ -38,7 +38,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setOrderSummaryText(event) {
-      this.orderSummaryText = event?.detail || this.$t('orderSummary.modalHeader');
+      this.orderSummaryText = event?.detail?.value || this.$t('orderSummary.modalHeader');
     },
   },
 };
