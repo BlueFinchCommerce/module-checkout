@@ -17,18 +17,18 @@
           :message="errorMessage"
           :attached="false"
         />
-        <BraintreeGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeGooglePay-${storedKey}`" />
-        <BraintreeApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreeApplePay-${storedKey}`" />
-        <BraintreePayPal @expressPaymentsLoad="expressPaymentsVisible" :key="`braintreePayPal-${storedKey}`" />
-        <AdyenGooglePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay @expressPaymentsLoad="expressPaymentsVisible" :key="`adyenApplePay-${storedKey}`" />
+        <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
+        <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
+        <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
+        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
+        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
       </div>
     </div>
     <div class="details-form-body">
       <DividerComponent />
-      <PayWith :is-express-payments-visible="isExpressPaymentsVisible" />
+      <PayWith />
 
-      <ProgressBar v-if="emailEntered"/>
+      <ProgressBar v-if="emailEntered" />
 
       <EmailAddress />
 
@@ -306,7 +306,6 @@ export default {
       billingInfoValidation: false,
       addressFormErrorMessage: false,
       storedKey: 0,
-      isExpressPaymentsVisible: true,
       instantCheckoutText: '',
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
       proceedToPayText: '',
@@ -327,7 +326,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect', 'loadingShippingMethods']),
-    ...mapState(usePaymentStore, ['errorMessage']),
+    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
@@ -386,9 +385,6 @@ export default {
       'setAddressesOnCart',
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
-    expressPaymentsVisible(value) {
-      this.isExpressPaymentsVisible = value;
-    },
     updateButtonState() {
       const addressType = this.address_type;
 

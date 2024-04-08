@@ -43,6 +43,7 @@ export default {
       googleClient: null,
       paypalInstance: null,
       paypalLoaded: false,
+      key: 'braintreePayPal',
     };
   },
   computed: {
@@ -60,6 +61,7 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
+    this.addExpressMethod(this.key);
     await this.getInitialConfig();
     await this.getCart();
 
@@ -68,9 +70,10 @@ export default {
     ));
 
     if (!paypalConfig) {
-      this.$emit('expressPaymentsLoad', 'false');
+      // Early return if Braintree PayPal isn't enabled.
       this.paypalLoaded = true;
-      return; // Early return if Braintree PayPal isn't enabled.
+      this.removeExpressMethod(this.key);
+      return;
     }
 
     await this.createClientToken();
@@ -91,6 +94,7 @@ export default {
       // If there is no reference to the container then run a teardown and return early.
       if (!this.$refs.braintreePayPal) {
         paypalInstance.teardown();
+        this.removeExpressMethod(this.key);
         return;
       }
 
@@ -192,7 +196,8 @@ export default {
           },
         };
 
-        this.expressPaymentsLoad();
+        this.paypalLoaded = true;
+
         return window.paypal.Buttons(renderData).render('#braintree-paypal');
       });
     });
@@ -201,15 +206,14 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['setErrorMessage']),
+    ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
+      'setErrorMessage',
+    ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.paypalLoaded = true;
-    },
 
     setInformationToQuote(payload) {
       const shippingAddress = !this.cart.is_virtual ? this.mapAddress(

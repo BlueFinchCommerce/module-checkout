@@ -13,6 +13,7 @@ import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
@@ -37,6 +38,7 @@ export default {
       applePayShippingStepTitle: '',
       applePayNoShippingMethods: '',
       applePayLoaded: true,
+      key: 'adyenApplePay',
     };
   },
 
@@ -57,6 +59,7 @@ export default {
 
   async created() {
     if (window.ApplePaySession && window.ApplePaySession.canMakePayments) {
+      this.addExpressMethod(this.key);
       this.applePayLoaded = false;
     } else {
       return;
@@ -67,8 +70,8 @@ export default {
 
     // Early return is Adyen isn't available.
     if (!this.isAdyenAvailable) {
-      this.$emit('expressPaymentsLoad', 'false');
       this.applePayLoaded = true;
+      this.removeExpressMethod(this.key);
       return;
     }
 
@@ -77,8 +80,9 @@ export default {
     const applePayMethod = this.getApplePayMethod(paymentMethodsResponse);
 
     if (!applePayMethod) {
-      this.applePayLoaded = true;
       // Return early if Apple Pay isn't enabled in Adyen.
+      this.applePayLoaded = true;
+      this.removeExpressMethod(this.key);
       return;
     }
 
@@ -100,9 +104,10 @@ export default {
       .isAvailable()
       .then(() => {
         applePayComponent.mount('#adyen-apple-pay');
-        this.expressPaymentsLoad();
+        this.applePayLoaded = true;
       })
       .catch(() => {
+        this.removeExpressMethod(this.key);
         console.warn('Apple Pay is not available');
       });
 
@@ -121,16 +126,15 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
+    ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
+    ]),
 
     getApplePayMethod(paymentMethodsResponse) {
       return paymentMethodsResponse.paymentMethods.find(({ type }) => (
         type === 'applepay'
       ));
-    },
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.applePayLoaded = true;
     },
 
     getApplePayConfiguration(applePayMethod) {

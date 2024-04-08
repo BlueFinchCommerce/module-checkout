@@ -1,18 +1,4 @@
 <template>
-  <div
-    v-if="!loadingPaymentMethods"
-    class="adyen-payment__title"
-  >
-    <Payment
-      class="adyen-payment__icon"
-      fill="black"
-    />
-    <TextField
-      class="adyen-payment__header"
-      :text="paymentStepText"
-    />
-    <div class="divider-line" />
-  </div>
   <template v-if="!storedPayments || storedPaymentMethods.length">
     <Loader v-if="loadingPaymentMethods" />
     <teleport
@@ -64,9 +50,7 @@ import AdyenPaymentCard from '@/components/Steps/PaymentPage/Adyen/DropIn/Paymen
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
-import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Services
 import createPayment from '@/services/payments/createPaymentGraphQl';
@@ -88,9 +72,7 @@ export default {
     Agreements,
     Loader,
     PrivacyPolicy,
-    Payment,
     Recaptcha,
-    TextField,
   },
   props: {
     id: {
@@ -117,7 +99,6 @@ export default {
       hideStoredPaymentRadio: false,
       paymentLoading: false,
       paymentVisible: true,
-      paymentStepText: '',
     };
   },
   computed: {
@@ -143,18 +124,6 @@ export default {
     // available then we can return early.
     if (this.storedPayments && !this.storedPaymentMethods.length) {
       return;
-    }
-
-    // The titles need to be reflective of the state we're in.
-    if (this.storedPayments) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
-        || this.$t('paymentStep.titleStored');
-    } else if (this.storedPaymentMethods.length) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
-        || this.$t('paymentStep.titleNew');
-    } else {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
-        || this.$t('paymentStep.titleGuest');
     }
 
     this.storedPaymentSelected = true;

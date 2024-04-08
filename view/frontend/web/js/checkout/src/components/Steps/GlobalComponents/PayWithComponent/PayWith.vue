@@ -3,16 +3,6 @@
     :style="style"
     class="pay-with__container"
   >
-    <TextField
-      v-if="isExpressPaymentsVisible"
-      class="pay-with__message"
-      :text="$t('payWithBlockTitle')"
-    />
-    <TextField
-      v-else
-      class="pay-with__message"
-      :text="$t('payNoExpressWithBlockTitle')"
-    />
     <template v-if="isAdyenAvailable">
       <div>
         <ul
@@ -96,8 +86,6 @@ import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
-
 // Icons
 import ApplePaySvg from '@/icons/payments/colour/icon-applepay-colour.svg';
 import GooglePaySvg from '@/icons/payments/colour/icon-googlepay-colour.svg';
@@ -115,9 +103,6 @@ import JCBSvg from '@/icons/payments/colour/icon-jcb-colour.svg';
 
 export default {
   name: 'PayWith',
-  components: {
-    TextField,
-  },
   props: {
     width: {
       type: String,
@@ -127,9 +112,6 @@ export default {
     },
     background: {
       type: String,
-    },
-    isExpressPaymentsVisible: {
-      type: Boolean,
     },
   },
   setup(props) {
@@ -145,7 +127,7 @@ export default {
   computed: {
     ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
-    ...mapState(usePaymentStore, ['availableMethods', 'getPaymentPriority', 'isPaymentMethodAvailable']),
+    ...mapState(usePaymentStore, ['availableMethods']),
     ApplePayIcon() {
       return `${getStaticUrl(ApplePaySvg)}`;
     },

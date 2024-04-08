@@ -20,7 +20,7 @@ define([
         CUSTOM_WORDING: '#gene_better_checkout_general_checkout_designer_custom_wording',
         DESIGNER_LOGO: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo',
         DESIGNER_LOGO_LABEL: `
-            #gene-bettercheckout-designer 
+            #gene-bettercheckout-designer
             label[for="gene_better_checkout_general_checkout_designer_gene_better_checkout_logo"]
         `,
         DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_image',
@@ -114,7 +114,12 @@ define([
         },
 
         dispatchTextChangeEvent: function (value, customEventId) {
-            const event = new CustomEvent(customEventId, { detail: value });
+            const event = new CustomEvent(customEventId, {
+                detail: {
+                    value,
+                    customEventId
+                }
+            });
 
             document.dispatchEvent(event);
             window.geneCheckout = window.geneCheckout || {};

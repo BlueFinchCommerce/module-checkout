@@ -41,6 +41,7 @@ export default {
       googleClient: null,
       googlePaymentInstance: null,
       googlePayLoaded: false,
+      key: 'braintreeGooglePay',
     };
   },
   computed: {
@@ -65,6 +66,7 @@ export default {
     ...mapState(usePaymentStore, ['availableMethods']),
   },
   async created() {
+    this.addExpressMethod(this.key);
     await this.getInitialConfig();
     await this.getCart();
 
@@ -73,9 +75,10 @@ export default {
     ));
 
     if (!googlePayConfig) {
-      this.$emit('expressPaymentsLoad', 'false');
+      // Early return if Braintree Google Pay isn't enabled.
+      this.removeExpressMethod(this.key);
       this.googlePayLoaded = true;
-      return; // Early return if Braintree Google Pay isn't enabled.
+      return;
     }
 
     await this.createClientToken();
@@ -113,7 +116,7 @@ export default {
               onClick: () => this.onClick(googlePayConfig.code),
             });
             this.$refs.braintreeGooglePay.append(button);
-            this.expressPaymentsLoad();
+            this.googlePayLoaded = true;
           }
         });
     });
@@ -127,15 +130,14 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(usePaymentStore, ['setErrorMessage']),
+    ...mapActions(usePaymentStore, [
+      'addExpressMethod',
+      'removeExpressMethod',
+      'setErrorMessage',
+    ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-
-    expressPaymentsLoad() {
-      this.$emit('expressPaymentsLoad', 'true');
-      this.googlePayLoaded = true;
-    },
 
     onClick(type) {
       // Check that the agreements (if any) are valid.

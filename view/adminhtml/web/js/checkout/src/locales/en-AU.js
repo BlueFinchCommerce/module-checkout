@@ -5,7 +5,7 @@ export default {
   },
   dividerText: 'Or checkout below with credit/debit card',
   signInDividerText: 'or',
-  payNoExpressWithBlockTitle: ' ',
+  payNoExpressWithBlockTitle: 'Enter your email address to pay by credit or debit card',
   payWithBlockTitle: 'Pay With',
   orderSummary: {
     applyBtn: 'Apply',
