@@ -110,9 +110,7 @@ export default () => {
       }
       ... on GiftCardCartItem {
         recipient_name
-        recipient_email
         sender_name
-        sender_email
         message
         amount {
           value
