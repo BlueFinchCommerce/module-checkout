@@ -1,5 +1,4 @@
 <template>
-  <Loader v-if="loading" />
   <div
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
@@ -15,12 +14,11 @@ import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
-
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // import formatPrice from '@/helpers/payment/formatPrice';
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
@@ -36,16 +34,12 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenGooglePay',
-  components: {
-    Loader,
-  },
   data() {
     return {
       browserInfo: {},
       googlePayLoaded: false,
       googlePayNoShippingMethods: '',
       key: 'adyenGooglePay',
-      loading: false,
       orderId: null,
     };
   },
@@ -142,6 +136,7 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
 
     setOrderId(orderId) {
       this.orderId = orderId;
@@ -158,13 +153,13 @@ export default {
       try {
         document.body.classList.remove('gene-checkout-threeds-opened');
 
-        this.loading = true;
+        this.setLoadingState(true);
         const response = await getAdyenPaymentStatus(this.orderId);
-        this.loading = false;
 
         this.handleAdyenResponse(response);
       } catch (error) {
         // If the getAdyenPaymentDetails call errors we need to catch it.
+        this.setLoadingState(false);
         const message = error.response?.data?.message;
         this.setErrorMessage(message);
       }
@@ -368,9 +363,12 @@ export default {
           await refreshCustomerData(getCartSectionNames());
           window.location.href = getSuccessPageUrl();
         } else {
+          this.setLoadingState(false);
           this.setErrorMessage(response.message);
         }
       } else if (response.action) {
+        this.setErrorMessage(response.message);
+
         // If the action is 3DS related then add a class globally so we can display as popup.
         if (response.action.type === 'threeDS2') {
           document.body.classList.add('gene-checkout-threeds-opened');

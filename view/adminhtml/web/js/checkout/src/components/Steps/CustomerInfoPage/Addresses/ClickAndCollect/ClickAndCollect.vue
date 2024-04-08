@@ -1,6 +1,5 @@
 <template>
   <div class="click-and-collect-container">
-    <Loader v-if="loading" />
     <div class="click-and-collect-title-container">
       <TextField
         class="click-and-collect-title click-and-collect-semibold"
@@ -162,6 +161,7 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 
@@ -178,7 +178,6 @@ import AddressBlock from '@/components/Steps/CustomerInfoPage/Addresses/AddressB
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
 import GoogleMap from '@/components/Steps/CustomerInfoPage/Addresses/GoogleMap/GoogleMap.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
@@ -204,7 +203,6 @@ export default {
     AddressList,
     BillingForm,
     GoogleMap,
-    Loader,
   },
   data() {
     return {
@@ -214,7 +212,6 @@ export default {
       customInfoSubmitted: false,
       isAddressBlockVisible: true,
       queryTimeout: null,
-      loading: false,
       postcodeError: false,
       postcodeErrorMessage: '',
     };
@@ -241,12 +238,13 @@ export default {
   },
   methods: {
     ...mapActions(useCustomerStore, ['setAddressToStore', 'setAddressAsEditing']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useShippingMethodsStore, ['clearShippingMethodCache', 'submitShippingInfo']),
     ...mapActions(useStepsStore, ['goToShipping']),
     async useMyLocation() {
       this.postcodeError = false;
       this.postcodeErrorMessage = '';
-      this.loading = true;
+      this.setLoadingState(true);
       const postcode = await getUsersPostcode();
 
       if (postcode) {
@@ -256,7 +254,7 @@ export default {
         // If we have no postcode then we must have errored.
         this.postcodeError = true;
         this.postcodeErrorMessage = this.$t('errorMessages.postcodeLookup');
-        this.loading = false;
+        this.setLoadingState(false);
       }
     },
     editShippingAdress() {
@@ -283,7 +281,7 @@ export default {
         if (this.query) {
           const locations = await getClickAndCollectLocations(this.query);
           this.foundLocations = locations.agents;
-          this.loading = false;
+          this.setLoadingState(false);
         }
         this.queryTimeout = null;
       }, 1000);

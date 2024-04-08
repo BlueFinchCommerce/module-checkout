@@ -13,6 +13,7 @@
   </div>
   <div id="gene-better-checkout-root">
     <component :is="currentDevice">
+      <Loader />
       <AppHeader />
       <Steps />
       <AppFooter />
@@ -39,6 +40,7 @@ import useStepsStore from '@/stores/StepsStore';
 
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import MockDesktop from '@/components/devices/desktop/desktop.vue';
 import MockFull from '@/components/devices/full/full.vue';
 import MockLaptop from '@/components/devices/laptop/laptop.vue';
@@ -53,6 +55,7 @@ export default {
   components: {
     AppFooter,
     AppHeader,
+    Loader,
     MockDesktop,
     MockFull,
     MockLaptop,

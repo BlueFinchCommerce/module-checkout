@@ -24,15 +24,6 @@
       :class="{'rvvup-method-visible': isMethodSelected}"
       class="rvvup-method"
     >
-      <div
-        v-if="loading"
-        class="rvvup-loader"
-      >
-        <Loader
-          :overlay="false"
-        />
-      </div>
-
       <IframeComponent
         v-if="payByBankDescriptionSrc && isMethodSelected"
         :title="'Rvvup payment modal'"
@@ -79,12 +70,12 @@ import { mapState, mapActions } from 'pinia';
 // Stores
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 // Components
 import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
 import IframeComponent from '@/components/Core/ActionComponents/Iframe/Iframe.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // Services
 import createPayment from '@/services/payments/createPaymentGraphQl';
@@ -100,7 +91,6 @@ export default {
   components: {
     Modal,
     IframeComponent,
-    Loader,
   },
   props: {
     method: {
@@ -115,7 +105,6 @@ export default {
       payByBankDescriptionSrc: '',
       isMethodSelected: false,
       showPaymentModal: false,
-      loading: false,
       frameWidth: null,
       frameHeight: null,
       orderId: null,
@@ -195,6 +184,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(usePaymentStore, ['setRvvupErrorMessage']),
 
     /**
@@ -324,7 +314,7 @@ export default {
      * Call Rvvup once order is created
      */
     startRvvupPayment() {
-      this.loading = true;
+      this.setLoadingState(true);
 
       const paymentMethod = { method: 'rvvup_YAPILY' };
       const data = {
@@ -366,7 +356,7 @@ export default {
           const cancel = response.find((method) => method.type === 'cancel');
 
           if (authorization && authorization.value) {
-            this.loading = false;
+            this.setLoadingState(false);
             this.setIframeUrl(authorization.value);
             this.setCancellationUrl(cancel.value);
             this.openModal();

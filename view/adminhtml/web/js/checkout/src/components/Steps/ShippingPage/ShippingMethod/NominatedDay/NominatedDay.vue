@@ -42,10 +42,6 @@
         :aria-modal="showCalender"
         @keyup.esc="closeCalendar()"
       >
-        <div v-show="loadingNominatedDay">
-          <Loader />
-        </div>
-
         <header class="calendar-header">
           <button
             type="button"
@@ -134,10 +130,10 @@
 // Stores
 import { mapState, mapActions, mapWritableState } from 'pinia';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // icons
 import Calendar from '@/components/Core/Icons/Calendar/Calendar.vue';
@@ -147,7 +143,6 @@ import ArrowRight from '@/components/Core/Icons/ArrowRight/ArrowRight.vue';
 export default {
   name: 'NominatedDay',
   components: {
-    Loader,
     TextField,
     Calendar,
     ArrowLeft,
@@ -173,7 +168,6 @@ export default {
       day: null,
       month: null,
       year: null,
-      loadingNominatedDay: false,
 
       emptyDays: 0, // Number of days in the week before the 1st
 
@@ -224,6 +218,7 @@ export default {
     this.year = today.getFullYear();
   },
   methods: {
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
 
     /**
@@ -266,7 +261,7 @@ export default {
      * Select a day
      */
     async selectDate(date) {
-      this.loadingNominatedDay = true;
+      this.setLoadingState(true);
       this.nominatedSelectedDate = date;
       this.nominatedSelectedDateFormatted = this.formatedSelectedDate(date);
       // Update shipping method
@@ -276,7 +271,7 @@ export default {
         ...this.item,
       });
       await this.submitShippingInfo();
-      this.loadingNominatedDay = false;
+      this.setLoadingState(false);
       this.closeCalendar();
     },
 

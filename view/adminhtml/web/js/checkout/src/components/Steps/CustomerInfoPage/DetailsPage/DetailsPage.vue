@@ -1,5 +1,4 @@
 <template>
-  <Loader v-if="loadingShippingMethods" />
   <div class="details-form">
     <div class="details-form-header"
          v-show="isExpressPaymentsVisible">
@@ -325,7 +324,7 @@ export default {
       'selected',
       'isUsingSavedShippingAddress',
     ]),
-    ...mapState(useShippingMethodsStore, ['isClickAndCollect', 'loadingShippingMethods']),
+    ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
   },
   created() {
