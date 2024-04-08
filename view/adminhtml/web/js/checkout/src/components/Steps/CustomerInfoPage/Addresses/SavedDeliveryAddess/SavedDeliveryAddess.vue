@@ -76,7 +76,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToYouDetails']),
     setDetailStepText(event) {
-      this.detailStepText = event?.detail || this.$t('yourDetailsSection.title');
+      this.detailStepText = event?.detail?.value || this.$t('yourDetailsSection.title');
     },
     setDetailsStepActive() {
       // Commented out to prevent functionality only for UI designer

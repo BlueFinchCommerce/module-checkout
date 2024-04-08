@@ -151,16 +151,16 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
     setApplyButtonText(event) {
-      this.applyButtonText = event?.detail || this.$t('orderSummary.applyBtn');
+      this.applyButtonText = event?.detail?.value || this.$t('orderSummary.applyBtn');
     },
     setRemoveButtonText(event) {
-      this.removeButtonText = event?.detail || this.$t('orderSummary.removeBtn');
+      this.removeButtonText = event?.detail?.value || this.$t('orderSummary.removeBtn');
     },
     setcouponDiscountText(event) {
-      this.couponDiscountText = event?.detail || this.$t('orderSummary.couponDiscountTitle');
+      this.couponDiscountText = event?.detail?.value || this.$t('orderSummary.couponDiscountTitle');
     },
     setCouponDiscountPlaceholderText(event) {
-      this.couponDiscountPlaceholderText = event?.detail || this.$t('orderSummary.couponDiscount.placeholder');
+      this.couponDiscountPlaceholderText = event?.detail?.value || this.$t('orderSummary.couponDiscount.placeholder');
     },
 
     async dispatchDiscountCode() {

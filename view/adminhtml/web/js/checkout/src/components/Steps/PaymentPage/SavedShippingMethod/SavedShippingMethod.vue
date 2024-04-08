@@ -88,7 +88,7 @@ export default {
     ...mapActions(useStepsStore, ['goToShipping']),
 
     setShippingStepText(event) {
-      this.shippingStepCompletedText = event?.detail || this.$t('shippingStep.stepCompleteTitle');
+      this.shippingStepCompletedText = event?.detail?.value || this.$t('shippingStep.stepCompleteTitle');
     },
 
     setDetailsStepActive() {

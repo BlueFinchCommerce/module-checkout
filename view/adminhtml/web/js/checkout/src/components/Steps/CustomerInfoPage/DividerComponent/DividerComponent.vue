@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     setDividerText(event) {
-      this.dividerText = event?.detail || this.$t('dividerText');
+      this.dividerText = event?.detail?.value || this.$t('dividerText');
     },
   },
 };
