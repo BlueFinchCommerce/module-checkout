@@ -251,6 +251,8 @@ export default {
     },
   },
   async mounted() {
+    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+
     await this.getInitialConfig();
     await this.getCart();
 
@@ -258,7 +260,6 @@ export default {
       step: 1,
       description: 'login',
     });
-    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
     document.addEventListener('keydown', this.handleKeyDown);
   },
   methods: {

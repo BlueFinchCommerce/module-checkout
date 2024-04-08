@@ -103,9 +103,9 @@ export default {
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
-    await this.getInitialConfig();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
+    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

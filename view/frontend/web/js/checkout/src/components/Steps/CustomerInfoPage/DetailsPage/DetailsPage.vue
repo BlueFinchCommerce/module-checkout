@@ -346,6 +346,9 @@ export default {
     this.updateButtonState();
   },
   async mounted() {
+    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+
     await this.getInitialConfig();
     await this.getCart();
 
@@ -353,9 +356,6 @@ export default {
       shipping: 'customerInfoValidation',
       billing: 'billingInfoValidation',
     };
-
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     Object.keys(types).forEach((type) => {
       const first = this.validateNameField(type, 'First name', this.selected[type].firstname);
