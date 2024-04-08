@@ -19,14 +19,14 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import '@adyen/adyen-web/dist/adyen.css';
 
 import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
-import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
-import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
-import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
+// import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+// import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
+// import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 
-import createPayment from '@/services/payments/createPaymentGraphQl';
+// import createPayment from '@/services/payments/createPaymentGraphQl';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
-import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
+// import refreshCustomerData from '@/services/customer/refreshCustomerData';
+// import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'AdyenApplePay',
@@ -166,77 +166,78 @@ export default {
           onShippingMethodSelected: this.onShippingMethodSelect.bind(this),
           shippingMethods: [],
         }),
-        onClick: (resolve, reject) => this.onClick(resolve, reject, applePayMethod.type),
+        // onClick: (resolve, reject) => this.onClick(resolve, reject, applePayMethod.type),
         onSubmit: () => {},
       };
     },
 
-    onClick(resolve, reject, type) {
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+    // Removed functionality for UI designer
+    // onClick(resolve, reject, type) {
+    //   // Check that the agreements (if any) are valid.
+    //   const isValid = this.validateAgreements();
 
-      if (!isValid) {
-        return false;
-      }
+    //   if (!isValid) {
+    //     return false;
+    //   }
 
-      return expressPaymentOnClickDataLayer(resolve, reject, type);
-    },
+    //   return expressPaymentOnClickDataLayer(resolve, reject, type);
+    // },
 
-    async onAuthorized(resolve, reject, data) {
-      const { shippingContact, billingContact } = data.payment;
+    // async onAuthorized(resolve, reject, data) {
+    //   const { shippingContact, billingContact } = data.payment;
 
-      const email = shippingContact.emailAddress;
-      const telephone = shippingContact.phoneNumber;
+    //   const email = shippingContact.emailAddress;
+    //   const telephone = shippingContact.phoneNumber;
 
-      let shippingAddress = null;
+    //   let shippingAddress = null;
 
-      if (!this.cart.is_virtual) {
-        shippingAddress = this.mapAddress(shippingContact, email, telephone);
-      }
+    //   if (!this.cart.is_virtual) {
+    //     shippingAddress = this.mapAddress(shippingContact, email, telephone);
+    //   }
 
-      const billingAddress = this.mapAddress(billingContact, email, telephone);
+    //   const billingAddress = this.mapAddress(billingContact, email, telephone);
 
-      if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {
-        reject(window.ApplePaySession.STATUS_FAILURE);
-        return;
-      }
+    //   if (!this.countries.some(({ id }) => id === billingAddress.country_code)) {
+    //     reject(window.ApplePaySession.STATUS_FAILURE);
+    //     return;
+    //   }
 
-      try {
-        setAddressesOnCart(shippingAddress, billingAddress, email)
-          .then(() => {
-            const stateData = JSON.stringify({
-              paymentMethod: {
-                applePayToken: btoa(JSON.stringify(data.payment.token.paymentData)),
-                type: 'applepay',
-              },
-              browserInfo: this.browserInfo,
-            });
+    //   try {
+    //     setAddressesOnCart(shippingAddress, billingAddress, email)
+    //       .then(() => {
+    //         const stateData = JSON.stringify({
+    //           paymentMethod: {
+    //             applePayToken: btoa(JSON.stringify(data.payment.token.paymentData)),
+    //             type: 'applepay',
+    //           },
+    //           browserInfo: this.browserInfo,
+    //         });
 
-            const paymentMethod = {
-              code: 'adyen_hpp',
-              adyen_additional_data_hpp: {
-                brand_code: 'applepay',
-                stateData,
-              },
-            };
+    //         const paymentMethod = {
+    //           code: 'adyen_hpp',
+    //           adyen_additional_data_hpp: {
+    //             brand_code: 'applepay',
+    //             stateData,
+    //           },
+    //         };
 
-            return createPayment(paymentMethod);
-          })
-          .then(async () => {
-            resolve(window.ApplePaySession.STATUS_SUCCESS);
-            await refreshCustomerData(getCartSectionNames());
-            window.location.href = getSuccessPageUrl();
-          });
-      } catch (error) {
-        const errors = {
-          errors: [
-            new window.ApplePayError('unknown', 'country', error.message),
-          ],
-        };
+    //         return createPayment(paymentMethod);
+    //       })
+    //       .then(async () => {
+    //         resolve(window.ApplePaySession.STATUS_SUCCESS);
+    //         await refreshCustomerData(getCartSectionNames());
+    //         window.location.href = getSuccessPageUrl();
+    //       });
+    //   } catch (error) {
+    //     const errors = {
+    //       errors: [
+    //         new window.ApplePayError('unknown', 'country', error.message),
+    //       ],
+    //     };
 
-        resolve(errors);
-      }
-    },
+    //     resolve(errors);
+    //   }
+    // },
 
     async onShippingContactSelect(resolve, reject, data) {
       const address = {

@@ -134,45 +134,46 @@ export default {
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
 
+    // Removed functionality for UI designer
     click(event) {
       event.preventDefault();
 
       // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+      // const isValid = this.validateAgreements();
 
-      if (!isValid) {
-        return;
-      }
+      // if (!isValid) {
+      //   return;
+      // }
 
-      try {
-        const requiredShippingContactFields = ['name', 'email', 'phone'];
+      // try {
+      //   const requiredShippingContactFields = ['name', 'email', 'phone'];
 
-        if (!this.cart.is_virtual) {
-          requiredShippingContactFields.push('postalAddress');
-        }
+      //   if (!this.cart.is_virtual) {
+      //     requiredShippingContactFields.push('postalAddress');
+      //   }
 
-        const paymentRequest = this.applePayInstance.createPaymentRequest({
-          total: {
-            label: this.websiteName,
-            amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
-          },
-          requiredShippingContactFields,
-          requiredBillingContactFields: ['postalAddress', 'name'],
-        });
-        const session = new window.ApplePaySession(3, paymentRequest);
+      //   const paymentRequest = this.applePayInstance.createPaymentRequest({
+      //     total: {
+      //       label: this.websiteName,
+      //       amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
+      //     },
+      //     requiredShippingContactFields,
+      //     requiredBillingContactFields: ['postalAddress', 'name'],
+      //   });
+      //   const session = new window.ApplePaySession(3, paymentRequest);
 
-        session.onvalidatemerchant = (validateEvent) => this.onValidateMerchant(validateEvent, session);
-        session.onpaymentauthorized = (data) => this.onAuthorized(data, session);
+      //   session.onvalidatemerchant = (validateEvent) => this.onValidateMerchant(validateEvent, session);
+      //   session.onpaymentauthorized = (data) => this.onAuthorized(data, session);
 
-        if (!this.cart.is_virtual) {
-          session.onshippingcontactselected = (data) => this.onShippingContactSelect(data, session);
-          session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
-        }
+      //   if (!this.cart.is_virtual) {
+      //     session.onshippingcontactselected = (data) => this.onShippingContactSelect(data, session);
+      //     session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
+      //   }
 
-        session.begin();
-      } catch (err) {
-        this.setApplePayError();
-      }
+      //   session.begin();
+      // } catch (err) {
+      //   this.setApplePayError();
+      // }
     },
 
     onValidateMerchant(event, session) {

@@ -1,10 +1,8 @@
 <template>
   <div class="saved-shipping">
-    <router-link
+    <div
       class="saved-shipping-link"
       aria-label="proceed-to-shipping-link"
-      to="/shipping"
-      @click="setDetailsStepActive();"
     >
       <div class="saved-shipping__title">
         <div class="order-total">
@@ -39,7 +37,7 @@
           <Edit />
         </button>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 <script>

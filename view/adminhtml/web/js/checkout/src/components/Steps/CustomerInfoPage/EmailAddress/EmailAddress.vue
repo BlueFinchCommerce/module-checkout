@@ -108,8 +108,8 @@
         </div>
 
         <div class="checkout-email__footer">
+          <!-- Removed href for UI designer only -->
           <a
-            :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
             data-cy="forgot-pass-button"
           >
@@ -308,17 +308,18 @@ export default {
 
     async submitForm() {
       scrollToTarget('.details-form');
-      // Validate the User's password.
-      this.loginErrorMessage = '';
-      this.validatePassword();
+      // Removed functionality for UI designer
+      // // Validate the User's password.
+      // this.loginErrorMessage = '';
+      // this.validatePassword();
 
-      // If there is any error then early return.
-      if (this.emailError || this.passwordError) return;
+      // // If there is any error then early return.
+      // if (this.emailError || this.passwordError) return;
 
-      this.loadingLogin = true;
-      await this.loginAndProceed();
-      this.emitUpdate();
-      this.loadingLogin = false;
+      // this.loadingLogin = true;
+      // await this.loginAndProceed();
+      // this.emitUpdate();
+      // this.loadingLogin = false;
     },
 
     validatePassword() {

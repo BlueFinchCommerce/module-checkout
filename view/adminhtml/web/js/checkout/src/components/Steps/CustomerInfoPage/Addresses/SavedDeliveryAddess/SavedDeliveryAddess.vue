@@ -1,10 +1,8 @@
 <template>
   <div class="delivery-address">
-    <router-link
+    <div
       class="delivery-address-link"
       aria-label="proceed-to-details-link"
-      to="/"
-      @click="setDetailsStepActive();"
     >
       <div class="details-title-section">
         <div class="details-title-section-image">
@@ -31,7 +29,7 @@
           <Edit />
         </button>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 <script>

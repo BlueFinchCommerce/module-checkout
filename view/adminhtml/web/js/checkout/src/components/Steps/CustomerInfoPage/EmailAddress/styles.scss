@@ -133,6 +133,7 @@
 
   &__footer {
     a {
+      cursor: pointer;
       font-size: var(--button__link-font-size);
       font-weight: var(--button__link-font-weight);
       color: var(---button__link-font-color);

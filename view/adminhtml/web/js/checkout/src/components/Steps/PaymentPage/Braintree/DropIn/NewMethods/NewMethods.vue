@@ -348,7 +348,8 @@ export default {
 
       // Open the first payment method.
       [this.selectedMethod] = this.paymentOptionPriority;
-      this.setToCurrentViewId();
+      // Removed for UI designer only to keep stored payments as the default selected
+      // this.setToCurrentViewId();
 
       this.paymentEmitter.emit('braintreeInitComplete');
     },

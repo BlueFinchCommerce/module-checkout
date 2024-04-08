@@ -436,10 +436,7 @@ export default {
 
         this.storedPaymentMethods = this.storedPaymentMethods.map((method, index) => {
           const updatedMethod = method;
-
-          if (!updatedMethod.originalId) {
-            updatedMethod.originalId = paymentMethods[index].id;
-          }
+          updatedMethod.originalId = paymentMethods[index].id;
           return updatedMethod;
         });
 

@@ -67,8 +67,8 @@ export default {
     ...mapState(useCartStore, ['cart']),
   },
   async created() {
-    await this.getInitialConfig();
     this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

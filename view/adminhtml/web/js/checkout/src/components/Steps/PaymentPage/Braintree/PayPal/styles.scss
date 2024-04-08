@@ -1,7 +1,27 @@
+// For UI designer only
+.fake-button {
+  position: absolute;
+  height: 55px;
+  width: 100%;
+  cursor: pointer;
+  z-index: 101;
+  background: black;
+  opacity: 0;
+
+  &:hover {
+    opacity: 0.2;
+  }
+}
+
 #braintree-paypal {
   &.text-loading {
     border-radius: var(--button__text-placeholder-bg-radius);
     height: var(--braintree-express-button-height, 48px);
+    z-index: 102;
+  }
+
+  &.ui-designer-disabled {
+    pointer-events: none;
   }
 
   button {

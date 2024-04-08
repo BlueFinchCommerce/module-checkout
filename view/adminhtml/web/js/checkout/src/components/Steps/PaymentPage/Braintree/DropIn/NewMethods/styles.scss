@@ -49,6 +49,10 @@
           &__flexible-fields {
             gap: var(--indent__base);
             margin-top: var(--indent__base);
+
+            button {
+              pointer-events: none; // Disabled buttons for UI designer only
+            }
           }
 
           &__field-group {
@@ -97,7 +101,21 @@
           }
 
           &__notice-of-collection {
+            pointer-events: none; // Disabled buttons for UI designer only
             flex: 100%;
+            a {
+              color: var(--button__link-font-color);
+              font-size: var(--button__link-font-size);
+              font-weight: var(--button__link-font-weight);
+              text-decoration: var(--button__link-text-decoration);
+
+              &:hover,
+              &:focus,
+              &:focus-visible {
+                font-weight: var(--button__link-font-weight-focus);
+                color: var(--button__link-font-color-hover);
+              }
+            }
           }
         }
       }
@@ -112,6 +130,7 @@
     [data-braintree-id="google-pay-button"] button,
     [data-braintree-id="apple-pay-button"],
     &__button--venmo {
+      pointer-events: none; // Disabled buttons for UI designer only
       height: var(--button__height);
       width: 100%;
     }
@@ -119,6 +138,7 @@
     &__button--paypal,
     [data-braintree-id="google-pay-button"],
     [data-braintree-id="apple-pay-button"] {
+      pointer-events: none; // Disabled buttons for UI designer only
       display: grid;
       gap: var(--indent__base);
 

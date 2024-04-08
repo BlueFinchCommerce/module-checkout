@@ -145,15 +145,15 @@ export default {
     },
   },
   async created() {
+    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+     || this.$t('orderSummary.crossSellsTitle');
+
     await this.getInitialConfig();
     await this.getCart();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
     }
     await this.getCrosssells();
-
-    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
-     || this.$t('orderSummary.crossSellsTitle');
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

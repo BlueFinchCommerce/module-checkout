@@ -8,6 +8,7 @@
   margin-bottom: var(--indent__xxs);
 
   &-link {
+    cursor: pointer;
     color: var(--details-title-color, var(--button__link-font-color));
     display: block;
     text-decoration: none;
