@@ -122,13 +122,14 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId]
       || this.$t('orderSummary.couponDiscountTitle');
     this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountTextId]
       || this.$t('orderSummary.couponDiscount.placeholder');
+
+    await this.getInitialConfig();
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),

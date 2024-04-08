@@ -146,13 +146,14 @@ export default {
   async created() {
     this.checkForGuestUser();
 
+    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
+      || this.$t('orderSummary.mobileDiscountText');
+
     await this.getInitialConfig();
     await this.getCart();
 
     await this.getCustomerInformation();
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
-      || this.$t('orderSummary.mobileDiscountText');
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

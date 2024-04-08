@@ -27,8 +27,8 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

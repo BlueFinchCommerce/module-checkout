@@ -44,8 +44,8 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
+    await this.getInitialConfig();
   },
   computed: {
     ...mapState(useConfigStore, ['secureBaseLinkUrl']),

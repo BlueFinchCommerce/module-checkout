@@ -73,9 +73,10 @@ export default {
     };
   },
   async created() {
-    await this.getInitialConfig();
     this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
-      || this.$t('shippingStep.stepCompleteTitle');
+    || this.$t('shippingStep.stepCompleteTitle');
+
+    await this.getInitialConfig();
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
