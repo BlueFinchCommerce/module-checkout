@@ -477,11 +477,9 @@ export default {
       return formatPrice(price);
     },
     setInstantCheckoutTextId(event) {
-      console.log(event)
       this.instantCheckoutText = event?.detail?.value || this.$t('instantCheckout');
     },
     setProceedToPayTextId(event) {
-      console.log(event)
       this.proceedToPayText = event?.detail?.value || this.$t('shippingStep.proceedToPay');
     },
   },
