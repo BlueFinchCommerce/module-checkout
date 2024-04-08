@@ -1,5 +1,4 @@
 <template>
-  <Loader v-if="isLoading" />
   <div v-if="Object.keys(hokodo).length !== 0 && isPaymentMethodAvailable('hokodo_bnpl')">
     <ErrorMessage
       v-if="hokodoScriptError"
@@ -41,10 +40,10 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useHokodoStore from '@/stores/PaymentStores/HokodoStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // components
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import HokodoPaymentTitle from '@/components/Steps/PaymentPage/Hokodo/HokodoPaymentTitle/HokodoPaymentTitle.vue';
 
 // helpers
@@ -62,7 +61,6 @@ export default {
   components: {
     HokodoPaymentTitle,
     ErrorMessage,
-    Loader,
   },
   data() {
     return {
@@ -70,7 +68,6 @@ export default {
       isHokodoActive: false,
       hokodoScriptError: false,
       hokodoErrorMessage: '',
-      isLoading: false,
       searchConfig: {},
     };
   },
@@ -79,6 +76,7 @@ export default {
     ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
     ...mapState(useHokodoStore, ['hokodo', 'offer', 'companyId']),
+    ...mapState(useLoadingStore, ['isLoading']),
   },
   async created() {
     await this.getInitialConfig();
@@ -123,6 +121,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useHokodoStore, ['getHokodoConfigs', 'getHokodoCompanyId', 'setOffer', 'setCompanyId']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(usePaymentStore, ['getPaymentMethods']),
 
     /**
@@ -234,12 +233,12 @@ export default {
 
     createOfferAction(companyId) {
       if (companyId) {
-        this.isLoading = true;
+        this.setLoadingState(true);
         return requestHokodoOffer(companyId)
           .then((response) => {
             if (response.offer !== undefined) {
               this.setOffer(response.offer);
-              this.isLoading = false;
+              this.setLoadingState(false);
             }
           }).catch((error) => {
             this.hokodoScriptError = true;

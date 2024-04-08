@@ -1,7 +1,4 @@
 <template>
-  <div v-if="loadingDiscountCode">
-    <Loader />
-  </div>
   <div
     class="coupon-discount-trigger dropdown-button"
     tabindex="0"
@@ -86,12 +83,13 @@ import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextI
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import SuccessMessage from '@/components/Core/ContentComponents/Messages/SuccessMessage/SuccessMessage.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // stores
 import { mapWritableState, mapState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+import useLoadingStore from '@/stores/LoadingStore';
+
 import CouponCode from '@/icons/coupon-icon.svg';
 
 export default {
@@ -104,13 +102,11 @@ export default {
     TextInput,
     MyButton,
     ErrorMessage,
-    Loader,
     SuccessMessage,
   },
   data() {
     return {
       isDropDownVisible: false,
-      loadingDiscountCode: false,
       applyButtonText: '',
       applyButtonTextId: 'gene-bettercheckout-applybutton-text',
       removeButtonText: '',
@@ -141,11 +137,12 @@ export default {
   methods: {
     ...mapActions(useCartStore, ['addDiscountCode', 'removeDiscountCode']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
 
     async dispatchDiscountCode(discountCode) {
-      this.loadingDiscountCode = true;
+      this.setLoadingState(true);
       await this.addDiscountCode(discountCode);
-      this.loadingDiscountCode = false;
+      this.setLoadingState(false);
     },
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

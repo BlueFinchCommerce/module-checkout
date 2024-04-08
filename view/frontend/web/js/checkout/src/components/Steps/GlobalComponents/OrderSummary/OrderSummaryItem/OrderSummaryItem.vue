@@ -68,26 +68,11 @@
       </div>
     </div>
   </div>
-  <div
-    v-else
-    class="loader__absolute-container"
-  >
-    <Loader />
-  </div>
-  <div
-    v-if="cartLoading === 'true'"
-    class="loader__absolute-container"
-  >
-    <Loader />
-  </div>
 </template>
 <script>
 // store
 import { mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
-
-// icons
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -105,7 +90,6 @@ export default {
   components: {
     TextField,
     Price,
-    Loader,
     ErrorMessage,
     ProductOptions,
     QtyButton,
@@ -117,7 +101,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useCartStore, ['cartItems', 'cartLoading']),
+    ...mapState(useCartStore, ['cartItems']),
   },
 };
 </script>
