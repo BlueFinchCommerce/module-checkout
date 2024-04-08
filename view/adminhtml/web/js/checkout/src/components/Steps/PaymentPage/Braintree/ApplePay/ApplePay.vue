@@ -90,13 +90,6 @@ export default {
 
     await this.createClientToken();
 
-    if (!this.clientToken) {
-      // Early return if Braintree PayPal isn't enabled.
-      this.paypalLoaded = true;
-      this.removeExpressMethod(this.key);
-      return;
-    }
-
     this.instance = await markRaw(braintree.client.create({
       authorization: this.clientToken,
     }));
