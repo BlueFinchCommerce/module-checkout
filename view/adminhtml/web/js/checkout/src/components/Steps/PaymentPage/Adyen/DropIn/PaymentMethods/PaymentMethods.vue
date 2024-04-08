@@ -1,18 +1,4 @@
 <template>
-  <div
-    v-if="!loadingPaymentMethods"
-    class="adyen-payment__title"
-  >
-    <Payment
-      class="adyen-payment__icon"
-      fill="black"
-    />
-    <TextField
-      class="adyen-payment__header"
-      :text="paymentStepText"
-    />
-    <div class="divider-line" />
-  </div>
   <template v-if="!storedPayments || storedPaymentMethods.length">
     <Loader v-if="loadingPaymentMethods" />
     <teleport
@@ -64,9 +50,7 @@ import AdyenPaymentCard from '@/components/Steps/PaymentPage/Adyen/DropIn/Paymen
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
-import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Services
 import createPayment from '@/services/payments/createPaymentGraphQl';
@@ -88,9 +72,7 @@ export default {
     Agreements,
     Loader,
     PrivacyPolicy,
-    Payment,
     Recaptcha,
-    TextField,
   },
   props: {
     id: {
@@ -117,10 +99,6 @@ export default {
       hideStoredPaymentRadio: false,
       paymentLoading: false,
       paymentVisible: true,
-      paymentStepText: '',
-      paymentStepTextStoredId: 'gene-bettercheckout-paymentstep-text-stored',
-      paymentStepTextNewId: 'gene-bettercheckout-paymentstep-text-new',
-      paymentStepTextGuestId: 'gene-bettercheckout-paymentstep-text-guest',
     };
   },
   computed: {
@@ -147,22 +125,6 @@ export default {
     if (this.storedPayments && !this.storedPaymentMethods.length) {
       return;
     }
-
-    // The titles need to be reflective of the state we're in.
-    if (this.storedPayments) {
-      this.paymentStepText = window.geneCheckout?.[this.paymentStepTextStoredId]
-        || this.$t('paymentStep.titleStored');
-    } else if (this.storedPaymentMethods.length) {
-      this.paymentStepText = window.geneCheckout?.[this.paymentStepTextNewId]
-        || this.$t('paymentStep.titleNew');
-    } else {
-      this.paymentStepText = window.geneCheckout?.[this.paymentStepTextGuestId]
-        || this.$t('paymentStep.titleGuest');
-    }
-
-    document.addEventListener(this.paymentStepTextStoredId, this.setPaymentStepText);
-    document.addEventListener(this.paymentStepTextNewId, this.setPaymentStepText);
-    document.addEventListener(this.paymentStepTextGuestId, this.setPaymentStepText);
 
     this.storedPaymentSelected = true;
 
@@ -317,21 +279,6 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-
-    setPaymentStepText(event) {
-      if (event?.detail) {
-        this.paymentStepText = event.detail;
-        return;
-      }
-
-      if (this.storedPayments) {
-        this.paymentStepText = this.$t('paymentStep.titleStored');
-      } else if (this.storedPaymentMethods.length) {
-        this.paymentStepText = this.$t('paymentStep.titleNew');
-      } else {
-        this.paymentStepText = this.$t('paymentStep.titleGuest');
-      }
-    },
 
     setOrderId(orderId) {
       this.orderId = orderId;

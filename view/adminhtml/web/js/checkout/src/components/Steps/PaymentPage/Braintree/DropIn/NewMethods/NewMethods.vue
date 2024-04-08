@@ -354,14 +354,6 @@ export default {
       this.paymentEmitter.emit('braintreeInitComplete');
     },
 
-    selectFirstPaymentOption() {
-      const sheetContainer = this.$refs.braintreeContainer.querySelector('.braintree-sheet--active');
-      const firstOption = sheetContainer.querySelector('.braintree-option');
-      if (firstOption) {
-        firstOption.classList.add('braintree-option__selected');
-      }
-    },
-
     attachEventListeners(instance) {
       instance.on('changeActiveView', ({ newViewId, previousViewId }) => {
         this.removeActiveClass();

@@ -40,7 +40,6 @@ import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useCustomerStore from '@/stores/CustomerStore';
-import useCartStore from '@/stores/CartStore';
 import useHokodoStore from '@/stores/PaymentStores/HokodoStore';
 
 // components
@@ -79,7 +78,6 @@ export default {
     ...mapState(useConfigStore, ['hokodoUser', 'currencyCode', 'locale', 'countryCode']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress']),
-    ...mapState(useCartStore, ['cartEmitter']),
     ...mapState(useHokodoStore, ['hokodo', 'offer', 'companyId']),
   },
   async created() {

@@ -12,6 +12,8 @@ export default defineStore('paymentStore', {
     rvvupErrorMessage: '',
     paymentEmitter: mitt(),
     availableMethods: getDummyPaymentMethods(),
+    expressMethods: [],
+    hasVaultedMethods: false,
   }),
   getters: {
     methodsResponse: (state) => state.methodsResponse,
@@ -27,6 +29,9 @@ export default defineStore('paymentStore', {
     ),
     getPaymentPriority: (state) => (
       (paymentMethod) => state.availableMethods.findIndex(({ code }) => code === paymentMethod)
+    ),
+    isExpressPaymentsVisible: (state) => (
+      state.expressMethods.length
     ),
   },
   actions: {
@@ -48,6 +53,24 @@ export default defineStore('paymentStore', {
     setPaymentMethods(paymentMethods) {
       this.setData({
         availableMethods: paymentMethods,
+      });
+    },
+
+    addExpressMethod(method) {
+      this.setData({
+        expressMethods: this.$state.expressMethods.concat([method]),
+      });
+    },
+
+    removeExpressMethod(method) {
+      this.setData({
+        expressMethods: this.$state.expressMethods.filter((expressMethod) => expressMethod !== method),
+      });
+    },
+
+    setHasVaultedMethods() {
+      this.setData({
+        hasVaultedMethods: true,
       });
     },
 

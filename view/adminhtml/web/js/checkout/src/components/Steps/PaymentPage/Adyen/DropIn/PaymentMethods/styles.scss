@@ -46,6 +46,7 @@
       border-radius: var(--selectable__border-radius);
       box-shadow: none;
       color: var(--adyen-saved-card__font-color);
+      font-weight: var(--font-weight__regular);
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: repeat(3, auto);
@@ -97,8 +98,6 @@
   }
 
   .adyen-checkout__payment-methods-list {
-    margin: var(--indent__base) 0 0;
-
     .adyen-checkout__payment-method {
       background-color: transparent;
       border: none;

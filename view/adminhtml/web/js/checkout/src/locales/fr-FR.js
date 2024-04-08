@@ -5,7 +5,7 @@ export default {
   },
   dividerText: 'ou',
   signInDividerText: 'or',
-  payNoExpressWithBlockTitle: ' ',
+  payNoExpressWithBlockTitle: 'Enter your email address to pay by credit or debit card',
   payWithBlockTitle: 'Payer avec',
   orderSummary: {
     applyBtn: 'Utiliser',

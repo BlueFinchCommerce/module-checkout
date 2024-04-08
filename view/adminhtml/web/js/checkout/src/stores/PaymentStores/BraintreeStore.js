@@ -1,6 +1,7 @@
 import { markRaw } from 'vue';
 import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
+import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import createClientToken from '@/services/braintree/createClientToken';
 import getVaultedMethods from '@/services/braintree/getVaultedMethods';
@@ -263,11 +264,16 @@ export default defineStore('brainteeStore', {
     },
 
     async getVaultedMethods() {
+      const paymentStore = usePaymentStore();
       const result = await getVaultedMethods();
 
       this.setData({
         vaultedMethods: result,
       });
+
+      if (Object.keys(result).length) {
+        paymentStore.setHasVaultedMethods(true);
+      }
     },
 
     selectVaultedMethod(vaultedMethod) {
