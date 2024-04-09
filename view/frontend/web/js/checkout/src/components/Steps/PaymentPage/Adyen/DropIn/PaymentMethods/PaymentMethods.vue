@@ -41,7 +41,6 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
-import useLoadingStore from '@/stores/LoadingStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
 
