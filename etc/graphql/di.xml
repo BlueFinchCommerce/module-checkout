@@ -26,13 +26,8 @@
                 <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
                 <item name="gene_better_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
                 <item name="gene_better_checkout_progress_bar_visible" xsi:type="string">gene_better_checkout/general/progress_bar_visible</item>
-                <item name="adyen_merchant_account" xsi:type="string">payment/adyen_abstract/merchant_account</item>
-                <item name="adyen_client_key_test" xsi:type="string">payment/adyen_abstract/client_key_test</item>
-                <item name="adyen_client_key_live" xsi:type="string">payment/adyen_abstract/client_key_live</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
-                <item name="adyen_environment_mode" xsi:type="string">payment/adyen_abstract/demo_mode</item>
-                <item name="adyen_vault_enabled" xsi:type="string">payment/adyen_oneclick/active</item>
 
                 <!-- Recaptch config -->
                 <item name="recaptcha_v2_checkbox_key" xsi:type="string">recaptcha_frontend/type_recaptcha/public_key</item>
