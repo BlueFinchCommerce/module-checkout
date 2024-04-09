@@ -96,7 +96,7 @@
             class="details-form-title">
             <YourDetails fill="black" />
             <TextField
-              :text="$t('yourDetailsSection.title')"
+              :text="yourDetailsText"
             />
             <div class="divider-line"></div>
           </div>
@@ -104,7 +104,7 @@
             <Locate />
             <TextField
               class="address-block__title"
-              :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
+              :text="newAddressText"
             />
             <div class="divider-line"></div>
           </div>
@@ -120,7 +120,7 @@
             <Locate />
             <div class="delivery-section-title-text">
               <TextField
-                :text="$t('yourDetailsSection.deliverySection.title')"
+                :text="deliverWhereText"
               />
             </div>
             <div class="divider-line"></div>
@@ -198,7 +198,7 @@
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
-        :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
+        :label="proceedToShippingText"
         :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
         @click="submitShippingOption();"
       />
@@ -308,6 +308,14 @@ export default {
       storedKey: 0,
       instantCheckoutText: '',
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      yourDetailsText: '',
+      yourDetailsTextId: 'gene-bettercheckout-your-details-text',
+      deliverWhereText: '',
+      deliverWhereTextId: 'gene-bettercheckout-deliver-where-text',
+      newAddressText: '',
+      newAddressTextId: 'gene-bettercheckout-new-address-text',
+      proceedToShippingText: '',
+      proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
       buttonEnabled: false,
@@ -346,7 +354,14 @@ export default {
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
+    || this.$t('yourDetailsSection.deliverySection.title');
+    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
+    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
 
     await this.getInitialConfig();
     await this.getCart();

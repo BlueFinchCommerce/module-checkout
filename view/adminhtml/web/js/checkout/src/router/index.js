@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import SignInPage from '@/components/Steps/CustomerInfoPage/SignInPage/SignInPage.vue';
 import DetailsPage from '@/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue';
 import ShippingPage from '@/components/Steps/ShippingPage/ShippingPage.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
@@ -10,10 +11,18 @@ const routes = [
     alias: [
       '/checkout',
     ],
+    name: 'SignInPage',
+    component: SignInPage,
+    meta: {
+      depth: 0,
+    },
+  },
+  {
+    path: '/details',
     name: 'DetailsPage',
     component: DetailsPage,
     meta: {
-      depth: 0,
+      depth: 1,
     },
   },
   {
@@ -21,7 +30,7 @@ const routes = [
     name: 'ShippingPage',
     component: ShippingPage,
     meta: {
-      depth: 1,
+      depth: 2,
     },
   },
   {
@@ -29,7 +38,7 @@ const routes = [
     name: 'PaymentPage',
     component: PaymentPage,
     meta: {
-      depth: 2,
+      depth: 3,
     },
   },
   {
@@ -37,7 +46,7 @@ const routes = [
     name: 'AmazonReview',
     component: AmazonReview,
     meta: {
-      depth: 2,
+      depth: 3,
     },
   },
   {

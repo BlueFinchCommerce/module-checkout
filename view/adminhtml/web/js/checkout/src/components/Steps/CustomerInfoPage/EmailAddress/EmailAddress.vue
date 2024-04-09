@@ -21,8 +21,7 @@
         />
       </template>
 
-      <!-- <div :class="{ 'logged-in-email': isLoggedIn }"> -->
-        <div>
+      <div :class="{ 'logged-in-email': emailEntered }">
         <TextInput
           ref="email"
           v-model="customer.email"
@@ -41,7 +40,8 @@
           @keyup="emailAddressChange"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
-        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
+        <!-- Removed for UI designer only -->
+        <!-- <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/> -->
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"

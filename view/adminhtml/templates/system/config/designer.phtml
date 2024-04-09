@@ -1742,6 +1742,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
+                                        <label for="gene-bettercheckout-crosssells-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Cross Sells" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-crosssells-text" data-type="checkout-wording" type="text" placeholder="You may also like these items..." />
+                                    </div>
+                                    <div class="fieldset">
                                         <label for="gene-bettercheckout-coupondiscount-text">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('"Promo Code" Text')) ?>
@@ -1975,7 +1983,42 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </div>
                 </div>
             </div>
-            <div class="section-config details-specific-field"
+            <div class="section-config sign-in-specific-field details-specific-field"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <span id="instant-checkout-section-tab"></span>
+                    <a data-role="title" class="main-heading" href="#instant-checkout-section-tab">
+                        <?= $escaper->escapeHtml(__('Instant Checkout Section')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="fieldset">
+                            <label for="gene-bettercheckout-instantcheckout-text">
+                                <span>
+                                    <?= $escaper->escapeHtml(__('"Instant Checkout" Header Text')) ?>
+                                </span>
+                            </label>
+                            <input id="gene-bettercheckout-instantcheckout-text" data-type="checkout-wording" type="text" placeholder="Instant Checkout" />
+                        </div>
+                        <div class="fieldset">
+                            <label for="gene-bettercheckout-instant-checkout-background-colour">
+                                <span>
+                                    <?= $escaper->escapeHtml(__('Instant Checkout Background Colour')) ?>
+                                </span>
+                            </label>
+                            <div class="color-input-wrapper">
+                                <input id="gene-bettercheckout-instant-checkout-background-colour" data-type="color-picker" data-css-variable="--instant-checkout__background-color" placeholder="#e8edf3"/>
+                                <div id="--instant-checkout__background-color-swatch" class="color-input-swatch"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-config sign-in-specific-field"
                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
@@ -1985,7 +2028,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 <div class="admin__collapsible-block">
                     <span id="step-1-tab"></span>
                     <a data-role="title" class="main-heading" href="#step-1-tab">
-                        <?= $escaper->escapeHtml(__('Step 1 - Your Details')) ?>
+                        <?= $escaper->escapeHtml(__('Step 1 - Sign In')) ?>
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
@@ -2001,14 +2044,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     <?= $escaper->escapeHtml(__('Headers')) ?>
                                 </a>
                                 <div class="config" data-role="content">
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-instantcheckout-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('"Instant Checkout" Header Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-instantcheckout-text" data-type="checkout-wording" type="text" placeholder="Instant Checkout" />
-                                    </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-divider-text">
                                             <span>
@@ -2028,46 +2063,148 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-1-instant-checkout-tab"></span>
-                                <a data-role="title" href="#step-1-instant-checkout-tab">
-                                    <?= $escaper->escapeHtml(__('Instant Checkout')) ?>
+                                <span id="step-1-primary-buttons-tab"></span>
+                                <a data-role="title" href="#step-1-primary-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-instant-checkout-background-colour">
+                                        <label for="gene-bettercheckout-continuebutton-text">
                                             <span>
-                                                <?= $escaper->escapeHtml(__('Instant Checkout Background Colour')) ?>
+                                                <?= $escaper->escapeHtml(__('Continue Button Text')) ?>
                                             </span>
                                         </label>
-                                        <div class="color-input-wrapper">
-                                            <input id="gene-bettercheckout-instant-checkout-background-colour" data-type="color-picker" data-css-variable="--instant-checkout__background-color" placeholder="#e8edf3"/>
-                                            <div id="--instant-checkout__background-color-swatch" class="color-input-swatch"></div>
-                                        </div>
+                                        <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="config" data-role="content">
-                            <div class="section-config"
-                                data-mage-init='{"collapsible": {
-                                    "animate": 200,
-                                    "collapsible": true,
-                                    "openedState": "active"
-                                }}'
-                            >
-                                <div class="admin__collapsible-block">
-                                    <span id="step-1-primary-buttons-tab"></span>
-                                    <a data-role="title" href="#step-1-primary-buttons-tab">
-                                        <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
-                                    </a>
-                                    <div class="config" data-role="content">
-                                        <div class="fieldset">
-                                            <label for="gene-bettercheckout-continuebutton-text">
-                                                <span>
-                                                    <?= $escaper->escapeHtml(__('Continue Button Text')) ?>
-                                                </span>
-                                            </label>
-                                            <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
+                    </div>
+                </div>
+            </div>
+            <div class="section-config details-specific-field"
+                data-mage-init='{"collapsible": {
+                    "animate": 200,
+                    "collapsible": true,
+                    "openedState": "active"
+                }}'
+            >
+                <div class="admin__collapsible-block">
+                    <span id="step-2-tab"></span>
+                    <a data-role="title" class="main-heading" href="#step-2-tab">
+                        <?= $escaper->escapeHtml(__('Step 2 - Your Details')) ?>
+                    </a>
+                    <div class="config" data-role="content">
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-headers-tab"></span>
+                                <a data-role="title" href="#step-2-headers-tab">
+                                    <?= $escaper->escapeHtml(__('Headers')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-your-details-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Your Details" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-your-details-text" data-type="checkout-wording" type="text" placeholder="Your details" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-deliver-where-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Where Should We Deliver It To?" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-deliver-where-text" data-type="checkout-wording" type="text" placeholder="Where should we deliver it to?" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-new-address-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Add New Address" Header Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-new-address-text" data-type="checkout-wording" type="text" placeholder="Add new address" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-primary-buttons-tab"></span>
+                                <a data-role="title" href="#step-2-primary-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-proceedtoshipping-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Choose Your Shipping Method Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-proceedtoshipping-text" data-type="checkout-wording" type="text" placeholder="Choose your shipping method" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-secondary-buttons-tab"></span>
+                                <a data-role="title" href="#step-2-secondary-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Secondary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-addnewaddress-button-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Add New Address Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-addnewaddress-button-text" data-type="checkout-wording" type="text" placeholder="+ Add new address" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-logged-in-user-tab"></span>
+                                <a data-role="title" href="#step-2-logged-in-user-tab">
+                                    <?= $escaper->escapeHtml(__('Logged In User Styling')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-logged-in-user-background-colour">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Logged In User Background Colour')) ?>
+                                            </span>
+                                        </label>
+                                        <div class="color-input-wrapper">
+                                            <input id="gene-bettercheckout-logged-in-user-background-colour" data-type="color-picker" data-css-variable="--input__background-color-logged-in" placeholder="#f5f9fe"/>
+                                            <div id="--input__background-color-logged-in" class="color-input-swatch"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -2084,9 +2221,9 @@ $fontUrl = $assetViewModel->getFontUrl();
                 }}'
             >
                 <div class="admin__collapsible-block">
-                    <span id="step-2-tab"></span>
-                    <a data-role="title" class="main-heading" href="#step-2-tab">
-                        <?= $escaper->escapeHtml(__('Step 2 - Shipping')) ?>
+                    <span id="step-3-tab"></span>
+                    <a data-role="title" class="main-heading" href="#step-3-tab">
+                        <?= $escaper->escapeHtml(__('Step 3 - Shipping')) ?>
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
@@ -2097,8 +2234,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-2-headers-tab"></span>
-                                <a data-role="title" href="#step-2-headers-tab">
+                                <span id="step-3-headers-tab"></span>
+                                <a data-role="title" href="#step-3-headers-tab">
                                     <?= $escaper->escapeHtml(__('Headers')) ?>
                                 </a>
                                 <div class="config" data-role="content">
@@ -2122,8 +2259,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 }}'
                             >
                                 <div class="admin__collapsible-block">
-                                    <span id="step-2-primary-buttons-tab"></span>
-                                    <a data-role="title" href="#step-2-primary-buttons-tab">
+                                    <span id="step-3-primary-buttons-tab"></span>
+                                    <a data-role="title" href="#step-3-primary-buttons-tab">
                                         <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                     </a>
                                     <div class="config" data-role="content">
@@ -2150,9 +2287,9 @@ $fontUrl = $assetViewModel->getFontUrl();
                 }}'
             >
                 <div class="admin__collapsible-block">
-                    <span id="step-3-tab"></span>
-                    <a data-role="title" class="main-heading" href="#step-3-tab">
-                        <?= $escaper->escapeHtml(__('Step 3 - Payment')) ?>
+                    <span id="step-4-tab"></span>
+                    <a data-role="title" class="main-heading" href="#step-4-tab">
+                        <?= $escaper->escapeHtml(__('Step 4 - Payment')) ?>
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
@@ -2163,8 +2300,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-3-completed-steps-tab"></span>
-                                <a data-role="title" href="#step-3-completed-steps-tab">
+                                <span id="step-4-completed-steps-tab"></span>
+                                <a data-role="title" href="#step-4-completed-steps-tab">
                                     <?= $escaper->escapeHtml(__('Completed Steps')) ?>
                                 </a>
                                 <div class="config" data-role="content">
@@ -2195,8 +2332,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-3-headers-tab"></span>
-                                <a data-role="title" href="#step-3-headers-tab">
+                                <span id="step-4-headers-tab"></span>
+                                <a data-role="title" href="#step-4-headers-tab">
                                     <?= $escaper->escapeHtml(__('Headers')) ?>
                                 </a>
                                 <div class="config" data-role="content">

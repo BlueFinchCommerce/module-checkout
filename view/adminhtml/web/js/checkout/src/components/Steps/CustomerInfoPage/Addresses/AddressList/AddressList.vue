@@ -4,10 +4,9 @@
       v-if="displayTitle"
       class="delivery-section-title"
     >
-      <img
-        :src="savedAddressIconUrl"
-        alt="saved-address-icon"
-      >
+      <Shipping v-if="addressType === 'shipping'" />
+      <BillingAddressIcon v-if="addressType === 'billing'" />
+
       <div class="delivery-section-title-text">
         <TextField
           :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
@@ -45,7 +44,7 @@
         <MyButton
           type="button"
           secondary
-          :label="$t('addNewAddressBtn')"
+          :label="addNewAddressButtonText"
           @click="newAddress"
         />
       </li>
@@ -61,7 +60,8 @@ import useCustomerStore from '@/stores/CustomerStore';
 
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
-import promoSvg from '@/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg';
+import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
+import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue'
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -69,7 +69,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
-import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 export default {
   name: 'AddressList',
@@ -77,6 +76,8 @@ export default {
     TextField,
     Tick,
     MyButton,
+    BillingAddressIcon,
+    Shipping,
   },
   props: {
     addressType: {
@@ -92,13 +93,12 @@ export default {
     return {
       isShippingNewCTA: true,
       uniqueAddressList: [],
+      addNewAddressButtonText: '',
+      addNewAddressButtonTextId: 'gene-bettercheckout-addnewaddress-button-text',
     };
   },
   computed: {
     ...mapState(useCustomerStore, ['customer', 'selected']),
-    savedAddressIconUrl() {
-      return `${getStaticUrl(promoSvg)}`;
-    },
   },
   watch: {
     addressType: {
@@ -134,6 +134,12 @@ export default {
         this.uniqueAddressList.push(address);
       }
     });
+
+    this.addNewAddressButtonText = window.geneCheckout?.[this.addNewAddressButtonTextId] || this.$t('addNewAddressBtn');
+    document.addEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
+  },
+  unmounted() {
+    document.removeEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -182,6 +188,9 @@ export default {
       } else {
         this.createNewAddress(this.addressType);
       }
+    },
+    setAddNewAddressButtonText(event) {
+      this.addNewAddressButtonText = event?.detail?.value || this.$t('addNewAddressBtn');
     },
   },
 };

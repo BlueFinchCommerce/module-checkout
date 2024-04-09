@@ -54,7 +54,7 @@
     <div class="promo-title crosssells">
       <div>
         <TextField
-          :text="freeShippingText"
+          :text="crossSellsText"
         />
       </div>
       <ArrowDown
@@ -134,8 +134,8 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
-      freeShippingText: '',
-      freeShippingTextId: 'gene-bettercheckout-freeshipping-text',
+      crossSellsText: '',
+      crossSellsTextId: 'gene-bettercheckout-crosssells-text',
     };
   },
   computed: {
@@ -145,7 +145,7 @@ export default {
     },
   },
   async created() {
-    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+    this.crossSellsText = window.geneCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
 
     await this.getInitialConfig();

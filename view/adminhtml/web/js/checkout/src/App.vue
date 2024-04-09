@@ -36,6 +36,7 @@
 import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
+import useCustomerStore from '@/stores/CustomerStore';
 
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
@@ -64,7 +65,7 @@ export default {
   data() {
     return {
       currentDevice: 'MockDesktop',
-      currentStep: 'YourDetails',
+      currentStep: 'SignInPage',
       devices: [
         { deviceName: 'MockMobile', displayName: 'Mobile' },
         { deviceName: 'MockTablet', displayName: 'Tablet' },
@@ -73,6 +74,7 @@ export default {
         { deviceName: 'MockFull', displayName: 'Full' },
       ],
       checkoutSteps: [
+        { stepName: 'SignInPage', displayName: 'Sign In' },
         { stepName: 'YourDetails', displayName: 'Your Details' },
         { stepName: 'Shipping', displayName: 'Shipping' },
         { stepName: 'Payment', displayName: 'Payment' },
@@ -80,10 +82,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(useStepsStore, ['yourDetailsActive', 'shippingActive', 'paymentActive']),
+    ...mapState(useStepsStore, ['signInPageActive', 'yourDetailsActive', 'shippingActive', 'paymentActive']),
   },
   async created() {
-    this.goToYouDetails();
+    this.goToSignInPage();
     await this.getInitialConfig();
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
@@ -92,7 +94,8 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useStepsStore, ['goToYouDetails', 'goToShipping', 'goToPayment']),
+    ...mapActions(useStepsStore, ['goToSignInPage', 'goToYouDetails', 'goToShipping', 'goToPayment']),
+    ...mapActions(useCustomerStore, ['dummyLogIn', 'dummyLogOut']),
 
     switchDevice(device) {
       this.currentDevice = device.deviceName;
@@ -106,13 +109,20 @@ export default {
     goToStep(step) {
       this.currentStep = step.stepName;
       switch (step.stepName) {
+        case 'SignInPage':
+          this.dummyLogOut();
+          this.goToSignInPage();
+          break;
         case 'YourDetails':
+          this.dummyLogIn();
           this.goToYouDetails();
           break;
         case 'Shipping':
+          this.dummyLogIn();
           this.goToShipping();
           break;
         case 'Payment':
+          this.dummyLogIn();
           this.goToPayment();
           break;
         default:

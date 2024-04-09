@@ -123,12 +123,6 @@
   }
 }
 
-.address-list {
-  float: none; // Override core styles
-  width: 100%; // Override core styles
-  margin-top: var(--indent__base);
-}
-
 .address-block {
   position: relative;
   margin: var(--indent__base) 0;

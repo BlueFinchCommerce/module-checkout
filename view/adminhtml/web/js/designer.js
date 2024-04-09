@@ -142,7 +142,7 @@ define([
                     'MockFull': '.mobile-specific-field, .desktop-specific-field'
                 };
 
-            // Hide all specific fields by default
+            // Hide specific fields
             $('.mobile-specific-field, .desktop-specific-field').hide();
 
             // Show specific field based on the device type
@@ -154,13 +154,17 @@ define([
 
                 // Define mappings for step to specific fields
                 stepToFieldMap = {
+                    'SignInPage': '.sign-in-specific-field',
                     'YourDetails': '.details-specific-field',
                     'Shipping': '.shipping-specific-field',
                     'Payment': '.payment-specific-field'
                 };
 
-            // Hide all specific fields by default
-            $('.details-specific-field, .shipping-specific-field, .payment-specific-field').hide();
+            // Hide specific fields
+            $(`.sign-in-specific-field,
+            .details-specific-field,
+            .shipping-specific-field,
+            .payment-specific-field`).hide();
 
             // Show specific field based on the checkout step
             $(stepToFieldMap[checkoutStep]).show();
