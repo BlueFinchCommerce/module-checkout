@@ -2055,7 +2055,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </div>
                             </div>
                         </div>
-                        <div class="section-config"
+                        <div class="section-config no-user-specific-field registered-user-specific-field"
                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
@@ -2068,13 +2068,53 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                 </a>
                                 <div class="config" data-role="content">
-                                    <div class="fieldset">
+                                    <div class="fieldset no-user-specific-field">
                                         <label for="gene-bettercheckout-continuebutton-text">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Continue Button Text')) ?>
                                             </span>
                                         </label>
                                         <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
+                                    </div>
+                                    <div class="fieldset registered-user-specific-field">
+                                        <label for="gene-bettercheckout-signinbutton-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Sign In Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-signinbutton-text" data-type="checkout-wording" type="text" placeholder="Sign In" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config guest-user-specific-field registered-user-specific-field"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-1-secondary-buttons-tab"></span>
+                                <a data-role="title" href="#step-1-secondary-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Secondary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset guest-user-specific-field">
+                                        <label for="gene-bettercheckout-noaccountguestbutton-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Continue As A Guest Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-noaccountguestbutton-text" data-type="checkout-wording" type="text" placeholder="Continue as a Guest" />
+                                    </div>
+                                    <div class="fieldset registered-user-specific-field">
+                                        <label for="gene-bettercheckout-accountguestbutton-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Or Continue As A Guest Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-accountguestbutton-text" data-type="checkout-wording" type="text" placeholder="Or Continue as a Guest" />
                                     </div>
                                 </div>
                             </div>

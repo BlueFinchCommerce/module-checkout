@@ -31,6 +31,18 @@
       {{ step.displayName }}
     </button>
   </div>
+  <div v-if="currentStep === 'SignInPage'" class="switchers">
+    <button
+      v-for="(user, index) in userType"
+      :key="index"
+      :class="{
+        'action-secondary': currentUser === user.userTypeName
+      }"
+      @click="setUserStatus(user)"
+    >
+      {{ user.displayName }}
+    </button>
+  </div>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
@@ -66,6 +78,7 @@ export default {
     return {
       currentDevice: 'MockDesktop',
       currentStep: 'SignInPage',
+      currentUser: 'NoUser',
       devices: [
         { deviceName: 'MockMobile', displayName: 'Mobile' },
         { deviceName: 'MockTablet', displayName: 'Tablet' },
@@ -79,6 +92,11 @@ export default {
         { stepName: 'Shipping', displayName: 'Shipping' },
         { stepName: 'Payment', displayName: 'Payment' },
       ],
+      userType: [
+        { userTypeName: 'NoUser', displayName: 'No User' },
+        { userTypeName: 'GuestUser', displayName: 'Guest User' },
+        { userTypeName: 'RegisteredUser', displayName: 'Registered User' },
+      ],
     };
   },
   computed: {
@@ -86,6 +104,7 @@ export default {
   },
   async created() {
     this.goToSignInPage();
+    this.dummyLogOut(this.currentStep);
     await this.getInitialConfig();
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
@@ -95,7 +114,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useStepsStore, ['goToSignInPage', 'goToYouDetails', 'goToShipping', 'goToPayment']),
-    ...mapActions(useCustomerStore, ['dummyLogIn', 'dummyLogOut']),
+    ...mapActions(useCustomerStore, ['dummyLogIn', 'dummyLogOut', 'dummyUserType']),
 
     switchDevice(device) {
       this.currentDevice = device.deviceName;
@@ -110,19 +129,22 @@ export default {
       this.currentStep = step.stepName;
       switch (step.stepName) {
         case 'SignInPage':
-          this.dummyLogOut();
+          this.dummyLogOut(step.stepName);
+          this.dummyUserType('NoUser');
           this.goToSignInPage();
           break;
         case 'YourDetails':
-          this.dummyLogIn();
+          this.dummyLogIn(step.stepName);
           this.goToYouDetails();
           break;
         case 'Shipping':
-          this.dummyLogIn();
+          this.dummyLogOut(step.stepName);
+          this.dummyUserType('NoUser');
           this.goToShipping();
           break;
         case 'Payment':
-          this.dummyLogIn();
+          this.dummyLogOut(step.stepName);
+          this.dummyUserType('NoUser');
           this.goToPayment();
           break;
         default:
@@ -134,6 +156,16 @@ export default {
     dispatchStep(stepName) {
       document.dispatchEvent(new CustomEvent('switchDisplayedStep', { detail: stepName }));
     },
+
+    setUserStatus(user) {
+      this.currentUser = user.userTypeName;
+      this.dummyUserType(user.userTypeName);
+      this.dispatchUserStatus(user.userTypeName)
+    },
+
+    dispatchUserStatus(userType) {
+      document.dispatchEvent(new CustomEvent('updateUserStatus', { detail: userType }));
+    }
   },
 };
 </script>
@@ -147,6 +179,7 @@ export default {
     gap: 20px;
     grid-auto-flow: column;
     justify-content: center;
+    margin-bottom: 20px;
   }
 
   #gene-better-checkout-root {

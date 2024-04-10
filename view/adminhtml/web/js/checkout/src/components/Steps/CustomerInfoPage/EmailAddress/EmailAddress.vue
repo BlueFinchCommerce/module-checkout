@@ -2,26 +2,26 @@
   <section class="customer-form">
     <template v-if="loadingLogin">
       <div class="loader__absolute-container">
-        <Loader/>
+        <Loader />
       </div>
     </template>
 
     <div class="checkout-section checkout-email">
-      <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
+      <template v-if="customer.registered !== undefined && !customer.loggedIn && emailEntered">
         <TextField
           class="welcome-message-title"
           data-cy="email"
-          :text="emailRegistered ?
+          :text="customer.registered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
         <TextField
           class="welcome-message"
-          :text="emailRegistered ?
+          :text="customer.registered ?
             $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
         />
       </template>
 
-      <div :class="{ 'logged-in-email': emailEntered }">
+      <div :class="{ 'logged-in-email': customer.loggedIn && currentStep === 'YourDetails' }">
         <TextInput
           ref="email"
           v-model="customer.email"
@@ -36,10 +36,11 @@
           autocomplete="email"
           type="email"
           :disabled="emailEntered"
+          :style="'pointer-events: none;'"
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
         />
-        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
+        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError" />
         <!-- Removed for UI designer only -->
         <!-- <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/> -->
         <div
@@ -48,20 +49,22 @@
           @click="changeEmail()"
           @keydown.enter="changeEmail()"
         >
-          <button class="edit-button"
-                  data-cy="button"
-                  :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
+          <button
+            class="edit-button"
+            data-cy="button"
+            :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+          >
             <TextField
               :text="$t('yourDetailsSection.editButton')"
             />
-            <Edit/>
+            <Edit />
           </button>
         </div>
       </div>
 
       <div>
         <MyButton
-          v-if="emailRegistered === undefined && !emailEntered"
+          v-if="customer.registered === undefined && !emailEntered && currentStep === 'SignInPage'"
           class="continue-btn"
           primary
           :label="continueButtonText"
@@ -69,9 +72,10 @@
         />
       </div>
 
-      <div v-if="emailRegistered && !emailEntered">
+      <div v-if="customer.registered && emailEntered && currentStep === 'SignInPage'">
         <div class="field__password">
           <TextInput
+            ref="passwordInput"
             v-model="password"
             :error="passwordError"
             :error-message="passwordErrorMessage"
@@ -80,7 +84,6 @@
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
-            ref="passwordInput"
             required
           >
             <template #icon>
@@ -90,10 +93,10 @@
                 @click="toggleShowPassword"
               >
                 <span v-if="showPassword">
-                  <ShowIcon/>
+                  <ShowIcon />
                 </span>
                 <span v-else>
-                  <HideIcon/>
+                  <HideIcon />
                 </span>
               </button>
             </template>
@@ -121,7 +124,7 @@
         </div>
 
         <div
-          v-if="!emailEntered"
+          v-if="emailEntered"
           class="actions"
         >
           <Recaptcha
@@ -139,33 +142,33 @@
             type="submit"
             class="sign-in-btn"
             primary
-            :label="$t('signInButton')"
+            :label="signInButtonText"
             @click="submitForm"
           />
           <div class="divider">
-            <div class="divider-line"></div>
-            <TextField :text="$t('signInDividerText')"/>
-            <div class="divider-line"></div>
+            <div class="divider-line" />
+            <TextField :text="$t('signInDividerText')" />
+            <div class="divider-line" />
           </div>
           <MyButton
             class="guest-btn"
             secondary
             :disabled="proceedAsGuestInvalid"
-            :label="$t('accountGuestButton')"
+            :label="accountGuestButtonText"
             @click="proceedAsGuest();"
           />
         </div>
       </div>
 
       <div
-        v-if="emailRegistered === false && !emailEntered"
+        v-if="customer.registered === false && emailEntered && currentStep === 'SignInPage'"
         class="actions"
       >
         <MyButton
           class="guest-btn single"
           secondary
           :disabled="proceedAsGuestInvalid"
-          :label="$t('noAccountGuestButton')"
+          :label="noAccountGuestButtonText"
           @click="proceedAsGuest();"
         />
       </div>
@@ -194,7 +197,6 @@ import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
-import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // helpers
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
@@ -206,7 +208,6 @@ import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLay
 export default {
   name: 'EmailAddress',
   components: {
-    ErrorIcon,
     TextInput,
     MyButton,
     HideIcon,
@@ -236,11 +237,20 @@ export default {
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
       continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
+      noAccountGuestButtonText: '',
+      noAccountGuestButtonTextId: 'gene-bettercheckout-noaccountguestbutton-text',
+      signInButtonText: '',
+      signInButtonTextId: 'gene-bettercheckout-signinbutton-text',
+      accountGuestButtonText: '',
+      accountGuestButtonTextId: 'gene-bettercheckout-accountguestbutton-text',
       tabKeyPressed: false,
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
+    ...mapState(
+      useCustomerStore,
+      ['isLoggedIn', 'emailEntered', 'inputsSanitiseError', 'dummyUserType', 'currentStep'],
+    ),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     ...mapState(useConfigStore, ['storeCode']),
@@ -263,10 +273,22 @@ export default {
     document.addEventListener('keydown', this.handleKeyDown);
 
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextIdId]
+    || this.$t('noAccountGuestButton');
+    this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
+    this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
+    || this.$t('accountGuestButton');
+
     document.addEventListener(this.continueButtonTextId, this.setContinueButtonText);
+    document.addEventListener(this.noAccountGuestButtonTextId, this.setNoAccountGuestButtonText);
+    document.addEventListener(this.signInButtonTextId, this.setSignInButtonText);
+    document.addEventListener(this.accountGuestButtonTextId, this.setAccountGuestButtonText);
   },
   unmounted() {
     document.removeEventListener(this.continueButtonTextId, this.setContinueButtonText);
+    document.removeEventListener(this.noAccountGuestButtonTextId, this.setNoAccountGuestButtonText);
+    document.removeEventListener(this.signInButtonTextId, this.setSignInButtonText);
+    document.removeEventListener(this.accountGuestButtonTextId, this.setAccountGuestButtonText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -282,6 +304,15 @@ export default {
 
     setContinueButtonText(event) {
       this.continueButtonText = event?.detail?.value || this.$t('continueButton');
+    },
+    setNoAccountGuestButtonText(event) {
+      this.noAccountGuestButtonText = event?.detail?.value || this.$t('noAccountGuestButton');
+    },
+    setSignInButtonText(event) {
+      this.signInButtonText = event?.detail?.value || this.$t('signInButton');
+    },
+    setAccountGuestButtonText(event) {
+      this.accountGuestButtonText = event?.detail?.value || this.$t('accountGuestButton');
     },
 
     toggleShowPassword() {

@@ -138,7 +138,7 @@
             type="submit"
             class="sign-in-btn"
             primary
-            :label="$t('signInButton')"
+            :label="signInButtonText"
             @click="submitForm"
           />
           <div class="divider">
@@ -150,7 +150,7 @@
             class="guest-btn"
             secondary
             :disabled="proceedAsGuestInvalid"
-            :label="$t('accountGuestButton')"
+            :label="accountGuestButtonText"
             @click="proceedAsGuest();"
           />
         </div>
@@ -164,7 +164,7 @@
           class="guest-btn single"
           secondary
           :disabled="proceedAsGuestInvalid"
-          :label="$t('noAccountGuestButton')"
+          :label="noAccountGuestButtonText"
           @click="proceedAsGuest();"
         />
       </div>
@@ -235,6 +235,12 @@ export default {
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
       continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
+      noAccountGuestButtonText: '',
+      noAccountGuestButtonTextId: 'gene-bettercheckout-noaccountguestbutton-text',
+      signInButtonText: '',
+      signInButtonTextId: 'gene-bettercheckout-signinbutton-text',
+      accountGuestButtonText: '',
+      accountGuestButtonTextId: 'gene-bettercheckout-accountguestbutton-text',
       tabKeyPressed: false,
     };
   },
@@ -252,6 +258,11 @@ export default {
   },
   async mounted() {
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextIdId]
+    || this.$t('noAccountGuestButton');
+    this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
+    this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
+    || this.$t('accountGuestButton');
 
     await this.getInitialConfig();
     await this.getCart();

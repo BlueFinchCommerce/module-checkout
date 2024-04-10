@@ -4275,13 +4275,14 @@ p {
 }
 body.no-scrollable {
   overflow: hidden;
-}.switchers[data-v-51a047c2] {
+}.switchers[data-v-0b6999a9] {
   display: grid;
   gap: 20px;
   grid-auto-flow: column;
   justify-content: center;
+  margin-bottom: 20px;
 }
-#gene-better-checkout-root[data-v-51a047c2] {
+#gene-better-checkout-root[data-v-0b6999a9] {
   margin: 20px 0;
 }.pay-with__container[data-v-95a344b4] {
   align-items: var(--pay-with__align-items);
@@ -4376,22 +4377,22 @@ body.no-scrollable {
 }
 }.recaptcha-container#customerLogin[data-v-6d74d795] {
   margin-top: var(--indent__m);
-}.customer-form .divider[data-v-4ce46dcb] {
+}.customer-form .divider[data-v-0862c9e6] {
   display: flex;
   align-items: center;
 }
-.customer-form .divider-line[data-v-4ce46dcb] {
+.customer-form .divider-line[data-v-0862c9e6] {
   border-bottom: var(--divider__border);
   flex-grow: 1;
 }
-.customer-form .divider p[data-v-4ce46dcb] {
+.customer-form .divider p[data-v-0862c9e6] {
   font-weight: var(--font-weight__semibold);
   font-family: var(--font-family__copy);
   font-size: var(--font__m);
   margin: 0 var(--indent__s);
   text-align: center;
 }
-.customer-form .welcome-message[data-v-4ce46dcb] {
+.customer-form .welcome-message[data-v-0862c9e6] {
   padding-top: var(--welcome-message-padding, 0);
   font-size: var(--welcome-message-font-size, var(--font__s));
   font-weight: var(--welcome-message-font-weight, var(--font-weight__medium));
@@ -4400,19 +4401,19 @@ body.no-scrollable {
   text-align: var(--welcome-message-text-align, center);
   color: var(--font__color-light);
 }
-.customer-form .welcome-message[data-v-4ce46dcb]:empty {
+.customer-form .welcome-message[data-v-0862c9e6]:empty {
   padding-top: 0;
 }
-.customer-form .actions[data-v-4ce46dcb] {
+.customer-form .actions[data-v-0862c9e6] {
   display: grid;
   grid-gap: var(--indent__m);
   margin: 0 0 var(--indent__s);
   width: 100%;
 }
-.customer-form .field__password[data-v-4ce46dcb] {
+.customer-form .field__password[data-v-0862c9e6] {
   position: relative;
 }
-.customer-form .field__password .button_show_password[data-v-4ce46dcb] {
+.customer-form .field__password .button_show_password[data-v-0862c9e6] {
   cursor: pointer;
   background: transparent;
   border: none;
@@ -4425,19 +4426,19 @@ body.no-scrollable {
   width: auto;
   top: 12px;
 }
-.customer-form .field__help-text[data-v-4ce46dcb] {
+.customer-form .field__help-text[data-v-0862c9e6] {
   display: var(--password-help-text-display);
   margin-top: var(--indent__s);
   font-size: var(--font__xs);
   font-weight: var(--font-weight__medium);
   color: var(--font__color-light);
 }
-.customer-form .forgot-pass p[data-v-4ce46dcb] {
+.customer-form .forgot-pass p[data-v-0862c9e6] {
   text-align: left;
   margin: var(--indent__s) 0 var(--indent__xs);
   font-family: var(--font-family__copy);
 }
-.customer-form .email-address-edit-btn[data-v-4ce46dcb] {
+.customer-form .email-address-edit-btn[data-v-0862c9e6] {
   position: absolute;
   cursor: pointer;
   right: 0;
@@ -4447,20 +4448,20 @@ body.no-scrollable {
   transform: translateY(50%);
   padding-right: var(--indent__m);
 }
-.customer-form .email-address-edit-btn button[data-v-4ce46dcb] {
+.customer-form .email-address-edit-btn button[data-v-0862c9e6] {
   text-align: right;
   width: 100%;
   border: none;
   justify-content: flex-end;
 }
-.customer-form .email-address-edit-btn p[data-v-4ce46dcb] {
+.customer-form .email-address-edit-btn p[data-v-0862c9e6] {
   display: none;
   cursor: pointer;
   font-family: var(--font-family__copy);
   font-size: var(--font__xs);
   font-weight: var(--font-weight__medium);
 }
-.edit-button[data-v-4ce46dcb] {
+.edit-button[data-v-0862c9e6] {
   align-items: center;
   background: transparent;
   border: none;
@@ -4472,48 +4473,48 @@ body.no-scrollable {
   line-height: 20px;
   padding: 0;
 }
-.checkout-email .logged-in-email-title[data-v-4ce46dcb] {
+.checkout-email .logged-in-email-title[data-v-0862c9e6] {
   display: var(--logged-in-email-title-visibility, none);
   font-size: var(--font__l);
   font-weight: var(--font-weight__semibold);
   margin-top: var(--indent__l);
 }
-.checkout-email .welcome-message-title[data-v-4ce46dcb] {
+.checkout-email .welcome-message-title[data-v-0862c9e6] {
   display: var(--logged-in-email-title-visibility, none);
   font-size: var(--welcome-message-title__font-size, var(--font__l));
   font-weight: var(--welcome-message-title__font-weight, var(--font-weight__semibold));
   font-family: var(--welcome-message-title__font-family, var(--font-family__copy));
 }
-.checkout-email__footer a[data-v-4ce46dcb] {
+.checkout-email__footer a[data-v-0862c9e6] {
   cursor: pointer;
   font-size: var(--button__link-font-size);
   font-weight: var(--button__link-font-weight);
   color: var(---button__link-font-color);
   text-decoration: var(--button__link-text-decoration);
 }
-.checkout-email__footer a[data-v-4ce46dcb]:hover, .checkout-email__footer a[data-v-4ce46dcb]:focus, .checkout-email__footer a[data-v-4ce46dcb]:focus-visible {
+.checkout-email__footer a[data-v-0862c9e6]:hover, .checkout-email__footer a[data-v-0862c9e6]:focus, .checkout-email__footer a[data-v-0862c9e6]:focus-visible {
   font-weight: var(--button__link-font-weight-hover);
 }
-.checkout-email__text[data-v-4ce46dcb] {
+.checkout-email__text[data-v-0862c9e6] {
   display: flex;
 }
-.checkout-email__text p[data-v-4ce46dcb] {
+.checkout-email__text p[data-v-0862c9e6] {
   margin-left: var(--indent__xs);
 }
-.checkout-email__text p[data-v-4ce46dcb]:first-child {
+.checkout-email__text p[data-v-0862c9e6]:first-child {
   margin-left: 0;
 }
-.checkout-email__text .terms[data-v-4ce46dcb],
-.checkout-email__text .policy[data-v-4ce46dcb] {
+.checkout-email__text .terms[data-v-0862c9e6],
+.checkout-email__text .policy[data-v-0862c9e6] {
   cursor: pointer;
   text-decoration: underline;
 }
-.mock-laptop .welcome-message-title[data-v-4ce46dcb],
-.mock-desktop .welcome-message-title[data-v-4ce46dcb] {
+.mock-laptop .welcome-message-title[data-v-0862c9e6],
+.mock-desktop .welcome-message-title[data-v-0862c9e6] {
   margin-top: 10px;
 }
 @media screen and (min-width: 768px) {
-.mock-full .welcome-message-title[data-v-4ce46dcb] {
+.mock-full .welcome-message-title[data-v-0862c9e6] {
     margin-top: 10px;
 }
 }#braintree-google-pay.text-loading {

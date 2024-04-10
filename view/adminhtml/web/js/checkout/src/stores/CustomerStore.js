@@ -26,12 +26,16 @@ import tokenTypes from '@/helpers/tokens/getTokenTypes';
 export default defineStore('customerStore', {
   state: () => ({
     customer: {
+      type: '', // Only for UI designer
+      loggedIn: false, // Only for UI designer
+      registered: undefined, // Only for UI designer
       addresses: getDummySavedAddresses(),
       email: '',
       ...getUrlTokens,
     },
     hasPreviouslyOrderedFpf: false,
     emailEntered: false,
+    currentStep: '', // Only for UI designer
     selected: {
       shipping: getDummyCustomerDetails(),
       billing: getDummyCustomerDetails(false),
@@ -98,22 +102,60 @@ export default defineStore('customerStore', {
       this.$patch(data);
     },
 
-    dummyLogIn() {
+    dummyLogIn(step) {
       this.setData({
         customer: {
           email: 'hello@gene.co.uk',
+          loggedIn: true,
         },
         emailEntered: true,
+        currentStep: step,
       });
     },
 
-    dummyLogOut() {
+    dummyLogOut(step) {
       this.setData({
         customer: {
           email: '',
+          loggedIn: false,
         },
         emailEntered: false,
+        currentStep: step,
       });
+    },
+
+    dummyUserType(userType) {
+      if (userType === 'NoUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: '',
+            loggedIn: false,
+            registered: undefined,
+          },
+          emailEntered: false,
+        });
+      } else if (userType === 'GuestUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: 'guest@gene.co.uk',
+            loggedIn: false,
+            registered: false,
+          },
+          emailEntered: true,
+        });
+      } else if (userType === 'RegisteredUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: 'hello@gene.co.uk',
+            loggedIn: false,
+            registered: true,
+          },
+          emailEntered: true,
+        });
+      }
     },
 
     setAddressToStore(address, addressType) {
