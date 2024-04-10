@@ -43,6 +43,7 @@ import { mapActions, mapState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -99,6 +100,7 @@ export default {
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     async selectPaymentMethod() {
       this.isMethodSelected = true;
@@ -114,11 +116,11 @@ export default {
       };
       this.buttonDisabled = true;
 
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+      // Check that the agreements (if any) and recpatcha is valid.
+      const agreementsValid = this.validateAgreements();
+      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!isValid) {
-        this.buttonDisabled = false;
+      if (!agreementsValid || !recaptchaValid) {
         return;
       }
 

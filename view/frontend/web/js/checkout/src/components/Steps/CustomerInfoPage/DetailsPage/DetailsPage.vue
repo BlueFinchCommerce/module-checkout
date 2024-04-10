@@ -15,6 +15,7 @@
           v-if="errorMessage !== ''"
           :message="errorMessage"
           :attached="false"
+          :margin="false"
         />
         <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
         <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />

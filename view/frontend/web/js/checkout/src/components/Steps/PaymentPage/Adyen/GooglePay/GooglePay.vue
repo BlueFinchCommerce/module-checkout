@@ -3,7 +3,10 @@
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
   />
-  <div id="adyen-threeds-container" />
+  <div
+    v-show="threeDSVisible"
+    id="adyen-threeds-container"
+  />
 </template>
 
 <script>
@@ -16,6 +19,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
@@ -41,6 +45,7 @@ export default {
       googlePayNoShippingMethods: '',
       key: 'adyenGooglePay',
       orderId: null,
+      threeDSVisible: false,
     };
   },
   computed: {
@@ -138,6 +143,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
     ...mapActions(useLoadingStore, ['setLoadingState']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     setOrderId(orderId) {
       this.orderId = orderId;
@@ -207,10 +213,11 @@ export default {
     },
 
     onClick(resolve, reject, type) {
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+      // Check that the agreements (if any) and recpatcha is valid.
+      const agreementsValid = this.validateAgreements();
+      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!isValid) {
+      if (!agreementsValid || !recaptchaValid) {
         return false;
       }
 
@@ -380,6 +387,7 @@ export default {
           challengeWindowSize: '05',
         };
 
+        this.threeDSVisible = true;
         this.checkout.createFromAction(response.action, threeDSConfiguration).mount('#adyen-threeds-container');
       }
     },

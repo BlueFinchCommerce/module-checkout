@@ -131,7 +131,8 @@
 
     &__button--paypal,
     [data-braintree-id="google-pay-button"],
-    [data-braintree-id="apple-pay-button"] {
+    .braintree-option__applePay.braintree-option__selected ~ .braintree-sheet__content,
+    .braintree-option__venmo.braintree-option__selected ~ .braintree-sheet__content {
       display: grid;
       gap: var(--indent__base);
 

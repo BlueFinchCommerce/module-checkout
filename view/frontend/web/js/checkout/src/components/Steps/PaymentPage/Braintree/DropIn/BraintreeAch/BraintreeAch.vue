@@ -126,6 +126,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -222,6 +223,7 @@ export default {
       'clearErrorMessage',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     selectMethod() {
       this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-ach' });
@@ -279,7 +281,7 @@ export default {
         return false;
       }
 
-      if (!this.validateAgreements()) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
         this.paymentEmitter.emit('braintreePaymentError');
         return false;
       }

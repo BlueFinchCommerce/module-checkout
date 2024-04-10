@@ -12,6 +12,7 @@
       v-if="errorMessage"
       :message="errorMessage"
       :attached="false"
+      :margin="false"
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
@@ -49,6 +50,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -216,6 +218,7 @@ export default {
         amount: this.cartGrandTotal / 100,
       };
     }
+    console.log(braintreeWebDropIn);
 
     braintreeWebDropIn.create(options, this.afterBraintreeInit);
   },
@@ -237,6 +240,7 @@ export default {
       'getPayPalLineItems',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');
@@ -259,7 +263,7 @@ export default {
 
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
-        if (!this.validateAgreements()) {
+        if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
           const error = new Error();
           error.name = 'DropinError';
           reject(error);

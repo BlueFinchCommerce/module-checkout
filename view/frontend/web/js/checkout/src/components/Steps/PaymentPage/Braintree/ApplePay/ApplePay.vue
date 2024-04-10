@@ -21,6 +21,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
@@ -128,14 +129,16 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     click(event) {
       event.preventDefault();
 
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+      // Check that the agreements (if any) and recpatcha is valid.
+      const agreementsValid = this.validateAgreements();
+      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!isValid) {
+      if (!agreementsValid || !recaptchaValid) {
         return;
       }
 

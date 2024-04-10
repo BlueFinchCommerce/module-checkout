@@ -12,11 +12,15 @@ export default defineStore('RecaptchaStore', {
       placeOrder: false,
     },
     tokens: {},
+    errors: {},
     cache: {},
   }),
   getters: {
     getTypeByPlacement: (state) => (
       (placement) => state.enabled[placement]
+    ),
+    getRecaptchaError: (state) => (
+      (placement) => state.errors[placement]
     ),
   },
   actions: {
@@ -67,6 +71,9 @@ export default defineStore('RecaptchaStore', {
 
     setToken(id, token) {
       this.setData({
+        errors: {
+          [id]: null,
+        },
         tokens: {
           [id]: token,
         },
@@ -79,6 +86,20 @@ export default defineStore('RecaptchaStore', {
           [id]: null,
         },
       });
+    },
+
+    validateToken(id) {
+      if (this.$state.enabled[id] && !this.$state.tokens[id]) {
+        this.setData({
+          errors: {
+            [id]: 'reCAPTCHA verification failed.',
+          },
+        });
+
+        return false;
+      }
+
+      return true;
     },
 
     getCachedResponse(request, cacheKey, args = {}) {

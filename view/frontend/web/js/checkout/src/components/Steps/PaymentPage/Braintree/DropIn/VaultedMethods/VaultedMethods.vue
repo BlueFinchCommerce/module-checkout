@@ -92,6 +92,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -174,6 +175,7 @@ export default {
       'mapCartTypes',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     async selectPaymentCard(vaultedMethod) {
       // If the method is the same as the one already selected then we can return early.
@@ -210,7 +212,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements()) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
         return;
       }
 

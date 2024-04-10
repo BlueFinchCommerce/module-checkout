@@ -4,7 +4,6 @@
     ref="braintreeGooglePay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
   />
-  <div id="braintree-threeds-container" />
 </template>
 
 <script>
@@ -20,6 +19,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
@@ -140,12 +140,14 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     onClick(type) {
-      // Check that the agreements (if any) are valid.
-      const isValid = this.validateAgreements();
+      // Check that the agreements (if any) and recpatcha is valid.
+      const agreementsValid = this.validateAgreements();
+      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!isValid) {
+      if (!agreementsValid || !recaptchaValid) {
         return false;
       }
 
