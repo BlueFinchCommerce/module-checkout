@@ -21,13 +21,8 @@ type StoreConfig {
     tax_cart_display_full_summary: String @doc(description: "Tax Display Full summary")
     tax_cart_display_zero_tax: String @doc(description: "Tax Display Zero tax")
     gene_better_checkout_copyright_text: String @doc(description: "Checkout copyright text")
-    adyen_merchant_account: String @doc(description: "Adyen merchant account")
-    adyen_client_key_test: String @doc(description: "Adyen client key test")
-    adyen_client_key_live: String @doc(description: "Adyen client key live")
     gtm_container_id: String @doc(description: "GTM Container ID")
     gtm_active: String @doc(description: "GTM Active")
-    adyen_environment_mode: String @doc(description: "Adyen environment mode")
-    adyen_vault_enabled: Boolean @doc(description: "Adyen vault enabled")
     recaptcha_v2_checkbox_key: String @doc(description: "Recaptcha v2 checkbox key")
     recaptcha_v2_invisible_key: String @doc(description: "Recaptcha v2 invisible key")
     recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
@@ -122,8 +117,4 @@ type Query {
 
 type StoreCode @doc(description: "Returns current store code") {
     store_code: String
-}
-
-input AdyenAdditionalDataCc {
-    is_active_payment_token_enabler: Boolean @doc(description: "Extend Adyen to allow cards to be saved.")
 }

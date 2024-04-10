@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "124b9d39e77fed216420e1fd1a4b6092",
+    "content-hash": "17ac7bb0ac3f3877288139c3b992f8d8",
     "packages": [
         {
             "name": "brick/math",
@@ -842,6 +842,59 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.17.0"
             },
             "time": "2023-11-17T15:01:25+00:00"
+        },
+        {
+            "name": "gene/module-better-checkout-adyen",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:genecommerce/module-better-checkout-adyen.git",
+                "reference": "70ccde5771a83b781cc8deaa3f0700a17c15f578"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/genecommerce/module-better-checkout-adyen/zipball/70ccde5771a83b781cc8deaa3f0700a17c15f578",
+                "reference": "70ccde5771a83b781cc8deaa3f0700a17c15f578",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://repo.packagist.com/gene/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/framework": "*"
+            },
+            "require-dev": {
+                "bitexpert/phpstan-magento": "^0.27",
+                "magento/magento-coding-standard": "^29.0",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Gene\\BetterCheckoutAdyen\\": ""
+                }
+            },
+            "notification-url": "https://repo.packagist.com/gene/downloads/",
+            "authors": [
+                {
+                    "name": "",
+                    "role": "Developer"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/genecommerce/module-better-checkout-adyen/tree/master",
+                "issues": "https://github.com/genecommerce/module-better-checkout-adyen/issues"
+            },
+            "time": "2024-04-09T15:10:51+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -10054,13 +10107,15 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "gene/module-better-checkout-adyen": 20
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "~8.1.0||~8.2.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
