@@ -83,6 +83,8 @@ jobs:
           name: Install Module @ CI Build Branch/Commit
           command: |
             composer config repositories.gene-packages '{"type": "composer", "url": "https://repo.packagist.com/gene/", "canonical": false}'
+            composer config minimum-stability dev
+            composer config prefer-stable true
             composer require gene/module-better-checkout:dev-${CIRCLE_BRANCH}#${CIRCLE_SHA1} --no-interaction
       - run:
           name: Install Magento
