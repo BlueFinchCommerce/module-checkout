@@ -35,6 +35,7 @@
                 <item name="recaptcha_v3_invisible_key" xsi:type="string">recaptcha_frontend/type_recaptcha_v3/public_key</item>
                 <item name="recaptcha_customer_login" xsi:type="string">recaptcha_frontend/type_for/customer_login</item>
                 <item name="recaptcha_place_order" xsi:type="string">recaptcha_frontend/type_for/place_order</item>
+                <item name="validation_failure_message" xsi:type="string">recaptcha_frontend/failure_messages/validation_failure_message</item>
 
                 <!-- Braintree Config -->
                 <item name="braintree_environment" xsi:type="string">payment/braintree/environment</item>

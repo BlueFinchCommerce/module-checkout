@@ -7,6 +7,7 @@ export default defineStore('RecaptchaStore', {
     v2CheckboxKey: null,
     v2InvisibleKey: null,
     v3Invisible: null,
+    failureMessage: '',
     enabled: {
       customerLogin: false,
       placeOrder: false,
@@ -39,6 +40,7 @@ export default defineStore('RecaptchaStore', {
           recaptcha_v3_invisible_key
           recaptcha_customer_login
           recaptcha_place_order
+          validation_failure_message
         }
       `;
     },
@@ -48,6 +50,7 @@ export default defineStore('RecaptchaStore', {
         v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
         v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
         v3Invisible: storeConfig.recaptcha_v3_invisible_key,
+        failureMessage: storeConfig.validation_failure_message,
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
           placeOrder: storeConfig.recaptcha_place_order,
@@ -95,7 +98,7 @@ export default defineStore('RecaptchaStore', {
       if (this.$state.enabled[id] && !this.$state.tokens[id]) {
         this.setData({
           errors: {
-            [id]: 'reCAPTCHA verification failed.',
+            [id]: this.$state.failureMessage,
           },
         });
 
