@@ -50,12 +50,13 @@
             :message="errorMessage"
             :attached="false"
           />
+          <Agreements id="braintreeLpm" />
+          <PrivacyPolicy />
           <Recaptcha
+            v-if="isRecaptchaVisible('placeOrder')"
             id="placeOrder"
             location="braintreeLpm"
           />
-          <Agreements id="braintreeLpm" />
-          <PrivacyPolicy />
           <button
             v-for="allowedMethod in getFilteredLpmMethods"
             v-show="!loading"
@@ -140,6 +141,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();

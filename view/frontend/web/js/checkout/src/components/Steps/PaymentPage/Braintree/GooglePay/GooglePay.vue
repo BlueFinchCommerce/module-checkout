@@ -143,6 +143,7 @@ export default {
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     onClick(type) {
+      this.setErrorMessage('');
       // Check that the agreements (if any) and recpatcha is valid.
       const agreementsValid = this.validateAgreements();
       const recaptchaValid = this.validateToken('placeOrder');

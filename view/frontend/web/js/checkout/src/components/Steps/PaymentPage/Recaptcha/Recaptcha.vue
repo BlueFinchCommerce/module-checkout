@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="getTypeByPlacement(id)"
+    v-if="isRecaptchaVisible(id)"
     :id="location"
     class="recaptcha-container"
   />
@@ -42,9 +42,15 @@ export default {
   },
   computed: {
     ...mapState(usePaymentStore, ['paymentEmitter']),
-    ...mapState(useRecaptchaStore, ['getRecaptchaError', 'v2CheckboxKey', 'v2InvisibleKey', 'v3Invisible']),
+    ...mapState(useRecaptchaStore, [
+      'getRecaptchaError',
+      'isRecaptchaVisible',
+      'v2CheckboxKey',
+      'v2InvisibleKey',
+      'v3Invisible',
+    ]),
   },
-  async created() {
+  async mounted() {
     await this.getInitialConfig();
 
     const recapchaType = this.getTypeByPlacement(this.id);
@@ -63,17 +69,13 @@ export default {
     } else if (recapchaType === recapchaTypes.recaptchaV3) {
       this.renderV3();
     }
-
-    this.paymentEmitter.on('paymentMethodSelected', () => this.resetToken(this.id));
-  },
-  unmounted() {
-    this.paymentEmitter.off('paymentMethodSelected', () => this.resetToken(this.id));
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken', 'resetToken']),
 
     renderV2() {
+      this.resetToken(this.id);
       window.grecaptcha.render(this.location, {
         sitekey: this.v2CheckboxKey,
         callback: (token) => {

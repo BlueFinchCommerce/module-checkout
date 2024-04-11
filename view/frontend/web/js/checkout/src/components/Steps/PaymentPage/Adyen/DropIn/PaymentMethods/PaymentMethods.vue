@@ -4,12 +4,13 @@
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
     >
+      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
+      <PrivacyPolicy />
       <Recaptcha
+        v-if="isRecaptchaVisible('placeOrder')"
         id="placeOrder"
         :location="`adyenDropIn${storedPayments ? 'stored' : 'new'}`"
       />
-      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
-      <PrivacyPolicy />
     </teleport>
     <teleport
       v-if="storedPayments && storedPaymentCardsLocation !== ''"
@@ -108,6 +109,7 @@ export default {
       'isLoggedIn',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
 
   async created() {

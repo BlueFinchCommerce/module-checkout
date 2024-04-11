@@ -65,12 +65,13 @@
         :message="errorMessage"
         :attached="false"
       />
+      <Agreements id="braintreeVault" />
+      <PrivacyPolicy />
       <Recaptcha
+        v-if="isRecaptchaVisible('placeOrder')"
         id="placeOrder"
         location="braintreeVaultedMethods"
       />
-      <Agreements id="braintreeVault" />
-      <PrivacyPolicy />
       <MyButton
         class="braintree-vaulted-methods-pay-button"
         label="Pay"
@@ -152,6 +153,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();

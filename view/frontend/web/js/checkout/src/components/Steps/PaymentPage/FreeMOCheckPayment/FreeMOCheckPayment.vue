@@ -16,16 +16,16 @@
       :message="errorMessage"
       :attached="false"
     />
-    <Recaptcha
-      v-if="isMethodSelected"
-      id="placeOrder"
-      location="freeMoCheckPayment"
-    />
     <Agreements
       v-if="isMethodSelected"
       id="freeMoPayment"
     />
     <PrivacyPolicy v-if="isMethodSelected" />
+    <Recaptcha
+      v-if="isMethodSelected && isRecaptchaVisible('placeOrder')"
+      id="placeOrder"
+      location="freeMoCheckPayment"
+    />
     <MyButton
       v-if="isMethodSelected"
       class="free-payment-button"
@@ -86,6 +86,7 @@ export default {
     ...mapState(useCustomerStore, [
       'customer',
     ]),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   created() {
     this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {

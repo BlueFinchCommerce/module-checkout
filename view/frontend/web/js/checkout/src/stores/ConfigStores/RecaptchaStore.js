@@ -22,6 +22,9 @@ export default defineStore('RecaptchaStore', {
     getRecaptchaError: (state) => (
       (placement) => state.errors[placement]
     ),
+    isRecaptchaVisible: (state) => (
+      (placement) => state.getTypeByPlacement(placement) === recapchaTypes.recaptchaV2
+    ),
   },
   actions: {
     setData(data) {

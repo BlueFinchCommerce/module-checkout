@@ -94,16 +94,17 @@
             :message="errorMessage"
             :attached="false"
           />
-          <Recaptcha
-            id="placeOrder"
-            location="braintreeAch"
-          />
           <CheckboxComponent
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
           <Agreements id="braintreeAch" />
+          <Recaptcha
+            v-if="isRecaptchaVisible('placeOrder')"
+            id="placeOrder"
+            location="braintreeAch"
+          />
           <PrivacyPolicy />
           <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
@@ -191,6 +192,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();

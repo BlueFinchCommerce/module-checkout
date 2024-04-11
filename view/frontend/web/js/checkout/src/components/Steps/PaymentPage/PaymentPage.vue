@@ -1,5 +1,10 @@
 <template>
   <div class="payment-step">
+    <Recaptcha
+      v-if="!isRecaptchaVisible('placeOrder')"
+      id="placeOrder"
+      location="braintreeNewMethods"
+    />
     <SavedDeliveryAddress />
     <SavedShippingMethod v-if="!cart.is_virtual" />
     <Rewards v-if="rewardsEnabled" />
@@ -91,6 +96,7 @@ import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import SavedDeliveryAddress from
@@ -105,6 +111,7 @@ import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.
 import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
 import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -129,6 +136,7 @@ export default {
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
+    Recaptcha,
     Payment,
     ProgressBar,
     TextField,
@@ -159,6 +167,7 @@ export default {
       'rvvupErrorMessage',
     ]),
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'cartGrandTotal']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
 
     getPaymentStepTitle() {
       if (this.hasVaultedMethods) {

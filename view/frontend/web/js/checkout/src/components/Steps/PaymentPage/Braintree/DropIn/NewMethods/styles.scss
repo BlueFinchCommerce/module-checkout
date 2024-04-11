@@ -135,11 +135,6 @@
     .braintree-option__venmo.braintree-option__selected ~ .braintree-sheet__content {
       display: grid;
       gap: var(--indent__base);
-
-      .braintree-store-method {
-        margin: var(--indent__s) 0 var(--indent__base);
-        order: -1;
-      }
     }
 
     &__error {
@@ -208,6 +203,7 @@
         border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
         border-top: 0;
         display: block;
+        opacity: 1;
         padding: 0 var(--indent__base) var(--indent__base);
       }
     }
