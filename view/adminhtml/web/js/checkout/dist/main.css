@@ -4275,14 +4275,14 @@ p {
 }
 body.no-scrollable {
   overflow: hidden;
-}.switchers[data-v-2cb64a6e] {
+}.switchers[data-v-963b074e] {
   display: grid;
   gap: 20px;
   grid-auto-flow: column;
   justify-content: center;
   margin-bottom: 20px;
 }
-#gene-better-checkout-root[data-v-2cb64a6e] {
+#gene-better-checkout-root[data-v-963b074e] {
   margin: 20px 0;
 }.pay-with__container[data-v-95a344b4] {
   align-items: var(--pay-with__align-items);

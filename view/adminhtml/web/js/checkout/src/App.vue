@@ -130,7 +130,7 @@ export default {
       switch (step.stepName) {
         case 'SignInPage':
           this.dummyLogOut(step.stepName);
-          this.dummyUserType('NoUser');
+          this.setUserStatus({ userTypeName: 'NoUser', displayName: 'No User' });
           this.goToSignInPage();
           break;
         case 'YourDetails':
