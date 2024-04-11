@@ -1,4 +1,5 @@
 <template>
+  <Loader />
   <AppHeader />
   <Steps />
   <AppFooter />
@@ -13,6 +14,7 @@ import useStepsStore from '@/stores/StepsStore';
 // Components
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
+import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import OrderSummaryMobile from
   '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryMobile/OrderSummaryMobile.vue';
 import Steps from '@/components/Steps/Steps.vue';
@@ -26,6 +28,7 @@ export default {
   components: {
     AppHeader,
     AppFooter,
+    Loader,
     OrderSummaryMobile,
     Steps,
   },

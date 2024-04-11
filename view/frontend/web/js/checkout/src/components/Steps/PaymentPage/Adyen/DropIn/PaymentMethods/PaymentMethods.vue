@@ -1,6 +1,5 @@
 <template>
   <template v-if="!storedPayments || storedPaymentMethods.length">
-    <Loader v-if="loadingPaymentMethods" />
     <teleport
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
@@ -48,7 +47,6 @@ import '@adyen/adyen-web/dist/adyen.css';
 // Components
 import AdyenPaymentCard from '@/components/Steps/PaymentPage/Adyen/DropIn/PaymentCard/PaymentCard.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 
@@ -70,7 +68,6 @@ export default {
   components: {
     AdyenPaymentCard,
     Agreements,
-    Loader,
     PrivacyPolicy,
     Recaptcha,
   },
@@ -102,7 +99,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'loadingPaymentMethods', 'getAdyenClientKey']),
+    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'getAdyenClientKey']),
     ...mapState(usePaymentStore, ['paymentEmitter']),
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [

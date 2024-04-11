@@ -2,6 +2,7 @@
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
@@ -42,7 +43,6 @@ export default defineStore('cartStore', {
     customer_is_guest: null,
     subtotalInclTax: null,
     totalSegments: [],
-    cartLoading: false,
     discountCode: '',
     giftCardCode: '',
     discountErrorMessage: null,
@@ -175,7 +175,8 @@ export default defineStore('cartStore', {
     },
 
     async updateQuantity(updateItem, change) {
-      this.cartLoading = 'true';
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
 
       try {
         const cart = await updateCartItemQuantity(updateItem, change);
@@ -215,11 +216,12 @@ export default defineStore('cartStore', {
         gtmStore.removeFromCartEvent(updateItem.product);
       }
 
-      this.cartLoading = 'false';
+      setLoadingState(false);
     },
 
     async removeItem(product) {
-      this.cartLoading = 'true';
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
 
       try {
         const cart = await removeCartItem(product.uid);
@@ -241,7 +243,7 @@ export default defineStore('cartStore', {
       const gtmStore = useGtmStore();
       gtmStore.removeFromCartEvent(product.product, product.quantity);
 
-      this.cartLoading = 'false';
+      setLoadingState(false);
     },
 
     async addDiscountCode(code) {
@@ -367,7 +369,9 @@ export default defineStore('cartStore', {
     },
 
     async addCartItem(product) {
-      this.cartLoading = 'true';
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
+
       try {
         const cart = await addCartItem(product);
         this.setData({ cart });
@@ -387,7 +391,7 @@ export default defineStore('cartStore', {
       const gtmStore = useGtmStore();
       gtmStore.addToCartEvent(product);
 
-      this.cartLoading = 'false';
+      setLoadingState(false);
     },
 
     calculateFreeShipping() {

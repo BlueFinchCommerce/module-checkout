@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import useStepsStore from '@/stores/StepsStore';
 
 import cleanAddress from '@/helpers/cart/redirectToBasketPage';
@@ -19,7 +20,6 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 export default defineStore('shippingMethodsStore', {
   state: () => ({
     shippingMethods: [],
-    loadingShippingMethods: false,
     nominatedDayEnabled: false,
     nominatedDates: false,
     nominatedSelectedMethod: false,
@@ -59,7 +59,8 @@ export default defineStore('shippingMethodsStore', {
      * @param {*} address
      */
     async getShippingMethods() {
-      this.loadingShippingMethods = true;
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
 
       const customerStore = useCustomerStore();
 
@@ -71,7 +72,7 @@ export default defineStore('shippingMethodsStore', {
 
       // If the address is invalid then show the address form.
       if (!isValid) {
-        this.loadingShippingMethods = false;
+        setLoadingState(false);
 
         // Go to the details page if the shipping address isn't valid at this point.
         const stepsStore = useStepsStore();
@@ -130,7 +131,7 @@ export default defineStore('shippingMethodsStore', {
         await this.submitShippingInfo();
       }
 
-      this.loadingShippingMethods = false;
+      setLoadingState(false);
     },
 
     async setDefaultShippingMethod() {
@@ -213,7 +214,9 @@ export default defineStore('shippingMethodsStore', {
     },
 
     async submitShippingInfo(carrierCode, methodCode) {
-      this.loadingShippingMethods = true;
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
+
       const cart = await setShippingMethodOnCart(carrierCode, methodCode);
 
       const cartStore = useCartStore();
@@ -225,13 +228,16 @@ export default defineStore('shippingMethodsStore', {
       // Track this event.
       setShippingMethodDataLayer();
 
-      this.loadingShippingMethods = false;
+      setLoadingState(false);
     },
 
     async setAsClickAndCollect(agentId) {
-      this.loadingShippingMethods = true;
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
+
       await setClickAndCollectAgent(agentId);
-      this.loadingShippingMethods = false;
+
+      setLoadingState(false);
     },
 
     /**

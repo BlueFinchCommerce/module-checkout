@@ -11,7 +11,6 @@ export default defineStore('adyenStore', {
     paymentTypes: [],
     adyenEnvironmentMode: 'live',
     adyenVaultEnabled: false,
-    loadingPaymentMethods: true,
     keyLive: '',
     keyTest: '',
   }),
@@ -53,7 +52,6 @@ export default defineStore('adyenStore', {
     },
 
     async getPaymentMethodsResponse() {
-      this.loadingPaymentMethods = true;
       const request = async () => getAdyenPaymentMethods();
       const {
         paymentMethodsExtraDetails,
@@ -88,7 +86,6 @@ export default defineStore('adyenStore', {
         paymentStore.setHasVaultedMethods();
       }
 
-      this.loadingPaymentMethods = false;
       return paymentMethodsResponse;
     },
 

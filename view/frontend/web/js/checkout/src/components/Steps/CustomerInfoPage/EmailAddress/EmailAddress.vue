@@ -1,11 +1,5 @@
 <template>
   <section class="customer-form">
-    <template v-if="loadingLogin">
-      <div class="loader__absolute-container">
-        <Loader/>
-      </div>
-    </template>
-
     <div class="checkout-section checkout-email">
       <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
         <TextField
@@ -179,6 +173,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // components
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
@@ -191,7 +186,6 @@ import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import ShowIcon from '@/components/Core/Icons/ShowIcon/ShowIcon.vue';
 import HideIcon from '@/components/Core/Icons/HideIcon/HideIcon.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
@@ -213,7 +207,6 @@ export default {
     ValidIcon,
     TextField,
     ErrorMessage,
-    Loader,
     Edit,
     Recaptcha,
   },
@@ -230,7 +223,6 @@ export default {
       showPassword: false,
       passwordValid: false,
       password: '',
-      loadingLogin: false,
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
@@ -284,6 +276,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
 
     toggleShowPassword() {
       this.showPassword = !this.showPassword;
@@ -316,10 +309,10 @@ export default {
       // If there is any error then early return.
       if (this.emailError || this.passwordError) return;
 
-      this.loadingLogin = true;
+      this.setLoadingState(true);
       await this.loginAndProceed();
       this.emitUpdate();
-      this.loadingLogin = false;
+      this.setLoadingState(false);
     },
 
     validatePassword() {

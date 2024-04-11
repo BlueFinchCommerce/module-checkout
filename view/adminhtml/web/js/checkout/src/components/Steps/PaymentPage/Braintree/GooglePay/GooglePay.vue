@@ -18,6 +18,7 @@ import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
@@ -134,6 +135,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',

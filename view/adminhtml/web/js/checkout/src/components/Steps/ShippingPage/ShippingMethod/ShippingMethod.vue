@@ -1,9 +1,6 @@
 <template>
   <section>
     <div class="checkout-section checkout-shipping">
-      <div v-if="loadingShippingMethods">
-        <Loader />
-      </div>
       <ProgressBar />
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
@@ -84,7 +81,7 @@
           />
         </div>
         <TextField
-          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods.length && !loadingShippingMethods"
+          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods.length"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
         />
@@ -97,7 +94,7 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!cart.shipping_addresses?.[0]?.available_shipping_methods?.length || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code || loadingShippingMethods"
+        :disabled="!cart.shipping_addresses?.[0]?.available_shipping_methods?.length || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
         @click="goToPayment"
       />
     </div>
@@ -166,7 +163,6 @@ export default {
     ...mapState(useConfigStore, ['taxCartDisplayShipping']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
-      'loadingShippingMethods',
       'getError',
       'nominatedDayEnabled',
       'nominatedPrice',

@@ -18,6 +18,7 @@ import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
@@ -129,6 +130,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
@@ -178,12 +180,16 @@ export default {
 
       expressPaymentOnClickDataLayer(type);
 
+      this.setLoadingState(true);
+
       return this.googleClient.loadPaymentData(paymentDataRequest)
         .then(this.handleThreeDs)
         .then(this.makePayment)
         .then(() => refreshCustomerData(['cart']))
         .then(() => { window.location.href = getSuccessPageUrl(); })
         .catch((err) => {
+          this.setLoadingState(false);
+
           try {
             handleServiceError(err);
           } catch (formattedError) {

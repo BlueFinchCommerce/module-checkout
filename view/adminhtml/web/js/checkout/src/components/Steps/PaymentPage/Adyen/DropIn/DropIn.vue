@@ -1,5 +1,5 @@
 <template>
-  <div :class="loadingPaymentMethods ? 'text-loading' : ''">
+  <div>
     <AdyenPaymentMethods
       id="adyen-dropin-container-new"
       :key="`adyenPayments-${adyenKey}`"
@@ -28,7 +28,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['loadingPaymentMethods']),
     ...mapState(useCustomerStore, [
       'customer',
       'isLoggedIn',

@@ -30,6 +30,10 @@
       {
           "type": "composer",
           "url": "https://repo.magento.com/"
+      },
+      {
+          "type": "composer",
+          "url": "https://repo.packagist.com/gene/"
       }
   ],
   "config": {
@@ -37,5 +41,7 @@
       "magento/composer-dependency-version-audit-plugin": true,
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

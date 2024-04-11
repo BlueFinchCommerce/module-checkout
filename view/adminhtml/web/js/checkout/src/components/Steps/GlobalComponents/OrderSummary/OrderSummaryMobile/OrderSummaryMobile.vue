@@ -63,9 +63,6 @@
         />
       </div>
     </div>
-    <div v-else>
-      <Loader />
-    </div>
   </div>
 </template>
 <script>
@@ -95,7 +92,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 import { mapActions, mapState } from 'pinia';
 
 // icons
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
@@ -112,7 +108,6 @@ export default {
     GiftCardDiscount,
     CouponDiscount,
     PromotionComponent,
-    Loader,
     SlideUp,
     Close,
     OrderSummaryTitleWithAmount,

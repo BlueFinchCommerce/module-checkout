@@ -56,7 +56,6 @@ export default defineStore('customerStore', {
     amastySubs: {},
     amastyConsentStatus: {},
     isEmailAvailableController: undefined,
-    loadingCustomerInformation: false,
     postCodeValid: false,
     cache: {},
     inputsSanitiseError: false,
@@ -278,9 +277,6 @@ export default defineStore('customerStore', {
 
     async getCustomerInformation() {
       if (this.customer.tokenType !== tokenTypes.guestUser) {
-        this.setData({
-          loadingCustomerInformation: true,
-        });
         const data = await this.getCachedResponse(getCustomerInformation, 'getCustomerInformation');
 
         if (data) {
@@ -343,9 +339,6 @@ export default defineStore('customerStore', {
           });
         }
 
-        this.setData({
-          loadingCustomerInformation: false,
-        });
         return data;
       }
 
