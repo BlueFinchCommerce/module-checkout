@@ -1,7 +1,10 @@
 <template>
   <div
     class="error-message"
-    :class="{'error-message-attached': attached}"
+    :class="{
+      'error-message-attached': attached,
+      'error-message-margin': margin,
+    }"
     :style="style"
   >
     <TextField :text="message" />
@@ -23,6 +26,10 @@ export default {
       default: '',
     },
     attached: {
+      type: Boolean,
+      default: true,
+    },
+    margin: {
       type: Boolean,
       default: true,
     },

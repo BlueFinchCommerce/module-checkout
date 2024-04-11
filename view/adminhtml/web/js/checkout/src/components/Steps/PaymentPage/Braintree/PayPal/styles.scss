@@ -24,6 +24,10 @@
     pointer-events: none;
   }
 
+  > div {
+    display: flex;
+  }
+
   button {
     border-radius: var(--button__border-radius);
     height: var(--braintree-express-button-height, 48px);

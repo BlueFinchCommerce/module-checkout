@@ -5,16 +5,17 @@
       <div class="instantCheckout-block">
         <TextField :text="instantCheckoutText" />
       </div>
+      <Agreements id="detailsPage" />
       <Recaptcha
         id="placeOrder"
         location="expressPayments"
       />
-      <Agreements id="detailsPage" />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
           :message="errorMessage"
           :attached="false"
+          :margin="false"
         />
         <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
         <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />

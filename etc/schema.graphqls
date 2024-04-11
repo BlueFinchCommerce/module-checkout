@@ -23,11 +23,13 @@ type StoreConfig {
     gene_better_checkout_copyright_text: String @doc(description: "Checkout copyright text")
     gtm_container_id: String @doc(description: "GTM Container ID")
     gtm_active: String @doc(description: "GTM Active")
+
     recaptcha_v2_checkbox_key: String @doc(description: "Recaptcha v2 checkbox key")
     recaptcha_v2_invisible_key: String @doc(description: "Recaptcha v2 invisible key")
     recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
     recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
     recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
+    validation_failure_message: String @doc(description: "Recaptcha Failure Message")
 
     braintree_environment: String @doc(description: "Braintree environment.")
     braintree_merchant_account_id: String @doc(description: "Braintree Merchant Account ID.")

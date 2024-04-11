@@ -12,6 +12,7 @@
       v-if="errorMessage"
       :message="errorMessage"
       :attached="false"
+      :margin="false"
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
@@ -24,11 +25,12 @@
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
     />
+    <Agreements id="braintreeNew" />
     <Recaptcha
+      v-if="isRecaptchaVisible('placeOrder')"
       id="placeOrder"
       location="braintreeNewMethods"
     />
-    <Agreements id="braintreeNew" />
     <PrivacyPolicy />
 
     <MyButton
@@ -42,6 +44,7 @@
 
 <script>
 // Stores
+import { toRaw } from 'vue';
 import { mapActions, mapState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
@@ -49,6 +52,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -111,6 +115,7 @@ export default {
       'getPaymentMethodTitle',
       'getPaymentPriority',
     ]),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();
@@ -237,6 +242,7 @@ export default {
       'getPayPalLineItems',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');
@@ -259,7 +265,11 @@ export default {
 
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
-        if (!this.validateAgreements()) {
+        this.setErrorMessage('');
+        const agreementsValid = this.validateAgreements();
+        const recaptchaValid = this.validateToken('placeOrder');
+
+        if (!agreementsValid || !recaptchaValid) {
           const error = new Error();
           error.name = 'DropinError';
           reject(error);
@@ -351,6 +361,8 @@ export default {
       this.setToCurrentViewId();
 
       this.paymentEmitter.emit('braintreeInitComplete');
+
+      this.modifyTokenize();
     },
 
     attachEventListeners(instance) {
@@ -436,6 +448,53 @@ export default {
           sheet.prepend(matchingContainer);
         }
       });
+    },
+
+    modifyTokenize() {
+      const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
+        .bind(toRaw(this.instance._mainView._views.googlePay));
+
+      this.instance._mainView._views.googlePay.tokenize = () => {
+        this.setErrorMessage('');
+        const agreementsValid = this.validateAgreements();
+        const recaptchaValid = this.validateToken('placeOrder');
+
+        if (!agreementsValid || !recaptchaValid) {
+          return Promise.resolve();
+        }
+
+        return originalGooglePay();
+      };
+
+      const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
+        .bind(this.instance._mainView._views.venmo.venmoInstance);
+
+      this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
+        this.setErrorMessage('');
+        const agreementsValid = this.validateAgreements();
+        const recaptchaValid = this.validateToken('placeOrder');
+
+        if (!agreementsValid || !recaptchaValid) {
+          return Promise.resolve();
+        }
+
+        return originalVenmo();
+      };
+
+      const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
+        .bind(this.instance._mainView._views.paypal.paypalInstance);
+
+      this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
+        this.setErrorMessage('');
+        const agreementsValid = this.validateAgreements();
+        const recaptchaValid = this.validateToken('placeOrder');
+
+        if (!agreementsValid || !recaptchaValid) {
+          return Promise.reject();
+        }
+
+        return originalPayPal(configuration);
+      };
     },
 
     addActiveClass(type) {

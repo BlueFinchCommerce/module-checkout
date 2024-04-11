@@ -65,12 +65,13 @@
         :message="errorMessage"
         :attached="false"
       />
+      <Agreements id="braintreeVault" />
+      <PrivacyPolicy />
       <Recaptcha
+        v-if="isRecaptchaVisible('placeOrder')"
         id="placeOrder"
         location="braintreeVaultedMethods"
       />
-      <Agreements id="braintreeVault" />
-      <PrivacyPolicy />
       <MyButton
         class="braintree-vaulted-methods-pay-button"
         label="Pay"
@@ -92,6 +93,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -151,6 +153,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();
@@ -174,6 +177,7 @@ export default {
       'mapCartTypes',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     async selectPaymentCard(vaultedMethod) {
       // If the method is the same as the one already selected then we can return early.
@@ -210,7 +214,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements()) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
         return;
       }
 

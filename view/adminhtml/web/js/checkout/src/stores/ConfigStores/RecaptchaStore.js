@@ -7,16 +7,24 @@ export default defineStore('RecaptchaStore', {
     v2CheckboxKey: null,
     v2InvisibleKey: null,
     v3Invisible: null,
+    failureMessage: '',
     enabled: {
       customerLogin: false,
       placeOrder: false,
     },
     tokens: {},
+    errors: {},
     cache: {},
   }),
   getters: {
     getTypeByPlacement: (state) => (
       (placement) => state.enabled[placement]
+    ),
+    getRecaptchaError: (state) => (
+      (placement) => state.errors[placement]
+    ),
+    isRecaptchaVisible: (state) => (
+      (placement) => state.getTypeByPlacement(placement) === recapchaTypes.recaptchaV2
     ),
   },
   actions: {
@@ -32,6 +40,7 @@ export default defineStore('RecaptchaStore', {
           recaptcha_v3_invisible_key
           recaptcha_customer_login
           recaptcha_place_order
+          validation_failure_message
         }
       `;
     },
@@ -41,6 +50,7 @@ export default defineStore('RecaptchaStore', {
         v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
         v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
         v3Invisible: storeConfig.recaptcha_v3_invisible_key,
+        failureMessage: storeConfig.validation_failure_message,
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
           placeOrder: storeConfig.recaptcha_place_order,
@@ -67,6 +77,9 @@ export default defineStore('RecaptchaStore', {
 
     setToken(id, token) {
       this.setData({
+        errors: {
+          [id]: null,
+        },
         tokens: {
           [id]: token,
         },
@@ -79,6 +92,20 @@ export default defineStore('RecaptchaStore', {
           [id]: null,
         },
       });
+    },
+
+    validateToken(id) {
+      if (this.$state.enabled[id] && !this.$state.tokens[id]) {
+        this.setData({
+          errors: {
+            [id]: this.$state.failureMessage,
+          },
+        });
+
+        return false;
+      }
+
+      return true;
     },
 
     getCachedResponse(request, cacheKey, args = {}) {

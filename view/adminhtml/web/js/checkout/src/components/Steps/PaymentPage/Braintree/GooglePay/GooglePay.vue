@@ -4,7 +4,6 @@
     ref="braintreeGooglePay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
   />
-  <div id="braintree-threeds-container" />
 </template>
 
 <script>

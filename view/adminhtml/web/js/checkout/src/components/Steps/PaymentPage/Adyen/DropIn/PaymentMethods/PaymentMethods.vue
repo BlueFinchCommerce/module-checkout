@@ -4,12 +4,13 @@
       v-if="agreementLocation !== ''"
       :to="agreementLocation"
     >
+      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
+      <PrivacyPolicy />
       <Recaptcha
+        v-if="isRecaptchaVisible('placeOrder')"
         id="placeOrder"
         :location="`adyenDropIn${storedPayments ? 'stored' : 'new'}`"
       />
-      <Agreements :id="`adyenDropIn-${storedPayments ? 'stored' : 'new'}`" />
-      <PrivacyPolicy />
     </teleport>
     <teleport
       v-if="storedPayments && storedPaymentCardsLocation !== ''"
@@ -41,6 +42,7 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 import '@adyen/adyen-web/dist/adyen.css';
 
@@ -107,6 +109,7 @@ export default {
       'isLoggedIn',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
 
   async created() {
@@ -142,8 +145,10 @@ export default {
       onAdditionalDetails: this.handleAdditionalDetails.bind(this),
       onError: this.handleOnError.bind(this),
       onSubmit: (state, dropin) => {
-        // Check that the agreements (if any) are valid.
-        state.isValid = this.validateAgreements();
+        // Check that the agreements (if any) and recpatcha is valid.
+        const agreementsValid = this.validateAgreements();
+        const recaptchaValid = this.validateToken('placeOrder');
+        state.isValid = agreementsValid && recaptchaValid;
 
         if (state.isValid) {
           const paymentMethod = this.getPaymentMethod(state, extensionAttributes);
@@ -159,7 +164,7 @@ export default {
               throw Error(error);
             });
         } else {
-          this.displayError(dropin, this.$t('agreements.paymentErrorMessage'));
+          dropin.setStatus('ready');
         }
       },
       paymentMethodsConfiguration: {
@@ -276,6 +281,7 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     setOrderId(orderId) {
       this.orderId = orderId;
