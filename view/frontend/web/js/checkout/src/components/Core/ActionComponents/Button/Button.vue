@@ -45,6 +45,13 @@ export default {
       type: Boolean,
       default: false,
     },
+    size: {
+      type: String,
+      validator(value) {
+        return ['small', 'medium', 'large'].indexOf(value) !== -1;
+      },
+      default: 'medium',
+    },
     backgroundColor: {
       type: String,
     },
@@ -67,6 +74,7 @@ export default {
         'button--primary': reactiveProps.primary,
         'button--secondary': reactiveProps.secondary,
         'button--tertiary': reactiveProps.tertiary,
+        [`button--${reactiveProps.size || 'medium'}`]: true,
       })),
       style: computed(() => ({
         backgroundColor: reactiveProps.backgroundColor,
