@@ -16,8 +16,7 @@
     "magento/framework": "*",
     "magento/module-checkout": "*",
     "magento/module-checkout-agreements": "*",
-    "magento/module-quote": "*",
-    "gene/module-better-checkout-adyen": "dev-master"
+    "magento/module-quote": "*"
   },
   "require-dev": {
     "magento/magento-coding-standard": "*",
