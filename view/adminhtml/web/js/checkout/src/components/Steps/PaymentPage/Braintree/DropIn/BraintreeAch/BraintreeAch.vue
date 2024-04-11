@@ -94,16 +94,17 @@
             :message="errorMessage"
             :attached="false"
           />
-          <Recaptcha
-            id="placeOrder"
-            location="braintreeAch"
-          />
           <CheckboxComponent
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
           <Agreements id="braintreeAch" />
+          <Recaptcha
+            v-if="isRecaptchaVisible('placeOrder')"
+            id="placeOrder"
+            location="braintreeAch"
+          />
           <PrivacyPolicy />
           <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
@@ -126,6 +127,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -190,6 +192,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();
@@ -222,6 +225,7 @@ export default {
       'clearErrorMessage',
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     selectMethod() {
       this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-ach' });
@@ -279,7 +283,7 @@ export default {
       //   return false;
       // }
 
-      // if (!this.validateAgreements()) {
+      // if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
       //   this.paymentEmitter.emit('braintreePaymentError');
       //   return false;
       // }

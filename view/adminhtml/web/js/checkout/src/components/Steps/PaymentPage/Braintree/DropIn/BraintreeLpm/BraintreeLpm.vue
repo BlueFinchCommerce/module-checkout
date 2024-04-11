@@ -50,12 +50,13 @@
             :message="errorMessage"
             :attached="false"
           />
+          <Agreements id="braintreeLpm" />
+          <PrivacyPolicy />
           <Recaptcha
+            v-if="isRecaptchaVisible('placeOrder')"
             id="placeOrder"
             location="braintreeLpm"
           />
-          <Agreements id="braintreeLpm" />
-          <PrivacyPolicy />
           <button
             v-for="allowedMethod in getFilteredLpmMethods"
             v-show="!loading"
@@ -88,6 +89,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -139,6 +141,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
     await this.getInitialConfig();
@@ -161,6 +164,7 @@ export default {
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(usePaymentStore, ['getPaymentMethodTitle']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     getIcon(method) {
       return getStaticUrl(images[method]);
@@ -174,7 +178,7 @@ export default {
       this.clearErrorMessage();
       //   this.paymentEmitter.emit('braintreePaymentStart');
 
-      //   if (!this.validateAgreements()) {
+      //   if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
       //     this.paymentEmitter.emit('braintreePaymentError');
       //     return;
       //   }

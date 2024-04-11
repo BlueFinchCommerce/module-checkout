@@ -1,5 +1,8 @@
 <template>
-  <div class="agreements-container">
+  <div
+    v-if="Object.keys(agreements).length"
+    class="agreements-container"
+  >
     <Agreement
       v-for="agreement in agreements"
       :id="id"
@@ -10,6 +13,7 @@
       v-if="showError"
       :message="$t('agreements.paymentErrorMessage')"
       :attached="false"
+      :margin="false"
     />
   </div>
 </template>

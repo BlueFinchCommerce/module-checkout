@@ -128,7 +128,8 @@
     }
 
     [data-braintree-id="google-pay-button"] button,
-    [data-braintree-id="apple-pay-button"],
+    .braintree-option__applePay.braintree-option__selected ~ .braintree-sheet__content,
+    .braintree-option__venmo.braintree-option__selected ~ .braintree-sheet__content,
     &__button--venmo {
       pointer-events: none; // Disabled buttons for UI designer only
       height: var(--button__height);
@@ -141,11 +142,6 @@
       pointer-events: none; // Disabled buttons for UI designer only
       display: grid;
       gap: var(--indent__base);
-
-      .braintree-store-method {
-        margin: var(--indent__s) 0 var(--indent__base);
-        order: -1;
-      }
     }
 
     &__error {
@@ -214,6 +210,7 @@
         border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
         border-top: 0;
         display: block;
+        opacity: 1;
         padding: 0 var(--indent__base) var(--indent__base);
       }
     }

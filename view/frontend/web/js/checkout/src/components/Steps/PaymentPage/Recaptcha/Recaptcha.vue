@@ -1,8 +1,14 @@
 <template>
   <div
-    v-if="getTypeByPlacement(id)"
+    v-if="isRecaptchaVisible(id)"
     :id="location"
     class="recaptcha-container"
+  />
+  <ErrorMessage
+    v-if="getRecaptchaError(id)"
+    :message="getRecaptchaError(id)"
+    :attached="false"
+    :margin="false"
   />
 </template>
 <script>
@@ -11,11 +17,17 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
+// Components
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+
 // Types
 import recapchaTypes from '@/helpers/types/getRecaptchaTypes';
 
 export default {
   name: 'Recaptcha',
+  components: {
+    ErrorMessage,
+  },
   props: {
     id: {
       type: String,
@@ -30,9 +42,15 @@ export default {
   },
   computed: {
     ...mapState(usePaymentStore, ['paymentEmitter']),
-    ...mapState(useRecaptchaStore, ['v2CheckboxKey', 'v2InvisibleKey', 'v3Invisible']),
+    ...mapState(useRecaptchaStore, [
+      'getRecaptchaError',
+      'isRecaptchaVisible',
+      'v2CheckboxKey',
+      'v2InvisibleKey',
+      'v3Invisible',
+    ]),
   },
-  async created() {
+  async mounted() {
     await this.getInitialConfig();
 
     const recapchaType = this.getTypeByPlacement(this.id);
@@ -51,17 +69,13 @@ export default {
     } else if (recapchaType === recapchaTypes.recaptchaV3) {
       this.renderV3();
     }
-
-    this.paymentEmitter.on('paymentMethodSelected', () => this.resetToken(this.id));
-  },
-  unmounted() {
-    this.paymentEmitter.off('paymentMethodSelected', () => this.resetToken(this.id));
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken', 'resetToken']),
 
     renderV2() {
+      this.resetToken(this.id);
       window.grecaptcha.render(this.location, {
         sitekey: this.v2CheckboxKey,
         callback: (token) => {
