@@ -507,7 +507,6 @@
     font-family: var(--font-family__copy);
     font-size: var(--error-message-font-size, var(--font__xs));
     font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
-    margin: var(--notification__margin);
     min-height: var(--messages-min-height, auto);
     padding: var(--message-padding, var(--indent__xs));
     width: 100%;
@@ -520,6 +519,10 @@
     }
   }
 
+  .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text {
+    margin: var(--notification__margin);
+  }
+
   .error-message {
     border-width: var(--error-message-border-width, var(--notification__border-weight));
 
@@ -527,6 +530,10 @@
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       margin-top: -12px;
+    }
+
+    &-margin {
+      margin: var(--notification__margin);
     }
   }
 

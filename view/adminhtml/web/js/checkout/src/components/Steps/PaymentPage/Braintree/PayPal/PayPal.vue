@@ -7,7 +7,6 @@
       ref="braintreePayPal"
       :class="!paypalLoaded ? 'text-loading' : 'ui-designer-disabled'"
     />
-    <div id="braintree-threeds-container" />
   </div>
 </template>
 
@@ -23,6 +22,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
@@ -126,10 +126,12 @@ export default {
             shippingOptions: [],
           }),
           onClick: () => {
-            // Check that the agreements (if any) are valid.
-            const isValid = this.validateAgreements();
+            this.setErrorMessage('');
+            // Check that the agreements (if any) and recpatcha is valid.
+            const agreementsValid = this.validateAgreements();
+            const recaptchaValid = this.validateToken('placeOrder');
 
-            if (!isValid) {
+            if (!agreementsValid || !recaptchaValid) {
               return false;
             }
 
@@ -214,6 +216,7 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     setInformationToQuote(payload) {
       const shippingAddress = !this.cart.is_virtual ? this.mapAddress(
