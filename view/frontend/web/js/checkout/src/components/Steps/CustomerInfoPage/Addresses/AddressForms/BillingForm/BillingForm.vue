@@ -110,7 +110,6 @@ import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressLi
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 
 // Helpers
@@ -119,7 +118,6 @@ import deepClone from '@/helpers/addresses/deepClone';
 export default {
   name: 'BillingForm',
   components: {
-    BillingAddressIcon,
     TextField,
     AddressForm,
     AddressBlock,

@@ -61,7 +61,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
-import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue'
+import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';

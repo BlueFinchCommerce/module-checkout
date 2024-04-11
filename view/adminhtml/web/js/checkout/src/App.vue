@@ -160,12 +160,12 @@ export default {
     setUserStatus(user) {
       this.currentUser = user.userTypeName;
       this.dummyUserType(user.userTypeName);
-      this.dispatchUserStatus(user.userTypeName)
+      this.dispatchUserStatus(user.userTypeName);
     },
 
     dispatchUserStatus(userType) {
       document.dispatchEvent(new CustomEvent('updateUserStatus', { detail: userType }));
-    }
+    },
   },
 };
 </script>

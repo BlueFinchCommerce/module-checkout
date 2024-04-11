@@ -456,7 +456,6 @@ export default defineStore('customerStore', {
     },
 
     createNewAddress(addressType) {
-      console.log(addressType)
       const sameAsShipping = addressType === 'billing';
       this.setData({
         selected: {
