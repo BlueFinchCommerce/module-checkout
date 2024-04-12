@@ -124,7 +124,6 @@
     --summary__background-color--desktop: var(--color__primary-white);
     --summary__border-radius--desktop: var(--base__border-radius-large);
 
-
     //
     // Base Borders
     //  ---------------------------------------------
@@ -322,6 +321,7 @@
     --input__font-size: var(--font__m);
     --input__font-weight: var(--font-weight__semibold);
     --input__background-color: var(--color__primary-white);
+    --input__background-color-logged-in: var(--color__primary-grey6);
     --input__border-color: var(--color__primary-grey2);
     --input__border-color-hover: var(--color__primary-grey2);
     --input__border-color-focus: var(--input__border-color);

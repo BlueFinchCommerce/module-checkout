@@ -76,6 +76,7 @@ define([
 
             document.addEventListener('switchDeviceType', this.handleSwitchDeviceType.bind(this));
             document.addEventListener('switchDisplayedStep', this.handleSwitchDisplayedStep.bind(this));
+            document.addEventListener('updateUserStatus', this.handleUpdateUserStatus.bind(this));
 
             $(element).on('click', this.openDesigner.bind(this));
         },
@@ -142,7 +143,7 @@ define([
                     'MockFull': '.mobile-specific-field, .desktop-specific-field'
                 };
 
-            // Hide all specific fields by default
+            // Hide specific fields
             $('.mobile-specific-field, .desktop-specific-field').hide();
 
             // Show specific field based on the device type
@@ -154,16 +155,39 @@ define([
 
                 // Define mappings for step to specific fields
                 stepToFieldMap = {
+                    'SignInPage': '.sign-in-specific-field',
                     'YourDetails': '.details-specific-field',
                     'Shipping': '.shipping-specific-field',
                     'Payment': '.payment-specific-field'
                 };
 
-            // Hide all specific fields by default
-            $('.details-specific-field, .shipping-specific-field, .payment-specific-field').hide();
+            // Hide specific fields
+            $(`.sign-in-specific-field,
+            .details-specific-field,
+            .shipping-specific-field,
+            .payment-specific-field`).hide();
 
             // Show specific field based on the checkout step
             $(stepToFieldMap[checkoutStep]).show();
+        },
+
+        handleUpdateUserStatus: function (event) {
+            let userType = event.detail,
+
+                // Define mappings for step to specific fields
+                userToFieldMap = {
+                    'NoUser': '.no-user-specific-field',
+                    'GuestUser': '.guest-user-specific-field',
+                    'RegisteredUser': '.registered-user-specific-field'
+                };
+
+            // Hide specific fields
+            $(`.no-user-specific-field,
+            .guest-user-specific-field,
+            .registered-user-specific-field`).hide();
+
+            // Show specific field based on the checkout step
+            $(userToFieldMap[userType]).show();
         },
 
         openDesigner: function (event) {

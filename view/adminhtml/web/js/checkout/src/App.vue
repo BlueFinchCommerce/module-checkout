@@ -32,11 +32,24 @@
       {{ step.displayName }}
     </button>
   </div>
+  <div v-if="currentStep === 'SignInPage'" class="switchers">
+    <button
+      v-for="(user, index) in userType"
+      :key="index"
+      :class="{
+        'action-secondary': currentUser === user.userTypeName
+      }"
+      @click="setUserStatus(user)"
+    >
+      {{ user.displayName }}
+    </button>
+  </div>
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
+import useCustomerStore from '@/stores/CustomerStore';
 
 import AppHeader from '@/components/Header/Header.vue';
 import AppFooter from '@/components/Footer/Footer.vue';
@@ -67,7 +80,8 @@ export default {
   data() {
     return {
       currentDevice: 'MockDesktop',
-      currentStep: 'YourDetails',
+      currentStep: 'SignInPage',
+      currentUser: 'NoUser',
       devices: [
         { deviceName: 'MockMobile', displayName: 'Mobile' },
         { deviceName: 'MockTablet', displayName: 'Tablet' },
@@ -76,17 +90,24 @@ export default {
         { deviceName: 'MockFull', displayName: 'Full' },
       ],
       checkoutSteps: [
+        { stepName: 'SignInPage', displayName: 'Sign In' },
         { stepName: 'YourDetails', displayName: 'Your Details' },
         { stepName: 'Shipping', displayName: 'Shipping' },
         { stepName: 'Payment', displayName: 'Payment' },
       ],
+      userType: [
+        { userTypeName: 'NoUser', displayName: 'No User' },
+        { userTypeName: 'GuestUser', displayName: 'Guest User' },
+        { userTypeName: 'RegisteredUser', displayName: 'Registered User' },
+      ],
     };
   },
   computed: {
-    ...mapState(useStepsStore, ['yourDetailsActive', 'shippingActive', 'paymentActive']),
+    ...mapState(useStepsStore, ['signInPageActive', 'yourDetailsActive', 'shippingActive', 'paymentActive']),
   },
   async created() {
-    this.goToYouDetails();
+    this.goToSignInPage();
+    this.dummyLogOut(this.currentStep);
     await this.getInitialConfig();
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
@@ -95,7 +116,8 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useStepsStore, ['goToYouDetails', 'goToShipping', 'goToPayment']),
+    ...mapActions(useStepsStore, ['goToSignInPage', 'goToYouDetails', 'goToShipping', 'goToPayment']),
+    ...mapActions(useCustomerStore, ['dummyLogIn', 'dummyLogOut', 'dummyUserType']),
 
     switchDevice(device) {
       this.currentDevice = device.deviceName;
@@ -109,13 +131,23 @@ export default {
     goToStep(step) {
       this.currentStep = step.stepName;
       switch (step.stepName) {
+        case 'SignInPage':
+          this.dummyLogOut(step.stepName);
+          this.setUserStatus({ userTypeName: 'NoUser', displayName: 'No User' });
+          this.goToSignInPage();
+          break;
         case 'YourDetails':
+          this.dummyLogIn(step.stepName);
           this.goToYouDetails();
           break;
         case 'Shipping':
+          this.dummyLogOut(step.stepName);
+          this.dummyUserType('NoUser');
           this.goToShipping();
           break;
         case 'Payment':
+          this.dummyLogOut(step.stepName);
+          this.dummyUserType('NoUser');
           this.goToPayment();
           break;
         default:
@@ -126,6 +158,16 @@ export default {
 
     dispatchStep(stepName) {
       document.dispatchEvent(new CustomEvent('switchDisplayedStep', { detail: stepName }));
+    },
+
+    setUserStatus(user) {
+      this.currentUser = user.userTypeName;
+      this.dummyUserType(user.userTypeName);
+      this.dispatchUserStatus(user.userTypeName);
+    },
+
+    dispatchUserStatus(userType) {
+      document.dispatchEvent(new CustomEvent('updateUserStatus', { detail: userType }));
     },
   },
 };
@@ -140,6 +182,7 @@ export default {
     gap: 20px;
     grid-auto-flow: column;
     justify-content: center;
+    margin-bottom: 20px;
   }
 
   #gene-better-checkout-root {

@@ -51,6 +51,12 @@ p {
     opacity: var(--disabled-buttons-opacity, 0.5);
   }
 
+  .address-list {
+    float: none; // Override core styles
+    width: 100%; // Override core styles
+    margin-top: var(--indent__base);
+  }
+
   @mixin largeWidth() {
     .root {
       height: initial;

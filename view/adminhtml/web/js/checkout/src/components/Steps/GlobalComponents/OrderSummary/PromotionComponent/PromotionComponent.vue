@@ -53,7 +53,7 @@
     <div class="promo-title crosssells">
       <div>
         <TextField
-          :text="freeShippingText"
+          :text="crossSellsText"
         />
       </div>
       <ArrowDown
@@ -133,8 +133,8 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
-      freeShippingText: '',
-      freeShippingTextId: 'gene-bettercheckout-freeshipping-text',
+      crossSellsText: '',
+      crossSellsTextId: 'gene-bettercheckout-crosssells-text',
     };
   },
   computed: {
@@ -144,13 +144,13 @@ export default {
     },
   },
   async created() {
-    this.freeShippingText = window.geneCheckout?.[this.freeShippingTextId]
+    this.crossSellsText = window.geneCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
 
-    document.addEventListener(this.freeShippingTextId, this.setFreeShippingText);
+    document.addEventListener(this.crossSellsTextId, this.setCrossSellsText);
   },
   unmounted() {
-    document.removeEventListener(this.freeShippingTextId, this.setFreeShippingText);
+    document.removeEventListener(this.crossSellsTextId, this.setCrossSellsText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -158,8 +158,8 @@ export default {
       'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
     ]),
 
-    setFreeShippingText(event) {
-      this.freeShippingText = event?.detail || this.$t('orderSummary.freeShippingAvailable');
+    setCrossSellsText(event) {
+      this.crossSellsText = event?.detail?.value || this.$t('orderSummary.crossSellsTitle');
     },
 
     openDropDown() {
