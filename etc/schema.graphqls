@@ -120,3 +120,25 @@ type Query {
 type StoreCode @doc(description: "Returns current store code") {
     store_code: String
 }
+
+type Attribute {
+    multiline_count: Int! @doc(description: "The number of lines of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\MultilineCount")
+    validate_rules: [ValidationRule] @doc(description: "The validation rules of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\ValidateRules")
+}
+
+type ValidationRule @doc(description: "Defines a customer attribute validation rule.") {
+    name: ValidationRuleEnum @doc(description: "Validation rule name applied to a customer attribute.")
+    value: String @doc(description: "Validation rule value.")
+}
+
+enum ValidationRuleEnum @doc(description: "List of validation rule names applied to a customer attribute.") {
+    DATE_RANGE_MAX
+    DATE_RANGE_MIN
+    FILE_EXTENSIONS
+    INPUT_VALIDATION
+    MAX_TEXT_LENGTH
+    MIN_TEXT_LENGTH
+    MAX_FILE_SIZE
+    MAX_IMAGE_HEIGHT
+    MAX_IMAGE_WIDTH
+}

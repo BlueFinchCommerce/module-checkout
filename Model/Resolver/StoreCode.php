@@ -14,18 +14,11 @@ use Magento\Store\Model\StoreManagerInterface;
 class StoreCode implements ResolverInterface
 {
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
-     */
-    protected $storeManagerInterface;
-
-    /**
      * @param \Magento\Store\Model\StoreManagerInterface $storeManagerInterface
      */
     public function __construct(
-        StoreManagerInterface $storeManagerInterface
-    ) {
-        $this->storeManagerInterface = $storeManagerInterface;
-    }
+        private readonly StoreManagerInterface $storeManagerInterface
+    ) {}
 
     /**
      * @inheritdoc
