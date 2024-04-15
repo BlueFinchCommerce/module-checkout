@@ -208,6 +208,7 @@ export default {
         onAuthorized: this.handeOnAuthorized,
         // onClick: (resolve, reject) => this.onClick(resolve, reject, googlePayConfig.type),
         onSubmit: () => {},
+        onError: () => { this.setLoadingState(false); },
       };
     },
 
@@ -222,7 +223,11 @@ export default {
     //     return false;
     //   }
 
-    //   return expressPaymentOnClickDataLayer(resolve, reject, type);
+    //   expressPaymentOnClickDataLayer(resolve, reject, type);
+
+    //   this.setLoading(true);
+
+    //   return resolve();
     // },
 
     // onPaymentDataChanged(data) {
@@ -268,6 +273,8 @@ export default {
     //         : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
 
     //       await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+    //       this.setLoading(true);
+
     //       const paymentDataRequestUpdate = {
     //         newShippingOptionParameters: {
     //           defaultSelectedOptionId: selectedShipping.method_code,
