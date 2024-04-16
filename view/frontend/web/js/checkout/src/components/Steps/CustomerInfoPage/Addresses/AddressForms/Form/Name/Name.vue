@@ -71,7 +71,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 
 // Components
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Icons
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
@@ -81,7 +80,6 @@ export default {
   name: 'AddressFormName',
   components: {
     TextInput,
-    TextField,
     ValidIcon,
     ErrorIcon,
   },
