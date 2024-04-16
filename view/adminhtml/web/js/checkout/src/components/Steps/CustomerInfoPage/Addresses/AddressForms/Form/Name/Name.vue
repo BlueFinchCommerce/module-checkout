@@ -9,15 +9,15 @@
       :placeholder="$t('yourDetailsSection.firstName.placeholder')"
       :error="getAddressFieldHasError(address_type, 'First name')"
       :error-message="getAddressFieldHasError(address_type, 'First name')
-      ? $t('errorMessages.firstNameErrorMessage') : ''"
+        ? $t('errorMessages.firstNameErrorMessage') : ''"
       type="text"
       required
       autocomplete="given-name"
       @keyup="textChange($event, 'firstname')"
-      @focusout="validateField('firstname', 'First name')"
+      @focusout="validateField('firstname', 'First name', true)"
     />
-    <ValidIcon v-if="isFieldValid('firstname', 'First name')"/>
-    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'First name')"/>
+    <ValidIcon v-if="isFieldValid('firstname', 'First name')" />
+    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'First name')" />
   </div>
   <div>
     <!-- Last Name Input -->
@@ -29,26 +29,26 @@
       :placeholder="$t('yourDetailsSection.lastName.placeholder')"
       :error="getAddressFieldHasError(address_type, 'Last name')"
       :error-message="getAddressFieldHasError(address_type, 'Last name')
-      ? $t('errorMessages.lastNameErrorMessage') : ''"
+        ? $t('errorMessages.lastNameErrorMessage') : ''"
       type="text"
       required
       autocomplete="family-name"
       @keyup="textChange($event, 'lastname')"
-      @focusout="validateField('lastname', 'Last name')"
+      @focusout="validateField('lastname', 'Last name', true)"
     />
-    <ValidIcon v-if="isFieldValid('lastname', 'Last name')"/>
-    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Last name')"/>
+    <ValidIcon v-if="isFieldValid('lastname', 'Last name')" />
+    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Last name')" />
   </div>
   <div>
     <!-- Phone Number Input -->
     <div class="phone-field">
       <TextInput
         v-model="selectedAddressType.telephone"
-        :class="{'field-valid': phoneValid && !getAddressFieldHasError(address_type, 'Telephone'),
-        'field-error': phoneValidError}"
-        :error="phoneValidError || getAddressFieldHasError(address_type, 'Telephone')"
-        :error-message="phoneValidError || getAddressFieldHasError(address_type, 'Telephone')
-        ? $t('errorMessages.phoneErrorMessage') : ''"
+        :class="{'field-valid': isFieldValid('telephone', 'Telephone'),
+                 'field-error': getAddressFieldHasError(address_type, 'Telephone')}"
+        :error="getAddressFieldHasError(address_type, 'Telephone')"
+        :error-message="getAddressFieldHasError(address_type, 'Telephone')
+          ? $t('errorMessages.phoneErrorMessage') : ''"
         :identifier="`${address_type}-phone`"
         type="tel"
         :label="$t('yourDetailsSection.phoneField.label')"
@@ -56,11 +56,10 @@
         required
         autocomplete="tel"
         @keyup="phoneChange($event)"
-        @focusout="validateField('telephone', 'Telephone')"
+        @focusout="validatePhone(address_type, $event.value, true)"
       />
-      <ValidIcon v-if="phoneValid && !getAddressFieldHasError(address_type, 'Telephone')"/>
-      <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Telephone') || phoneValidError"/>
-      <TextField v-if="!phoneErrorClass" :text="$t('yourDetailsSection.phoneField.infoMessage')"/>
+      <ValidIcon v-if="isFieldValid('telephone', 'Telephone')" />
+      <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Telephone')" />
     </div>
   </div>
 </template>
@@ -93,12 +92,7 @@ export default {
     },
   },
   emits: ['isCustomerInfoFull'],
-  data() {
-    return {
-      phoneValidError: false,
-      phoneValid: false,
-    };
-  },
+
   setup() {
     const customerStore = useCustomerStore();
 
@@ -126,18 +120,13 @@ export default {
     validateFields() {
       const first = this.validateField('firstname', 'First name');
       const last = this.validateField('lastname', 'Last name');
-      const phone = this.validateField('telephone', 'Telephone');
-
-      this.nameValid = !!first;
-      this.lastNameValid = !!last;
-      this.phoneValidError = this.selectedAddressType.telephone.length > 32;
-      this.phoneValid = this.selectedAddressType.telephone.length === 8;
+      const phone = this.validatePhone(this.address_type, this.selectedAddressType.telephone);
 
       const fullDetails = first && last && phone;
       this.$emit('isCustomerInfoFull', fullDetails);
     },
-    validateField(field, label) {
-      return this.validateNameField(this.address_type, label, this.selectedAddressType[field]);
+    validateField(field, label, addError) {
+      return this.validateNameField(this.address_type, label, this.selectedAddressType[field], addError);
     },
     isFieldValid(field, label) {
       return !this.getAddressFieldHasError(this.address_type, label) && this.selectedAddressType[field];
