@@ -57,8 +57,9 @@
         autocomplete="tel"
         @keyup="phoneChange($event)"
         @focusout="validatePhone(address_type, $event.value, true)"
+        @telephone-error="validatePhone(address_type, selectedAddressType.telephone, true)"
       />
-      <ValidIcon v-if="isFieldValid('telephone', 'Telephone')" />
+      <ValidIcon v-if="validatePhone(address_type, selectedAddressType.telephone)" />
       <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Telephone')" />
     </div>
   </div>
