@@ -3,7 +3,6 @@
     <div class="loqate__field">
       <TextInput
         id="loqate"
-        :class="{'field-valid': loqateValid}"
         v-model="query"
         type="text"
         :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
@@ -17,7 +16,6 @@
         @keydown.up="onArrowUp"
         @keydown.enter="onEnter"
       />
-      <ValidIcon v-if="loqateValid"/>
       <Search stroke="black" />
     </div>
 
@@ -87,7 +85,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import selectAddressDataLayer from '@/helpers/dataLayer/selectAddressDataLayer';
 
 export default {
@@ -98,7 +95,6 @@ export default {
     Search,
     Edit,
     MyButton,
-    ValidIcon,
   },
   props: {
     address_type: {
@@ -114,7 +110,6 @@ export default {
       address: false,
       request: null,
       displayResults: false,
-      loqateValid: false,
     };
   },
   computed: {
@@ -154,9 +149,6 @@ export default {
       // Single Address
       if (item.Type === 'Address') {
         loqate.getAndUseAddress(item.Id).then(this.updateAddress);
-
-        // Set loqate valid
-        this.loqateValid = true;
 
         // Hide the list after selecting an item.
         this.displayResults = false;
