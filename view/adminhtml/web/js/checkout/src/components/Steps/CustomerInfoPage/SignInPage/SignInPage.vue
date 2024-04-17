@@ -194,7 +194,7 @@ export default {
       ) && this.validateNameField(
         addressType,
         'Last name',
-        this.selected[addressType].firstname,
+        this.selected[addressType].lastname,
       ) && this.validatePhone(
         addressType,
         this.selected[addressType].telephone,
