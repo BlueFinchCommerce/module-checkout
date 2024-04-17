@@ -3,7 +3,6 @@
     <div class="loqate__field">
       <TextInput
         id="loqate"
-        :class="{'field-valid': loqateValid}"
         v-model="query"
         type="text"
         :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
@@ -17,7 +16,6 @@
         @keydown.up="onArrowUp"
         @keydown.enter="onEnter"
       />
-      <ValidIcon v-if="loqateValid"/>
       <Search stroke="black" />
     </div>
 
@@ -44,8 +42,10 @@
   </div>
 
   <template v-if="address">
-    <div class="address-block"
-         :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
+    <div
+      class="address-block"
+      :class="customer.addresses.length > 0 ? 'saved-address-active' : ''"
+    >
       <div class="address-block__item">
         <article>
           <AddressBlock
@@ -88,7 +88,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import selectAddressDataLayer from '@/helpers/dataLayer/selectAddressDataLayer';
 
 export default {
@@ -99,7 +98,6 @@ export default {
     Search,
     Edit,
     MyButton,
-    ValidIcon,
   },
   props: {
     address_type: {
@@ -115,17 +113,21 @@ export default {
       address: false,
       request: null,
       displayResults: false,
-      loqateValid: false,
     };
   },
   computed: {
     ...mapWritableState(useCustomerStore, ['selected', 'customer']),
     ...mapState(useConfigStore, ['countryCode', 'stateRequired', 'countries']),
+    selectedAddressType() {
+      return this.selected[this.address_type];
+    },
   },
   methods: {
     ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
+      'validateNameField',
+      'validatePhone',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
@@ -155,9 +157,6 @@ export default {
       // Single Address
       if (item.Type === 'Address') {
         loqate.getAndUseAddress(item.Id).then(this.updateAddress);
-
-        // Set loqate valid
-        this.loqateValid = true;
 
         // Hide the list after selecting an item.
         this.displayResults = false;
@@ -231,9 +230,29 @@ export default {
       this.updateRegionRequired(this.address_type);
       this.setAddressToStore(newAddress, this.address_type);
 
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      const firstNameValid = this.validateNameField(
+        this.address_type,
+        'First name',
+        this.selectedAddressType.firstname,
+        true,
+      );
+      const lastNameValid = this.validateNameField(
+        this.address_type,
+        'Last name',
+        this.selectedAddressType.lastname,
+        true,
+      );
+      const phoneNumberValid = this.validatePhone(
+        this.address_type,
+        this.selectedAddressType.telephone,
+        true,
+      );
+      const addressValid = this.validateAddress(this.address_type, true);
+      const postcodeValid = this.validatePostcode(this.address_type, true);
 
-      // If the address we get back from AFD is not valid then open the form
+      const isValid = firstNameValid && lastNameValid && phoneNumberValid && addressValid && postcodeValid;
+
+      // If the address we get back from Loqate is not valid or details are not filled in then open the form
       // allowing User's the ability to edit.
       if (!isValid) {
         this.setAddressAsEditing(this.address_type, true);

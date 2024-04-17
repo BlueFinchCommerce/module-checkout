@@ -136,7 +136,11 @@ export default {
           this.validationErrorMessage = '';
         } else {
           this.$emit('update:modelValue', inputValue);
-          this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+          if (inputType === 'tel') {
+            this.$emit('telephone-error');
+          } else {
+            this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+          }
         }
 
         // Use $nextTick to check for errors after the DOM is updated
