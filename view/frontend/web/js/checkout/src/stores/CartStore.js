@@ -250,6 +250,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addDiscountCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           discountErrorMessage: null,
@@ -273,6 +274,7 @@ export default defineStore('cartStore', {
         discountCodeDataLayer('discountCodeRemoved');
         const cart = await removeDiscountCode();
 
+        this.emitUpdate();
         this.setData({
           cart,
           discountErrorMessage: null,
@@ -294,6 +296,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addGiftCardCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           giftCardErrorMessage: null,
@@ -317,6 +320,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await removeGiftCardCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           giftCardErrorMessage: null,

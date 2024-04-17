@@ -189,6 +189,8 @@ export default {
       //   .then(() => refreshCustomerData(['cart']))
       //   .then(() => { window.location.href = getSuccessPageUrl(); })
       //   .catch((err) => {
+      //     this.setLoadingState(false);
+
       //     try {
       //       handleServiceError(err);
       //     } catch (formattedError) {
@@ -246,6 +248,8 @@ export default {
             : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
 
           await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+          this.setLoadingState(true);
+
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
               defaultSelectedOptionId: selectedShipping.method_code,
@@ -332,6 +336,7 @@ export default {
     },
 
     async handleThreeDs(response) {
+      this.setLoadingState(true);
       const billingAddress = this.mapAddress(
         response.paymentMethodData.info.billingAddress,
         response.email,
