@@ -115,11 +115,16 @@ export default {
   computed: {
     ...mapWritableState(useCustomerStore, ['selected', 'customer']),
     ...mapState(useConfigStore, ['countryCode', 'stateRequired', 'countries']),
+    selectedAddressType() {
+      return this.selected[this.address_type];
+    },
   },
   methods: {
     ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
+      'validateNameField',
+      'validatePhone',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
@@ -222,9 +227,29 @@ export default {
       this.updateRegionRequired(this.address_type);
       this.setAddressToStore(newAddress, this.address_type);
 
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      const firstNameValid = this.validateNameField(
+        this.address_type,
+        'First name',
+        this.selectedAddressType.firstname,
+        true,
+      );
+      const lastNameValid = this.validateNameField(
+        this.address_type,
+        'Last name',
+        this.selectedAddressType.lastname,
+        true,
+      );
+      const phoneNumberValid = this.validatePhone(
+        this.address_type,
+        this.selectedAddressType.telephone,
+        true,
+      );
+      const addressValid = this.validateAddress(this.address_type, true);
+      const postcodeValid = this.validatePostcode(this.address_type, true);
 
-      // If the address we get back from AFD is not valid then open the form
+      const isValid = firstNameValid && lastNameValid && phoneNumberValid && addressValid && postcodeValid;
+
+      // If the address we get back from Loqate is not valid or details are not filled in then open the form
       // allowing User's the ability to edit.
       if (!isValid) {
         this.setAddressAsEditing(this.address_type, true);
