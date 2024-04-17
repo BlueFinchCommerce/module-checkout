@@ -4,7 +4,6 @@
       <div class="afd-postcode__field">
         <TextInput type="text"
                    id="afd-postcode"
-                   :class="{'field-valid': afdValid}"
                    v-model="query"
                    :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
                    :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
@@ -16,7 +15,6 @@
                    @keydown.down="onArrowDown"
                    @keydown.up="onArrowUp"
                    @keydown.enter="onEnter"/>
-        <ValidIcon v-if="afdValid"/>
         <Search stroke="black"/>
       </div>
 
@@ -89,7 +87,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 
 export default {
   name: 'AfdPostCode',
@@ -99,7 +96,6 @@ export default {
     Search,
     Edit,
     MyButton,
-    ValidIcon,
   },
   props: {
     address_type: {
@@ -115,7 +111,6 @@ export default {
       address: false,
       request: null,
       displayResults: true,
-      afdValid: false,
     };
   },
   computed: {
@@ -187,9 +182,6 @@ export default {
     selectSuggestion(item) {
       this.arrowCounter = -1;
       this.addressList = [];
-
-      // Set afd valid
-      this.afdValid = true;
 
       // Single Address
       afdPostcode.getAndUseAddress(item.Key, this.address_type).then(this.updateAddress);
