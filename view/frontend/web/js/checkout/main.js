@@ -6,6 +6,7 @@ import App from '@/App.vue';
 import router from '@/router';
 import messages from '@/locales';
 import helpers from '@/helpers';
+import services from '@/services';
 import stores from '@/stores';
 
 const i18n = createI18n({
@@ -28,4 +29,4 @@ app.use(router);
 
 app.mount('#gene-better-checkout-root');
 
-export default { helpers, stores };
+export default { helpers, services, stores, pinia };

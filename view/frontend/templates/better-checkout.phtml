@@ -14,15 +14,17 @@ $customWordings = $assetViewModel->getCustomWording();
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {
-        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
-        logo: "<?= $escaper->escapeJs($logo); ?>",
-        paymentMethods: [],
-        shippingMethods: [],
-        <?php if ($customWordings): ?>
-            ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'),
-        <?php endif; ?>
-    };
+    window.geneCheckout = window.geneCheckout || {};
+
+    window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+    window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
+    window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
+    window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
+    window.geneCheckout.shippingMethods = window.geneCheckout.shippingMethods || {};
+
+    <?php if ($customWordings): ?>
+        // window.geneCheckout = Object.assign(window.geneCheckout, ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'));
+    <?php endif; ?>
 </script>
 
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
