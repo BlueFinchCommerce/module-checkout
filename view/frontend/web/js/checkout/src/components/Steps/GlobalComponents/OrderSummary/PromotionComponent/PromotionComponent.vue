@@ -1,61 +1,37 @@
 <template>
-  <div
-    class="promotion-trigger dropdown-button"
-    tabindex="0"
-    v-if="freeShipping > 0 && crosssells.length === 0"
-    :class="{opened: isDropDownVisible}"
-    data-cy="dropdown-trigger"
-    @click="openDropDown"
-    @keydown="openDropDownKeyDown($event)"
-  >
-    <div class="promotion-icon-container">
-      <img
-        :src="promoIconUrl"
-        alt="promo-dropdown-icon"
-      >
-    </div>
-    <div class="promo-title no-shipping">
-      <div>
-        <TextField
-          :text="$t('orderSummary.couponCodeTitle')"
-        />
-        <Price
-          class="bold"
-          :value="freeShipping"
-        />
-        <TextField
-          :text="$t('orderSummary.couponCodeTitleBottom')"
-        />
-        <TextField
-          class="bold"
-          :text="$t('orderSummary.couponCodeTitleFreeShipping')"
-        />
+  <div :class="!promotionsLoaded ? 'promotion-text-loading text-loading' : ''">
+    <div
+      class="promotion-trigger dropdown-button"
+      tabindex="0"
+      v-if="freeShipping > 0 && crosssells.length === 0"
+      :class="{opened: isDropDownVisible}"
+      data-cy="dropdown-trigger"
+      @click="openDropDown"
+      @keydown="openDropDownKeyDown($event)"
+    >
+      <div class="promotion-icon-container">
+        <img
+          :src="promoIconUrl"
+          alt="promo-dropdown-icon"
+        >
       </div>
-    </div>
-    <ArrowDown
-      v-if="!isDropDownVisible && crosssells.length"
-      class="dropdown-arrow__down"
-    />
-    <ArrowUp
-      v-if="isDropDownVisible && crosssells.length"
-      class="dropdown-arrow__up"
-    />
-  </div>
-
-  <div
-    v-if="!freeShipping && crosssells.length > 0"
-    class="promotion-trigger dropdown-button"
-    tabindex="0"
-    :class="{opened: isDropDownVisible}"
-    data-cy="dropdown-trigger"
-    @click="openDropDown"
-    @keydown="openDropDownKeyDown($event)"
-  >
-    <div class="promo-title crosssells">
-      <div>
-        <TextField
-          :text="crossSellsText"
-        />
+      <div class="promo-title no-shipping">
+        <div>
+          <TextField
+            :text="$t('orderSummary.couponCodeTitle')"
+          />
+          <Price
+            class="bold"
+            :value="freeShipping"
+          />
+          <TextField
+            :text="$t('orderSummary.couponCodeTitleBottom')"
+          />
+          <TextField
+            class="bold"
+            :text="$t('orderSummary.couponCodeTitleFreeShipping')"
+          />
+        </div>
       </div>
       <ArrowDown
         v-if="!isDropDownVisible && crosssells.length"
@@ -66,42 +42,68 @@
         class="dropdown-arrow__up"
       />
     </div>
-  </div>
-  <DropDown
-    v-if="isDropDownVisible && crosssells.length"
-    class="promo-dropdown"
-    :class="{active: isDropDownVisible}"
-  >
-    <template #content>
-      <div :class="['product-item-carousel', `product-item-carousel-${crosssells.length}`]">
-        <div
-          v-for="(product, index) in crosssells"
-          :key="index"
-          class="product-item"
-        >
-          <div class="product-item-image">
-            <img
-              :src="product.thumbnail.url"
-              :alt="product.thumbnail.label"
-            >
-          </div>
-          <div class="product-item-info">
-            <TextField
-              :text="product.name"
-              class="product-item-name"/>
-            <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
-          </div>
-          <div class="product-actions">
-            <MyButton
-              primary
-              :label="$t('orderSummary.addToCart')"
-              @click="addItem(product)"
-            />
+
+    <div
+      v-if="!freeShipping && crosssells.length > 0"
+      class="promotion-trigger dropdown-button"
+      tabindex="0"
+      :class="{opened: isDropDownVisible}"
+      data-cy="dropdown-trigger"
+      @click="openDropDown"
+      @keydown="openDropDownKeyDown($event)"
+    >
+      <div class="promo-title crosssells">
+        <div>
+          <TextField
+            :text="crossSellsText"
+          />
+        </div>
+        <ArrowDown
+          v-if="!isDropDownVisible && crosssells.length"
+          class="dropdown-arrow__down"
+        />
+        <ArrowUp
+          v-if="isDropDownVisible && crosssells.length"
+          class="dropdown-arrow__up"
+        />
+      </div>
+    </div>
+    <DropDown
+      v-if="isDropDownVisible && crosssells.length"
+      class="promo-dropdown"
+      :class="{active: isDropDownVisible}"
+    >
+      <template #content>
+        <div :class="['product-item-carousel', `product-item-carousel-${crosssells.length}`]">
+          <div
+            v-for="(product, index) in crosssells"
+            :key="index"
+            class="product-item"
+          >
+            <div class="product-item-image">
+              <img
+                :src="product.thumbnail.url"
+                :alt="product.thumbnail.label"
+              >
+            </div>
+            <div class="product-item-info">
+              <TextField
+                :text="product.name"
+                class="product-item-name"/>
+              <Price class="product-item-price" :value="product.price_range.minimum_price.final_price.value"/>
+            </div>
+            <div class="product-actions">
+              <MyButton
+                primary
+                :label="$t('orderSummary.addToCart')"
+                @click="addItem(product)"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </template>
-  </DropDown>
+      </template>
+    </DropDown>
+  </div>
 </template>
 <script>
 // stores
@@ -134,6 +136,7 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
+      promotionsLoaded: false,
       crossSellsText: '',
       crossSellsTextId: 'gene-bettercheckout-crosssells-text',
     };
@@ -152,8 +155,10 @@ export default {
     await this.getCart();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
+      this.promotionsLoaded = true;
     }
     await this.getCrosssells();
+    this.promotionsLoaded = true;
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
