@@ -21,6 +21,10 @@ export default () => {
       },
       giftMessage: {},
     },
+    configurable_options: item.options.map((option) => ({
+      options_label: option.label,
+      value_label: option.value,
+    })),
   })).sort((a, b) => (
     parseInt(a.item_id, 10) - parseInt(b.item_id, 10)
   ));

@@ -73,6 +73,7 @@ export default {
     }
 
     this.addExpressMethod(this.key);
+    this.applePayLoaded = false;
 
     await this.getInitialConfig();
     await this.getCart();

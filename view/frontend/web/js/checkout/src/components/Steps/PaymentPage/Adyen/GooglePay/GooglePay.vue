@@ -1,9 +1,11 @@
 <template>
   <div
+    v-if="isAdyenAvailable"
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
   />
   <div
+    v-if="isAdyenAvailable"
     v-show="threeDSVisible"
     id="adyen-threeds-container"
   />

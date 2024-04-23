@@ -28,6 +28,7 @@ import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
 import pennies from '@/services/payments/penniesCharityBox';
 
 import getCartItems from '@/helpers/cart/getCartItems';
+import getCartPrices from '@/helpers/cart/getCartPrices';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
@@ -39,6 +40,7 @@ export default defineStore('cartStore', {
     id: null,
     cart: {
       items: getCartItems(),
+      prices: getCartPrices(),
     },
     customer_is_guest: null,
     subtotalInclTax: null,
