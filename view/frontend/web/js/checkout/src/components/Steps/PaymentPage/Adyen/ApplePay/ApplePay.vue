@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="isAdyenAvailable"
     id="adyen-apple-pay"
     :class="!applePayLoaded ? 'text-loading' : ''"
   />
@@ -59,12 +60,13 @@ export default {
   },
 
   async created() {
-    if (window.ApplePaySession && window.ApplePaySession.canMakePayments) {
-      this.addExpressMethod(this.key);
-      this.applePayLoaded = false;
-    } else {
+    // If the browser doesn't support Apple Pay then return early.
+    if (!window.ApplePaySession || !window.ApplePaySession.canMakePayments) {
       return;
     }
+
+    this.addExpressMethod(this.key);
+    this.applePayLoaded = false;
 
     await this.getInitialConfig();
     await this.getCart();
