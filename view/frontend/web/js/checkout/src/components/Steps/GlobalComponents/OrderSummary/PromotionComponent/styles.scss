@@ -1,11 +1,17 @@
 @import '@/styles/global/_breakpoints';
 
+.promotion-text-loading {
+  border-radius: var(--dropdown__border-radius);
+  height: var(--button__height);
+  margin: var(--indent__s) 0 var(--indent__xs);
+}
+
 .dropdown-button {
   &.promotion-trigger {
     border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
     padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
     background: var(--dropdown__background-color-highlight);
-    margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
+    margin-top: var(--drop-down-trigger-margin-top, var(--indent__m));
     display: var(--promotion-visibility, flex);
     max-width: none;
     justify-content: normal;

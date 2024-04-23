@@ -901,6 +901,10 @@ button .text-loading {
 .product-item-container[data-v-29079443] {
   display: flex;
 }
+.product-item-container .product-image img[data-v-29079443] {
+  height: auto;
+  width: 100px;
+}
 .product-item-container img[data-v-29079443] {
   max-width: var(--order-image-max-width, 100px);
   border-radius: var(--order-image-border-radius, 0);
@@ -1649,6 +1653,10 @@ button .text-loading {
 .product-item-container[data-v-0a66a2bc] {
   display: flex;
 }
+.product-item-container .product-image img[data-v-0a66a2bc] {
+  height: auto;
+  width: 100px;
+}
 .product-item-container img[data-v-0a66a2bc] {
   max-width: var(--order-image-max-width, 100px);
   border-radius: var(--order-image-border-radius, 0);
@@ -1792,6 +1800,10 @@ button .text-loading {
 .product-item-container[data-v-5c5d2865] {
   display: flex;
 }
+.product-item-container .product-image img[data-v-5c5d2865] {
+  height: auto;
+  width: 100px;
+}
 .product-item-container img[data-v-5c5d2865] {
   max-width: var(--order-image-max-width, 100px);
   border-radius: var(--order-image-border-radius, 0);
@@ -1934,6 +1946,10 @@ button .text-loading {
 }
 .product-item-container[data-v-d688ed7c] {
   display: flex;
+}
+.product-item-container .product-image img[data-v-d688ed7c] {
+  height: auto;
+  width: 100px;
 }
 .product-item-container img[data-v-d688ed7c] {
   max-width: var(--order-image-max-width, 100px);
@@ -2206,7 +2222,7 @@ button .text-loading {
   border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
   padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
   background: var(--dropdown__background-color-highlight);
-  margin: var(--indent__base--desktop) 0 var(--indent__xs) 0;
+  margin-top: var(--drop-down-trigger-margin-top, var(--indent__m));
   display: var(--promotion-visibility, flex);
   max-width: none;
   justify-content: normal;
@@ -3007,6 +3023,7 @@ div.dropdown.gift-dropdown .field .success[data-v-b1db4e5a] {
   padding: var(--drop-down-trigger-padding, var(--indent__m) var(--indent__base));
   background: var(--coupon-discount__background, var(--dropdown__background-color));
   order: var(--coupon-discount-trigger-order, 0);
+  margin-top: var(--drop-down-trigger-margin-top, var(--indent__m));
   max-width: none;
   justify-content: normal;
   position: relative;
@@ -7246,7 +7263,6 @@ body.no-scrollable {
 }.progress-bar-container[data-v-66c8b928] {
   padding: 0 0 var(--indent__m);
   background: var(--color__primary-white);
-  z-index: 10;
   position: sticky;
   top: 0;
   min-height: 69px;
