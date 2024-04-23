@@ -5,7 +5,7 @@ import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import useStepsStore from '@/stores/StepsStore';
 
-import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
@@ -110,7 +110,7 @@ export default defineStore('shippingMethodsStore', {
       // If there is no current selected method then select the cheapest by default.
       if (shippingMethods.length && (!isMethodAvailable || !this.selectedMethod.carrier_code)) {
         const cheapest = shippingMethods.reduce((prev, curr) => (
-          prev.price_incl_tax < curr.price_incl_tax ? prev : curr
+          prev.carrier_code && prev.amount.value < curr.amount.value ? prev : curr
         ), {});
 
         // Check if cheapest shipping method = nominated_delivery method that comes from admin (not from matrix)
@@ -128,7 +128,7 @@ export default defineStore('shippingMethodsStore', {
           this.selectShippingMethod(cheapest);
         }
 
-        await this.submitShippingInfo();
+        await this.submitShippingInfo(cheapest.carrier_code, cheapest.method_code);
       }
 
       setLoadingState(false);

@@ -9,6 +9,7 @@ const formatAddress = (address) => {
     return address;
   }
 
+  console.log('formatAddress', address);
   const clonedAddress = deepClone(address);
 
   // Format region.

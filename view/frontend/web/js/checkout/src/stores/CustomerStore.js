@@ -93,6 +93,25 @@ export default defineStore('customerStore', {
     },
 
     setAddressToStore(address, addressType) {
+      // If the address has an object for country map it to the right value.
+      if (typeof address.country === 'object') {
+        address.country_code = address.country.code;
+      }
+
+      // The region comes back with differnt keys than it expects so map them.
+      if (address.region.label) {
+        const configStore = useConfigStore();
+        address.region.region = address.region.code;
+        address.region.region_id = configStore.getRegionId(address.country_code, address.region);
+      }
+
+      // Save the address to state and also include the email address from the customer.
+      this.setData({
+        selected: {
+          [addressType]: Object.assign(address, { email: this.customer.email }),
+        },
+      });
+
       if (addressType === 'shipping') {
         const shippingMethodsStore = useShippingMethodsStore();
 
@@ -105,13 +124,6 @@ export default defineStore('customerStore', {
           });
         }
       }
-
-      // Save the address to state and also include the email address from the customer.
-      this.setData({
-        selected: {
-          [addressType]: Object.assign(address, { email: this.customer.email }),
-        },
-      });
     },
 
     setAddressAsEditing(addressType, value) {

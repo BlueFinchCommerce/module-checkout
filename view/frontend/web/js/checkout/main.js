@@ -5,6 +5,7 @@ import { createPinia } from 'pinia';
 import App from '@/App.vue';
 import router from '@/router';
 import messages from '@/locales';
+import components from '@/components';
 import helpers from '@/helpers';
 import services from '@/services';
 import stores from '@/stores';
@@ -29,4 +30,6 @@ app.use(router);
 
 app.mount('#gene-better-checkout-root');
 
-export default { helpers, services, stores, pinia };
+export default {
+  components, helpers, services, stores, pinia,
+};

@@ -18,6 +18,7 @@
       <div :class="{ 'logged-in-email': isLoggedIn }">
         <TextInput
           ref="email"
+          v-model="customer.email"
           :error="emailError"
           :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
           data-cy="email"
@@ -31,7 +32,6 @@
           :disabled="emailEntered"
           @blur="emailAddressBlur"
           @keyup="emailAddressChange"
-          :modelValue="customer.email"
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
@@ -288,7 +288,6 @@ export default {
       'setEmailEntered',
       'isEmailAvailable',
       'editEmail',
-      'setData',
     ]),
     ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
@@ -399,10 +398,7 @@ export default {
       this.tabKeyPressed = false;
     },
 
-    async emailAddressChange(event) {
-      if (event) {
-        this.setData({ customer: { email: event.target.value } });
-      }
+    async emailAddressChange() {
       // On changing the email address we must be focused on the element so
       // hide the error.
       this.setEmailErrorState(false);
