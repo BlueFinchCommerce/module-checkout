@@ -1,11 +1,5 @@
 @import '@/styles/global/_breakpoints';
 
-.promotion-text-loading {
-  border-radius: var(--dropdown__border-radius);
-  height: var(--button__height);
-  margin: var(--indent__s) 0 var(--indent__xs);
-}
-
 .dropdown-button {
   &.promotion-trigger {
     border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));

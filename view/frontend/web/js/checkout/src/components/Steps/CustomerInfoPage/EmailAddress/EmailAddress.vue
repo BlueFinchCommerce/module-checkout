@@ -36,13 +36,7 @@
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
 
-        <component
-          :is="belowEmailFieldExtension"
-          v-for="belowEmailFieldExtension in belowEmailFieldExtensions"
-          :key="belowEmailFieldExtension"
-        />
-
-        <div
+                <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
           @click="changeEmail()"
@@ -57,6 +51,11 @@
             <Edit/>
           </button>
         </div>
+        <component
+          :is="belowEmailFieldExtension"
+          v-for="belowEmailFieldExtension in belowEmailFieldExtensions"
+          :key="belowEmailFieldExtension"
+        />
       </div>
 
       <div>
