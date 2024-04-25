@@ -5,13 +5,20 @@
   >
     <div
       class="product-options-trigger"
-      data-cy="product-options-trigger"
       @click="showProductOptions"
       @keydown="showProductOptions"
+      :data-cy="dataCy ? `${dataCy}-trigger` : 'product-options-trigger'"
     >
-      <TextField :text="$t('productOptionsTrigger')" />
-      <ArrowUp v-if="productOptionsVisible" />
-      <ArrowDown v-if="!productOptionsVisible" />
+      <TextField
+        :text="$t('productOptionsTrigger')"
+        :data-cy="dataCy ? `${dataCy}-title` : 'product-options-title'"
+      />
+      <ArrowUp v-if="productOptionsVisible"
+        :data-cy="dataCy ? `${dataCy}-up-arrow` : 'product-options-up-arrow'"
+      />
+      <ArrowDown v-if="!productOptionsVisible"
+        :data-cy="dataCy ? `${dataCy}-down-arrow` : 'product-options-down-arrow'"
+      />
     </div>
     <div
       v-if="productOptionsVisible"
@@ -22,7 +29,10 @@
         :key="index"
         class="option-value"
       >
-        <TextField :text="`${option.option_label}: ${option.value_label}`" />
+        <TextField
+          :text="`${option.option_label}: ${option.value_label}`"
+          :data-cy="dataCy ? `${dataCy}-option` : 'product-options-option'"
+        />
       </div>
     </div>
   </div>
@@ -45,6 +55,9 @@ export default {
   props: {
     item: {
       type: Object,
+    },
+    dataCy: {
+      type: String,
     },
   },
   data() {

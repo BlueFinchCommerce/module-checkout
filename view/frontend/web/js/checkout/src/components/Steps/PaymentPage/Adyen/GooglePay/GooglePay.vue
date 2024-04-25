@@ -3,6 +3,7 @@
     v-if="isAdyenAvailable"
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-adyenGooglePay'"
   />
   <div
     v-if="isAdyenAvailable"

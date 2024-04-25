@@ -2,6 +2,7 @@
   <div
     :style="style"
     class="footer-icons"
+    data-cy="footer-icons"
   >
     <template v-if="isAdyenAvailable">
       <div>
@@ -24,13 +25,14 @@
                               : paymentType.icon"
               :alt="paymentType.name"
               :class="generateClass(paymentType.name)"
+              :data-cy="generateDataCY(paymentType.icon, 'adyen')"
             >
           </li>
         </ul>
       </div>
     </template>
     <div>
-      <ul v-if="!isAdyenAvailable && availableMethods.length > 0">
+      <ul v-if="availableMethods.length > 0">
         <template
           v-for="(paymentType, index) in availableMethods"
           :key="index"
@@ -44,6 +46,7 @@
               <img
                 :alt="cCType"
                 :src="getCCIcon(cCType)"
+                :data-cy="generateDataCY(cCType, 'braintree')"
               >
             </li>
           </template>
@@ -63,6 +66,7 @@
                         : ''"
                 :alt="paymentType.title"
                 :class="generateClass(paymentType.title)"
+                :data-cy="generateDataCY(paymentType.code, 'braintree')"
               >
             </li>
           </template>
@@ -148,6 +152,20 @@ export default {
     generateClass(paymentName) {
       // Convert paymentType.name to lowercase and replace spaces with underscores
       return paymentName.toLowerCase().replace(/\s+/g, '_');
+    },
+
+    generateDataCY(paymentIconName, serviceProvider) {
+      let iconName = paymentIconName;
+
+      if (serviceProvider === 'adyen') {
+          // Extract the string after "logos/" and before ".svg" or ".png" using a regular expression
+          const match = paymentIconName.match(/\/logos\/(.*?)\.(svg|png)/);
+          if (match) {
+              iconName = match[1];
+          }
+      }
+
+      return `footer-${serviceProvider}-${iconName}-icon`;
     },
 
     getCCIcon(type) {

@@ -27,6 +27,7 @@
                               : paymentType.icon"
               :alt="paymentType.name"
               :class="generateClass(paymentType.name)"
+              :data-cy="generateDataCY(paymentType.icon, 'adyen')"
             >
           </li>
         </ul>
@@ -48,6 +49,7 @@
               <img
                 :alt="cCType"
                 :src="getCCIcon(cCType)"
+                :data-cy="generateDataCY(cCType, 'braintree')"
               >
             </li>
           </template>
@@ -67,6 +69,7 @@
                         : ''"
                 :alt="paymentType.title"
                 :class="generateClass(paymentType.title)"
+                :data-cy="generateDataCY(paymentType.code, 'braintree')"
               >
             </li>
           </template>
@@ -164,9 +167,24 @@ export default {
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
+
     generateClass(paymentName) {
       // Convert paymentType.name to lowercase and replace spaces with underscores
       return paymentName.toLowerCase().replace(/\s+/g, '_');
+    },
+
+    generateDataCY(paymentIconName, serviceProvider) {
+      let iconName = paymentIconName;
+
+      if (serviceProvider === 'adyen') {
+          // Extract the string after "logos/" and before ".svg" or ".png" using a regular expression
+          const match = paymentIconName.match(/\/logos\/(.*?)\.(svg|png)/);
+          if (match) {
+              iconName = match[1];
+          }
+      }
+
+      return `checkout-${serviceProvider}-${iconName}-icon`;
     },
 
     getCCIcon(type) {

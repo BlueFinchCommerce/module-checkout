@@ -10,22 +10,38 @@
           <img
             :src="item.product?.thumbnail?.url"
             :alt="item.product?.thumbnail?.label"
+            :data-cy="dataCy ? `product-image-${dataCy}` : 'product-image'"
           >
         </div>
         <div class="product-item-info">
-          <TextField :text="item?.product?.name" />
+          <TextField
+            :text="item?.product?.name"
+            :data-cy="dataCy ? `product-name-${dataCy}` : 'product-name'"
+          />
           <ProductOptions
             v-if="item?.configurable_options"
             :item="item"
+            :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
           />
           <div class="product-item-price">
             <Price v-if="item.__typename !== 'GiftCardCartItem'"
-              :value="item.product?.price_range?.minimum_price?.final_price?.value" />
-            <Price v-else :value="item.amount.value" />
+              :value="item.product?.price_range?.minimum_price?.final_price?.value"
+              :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
+            />
+            <Price v-else
+              :value="item.amount.value"
+              :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
+            />
           </div>
           <div class="product-item-actions">
-            <QtyButton :item="item" />
-            <RemoveItemButton :product="item" />
+            <QtyButton
+              :item="item"
+              :data-cy="dataCy ? `qty-component-${dataCy}` : 'qty-component'"
+            />
+            <RemoveItemButton
+              :product="item"
+              :data-cy="dataCy ? `remove-item-component-${dataCy}` : 'remove-item-component'"
+            />
           </div>
           <div
             v-if="item.__typename === 'GiftCardCartItem'"
@@ -48,6 +64,7 @@
                   },
                 ]
               }"
+              :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
             />
           </div>
           <div
@@ -98,6 +115,9 @@ export default {
   props: {
     response: {
       type: Object,
+    },
+    dataCy: {
+      type: String,
     },
   },
   computed: {

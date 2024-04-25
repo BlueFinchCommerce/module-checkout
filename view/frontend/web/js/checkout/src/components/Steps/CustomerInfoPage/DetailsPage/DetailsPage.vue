@@ -3,7 +3,10 @@
     <div class="details-form-header"
          v-show="isExpressPaymentsVisible">
       <div class="instantCheckout-block">
-        <TextField :text="instantCheckoutText" />
+        <TextField
+          :text="instantCheckoutText"
+          :data-cy="'instant-checkout-title'"
+        />
       </div>
       <Agreements id="detailsPage" />
       <Recaptcha

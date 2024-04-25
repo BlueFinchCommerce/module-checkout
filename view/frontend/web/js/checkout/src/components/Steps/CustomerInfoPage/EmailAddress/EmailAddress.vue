@@ -4,12 +4,13 @@
       <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
         <TextField
           class="welcome-message-title"
-          data-cy="email"
+          :data-cy="'welcome-message-title'"
           :text="emailRegistered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
         <TextField
           class="welcome-message"
+          :data-cy="'welcome-message'"
           :text="emailRegistered ?
             $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
         />
@@ -21,7 +22,7 @@
           v-model="customer.email"
           :error="emailError"
           :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
-          data-cy="email"
+          :data-cy="isLoggedIn ? 'logged-in-email' : 'email'"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -42,12 +43,13 @@
           @keydown.enter="changeEmail()"
         >
           <button class="edit-button"
-                  data-cy="button"
+                  data-cy="edit-email-button"
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
+              :data-cy="'edit-email-button-text'"
             />
-            <Edit/>
+            <Edit :data-cy="'edit-email-button-icon'"/>
           </button>
         </div>
       </div>
@@ -59,6 +61,7 @@
           primary
           :label="continueButtonText"
           @click="emailAddressChange()"
+          :data-cy="'continue-button'"
         />
       </div>
 
@@ -69,7 +72,7 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            data-cy="password"
+            :data-cy="'password'"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -81,12 +84,13 @@
                 class="button_show_password"
                 :aria-label="$t('yourDetailsSection.showPassLabel')"
                 @click="toggleShowPassword"
+                :data-cy="'show-password-button'"
               >
                 <span v-if="showPassword">
-                  <ShowIcon/>
+                  <ShowIcon :data-cy="'show-passowrd-icon'" />
                 </span>
                 <span v-else>
-                  <HideIcon/>
+                  <HideIcon :data-cy="'hide-passowrd-icon'"/>
                 </span>
               </button>
             </template>
@@ -97,6 +101,7 @@
           <TextField
             class="field__help-text"
             :text="$t('errorMessages.passwordHelpText')"
+
           />
         </div>
 

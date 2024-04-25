@@ -1,8 +1,8 @@
 <template>
   <div
     class="gift-discount-trigger dropdown-button"
-    data-cy="dropdown-trigger-gift"
     tabindex="0"
+    :data-cy="dataCy ? `gift-card-trigger-${dataCy}` : 'gift-card-trigger'"
     :class="{opened: isDropDownVisible}"
     @click="openDropDown"
     @keydown="openDropDownKeyDown($event)"
@@ -11,25 +11,30 @@
       <img
         :src="GiftIcon"
         alt="gift-dropdown-icon"
+        :data-cy="dataCy ? `gift-card-icon-${dataCy}` : 'gift-card-icon'"
       >
     </div>
     <TextField
       :text="giftCardText"
       class="gift-discount-title"
+      :data-cy="dataCy ? `gift-card-title-${dataCy}` : 'gift-card-title'"
     />
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
+      :data-cy="dataCy ? `gift-card-arrow-down-${dataCy}` : 'gift-card-arrow-down'"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
+      :data-cy="dataCy ? `gift-card-arrow-up-${dataCy}` : 'gift-card-arrow-up'"
     />
   </div>
   <DropDown
     v-show="isDropDownVisible"
     class="gift-dropdown"
     :class="{active: isDropDownVisible}"
+    :data-cy="dataCy ? `gift-card-dropdown-${dataCy}` : 'gift-card-dropdown'"
   >
     <template #content>
       <div class="field gift-code-field">
@@ -40,12 +45,14 @@
           :placeholder="giftCardPlaceholderText"
           :disabled="cart.applied_gift_cards?.[0]"
           autocomplete="off"
+          :data-cy="dataCy ? `gift-card-input-${dataCy}` : 'gift-card-input'"
         />
         <MyButton
           v-if="!cart.applied_gift_cards?.[0]"
           primary
           :label="applyButtonText"
           @click="dispatchDiscountCode(giftCardCode)"
+          :data-cy="dataCy ? `gift-card-apply-${dataCy}` : 'gift-card-apply'"
         />
 
         <MyButton
@@ -53,15 +60,18 @@
           secondary
           :label="removeButtonText"
           @click="removeGiftCardCode(giftCardCode)"
+          :data-cy="dataCy ? `gift-card-remove-${dataCy}` : 'gift-card-remove'"
         />
         <div class="success">
           <SuccessMessage
+            :data-cy="dataCy ? `gift-card-success-${dataCy}` : 'gift-card-success'"
             v-if="cart.applied_gift_cards?.[0]"
             :message="$t('orderSummary.giftCardDiscount.successMessage', { code: giftCardCode })"
           />
         </div>
         <div class="error">
           <ErrorMessage
+            :data-cy="dataCy ? `gift-card-error-${dataCy}` : 'gift-card-error'"
             v-if="giftCardErrorMessage"
             :message="$t('orderSummary.giftCardDiscount.errorMessage')"
           />
@@ -103,6 +113,11 @@ export default {
     MyButton,
     ErrorMessage,
     SuccessMessage,
+  },
+  props: {
+    dataCy: {
+      type: String,
+    },
   },
   data() {
     return {

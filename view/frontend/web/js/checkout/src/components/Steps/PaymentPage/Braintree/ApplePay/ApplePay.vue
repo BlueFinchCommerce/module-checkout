@@ -5,6 +5,7 @@
     :class="!applePayLoaded ? 'text-loading' : 'braintree-apple-pay'"
     @keydown.enter="click"
     @click="click"
+    :data-cy="'instant-checkout-braintreeApplePay'"
   />
 </template>
 

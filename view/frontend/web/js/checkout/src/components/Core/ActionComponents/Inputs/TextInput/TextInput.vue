@@ -28,8 +28,14 @@
       >
       <slot name="icon" />
     </label>
-    <ErrorMessage v-if="errorMessage !== ''" :message="errorMessage"/>
-    <ErrorMessage v-if="validationErrorMessage !== ''" :message="validationErrorMessage"/>
+    <ErrorMessage v-if="errorMessage !== ''"
+      :message="errorMessage"
+      :data-cy="'field-error-message'"
+    />
+    <ErrorMessage v-if="validationErrorMessage !== ''"
+      :message="validationErrorMessage"
+      :data-cy="'field-error-message'"
+    />
   </div>
 </template>
 <script>
