@@ -13,41 +13,17 @@ use Magento\Quote\Model\QuoteRepository;
 class GetCheckoutData implements GetCheckoutDataInterface
 {
     /**
-     * @var CompositeDataProviderInterface
-     */
-    private $compositeDataProvider;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var ManagerInterface
-     */
-    private $eventManager;
-
-    /**
-     * @var QuoteRepository
-     */
-    private $quoteRepository;
-
-    /**
      * @param SerializerInterface $serializer
      * @param CompositeDataProviderInterface $compositeDataProvider
      * @param ManagerInterface $eventManager
      * @param QuoteRepository $quoteRepository
      */
     public function __construct(
-        SerializerInterface $serializer,
-        CompositeDataProviderInterface $compositeDataProvider,
-        ManagerInterface $eventManager,
-        QuoteRepository $quoteRepository
+        private readonly SerializerInterface $serializer,
+        private readonly CompositeDataProviderInterface $compositeDataProvider,
+        private readonly ManagerInterface $eventManager,
+        private readonly QuoteRepository $quoteRepository
     ) {
-        $this->serializer = $serializer;
-        $this->compositeDataProvider = $compositeDataProvider;
-        $this->eventManager = $eventManager;
-        $this->quoteRepository = $quoteRepository;
     }
 
     /**

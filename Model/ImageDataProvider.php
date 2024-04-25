@@ -6,6 +6,7 @@ namespace Gene\BetterCheckout\Model;
 
 use Exception;
 use Magento\Checkout\CustomerData\DefaultItem;
+use Magento\Framework\App\Area;
 use Magento\Quote\Api\CartItemRepositoryInterface;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Store\Model\App\Emulation;
@@ -15,31 +16,6 @@ use Psr\Log\LoggerInterface;
 class ImageDataProvider implements DataProviderInterface
 {
     /**
-     * @var CartItemRepositoryInterface
-     */
-    private $itemRepository;
-
-    /**
-     * @var DefaultItem
-     */
-    private $customerDataItem;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var Emulation
-     */
-    private $appEmulation;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private $storeManager;
-
-    /**
      * @param CartItemRepositoryInterface $itemRepository
      * @param DefaultItem $customerDataItem
      * @param LoggerInterface $logger
@@ -47,17 +23,12 @@ class ImageDataProvider implements DataProviderInterface
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        CartItemRepositoryInterface $itemRepository,
-        DefaultItem $customerDataItem,
-        LoggerInterface $logger,
-        Emulation $appEmulation,
-        StoreManagerInterface $storeManager
+        private readonly CartItemRepositoryInterface $itemRepository,
+        private readonly DefaultItem $customerDataItem,
+        private readonly LoggerInterface $logger,
+        private readonly Emulation $appEmulation,
+        private readonly StoreManagerInterface $storeManager
     ) {
-        $this->itemRepository = $itemRepository;
-        $this->customerDataItem = $customerDataItem;
-        $this->logger = $logger;
-        $this->appEmulation = $appEmulation;
-        $this->storeManager = $storeManager;
     }
 
     /**
@@ -71,7 +42,7 @@ class ImageDataProvider implements DataProviderInterface
         try {
             $items = $this->itemRepository->getList($quoteId);
             $storeId = $this->storeManager->getStore()->getId();
-            $this->appEmulation->startEnvironmentEmulation($storeId, \Magento\Framework\App\Area::AREA_FRONTEND, true);
+            $this->appEmulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND, true);
             foreach ($items as $cartItem) {
                 /** @var Item $cartItem */
                 $allData = $this->customerDataItem->getItemData($cartItem);

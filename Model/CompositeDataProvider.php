@@ -11,33 +11,20 @@ use Psr\Log\LoggerInterface;
 class CompositeDataProvider implements CompositeDataProviderInterface
 {
     /**
-     * @var array
-     */
-    private $dataProviders;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @param DataProviderInterface[] $dataProviders
      */
     public function __construct(
-        LoggerInterface $logger,
-        array $dataProviders = []
+        private readonly LoggerInterface $logger,
+        private readonly array $dataProviders = []
     ) {
-        $this->dataProviders = $dataProviders;
-        $this->logger = $logger;
     }
 
     /**
      * @param int $quoteId
      * @return array
      */
-    public function getData(
-        int $quoteId
-    ): array {
+    public function getData(int $quoteId): array
+    {
         $result = [];
         foreach ($this->dataProviders as $dataProvider) {
             try {
