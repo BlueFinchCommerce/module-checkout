@@ -35,6 +35,13 @@
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
+
+        <component
+          :is="belowEmailFieldExtension"
+          v-for="belowEmailFieldExtension in belowEmailFieldExtensions"
+          :key="belowEmailFieldExtension"
+        />
+
         <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
@@ -189,6 +196,9 @@ import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
+// Extensions
+import belowEmailFieldExtensions from '@/extensions/belowEmailFieldExtensions';
+
 // helpers
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
 import isEmailValid from '@/helpers/validation/isEmailValid';
@@ -209,6 +219,7 @@ export default {
     ErrorMessage,
     Edit,
     Recaptcha,
+    ...belowEmailFieldExtensions(),
   },
   data() {
     return {
@@ -234,6 +245,7 @@ export default {
       accountGuestButtonText: '',
       accountGuestButtonTextId: 'gene-bettercheckout-accountguestbutton-text',
       tabKeyPressed: false,
+      belowEmailFieldExtensions: [],
     };
   },
   computed: {
@@ -264,6 +276,9 @@ export default {
       description: 'login',
     });
     document.addEventListener('keydown', this.handleKeyDown);
+  },
+  created() {
+    this.belowEmailFieldExtensions = Object.keys(belowEmailFieldExtensions());
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

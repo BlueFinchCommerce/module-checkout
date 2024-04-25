@@ -120,6 +120,7 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.createClientToken();
+    await this.getCart();
 
     const total = (this.cartGrandTotal / 100).toString();
 
@@ -241,6 +242,7 @@ export default {
       'escapeNonAsciiCharacters',
       'getPayPalLineItems',
     ]),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
@@ -355,10 +357,6 @@ export default {
 
       this.attachEventListeners(instance);
       this.movePaymentContainers();
-
-      // Open the first payment method.
-      [this.selectedMethod] = this.paymentOptionPriority;
-      this.setToCurrentViewId();
 
       this.paymentEmitter.emit('braintreeInitComplete');
 

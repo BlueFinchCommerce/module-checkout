@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label class="radio-button" for="radio-input">
+    <label class="radio-button" :for="id">
       <input
-        id="radio-input"
+        :id="id"
         type="radio"
         :disabled="disabled"
         :name="name"
@@ -26,6 +26,10 @@ import { computed, reactive } from 'vue';
 export default {
   name: 'RadioButton',
   props: {
+    id: {
+      type: String,
+      default: 'radio-input',
+    },
     text: {
       type: String,
     },

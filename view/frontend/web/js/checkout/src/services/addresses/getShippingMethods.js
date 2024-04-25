@@ -8,7 +8,7 @@ import getFullCart from '@/helpers/cart/getFullCart';
 const convertBoolean = (value) => (value === 1);
 
 const mapToGraphQLString = (obj) => Object.entries(obj)
-  .map(([key, value]) => `${key}: ${JSON.stringify(value)}`)
+  .map(([key, value]) => (value ? `${key}: ${JSON.stringify(value)}` : ''))
   .join(', ');
 
 const buildShippingAddressMutation = (cartId, formattedAddressGraphQL) => `
@@ -28,12 +28,6 @@ mutation {
     }
   }
 }`;
-
-const mapShippingMethods = (response) => (
-  response.data.setShippingAddressesOnCart
-    ? response.data.setShippingAddressesOnCart.cart.shipping_addresses[0].available_shipping_methods
-    : []
-);
 
 export default async (shippingAddress) => {
   const { maskedId, getMaskedId } = useCartStore();
@@ -76,5 +70,12 @@ export default async (shippingAddress) => {
   const formattedAddressGraphQL = mapToGraphQLString(formattedAddress);
   const request = buildShippingAddressMutation(cartId, formattedAddressGraphQL);
 
-  return graphQlRequest(request).then(mapShippingMethods);
+  return graphQlRequest(request)
+    .then((response) => {
+      if (response.errors) {
+        throw new Error(response.errors[0].message);
+      }
+
+      return response.data.setShippingAddressesOnCart.cart;
+    });
 };

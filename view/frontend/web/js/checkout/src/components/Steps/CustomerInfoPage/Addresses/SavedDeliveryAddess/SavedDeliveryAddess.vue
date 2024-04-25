@@ -1,10 +1,10 @@
 <template>
   <div class="delivery-address">
-    <router-link
+    <div
       class="delivery-address-link"
       aria-label="proceed-to-details-link"
-      to="/"
-      @click="setDetailsStepActive();"
+      @click="setDetailsStepActive"
+      @keydown="openDropDown"
     >
       <div class="details-title-section">
         <div class="details-title-section-image">
@@ -31,7 +31,7 @@
           <Edit />
         </button>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -75,9 +75,13 @@ export default {
     ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {
-      const element = document.getElementById('progress-bar');
-      element.classList.add('details-active');
-      this.goToYouDetails();
+      if (window.geneCheckout?.overrides?.setDetailsStepActive) {
+        window.geneCheckout.overrides.setDetailsStepActive();
+      } else {
+        const element = document.getElementById('progress-bar');
+        element.classList.add('shipping-active');
+        this.goToYouDetails();
+      }
     },
   },
 };

@@ -11,6 +11,7 @@ import amastyConsentLogic from '@/services/content/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
 import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import deepClone from '@/helpers/addresses/deepClone';
 import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
 import formatAddress from '@/helpers/addresses/formatAddress';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
@@ -93,6 +94,28 @@ export default defineStore('customerStore', {
     },
 
     setAddressToStore(address, addressType) {
+      // Create new addess to be able to be changed.
+      const clonedAddress = deepClone(address);
+
+      // If the address has an object for country map it to the right value.
+      if (typeof address.country === 'object') {
+        clonedAddress.country_code = address.country.code;
+      }
+
+      // The region comes back with differnt keys than it expects so map them.
+      if (address.region.label) {
+        const configStore = useConfigStore();
+        clonedAddress.region.region = address.region.code;
+        clonedAddress.region.region_id = configStore.getRegionId(address.country_code, address.region);
+      }
+
+      // Save the address to state and also include the email address from the customer.
+      this.setData({
+        selected: {
+          [addressType]: Object.assign(clonedAddress, { email: this.customer.email }),
+        },
+      });
+
       if (addressType === 'shipping') {
         const shippingMethodsStore = useShippingMethodsStore();
 
@@ -100,18 +123,11 @@ export default defineStore('customerStore', {
         if (this.selected.billing.same_as_shipping && !shippingMethodsStore.isClickAndCollect) {
           this.setData({
             selected: {
-              billing: Object.assign(address, { email: this.customer.email }),
+              billing: Object.assign(clonedAddress, { email: this.customer.email }),
             },
           });
         }
       }
-
-      // Save the address to state and also include the email address from the customer.
-      this.setData({
-        selected: {
-          [addressType]: Object.assign(address, { email: this.customer.email }),
-        },
-      });
     },
 
     setAddressAsEditing(addressType, value) {
