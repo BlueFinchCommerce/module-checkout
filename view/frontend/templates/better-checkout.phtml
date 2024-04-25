@@ -23,7 +23,9 @@ $customWordings = $assetViewModel->getCustomWording();
     window.geneCheckout.shippingMethods = window.geneCheckout.shippingMethods || {};
 
     <?php if ($customWordings): ?>
-        // window.geneCheckout = Object.assign(window.geneCheckout, ...JSON.parse('<?= /* no-escape */ $customWordings; ?>'));
+        <?php foreach (json_decode($customWordings) as $key => $value): ?>
+            window.geneCheckout["<?= $key ?>"] = "<?= $value ?>";
+        <?php endforeach; ?>
     <?php endif; ?>
 </script>
 
