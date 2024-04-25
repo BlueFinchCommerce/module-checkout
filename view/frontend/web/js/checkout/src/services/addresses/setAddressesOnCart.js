@@ -9,7 +9,6 @@ const formatAddress = (address) => {
     return address;
   }
 
-  console.log('formatAddress', address);
   const clonedAddress = deepClone(address);
 
   // Format region.
@@ -22,6 +21,10 @@ const formatAddress = (address) => {
 
   if (!clonedAddress.region) {
     delete clonedAddress.region;
+  }
+
+  if (!clonedAddress.company) {
+    delete clonedAddress.company;
   }
 
   delete clonedAddress.id;

@@ -62,6 +62,7 @@ export default defineStore('shippingMethodsStore', {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);
 
+      const cartStore = useCartStore();
       const customerStore = useCustomerStore();
 
       await this.getNominatedDeliveryMethods(customerStore.selected.shipping.postcode);
@@ -80,17 +81,22 @@ export default defineStore('shippingMethodsStore', {
         return;
       }
 
-      const shippingMethods = await this.getCachedResponse(
+      const result = await this.getCachedResponse(
         getShipping,
         'getShippingMethods',
         clonedAddress,
       );
-      this.setShippingMethods(shippingMethods);
+
+      cartStore.handleCartData(result);
+
+      const methods = result.shipping_addresses[0].available_shipping_methods;
+
+      this.setShippingMethods(methods);
 
       // Check the cart selected method is still returned in the shipping methods
       let isMethodAvailable = false;
       if (this.selectedMethod.carrier_code) {
-        isMethodAvailable = shippingMethods.find(
+        isMethodAvailable = methods.find(
           (method) => method.method_code === this.selectedMethod.method_code,
         );
       }
@@ -100,7 +106,7 @@ export default defineStore('shippingMethodsStore', {
       // done to prevent situation where there is no selected method on shipping step
 
       if (this.selectedMethod.carrier_code === 'nominated_delivery') {
-        const shippingMethodsSliced = shippingMethods.slice(0, -1);
+        const shippingMethodsSliced = methods.slice(0, -1);
         const cheapestFromSliced = shippingMethodsSliced.reduce((prev, curr) => (
           prev.price_incl_tax < curr.price_incl_tax ? prev : curr
         ), {});
@@ -108,8 +114,8 @@ export default defineStore('shippingMethodsStore', {
       }
 
       // If there is no current selected method then select the cheapest by default.
-      if (shippingMethods.length && (!isMethodAvailable || !this.selectedMethod.carrier_code)) {
-        const cheapest = shippingMethods.reduce((prev, curr) => (
+      if (methods.length && (!isMethodAvailable || !this.selectedMethod.carrier_code)) {
+        const cheapest = methods.reduce((prev, curr) => (
           prev.carrier_code && prev.amount.value < curr.amount.value ? prev : curr
         ), {});
 
@@ -119,7 +125,7 @@ export default defineStore('shippingMethodsStore', {
 
         if (cheapest.carrier_code === 'nominated_delivery'
             || cheapest.carrier_code === 'amstorepickup') {
-          const shippingMethodsSliced = shippingMethods.slice(0, -1);
+          const shippingMethodsSliced = methods.slice(0, -1);
           const cheapestFromSliced = shippingMethodsSliced.reduce((prev, curr) => (
             prev.price_incl_tax < curr.price_incl_tax ? prev : curr
           ), {});

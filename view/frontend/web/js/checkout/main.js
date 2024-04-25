@@ -30,6 +30,8 @@ app.use(router);
 
 app.mount('#gene-better-checkout-root');
 
+window.geneCheckout.helpers = helpers;
+
 export default {
   components, helpers, services, stores, pinia,
 };
