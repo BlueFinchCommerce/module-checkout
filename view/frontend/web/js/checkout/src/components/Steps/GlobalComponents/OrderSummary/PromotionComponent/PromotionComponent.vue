@@ -1,5 +1,4 @@
 <template>
-  <div :class="!promotionsLoaded ? 'promotion-text-loading text-loading' : ''">
     <div
       class="promotion-trigger dropdown-button"
       tabindex="0"
@@ -103,7 +102,6 @@
         </div>
       </template>
     </DropDown>
-  </div>
 </template>
 <script>
 // stores
@@ -136,7 +134,6 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
-      promotionsLoaded: false,
       crossSellsText: '',
       crossSellsTextId: 'gene-bettercheckout-crosssells-text',
     };
@@ -155,10 +152,8 @@ export default {
     await this.getCart();
     if (this.amastyEnabled) {
       await this.getAmastyShippingData();
-      this.promotionsLoaded = true;
     }
     await this.getCrosssells();
-    this.promotionsLoaded = true;
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

@@ -7,7 +7,7 @@
 
   .closer-container {
     .agreement-close {
-      width: var(--button__height);
+      width: var(--button__height) !important; // Override dropin styles
       font-size: var(--font__l);
       font-weight: var(--font-weight__regular);
       background: transparent;

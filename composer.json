@@ -27,10 +27,6 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
     },
     "repositories": {
-        "hyva-themes/magento2-compat-module-fallback": {
-            "type": "git",
-            "url": "git@gitlab.hyva.io:hyva-themes/magento2-compat-module-fallback.git"
-        },
         "0": {
             "type": "composer",
             "url": "https://repo.magento.com/"
