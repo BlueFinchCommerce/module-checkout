@@ -13,6 +13,7 @@
       <div
         data-braintree-id="ach"
         class="braintree-ach braintree-sheet"
+        data-cy="braintree-ach-trigger"
         @click="selectMethod"
         @keydown="selectMethod"
       >
@@ -28,12 +29,15 @@
               height="29"
               class=""
             >
-              <use xlink:href="#logoAch" />
+              <use xlink:href="#logoAch"
+                data-cy="braintree-ach-logo"
+              />
             </svg>
           </div>
           <div
             class="braintree-option__label"
             :aria-label="$t('braintree.ach.payment')"
+            data-cy="braintree-ach-title"
           >
             {{ $t('braintree.ach.payment') }}
             <div class="braintree-option__disabled-message" />
@@ -49,22 +53,26 @@
           name="routing-number"
           :placeholder="$t('braintree.ach.routingNumber')"
           autocomplete="off"
+          :data-cy="'braintree-ach-routing-number-input'"
         />
         <TextInput
           v-model="accountNumber"
           name="account-number"
           :placeholder="$t('braintree.ach.accountNumber')"
           autocomplete="off"
+          :data-cy="'braintree-ach-account-number-input'"
         />
         <SelectInput
           v-model="accountType"
           :options="getAccountTypeOptions()"
           :label="$t('braintree.ach.accountType')"
+          :data-cy="'braintree-ach-account-type-select'"
         />
         <SelectInput
           v-model="ownershipType"
           :options="getOwnershipTypeOptions()"
           :label="$t('braintree.ach.ownershipType')"
+          :data-cy="'braintree-ach-ownership-type-select'"
         />
         <TextInput
           v-if="ownershipType === 'personal'"
@@ -72,6 +80,7 @@
           name="firstname"
           :placeholder="$t('braintree.ach.firstname')"
           autocomplete="off"
+          :data-cy="'braintree-ach-firstname-input'"
         />
         <TextInput
           v-if="ownershipType === 'personal'"
@@ -79,6 +88,7 @@
           name="lastname"
           :placeholder="$t('braintree.ach.lastname')"
           autocomplete="off"
+          :data-cy="'braintree-ach-lastname-input'"
         />
         <TextInput
           v-if="ownershipType === 'business'"
@@ -87,6 +97,7 @@
           name="business-name"
           :placeholder="$t('braintree.ach.businessName')"
           autocomplete="off"
+          :data-cy="'braintree-ach-business-name-input'"
         />
         <div class="braintree-ach-mandate">
           <ErrorMessage
@@ -98,6 +109,7 @@
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
+            :data-cy="'braintree-ach-proof-checkbox'"
           />
           <Agreements id="braintreeAch" />
           <Recaptcha
@@ -106,10 +118,14 @@
             location="braintreeAch"
           />
           <PrivacyPolicy />
-          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
+          <TextField
+            :text="$t('braintree.ach.terms', { websiteName })"
+            :data-cy="'braintree-ach-terms-text'"
+          />
           <MyButton
             label="Pay"
             primary
+            :data-cy="'braintree-ach-pay-button'"
             @click="startPayment()"
           />
         </div>

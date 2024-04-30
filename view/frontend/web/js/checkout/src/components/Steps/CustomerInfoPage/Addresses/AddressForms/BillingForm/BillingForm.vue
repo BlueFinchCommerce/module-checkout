@@ -10,6 +10,7 @@
           v-if="showCheckbox && !cart.is_virtual"
           :checked="selected[address_type].same_as_shipping"
           :text="$t('billingForm.notSameAddress')"
+          :data-cy="'billing-address-checkbox'"
           @change="toggleBillingAddress"
         />
       </div>
@@ -32,12 +33,14 @@
         <TextField
           class="address-block__title selected"
           :text="$t('yourDetailsSection.deliverySection.selectedBillingAddressTitle')"
+          :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
           <article>
             <AddressBlock
               :address_type="address_type"
               :address="selected[address_type]"
+              :data-cy="'selected'"
             />
           </article>
         </div>
@@ -49,7 +52,7 @@
           @click.prevent="editBillingAddress"
           @keydown.enter.prevent="editBillingAddress"
         >
-          <Edit />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`"/>
         </div>
       </div>
     </div>
@@ -61,10 +64,11 @@
       && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)">
 
       <div class="address-block__title-with-icon billing">
-        <Locate />
+        <Locate :data-cy="`${address_type}-new-address-icon`" />
         <TextField
           class="address-block__title"
           :text="newAddressText"
+          :data-cy="`${address_type}-new-address-title`"
         />
         <div class="divider-line"></div>
       </div>
@@ -79,6 +83,7 @@
             v-if="!selected[address_type].id
               || (selected[address_type].id === 'custom' && selected[address_type].editing)"
             :address_type="address_type"
+            :data-cy="address_type"
           />
         </div>
 

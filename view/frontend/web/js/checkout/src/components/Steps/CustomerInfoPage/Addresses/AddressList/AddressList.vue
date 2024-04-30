@@ -4,12 +4,16 @@
       v-if="displayTitle"
       class="delivery-section-title"
     >
-      <Shipping v-if="addressType === 'shipping'" />
-      <BillingAddressIcon v-if="addressType === 'billing'" />
-
+      <Shipping v-if="addressType === 'shipping'"
+        :data-cy="`saved-${addressType}-address-icon`"
+      />
+      <BillingAddressIcon v-if="addressType === 'billing'"
+        :data-cy="`saved-${addressType}-address-icon`"
+      />
       <div class="delivery-section-title-text">
         <TextField
           :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
+          :data-cy="`saved-${addressType}-address-title`"
         />
       </div>
       <div class="divider-line"></div>
@@ -22,13 +26,16 @@
         class="address-list__item"
         :class="{ active: item.id === selected[addressType].id }"
         @click="selectAddress(item)"
-        data-cy="ship-here"
+        :data-cy="`${addressType}-saved-address`"
         @keydown="selectAddress(item)"
       >
-        <Tick v-if="item.id === selected[addressType].id" />
+        <Tick v-if="item.id === selected[addressType].id"
+        :data-cy="`${addressType}-saved-address-active`"
+        />
         <TextField
           v-else-if="addressType ==='shipping'"
           class="ship-here"
+          :data-cy="`${addressType}-saved-address-ship-here`"
           :text="$t('yourDetailsSection.deliverySection.shipHere')"
         />
         {{ item.firstname }} {{ item.lastname }}<br><br>
@@ -45,6 +52,7 @@
           type="button"
           secondary
           :label="addNewAddressButtonText"
+          :data-cy="`${addressType}-add-new-address-button`"
           @click="newAddress"
         />
       </li>

@@ -22,7 +22,7 @@
           v-model="customer.email"
           :error="emailError"
           :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
-          :data-cy="isLoggedIn ? 'logged-in-email' : 'email'"
+          :data-cy="isLoggedIn ? 'logged-in-email' : 'email-input'"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -72,7 +72,7 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            :data-cy="'password'"
+            :data-cy="'password-input'"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -101,7 +101,7 @@
           <TextField
             class="field__help-text"
             :text="$t('errorMessages.passwordHelpText')"
-
+            :data-cy="'password-description'"
           />
         </div>
 
@@ -109,11 +109,12 @@
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
-            data-cy="forgot-pass-button"
+            data-cy="forgot-password-link"
           >
             <span style="display: none">forgotPass link</span>
             <TextField
               :text="$t('forgotPass')"
+              :data-cy="'forgot-password-link-text'"
             />
           </a>
         </div>
@@ -138,11 +139,15 @@
             class="sign-in-btn"
             primary
             :label="signInButtonText"
+            :data-cy="'sign-in-button'"
             @click="submitForm"
           />
           <div class="divider">
             <div class="divider-line"></div>
-            <TextField :text="$t('signInDividerText')"/>
+            <TextField
+              :text="$t('signInDividerText')"
+              :data-cy="'sign-in-divider-text'"
+            />
             <div class="divider-line"></div>
           </div>
           <MyButton
@@ -150,6 +155,7 @@
             secondary
             :disabled="proceedAsGuestInvalid"
             :label="accountGuestButtonText"
+            :data-cy="'guest-continue-button'"
             @click="proceedAsGuest();"
           />
         </div>
@@ -164,6 +170,7 @@
           secondary
           :disabled="proceedAsGuestInvalid"
           :label="noAccountGuestButtonText"
+          :data-cy="'guest-continue-button-no-account'"
           @click="proceedAsGuest();"
         />
       </div>

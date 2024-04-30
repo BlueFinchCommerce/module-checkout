@@ -100,14 +100,16 @@
             <YourDetails fill="black" />
             <TextField
               :text="yourDetailsText"
+              :data-cy="'your-details-title'"
             />
             <div class="divider-line"></div>
           </div>
           <div v-else class="details-form-title saved-address">
-            <Locate />
+            <Locate :data-cy="`${address_type}-new-address-icon`" />
             <TextField
               class="address-block__title"
               :text="newAddressText"
+              :data-cy="`${address_type}-new-address-title`"
             />
             <div class="divider-line"></div>
           </div>
@@ -120,10 +122,11 @@
             v-if="isAddressBlockVisible"
             class="delivery-section-title"
           >
-            <Locate />
+            <Locate :data-cy="`${address_type}-where-to-icon`" />
             <div class="delivery-section-title-text">
               <TextField
                 :text="deliverWhereText"
+                :data-cy="`${address_type}-where-to-icon`"
               />
             </div>
             <div class="divider-line"></div>
@@ -134,6 +137,7 @@
               <AddressFinder
                 v-if="!selected[address_type].id
                   || (selected[address_type].id === 'custom' && selected[address_type].editing)"
+                :data-cy="address_type"
               />
             </div>
           </div>
@@ -146,6 +150,7 @@
               && addressFinder.enabled"
             class="manually-button"
             :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :data-cy="'enter-address-manually-link'"
             @click.prevent="editAddress"
           />
         </div>
@@ -164,12 +169,14 @@
         <TextField
           class="address-block__title selected"
           :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
+          :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
           <article>
             <AddressBlock
               :address_type="`shipping`"
               :address="selected[address_type]"
+              :data-cy="'selected'"
             />
           </article>
         </div>
@@ -181,7 +188,7 @@
           @keydown.enter.prevent="editAddress"
           tabindex="0"
         >
-          <Edit />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
         </div>
       </div>
 
@@ -203,6 +210,7 @@
         primary
         :label="proceedToShippingText"
         :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
+        :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -211,6 +219,7 @@
         primary
         :label="proceedToPayText"
         :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
     </div>

@@ -13,6 +13,7 @@
       <div
         data-braintree-id="lpm"
         class="braintree-lpm braintree-sheet"
+        data-cy="braintree-lpm-trigger"
         @click="selectMethod"
         @keydown="selectMethod"
       >
@@ -28,12 +29,15 @@
               height="29"
               class=""
             >
-              <use xlink:href="#logoLpm" />
+              <use xlink:href="#logoLpm"
+                data-cy="braintree-lpm-logo"
+              />
             </svg>
           </div>
           <div
             class="braintree-option__label"
             :aria-label="$t('braintree.payingWith', { paymentTitle: getPaymentMethodTitle('braintree_local_payment') })"
+            data-cy="braintree-lpm-title"
           >
             {{ getPaymentMethodTitle('braintree_local_payment') }}
             <div class="braintree-option__disabled-message" />
@@ -62,9 +66,11 @@
             v-show="!loading"
             :key="allowedMethod"
             class="button button--secondary braintree-lpm-method"
+            :data-cy="'braintree-lpm-pay-button'"
             @click="initialiseLpm(allowedMethod)"
           >
             <img
+              data-cy="braintree-lpm-button-image"
               :src="getIcon(allowedMethod)"
               :alt="allowedMethod"
             >
@@ -73,6 +79,7 @@
         <TextField
           v-else
           :text="$t('braintree.lpm.noMethods')"
+          data-cy="braintree-lpm-no-method-text"
         />
       </div>
     </div>

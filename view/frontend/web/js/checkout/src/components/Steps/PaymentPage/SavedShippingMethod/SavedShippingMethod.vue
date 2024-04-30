@@ -3,6 +3,7 @@
     <router-link
       class="saved-shipping-link"
       aria-label="proceed-to-shipping-link"
+      data-cy="completed-step-shipping-trigger"
       to="/shipping"
       @click="setDetailsStepActive();"
     >
@@ -11,17 +12,24 @@
           <div class="total__row">
             <div class="saved-shipping__icon">
               <div class="saved-shipping__icon-image">
-                <Shipping />
+                <Shipping :data-cy="'completed-step-shipping-icon'" />
               </div>
               <div class="title">
-                <TextField :text="shippingStepCompletedText" />
+                <TextField
+                  :text="shippingStepCompletedText"
+                  :data-cy="'completed-step-shipping-title'"
+                />
               </div>
             </div>
             <div class="shipping-method-title">
-              <TextField :text="`${cart.shipping_addresses?.[0]?.selected_shipping_method?.method_title}, `" />
+              <TextField
+                :text="`${cart.shipping_addresses?.[0]?.selected_shipping_method?.method_title}, `"
+                :data-cy="'completed-step-shipping-content-method'"
+              />
               <Price
                 class="shipping-method-value"
                 :value="cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value"
+                :data-cy="'completed-step-shipping-content-price'"
               />
             </div>
           </div>
@@ -31,12 +39,14 @@
         <button
           class="button--blank edit-shipping-button"
           :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+          :data-cy="'completed-step-shipping-edit-button'"
         >
           <TextField
             class="edit-button-title"
             :text="$t('yourDetailsSection.editButton')"
+            :data-cy="'completed-step-shipping-edit-button-text'"
           />
-          <Edit />
+          <Edit :data-cy="'completed-step-shipping-edit-icon'" />
         </button>
       </div>
     </router-link>

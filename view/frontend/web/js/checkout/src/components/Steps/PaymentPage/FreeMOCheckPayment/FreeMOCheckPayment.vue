@@ -7,6 +7,7 @@
     <RadioButton
       :text="title"
       :checked="isMethodSelected"
+      :data-cy="'free-mo-payment-radio'"
       class="free-payment-radio"
       @click="selectPaymentMethod"
       @keydown="selectPaymentMethod"
@@ -32,6 +33,7 @@
       :label="$t('paymentStep.payNow')"
       primary
       :disabled="buttonDisabled"
+      :data-cy="'free-mo-pay-button'"
       @click="createPayment()"
     />
   </div>
