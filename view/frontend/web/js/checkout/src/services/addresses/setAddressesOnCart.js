@@ -23,6 +23,10 @@ const formatAddress = (address) => {
     delete clonedAddress.region;
   }
 
+  if (!clonedAddress.company) {
+    delete clonedAddress.company;
+  }
+
   delete clonedAddress.id;
   delete clonedAddress.email;
   delete clonedAddress.editing;

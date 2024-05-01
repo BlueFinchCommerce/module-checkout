@@ -1,5 +1,9 @@
 <template>
-  <img :src="detailsIconSvg" :alt="detailsIconSvg" />
+  <img
+    :src="detailsIconSvg"
+    :alt="detailsIconSvg"
+    data-cy="your-details-icon"
+  />
 </template>
 
 <script>

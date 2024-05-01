@@ -4,12 +4,17 @@
                  to="/checkout"
                  :tabindex="shippingActive ? 0 : -1"
                  class="details active"
+                 data-cy="progress-bar-details-trigger"
                  @click="goToYouDetails">
       <StepCompletedIcon v-if="shippingActive"/>
       <div class="number active" v-if="!shippingActive">
-        <p>1</p>
+        <p data-cy="progerss-bar-one">1</p>
       </div>
-      <TextField class="details-text" :text="$t('progressBar.detailStepTitle')"/>
+      <TextField
+        class="details-text"
+        :text="$t('progressBar.detailStepTitle')"
+        :data-cy="'progress-bar-details-text'"
+      />
     </router-link>
     <div class="progress-bar-arrow" :class="{active: shippingActive}">
       <ProgressBarArrow/>
@@ -19,12 +24,16 @@
                  :tabindex=" paymentActive ? 0 : -1 "
                  :class="{active: shippingActive}"
                  class="shipping"
+                 data-cy="progress-bar-shipping-trigger"
                  @click="shippingActive ? goToShipping() : null">
       <StepCompletedIcon v-if="paymentActive"/>
       <div class="number" :class="{active: shippingActive}" v-if="!paymentActive">
-        <p>2</p>
+        <p data-cy="progerss-bar-two">2</p>
       </div>
-      <TextField :text="$t('progressBar.shippingStepTitle')"/>
+      <TextField
+        :text="$t('progressBar.shippingStepTitle')"
+        :data-cy="'progress-bar-shipping-text'"
+      />
     </router-link>
     <div class="progress-bar-arrow" :class="{active: paymentActive}">
       <ProgressBarArrow/>
@@ -34,11 +43,15 @@
                  :class="{active: paymentActive}"
                  tabindex="-1"
                  class="payment"
+                 data-cy="progress-bar-payment-trigger"
                  @click="paymentActive ? goToPayment() : null">
       <div class="number" :class="{active: paymentActive}">
-        <p>3</p>
+        <p data-cy="progerss-bar-three">3</p>
       </div>
-      <TextField :text="$t('progressBar.paymentStepTitle')"/>
+      <TextField
+        :text="$t('progressBar.paymentStepTitle')"
+        :data-cy="'progress-bar-payment-text'"
+      />
     </router-link>
   </div>
 </template>

@@ -3,6 +3,7 @@
     id="braintree-paypal"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-braintreePayPal'"
   />
 </template>
 
@@ -135,10 +136,11 @@ export default {
               region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
               street: ['0'],
             };
-            const shippingMethods = await getShippingMethods(address);
+            const result = await getShippingMethods(address);
+            const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
-            const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+            const fShippingMethods = methods.filter((sid) => sid.id !== 'nominated_delivery');
 
             const selectedShipping = !data.selected_shipping_option
               ? fShippingMethods[0]

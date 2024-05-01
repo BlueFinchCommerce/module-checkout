@@ -5,6 +5,7 @@
     :class="!applePayLoaded ? 'text-loading' : 'braintree-apple-pay'"
     @keydown.enter="click"
     @click="click"
+    :data-cy="'instant-checkout-braintreeApplePay'"
   />
 </template>
 
@@ -272,8 +273,9 @@ export default {
       this.address = address;
 
       const result = await getShippingMethods(address);
+      const methods = result.shipping_addresses[0].available_shipping_methods;
 
-      const filteredMethods = result.filter(({ method_code: methodCode }) => (
+      const filteredMethods = methods.filter(({ method_code: methodCode }) => (
         methodCode !== 'nominated_delivery'
       ));
 

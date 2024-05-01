@@ -1,5 +1,7 @@
 <template>
-  <Loqate v-if="addressFinder.loqate.enabled && addressFinder.loqate.apiKey && !addressFinder.afd.enabled" />
+  <Loqate v-if="addressFinder.loqate.enabled && addressFinder.loqate.apiKey && !addressFinder.afd.enabled"
+    :data-cy="dataCy ? `${dataCy}-loqate` : 'loquate'"
+  />
   <AfdPostCode v-if="addressFinder.afd.enabled && !addressFinder.loqate.enabled" />
 </template>
 <script>
@@ -14,6 +16,11 @@ export default {
   components: {
     AfdPostCode,
     Loqate,
+  },
+  props: {
+    dataCy: {
+      type: String,
+    },
   },
   computed: {
     ...mapState(useConfigStore, ['addressFinder']),

@@ -4,12 +4,13 @@
       <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
         <TextField
           class="welcome-message-title"
-          data-cy="email"
+          :data-cy="'welcome-message-title'"
           :text="emailRegistered ?
             $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
         />
         <TextField
           class="welcome-message"
+          :data-cy="'welcome-message'"
           :text="emailRegistered ?
             $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
         />
@@ -21,7 +22,7 @@
           v-model="customer.email"
           :error="emailError"
           :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
-          data-cy="email"
+          :data-cy="isLoggedIn ? 'logged-in-email' : 'email-input'"
           :error-message="emailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
@@ -35,21 +36,28 @@
         />
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
-        <div
+
+                <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
           @click="changeEmail()"
           @keydown.enter="changeEmail()"
         >
           <button class="edit-button"
-                  data-cy="button"
+                  data-cy="edit-email-button"
                   :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
             <TextField
               :text="$t('yourDetailsSection.editButton')"
+              :data-cy="'edit-email-button-text'"
             />
-            <Edit/>
+            <Edit :data-cy="'edit-email-button-icon'"/>
           </button>
         </div>
+        <component
+          :is="belowEmailFieldExtension"
+          v-for="belowEmailFieldExtension in belowEmailFieldExtensions"
+          :key="belowEmailFieldExtension"
+        />
       </div>
 
       <div>
@@ -59,6 +67,7 @@
           primary
           :label="continueButtonText"
           @click="emailAddressChange()"
+          :data-cy="'continue-button'"
         />
       </div>
 
@@ -69,7 +78,7 @@
             :error="passwordError"
             :error-message="passwordErrorMessage"
             :type="passwordInputType"
-            data-cy="password"
+            :data-cy="'password-input'"
             identifier="password"
             :label="$t('yourDetailsSection.passwordField.label')"
             :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
@@ -81,12 +90,13 @@
                 class="button_show_password"
                 :aria-label="$t('yourDetailsSection.showPassLabel')"
                 @click="toggleShowPassword"
+                :data-cy="'show-password-button'"
               >
                 <span v-if="showPassword">
-                  <ShowIcon/>
+                  <ShowIcon :data-cy="'show-passowrd-icon'" />
                 </span>
                 <span v-else>
-                  <HideIcon/>
+                  <HideIcon :data-cy="'hide-passowrd-icon'"/>
                 </span>
               </button>
             </template>
@@ -97,6 +107,7 @@
           <TextField
             class="field__help-text"
             :text="$t('errorMessages.passwordHelpText')"
+            :data-cy="'password-description'"
           />
         </div>
 
@@ -104,11 +115,12 @@
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
-            data-cy="forgot-pass-button"
+            data-cy="forgot-password-link"
           >
             <span style="display: none">forgotPass link</span>
             <TextField
               :text="$t('forgotPass')"
+              :data-cy="'forgot-password-link-text'"
             />
           </a>
         </div>
@@ -133,11 +145,15 @@
             class="sign-in-btn"
             primary
             :label="signInButtonText"
+            :data-cy="'sign-in-button'"
             @click="submitForm"
           />
           <div class="divider">
             <div class="divider-line"></div>
-            <TextField :text="$t('signInDividerText')"/>
+            <TextField
+              :text="$t('signInDividerText')"
+              :data-cy="'sign-in-divider-text'"
+            />
             <div class="divider-line"></div>
           </div>
           <MyButton
@@ -145,6 +161,7 @@
             secondary
             :disabled="proceedAsGuestInvalid"
             :label="accountGuestButtonText"
+            :data-cy="'guest-continue-button'"
             @click="proceedAsGuest();"
           />
         </div>
@@ -159,6 +176,7 @@
           secondary
           :disabled="proceedAsGuestInvalid"
           :label="noAccountGuestButtonText"
+          :data-cy="'guest-continue-button-no-account'"
           @click="proceedAsGuest();"
         />
       </div>
@@ -189,6 +207,9 @@ import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
+// Extensions
+import belowEmailFieldExtensions from '@/extensions/belowEmailFieldExtensions';
+
 // helpers
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
 import isEmailValid from '@/helpers/validation/isEmailValid';
@@ -209,6 +230,7 @@ export default {
     ErrorMessage,
     Edit,
     Recaptcha,
+    ...belowEmailFieldExtensions(),
   },
   data() {
     return {
@@ -234,6 +256,7 @@ export default {
       accountGuestButtonText: '',
       accountGuestButtonTextId: 'gene-bettercheckout-accountguestbutton-text',
       tabKeyPressed: false,
+      belowEmailFieldExtensions: [],
     };
   },
   computed: {
@@ -264,6 +287,9 @@ export default {
       description: 'login',
     });
     document.addEventListener('keydown', this.handleKeyDown);
+  },
+  created() {
+    this.belowEmailFieldExtensions = Object.keys(belowEmailFieldExtensions());
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

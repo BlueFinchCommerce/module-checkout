@@ -7,6 +7,7 @@
         type="text"
         :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
         :label="$t('yourDetailsSection.deliverySection.addressFinder.title')"
+        :data-cy="dataCy ? `${dataCy}-input` : 'loqate-input'"
         class="loqate__input"
         autocomplete="postal-code"
         @blur="onBlur"
@@ -16,7 +17,9 @@
         @keydown.up="onArrowUp"
         @keydown.enter="onEnter"
       />
-      <Search stroke="black" />
+      <Search
+        stroke="black"
+        :data-cy="dataCy ? dataCy : 'loqate'" />
     </div>
 
     <ul
@@ -28,6 +31,7 @@
         :key="i"
         :class="{ 'locate__suggestion--active': i === arrowCounter }"
         class="loqate__result"
+        :data-cy="dataCy ? `${dataCy}-result` : 'loqate-result'"
       >
         <button
           tabindex="-1"
@@ -103,6 +107,9 @@ export default {
     address_type: {
       type: String,
       default: 'shipping',
+    },
+    dataCy: {
+      type: String,
     },
   },
   data() {

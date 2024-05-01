@@ -1,7 +1,14 @@
 <template>
-  <div class="success-message" :style="style">
-    <SuccessIcon />
-    <TextField :text="message" />
+  <div
+    class="success-message"
+    :style="style"
+    :data-cy="dataCy ? dataCy : 'success-message'"
+  >
+    <SuccessIcon :data-cy="dataCy ? `${dataCy}-icon` : 'success-icon'"/>
+    <TextField
+      :text="message"
+      :data-cy="dataCy ? `${dataCy}-text` : 'success-message-text'"
+    />
   </div>
 </template>
 <script>
@@ -16,6 +23,9 @@ export default {
     SuccessIcon,
   },
   props: {
+    dataCy: {
+      type: String,
+    },
     message: {
       type: String,
       require: true,

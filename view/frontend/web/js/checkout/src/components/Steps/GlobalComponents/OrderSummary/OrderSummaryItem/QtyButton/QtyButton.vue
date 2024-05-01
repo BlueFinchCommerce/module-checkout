@@ -6,26 +6,26 @@
     <MyButton
       :primary="false"
       :aria-label="$t('orderSummary.minusOneItem')"
-      data-cy="qty-decrease"
       label=" - "
       @click="item.quantity === 1 ? false : updateQuantity(item, -1)"
+      :data-cy="dataCy ? `${dataCy}-decrease` : 'qty-component-decrease'"
     />
     <span>
       <!--  eslint-disable vue/no-mutating-props -->
       <TextInput
         :modelValue="item.quantity"
         :name="`input-qty-${item.id}`"
-        data-cy="qty-input"
         :placeholder="item.quantity"
         :disabled="true"
+        :data-cy="dataCy ? `${dataCy}-input` : 'qty-component-input'"
       />
     </span>
     <MyButton
       :primary="false"
       :aria-label="$t('orderSummary.plusOneItem')"
-      data-cy="qty-increase"
       label=" + "
       @click="updateQuantity(item, 1)"
+      :data-cy="dataCy ? `${dataCy}-increase` : 'qty-component-increase'"
     />
   </div>
 </template>
@@ -47,6 +47,9 @@ export default {
   props: {
     item: {
       type: Object,
+    },
+    dataCy: {
+      type: String,
     },
   },
   methods: {

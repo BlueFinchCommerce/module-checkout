@@ -4,7 +4,7 @@
     class="store-credit"
   >
     <div>
-      <span class="store-credit-available">
+      <span class="store-credit-available" data-cy="store-credit-text">
         {{
           $t('storeCredit.applyStoreCredit',
              {
@@ -15,6 +15,7 @@
     </div>
     <MyButton
       :label="$t('storeCredit.applyButton')"
+      :data-cy="'use-store-credit-button'"
       secondary
       @click="useStoreCredit()"
     />
@@ -23,9 +24,10 @@
     v-else-if="cart.applied_store_credit?.applied_balance?.value"
     class="store-credit"
   >
-    <span>{{ $t('storeCredit.removeStoreCredit') }}</span>
+    <span data-cy="store-credit-used-text">{{ $t('storeCredit.removeStoreCredit') }}</span>
     <MyButton
       :label="$t('storeCredit.removeButton')"
+      :data-cy="'remove-store-credit-button'"
       secondary
       @click="removeStoreCredit()"
     />

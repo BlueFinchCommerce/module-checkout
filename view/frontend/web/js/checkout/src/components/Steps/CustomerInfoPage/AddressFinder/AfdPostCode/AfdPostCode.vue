@@ -7,6 +7,7 @@
                    v-model="query"
                    :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
                    :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+                   :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'"
                    class="afd-postcode__input"
                    autocomplete="postal-code"
                    @blur="onBlur"
@@ -15,7 +16,10 @@
                    @keydown.down="onArrowDown"
                    @keydown.up="onArrowUp"
                    @keydown.enter="onEnter"/>
-        <Search stroke="black"/>
+        <Search
+          stroke="black"
+          :data-cy="dataCy ? dataCy : 'afd-postcode'" />
+        />
       </div>
 
       <ul
@@ -28,6 +32,7 @@
           :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
           tabindex="-1"
           class="afd-postcode__result"
+          :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'"
         >
           <button
             tabindex="-1"

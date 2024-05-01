@@ -2,6 +2,7 @@
   <svg  :style="style"
         :role="role"
         :aria-label="ariaLabel"
+        data-cy="progress-bar-arrow"
         xmlns="http://www.w3.org/2000/svg"
         width="91"
         height="8"
