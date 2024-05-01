@@ -5249,7 +5249,7 @@ body.no-scrollable {
 }
 .modal[data-v-55bffe12] {
   background: var(--modal-background-color, var(--color__primary-white));
-  bottom: 0;
+  bottom: 15%;
   box-shadow: var(--modal-box-shadow, 0 0 12px 2px rgba(0, 0, 0, 0.15));
   display: flex;
   flex-direction: column;
@@ -5263,7 +5263,6 @@ body.no-scrollable {
   z-index: 400;
   border-radius: var(--base__border-radius-large);
   padding: var(--indent__s);
-  max-height: max-content;
 }
 .modal-header[data-v-55bffe12] {
   color: var(--color__primary-dark-blue);
@@ -5359,6 +5358,7 @@ body.no-scrollable {
 .mock-laptop .modal[data-v-55bffe12],
 .mock-desktop .modal[data-v-55bffe12] {
   margin: 0 auto;
+  max-height: max-content;
 }
 .mock-laptop .amasty-modal[data-v-55bffe12],
 .mock-desktop .amasty-modal[data-v-55bffe12] {
@@ -5371,6 +5371,7 @@ body.no-scrollable {
 @media screen and (min-width: 768px) {
 .mock-full .modal[data-v-55bffe12] {
     margin: 0 auto;
+    max-height: max-content;
 }
 .mock-full .amasty-modal[data-v-55bffe12] {
     max-height: var(--modal-desktop-max-height, none);
