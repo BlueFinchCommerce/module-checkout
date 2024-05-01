@@ -183,6 +183,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await updateCartItemQuantity(updateItem, change);
         this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         // Add the error message to the cart item.
         const { items } = this.cart;
@@ -228,6 +229,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await removeCartItem(product.uid);
         this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         console.warn('Unable to remove cart item', error.message);
       }

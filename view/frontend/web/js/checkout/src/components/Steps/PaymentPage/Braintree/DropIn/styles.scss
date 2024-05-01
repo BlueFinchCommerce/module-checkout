@@ -1,5 +1,10 @@
 @import '@/styles/global/_breakpoints';
 
+//override braintree styles for icon alignment
+.braintree-sheet__content--form .braintree-form__field-group .braintree-form__field .braintree-form__icon-container {
+  top: 58%;
+}
+
 .braintree-payment {
   display: grid;
   gap: var(--indent__base);
