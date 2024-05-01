@@ -101,7 +101,7 @@ class CheckoutSuccess implements ArgumentInterface
      * @param Address $address
      * @return null|string
      */
-    public function getFormattedAddress(Address $address)
+    public function getFormattedAddress(Address $address): ?string
     {
         return $this->orderInfoBlock->getFormattedAddress($address);
     }
@@ -138,7 +138,7 @@ class CheckoutSuccess implements ArgumentInterface
      * @param null|string|bool|int|Store $store
      * @return bool
      */
-    public function displayCartPricesInclTax($store = null)
+    public function displayCartPricesInclTax(mixed $store = null): bool
     {
         return $this->scopeConfig->getValue(
                 Config::XML_PATH_DISPLAY_CART_PRICE,
@@ -153,7 +153,7 @@ class CheckoutSuccess implements ArgumentInterface
      * @param null|string|bool|int|Store $store
      * @return bool
      */
-    public function displayCartPricesExclTax($store = null)
+    public function displayCartPricesExclTax(mixed $store = null): bool
     {
         return $this->scopeConfig->getValue(
                 Config::XML_PATH_DISPLAY_CART_PRICE,
@@ -168,7 +168,7 @@ class CheckoutSuccess implements ArgumentInterface
      * @param null|string|bool|int|Store $store
      * @return bool
      */
-    public function displayShippingPricesInclTax($store = null)
+    public function displayShippingPricesInclTax(mixed $store = null)
     {
         return $this->scopeConfig->getValue(
                 Config::XML_PATH_DISPLAY_CART_SHIPPING,
@@ -183,7 +183,7 @@ class CheckoutSuccess implements ArgumentInterface
      * @param null|string|bool|int|Store $store
      * @return bool
      */
-    public function displayShippingPricesExclTax($store = null)
+    public function displayShippingPricesExclTax(mixed $store = null)
     {
         return $this->scopeConfig->getValue(
                 Config::XML_PATH_DISPLAY_CART_SHIPPING,

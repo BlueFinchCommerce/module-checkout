@@ -9,17 +9,11 @@ use Magento\CheckoutAgreements\Model\AgreementsConfigProvider;
 class AgreementsDataProvider implements DataProviderInterface
 {
     /**
-     * @var AgreementsConfigProvider
-     */
-    private $agreementsConfigProvider;
-
-    /**
      * @param AgreementsConfigProvider $agreementsConfigProvider
      */
     public function __construct(
-        AgreementsConfigProvider $agreementsConfigProvider
+        private readonly AgreementsConfigProvider $agreementsConfigProvider
     ) {
-        $this->agreementsConfigProvider = $agreementsConfigProvider;
     }
 
     /**

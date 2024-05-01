@@ -5,6 +5,8 @@ namespace Gene\BetterCheckout\ViewModel;
 
 use Gene\BetterCheckout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Asset\File;
@@ -43,6 +45,7 @@ class Assets implements ArgumentInterface
 
     /**
      * @return string|null
+     * @throws NoSuchEntityException
      */
     public function getFontUrl(): ?string
     {
@@ -65,10 +68,11 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * @param string $area
      * @return array
      * @throws LocalizedException
      */
-    public function getAssets($area = 'frontend'): array
+    public function getAssets(string $area = 'frontend'): array
     {
         if (count($this->assetFilesByType)) {
             return $this->assetFilesByType;
@@ -90,14 +94,20 @@ class Assets implements ArgumentInterface
             }
         }
         if (array_key_exists('css', $assetDefinitionArray['main.js'])) {
-            $this->assetFilesByType['css'] = [$this->createAsset($assetDefinitionArray['main.js']['css'][0], $area)];
+            $this->assetFilesByType['css'] = [
+                $this->createAsset($assetDefinitionArray['main.js']['css'][0], $area)
+            ];
         }
         if (array_key_exists('file', $assetDefinitionArray['main.js'])) {
-            $this->assetFilesByType['js']['main'] = [$this->createAsset($assetDefinitionArray['main.js']['file'], $area)];
+            $this->assetFilesByType['js']['main'] = [
+                $this->createAsset($assetDefinitionArray['main.js']['file'], $area)
+            ];
         }
         if (array_key_exists('imports', $assetDefinitionArray['main.js'])) {
             foreach($assetDefinitionArray['main.js']['imports'] as $fileName) {
-                $this->assetFilesByType['js']['imports'][] = $this->createAsset($assetDefinitionArray[$fileName]['file'], $area);
+                $this->assetFilesByType['js']['imports'][] = $this->createAsset(
+                    $assetDefinitionArray[$fileName]['file'], $area
+                );
             }
         }
         return $this->assetFilesByType;
@@ -105,9 +115,11 @@ class Assets implements ArgumentInterface
 
     /**
      * @param string $type
+     * @param string $area
      * @return File[]
+     * @throws LocalizedException
      */
-    public function getAssetsByType(string $type, $area = 'frontend'): array
+    public function getAssetsByType(string $type, string $area = 'frontend'): array
     {
         $assets = $this->getAssets($area);
         return $assets[$type] ?? [];
@@ -115,10 +127,11 @@ class Assets implements ArgumentInterface
 
     /**
      * @param string $fileName
+     * @param string $area
      * @return File
      * @throws LocalizedException
      */
-    public function createAsset(string $fileName, $area = 'frontend'): File
+    public function createAsset(string $fileName, string $area = 'frontend'): File
     {
         $params = ['area' => $area];
         return $this->assetRepository->createAsset(
@@ -132,10 +145,11 @@ class Assets implements ArgumentInterface
      *
      * @param string $scopeType
      * @param int|string|null $scopeCode
+     * @return string
      */
     public function getStyles(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-        $scopeCode = null
+        mixed $scopeCode = null
     ): string
     {
         $designerValues = $this->scopeConfig->getValue(
@@ -152,10 +166,11 @@ class Assets implements ArgumentInterface
      *
      * @param string $scopeType
      * @param int|string|null $scopeCode
+     * @return string
      */
     public function getCustomWording(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-        $scopeCode = null
+        mixed $scopeCode = null
     ): string
     {
         $customWording = $this->scopeConfig->getValue(
@@ -171,11 +186,13 @@ class Assets implements ArgumentInterface
      * Returns the media URL for the custom logo is it exists in configuration.
      *
      * @param string $scopeType
-     * @param string|null $scopeCode
+     * @param int|string|null $scopeCode
+     * @return string
+     * @throws NoSuchEntityException
      */
     public function getLogo(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-        $scopeCode = null
+        mixed $scopeCode = null
     ): string
     {
         $logoValue = $this->scopeConfig->getValue(
