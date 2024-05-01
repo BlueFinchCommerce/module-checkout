@@ -111,13 +111,10 @@
             :text="$t('braintree.ach.proof')"
             :data-cy="'braintree-ach-proof-checkbox'"
           />
-<<<<<<< HEAD
           <TextField
             :text="$t('braintree.ach.terms', { websiteName })"
             :data-cy="'braintree-ach-terms-text'"
           />
-=======
->>>>>>> cb78186 (added back pay button for ACH)
           <Agreements id="braintreeAch" />
           <Recaptcha
             v-if="isRecaptchaVisible('placeOrder')"
@@ -125,7 +122,6 @@
             location="braintreeAch"
           />
           <PrivacyPolicy />
-          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
             label="Pay"
             primary
