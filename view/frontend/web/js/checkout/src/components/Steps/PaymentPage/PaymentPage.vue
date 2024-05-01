@@ -60,6 +60,13 @@
             />
             <div class="divider-line" />
           </div>
+
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
+
           <AdyenDropIn
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
@@ -75,11 +82,6 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <component
-            :is="additionalPaymentMethod"
-            v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
-          />
         </template>
         <FreeMOCheckPayment
           v-else

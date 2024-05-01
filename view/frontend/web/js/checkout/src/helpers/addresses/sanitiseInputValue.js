@@ -5,7 +5,7 @@ export default (input, type) => {
 
   if (type === 'email') {
     /* eslint-disable max-len */
-    allowedCharactersRegex = /^[\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_]*[^,#?][\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_]*$/;
+    allowedCharactersRegex = /^[\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_-]*[^,#?][\u0600-\u06FF\u0750-\u077F\u0400-\u04FF\u2E80-\u9FFF\w\s.@+_]*$/;
   } else if (type === 'tel') {
     allowedCharactersRegex = /^[+]?[\d() -]+$/;
   } else {

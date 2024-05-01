@@ -5389,7 +5389,7 @@ body.no-scrollable {
   font-size: var(--font__xs);
 }
 .agreement-container .closer-container .agreement-close {
-  width: var(--button__height);
+  width: var(--button__height) !important;
   font-size: var(--font__l);
   font-weight: var(--font-weight__regular);
   background: transparent;
@@ -7263,7 +7263,6 @@ body.no-scrollable {
 }.progress-bar-container[data-v-66c8b928] {
   padding: 0 0 var(--indent__m);
   background: var(--color__primary-white);
-  position: sticky;
   top: 0;
   min-height: 69px;
   display: var(--progess-bar-display-mobile, none);

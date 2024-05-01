@@ -5,6 +5,7 @@
     :class="{active: isMethodSelected}"
   >
     <RadioButton
+      id="fastlane-select"
       :text="title"
       :checked="isMethodSelected"
       :data-cy="'free-mo-payment-radio'"
