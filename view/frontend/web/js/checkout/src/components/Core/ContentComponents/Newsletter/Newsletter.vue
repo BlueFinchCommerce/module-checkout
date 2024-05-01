@@ -9,6 +9,7 @@
       :checked="newsletter.subscribeToNewsletter"
       :text="$t('newsletter.label')"
       :change-handler="changeNewsletterSubscription"
+      :data-cy="'newsletter-signup-checkbox'"
     />
   </div>
 </template>

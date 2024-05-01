@@ -27,6 +27,7 @@
     <div
       v-show="!isErrorDisplayed && paymentVisible"
       :id="id"
+      :data-cy="id"
       ref="adyenPayments"
     />
   </template>

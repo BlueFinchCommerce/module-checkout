@@ -2,7 +2,7 @@
   <div
     class="coupon-discount-trigger dropdown-button"
     tabindex="0"
-    data-cy="dropdown-trigger-coupon"
+    :data-cy="dataCy ? `coupon-discount-trigger-${dataCy}` : 'coupon-discount-trigger'"
     :class="{opened: isDropDownVisible}"
     @click="openDropDown"
     @keydown="openDropDownKeyDown($event)"
@@ -11,25 +11,31 @@
       <img
         :src="CouponCodeIcon"
         alt="coupon-dropdown-icon"
+        :data-cy="dataCy ? `coupon-discount-icon-${dataCy}` : 'coupon-discount-icon'"
+
       >
     </div>
     <TextField
       :text="couponDiscountText"
       class="coupon-discount-title"
+      :data-cy="dataCy ? `coupon-discount-title-${dataCy}` : 'coupon-discount-title'"
     />
     <ArrowDown
       v-show="!isDropDownVisible"
       class="dropdown-arrow__down"
+      :data-cy="dataCy ? `coupon-discount-arrow-down-${dataCy}` : 'coupon-discount-arrow-down'"
     />
     <ArrowUp
       v-show="isDropDownVisible"
       class="dropdown-arrow__up"
+      :data-cy="dataCy ? `coupon-discount-arrow-up-${dataCy}` : 'coupon-discount-arrow-up'"
     />
   </div>
   <DropDown
     v-show="isDropDownVisible"
     class="coupon-dropdown"
     :class="{active: isDropDownVisible}"
+    :data-cy="dataCy ? `coupon-discount-dropdown-${dataCy}` : 'coupon-discount-dropdown'"
   >
     <template #content>
       <div class="field coupon-code-field">
@@ -40,28 +46,32 @@
           :placeholder="couponDiscountPlaceholderText"
           :disabled="cart.applied_coupons?.length"
           autocomplete="off"
+          :data-cy="dataCy ? `coupon-discount-input-${dataCy}` : 'coupon-discount-input'"
         />
         <MyButton
           v-if="!cart.applied_coupons?.length"
           primary
           :label="applyButtonText"
           @click="dispatchDiscountCode(discountCode)"
+          :data-cy="dataCy ? `coupon-discount-apply-${dataCy}` : 'coupon-discount-apply'"
         />
-
         <MyButton
           v-if="cart.applied_coupons?.length"
           secondary
           :label="removeButtonText"
           @click="removeDiscountCode"
+          :data-cy="dataCy ? `coupon-discount-remove-${dataCy}` : 'coupon-discount-remove'"
         />
         <div class="success">
           <SuccessMessage
+            :data-cy="dataCy ? `coupon-discount-success-${dataCy}` : 'coupon-discount-success'"
             v-if="cart.applied_coupons?.length"
             :message="$t('orderSummary.couponDiscount.successMessage', { code: cart.applied_coupons[0].code })"
           />
         </div>
         <div class="error">
           <ErrorMessage
+            :data-cy="dataCy ? `coupon-discount-error-${dataCy}` : 'coupon-discount-error'"
             v-if="discountErrorMessage"
             :message="discountErrorMessage"
           />
@@ -103,6 +113,11 @@ export default {
     MyButton,
     ErrorMessage,
     SuccessMessage,
+  },
+  props: {
+    dataCy: {
+      type: String,
+    },
   },
   data() {
     return {

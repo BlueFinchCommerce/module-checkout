@@ -6,7 +6,8 @@
     <div class="footer-block">
       <FooterIcons />
       <TextField
-          :text="copyrightText"
+        :data-cy="'copyright-text'"
+        :text="copyrightText"
       />
     </div>
   </footer>

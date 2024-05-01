@@ -3,15 +3,22 @@
     <div
       class="delivery-address-link"
       aria-label="proceed-to-details-link"
+      data-cy="completed-step-details-trigger"
       @click="setDetailsStepActive"
       @keydown="openDropDown"
     >
       <div class="details-title-section">
         <div class="details-title-section-image">
-          <YourDetails fill="black" />
+          <YourDetails
+            fill="black"
+            :data-cy="'completed-step-details-icon'"
+          />
         </div>
         <div class="details-title-section-title">
-          <TextField :text="detailStepText" />
+          <TextField
+            :text="detailStepText"
+            :data-cy="'completed-step-details-title'"
+          />
         </div>
       </div>
       <AddressBlockShort
@@ -23,12 +30,14 @@
         <button
           class="button--blank edit-details-button"
           :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+          :data-cy="'completed-step-details-edit-button'"
         >
           <TextField
             class="edit-button-title"
             :text="$t('yourDetailsSection.editButton')"
+            :data-cy="'completed-step-details-edit-button-text'"
           />
-          <Edit />
+          <Edit :data-cy="'completed-step-details-edit-icon'"/>
         </button>
       </div>
     </div>

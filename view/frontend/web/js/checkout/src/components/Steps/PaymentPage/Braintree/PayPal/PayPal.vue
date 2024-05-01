@@ -3,6 +3,7 @@
     id="braintree-paypal"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-braintreePayPal'"
   />
 </template>
 

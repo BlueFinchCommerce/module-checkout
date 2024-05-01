@@ -3,6 +3,7 @@
       :style="style"
       :role="role"
       :aria-label="ariaLabel"
+      :data-cy="dataCy ? `${dataCy}-search-icon` : 'search-icon'"
       width="23"
       height="23"
       viewBox="0 0 23 23"
@@ -35,6 +36,9 @@ export default {
       type: String,
     },
     ariaLabel: {
+      type: String,
+    },
+    dataCy: {
       type: String,
     },
   },
