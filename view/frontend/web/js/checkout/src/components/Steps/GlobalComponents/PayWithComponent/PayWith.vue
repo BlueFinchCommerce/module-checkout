@@ -177,11 +177,11 @@ export default {
       let iconName = paymentIconName;
 
       if (serviceProvider === 'adyen') {
-          // Extract the string after "logos/" and before ".svg" or ".png" using a regular expression
-          const match = paymentIconName.match(/\/logos\/(.*?)\.(svg|png)/);
-          if (match) {
-              iconName = match[1];
-          }
+        // Extract the string after "logos/" and before ".svg" or ".png" using a regular expression
+        const match = paymentIconName.match(/\/logos\/(.*?)\.(svg|png)/);
+        if (match) {
+          [, iconName] = match;
+        }
       }
 
       return `checkout-${serviceProvider}-${iconName}-icon`;

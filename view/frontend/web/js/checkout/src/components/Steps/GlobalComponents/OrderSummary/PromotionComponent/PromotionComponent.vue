@@ -33,7 +33,9 @@
           <TextField
             class="bold"
             :text="$t('orderSummary.couponCodeTitleFreeShipping')"
-            :data-cy="dataCy ? `cross-sells-shipping-post-additional-text-${dataCy}` : 'cross-sells-shipping-post-additional-text'"
+            :data-cy="dataCy ?
+            `cross-sells-shipping-post-additional-text-${dataCy}` :
+            'cross-sells-shipping-post-additional-text'"
           />
         </div>
       </div>
