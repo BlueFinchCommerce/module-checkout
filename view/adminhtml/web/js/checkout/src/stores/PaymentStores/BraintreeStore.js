@@ -234,7 +234,7 @@ export default defineStore('brainteeStore', {
           unitAmount: Math.abs(cart.prices.discounts[0].amount.value),
         });
       }
-  
+
       if (includeShipping && cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value) {
         items.push({
           name: this.$i18n.global.t('progressBar.shippingStepTitle'),

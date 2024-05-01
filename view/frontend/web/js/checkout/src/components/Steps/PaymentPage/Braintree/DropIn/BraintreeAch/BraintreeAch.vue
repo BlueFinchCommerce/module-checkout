@@ -111,7 +111,10 @@
             :text="$t('braintree.ach.proof')"
             :data-cy="'braintree-ach-proof-checkbox'"
           />
-          <TextField data-cy="'braintree-ach-terms-text'" :text="$t('braintree.ach.terms', { websiteName })" />
+          <TextField
+            :text="$t('braintree.ach.terms', { websiteName })"
+            :data-cy="'braintree-ach-terms-text'"
+          />
           <Agreements id="braintreeAch" />
           <Recaptcha
             v-if="isRecaptchaVisible('placeOrder')"
