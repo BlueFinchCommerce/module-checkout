@@ -3,6 +3,7 @@
     v-if="isAdyenAvailable"
     id="adyen-apple-pay"
     :class="!applePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-adyenApplePay'"
   />
 </template>
 

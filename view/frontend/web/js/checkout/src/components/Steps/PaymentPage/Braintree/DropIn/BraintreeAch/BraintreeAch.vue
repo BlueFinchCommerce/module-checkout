@@ -13,6 +13,7 @@
       <div
         data-braintree-id="ach"
         class="braintree-ach braintree-sheet"
+        data-cy="braintree-ach-trigger"
         @click="selectMethod"
         @keydown="selectMethod"
       >
@@ -28,12 +29,15 @@
               height="29"
               class=""
             >
-              <use xlink:href="#logoAch" />
+              <use xlink:href="#logoAch"
+                data-cy="braintree-ach-logo"
+              />
             </svg>
           </div>
           <div
             class="braintree-option__label"
             :aria-label="$t('braintree.ach.payment')"
+            data-cy="braintree-ach-title"
           >
             {{ $t('braintree.ach.payment') }}
             <div class="braintree-option__disabled-message" />
@@ -49,22 +53,26 @@
           name="routing-number"
           :placeholder="$t('braintree.ach.routingNumber')"
           autocomplete="off"
+          :data-cy="'braintree-ach-routing-number-input'"
         />
         <TextInput
           v-model="accountNumber"
           name="account-number"
           :placeholder="$t('braintree.ach.accountNumber')"
           autocomplete="off"
+          :data-cy="'braintree-ach-account-number-input'"
         />
         <SelectInput
           v-model="accountType"
           :options="getAccountTypeOptions()"
           :label="$t('braintree.ach.accountType')"
+          :data-cy="'braintree-ach-account-type-select'"
         />
         <SelectInput
           v-model="ownershipType"
           :options="getOwnershipTypeOptions()"
           :label="$t('braintree.ach.ownershipType')"
+          :data-cy="'braintree-ach-ownership-type-select'"
         />
         <TextInput
           v-if="ownershipType === 'personal'"
@@ -72,6 +80,7 @@
           name="firstname"
           :placeholder="$t('braintree.ach.firstname')"
           autocomplete="off"
+          :data-cy="'braintree-ach-firstname-input'"
         />
         <TextInput
           v-if="ownershipType === 'personal'"
@@ -79,6 +88,7 @@
           name="lastname"
           :placeholder="$t('braintree.ach.lastname')"
           autocomplete="off"
+          :data-cy="'braintree-ach-lastname-input'"
         />
         <TextInput
           v-if="ownershipType === 'business'"
@@ -87,6 +97,7 @@
           name="business-name"
           :placeholder="$t('braintree.ach.businessName')"
           autocomplete="off"
+          :data-cy="'braintree-ach-business-name-input'"
         />
         <div class="braintree-ach-mandate">
           <ErrorMessage
@@ -98,6 +109,7 @@
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
+            :data-cy="'braintree-ach-proof-checkbox'"
           />
           <TextField data-cy="'braintree-ach-terms-text'" :text="$t('braintree.ach.terms', { websiteName })" />
           <Agreements id="braintreeAch" />
@@ -106,10 +118,10 @@
             id="placeOrder"
             location="braintreeAch"
           />
-          <PrivacyPolicy />
-          <MyButton
+          <PrivacyPolicy
             label="Pay"
             primary
+            :data-cy="'braintree-ach-pay-button'"
             @click="startPayment()"
           />
         </div>
@@ -133,7 +145,6 @@ import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
-import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import SelectInput from '@/components/Core/ActionComponents/Inputs/Select/Select.vue';
@@ -158,7 +169,6 @@ export default {
     Agreements,
     CheckboxComponent,
     ErrorMessage,
-    MyButton,
     PrivacyPolicy,
     Recaptcha,
     SelectInput,

@@ -4,24 +4,28 @@
     @close="closeSummary"
   >
     <template #header>
-      <OrderSummaryTitleWithAmount :order-items-amount="getCartItemsQty" />
+      <OrderSummaryTitleWithAmount
+        :order-items-amount="getCartItemsQty"
+        :data-cy="deviceType"
+      />
       <button
         class="order-summary-close-button"
         :aria-label="$t('orderSummary.closeButton')"
         @click="toggleSummary"
         @keydown="toggleSummary"
+        :data-cy="'order-summary-close-button-mobile'"
       >
-        <Close />
+        <Close :data-cy="'order-summary-close-icon-mobile'"/>
       </button>
     </template>
     <template #body>
-      <PromotionComponent />
-      <CouponDiscount />
-      <GiftCardDiscount />
+      <PromotionComponent :data-cy="deviceType" />
+      <CouponDiscount :data-cy="deviceType" />
+      <GiftCardDiscount :data-cy="deviceType" />
       <div class="product-items">
-        <OrderSummaryItem />
+        <OrderSummaryItem :data-cy="deviceType" />
       </div>
-      <OrderSummaryTotal />
+      <OrderSummaryTotal :data-cy="deviceType" />
     </template>
   </SlideUp>
   <div
@@ -29,6 +33,7 @@
     :style="style"
     @click="toggleSummary"
     @keydown="toggleSummary"
+    data-cy="collapsed-order-summary-trigger-mobile"
   >
     <div
       v-if="cartGrandTotal || getCartItemsQty"
@@ -38,11 +43,13 @@
         <TextField
           class="order-summary-title-text"
           :text="orderSummaryText + ': '"
+          :data-cy="'collapsed-order-summary-title-mobile'"
         />
         <Price
           v-if="cartGrandTotal !== null"
           class="price"
           :value="cartGrandTotal / 100"
+          :data-cy="'collapsed-order-summary-grand-total-mobile'"
         />
         <Price
           class="storyBookEmptyPrice"
@@ -51,15 +58,16 @@
       </div>
       <div class="order-summary-icon">
         <div class="arrow-up-icon" v-if="isModalVisible">
-          <ArrowUp/>
+          <ArrowUp :data-cy="'collapsed-order-summary-arrow-up-mobile'" />
         </div>
-        <ArrowDown
+        <ArrowDown :data-cy="'collapsed-order-summary-arrow-down-mobile'"
           v-else
         />
       </div>
       <div class="order-summary-description">
         <TextField
           :text="orderSummaryDescriptionText"
+          :data-cy="'collapsed-order-summary-description-mobile'"
         />
       </div>
     </div>
@@ -127,6 +135,7 @@ export default {
   },
   data() {
     return {
+      deviceType: 'mobile',
       isModalVisible: false,
       orderSummaryText: '',
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',

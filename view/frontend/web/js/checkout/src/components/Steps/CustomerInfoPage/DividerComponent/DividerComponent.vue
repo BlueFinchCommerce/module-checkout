@@ -4,10 +4,12 @@
     <TextField
       v-if="isExpressPaymentsVisible"
       :text="dividerText"
+      :data-cy="'instant-checkout-divider-text'"
     />
     <TextField
       v-else
       :text="$t('payNoExpressWithBlockTitle')"
+      :data-cy="'checkout-divider-text'"
     />
     <div class="divider-line" />
   </div>

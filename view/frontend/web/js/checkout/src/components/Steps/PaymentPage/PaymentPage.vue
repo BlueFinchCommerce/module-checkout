@@ -24,10 +24,12 @@
               <Payment
                 class="braintree-payment__icon"
                 fill="black"
+                :data-cy="'saved-payment-icon'"
               />
               <TextField
                 class="braintree-payment__header"
                 :text="storedStepText"
+                :data-cy="'saved-payment-title'"
               />
               <div class="divider-line" />
             </div>
@@ -49,10 +51,12 @@
             <Payment
               class="braintree-payment__icon"
               fill="black"
+              :data-cy="'select-payment-method-icon'"
             />
             <TextField
               class="braintree-payment__header"
               :text="getPaymentStepTitle"
+              :data-cy="'select-payment-method-title'"
             />
             <div class="divider-line" />
           </div>

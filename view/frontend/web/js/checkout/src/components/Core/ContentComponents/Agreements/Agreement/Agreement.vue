@@ -6,11 +6,13 @@
         :id="`${agreement.agreement_id}-${id}`"
         :checked="agreement.approved"
         :change-handler="changeAgreement"
+        :data-cy="`${id}-checkbox`"
       >
         {{ $t('agreements.label') }}
         <a
           href="#"
           class="agreement-open-modal"
+          :data-cy="`${id}-terms-modal-trigger`"
           @click="showModal"
           @keydown="showModal"
           v-html="agreement.checkbox_text"
@@ -25,6 +27,7 @@
       <a
         href="#"
         class="agreement-open-modal"
+        :data-cy="`${id}-terms-modal-trigger`"
         @click="showModal"
         @keydown="showModal"
         v-html="agreement.checkbox_text"
@@ -35,6 +38,7 @@
       />
     </span>
     <modal
+      :data-cy="`${id}-terms-modal`"
       :visible="isModalVisible"
       @close="closeModal"
     >
@@ -42,20 +46,24 @@
         <div class="closer-container">
           <TextField class="modal-header-title"
             :text="$t('agreements.title')"
+            :data-cy="`${id}-terms-modal-title`"
           />
           <button
             type="button"
             class="button button--blank agreement-close"
             aria-label="Close"
+            :data-cy="`${id}-terms-modal-close-button`"
             @click="closeModal"
           >
-            <CloseIcon />
+            <CloseIcon :data-cy="`${id}-terms-modal-close-icon`" />
           </button>
         </div>
       </template>
       <template #body>
         <div>
-          <p v-html="agreement.content" />
+          <p v-html="agreement.content"
+            :data-cy="`${id}-terms-modal-content`"
+          />
         </div>
       </template>
 
@@ -64,12 +72,14 @@
           class="modal-footer-btn-close button--secondary"
           :label="$t('orderSummary.backBtn')"
           :aria-label="$t('orderSummary.backBtn')"
+          :data-cy="`${id}-terms-modal-back-button`"
           @click="closeModal"
         />
         <ButtonComponent
           class="modal-footer-btn-close button--primary"
           :label="$t('agreements.acceptBtn')"
           :aria-label="$t('agreements.acceptBtn')"
+          :data-cy="`${id}-terms-modal-accept-button`"
           @click="changeAgreementFromModal"
         />
       </template>

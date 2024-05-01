@@ -1,7 +1,7 @@
 <template v-if="address && address.city">
   <div class="address-block__address">
     <div>
-      <p>
+      <p :data-cy="`completed-step-${address_type}-content`">
         {{ address.firstname }} {{ address.lastname }}, {{ address.street[0] }}
         <template v-if="address.street[1]">
           {{ address.street[1] }}

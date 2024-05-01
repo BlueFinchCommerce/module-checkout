@@ -3,6 +3,7 @@
     id="braintree-google-pay"
     ref="braintreeGooglePay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-braintreeGooglePay'"
   />
 </template>
 

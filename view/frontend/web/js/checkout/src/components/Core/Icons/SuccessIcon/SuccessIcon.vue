@@ -2,6 +2,7 @@
   <svg :style="style"
        :role="role"
        :aria-label="ariaLabel"
+       :data-cy="dataCy ? dataCy : 'success-icon'"
        width="20"
        height="20"
        viewBox="0 0 15 15"
@@ -16,6 +17,9 @@ import { computed, reactive } from 'vue';
 export default {
   name: 'SuccessIcon',
   props: {
+    dataCy: {
+      type: String,
+    },
     width: {
       type: String,
     },

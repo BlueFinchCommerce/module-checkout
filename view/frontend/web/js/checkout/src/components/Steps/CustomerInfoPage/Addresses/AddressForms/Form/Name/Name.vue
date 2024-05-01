@@ -10,6 +10,7 @@
       :error="getAddressFieldHasError(address_type, 'First name')"
       :error-message="getAddressFieldHasError(address_type, 'First name')
         ? $t('errorMessages.firstNameErrorMessage') : ''"
+      :data-cy="`${address_type}-first-name-input`"
       type="text"
       required
       autocomplete="given-name"
@@ -30,6 +31,7 @@
       :error="getAddressFieldHasError(address_type, 'Last name')"
       :error-message="getAddressFieldHasError(address_type, 'Last name')
         ? $t('errorMessages.lastNameErrorMessage') : ''"
+      :data-cy="`${address_type}-last-name-input`"
       type="text"
       required
       autocomplete="family-name"
@@ -53,6 +55,7 @@
         type="tel"
         :label="$t('yourDetailsSection.phoneField.label')"
         :placeholder="$t('yourDetailsSection.phoneField.placeholder')"
+        :data-cy="`${address_type}-phone-number-input`"
         required
         autocomplete="tel"
         @keyup="phoneChange($event)"
