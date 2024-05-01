@@ -99,7 +99,7 @@
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
-          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
+          <TextField data-cy="'braintree-ach-terms-text'" :text="$t('braintree.ach.terms', { websiteName })" />
           <Agreements id="braintreeAch" />
           <Recaptcha
             v-if="isRecaptchaVisible('placeOrder')"
