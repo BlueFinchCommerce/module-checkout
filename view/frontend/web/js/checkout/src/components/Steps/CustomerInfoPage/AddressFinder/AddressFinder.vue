@@ -2,12 +2,12 @@
   <Loqate
     v-if="addressFinder.loqate.enabled && addressFinder.loqate.apiKey && !addressFinder.afd.enabled"
     :data-cy="dataCy ? `${dataCy}-loqate` : 'loquate'"
-    :address_type="addressType"
+    :address_type="address_type"
   />
   <AfdPostCode
     v-if="addressFinder.afd.enabled && !addressFinder.loqate.enabled"
     :data-cy="dataCy ? `${dataCy}-afd-postcode` : 'afd-postcode'"
-    :address_type="addressType"
+    :address_type="address_type"
   />
 </template>
 <script>
@@ -24,7 +24,7 @@ export default {
     Loqate,
   },
   props: {
-    addressType: {
+    address_type: {
       type: String,
       default: 'shipping',
     },
