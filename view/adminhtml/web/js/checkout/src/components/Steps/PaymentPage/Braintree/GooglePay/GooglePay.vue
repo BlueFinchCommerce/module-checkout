@@ -248,8 +248,8 @@ export default {
           }
 
           const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? methods[0]
-            : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
+            ? shippingMethods[0]
+            : shippingMethods.find(({ method_code: id }) => id === data.shippingOptionData.id) || shippingMethods[0];
 
           await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
           this.setLoadingState(true);
