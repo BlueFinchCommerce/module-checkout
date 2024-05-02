@@ -20,11 +20,26 @@
           :attached="false"
           :margin="false"
         />
-        <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
-        <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
-        <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
-        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
+        <BraintreeGooglePay
+          v-if="isPaymentMethodAvailable('braintree_googlepay')"
+          :key="`braintreeGooglePay-${storedKey}`"
+        />
+        <BraintreeApplePay
+          v-if="isPaymentMethodAvailable('braintree_applepay')"
+          :key="`braintreeApplePay-${storedKey}`"
+        />
+        <BraintreePayPal
+          v-if="isPaymentMethodAvailable('braintree_paypal')"
+          :key="`braintreePayPal-${storedKey}`"
+        />
+        <AdyenGooglePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenGooglePay-${storedKey}`"
+        />
+        <AdyenApplePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenApplePay-${storedKey}`"
+        />
       </div>
     </div>
     <div class="details-form-body">
@@ -344,7 +359,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
-    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
