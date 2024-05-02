@@ -121,6 +121,7 @@ export default {
             flow: 'checkout',
             currency: this.currencyCode,
             enableShippingAddress: !this.cart.is_virtual,
+            locale: this.locale,
             intent: 'capture',
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
