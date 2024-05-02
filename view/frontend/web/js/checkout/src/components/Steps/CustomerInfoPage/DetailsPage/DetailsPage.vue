@@ -155,7 +155,6 @@
           />
         </div>
       </div>
-
       <div
         v-if="emailEntered && !selected[address_type].editing
           && !isSavedAddressSelected
@@ -388,6 +387,10 @@ export default {
 
       this[types[type]] = first && last && phone;
     });
+
+    if (this.validateAddress(this.address_type)) {
+      this.setAddressAsCustom(this.address_type);
+    }
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
