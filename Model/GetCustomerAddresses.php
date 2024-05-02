@@ -13,33 +13,15 @@ use Magento\Framework\Serialize\SerializerInterface;
 class GetCustomerAddresses implements GetCustomerAddressesInterface
 {
     /**
-     * @var Session
-     */
-    private $session;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var ManagerInterface
-     */
-    private $eventManager;
-
-    /**
      * @param Session $session
      * @param SerializerInterface $serializer
      * @param ManagerInterface $eventManager
      */
     public function __construct(
-        Session $session,
-        SerializerInterface $serializer,
-        ManagerInterface $eventManager
+        private readonly Session $session,
+        private readonly SerializerInterface $serializer,
+        private readonly ManagerInterface $eventManager
     ) {
-        $this->session = $session;
-        $this->serializer = $serializer;
-        $this->eventManager = $eventManager;
     }
 
     /**

@@ -20,18 +20,12 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return bool
      */
-    public function getIsEnabled(
-        string $scopeType = ScopeInterface::SCOPE_STORE,
-        string $scopeCode = null
-    ): bool;
+    public function getIsEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): bool;
 
     /**
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return string
      */
-    public function getFontPath(
-        string $scopeType = ScopeInterface::SCOPE_STORE,
-        string $scopeCode = null
-    ): string;
+    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
 }

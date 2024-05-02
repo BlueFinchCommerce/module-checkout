@@ -12,25 +12,13 @@ use Magento\Quote\Api\CartRepositoryInterface;
 class GiftMessageDataProvider implements DataProviderInterface
 {
     /**
-     * @var CartRepositoryInterface
-     */
-    private $cartRepository;
-
-    /**
-     * @var ItemRepositoryInterface
-     */
-    private $messageRepository;
-
-    /**
      * @param CartRepositoryInterface $cartRepository
      * @param ItemRepositoryInterface $messageRepository
      */
     public function __construct(
-        CartRepositoryInterface $cartRepository,
-        ItemRepositoryInterface $messageRepository
+        private readonly CartRepositoryInterface $cartRepository,
+        private readonly ItemRepositoryInterface $messageRepository
     ) {
-        $this->cartRepository = $cartRepository;
-        $this->messageRepository = $messageRepository;
     }
 
     /**

@@ -3,23 +3,14 @@
 namespace Gene\BetterCheckout\Block\Adminhtml\System\Config;
 
 use Magento\Backend\Block\Template\Context;
+use Magento\Config\Block\System\Config\Form\Field;
+use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 use Gene\BetterCheckout\ViewModel\Assets;
 
-
-class Designer extends \Magento\Config\Block\System\Config\Form\Field
+class Designer extends Field
 {
     protected $_template = 'Gene_BetterCheckout::system/config/designer.phtml';
-
-    /**
-     * @var SecureHtmlRenderer
-     */
-    private $secureRenderer;
-
-    /**
-     * @var Assets
-     */
-    private $assets;
 
     /**
      * @param Context $context
@@ -28,35 +19,33 @@ class Designer extends \Magento\Config\Block\System\Config\Form\Field
      * @param Assets $assets
      */
     public function __construct(
+        private readonly Assets $assets,
         Context $context,
-        Assets $assets,
         array $data = [],
         ?SecureHtmlRenderer $secureRenderer = null
     ) {
         parent::__construct($context, $data, $secureRenderer);
-        $this->assets = $assets;
     }
 
     /**
      * Remove scope label
      *
-     * @param  \Magento\Framework\Data\Form\Element\AbstractElement $element
+     * @param  AbstractElement $element
      * @return string
      */
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    public function render(AbstractElement $element)
     {
         $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
         return parent::render($element);
     }
 
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    /**
+     * @param AbstractElement $element
+     * @return string
+     */
+    protected function _getElementHtml(AbstractElement $element)
     {
-        $this->addData(
-            [
-                'asset_view_model' => $this->assets
-            ]
-        );
-
+        $this->addData(['asset_view_model' => $this->assets]);
         return $this->_toHtml();
     }
 }
