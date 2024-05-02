@@ -121,7 +121,8 @@
             id="placeOrder"
             location="braintreeAch"
           />
-          <PrivacyPolicy
+          <PrivacyPolicy />
+          <MyButton
             label="Pay"
             primary
             :data-cy="'braintree-ach-pay-button'"
@@ -148,6 +149,7 @@ import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
+import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import SelectInput from '@/components/Core/ActionComponents/Inputs/Select/Select.vue';
@@ -172,6 +174,7 @@ export default {
     Agreements,
     CheckboxComponent,
     ErrorMessage,
+    MyButton,
     PrivacyPolicy,
     Recaptcha,
     SelectInput,
@@ -229,7 +232,33 @@ export default {
       this.selectedMethod = id;
     });
   },
-
+  watch: {
+    routingNumber() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    accountNumber() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    firstname() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    lastname() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    businessName() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+  },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
