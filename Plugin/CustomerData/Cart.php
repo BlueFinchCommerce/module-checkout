@@ -51,14 +51,17 @@ class Cart
         $quoteId = $quote ? (int) $quote->getId() : null;
 
         if ($quote instanceof CartInterface) {
-            if (!$quote->getCustomerId() && $quoteId !== null) {
-                $maskedId = $this->maskedQuote->execute((int) $quote->getId());
-                $result['guest_masked_id'] = $maskedId;
+            if ($quoteId !== null && $quoteId !== 0) {
+                if (!$quote->getCustomerId()) {
+                    $maskedId = $this->maskedQuote->execute((int) $quote->getId());
+                    $result['guest_masked_id'] = $maskedId;
+                }
+
+                $methodList = $this->methodList->getAvailableMethods($quote);
+                $result['paymentMethodList'] = array_map(function (MethodInterface $method) {
+                    return ['code' => $method->getCode(), 'title' => $method->getTitle()];
+                }, $methodList);
             }
-            $methodList = $this->methodList->getAvailableMethods($quote);
-            $result['paymentMethodList'] = array_map(function (MethodInterface $method) {
-                return ['code' => $method->getCode(), 'title' => $method->getTitle()];
-            }, $methodList);
         }
 
         $result['currencyCode'] = $quote->getQuoteCurrencyCode();

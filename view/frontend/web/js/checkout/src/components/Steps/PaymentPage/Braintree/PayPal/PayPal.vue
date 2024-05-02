@@ -131,12 +131,17 @@ export default {
           },
           onShippingChange: async (data) => {
             const address = {
+              city: data.shipping_address.city,
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
               region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
               street: ['0'],
+              telephone: '000000000',
+              firstname: 'UNKNOWN',
+              lastname: 'UNKNOWN',
             };
+
             const result = await getShippingMethods(address);
             const methods = result.shipping_addresses[0].available_shipping_methods;
 
@@ -229,7 +234,7 @@ export default {
         .then(() => ({ payload, email: payload.details.email }));
     },
 
-    makePayment([{ payload, email }]) {
+    makePayment({ payload, email }) {
       const payment = {
         email,
         paymentMethod: {
