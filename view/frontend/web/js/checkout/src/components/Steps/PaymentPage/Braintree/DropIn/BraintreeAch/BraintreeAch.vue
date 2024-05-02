@@ -232,7 +232,33 @@ export default {
       this.selectedMethod = id;
     });
   },
-
+  watch: {
+    routingNumber() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    accountNumber() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    firstname() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    lastname() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+    businessName() {
+      if (this.errorMessage) {
+        this.clearErrorMessage();
+      }
+    },
+  },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
