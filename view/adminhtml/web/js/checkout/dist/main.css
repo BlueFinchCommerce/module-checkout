@@ -4412,10 +4412,10 @@ body.no-scrollable {
 .mock-full .divider p[data-v-056caa9c] {
     font-size: var(--font__heading--desktop);
 }
-}.recaptcha-container[data-v-75b43ef4] {
+}.recaptcha-container[data-v-27cb3eee] {
   z-index: 1;
 }
-.recaptcha-container#customerLogin[data-v-75b43ef4] {
+.recaptcha-container#customerLogin[data-v-27cb3eee] {
   margin-top: var(--indent__m);
 }.customer-form .divider[data-v-17b7efab] {
   display: flex;
