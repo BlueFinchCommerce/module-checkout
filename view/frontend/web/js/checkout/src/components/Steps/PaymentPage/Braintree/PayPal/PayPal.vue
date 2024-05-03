@@ -264,7 +264,7 @@ export default {
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
-        telephone,
+        telephone: telephone !== undefined ? telephone : '000000000',
         region: {
           ...(address.state ? { region: address.state } : {}),
           ...(regionId ? { region_id: regionId } : {}),
