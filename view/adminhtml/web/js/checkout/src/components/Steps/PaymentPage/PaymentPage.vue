@@ -67,7 +67,7 @@
           />
           <div v-if="isPaymentMethodAvailable('checkmo') && isBraintreeEnabled !== '0'">
             <FreeMOCheckPayment
-              v-if="showMagentoPayment"
+              v-if="showMagentoPayments"
               :payment-type="'checkmo'"
               :title="getPaymentMethodTitle('checkmo')"
             />
@@ -168,7 +168,7 @@ export default {
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
-    ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayment']),
+    ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
       'hasVaultedMethods',

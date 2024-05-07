@@ -9754,46 +9754,46 @@ a {
 .mock-full .braintree-vaulted-methods-container-1, .mock-full .braintree-vaulted-methods-container-2 {
     grid-auto-columns: calc(50% - var(--indent__xs));
 }
-}.payment-page[data-v-12c4961d] {
+}.payment-page[data-v-7c352566] {
   padding: var(--indent__base--mobile) var(--payment-page-mobile-padding, var(--indent__base--mobile));
   font-family: var(--payment-page-font-family, unset);
 }
-.payment-page .payment-form[data-v-12c4961d] {
+.payment-page .payment-form[data-v-7c352566] {
   background: var(--page__background-color--mobile);
   margin-top: var(--indent__base);
   min-height: var(--payment-form-min-height, 600px);
 }
-.payment-page .payment-form .address-block__edit[data-v-12c4961d] {
+.payment-page .payment-form .address-block__edit[data-v-7c352566] {
   cursor: pointer;
   position: absolute;
   bottom: var(--indent__base);
   right: var(--indent__base);
 }
-.payment-page .payment-form .billing-address[data-v-12c4961d] {
+.payment-page .payment-form .billing-address[data-v-7c352566] {
   padding: var(--indent__base);
   background: var(--color__primary-white);
 }
-.payment-page .payment-form .billing-address .details-title-section[data-v-12c4961d] {
+.payment-page .payment-form .billing-address .details-title-section[data-v-7c352566] {
   display: flex;
 }
-.payment-page .payment-form .billing-address .details-title-section svg[data-v-12c4961d] {
+.payment-page .payment-form .billing-address .details-title-section svg[data-v-7c352566] {
   margin-right: var(--indent__base);
 }
-.mock-laptop .payment-page[data-v-12c4961d],
-.mock-desktop .payment-page[data-v-12c4961d] {
+.mock-laptop .payment-page[data-v-7c352566],
+.mock-desktop .payment-page[data-v-7c352566] {
   padding: var(--indent__base) 0 0;
 }
-.mock-laptop .payment-page .payment-form[data-v-12c4961d],
-.mock-desktop .payment-page .payment-form[data-v-12c4961d] {
+.mock-laptop .payment-page .payment-form[data-v-7c352566],
+.mock-desktop .payment-page .payment-form[data-v-7c352566] {
   background: var(--payment-form-background, var(--steps__background-color--desktop));
   border-radius: var(--steps__border-radius--desktop);
   padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);
 }
 @media screen and (min-width: 768px) {
-.mock-full .payment-page[data-v-12c4961d] {
+.mock-full .payment-page[data-v-7c352566] {
     padding: var(--indent__base) 0 0;
 }
-.mock-full .payment-page .payment-form[data-v-12c4961d] {
+.mock-full .payment-page .payment-form[data-v-7c352566] {
     background: var(--payment-form-background, var(--steps__background-color--desktop));
     border-radius: var(--steps__border-radius--desktop);
     padding: var(--form-details-padding-desktop, var(--indent__base) 40px 70px);

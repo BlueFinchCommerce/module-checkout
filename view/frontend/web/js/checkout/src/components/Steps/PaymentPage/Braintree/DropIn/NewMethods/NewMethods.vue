@@ -56,6 +56,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -97,7 +98,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useBraintreeStore, ['showMagentoPayment']),
+    ...mapWritableState(useBraintreeStore, ['showMagentoPayments']),
     ...mapState(useBraintreeStore, [
       'vaultActive',
       'clientToken',
@@ -125,6 +126,7 @@ export default {
     await this.getInitialConfig();
     await this.createClientToken();
     await this.getCart();
+    this.setLoadingState(true);
 
     const total = (this.cartGrandTotal / 100).toString();
 
@@ -235,6 +237,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'createClientToken',
@@ -351,7 +354,8 @@ export default {
     },
 
     afterBraintreeInit(event, instance) {
-      this.showMagentoPayment = true;
+      this.showMagentoPayments = true;
+      this.setLoadingState(false);
       this.setClientInstance(instance._client);
 
       if (instance._threeDSecure) {

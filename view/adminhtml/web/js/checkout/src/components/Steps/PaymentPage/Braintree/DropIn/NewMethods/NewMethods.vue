@@ -94,7 +94,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useBraintreeStore, ['showMagentoPayment']),
+    ...mapWritableState(useBraintreeStore, ['showMagentoPayments']),
     ...mapState(useBraintreeStore, [
       'vaultActive',
       'clientToken',
@@ -346,7 +346,7 @@ export default {
     },
 
     afterBraintreeInit(event, instance) {
-      this.showMagentoPayment = true;
+      this.showMagentoPayments = true;
       this.setClientInstance(instance._client);
 
       if (instance._threeDSecure) {

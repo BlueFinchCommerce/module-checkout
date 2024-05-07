@@ -12,7 +12,7 @@ export default defineStore('brainteeStore', {
     cache: {},
     environment: 'sandbox',
     isBraintreeEnabled: null,
-    showMagentoPayment: false,
+    showMagentoPayments: false,
     merchantAccountId: '',
     cCTypes: [],
     clientToken: null,
