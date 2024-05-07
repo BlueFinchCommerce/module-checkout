@@ -223,11 +223,15 @@ export default {
     onPaymentDataChanged(data) {
       return new Promise((resolve) => {
         const address = {
+          city: data.shippingAddress.locality,
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
           region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
           street: ['0'],
+          telephone: '000000000',
+          firstname: 'UNKNOWN',
+          lastname: 'UNKNOWN',
         };
 
         getShippingMethods(address).then(async (response) => {
@@ -261,8 +265,8 @@ export default {
           }
 
           const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? response[0]
-            : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
+            ? methods[0]
+            : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
 
           await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
           this.setLoadingState(true);

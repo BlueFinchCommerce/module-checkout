@@ -249,6 +249,9 @@ export default {
         country_code: data.shippingContact.countryCode.toUpperCase(),
         postcode: data.shippingContact.postalCode,
         street: ['0'],
+        telephone: '000000000',
+        firstname: 'UNKNOWN',
+        lastname: 'UNKNOWN',
       };
 
       this.address = address;

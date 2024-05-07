@@ -121,6 +121,7 @@ export default {
             flow: 'checkout',
             currency: this.currencyCode,
             enableShippingAddress: !this.cart.is_virtual,
+            locale: this.locale,
             intent: 'capture',
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
@@ -139,11 +140,15 @@ export default {
           },
           onShippingChange: async (data) => {
             const address = {
+              city: data.shipping_address.city,
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
               region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
               street: ['0'],
+              telephone: '000000000',
+              firstname: 'UNKNOWN',
+              lastname: 'UNKNOWN',
             };
             const shippingMethods = await getShippingMethods(address);
 
@@ -236,7 +241,7 @@ export default {
         .then(() => ({ payload, email: payload.details.email }));
     },
 
-    makePayment([{ payload, email }]) {
+    makePayment({ payload, email }) {
       const payment = {
         email,
         paymentMethod: {
