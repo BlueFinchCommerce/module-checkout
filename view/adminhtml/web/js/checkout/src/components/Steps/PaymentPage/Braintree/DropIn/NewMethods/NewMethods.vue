@@ -45,7 +45,7 @@
 <script>
 // Stores
 import { toRaw } from 'vue';
-import { mapActions, mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
@@ -94,6 +94,7 @@ export default {
     };
   },
   computed: {
+    ...mapWritableState(useBraintreeStore, ['showMagentoPayment']),
     ...mapState(useBraintreeStore, [
       'vaultActive',
       'clientToken',
@@ -345,6 +346,7 @@ export default {
     },
 
     afterBraintreeInit(event, instance) {
+      this.showMagentoPayment = true;
       this.setClientInstance(instance._client);
 
       if (instance._threeDSecure) {

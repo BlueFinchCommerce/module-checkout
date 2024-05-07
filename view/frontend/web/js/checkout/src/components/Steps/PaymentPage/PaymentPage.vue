@@ -71,12 +71,20 @@
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
           />
-          <BraintreeDropIn :key="`braintreeNewMethods-${paymentKey}`" />
+          <BraintreeDropIn v-if="isBraintreeEnabled !== '0'"
+            :key="`braintreeNewMethods-${paymentKey}`" />
           <RvvupPayByBank
             v-if="rvvupPaymentsActive"
             :key="`rvvupNewMethods-${paymentKey}`"
           />
-          <div v-if="isPaymentMethodAvailable('checkmo')">
+          <div v-if="isPaymentMethodAvailable('checkmo') && isBraintreeEnabled !== '0'">
+            <FreeMOCheckPayment
+              v-if="showMagentoPayment"
+              :payment-type="'checkmo'"
+              :title="getPaymentMethodTitle('checkmo')"
+            />
+          </div>
+          <div v-if="isPaymentMethodAvailable('checkmo') && isBraintreeEnabled === '0'">
             <FreeMOCheckPayment
               :payment-type="'checkmo'"
               :title="getPaymentMethodTitle('checkmo')"
@@ -166,6 +174,7 @@ export default {
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
+    ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayment']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
       'hasVaultedMethods',
