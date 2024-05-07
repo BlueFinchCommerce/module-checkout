@@ -1,12 +1,10 @@
 <template>
   <div
-    v-if="isAdyenAvailable"
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
     :data-cy="'instant-checkout-adyenGooglePay'"
   />
   <div
-    v-if="isAdyenAvailable"
     v-show="threeDSVisible"
     id="adyen-threeds-container"
   />
@@ -52,7 +50,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
@@ -70,13 +67,6 @@ export default {
 
     await this.getInitialConfig();
     await this.getCart();
-
-    // Early return is Adyen isn't available.
-    if (!this.isAdyenAvailable) {
-      this.googlePayLoaded = true;
-      this.removeExpressMethod(this.key);
-      return;
-    }
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
@@ -133,10 +123,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(useAdyenStore, [
-      'getIsAdyenAvailable',
-      'getPaymentMethodsResponse',
-    ]),
+    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',

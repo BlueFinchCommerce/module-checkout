@@ -1,6 +1,12 @@
 <template>
-  <Loqate v-if="addressFinder.loqate.enabled && addressFinder.loqate.apiKey && !addressFinder.afd.enabled" />
-  <AfdPostCode v-if="addressFinder.afd.enabled && !addressFinder.loqate.enabled" />
+  <Loqate
+    v-if="addressFinder.loqate.enabled && addressFinder.loqate.apiKey && !addressFinder.afd.enabled"
+    :address_type="address_type"
+  />
+  <AfdPostCode
+    v-if="addressFinder.afd.enabled && !addressFinder.loqate.enabled"
+    :address_type="address_type"
+  />
 </template>
 <script>
 import { mapActions, mapState } from 'pinia';
@@ -14,6 +20,12 @@ export default {
   components: {
     AfdPostCode,
     Loqate,
+  },
+  props: {
+    address_type: {
+      type: String,
+      default: 'shipping',
+    },
   },
   computed: {
     ...mapState(useConfigStore, ['addressFinder']),

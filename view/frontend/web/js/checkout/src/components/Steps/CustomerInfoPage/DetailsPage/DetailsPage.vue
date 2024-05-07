@@ -20,11 +20,26 @@
           :attached="false"
           :margin="false"
         />
-        <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
-        <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
-        <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
-        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
+        <BraintreeGooglePay
+          v-if="isPaymentMethodAvailable('braintree_googlepay')"
+          :key="`braintreeGooglePay-${storedKey}`"
+        />
+        <BraintreeApplePay
+          v-if="isPaymentMethodAvailable('braintree_applepay')"
+          :key="`braintreeApplePay-${storedKey}`"
+        />
+        <BraintreePayPal
+          v-if="isPaymentMethodAvailable('braintree_paypal')"
+          :key="`braintreePayPal-${storedKey}`"
+        />
+        <AdyenGooglePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenGooglePay-${storedKey}`"
+        />
+        <AdyenApplePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenApplePay-${storedKey}`"
+        />
       </div>
     </div>
     <div class="details-form-body">
@@ -155,7 +170,6 @@
           />
         </div>
       </div>
-
       <div
         v-if="emailEntered && !selected[address_type].editing
           && !isSavedAddressSelected
@@ -344,7 +358,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
-    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
@@ -388,6 +402,10 @@ export default {
 
       this[types[type]] = first && last && phone;
     });
+
+    if (this.validateAddress(this.address_type)) {
+      this.setAddressAsCustom(this.address_type);
+    }
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),

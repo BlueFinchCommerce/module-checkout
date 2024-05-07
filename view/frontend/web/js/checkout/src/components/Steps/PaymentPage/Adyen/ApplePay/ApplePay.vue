@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="isAdyenAvailable"
+    v-if="applePayAvailable"
     id="adyen-apple-pay"
     :class="!applePayLoaded ? 'text-loading' : ''"
     :data-cy="'instant-checkout-adyenApplePay'"
@@ -36,6 +36,7 @@ export default {
 
   data() {
     return {
+      applePayAvailable: false,
       applePayTotal: '',
       applPaySubtotaltitle: '',
       applePayShippingStepTitle: '',
@@ -46,7 +47,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable', 'getAdyenClientKey']),
+    ...mapState(useAdyenStore, ['getAdyenClientKey']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartDiscountTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
     ...mapState(useConfigStore, [
@@ -68,16 +69,10 @@ export default {
 
     this.addExpressMethod(this.key);
     this.applePayLoaded = false;
+    this.applePayAvailable = true;
 
     await this.getInitialConfig();
     await this.getCart();
-
-    // Early return is Adyen isn't available.
-    if (!this.isAdyenAvailable) {
-      this.applePayLoaded = true;
-      this.removeExpressMethod(this.key);
-      return;
-    }
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
