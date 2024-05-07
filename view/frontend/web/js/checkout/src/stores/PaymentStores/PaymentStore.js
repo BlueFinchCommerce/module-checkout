@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+import getCartPaymentMethods from '@/helpers/cart/getCartPaymentMethods';
+
 import mitt from 'mitt';
 
 export default defineStore('paymentStore', {
@@ -10,7 +12,7 @@ export default defineStore('paymentStore', {
     errorMessage: '',
     rvvupErrorMessage: '',
     paymentEmitter: mitt(),
-    availableMethods: [],
+    availableMethods: getCartPaymentMethods(),
     expressMethods: [],
     hasVaultedMethods: false,
   }),
