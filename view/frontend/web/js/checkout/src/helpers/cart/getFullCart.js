@@ -21,7 +21,6 @@ export default () => {
       city
       country {
         code
-        label
       }
       firstname
       lastname
@@ -45,7 +44,6 @@ export default () => {
       }
       country {
         code
-        label
       }
       telephone
       available_shipping_methods {

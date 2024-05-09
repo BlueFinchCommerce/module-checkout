@@ -403,7 +403,7 @@ export default {
       this[types[type]] = first && last && phone;
     });
 
-    if (this.validateAddress(this.address_type)) {
+    if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
   },

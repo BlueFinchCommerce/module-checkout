@@ -265,10 +265,7 @@ export default {
   },
   created() {
     this.setupCountry();
-
-    if (!this.selected[this.address_type].region.region) {
-      this.updateRegionRequired(this.address_type);
-    }
+    this.updateRegionRequired(this.address_type);
 
     const customerStore = useCustomerStore();
     customerStore.$subscribe((mutation) => {
@@ -288,6 +285,7 @@ export default {
       'setAddressAsEditing',
       'addAddressError',
       'removeAddressError',
+      'clearRegion',
       'updateRegionRequired',
       'validateNameField',
       'validatePhone',
@@ -321,6 +319,7 @@ export default {
     },
 
     countryUpdated() {
+      this.clearRegion(this.address_type);
       this.updateRegionRequired(this.address_type);
       this.validatePostcode(this.address_type, true);
     },
