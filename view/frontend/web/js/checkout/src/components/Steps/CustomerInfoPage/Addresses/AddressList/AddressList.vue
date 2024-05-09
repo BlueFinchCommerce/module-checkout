@@ -65,6 +65,7 @@
 // stores
 import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useCartStore from '@/stores/CartStore';
 
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
@@ -107,14 +108,15 @@ export default {
   },
   computed: {
     ...mapState(useCustomerStore, ['customer', 'selected']),
+    ...mapState(useCartStore, ['cart']),
   },
   watch: {
     addressType: {
       immediate: true,
       handler(newVal) {
         if (newVal === 'billing') {
-          // When the addressType changes to 'billing', select the first address
-          this.selectFirstAddress();
+          // When the addressType changes to 'billing', select the new billing address or the first address
+          this.selectCorrectAddress();
         }
       },
     },
@@ -154,8 +156,10 @@ export default {
       'setAddressAsCustom',
       'createNewBillingAddress',
     ]),
-    selectFirstAddress() {
-      if (this.customer.addresses.length > 0) {
+    selectCorrectAddress() {
+      if (this.cart.billing_address) {
+        this.selectAddress(this.cart.billing_address);
+      } else if (this.customer.addresses.length > 0) {
         const firstItem = this.customer.addresses[0];
         this.selectAddress(firstItem);
       }

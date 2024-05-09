@@ -100,13 +100,15 @@ export default defineStore('customerStore', {
       // If the address has an object for country map it to the right value.
       if (typeof address.country === 'object') {
         clonedAddress.country_code = address.country.code;
+        delete clonedAddress.country;
       }
 
       // The region comes back with differnt keys than it expects so map them.
       if (address.region.label) {
         const configStore = useConfigStore();
         clonedAddress.region.region = address.region.code;
-        clonedAddress.region.region_id = configStore.getRegionId(address.country_code, address.region);
+        clonedAddress.region.region_id = configStore.getRegionId(address.country.code, address.region.code);
+        delete clonedAddress.region.label;
       }
 
       // Save the address to state and also include the email address from the customer.
@@ -160,10 +162,7 @@ export default defineStore('customerStore', {
       }
     },
 
-    updateRegionRequired(addressType) {
-      const { stateRequired } = useConfigStore();
-      const currentCountry = this.selected[addressType].country_code;
-
+    clearRegion(addressType) {
       this.setData({
         selected: {
           [addressType]: {
@@ -181,10 +180,16 @@ export default defineStore('customerStore', {
           },
         },
       });
+    },
+
+    updateRegionRequired(addressType) {
+      const { stateRequired } = useConfigStore();
+      const currentCountry = this.selected[addressType].country_code;
 
       if (stateRequired.indexOf(currentCountry) !== -1) {
         const { countries } = useConfigStore();
         const country = countries.find((cty) => cty.id === currentCountry);
+
         if (country) {
           const availableRegions = country.available_regions || [];
           const regionOptions = availableRegions.map((region) => (
@@ -452,9 +457,8 @@ export default defineStore('customerStore', {
         if (key === 'region') {
           if (this.selected.regionRequired[addressType].required) {
             if (
-              !this.selected[addressType][key]
-              || (typeof this.selected[addressType][key] === 'string'
-              && !this.selected[addressType][key].trim())
+              !this.selected[addressType][key].region?.trim()
+              && !this.selected[addressType][key].region_id
             ) {
               addErrors && this.addAddressError(addressType, value);
               valid = false;

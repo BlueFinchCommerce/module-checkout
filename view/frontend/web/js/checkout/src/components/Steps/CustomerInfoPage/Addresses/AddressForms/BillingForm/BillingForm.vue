@@ -52,17 +52,18 @@
           @click.prevent="editBillingAddress"
           @keydown.enter.prevent="editBillingAddress"
         >
-          <Edit :data-cy="`${address_type}-address-selected-edit-icon`"/>
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
         </div>
       </div>
     </div>
 
-    <template v-if="
-       ((customer.addresses.length > 0
-       ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
-      || (selected[address_type].id === 'custom' && selected[address_type].editing))
-      && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)">
-
+    <template
+      v-if="
+        ((customer.addresses.length > 0
+          ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
+          || (selected[address_type].id === 'custom' && selected[address_type].editing))
+          && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)"
+    >
       <div class="address-block__title-with-icon billing">
         <Locate :data-cy="`${address_type}-new-address-icon`" />
         <TextField
@@ -70,7 +71,7 @@
           :text="newAddressText"
           :data-cy="`${address_type}-new-address-title`"
         />
-        <div class="divider-line"></div>
+        <div class="divider-line" />
       </div>
       <NameFields
         :address_type="address_type"
@@ -167,15 +168,22 @@ export default {
       'createNewAddress',
       'submitCustom',
       'setAddressAsCustom',
+      'setAddressToStore',
     ]),
     toggleBillingAddress(event) {
       if (!event.target.checked) {
         if (this.customer.addresses.length > 0) {
           this.savedAddressActive = true;
         }
-        this.createNewAddress(this.address_type);
+        if (this.cart.billing_address) {
+          this.setAddressToStore(this.cart.billing_address, this.address_type);
+          this.setAddressAsEditing(this.address_type, false);
+          this.setAddressAsCustom(this.address_type);
+        } else {
+          this.createNewAddress(this.address_type);
+          this.setAddressAsEditing(this.address_type, true);
+        }
         this.selected[this.address_type].same_as_shipping = false;
-        this.setAddressAsEditing(this.address_type, true);
       } else {
         this.savedAddressActive = false;
         this.selected[this.address_type] = deepClone(this.selected.shipping);

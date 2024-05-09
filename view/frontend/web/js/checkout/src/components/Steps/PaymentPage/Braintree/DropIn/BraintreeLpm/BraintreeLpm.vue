@@ -199,7 +199,7 @@ export default {
       const shippingAddress = this.cart.shipping_addresses[0];
       const address = {};
 
-      address.countryCode = shippingAddress.country.code;
+      address.countryCode = shippingAddress.country_code;
 
       if (!isVirtual) {
         const [streetAddress, extendedAddress] = shippingAddress.street;
@@ -222,7 +222,7 @@ export default {
         shippingAddressRequired: !isVirtual,
         address,
         paymentType: allowedMethod,
-        paymentTypeCountryCode: billingAddress.country.code,
+        paymentTypeCountryCode: billingAddress.country_code,
         recurrent: false,
         customerId: null,
         onPaymentStart(data, start) {

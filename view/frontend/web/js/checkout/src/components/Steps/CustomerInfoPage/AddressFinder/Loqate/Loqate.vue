@@ -235,7 +235,6 @@ export default {
       };
       this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
-      this.setAddressToStore(newAddress, this.address_type);
 
       const firstNameValid = this.validateNameField(
         this.address_type,
