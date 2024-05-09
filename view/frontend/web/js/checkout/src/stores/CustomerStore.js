@@ -132,6 +132,16 @@ export default defineStore('customerStore', {
       }
     },
 
+    setSelectedSavedAddress(addressType, value) {
+      this.setData({
+        selected: {
+          [addressType]: {
+            isSavedAddressSelected: value,
+          },
+        },
+      });
+    },
+
     setAddressAsEditing(addressType, value) {
       this.setData({
         selected: {
