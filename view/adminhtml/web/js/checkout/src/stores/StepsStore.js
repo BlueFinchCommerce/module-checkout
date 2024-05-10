@@ -3,7 +3,8 @@ import useCartStore from '@/stores/CartStore';
 
 export default defineStore('stepsStore', {
   state: () => ({
-    yourDetailsActive: true,
+    signInPage: true,
+    yourDetailsActive: false,
     shippingActive: false,
     paymentActive: false,
   }),
@@ -15,18 +16,30 @@ export default defineStore('stepsStore', {
       const { name } = this.$router.currentRoute.value;
 
       this.setData({
+        signInPageActive: name === 'SignInPage' || name === 'DetailsPage'
+        || name === 'ShippingPage' || name === 'PaymentPage',
         yourDetailsActive: name === 'DetailsPage' || name === 'ShippingPage' || name === 'PaymentPage',
         shippingActive: name === 'ShippingPage' || name === 'PaymentPage',
         paymentActive: name === 'PaymentPage',
       });
     },
-    goToYouDetails() {
+    goToSignInPage() {
       this.setData({
-        yourDetailsActive: true,
+        signInPage: true,
+        yourDetailsActive: false,
         shippingActive: false,
         paymentActive: false,
       });
       this.$router.push('/');
+    },
+    goToYouDetails() {
+      this.setData({
+        signInPage: false,
+        yourDetailsActive: true,
+        shippingActive: false,
+        paymentActive: false,
+      });
+      this.$router.push('/details');
     },
     goToShipping() {
       // If all products within the cart do not require shipping then whenever this is called go directly to payment.
@@ -34,6 +47,7 @@ export default defineStore('stepsStore', {
 
       if (isItemRequiringDelivery) {
         this.setData({
+          signInPage: false,
           yourDetailsActive: true,
           shippingActive: true,
           paymentActive: false,
@@ -45,6 +59,7 @@ export default defineStore('stepsStore', {
     },
     goToPayment() {
       this.setData({
+        signInPage: false,
         yourDetailsActive: true,
         shippingActive: true,
         paymentActive: true,
@@ -53,6 +68,7 @@ export default defineStore('stepsStore', {
     },
     goToAdyenAmazonReviw() {
       this.setData({
+        signInPage: true,
         yourDetailsActive: true,
         shippingActive: true,
         paymentActive: true,

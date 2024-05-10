@@ -17,16 +17,19 @@
           :class="{ 'braintree-payment__payment-method-disabled': !vaultedMethod.selected }"
           :aria-label="$t('paymentCard.storedPaymentLabel', { lastFour: vaultedMethod.details.maskedCC })"
           type="button"
+          data-cy="braintree-saved-payment-card-button"
           @click="selectPaymentCard(vaultedMethod)"
         >
           <Tick
             v-if="vaultedMethod.selected"
             class="braintree-payment__payment-method-tick"
+            :data-cy="'braintree-saved-payment-card-active-icon'"
           />
           <TextField
             v-else
             class="braintree-payment__payment-method-select"
             :text="$t('paymentCard.select')"
+            :data-cy="'braintree-saved-payment-card-select-text'"
           />
           <span
             class="braintree-payment__payment-method__radio"
@@ -40,15 +43,32 @@
               <use
                 data-braintree-id="card-number-icon-svg"
                 :xlink:href="`#icon-${mapCartTypes(vaultedMethod.details.type)}`"
+                :data-cy="`braintree-saved-payment-card-${mapCartTypes(vaultedMethod.details.type)}-icon`"
               />
             </svg>
           </span>
-          <span class="braintree-payment__payment-method__card-number">{{ $t('paymentCard.cardNumber') }}</span>
-          <span class="braintree-payment__payment-method__name">
+          <span
+            class="braintree-payment__payment-method__card-number"
+            data-cy="braintree-saved-payment-card-text"
+          >
+            {{ $t('paymentCard.cardNumber') }}
+          </span>
+          <span
+            class="braintree-payment__payment-method__name"
+            data-cy="braintree-saved-payment-card-text-number"
+          >
             **** **** **** {{ vaultedMethod.details.maskedCC }}
           </span>
-          <span class="braintree-payment__payment-method__expiry-label">{{ $t('paymentCard.expiry') }}</span>
-          <span class="braintree-payment__payment-method__expiry">
+          <span
+            class="braintree-payment__payment-method__expiry-label"
+            data-cy="braintree-saved-payment-card-expiry-text"
+          >
+            {{ $t('paymentCard.expiry') }}
+          </span>
+          <span
+            class="braintree-payment__payment-method__expiry"
+            data-cy="braintree-saved-payment-card-expiry-date"
+          >
             {{ vaultedMethod.details.expirationDate }}
           </span>
         </button>
@@ -76,6 +96,7 @@
         class="braintree-vaulted-methods-pay-button"
         label="Pay"
         primary
+        :data-cy="'braintree-saved-payment-card-pay-button'"
         @click="startPayment()"
       />
     </template>
@@ -157,7 +178,6 @@ export default {
   },
   async created() {
     await this.getInitialConfig();
-    await this.getVaultedMethods();
 
     this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
@@ -169,7 +189,6 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'createClientToken',
-      'getVaultedMethods',
       'selectVaultedMethod',
       'setErrorMessage',
       'clearErrorMessage',
@@ -234,7 +253,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || this.vaultVerifyCvv || price < threshold) {
+        if (!this.threeDSEnabled || (!this.alwaysRequestThreeDS && this.vaultVerifyCvv && price < threshold)) {
           resolve({
             nonce,
           });

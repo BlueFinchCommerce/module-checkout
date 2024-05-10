@@ -1,7 +1,9 @@
 <template>
   <div class="details-form">
-    <div class="details-form-header"
-         v-show="isExpressPaymentsVisible">
+    <div
+      v-show="isExpressPaymentsVisible"
+      class="details-form-header"
+    >
       <div class="instantCheckout-block">
         <TextField :text="instantCheckoutText" />
       </div>
@@ -70,61 +72,59 @@
         />
       </div>
 
+      <div class="details-form-title">
+        <YourDetails fill="black" />
+        <TextField
+          :text="yourDetailsText"
+        />
+        <div class="divider-line" />
+      </div>
+      <!-- v-else -->
+
+      <NameFields
+        :address_type="address_type"
+        @isCustomerInfoFull="isCustomerInfoFull"
+      />
+      <!-- v-if="isAddressBlockVisible" -->
+      <div
+        class="delivery-section-title"
+      >
+        <Locate />
+        <div class="delivery-section-title-text">
+          <TextField
+            :text="deliverWhereText"
+          />
+        </div>
+        <div class="divider-line" />
+      </div>
+
       <AddressList
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
-        @passSelectedItemId = "passSelectedItemId"
+        @passSelectedItemId="passSelectedItemId"
         @selectedSavedAddress="selectedSavedAddress"
       />
 
       <div class="address-form-error-message">
-        <ErrorMessage v-if="addressInfoWrong"
-                      :message="$t('errorMessages.addressWrongError')"/>
+        <ErrorMessage
+          v-if="addressInfoWrong"
+          :message="$t('errorMessages.addressWrongError')"
+        />
       </div>
 
-      <div
-        v-if="emailEntered && (!selected[address_type].id
+      <!-- Removed for UI designer only -->
+      <!-- v-if="emailEntered && (!selected[address_type].id
           || (selected[address_type].id === 'custom' && selected[address_type].editing))
-          && !isClickAndCollect && !cart.is_virtual"
+          && !isClickAndCollect && !cart.is_virtual" -->
+      <div
         class="additional-detail-form"
       >
         <div
           class="delivery-section"
         >
-          <div v-if="customer.addresses.length <= 0"
-               class="details-form-title">
-            <YourDetails fill="black" />
-            <TextField
-              :text="$t('yourDetailsSection.title')"
-            />
-            <div class="divider-line"></div>
-          </div>
-          <div v-else class="details-form-title saved-address">
-            <Locate />
-            <TextField
-              class="address-block__title"
-              :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
-            />
-            <div class="divider-line"></div>
-          </div>
-
-          <NameFields
-            :address_type="address_type"
-            @isCustomerInfoFull="isCustomerInfoFull"
-          />
-          <div
-            v-if="isAddressBlockVisible"
-            class="delivery-section-title"
-          >
-            <Locate />
-            <div class="delivery-section-title-text">
-              <TextField
-                :text="$t('yourDetailsSection.deliverySection.title')"
-              />
-            </div>
-            <div class="divider-line"></div>
-          </div>
+          <!-- Removed for UI designer only -->
+          <!-- v-if="customer.addresses.length <= 0" -->
 
           <div>
             <div>
@@ -135,7 +135,19 @@
             </div>
           </div>
 
-          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
+          <!-- Removed for UI designer only -->
+          <!-- v-if="selected[address_type].editing || !addressFinder.enabled" -->
+          <div
+            class="details-form-title saved-address"
+          >
+            <Locate />
+            <TextField
+              class="address-block__title"
+              :text="newAddressText"
+            />
+            <div class="divider-line" />
+          </div>
+          <ShippingForm />
 
           <LinkComponent
             v-if="!selected[address_type].id
@@ -174,9 +186,9 @@
           v-if="selected[address_type].id"
           class="address-block__edit"
           :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          tabindex="0"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
-          tabindex="0"
         >
           <Edit />
         </div>
@@ -194,12 +206,13 @@
         @billingInfoFull="billingInfoFull"
       />
 
+      <!-- Removed for ui designer only -->
+      <!-- :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)" -->
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
-        :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
-        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
+        :label="proceedToShippingText"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -215,6 +228,7 @@
 </template>
 <script>
 // icons
+import { mapActions, mapState } from 'pinia';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
@@ -245,7 +259,6 @@ import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
-import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -306,6 +319,14 @@ export default {
       storedKey: 0,
       instantCheckoutText: '',
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      yourDetailsText: '',
+      yourDetailsTextId: 'gene-bettercheckout-your-details-text',
+      deliverWhereText: '',
+      deliverWhereTextId: 'gene-bettercheckout-deliver-where-text',
+      newAddressText: '',
+      newAddressTextId: 'gene-bettercheckout-new-address-text',
+      proceedToShippingText: '',
+      proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
       buttonEnabled: false,
@@ -351,9 +372,6 @@ export default {
       billing: 'billingInfoValidation',
     };
 
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
-
     Object.keys(types).forEach((type) => {
       const first = this.validateNameField(type, 'First name', this.selected[type].firstname);
       const last = this.validateNameField(type, 'Last name', this.selected[type].lastname);
@@ -362,12 +380,29 @@ export default {
       this[types[type]] = first && last && phone;
     });
 
-    document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutTextId);
-    document.addEventListener(this.proceedToPayTextId, this.setProceedToPayTextId);
+    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
+    || this.$t('yourDetailsSection.deliverySection.title');
+    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
+    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+
+    document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
+    document.addEventListener(this.yourDetailsTextId, this.setYourDetailsText);
+    document.addEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
+    document.addEventListener(this.newAddressTextId, this.setNewAddressText);
+    document.addEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
+    document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
   },
   unmounted() {
-    document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutTextId);
-    document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayTextId);
+    document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
+    document.removeEventListener(this.yourDetailsTextId, this.setYourDetailsText);
+    document.removeEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
+    document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
+    document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayText);
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -400,7 +435,7 @@ export default {
       ) && this.validateNameField(
         addressType,
         'Last name',
-        this.selected[addressType].firstname,
+        this.selected[addressType].lastname,
       ) && this.validatePhone(
         addressType,
         this.selected[addressType].telephone,
@@ -474,10 +509,23 @@ export default {
     formatPrice(price) {
       return formatPrice(price);
     },
-    setInstantCheckoutTextId(event) {
+    setInstantCheckoutText(event) {
       this.instantCheckoutText = event?.detail?.value || this.$t('instantCheckout');
     },
-    setProceedToPayTextId(event) {
+    setYourDetailsText(event) {
+      this.yourDetailsText = event?.detail?.value || this.$t('yourDetailsSection.title');
+    },
+    setDeliverWhereText(event) {
+      this.deliverWhereText = event?.detail?.value || this.$t('yourDetailsSection.deliverySection.title');
+    },
+    setNewAddressText(event) {
+      this.newAddressText = event?.detail?.value || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+    },
+    setProceedToShippingText(event) {
+      this.proceedToShippingText = event?.detail?.value
+      || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    },
+    setProceedToPayText(event) {
       this.proceedToPayText = event?.detail?.value || this.$t('shippingStep.proceedToPay');
     },
   },

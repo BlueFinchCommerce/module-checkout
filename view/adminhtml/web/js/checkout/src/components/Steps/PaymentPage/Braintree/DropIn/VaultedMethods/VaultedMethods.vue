@@ -157,7 +157,6 @@ export default {
   },
   async created() {
     await this.getInitialConfig();
-    await this.getVaultedMethods();
 
     this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
@@ -169,7 +168,6 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'createClientToken',
-      'getVaultedMethods',
       'selectVaultedMethod',
       'setErrorMessage',
       'clearErrorMessage',
@@ -234,7 +232,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || this.vaultVerifyCvv || price < threshold) {
+        if (!this.threeDSEnabled || (!this.alwaysRequestThreeDS && this.vaultVerifyCvv && price < threshold)) {
           resolve({
             nonce,
           });

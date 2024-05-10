@@ -91,6 +91,7 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -190,7 +191,7 @@ export default {
     this.additionalPaymentMethods = Object.keys(paymentMethods());
   },
   methods: {
-    ...mapActions(useAdyenStore, ['getIsAdyenAvailable']),
+    ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),

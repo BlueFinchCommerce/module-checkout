@@ -165,9 +165,7 @@ export default defineStore('brainteeStore', {
         getGiftWrappingTotal,
       } = useCartStore();
 
-      Object.keys(cartItems).forEach((key) => {
-        const cartItem = cartItems[key];
-
+      Object.values(cartItems).forEach((cartItem) => {
         const unitAmount = cartItem.__typename === 'GiftCardCartItem'
           ? cartItem.amount.value
           : cartItem.product.price_range.minimum_price.final_price.value;
@@ -225,6 +223,15 @@ export default defineStore('brainteeStore', {
           kind: 'credit',
           quantity: 1,
           unitAmount: Math.abs(getCouponValue(cart.applied_coupons[0].code)),
+        });
+      }
+
+      if (Object.keys(cart.prices.discounts).length > 0) {
+        items.push({
+          name: this.$i18n.global.t('couponDiscount.title'),
+          kind: 'credit',
+          quantity: 1,
+          unitAmount: Math.abs(cart.prices.discounts[0].amount.value),
         });
       }
 

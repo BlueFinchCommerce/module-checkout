@@ -4,10 +4,10 @@
       <div class="afd-postcode__field">
         <TextInput type="text"
                    id="afd-postcode"
-                   :class="{'field-valid': afdValid}"
                    v-model="query"
                    :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
                    :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+                   :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'"
                    class="afd-postcode__input"
                    autocomplete="postal-code"
                    @blur="onBlur"
@@ -16,8 +16,10 @@
                    @keydown.down="onArrowDown"
                    @keydown.up="onArrowUp"
                    @keydown.enter="onEnter"/>
-        <ValidIcon v-if="afdValid"/>
-        <Search stroke="black"/>
+        <Search
+          stroke="black"
+          :data-cy="dataCy ? dataCy : 'afd-postcode'" />
+        />
       </div>
 
       <ul
@@ -30,6 +32,7 @@
           :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
           tabindex="-1"
           class="afd-postcode__result"
+          :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'"
         >
           <button
             tabindex="-1"
@@ -89,7 +92,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 // Icons
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 
 export default {
   name: 'AfdPostCode',
@@ -99,7 +101,6 @@ export default {
     Search,
     Edit,
     MyButton,
-    ValidIcon,
   },
   props: {
     address_type: {
@@ -115,7 +116,6 @@ export default {
       address: false,
       request: null,
       displayResults: true,
-      afdValid: false,
     };
   },
   computed: {
@@ -126,6 +126,9 @@ export default {
       'countries',
       'addressFinder',
     ]),
+    selectedAddressType() {
+      return this.selected[this.address_type];
+    },
   },
   async mounted() {
     await this.getAfdConfiguration();
@@ -133,6 +136,8 @@ export default {
   methods: {
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
+      'validateNameField',
+      'validatePhone',
       'validateAddress',
       'validatePostcode',
       'setAddressAsEditing',
@@ -188,9 +193,6 @@ export default {
       this.arrowCounter = -1;
       this.addressList = [];
 
-      // Set afd valid
-      this.afdValid = true;
-
       // Single Address
       afdPostcode.getAndUseAddress(item.Key, this.address_type).then(this.updateAddress);
 
@@ -233,9 +235,29 @@ export default {
       this.updateRegionRequired(this.address_type);
       this.setAddressToStore(newAddress, this.address_type);
 
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      const firstNameValid = this.validateNameField(
+        this.address_type,
+        'First name',
+        this.selectedAddressType.firstname,
+        true,
+      );
+      const lastNameValid = this.validateNameField(
+        this.address_type,
+        'Last name',
+        this.selectedAddressType.lastname,
+        true,
+      );
+      const phoneNumberValid = this.validatePhone(
+        this.address_type,
+        this.selectedAddressType.telephone,
+        true,
+      );
+      const addressValid = this.validateAddress(this.address_type, true);
+      const postcodeValid = this.validatePostcode(this.address_type, true);
 
-      // If the address we get back from AFD is not valid then open the form
+      const isValid = firstNameValid && lastNameValid && phoneNumberValid && addressValid && postcodeValid;
+
+      // If the address we get back from AFD is not valid or details are not filled in then open the form
       // allowing User's the ability to edit.
       if (!isValid) {
         this.setAddressAsEditing(this.address_type, true);

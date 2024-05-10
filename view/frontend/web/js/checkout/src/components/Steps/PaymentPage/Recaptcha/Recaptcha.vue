@@ -4,6 +4,11 @@
     :id="location"
     class="recaptcha-container"
   />
+  <div
+    v-else
+    :id="location"
+    class="recaptcha-container-invisible"
+  />
   <ErrorMessage
     v-if="getRecaptchaError(id)"
     :message="getRecaptchaError(id)"

@@ -85,12 +85,9 @@
   .email-address-edit-btn {
     position: absolute;
     cursor: pointer;
-    right: 0;
-    left: 0;
-    bottom: calc(var(--input__height) / 2);
+    right: var(--indent__m);
+    top: calc(var(--input__height) / 2);
     text-align: right;
-    transform: translateY(50%);
-    padding-right: var(--indent__m);
 
     button {
       text-align: right;

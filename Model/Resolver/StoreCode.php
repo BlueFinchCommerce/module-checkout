@@ -14,11 +14,12 @@ use Magento\Store\Model\StoreManagerInterface;
 class StoreCode implements ResolverInterface
 {
     /**
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManagerInterface
+     * @param StoreManagerInterface $storeManagerInterface
      */
     public function __construct(
         private readonly StoreManagerInterface $storeManagerInterface
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritdoc
@@ -38,7 +39,7 @@ class StoreCode implements ResolverInterface
             $store = $this->storeManagerInterface->getStore($args['store_id']);
             $storeCode = (string)$store->getCode();
         } catch (GraphQlNoSuchEntityException $exception) {
-            throw new GraphQlNoSuchEntityException($exception->getMessage());
+            throw new GraphQlNoSuchEntityException(__($exception->getMessage()));
         }
 
         return [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Gene\BetterCheckout\Controller;
 
 use Gene\BetterCheckout\Model\ConfigurationInterface;
+use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\RouterInterface;
 
@@ -14,25 +15,20 @@ use Magento\Framework\App\RouterInterface;
 class Router implements RouterInterface
 {
     /**
-     * @var ConfigurationInterface
-     */
-    private $configuration;
-
-    /**
      * Router constructor.
      *
      * @param ConfigurationInterface $configuration
      * @return void
      */
-    public function __construct (ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct (
+        private readonly ConfigurationInterface $configuration
+    ) {
     }
 
     /**
      * @param RequestInterface $request
      *
-     * @return \Magento\Framework\App\ActionInterface|void
+     * @return ActionInterface|void
      */
     public function match(RequestInterface $request)
     {

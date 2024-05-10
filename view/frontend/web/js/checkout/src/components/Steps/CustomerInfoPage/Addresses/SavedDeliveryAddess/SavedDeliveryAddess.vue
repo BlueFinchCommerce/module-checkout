@@ -1,17 +1,24 @@
 <template>
   <div class="delivery-address">
-    <router-link
+    <div
       class="delivery-address-link"
       aria-label="proceed-to-details-link"
-      to="/"
-      @click="setDetailsStepActive();"
+      data-cy="completed-step-details-trigger"
+      @click="setDetailsStepActive"
+      @keydown="openDropDown"
     >
       <div class="details-title-section">
         <div class="details-title-section-image">
-          <YourDetails fill="black" />
+          <YourDetails
+            fill="black"
+            :data-cy="'completed-step-details-icon'"
+          />
         </div>
         <div class="details-title-section-title">
-          <TextField :text="detailStepText" />
+          <TextField
+            :text="detailStepText"
+            :data-cy="'completed-step-details-title'"
+          />
         </div>
       </div>
       <AddressBlockShort
@@ -23,15 +30,17 @@
         <button
           class="button--blank edit-details-button"
           :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+          :data-cy="'completed-step-details-edit-button'"
         >
           <TextField
             class="edit-button-title"
             :text="$t('yourDetailsSection.editButton')"
+            :data-cy="'completed-step-details-edit-button-text'"
           />
-          <Edit />
+          <Edit :data-cy="'completed-step-details-edit-icon'"/>
         </button>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -75,9 +84,13 @@ export default {
     ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {
-      const element = document.getElementById('progress-bar');
-      element.classList.add('details-active');
-      this.goToYouDetails();
+      if (window.geneCheckout?.overrides?.setDetailsStepActive) {
+        window.geneCheckout.overrides.setDetailsStepActive();
+      } else {
+        const element = document.getElementById('progress-bar');
+        element.classList.add('shipping-active');
+        this.goToYouDetails();
+      }
     },
   },
 };

@@ -1,5 +1,7 @@
+import deepClone from '@/helpers/addresses/deepClone';
+
 export default (address) => {
-  const formattedAddress = address;
+  const formattedAddress = deepClone(address);
   delete formattedAddress.id;
   delete formattedAddress.default_shipping;
   delete formattedAddress.default_billing;

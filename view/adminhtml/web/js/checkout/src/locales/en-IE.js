@@ -135,8 +135,8 @@ export default {
   errorMessages: {
     addressWrongError: 'Please check your address format.',
     sanitiseError: 'Invalid character entered',
-    firstNameErrorMessage: 'Please enter a valid firstname',
-    lastNameErrorMessage: 'Please enter a valid lastname',
+    firstNameErrorMessage: 'Please enter a valid first name',
+    lastNameErrorMessage: 'Please enter a valid last name',
     emailErrorMessage: 'Please enter a valid email address',
     phoneErrorMessage: 'Not a valid Phone Number',
     passwordHelpText: 'Minimum 8 characters and must include at least three character classes '

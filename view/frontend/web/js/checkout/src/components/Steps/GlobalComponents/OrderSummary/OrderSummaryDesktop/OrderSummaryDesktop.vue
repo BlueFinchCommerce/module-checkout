@@ -1,12 +1,12 @@
 <template>
   <div class="order-summary-desktop">
-    <PromotionComponent />
-    <CouponDiscount />
-    <GiftCardDiscount />
+    <PromotionComponent :data-cy="deviceType" />
+    <CouponDiscount :data-cy="deviceType" />
+    <GiftCardDiscount :data-cy="deviceType" />
     <div class="order-summary-desktop-items">
-      <OrderSummaryItem/>
+      <OrderSummaryItem :data-cy="deviceType"/>
     </div>
-    <OrderSummaryTotal/>
+    <OrderSummaryTotal :data-cy="deviceType" />
   </div>
 </template>
 <script>
@@ -26,6 +26,11 @@ export default {
     PromotionComponent,
     GiftCardDiscount,
     CouponDiscount,
+  },
+  data() {
+    return {
+      deviceType: 'desktop',
+    };
   },
 };
 </script>

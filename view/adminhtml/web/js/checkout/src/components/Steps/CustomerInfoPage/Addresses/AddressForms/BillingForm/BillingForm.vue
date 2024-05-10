@@ -14,24 +14,10 @@
         />
       </div>
 
-      <div class="address-block__title"
-           v-if="customer.addresses.length > 0
-           && (!selected[address_type].same_as_shipping && !isClickAndCollect)
-           || cart.is_virtual">
-       <div class="address-block__title-with-icon">
-         <BillingAddressIcon/>
-         <TextField
-           class="address-block__title"
-           :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
-         />
-       </div>
-        <div class="divider-line"></div>
-      </div>
-
       <AddressList
         v-if="emailEntered && customer.addresses.length
           && (!selected[address_type].same_as_shipping || cart.is_virtual)"
-        :display-title="false"
+        :display-title="true"
         address-type="billing"
       />
 
@@ -77,7 +63,7 @@
         <Locate />
         <TextField
           class="address-block__title"
-          :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
+          :text="newAddressText"
         />
         <div class="divider-line"></div>
       </div>
@@ -123,7 +109,6 @@ import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressLi
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 
 // Helpers
@@ -132,7 +117,6 @@ import deepClone from '@/helpers/addresses/deepClone';
 export default {
   name: 'BillingForm',
   components: {
-    BillingAddressIcon,
     TextField,
     AddressForm,
     AddressBlock,
@@ -157,6 +141,8 @@ export default {
       address_type: 'billing',
       customerInfoValidation: false,
       savedAddressActive: false,
+      newAddressText: '',
+      newAddressTextId: 'gene-bettercheckout-new-address-text',
     };
   },
   computed: {
@@ -164,6 +150,15 @@ export default {
     ...mapState(useConfigStore, ['addressFinder']),
     ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
+  },
+  mounted() {
+    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+
+    document.addEventListener(this.newAddressTextId, this.setNewAddressText);
+  },
+  unmounted() {
+    document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -193,6 +188,9 @@ export default {
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;
       this.$emit('billingInfoFull', value);
+    },
+    setNewAddressText(event) {
+      this.newAddressText = event?.detail?.value || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
     },
   },
 };

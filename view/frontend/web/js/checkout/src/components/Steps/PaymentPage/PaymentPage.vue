@@ -24,10 +24,12 @@
               <Payment
                 class="braintree-payment__icon"
                 fill="black"
+                :data-cy="'saved-payment-icon'"
               />
               <TextField
                 class="braintree-payment__header"
                 :text="storedStepText"
+                :data-cy="'saved-payment-title'"
               />
               <div class="divider-line" />
             </div>
@@ -49,13 +51,22 @@
             <Payment
               class="braintree-payment__icon"
               fill="black"
+              :data-cy="'select-payment-method-icon'"
             />
             <TextField
               class="braintree-payment__header"
               :text="getPaymentStepTitle"
+              :data-cy="'select-payment-method-title'"
             />
             <div class="divider-line" />
           </div>
+
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
+
           <AdyenDropIn
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
@@ -71,11 +82,6 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <component
-            :is="additionalPaymentMethod"
-            v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
-          />
         </template>
         <FreeMOCheckPayment
           v-else
@@ -91,6 +97,7 @@
 // Stores
 import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -181,6 +188,7 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.getCart();
+    await this.getVaultedMethods();
 
     // The titles need to be reflective of the state we're in.
     this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
@@ -205,6 +213,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),

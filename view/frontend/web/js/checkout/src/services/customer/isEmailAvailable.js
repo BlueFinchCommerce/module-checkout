@@ -8,5 +8,5 @@ export default async (email) => {
 } `;
 
   return graphQlRequest(request)
-    .then((response) => response.data.isEmailAvailable.is_email_available);
+    .then((response) => response.data?.isEmailAvailable?.is_email_available || true);
 };

@@ -3,6 +3,7 @@
     id="braintree-google-pay"
     ref="braintreeGooglePay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-braintreeGooglePay'"
   />
 </template>
 
@@ -210,15 +211,21 @@ export default {
     onPaymentDataChanged(data) {
       return new Promise((resolve) => {
         const address = {
+          city: data.shippingAddress.locality,
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
           region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
           street: ['0'],
+          telephone: '000000000',
+          firstname: 'UNKNOWN',
+          lastname: 'UNKNOWN',
         };
 
         getShippingMethods(address).then(async (response) => {
-          const shippingMethods = response.map((shippingMethod) => {
+          const methods = response.shipping_addresses[0].available_shipping_methods;
+
+          const shippingMethods = methods.map((shippingMethod) => {
             const description = shippingMethod.carrier_title
               ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
               : formatPrice(shippingMethod.price_incl_tax.value);
@@ -246,10 +253,12 @@ export default {
           }
 
           const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? response[0]
-            : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
+            ? methods[0]
+            : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
 
           await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+          this.setLoadingState(true);
+
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
               defaultSelectedOptionId: selectedShipping.method_code,
@@ -336,6 +345,7 @@ export default {
     },
 
     async handleThreeDs(response) {
+      this.setLoadingState(true);
       const billingAddress = this.mapAddress(
         response.paymentMethodData.info.billingAddress,
         response.email,

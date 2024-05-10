@@ -326,7 +326,7 @@
         padding: var(--logged-in-email-padding, var(--indent__s));
         margin-top: var(--logged-in-email-margin-top, 0);
         text-align: center;
-        background-color: var(--color__primary-grey6);
+        background-color: var(--input__background-color-logged-in);
         font-weight: var(--font-weight__bold);
         font-size: var(--font__m);
         color: var(--font__color-light);
@@ -526,14 +526,14 @@
   .error-message {
     border-width: var(--error-message-border-width, var(--notification__border-weight));
 
+    &-margin {
+      margin: var(--notification__margin);
+    }
+
     &-attached {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
-      margin-top: -12px;
-    }
-
-    &-margin {
-      margin: var(--notification__margin);
+      margin-top: -2px;
     }
   }
 

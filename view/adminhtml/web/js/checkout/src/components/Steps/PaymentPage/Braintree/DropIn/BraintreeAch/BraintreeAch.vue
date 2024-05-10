@@ -99,6 +99,7 @@
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
             :text="$t('braintree.ach.proof')"
           />
+          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <Agreements id="braintreeAch" />
           <Recaptcha
             v-if="isRecaptchaVisible('placeOrder')"
@@ -106,7 +107,6 @@
             location="braintreeAch"
           />
           <PrivacyPolicy />
-          <TextField :text="$t('braintree.ach.terms', { websiteName })" />
           <MyButton
             label="Pay"
             primary

@@ -28,6 +28,7 @@ import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
 import pennies from '@/services/payments/penniesCharityBox';
 
 import getCartItems from '@/helpers/cart/getCartItems';
+import getCartPrices from '@/helpers/cart/getCartPrices';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
@@ -39,6 +40,7 @@ export default defineStore('cartStore', {
     id: null,
     cart: {
       items: getCartItems(),
+      prices: getCartPrices(),
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -181,6 +183,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await updateCartItemQuantity(updateItem, change);
         this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         // Add the error message to the cart item.
         const { items } = this.cart;
@@ -226,6 +229,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await removeCartItem(product.uid);
         this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         console.warn('Unable to remove cart item', error.message);
       }
@@ -250,6 +254,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addDiscountCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           discountErrorMessage: null,
@@ -273,6 +278,7 @@ export default defineStore('cartStore', {
         discountCodeDataLayer('discountCodeRemoved');
         const cart = await removeDiscountCode();
 
+        this.emitUpdate();
         this.setData({
           cart,
           discountErrorMessage: null,
@@ -294,6 +300,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addGiftCardCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           giftCardErrorMessage: null,
@@ -317,6 +324,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await removeGiftCardCode(code);
 
+        this.emitUpdate();
         this.setData({
           cart,
           giftCardErrorMessage: null,

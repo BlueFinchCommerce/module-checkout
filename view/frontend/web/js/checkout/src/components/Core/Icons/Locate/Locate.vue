@@ -1,5 +1,9 @@
 <template>
-  <img :src="deliverySvgIcon" :alt="deliverySvgIcon" />
+  <img
+    :src="deliverySvgIcon"
+    :alt="deliverySvgIcon"
+    :data-cy="dataCy ? dataCy : 'delivery-icon'"
+  />
 </template>
 
 <script>
@@ -23,6 +27,9 @@ export default {
       type: String,
     },
     ariaLabel: {
+      type: String,
+    },
+    dataCy: {
       type: String,
     },
   },

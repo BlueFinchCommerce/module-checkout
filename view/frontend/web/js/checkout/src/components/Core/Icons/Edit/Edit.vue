@@ -3,6 +3,7 @@
     :style="style"
     :role="role"
     :aria-label="ariaLabel"
+    data-cy="edit-icon"
     width="24"
     height="24"
     viewBox="0 0 24 24"

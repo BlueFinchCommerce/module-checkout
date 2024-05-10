@@ -3,6 +3,7 @@
     id="braintree-drop-in"
     ref="braintreeContainer"
     class="braintree-drop-in"
+    data-cy="braintree-drop-in-container"
   />
   <teleport
     v-if="additionalComponents !== ''"
@@ -24,6 +25,7 @@
       :checked="storeMethod"
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
       :text="$t('braintree.storePayment')"
+      :data-cy="'braintree-save-payment-card-checkbox'"
     />
     <Agreements id="braintreeNew" />
     <Recaptcha
@@ -38,6 +40,7 @@
       label="Pay"
       primary
       @click="startPayment()"
+      :data-cy="'braintree-new-card-pay-button'"
     />
   </teleport>
 </template>
@@ -120,6 +123,7 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.createClientToken();
+    await this.getCart();
 
     const total = (this.cartGrandTotal / 100).toString();
 
@@ -241,6 +245,7 @@ export default {
       'escapeNonAsciiCharacters',
       'getPayPalLineItems',
     ]),
+    ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
@@ -355,10 +360,6 @@ export default {
 
       this.attachEventListeners(instance);
       this.movePaymentContainers();
-
-      // Open the first payment method.
-      [this.selectedMethod] = this.paymentOptionPriority;
-      this.setToCurrentViewId();
 
       this.paymentEmitter.emit('braintreeInitComplete');
 

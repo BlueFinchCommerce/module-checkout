@@ -4,7 +4,7 @@ import shoulder from '@/icons/products/shoulder.jpg';
 
 export default () => [
   {
-    email: 'bettercheckout@gene.co.uk',
+    email: 'hello@gene.co.uk',
     applied_gift_cards: [
       {
         code: '035K7XUJDOWJ',

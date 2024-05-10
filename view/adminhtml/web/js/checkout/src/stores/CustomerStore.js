@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia';
+import { postcodeValidator, postcodeValidatorExistsForCountry } from 'postcode-validator';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import getCustomerInformation from '@/services/customer/getCustomerInformation';
 import getDummyCustomerDetails from '@/helpers/dummyContent/getDummyCustomerDetails';
+import getDummySavedAddresses from '@/helpers/dummyContent/getDummySavedAddresses';
 import isEmailAvailable from '@/services/customer/isEmailAvailable';
 import login from '@/services/customer/login';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
@@ -21,16 +23,22 @@ import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
 
-import { postcodeValidator, postcodeValidatorExistsForCountry } from 'postcode-validator';
-
 export default defineStore('customerStore', {
   state: () => ({
-    customer: { addresses: [], email: '', ...getUrlTokens },
+    customer: {
+      type: '', // Only for UI designer
+      loggedIn: false, // Only for UI designer
+      registered: undefined, // Only for UI designer
+      addresses: getDummySavedAddresses(),
+      email: '',
+      ...getUrlTokens,
+    },
     hasPreviouslyOrderedFpf: false,
     emailEntered: false,
+    currentStep: '', // Only for UI designer
     selected: {
       shipping: getDummyCustomerDetails(),
-      billing: getDummyCustomerDetails(true),
+      billing: getDummyCustomerDetails(false),
       formErrors: {
         billing: [],
         shipping: [],
@@ -91,6 +99,62 @@ export default defineStore('customerStore', {
   actions: {
     setData(data) {
       this.$patch(data);
+    },
+
+    dummyLogIn(step) {
+      this.setData({
+        customer: {
+          email: 'hello@gene.co.uk',
+          loggedIn: true,
+        },
+        emailEntered: true,
+        currentStep: step,
+      });
+    },
+
+    dummyLogOut(step) {
+      this.setData({
+        customer: {
+          email: '',
+          loggedIn: false,
+        },
+        emailEntered: false,
+        currentStep: step,
+      });
+    },
+
+    dummyUserType(userType) {
+      if (userType === 'NoUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: '',
+            loggedIn: false,
+            registered: undefined,
+          },
+          emailEntered: false,
+        });
+      } else if (userType === 'GuestUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: 'guest@gene.co.uk',
+            loggedIn: false,
+            registered: false,
+          },
+          emailEntered: true,
+        });
+      } else if (userType === 'RegisteredUser') {
+        this.setData({
+          customer: {
+            type: userType,
+            email: 'hello@gene.co.uk',
+            loggedIn: false,
+            registered: true,
+          },
+          emailEntered: true,
+        });
+      }
     },
 
     setAddressToStore(address, addressType) {

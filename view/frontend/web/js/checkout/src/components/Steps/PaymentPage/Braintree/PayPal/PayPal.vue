@@ -3,6 +3,7 @@
     id="braintree-paypal"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-braintreePayPal'"
   />
 </template>
 
@@ -111,6 +112,7 @@ export default {
             flow: 'checkout',
             currency: this.currencyCode,
             enableShippingAddress: !this.cart.is_virtual,
+            locale: this.locale,
             intent: 'capture',
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
@@ -129,16 +131,22 @@ export default {
           },
           onShippingChange: async (data) => {
             const address = {
+              city: data.shipping_address.city,
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
               region_id: this.getRegionId(data.shipping_address.country_code, data.shipping_address.state),
               street: ['0'],
+              telephone: '000000000',
+              firstname: 'UNKNOWN',
+              lastname: 'UNKNOWN',
             };
-            const shippingMethods = await getShippingMethods(address);
+
+            const result = await getShippingMethods(address);
+            const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
-            const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+            const fShippingMethods = methods.filter((sid) => sid.id !== 'nominated_delivery');
 
             const selectedShipping = !data.selected_shipping_option
               ? fShippingMethods[0]
@@ -226,7 +234,7 @@ export default {
         .then(() => ({ payload, email: payload.details.email }));
     },
 
-    makePayment([{ payload, email }]) {
+    makePayment({ payload, email }) {
       const payment = {
         email,
         paymentMethod: {
@@ -256,7 +264,7 @@ export default {
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
-        telephone,
+        telephone: telephone !== undefined ? telephone : '000000000',
         region: {
           ...(address.state ? { region: address.state } : {}),
           ...(regionId ? { region_id: regionId } : {}),

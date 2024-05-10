@@ -6,8 +6,12 @@
       'error-message-margin': margin,
     }"
     :style="style"
+    :data-cy="dataCy ? dataCy : 'error-message'"
   >
-    <TextField :text="message" />
+    <TextField
+      :text="message"
+      :data-cy="dataCy ? `${dataCy}-text` : 'error-message-text'"
+       />
   </div>
 </template>
 <script>
@@ -20,6 +24,9 @@ export default {
     TextField,
   },
   props: {
+    dataCy: {
+      type: String,
+    },
     message: {
       type: String,
       require: true,

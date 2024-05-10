@@ -10,28 +10,15 @@
           v-if="showCheckbox && !cart.is_virtual"
           :checked="selected[address_type].same_as_shipping"
           :text="$t('billingForm.notSameAddress')"
+          :data-cy="'billing-address-checkbox'"
           @change="toggleBillingAddress"
         />
-      </div>
-
-      <div class="address-block__title"
-           v-if="customer.addresses.length > 0
-           && (!selected[address_type].same_as_shipping && !isClickAndCollect)
-           || cart.is_virtual">
-       <div class="address-block__title-with-icon">
-         <BillingAddressIcon/>
-         <TextField
-           class="address-block__title"
-           :text="$t('yourDetailsSection.deliverySection.billingAddressTitle')"
-         />
-       </div>
-        <div class="divider-line"></div>
       </div>
 
       <AddressList
         v-if="emailEntered && customer.addresses.length
           && (!selected[address_type].same_as_shipping || cart.is_virtual)"
-        :display-title="false"
+        :display-title="true"
         address-type="billing"
       />
 
@@ -46,12 +33,14 @@
         <TextField
           class="address-block__title selected"
           :text="$t('yourDetailsSection.deliverySection.selectedBillingAddressTitle')"
+          :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
           <article>
             <AddressBlock
               :address_type="address_type"
               :address="selected[address_type]"
+              :data-cy="'selected'"
             />
           </article>
         </div>
@@ -63,24 +52,26 @@
           @click.prevent="editBillingAddress"
           @keydown.enter.prevent="editBillingAddress"
         >
-          <Edit />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
         </div>
       </div>
     </div>
 
-    <template v-if="
-       ((customer.addresses.length > 0
-       ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
-      || (selected[address_type].id === 'custom' && selected[address_type].editing))
-      && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)">
-
+    <template
+      v-if="
+        ((customer.addresses.length > 0
+          ? (!selected[address_type].id && !savedAddressActive) : !selected[address_type].id)
+          || (selected[address_type].id === 'custom' && selected[address_type].editing))
+          && (!selected[address_type].same_as_shipping || isClickAndCollect || cart.is_virtual)"
+    >
       <div class="address-block__title-with-icon billing">
-        <Locate />
+        <Locate :data-cy="`${address_type}-new-address-icon`" />
         <TextField
           class="address-block__title"
-          :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
+          :text="newAddressText"
+          :data-cy="`${address_type}-new-address-title`"
         />
-        <div class="divider-line"></div>
+        <div class="divider-line" />
       </div>
       <NameFields
         :address_type="address_type"
@@ -93,6 +84,7 @@
             v-if="!selected[address_type].id
               || (selected[address_type].id === 'custom' && selected[address_type].editing)"
             :address_type="address_type"
+            :data-cy="address_type"
           />
         </div>
 
@@ -124,7 +116,6 @@ import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressLi
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
-import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 
 // Helpers
@@ -133,7 +124,6 @@ import deepClone from '@/helpers/addresses/deepClone';
 export default {
   name: 'BillingForm',
   components: {
-    BillingAddressIcon,
     TextField,
     AddressForm,
     AddressBlock,
@@ -158,6 +148,8 @@ export default {
       address_type: 'billing',
       customerInfoValidation: false,
       savedAddressActive: false,
+      newAddressText: '',
+      newAddressTextId: 'gene-bettercheckout-new-address-text',
     };
   },
   computed: {
@@ -166,21 +158,32 @@ export default {
     ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
   },
+  mounted() {
+    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+  },
   methods: {
     ...mapActions(useCustomerStore, [
       'setAddressAsEditing',
       'createNewAddress',
       'submitCustom',
       'setAddressAsCustom',
+      'setAddressToStore',
     ]),
     toggleBillingAddress(event) {
       if (!event.target.checked) {
         if (this.customer.addresses.length > 0) {
           this.savedAddressActive = true;
         }
-        this.createNewAddress(this.address_type);
+        if (this.cart.billing_address) {
+          this.setAddressToStore(this.cart.billing_address, this.address_type);
+          this.setAddressAsEditing(this.address_type, false);
+          this.setAddressAsCustom(this.address_type);
+        } else {
+          this.createNewAddress(this.address_type);
+          this.setAddressAsEditing(this.address_type, true);
+        }
         this.selected[this.address_type].same_as_shipping = false;
-        this.setAddressAsEditing(this.address_type, true);
       } else {
         this.savedAddressActive = false;
         this.selected[this.address_type] = deepClone(this.selected.shipping);

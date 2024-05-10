@@ -6,6 +6,8 @@
             <image id="mini_cart_product_thumbnail" type="thumbnail">
                 <width>150</width>
                 <height>150</height>
+                <aspect_ratio>true</aspect_ratio>
+                <frame>false</frame>
             </image>
         </images>
     </media>

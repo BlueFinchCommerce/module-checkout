@@ -1,47 +1,47 @@
 {
-  "name": "gene/module-better-checkout",
-  "description": "",
-  "type": "magento2-module",
-  "version": "0.0.1",
-  "autoload": {
-    "files": [
-      "registration.php"
-    ],
-    "psr-4": {
-      "Gene\\BetterCheckout\\": ""
-    }
-  },
-  "require": {
-    "php": "~8.1.0||~8.2.0",
-    "magento/framework": "*",
-    "magento/module-checkout": "*",
-    "magento/module-checkout-agreements": "*",
-    "magento/module-quote": "*"
-  },
-  "require-dev": {
-    "magento/magento-coding-standard": "*",
-    "phpcompatibility/php-compatibility": "*",
-    "phpunit/phpunit": "*",
-    "phpstan/phpstan": "^1.9",
-    "squizlabs/php_codesniffer": "^3.6",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
-  },
-  "repositories": [
-      {
-          "type": "composer",
-          "url": "https://repo.magento.com/"
-      },
-      {
-          "type": "composer",
-          "url": "https://repo.packagist.com/gene/"
-      }
-  ],
-  "config": {
-    "allow-plugins": {
-      "magento/composer-dependency-version-audit-plugin": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "gene/module-better-checkout",
+    "description": "",
+    "type": "magento2-module",
+    "version": "0.0.1",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Gene\\BetterCheckout\\": ""
+        }
+    },
+    "require": {
+        "php": "~8.1.0||~8.2.0",
+        "magento/framework": "*",
+        "magento/module-checkout": "*",
+        "magento/module-checkout-agreements": "*",
+        "magento/module-quote": "*"
+    },
+    "require-dev": {
+        "magento/magento-coding-standard": "*",
+        "phpcompatibility/php-compatibility": "*",
+        "phpunit/phpunit": "*",
+        "phpstan/phpstan": "^1.9",
+        "squizlabs/php_codesniffer": "^3.6",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+    "repositories": {
+        "0": {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        "1": {
+            "type": "composer",
+            "url": "https://repo.packagist.com/gene/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "magento/composer-dependency-version-audit-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

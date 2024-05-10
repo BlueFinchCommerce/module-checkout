@@ -2,6 +2,7 @@
   <div
     id="adyen-google-pay"
     :class="!googlePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-adyenGooglePay'"
   />
   <div
     v-show="threeDSVisible"
@@ -49,7 +50,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, [
@@ -67,13 +67,6 @@ export default {
 
     await this.getInitialConfig();
     await this.getCart();
-
-    // Early return is Adyen isn't available.
-    if (!this.isAdyenAvailable) {
-      this.googlePayLoaded = true;
-      this.removeExpressMethod(this.key);
-      return;
-    }
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
     const googlePayMethod = this.getGooglePayMethod(paymentMethodsResponse);
@@ -130,10 +123,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
-    ...mapActions(useAdyenStore, [
-      'getIsAdyenAvailable',
-      'getPaymentMethodsResponse',
-    ]),
+    ...mapActions(useAdyenStore, ['getPaymentMethodsResponse']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -209,6 +199,7 @@ export default {
         onAuthorized: this.handeOnAuthorized,
         onClick: (resolve, reject) => this.onClick(resolve, reject, googlePayConfig.type),
         onSubmit: () => {},
+        onError: () => { this.setLoadingState(false); },
       };
     },
 
@@ -224,21 +215,29 @@ export default {
 
       expressPaymentOnClickDataLayer(type);
 
+      this.setLoadingState(true);
+
       return resolve();
     },
 
     onPaymentDataChanged(data) {
       return new Promise((resolve) => {
         const address = {
+          city: data.shippingAddress.locality,
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
           region_id: this.getRegionId(data.shippingAddress.countryCode, data.shippingAddress.administrativeArea),
           street: ['0'],
+          telephone: '000000000',
+          firstname: 'UNKNOWN',
+          lastname: 'UNKNOWN',
         };
 
         getShippingMethods(address).then(async (response) => {
-          const shippingMethods = response.map((shippingMethod) => {
+          const methods = response.shipping_addresses[0].available_shipping_methods;
+
+          const shippingMethods = methods.map((shippingMethod) => {
             const description = shippingMethod.carrier_title
               ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
               : formatPrice(shippingMethod.price_incl_tax.value);
@@ -266,10 +265,12 @@ export default {
           }
 
           const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? response[0]
-            : response.find(({ method_code: id }) => id === data.shippingOptionData.id) || response[0];
+            ? methods[0]
+            : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
 
           await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+          this.setLoadingState(true);
+
           const paymentDataRequestUpdate = {
             newShippingOptionParameters: {
               defaultSelectedOptionId: selectedShipping.method_code,

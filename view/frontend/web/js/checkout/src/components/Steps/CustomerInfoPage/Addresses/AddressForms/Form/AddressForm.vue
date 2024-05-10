@@ -18,6 +18,7 @@
             'addressField.label')"
             autocomplete="address-line1"
             required
+            :data-cy="`${address_type}-address-one-input`"
             @input="validateStreet(selectedAddressType.street[0])"
             @focusout="validateStreet(selectedAddressType.street[0])"
           />
@@ -42,6 +43,7 @@
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'addressField.unrequiredLabel')"
             autocomplete="address-line2"
+            :data-cy="`${address_type}-address-two-input`"
             @input="validateStreet2(selectedAddressType.street[1])"
             @focusout="validateStreet2(selectedAddressType.street[1])"
           />
@@ -67,6 +69,7 @@
             'cityField.label')"
             required
             autocomplete="address-level2"
+            :data-cy="`${address_type}-city-input`"
             @input="validateCity(selectedAddressType.city)"
             @focusout="validateCity(selectedAddressType.city)"
           />
@@ -92,6 +95,7 @@
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'regionField.label')"
             autocomplete="address-level1"
+            :data-cy="`${address_type}-region-input`"
             :required="getRegionRequired(address_type)"
             @input="validateRegion(selectedAddressType.region)"
             @focusout="validateRegion(selectedAddressType.region)"
@@ -111,6 +115,7 @@
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
           'regionField.label')"
           :required="getRegionRequired(address_type)"
+          :data-cy="`${address_type}-state-select`"
           @change="setRegion($event)"
         />
         <!-- Postcode -->
@@ -126,6 +131,7 @@
             :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'postCodeField.label')"
             autocomplete="postal-code"
+            :data-cy="`${address_type}-postcode-input`"
             :required="postcodeRequired(selectedAddressType.country_code)"
             @input="validatePostcode(address_type, true)"
             @focusout="validatePostcode(address_type, true)"
@@ -148,6 +154,7 @@
           :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
           :selected-option="$t('yourDetailsSection.selectPlaceholder')"
           required
+          :data-cy="`${address_type}-country-select`"
           @change="countryUpdated($event)"
         />
         <ErrorMessage
@@ -163,6 +170,7 @@
             :id="`${address_type}-save-in-address-book`"
             :text="$t('saveNewAddress')"
             :checked="selectedAddressType.save_in_address_book === 1"
+            :data-cy="`${address_type}-address-save-checkbox`"
             @change="handleSaveInAddressBookChange"
           />
         </div>
@@ -175,6 +183,7 @@
             :disabled="!buttonEnabled"
             :label="$t('yourDetailsSection.deliverySection' +
               '.addressForm.saveAddressButton')"
+            :data-cy="`${address_type}-address-use-button`"
           />
         </div>
       </form>
@@ -256,10 +265,7 @@ export default {
   },
   created() {
     this.setupCountry();
-
-    if (!this.selected[this.address_type].region.region) {
-      this.updateRegionRequired(this.address_type);
-    }
+    this.updateRegionRequired(this.address_type);
 
     const customerStore = useCustomerStore();
     customerStore.$subscribe((mutation) => {
@@ -279,6 +285,7 @@ export default {
       'setAddressAsEditing',
       'addAddressError',
       'removeAddressError',
+      'clearRegion',
       'updateRegionRequired',
       'validateNameField',
       'validatePhone',
@@ -312,6 +319,7 @@ export default {
     },
 
     countryUpdated() {
+      this.clearRegion(this.address_type);
       this.updateRegionRequired(this.address_type);
       this.validatePostcode(this.address_type, true);
     },
@@ -401,7 +409,7 @@ export default {
           ) && this.validateNameField(
             addressType,
             'Last name',
-            this.selected[addressType].firstname,
+            this.selected[addressType].lastname,
           ) && this.validatePhone(
             addressType,
             this.selected[addressType].telephone,

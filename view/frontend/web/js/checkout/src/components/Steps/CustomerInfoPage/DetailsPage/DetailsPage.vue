@@ -3,7 +3,10 @@
     <div class="details-form-header"
          v-show="isExpressPaymentsVisible">
       <div class="instantCheckout-block">
-        <TextField :text="instantCheckoutText" />
+        <TextField
+          :text="instantCheckoutText"
+          :data-cy="'instant-checkout-title'"
+        />
       </div>
       <Agreements id="detailsPage" />
       <Recaptcha
@@ -17,11 +20,26 @@
           :attached="false"
           :margin="false"
         />
-        <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
-        <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
-        <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
-        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
+        <BraintreeGooglePay
+          v-if="isPaymentMethodAvailable('braintree_googlepay')"
+          :key="`braintreeGooglePay-${storedKey}`"
+        />
+        <BraintreeApplePay
+          v-if="isPaymentMethodAvailable('braintree_applepay')"
+          :key="`braintreeApplePay-${storedKey}`"
+        />
+        <BraintreePayPal
+          v-if="isPaymentMethodAvailable('braintree_paypal')"
+          :key="`braintreePayPal-${storedKey}`"
+        />
+        <AdyenGooglePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenGooglePay-${storedKey}`"
+        />
+        <AdyenApplePay
+          v-if="isPaymentMethodAvailable('adyen_hpp')"
+          :key="`adyenApplePay-${storedKey}`"
+        />
       </div>
     </div>
     <div class="details-form-body">
@@ -96,15 +114,17 @@
             class="details-form-title">
             <YourDetails fill="black" />
             <TextField
-              :text="$t('yourDetailsSection.title')"
+              :text="yourDetailsText"
+              :data-cy="'your-details-title'"
             />
             <div class="divider-line"></div>
           </div>
           <div v-else class="details-form-title saved-address">
-            <Locate />
+            <Locate :data-cy="`${address_type}-new-address-icon`" />
             <TextField
               class="address-block__title"
-              :text="$t('yourDetailsSection.deliverySection.newAddressTitle')"
+              :text="newAddressText"
+              :data-cy="`${address_type}-new-address-title`"
             />
             <div class="divider-line"></div>
           </div>
@@ -117,10 +137,11 @@
             v-if="isAddressBlockVisible"
             class="delivery-section-title"
           >
-            <Locate />
+            <Locate :data-cy="`${address_type}-where-to-icon`" />
             <div class="delivery-section-title-text">
               <TextField
-                :text="$t('yourDetailsSection.deliverySection.title')"
+                :text="deliverWhereText"
+                :data-cy="`${address_type}-where-to-icon`"
               />
             </div>
             <div class="divider-line"></div>
@@ -131,6 +152,7 @@
               <AddressFinder
                 v-if="!selected[address_type].id
                   || (selected[address_type].id === 'custom' && selected[address_type].editing)"
+                :data-cy="address_type"
               />
             </div>
           </div>
@@ -143,11 +165,11 @@
               && addressFinder.enabled"
             class="manually-button"
             :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :data-cy="'enter-address-manually-link'"
             @click.prevent="editAddress"
           />
         </div>
       </div>
-
       <div
         v-if="emailEntered && !selected[address_type].editing
           && !isSavedAddressSelected
@@ -161,12 +183,14 @@
         <TextField
           class="address-block__title selected"
           :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
+          :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
           <article>
             <AddressBlock
               :address_type="`shipping`"
               :address="selected[address_type]"
+              :data-cy="'selected'"
             />
           </article>
         </div>
@@ -178,7 +202,7 @@
           @keydown.enter.prevent="editAddress"
           tabindex="0"
         >
-          <Edit />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
         </div>
       </div>
 
@@ -198,8 +222,9 @@
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
-        :label="$t('yourDetailsSection.deliverySection.toShippingButton')"
+        :label="proceedToShippingText"
         :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
+        :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
       <MyButton
@@ -208,6 +233,7 @@
         primary
         :label="proceedToPayText"
         :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
     </div>
@@ -306,6 +332,14 @@ export default {
       storedKey: 0,
       instantCheckoutText: '',
       instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      yourDetailsText: '',
+      yourDetailsTextId: 'gene-bettercheckout-your-details-text',
+      deliverWhereText: '',
+      deliverWhereTextId: 'gene-bettercheckout-deliver-where-text',
+      newAddressText: '',
+      newAddressTextId: 'gene-bettercheckout-new-address-text',
+      proceedToShippingText: '',
+      proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
       buttonEnabled: false,
@@ -324,7 +358,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
-    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
@@ -344,7 +378,14 @@ export default {
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
+    || this.$t('yourDetailsSection.deliverySection.title');
+    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
+    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
 
     await this.getInitialConfig();
     await this.getCart();
@@ -361,6 +402,10 @@ export default {
 
       this[types[type]] = first && last && phone;
     });
+
+    if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
+      this.setAddressAsCustom(this.address_type);
+    }
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -393,7 +438,7 @@ export default {
       ) && this.validateNameField(
         addressType,
         'Last name',
-        this.selected[addressType].firstname,
+        this.selected[addressType].lastname,
       ) && this.validatePhone(
         addressType,
         this.selected[addressType].telephone,

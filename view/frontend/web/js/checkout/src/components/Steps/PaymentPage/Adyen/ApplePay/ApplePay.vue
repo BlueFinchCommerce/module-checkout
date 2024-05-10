@@ -1,7 +1,9 @@
 <template>
   <div
+    v-if="applePayAvailable"
     id="adyen-apple-pay"
     :class="!applePayLoaded ? 'text-loading' : ''"
+    :data-cy="'instant-checkout-adyenApplePay'"
   />
 </template>
 
@@ -34,6 +36,7 @@ export default {
 
   data() {
     return {
+      applePayAvailable: false,
       applePayTotal: '',
       applPaySubtotaltitle: '',
       applePayShippingStepTitle: '',
@@ -44,7 +47,7 @@ export default {
   },
 
   computed: {
-    ...mapState(useAdyenStore, ['isAdyenAvailable', 'getAdyenClientKey']),
+    ...mapState(useAdyenStore, ['getAdyenClientKey']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartDiscountTotal']),
     ...mapState(useShippingMethodsStore, ['shippingMethods', 'selectedMethod']),
     ...mapState(useConfigStore, [
@@ -59,22 +62,17 @@ export default {
   },
 
   async created() {
-    if (window.ApplePaySession && window.ApplePaySession.canMakePayments) {
-      this.addExpressMethod(this.key);
-      this.applePayLoaded = false;
-    } else {
+    // If the browser doesn't support Apple Pay then return early.
+    if (!window.ApplePaySession || !window.ApplePaySession.canMakePayments) {
       return;
     }
+
+    this.addExpressMethod(this.key);
+    this.applePayLoaded = false;
+    this.applePayAvailable = true;
 
     await this.getInitialConfig();
     await this.getCart();
-
-    // Early return is Adyen isn't available.
-    if (!this.isAdyenAvailable) {
-      this.applePayLoaded = true;
-      this.removeExpressMethod(this.key);
-      return;
-    }
 
     const paymentMethodsResponse = await this.getPaymentMethodsResponse();
 
@@ -251,13 +249,17 @@ export default {
         country_code: data.shippingContact.countryCode.toUpperCase(),
         postcode: data.shippingContact.postalCode,
         street: ['0'],
+        telephone: '000000000',
+        firstname: 'UNKNOWN',
+        lastname: 'UNKNOWN',
       };
 
       this.address = address;
 
       const result = await getShippingMethods(address);
+      const methods = result.shipping_addresses[0].available_shipping_methods;
 
-      const filteredMethods = result.filter(({ method_code: methodCode }) => (
+      const filteredMethods = methods.filter(({ method_code: methodCode }) => (
         methodCode !== 'nominated_delivery'
       ));
 

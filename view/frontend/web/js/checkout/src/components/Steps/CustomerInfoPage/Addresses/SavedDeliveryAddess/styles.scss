@@ -9,6 +9,7 @@
 
   &-link {
     color: var(--details-title-color, var(--button__link-font-color));
+    cursor: pointer;
     display: block;
     text-decoration: none;
     padding: var(--your-details-padding-desktop, 16px 20px);
@@ -88,7 +89,7 @@
         font-size: var(--steps-complete__font-size-sub--desktop);
       }
     }
-    
+
     .details-title-section {
       p {
         font-size: var(--steps-complete__font-size-title--desktop);

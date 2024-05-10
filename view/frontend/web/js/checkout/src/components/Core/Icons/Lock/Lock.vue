@@ -1,5 +1,5 @@
 <template>
-  <img :src="lockIconSvg" :alt="lockIconSvg" />
+  <img :src="lockIconSvg" :alt="lockIconSvg" data-cy="secure-icon" />
 </template>
 
 <script>

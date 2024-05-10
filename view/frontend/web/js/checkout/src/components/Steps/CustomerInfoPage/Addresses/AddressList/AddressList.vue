@@ -4,13 +4,16 @@
       v-if="displayTitle"
       class="delivery-section-title"
     >
-      <img
-        :src="savedAddressIconUrl"
-        alt="saved-address-icon"
-      >
+      <Shipping v-if="addressType === 'shipping'"
+        :data-cy="`saved-${addressType}-address-icon`"
+      />
+      <BillingAddressIcon v-if="addressType === 'billing'"
+        :data-cy="`saved-${addressType}-address-icon`"
+      />
       <div class="delivery-section-title-text">
         <TextField
           :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
+          :data-cy="`saved-${addressType}-address-title`"
         />
       </div>
       <div class="divider-line"></div>
@@ -23,13 +26,16 @@
         class="address-list__item"
         :class="{ active: item.id === selected[addressType].id }"
         @click="selectAddress(item)"
-        data-cy="ship-here"
+        :data-cy="`${addressType}-saved-address`"
         @keydown="selectAddress(item)"
       >
-        <Tick v-if="item.id === selected[addressType].id" />
+        <Tick v-if="item.id === selected[addressType].id"
+        :data-cy="`${addressType}-saved-address-active`"
+        />
         <TextField
           v-else-if="addressType ==='shipping'"
           class="ship-here"
+          :data-cy="`${addressType}-saved-address-ship-here`"
           :text="$t('yourDetailsSection.deliverySection.shipHere')"
         />
         {{ item.firstname }} {{ item.lastname }}<br><br>
@@ -45,7 +51,8 @@
         <MyButton
           type="button"
           secondary
-          :label="$t('addNewAddressBtn')"
+          :label="addNewAddressButtonText"
+          :data-cy="`${addressType}-add-new-address-button`"
           @click="newAddress"
         />
       </li>
@@ -58,10 +65,12 @@
 // stores
 import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useCartStore from '@/stores/CartStore';
 
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
-import promoSvg from '@/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg';
+import BillingAddressIcon from '@/components/Core/Icons/BillingAddressIcon/BillingAddressIcon.vue';
+import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -69,7 +78,6 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
-import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 export default {
   name: 'AddressList',
@@ -77,6 +85,8 @@ export default {
     TextField,
     Tick,
     MyButton,
+    BillingAddressIcon,
+    Shipping,
   },
   props: {
     addressType: {
@@ -92,21 +102,21 @@ export default {
     return {
       isShippingNewCTA: true,
       uniqueAddressList: [],
+      addNewAddressButtonText: '',
+      addNewAddressButtonTextId: 'gene-bettercheckout-addnewaddress-button-text',
     };
   },
   computed: {
     ...mapState(useCustomerStore, ['customer', 'selected']),
-    savedAddressIconUrl() {
-      return `${getStaticUrl(promoSvg)}`;
-    },
+    ...mapState(useCartStore, ['cart']),
   },
   watch: {
     addressType: {
       immediate: true,
       handler(newVal) {
         if (newVal === 'billing') {
-          // When the addressType changes to 'billing', select the first address
-          this.selectFirstAddress();
+          // When the addressType changes to 'billing', select the new billing address or the first address
+          this.selectCorrectAddress();
         }
       },
     },
@@ -134,6 +144,8 @@ export default {
         this.uniqueAddressList.push(address);
       }
     });
+
+    this.addNewAddressButtonText = window.geneCheckout?.[this.addNewAddressButtonTextId] || this.$t('addNewAddressBtn');
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -144,8 +156,10 @@ export default {
       'setAddressAsCustom',
       'createNewBillingAddress',
     ]),
-    selectFirstAddress() {
-      if (this.customer.addresses.length > 0) {
+    selectCorrectAddress() {
+      if (this.cart.billing_address) {
+        this.selectAddress(this.cart.billing_address);
+      } else if (this.customer.addresses.length > 0) {
         const firstItem = this.customer.addresses[0];
         this.selectAddress(firstItem);
       }

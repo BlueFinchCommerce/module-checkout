@@ -3,6 +3,7 @@
     v-if="applePayAvailable"
     id="braintree-apple-pay"
     :class="!applePayLoaded ? 'text-loading' : 'braintree-apple-pay'"
+    :data-cy="'instant-checkout-braintreeApplePay'"
     @keydown.enter="click"
     @click="click"
   />
@@ -38,8 +39,8 @@ export default {
 
   data() {
     return {
-      applePayTotal: '',
       applePayAvailable: false,
+      applePayTotal: '',
       instance: null,
       applePayInstance: null,
       dataCollectorInstance: null,
@@ -73,6 +74,8 @@ export default {
     }
 
     this.addExpressMethod(this.key);
+    this.applePayLoaded = false;
+    this.applePayAvailable = true;
 
     await this.getInitialConfig();
     await this.getCart();
@@ -87,9 +90,6 @@ export default {
       this.removeExpressMethod(this.key);
       return;
     }
-
-    this.applePayAvailable = true;
-    this.applePayLoaded = false;
 
     await this.createClientToken();
 
@@ -266,13 +266,17 @@ export default {
         country_code: data.shippingContact.countryCode.toUpperCase(),
         postcode: data.shippingContact.postalCode,
         street: ['0'],
+        telephone: '000000000',
+        firstname: 'UNKNOWN',
+        lastname: 'UNKNOWN',
       };
 
       this.address = address;
 
       const result = await getShippingMethods(address);
+      const methods = result.shipping_addresses[0].available_shipping_methods;
 
-      const filteredMethods = result.filter(({ method_code: methodCode }) => (
+      const filteredMethods = methods.filter(({ method_code: methodCode }) => (
         methodCode !== 'nominated_delivery'
       ));
 
