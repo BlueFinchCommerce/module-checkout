@@ -396,9 +396,9 @@ export default {
     };
 
     Object.keys(types).forEach((type) => {
-      const first = this.validateNameField(type, 'First name', this.selected[type].firstname);
-      const last = this.validateNameField(type, 'Last name', this.selected[type].lastname);
-      const phone = this.validatePhone(type, this.selected[type].telephone);
+      const first = this.validateInputField(type, 'First name', this.selected[type].firstname, 'firstname');
+      const last = this.validateInputField(type, 'Last name', this.selected[type].lastname, 'lastname');
+      const phone = this.validateInputField(type, 'Telephone', this.selected[type].telephone, 'telephone');
 
       this[types[type]] = first && last && phone;
     });
@@ -415,8 +415,7 @@ export default {
       'setAddressAsEditing',
       'validateAddress',
       'addAddressError',
-      'validateNameField',
-      'validatePhone',
+      'validateInputField',
       'validatePostcode',
       'setAddressToStore',
     ]),
@@ -431,17 +430,21 @@ export default {
     updateButtonState() {
       const addressType = this.address_type;
 
-      const areNamesValid = this.validateNameField(
+      const areNamesValid = this.validateInputField(
         addressType,
         'First name',
         this.selected[addressType].firstname,
-      ) && this.validateNameField(
+        'firstname',
+      ) && this.validateInputField(
         addressType,
         'Last name',
         this.selected[addressType].lastname,
-      ) && this.validatePhone(
+        'lastname',
+      ) && this.validateInputField(
         addressType,
+        'Telephone',
         this.selected[addressType].telephone,
+        'telephone',
       );
 
       const validAddress = this.validateAddress(addressType);

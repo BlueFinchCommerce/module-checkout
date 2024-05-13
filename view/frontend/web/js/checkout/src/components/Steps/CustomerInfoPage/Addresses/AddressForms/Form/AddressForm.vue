@@ -287,8 +287,7 @@ export default {
       'removeAddressError',
       'clearRegion',
       'updateRegionRequired',
-      'validateNameField',
-      'validatePhone',
+      'validateInputField',
       'validatePostcode',
     ]),
     validateAndSave() {
@@ -402,17 +401,21 @@ export default {
       // If we're on billing then validate the name fields.
       const areNamesValid = addressType !== 'billing'
         || (
-          this.validateNameField(
+          this.validateInputField(
             addressType,
             'First name',
             this.selected[addressType].firstname,
-          ) && this.validateNameField(
+            'firstname',
+          ) && this.validateInputField(
             addressType,
             'Last name',
             this.selected[addressType].lastname,
-          ) && this.validatePhone(
+            'lastname',
+          ) && this.validateInputField(
             addressType,
+            'Telephone',
             this.selected[addressType].telephone,
+            'telephone',
           )
         );
 

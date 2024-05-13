@@ -133,8 +133,7 @@ export default {
     ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
-      'validateNameField',
-      'validatePhone',
+      'validateInputField',
       'validateAddress',
       'validatePostcode',
       'updateRegionRequired',
@@ -236,21 +235,25 @@ export default {
       this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
 
-      const firstNameValid = this.validateNameField(
+      const firstNameValid = this.validateInputField(
         this.address_type,
         'First name',
         this.selectedAddressType.firstname,
+        'firstname',
         true,
       );
-      const lastNameValid = this.validateNameField(
+      const lastNameValid = this.validateInputField(
         this.address_type,
         'Last name',
         this.selectedAddressType.lastname,
+        'lastname',
         true,
       );
-      const phoneNumberValid = this.validatePhone(
+      const phoneNumberValid = this.validateInputField(
         this.address_type,
+        'Telephone',
         this.selectedAddressType.telephone,
+        'telephone',
         true,
       );
       const addressValid = this.validateAddress(this.address_type, true);

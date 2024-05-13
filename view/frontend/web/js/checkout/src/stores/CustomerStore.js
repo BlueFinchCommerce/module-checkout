@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 import getCustomerInformation from '@/services/customer/getCustomerInformation';
 import isEmailAvailable from '@/services/customer/isEmailAvailable';
@@ -516,23 +517,15 @@ export default defineStore('customerStore', {
       return isValid;
     },
 
-    validateNameField(addressType, fieldName, value, addErrors = false) {
-      const invalid = !value || (typeof value === 'string' && !value.trim());
-      if (invalid) {
+    validateInputField(addressType, fieldName, value, attribute, addErrors = false) {
+      const validationStore = useValidationStore();
+      const isValid = validationStore.testValidationRules(value, attribute);
+
+      // const invalid = !value || (typeof value === 'string' && !value.trim());
+      if (!isValid) {
         addErrors && this.addAddressError(addressType, fieldName);
       } else {
         this.removeAddressError(addressType, fieldName);
-      }
-      return !invalid;
-    },
-
-    validatePhone(addressType, phone, addErrors = false) {
-      /* eslint-disable  no-useless-escape */
-      const isValid = getPhoneValidation(phone);
-      if (!isValid) {
-        addErrors && this.addAddressError(addressType, 'Telephone');
-      } else {
-        this.removeAddressError(addressType, 'Telephone');
       }
       return isValid;
     },
