@@ -18,7 +18,6 @@ import formatAddress from '@/helpers/addresses/formatAddress';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
 import getEmptyAddress from '@/helpers/addresses/getEmptyAddress';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
-import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
 
@@ -429,6 +428,41 @@ export default defineStore('customerStore', {
       * @returns
       */
     validateAddress(addressType, addErrors = false) {
+      const validationStore = useValidationStore();
+      // const isValid = validationStore.testValidationRules(value, attribute);
+
+      let isValid = true;
+
+      Object.entries(this.selected[addressType]).forEach(([attribute, value]) => {
+        // const validationRules = item.items[0].validate_rules;
+        if (!validationStore.attributes.includes(attribute)) {
+          return;
+        }
+
+        if (attribute === 'region') {
+          return;
+        }
+
+        if (attribute === 'street') {
+          Object.entries(value).forEach(([index, street]) => {
+            const streetLine = `street.${parseInt(index, 10) + 1}`;
+            const keyIsValid = validationStore.testValidationRules(street, streetLine);
+
+            if (!keyIsValid) {
+              isValid = false;
+            }
+          });
+        } else {
+          const keyIsValid = validationStore.testValidationRules(value, attribute);
+
+          if (!keyIsValid) {
+            isValid = false;
+          }
+        }
+      });
+
+      return isValid;
+
       const requiredFields = {
         street: 'Address Line 1',
         city: 'City',

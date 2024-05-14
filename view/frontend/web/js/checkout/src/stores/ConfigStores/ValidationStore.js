@@ -76,7 +76,7 @@ export default defineStore('ValidationStore', {
       const validationRules = deepClone(this.validationItems?.[attribute]?.items[0]?.validate_rules);
 
       // Only street 1 is ever required.
-      if (attribute === 'street' && field !== 'street.1') {
+      if (validationRules?.length && attribute === 'street' && field !== 'street.1') {
         const requiredIndex = validationRules.findIndex(({ name }) => name === 'IS_REQUIRED');
         if (requiredIndex !== -1) {
           validationRules.splice(requiredIndex, 1);
@@ -111,6 +111,7 @@ export default defineStore('ValidationStore', {
           const helperFunction = this.validationMapping[rule.name];
           if (helperFunction) {
             const validationResult = helperFunction(value, rule.value);
+
             return validationResult;
           }
           // If no helper function is found, assume the validation passes

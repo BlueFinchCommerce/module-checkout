@@ -1,1 +1,7 @@
-export default (string, minLength) => string.trim().length >= minLength;
+export default (string, minLength) => {
+  if (!string) {
+    return true;
+  }
+
+  return string.trim().length >= minLength;
+};
