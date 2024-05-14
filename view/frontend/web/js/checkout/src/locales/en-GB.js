@@ -114,10 +114,8 @@ export default {
         viewMapAndHours: 'View map and opening hours',
         selectLocation: 'SELECT LOCATION',
         addressField: {
-          placeholder: 'Address (line 1)',
-          unrequired: 'Address (line 2)',
-          label: 'Address (line 1)',
-          unrequiredLabel: 'Address (line 2)',
+          placeholder: 'Address (line {line})',
+          label: 'Address (line {line})',
         },
         cityField: {
           label: 'City',

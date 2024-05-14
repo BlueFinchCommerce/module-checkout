@@ -3,7 +3,8 @@
     <!-- First Name Input -->
     <TextInput
       v-model="selectedAddressType.firstname"
-      :class="{'field-valid': isFieldValid('firstname', 'First name')}"
+      :class="{'field-valid': isFieldValid('firstname', 'First name'),
+               'field-error': getAddressFieldHasError(address_type, 'First name')}"
       :identifier="`${address_type}-first-name`"
       :label="$t('yourDetailsSection.firstName.label')"
       :placeholder="$t('yourDetailsSection.firstName.placeholder')"
@@ -14,7 +15,7 @@
       type="text"
       :required="isRequired('firstname')"
       autocomplete="given-name"
-      @keyup="handleInputChange($event, 'firstname')"
+      @keyup="validateField('firstname', 'First name', true); handleInputChange($event, 'firstname');"
       @focusout="validateField('firstname', 'First name', true)"
     />
     <ValidIcon v-if="isFieldValid('firstname', 'First name')" />
@@ -24,7 +25,8 @@
     <!-- Last Name Input -->
     <TextInput
       v-model="selectedAddressType.lastname"
-      :class="{'field-valid': isFieldValid('lastname', 'Last name')}"
+      :class="{'field-valid': isFieldValid('lastname', 'Last name'),
+               'field-error': getAddressFieldHasError(address_type, 'Last name')}"
       :identifier="`${address_type}-last-name`"
       :label="$t('yourDetailsSection.lastName.label')"
       :placeholder="$t('yourDetailsSection.lastName.placeholder')"
@@ -35,7 +37,7 @@
       type="text"
       :required="isRequired('lastname')"
       autocomplete="family-name"
-      @keyup="handleInputChange($event, 'lastname')"
+      @keyup="validateField('lastname', 'Last name', true); handleInputChange($event, 'lastname')"
       @focusout="validateField('lastname', 'Last name', true)"
     />
     <ValidIcon v-if="isFieldValid('lastname', 'Last name')" />

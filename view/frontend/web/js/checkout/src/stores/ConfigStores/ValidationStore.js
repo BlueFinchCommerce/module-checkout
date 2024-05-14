@@ -3,7 +3,9 @@ import { defineStore } from 'pinia';
 import requiredValid from '@/helpers/validation/requiredValid';
 import minLength from '@/helpers/validation/minLength';
 import maxLength from '@/helpers/validation/maxLength';
+import inputTypeValid from '@/helpers/validation/inputTypeValid';
 import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
+import deepClone from '@/helpers/addresses/deepClone';
 
 /**
  * Validation store
@@ -15,6 +17,8 @@ export default defineStore('ValidationStore', {
       IS_REQUIRED: requiredValid,
       MIN_TEXT_LENGTH: minLength,
       MAX_TEXT_LENGTH: maxLength,
+      INPUT_VALIDATION: inputTypeValid,
+
     },
     attributes: [
       'prefix',
@@ -67,8 +71,23 @@ export default defineStore('ValidationStore', {
       });
     },
 
+    getValidationRules(field) {
+      const [attribute] = field.split('.');
+      const validationRules = deepClone(this.validationItems?.[attribute]?.items[0]?.validate_rules);
+
+      // Only street 1 is ever required.
+      if (attribute === 'street' && field !== 'street.1') {
+        const requiredIndex = validationRules.findIndex(({ name }) => name === 'IS_REQUIRED');
+        if (requiredIndex !== -1) {
+          validationRules.splice(requiredIndex, 1);
+        }
+      }
+
+      return validationRules;
+    },
+
     isRequired(attribute) {
-      const validationRules = this.validationItems?.[attribute]?.items[0]?.validate_rules;
+      const validationRules = this.getValidationRules(attribute);
 
       if (validationRules) {
         // Find the IS_REQUIRED rule
@@ -83,8 +102,8 @@ export default defineStore('ValidationStore', {
       return false;
     },
 
-    testValidationRules(value, attribute) {
-      const validationRules = this.validationItems?.[attribute]?.items[0]?.validate_rules;
+    testValidationRules(value, field) {
+      const validationRules = this.getValidationRules(field);
 
       if (validationRules) {
         // Use Array.every() to ensure that all validation rules pass
@@ -99,7 +118,7 @@ export default defineStore('ValidationStore', {
         });
 
         // If attribute is "telephone", also check phone validation
-        if (attribute === 'telephone') {
+        if (field === 'telephone') {
           const phoneValidationResult = getPhoneValidation(value);
           return validationResults && phoneValidationResult;
         }
