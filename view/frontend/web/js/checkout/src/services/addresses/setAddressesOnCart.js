@@ -40,6 +40,7 @@ const formatAddress = (address) => {
   delete clonedAddress.available_shipping_methods;
   delete clonedAddress.save_in_address_book;
   delete clonedAddress.selected_shipping_method;
+  delete clonedAddress.isSavedAddressSelected;
 
   clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
 

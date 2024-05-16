@@ -5619,14 +5619,14 @@ body.no-scrollable {
     margin-top: 60px;
     display: block;
 }
-}.address-block__address[data-v-28ecf461] {
+}.address-block__address[data-v-477bb351] {
   font-size: var(--font__m);
   font-family: var(--address-block__font-family, unset);
 }
-.address-block__address p[data-v-28ecf461] {
+.address-block__address p[data-v-477bb351] {
   font-weight: var(--address-block__font-weight, var(--font-weight__medium));
 }
-.shipping-billing-steps[data-v-28ecf461] {
+.shipping-billing-steps[data-v-477bb351] {
   margin-right: 23px;
   max-height: var(--short-info-height, 55px);
   padding-left: 50px;
@@ -5634,11 +5634,11 @@ body.no-scrollable {
   display: flex;
   flex-wrap: wrap;
 }
-.shipping-billing-steps strong[data-v-28ecf461] {
+.shipping-billing-steps strong[data-v-477bb351] {
   display: block;
   width: 100%;
 }
-.shipping-billing-steps div[data-v-28ecf461] {
+.shipping-billing-steps div[data-v-477bb351] {
   display: var(--shipping-address-bisplay, -webkit-box);
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -5805,31 +5805,31 @@ body.no-scrollable {
 }
 .billing-form-address .afd-postcode__container[data-v-fc3dd1ec] {
   margin-top: 40px;
-}.address-form .select-address-btn[data-v-76d72040] {
+}.address-form .select-address-btn[data-v-4a3cfcba] {
   margin-top: var(--indent__base);
 }
-.address-form .save-address-field[data-v-76d72040] {
+.address-form .save-address-field[data-v-4a3cfcba] {
   margin-top: var(--indent__base);
 }
-.address-form .save-address-field p[data-v-76d72040] {
+.address-form .save-address-field p[data-v-4a3cfcba] {
   display: inline-block;
 }
-.phone-field p[data-v-76d72040] {
+.phone-field p[data-v-4a3cfcba] {
   margin-bottom: var(--indent__base);
 }
-.mock-laptop .select-address-btn[data-v-76d72040],
-.mock-desktop .select-address-btn[data-v-76d72040] {
+.mock-laptop .select-address-btn[data-v-4a3cfcba],
+.mock-desktop .select-address-btn[data-v-4a3cfcba] {
   margin-top: calc(var(--indent__base) * 2);
 }
-.mock-laptop .address-form + .proceed-to-shipping-btn[data-v-76d72040],
-.mock-desktop .address-form + .proceed-to-shipping-btn[data-v-76d72040] {
+.mock-laptop .address-form + .proceed-to-shipping-btn[data-v-4a3cfcba],
+.mock-desktop .address-form + .proceed-to-shipping-btn[data-v-4a3cfcba] {
   display: none;
 }
 @media screen and (min-width: 768px) {
-.mock-full .select-address-btn[data-v-76d72040] {
+.mock-full .select-address-btn[data-v-4a3cfcba] {
     margin-top: calc(var(--indent__base) * 2);
 }
-.mock-full .address-form + .proceed-to-shipping-btn[data-v-76d72040] {
+.mock-full .address-form + .proceed-to-shipping-btn[data-v-4a3cfcba] {
     display: none;
 }
 }#gene-better-checkout-root .amasty-click-collect .select-input svg[data-v-d1f67e38] {
