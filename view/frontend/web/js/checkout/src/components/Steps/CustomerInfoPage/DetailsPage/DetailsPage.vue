@@ -93,7 +93,6 @@
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
         @passSelectedItemId = "passSelectedItemId"
-        @selectedSavedAddress="selectedSavedAddress"
       />
 
       <div class="address-form-error-message">
@@ -172,7 +171,7 @@
       </div>
       <div
         v-if="emailEntered && !selected[address_type].editing
-          && !isSavedAddressSelected
+          && !selected[address_type].isSavedAddressSelected
           && selected[address_type].id
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
@@ -324,7 +323,6 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
-      isSavedAddressSelected: false,
       savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
@@ -499,9 +497,6 @@ export default {
       if (value !== null) {
         this.buttonEnabled = true;
       }
-    },
-    selectedSavedAddress(value) {
-      this.isSavedAddressSelected = value;
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;
