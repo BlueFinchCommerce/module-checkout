@@ -80,6 +80,7 @@
 import { mapState, mapWritableState, mapActions } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // services
 import loqate from '@/services/addresses/loqate';
@@ -133,12 +134,11 @@ export default {
     ...mapActions(useConfigStore, ['getRegionsByCountry']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
-      'validateInputField',
-      'validateAddress',
-      'validatePostcode',
       'updateRegionRequired',
       'setAddressAsEditing',
     ]),
+    ...mapActions(useValidationStore, ['validateAddress']),
+
     editAddress() {
       this.address = false;
     },
@@ -235,31 +235,7 @@ export default {
       this.setAddressToStore(newAddress, this.address_type);
       this.updateRegionRequired(this.address_type);
 
-      const firstNameValid = this.validateInputField(
-        this.address_type,
-        'First name',
-        this.selectedAddressType.firstname,
-        'firstname',
-        true,
-      );
-      const lastNameValid = this.validateInputField(
-        this.address_type,
-        'Last name',
-        this.selectedAddressType.lastname,
-        'lastname',
-        true,
-      );
-      const phoneNumberValid = this.validateInputField(
-        this.address_type,
-        'Telephone',
-        this.selectedAddressType.telephone,
-        'telephone',
-        true,
-      );
-      const addressValid = this.validateAddress(this.address_type, true);
-      const postcodeValid = this.validatePostcode(this.address_type, true);
-
-      const isValid = firstNameValid && lastNameValid && phoneNumberValid && addressValid && postcodeValid;
+      const isValid = this.validateAddress(this.address_type, true);
 
       // If the address we get back from Loqate is not valid or details are not filled in then open the form
       // allowing User's the ability to edit.

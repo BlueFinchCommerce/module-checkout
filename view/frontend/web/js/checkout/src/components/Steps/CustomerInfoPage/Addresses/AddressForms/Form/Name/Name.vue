@@ -3,55 +3,55 @@
     <!-- First Name Input -->
     <TextInput
       v-model="selectedAddressType.firstname"
-      :class="{'field-valid': isFieldValid('firstname', 'First name'),
-               'field-error': getAddressFieldHasError(address_type, 'First name')}"
+      :class="{'field-valid': isFieldValid(address_type, 'firstname'),
+               'field-error': !isFieldValid(address_type, 'firstname')}"
       :identifier="`${address_type}-first-name`"
       :label="$t('yourDetailsSection.firstName.label')"
       :placeholder="$t('yourDetailsSection.firstName.placeholder')"
-      :error="getAddressFieldHasError(address_type, 'First name')"
-      :error-message="getAddressFieldHasError(address_type, 'First name')
+      :error="!isFieldValid(address_type, 'firstname')"
+      :error-message="!isFieldValid(address_type, 'firstname')
         ? $t('errorMessages.firstNameErrorMessage') : ''"
       :data-cy="`${address_type}-first-name-input`"
       type="text"
       :required="isRequired('firstname')"
       autocomplete="given-name"
-      @keyup="validateField('firstname', 'First name', true); handleInputChange($event, 'firstname');"
-      @focusout="validateField('firstname', 'First name', true)"
+      @keyup="validateField(address_type, 'firstname', true); handleInputChange($event, 'firstname');"
+      @focusout="validateField(address_type, 'firstname', true)"
     />
-    <ValidIcon v-if="isFieldValid('firstname', 'First name')" />
-    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'First name')" />
+    <ValidIcon v-if="isFieldValid(address_type, 'firstname')" />
+    <ErrorIcon v-if="!isFieldValid(address_type, 'firstname')" />
   </div>
   <div>
     <!-- Last Name Input -->
     <TextInput
       v-model="selectedAddressType.lastname"
-      :class="{'field-valid': isFieldValid('lastname', 'Last name'),
-               'field-error': getAddressFieldHasError(address_type, 'Last name')}"
+      :class="{'field-valid': isFieldValid(address_type, 'lastname'),
+               'field-error': !isFieldValid(address_type, 'lastname')}"
       :identifier="`${address_type}-last-name`"
       :label="$t('yourDetailsSection.lastName.label')"
       :placeholder="$t('yourDetailsSection.lastName.placeholder')"
-      :error="getAddressFieldHasError(address_type, 'Last name')"
-      :error-message="getAddressFieldHasError(address_type, 'Last name')
+      :error="!isFieldValid(address_type, 'lastname')"
+      :error-message="!isFieldValid(address_type, 'lastname')
         ? $t('errorMessages.lastNameErrorMessage') : ''"
       :data-cy="`${address_type}-last-name-input`"
       type="text"
       :required="isRequired('lastname')"
       autocomplete="family-name"
-      @keyup="validateField('lastname', 'Last name', true); handleInputChange($event, 'lastname')"
-      @focusout="validateField('lastname', 'Last name', true)"
+      @keyup="validateField(address_type, 'lastname', true); handleInputChange($event, 'lastname')"
+      @focusout="validateField(address_type, 'lastname', true)"
     />
-    <ValidIcon v-if="isFieldValid('lastname', 'Last name')" />
-    <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Last name')" />
+    <ValidIcon v-if="isFieldValid(address_type, 'lastname')" />
+    <ErrorIcon v-if="!isFieldValid(address_type, 'lastname')" />
   </div>
   <div>
     <!-- Phone Number Input -->
     <div class="phone-field">
       <TextInput
         v-model="selectedAddressType.telephone"
-        :class="{'field-valid': isFieldValid('telephone', 'Telephone'),
-                 'field-error': getAddressFieldHasError(address_type, 'Telephone')}"
-        :error="getAddressFieldHasError(address_type, 'Telephone')"
-        :error-message="getAddressFieldHasError(address_type, 'Telephone')
+        :class="{'field-valid': isFieldValid(address_type, 'telephone'),
+                 'field-error': !isFieldValid(address_type, 'telephone')}"
+        :error="!isFieldValid(address_type, 'telephone')"
+        :error-message="!isFieldValid(address_type, 'telephone')
           ? $t('errorMessages.phoneErrorMessage') : ''"
         :identifier="`${address_type}-phone`"
         type="tel"
@@ -61,18 +61,18 @@
         :required="isRequired('telephone')"
         autocomplete="tel"
         @keyup="handleInputChange($event)"
-        @focusout="validateField('telephone', 'Telephone', true)"
-        @telephone-error="validateField('telephone', 'Telephone', true)"
+        @focusout="validateField(address_type, 'telephone', true)"
+        @telephone-error="validateField(address_type, 'telephone', true)"
       />
-      <ValidIcon v-if="validateField('telephone', 'Telephone')" />
-      <ErrorIcon v-if="getAddressFieldHasError(address_type, 'Telephone')" />
+      <ValidIcon v-if="isFieldValid(address_type, 'telephone')" />
+      <ErrorIcon v-if="!isFieldValid(address_type, 'telephone')" />
     </div>
   </div>
 </template>
 
 <script>
 // Stores
-import { mapActions, mapWritableState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
@@ -99,52 +99,25 @@ export default {
   },
   emits: ['isCustomerInfoFull'],
 
-  setup() {
-    const customerStore = useCustomerStore();
-
-    return {
-      getAddressFieldHasError: customerStore.getAddressFieldHasError,
-    };
-  },
   computed: {
     ...mapWritableState(useCustomerStore, ['selected']),
+    ...mapState(useValidationStore, ['isFieldValid']),
+
     selectedAddressType() {
       return this.selected[this.address_type];
     },
   },
   async mounted() {
     await this.getInitialConfig();
-    this.validateFields();
-  },
-  updated() {
-    this.validateFields();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['validateInputField']),
-    ...mapActions(useValidationStore, ['isRequired']),
-    validateFields() {
-      const first = this.validateField('firstname', 'First name');
-      const last = this.validateField('lastname', 'Last name');
-      const phone = this.validateField('telephone', 'Telephone');
+    ...mapActions(useValidationStore, ['isRequired', 'validateField']),
 
-      const fullDetails = first && last && phone;
-      this.$emit('isCustomerInfoFull', fullDetails);
-    },
-    validateField(field, label, addError) {
-      return this.validateInputField(this.address_type, label, this.selectedAddressType[field], field, addError);
-    },
-    isFieldValid(field, label) {
-      return !this.getAddressFieldHasError(this.address_type, label) && this.selectedAddressType[field];
-    },
     handleInputChange(event, type) {
       if (event.key === 'Enter') {
-        if (type === 'telephone') {
-          this.validateField('telephone', 'Telephone');
-        } else {
-          const fieldName = type === 'firstname' ? 'First name' : 'Last name';
-          this.validateField(type, fieldName);
-        }
+        this.validateField(this.address_type, type, true);
       }
     },
   },

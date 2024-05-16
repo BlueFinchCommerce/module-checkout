@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
-import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 import getCustomerInformation from '@/services/customer/getCustomerInformation';
 import isEmailAvailable from '@/services/customer/isEmailAvailable';
@@ -20,8 +19,6 @@ import getEmptyAddress from '@/helpers/addresses/getEmptyAddress';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
-
-import { postcodeValidator, postcodeValidatorExistsForCountry } from 'postcode-validator';
 
 export default defineStore('customerStore', {
   state: () => ({
@@ -215,38 +212,6 @@ export default defineStore('customerStore', {
       }
     },
 
-    addAddressError(addressType, error) {
-      const errors = this.selected.formErrors[addressType];
-      const index = errors.indexOf(error);
-
-      // Only add this new error if it's not already in the list.
-      if (index === -1) {
-        errors.push(error);
-        this.setData({
-          selected: {
-            formErrors: {
-              [addressType]: errors,
-            },
-          },
-        });
-      }
-    },
-
-    removeAddressError(addressType, error) {
-      const errors = this.selected.formErrors[addressType];
-      const index = errors.indexOf(error);
-      if (index !== -1) {
-        errors.splice(index, 1);
-        this.setData({
-          selected: {
-            formErrors: {
-              [addressType]: errors,
-            },
-          },
-        });
-      }
-    },
-
     isEmailAvailable(email) {
       // Cancel the previous request if it exists.
       if (this.$state.isEmailAvailableController) {
@@ -419,149 +384,6 @@ export default defineStore('customerStore', {
           [addressType]: getEmptyAddress(false),
         },
       });
-    },
-
-    /**
-      * Validate Email Forms
-      * @todo - this is a naff. It would be much better to handle this differently
-      * @param {*} addressType
-      * @returns
-      */
-    validateAddress(addressType, addErrors = false) {
-      const validationStore = useValidationStore();
-      // const isValid = validationStore.testValidationRules(value, attribute);
-
-      let isValid = true;
-
-      Object.entries(this.selected[addressType]).forEach(([attribute, value]) => {
-        // const validationRules = item.items[0].validate_rules;
-        if (!validationStore.attributes.includes(attribute)) {
-          return;
-        }
-
-        if (attribute === 'region') {
-          return;
-        }
-
-        if (attribute === 'street') {
-          Object.entries(value).forEach(([index, street]) => {
-            const streetLine = `street.${parseInt(index, 10) + 1}`;
-            const keyIsValid = validationStore.testValidationRules(street, streetLine);
-
-            if (!keyIsValid) {
-              isValid = false;
-            }
-          });
-        } else {
-          const keyIsValid = validationStore.testValidationRules(value, attribute);
-
-          if (!keyIsValid) {
-            isValid = false;
-          }
-        }
-      });
-
-      return isValid;
-
-      const requiredFields = {
-        street: 'Address Line 1',
-        city: 'City',
-        country_code: 'Country',
-        region: 'State/Region',
-      };
-
-      let valid = true;
-      const streetAddress1 = this.selected[addressType].street[0];
-      const streetAddress2 = this.selected[addressType].street[1];
-      const streetAddressLength = [streetAddress1, streetAddress2].join(' ').length;
-
-      Object.entries(requiredFields).forEach(([key, value]) => {
-        addErrors && this.removeAddressError(addressType, value);
-
-        // Handle Street a little differently
-        if (key === 'street') {
-          if (!this.selected[addressType].street[0].trim() || streetAddressLength > 75) {
-            addErrors && this.addAddressError(addressType, value);
-            valid = false;
-          }
-        }
-
-        // Additional check on the trimmed string required to ensure user does not submit only empty
-        // spaces ie Submitting " " instead of "" will bypass the native html validation
-        // and we'd get no data :(
-        if (key === 'region') {
-          if (this.selected.regionRequired[addressType].required) {
-            if (
-              !this.selected[addressType][key].region?.trim()
-              && !this.selected[addressType][key].region_id
-            ) {
-              addErrors && this.addAddressError(addressType, value);
-              valid = false;
-            }
-          }
-        } else if (
-          !this.selected[addressType][key]
-            || (typeof this.selected[addressType][key] === 'string'
-            && !this.selected[addressType][key].trim())
-        ) {
-          addErrors && this.addAddressError(addressType, value);
-          valid = false;
-        }
-      });
-      // Set the message
-      if (!valid) {
-        addErrors && this.setAddressErrorMessage(addressType);
-      }
-
-      return valid;
-    },
-
-    validatePostcode(addressType, addErrors = false) {
-      const configStore = useConfigStore();
-
-      addErrors && this.removeAddressError(addressType, 'Country');
-      addErrors && this.removeAddressError(addressType, 'Postcode');
-
-      let isValid = true;
-
-      if (configStore.postcodeRequired(this.selected[addressType].country_code)) {
-        if (!this.selected[addressType].country_code) {
-          addErrors && this.addAddressError(addressType, 'Country');
-        } else {
-          const countId = this.selected[addressType].country_code;
-          const postCode = this.selected[addressType].postcode;
-          if (postcodeValidatorExistsForCountry(countId)) {
-            isValid = postcodeValidator(postCode, countId);
-          } else {
-            isValid = true;
-          }
-
-          this.setData({
-            postCodeValid: isValid,
-          });
-
-          !isValid && addErrors && this.addAddressError(addressType, 'Postcode');
-        }
-      }
-
-      this.setData({
-        postCodeValid: isValid,
-      });
-
-      return isValid;
-    },
-
-    validateInputField(addressType, fieldName, value, attribute, addErrors = false) {
-      const validationStore = useValidationStore();
-      const isValid = validationStore.testValidationRules(value, attribute);
-
-      // const invalid = !value || (typeof value === 'string' && !value.trim());
-      if (!isValid) {
-        addErrors && this.addAddressError(addressType, fieldName);
-      } else {
-        this.removeAddressError(addressType, fieldName);
-      }
-      return isValid;
     },
 
     // Set the errors

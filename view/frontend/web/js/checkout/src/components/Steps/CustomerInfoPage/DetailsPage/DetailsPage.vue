@@ -92,7 +92,6 @@
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
-        @passSelectedItemId = "passSelectedItemId"
         @selectedSavedAddress="selectedSavedAddress"
       />
 
@@ -208,7 +207,7 @@
 
       <div class="address-form-error-message">
         <ErrorMessage
-          v-if="!customerInfoValidation && addressFormErrorMessage"
+          v-if="addressFormErrorMessage"
           :message="$t('errorMessages.addressFormErrorMessage')"
         />
       </div>
@@ -218,12 +217,13 @@
         @billingInfoFull="billingInfoFull"
       />
 
+      {{ errors }}
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
+        :disabled="!isAddressValid(address_type)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -279,6 +279,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -359,22 +360,13 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
+    ...mapState(useValidationStore, ['errors', 'isAddressValid']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
     });
-
-    const customerStore = useCustomerStore();
-    customerStore.$subscribe((mutation) => {
-      if (mutation.type === 'direct' || (mutation.type === 'patch object'
-        && mutation.payload.selected
-        && mutation.payload.selected[this.address_type])) {
-        this.updateButtonState();
-      }
-    }, { flush: 'sync' });
-    this.updateButtonState();
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
@@ -390,19 +382,6 @@ export default {
     await this.getInitialConfig();
     await this.getCart();
 
-    const types = {
-      shipping: 'customerInfoValidation',
-      billing: 'billingInfoValidation',
-    };
-
-    Object.keys(types).forEach((type) => {
-      const first = this.validateInputField(type, 'First name', this.selected[type].firstname, 'firstname');
-      const last = this.validateInputField(type, 'Last name', this.selected[type].lastname, 'lastname');
-      const phone = this.validateInputField(type, 'Telephone', this.selected[type].telephone, 'telephone');
-
-      this[types[type]] = first && last && phone;
-    });
-
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
@@ -413,10 +392,8 @@ export default {
     ...mapActions(useCustomerStore, [
       'setAddressAsCustom',
       'setAddressAsEditing',
-      'validateAddress',
       'addAddressError',
       'validateInputField',
-      'validatePostcode',
       'setAddressToStore',
     ]),
     ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
@@ -427,35 +404,12 @@ export default {
       'setAddressesOnCart',
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
-    updateButtonState() {
-      const addressType = this.address_type;
+    ...mapActions(useValidationStore, ['validateAddress']),
 
-      const areNamesValid = this.validateInputField(
-        addressType,
-        'First name',
-        this.selected[addressType].firstname,
-        'firstname',
-      ) && this.validateInputField(
-        addressType,
-        'Last name',
-        this.selected[addressType].lastname,
-        'lastname',
-      ) && this.validateInputField(
-        addressType,
-        'Telephone',
-        this.selected[addressType].telephone,
-        'telephone',
-      );
-
-      const validAddress = this.validateAddress(addressType);
-      const validPostcode = this.validatePostcode(this.address_type);
-
-      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
-    },
     async submitShippingOption() {
       this.requiredErrorMessage = '';
 
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      const isValid = this.validateAddress(this.address_type, true);
 
       if (isValid) {
         if (this.savedAddressID === null
@@ -496,12 +450,6 @@ export default {
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
-    },
-    passSelectedItemId(value) {
-      this.savedAddressID = value;
-      if (value !== null) {
-        this.buttonEnabled = true;
-      }
     },
     selectedSavedAddress(value) {
       this.isSavedAddressSelected = value;

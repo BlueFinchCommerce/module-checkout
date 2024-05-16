@@ -66,6 +66,7 @@
 import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useCartStore from '@/stores/CartStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
@@ -124,13 +125,6 @@ export default {
   mounted() {
     this.$emit('showAddressBlock', false);
 
-    let selectedId = null;
-    const selectedItem = this.customer.addresses.find((item) => item.id === this.selected[this.addressType].id);
-    if (selectedItem) {
-      selectedId = selectedItem.id;
-    }
-    this.$emit('passSelectedItemId', selectedId);
-
     const uniqueAddresses = {};
     // Iterate through the addresses
     this.customer.addresses.forEach((address) => {
@@ -151,11 +145,12 @@ export default {
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'createNewAddress',
-      'removeAddressError',
       'setAddressAsEditing',
       'setAddressAsCustom',
       'createNewBillingAddress',
     ]),
+    ...mapActions(useValidationStore, ['removeAddressError']),
+
     selectCorrectAddress() {
       if (this.cart.billing_address) {
         this.selectAddress(this.cart.billing_address);
@@ -175,7 +170,6 @@ export default {
       }
 
       this.$emit('selectedSavedAddress', true);
-      this.$emit('passSelectedItemId', address.id);
 
       this.isShippingNewCTA = true;
     },
@@ -183,7 +177,7 @@ export default {
       this.isShippingNewCTA = false;
 
       // Remove postcode error from new address form if saved address has an error.
-      this.removeAddressError(this.addressType, 'Postcode');
+      this.removeAddressError(this.addressType, 'postcode');
 
       if (this.selected[this.addressType].region_id !== null) {
         this.selected[this.addressType].region_id = null;

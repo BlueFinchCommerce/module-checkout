@@ -124,7 +124,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',

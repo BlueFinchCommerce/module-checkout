@@ -217,10 +217,6 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
-    setDetailsStepActive() {
-      const element = document.getElementById('progress-bar');
-      element.classList.add('details-active');
-    },
   },
 };
 </script>
