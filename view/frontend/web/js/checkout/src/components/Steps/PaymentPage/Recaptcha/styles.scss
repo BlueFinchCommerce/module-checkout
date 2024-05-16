@@ -3,5 +3,9 @@
     margin-top: var(--indent__m);
   }
 
+  div + iframe {
+    display: none !important; //override !important dropin styles
+  }
+
   z-index: 1;
 }

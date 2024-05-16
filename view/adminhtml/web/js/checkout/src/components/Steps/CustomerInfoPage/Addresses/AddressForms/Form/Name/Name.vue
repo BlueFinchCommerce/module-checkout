@@ -105,10 +105,27 @@ export default {
       return this.selected[this.address_type];
     },
   },
+  watch: {
+    selectedAddressType: {
+      handler(newValue) {
+        if (newValue.firstname === 'UNKNOWN') {
+          this.selectedAddressType.firstname = '';
+        }
+        if (newValue.lastname === 'UNKNOWN') {
+          this.selectedAddressType.lastname = '';
+        }
+        if (String(newValue.telephone) === '000000000') {
+          this.selectedAddressType.telephone = '';
+        }
+      },
+      deep: true,
+    },
+  },
   mounted() {
     this.validateFields();
   },
   updated() {
+    this.sanitizeAddressFields();
     this.validateFields();
   },
   methods: {
@@ -116,6 +133,17 @@ export default {
       'validateNameField',
       'validatePhone',
     ]),
+    sanitizeAddressFields() {
+      if (this.selectedAddressType.firstname === 'UNKNOWN') {
+        this.selectedAddressType.firstname = '';
+      }
+      if (this.selectedAddressType.lastname === 'UNKNOWN') {
+        this.selectedAddressType.lastname = '';
+      }
+      if (String(this.selectedAddressType.telephone) === '000000000') {
+        this.selectedAddressType.telephone = '';
+      }
+    },
     validateFields() {
       const first = this.validateField('firstname', 'First name');
       const last = this.validateField('lastname', 'Last name');
