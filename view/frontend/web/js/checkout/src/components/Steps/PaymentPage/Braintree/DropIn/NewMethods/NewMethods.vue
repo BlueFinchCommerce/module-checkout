@@ -113,6 +113,7 @@ export default {
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
       'availableMethods',
+      'firstOpenController',
       'paymentEmitter',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
@@ -361,6 +362,12 @@ export default {
       this.attachEventListeners(instance);
       this.movePaymentContainers();
 
+      // If Braintree is controlling the first opened payment method then open that method.
+      if (this.firstOpenController === 'braintree') {
+        [this.selectedMethod] = this.paymentOptionPriority;
+        this.setToCurrentViewId();
+      }
+
       this.paymentEmitter.emit('braintreeInitComplete');
 
       this.modifyTokenize();
@@ -447,6 +454,12 @@ export default {
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
           sheet.style.setProperty('--braintree-method-position', priority + 1);
           sheet.prepend(matchingContainer);
+
+          // Move the card payment icons
+          if (braintreeId === 'card') {
+            const icons = sheet.querySelector('.braintree-sheet__icons');
+            matchingContainer.append(icons);
+          }
         }
       });
     },

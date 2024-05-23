@@ -158,10 +158,10 @@
     display: block;
     height: auto;
     visibility: visible;
+  }
 
-    &.braintree-hidden {
-      display: none;
-    }
+  .braintree-hidden {
+    display: none;
   }
 
   .braintree-option {
@@ -181,6 +181,16 @@
       width: var(--radio-input__width);
       height: var(--radio-input__height);
       border-radius: 50%;
+    }
+
+    &__card {
+      .braintree-option__logo {
+        display: none;
+      }
+
+      .braintree-sheet__icons {
+        display: flex;
+      }
     }
 
     &__selected {
