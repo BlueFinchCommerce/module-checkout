@@ -15,6 +15,7 @@ export default defineStore('paymentStore', {
     availableMethods: getCartPaymentMethods(),
     expressMethods: [],
     hasVaultedMethods: false,
+    firstOpenController: 'braintree',
   }),
   getters: {
     methodsResponse: (state) => state.methodsResponse,
