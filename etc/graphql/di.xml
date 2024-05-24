@@ -198,4 +198,27 @@
             </argument>
         </arguments>
     </type>
+    <virtualType name="BetterCheckoutSessionPlugin" type="Gene\BetterCheckout\Plugin\DisableSession">
+        <arguments>
+            <argument name="operationNames" xsi:type="array">
+                <item name="storeConfig" xsi:type="string">BetterCheckoutStoreConfig</item>
+                <item name="cart" xsi:type="string">BetterCheckoutCart</item>
+                <item name="customerCart" xsi:type="string">BetterCheckoutCustomerCart</item>
+                <item name="customer" xsi:type="string">BetterCheckoutCustomer</item>
+                <item name="products" xsi:type="string">BetterCheckoutProducts</item>
+                <item name="isEmailAvailable" xsi:type="string">BetterCheckoutEmailAvailable</item>
+                <item name="setGuestEmailOnCart" xsi:type="string">BetterCheckoutSetGuestEmailCart</item>
+                <item name="setShippingMethodsOnCart" xsi:type="string">BetterCheckoutSetShippingMethodCart</item>
+                <item name="SetAddresses" xsi:type="string">BetterCheckoutSetAddress</item>
+                <item name="createBraintreeClientToken" xsi:type="string">BetterCheckoutBraintreeToken</item>
+                <item name="customerPaymentTokens" xsi:type="string">BetterCheckoutCustomerPaymentTokens</item>
+                <item name="adyenPaymentMethods" xsi:type="string">BetterCheckoutAdyenPaymentMethods</item>
+                <item name="placeOrder" xsi:type="string">BetterCheckoutPlaceOrder</item>
+                <item name="adyenPaymentStatus" xsi:type="string">BetterCheckoutAdyenPaymentStatus</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\Session\SessionStartChecker">
+        <plugin name="better_checkout_graphql_session_disable" type="BetterCheckoutSessionPlugin"/>
+    </type>
 </config>
