@@ -226,7 +226,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (Object.keys(cart.prices.discounts).length > 0) {
+      if (cart.prices.discounts && Object.keys(cart.prices.discounts).length > 0) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',
