@@ -25,6 +25,7 @@ export default defineStore('configStore', {
     locale: getLocale(),
     countryCode: undefined,
     rvvupPaymentsActive: false,
+    superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -231,6 +232,18 @@ export default defineStore('configStore', {
       if (data) {
         this.setData({
           rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
+        });
+      }
+    },
+    async getSuperPaymentsConfig() {
+      const configs = [
+        'super_payment_gateway_enabled',
+      ];
+      const data = await this.getConfig(configs);
+
+      if (data) {
+        this.setData({
+          superPaymentsActive: !!Number(data.super_payment_gateway_enabled),
         });
       }
     },

@@ -108,7 +108,7 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['currencyCode', 'websiteName', 'superPaymentsActive']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
@@ -360,6 +360,18 @@ export default {
       this.instance = instance;
 
       this.attachEventListeners(instance);
+
+      // if (!this.superPaymentsActive) {
+      //   this.attachEventListeners(instance);
+      // } else {
+      //   const options = this.$refs.braintreeContainer.querySelectorAll('.braintree-sheet__container .braintree-sheet');
+      //   options.forEach((option) => {
+      //     option.addEventListener('click', () => {
+      //       this.attachEventListeners(instance);
+      //     });
+      //   });
+      // }
+
       this.movePaymentContainers();
 
       // If Braintree is controlling the first opened payment method then open that method.
@@ -383,9 +395,9 @@ export default {
           this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: false });
           previousViewId !== 'card' && this.startPayment();
         } else if (newViewId !== 'options') {
-          this.addActiveClass(newViewId);
+          // this.addActiveClass(newViewId);
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
-          this.paymentEmitter.emit('paymentMethodSelected', { id });
+          // this.paymentEmitter.emit('paymentMethodSelected', { id });
 
           this.selectedMethod = newViewId;
 
@@ -412,7 +424,7 @@ export default {
       });
 
       this.paymentEmitter.on('paymentMethodSelected', this.clearSelectedMethod);
-      this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
+      // this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.on('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.on('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.on('braintreePaymentError', this.hideLoader);
