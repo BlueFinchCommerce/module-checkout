@@ -197,6 +197,7 @@ export default {
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
     async selectPaymentCard(vaultedMethod) {
       // If the method is the same as the one already selected then we can return early.
@@ -204,7 +205,7 @@ export default {
         return;
       }
 
-      this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-vaulted' });
+      this.selectPaymentMethod('braintree-vaulted');
 
       // Remove any existing hosted fields if they exist.
       if (this.hostedFieldsInstance) {

@@ -112,6 +112,17 @@ export default {
       cancellationUrl: '',
     };
   },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'rvvup_yapily') {
+          this.isMethodSelected = false;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   computed: {
     ...mapState(useCustomerStore, [
       'customer',
@@ -122,6 +133,7 @@ export default {
     ]),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
+      'selectedMethod',
     ]),
 
     getRvvupIcon() {
@@ -172,21 +184,13 @@ export default {
     this.payByBankDescriptionSrc = payByBank.summary_url;
 
     // On payment selected if it's not RVVUP then close.
-    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
-      if (id !== 'rvvup_yapily') {
-        this.isMethodSelected = false;
-      }
-    });
-
-    // On payment selected if it's not RVVUP then close.
     this.paymentEmitter.on('adyenPaymentDisplayingError', ({ isDisplaying }) => {
       this.isPayByBankActive = !isDisplaying;
     });
   },
   methods: {
     ...mapActions(useLoadingStore, ['setLoadingState']),
-    ...mapActions(usePaymentStore, ['setRvvupErrorMessage']),
-
+    ...mapActions(usePaymentStore, ['setRvvupErrorMessage', 'selectPaymentMethod']),
     /**
      * Remove URL Param
      * @param {*} key
@@ -223,11 +227,7 @@ export default {
      */
     selectPaymentCard() {
       this.isMethodSelected = true;
-
-      this.paymentEmitter.emit('paymentMethodSelected', {
-        id: 'rvvup_yapily',
-        type: 'rvvup_yapily',
-      });
+      this.selectPaymentMethod('rvvup_yapily');
     },
 
     /**

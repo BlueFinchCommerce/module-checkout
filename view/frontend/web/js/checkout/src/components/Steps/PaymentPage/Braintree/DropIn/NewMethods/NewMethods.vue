@@ -93,7 +93,6 @@ export default {
       additionalComponents: '',
       paymentOptionPriority: [],
       map: {},
-      selectedMethod: null,
     };
   },
   computed: {
@@ -118,6 +117,7 @@ export default {
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
       'getPaymentPriority',
+      'selectedMethod',
     ]),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
@@ -233,7 +233,18 @@ export default {
   unmounted() {
     this.removeEventListeners();
   },
-
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && (!newVal.startsWith('braintree')
+          || newVal === 'braintree-lpm' || newVal === 'braintree-vaulted' || newVal === 'braintree-ach')) {
+          this.clearSelectedMethod(newVal);
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
@@ -248,6 +259,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
@@ -361,22 +373,13 @@ export default {
 
       this.attachEventListeners(instance);
 
-      // if (!this.superPaymentsActive) {
-      //   this.attachEventListeners(instance);
-      // } else {
-      //   const options = this.$refs.braintreeContainer.querySelectorAll('.braintree-sheet__container .braintree-sheet');
-      //   options.forEach((option) => {
-      //     option.addEventListener('click', () => {
-      //       this.attachEventListeners(instance);
-      //     });
-      //   });
-      // }
-
       this.movePaymentContainers();
 
       // If Braintree is controlling the first opened payment method then open that method.
-      if (this.firstOpenController === 'braintree') {
-        [this.selectedMethod] = this.paymentOptionPriority;
+      if (this.selectedMethod.startsWith('braintree')) {
+        const [firstMethod] = this.paymentOptionPriority;
+
+        this.selectPaymentMethod(firstMethod);
         this.setToCurrentViewId();
       }
 
@@ -395,9 +398,9 @@ export default {
           this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: false });
           previousViewId !== 'card' && this.startPayment();
         } else if (newViewId !== 'options') {
-          // this.addActiveClass(newViewId);
+          this.addActiveClass(newViewId);
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
-          // this.paymentEmitter.emit('paymentMethodSelected', { id });
+          this.selectPaymentMethod(id);
 
           this.selectedMethod = newViewId;
 
@@ -423,25 +426,23 @@ export default {
         }
       });
 
-      this.paymentEmitter.on('paymentMethodSelected', this.clearSelectedMethod);
-      // this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
+      this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.on('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.on('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.on('braintreePaymentError', this.hideLoader);
     },
 
     removeEventListeners() {
-      this.paymentEmitter.off('paymentMethodSelected', this.clearSelectedMethod);
       this.paymentEmitter.off('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.off('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.off('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.off('braintreePaymentError', this.hideLoader);
     },
 
-    clearSelectedMethod({ id }) {
+    clearSelectedMethod(id) {
       this.unselectVaultedMethods();
-      if (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach') {
+      if (id !== null && (!id.startsWith('braintree')
+        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 
@@ -538,9 +539,11 @@ export default {
     },
 
     clearSelectedPaymentMethod() {
-      this.instance.clearSelectedPaymentMethod();
+      if (this.instance !== null) {
+        this.instance.clearSelectedPaymentMethod();
 
-      this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+        this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+      }
     },
 
     setToCurrentViewId() {

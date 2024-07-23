@@ -8,6 +8,8 @@
                 <item name="gene_better_checkout_enabled" xsi:type="string">gene_better_checkout/general/enabled</item>
                 <item name="gene_better_checkout_loqate_enabled" xsi:type="string">gene_better_checkout/general/loqate/loqate_enabled</item>
                 <item name="gene_better_checkout_loqate_api_key" xsi:type="string">gene_better_checkout/general/loqate/loqate_api_key</item>
+                <item name="gene_better_checkout_super_payments_open" xsi:type="string">gene_better_checkout/general/super_payments/super_payments_open</item>
+                <item name="gene_better_checkout_super_payments_first_method" xsi:type="string">gene_better_checkout/general/super_payments/super_payments_first_method</item>
                 <item name="gene_better_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
                 <item name="gene_better_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
                 <item name="gene_better_checkout_country_state_required" xsi:type="string">general/region/state_required</item>

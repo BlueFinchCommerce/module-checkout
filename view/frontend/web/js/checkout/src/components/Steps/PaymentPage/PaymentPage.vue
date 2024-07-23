@@ -68,7 +68,7 @@
           />
 
           <SuperPayments
-            v-if="superPaymentsActive"
+            v-if="superPaymentsActive && superPaymentsFirstOption"
             :key="`superPaymentsNewMethods-${paymentKey}`"/>
           <AdyenDropIn
             v-if="isAdyenAvailable"
@@ -85,6 +85,9 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
+          <SuperPayments
+            v-if="superPaymentsActive && !superPaymentsFirstOption"
+            :key="`superPaymentsNewMethods-${paymentKey}`"/>
         </template>
         <FreeMOCheckPayment
           v-else
@@ -169,6 +172,7 @@ export default {
       'rewardsEnabled',
       'rvvupPaymentsActive',
       'superPaymentsActive',
+      'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),

@@ -6,16 +6,16 @@
       class="super-payments-container"
     >
       <div class="super-payments-title"
-           @click="selectPaymentMethod"
-           @keydown="selectPaymentMethod">
+           @click="selectSuperPaymentMethod"
+           @keydown="selectSuperPaymentMethod">
         <RadioButton
           id="super-payments-select"
           :text="title"
           :checked="isMethodSelected"
           :data-cy="'super-payment-radio'"
           class="super-payment-radio"
-          @click="selectPaymentMethod"
-          @keydown="selectPaymentMethod"
+          @click="selectSuperPaymentMethod"
+          @keydown="selectSuperPaymentMethod"
         />
         <span class="payment-method-name">
           {{ $t('superPayments.superPaymentsTitle') }}
@@ -61,78 +61,83 @@
     </div>
   </div>
 </template>
-<script>
 
-// Stores
-import {mapActions, mapState} from 'pinia';
+<script>
+import { mapActions, mapState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
+import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // Services
 import createPayment from '@/services/payments/createPaymentGraphQl';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 
-//Helpers
+// Helpers
 import getSuperPaymentsData from '@/helpers/payment/getSuperPaymentsData';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
 
-//Components
+// Components
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
-import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import PrivacyPolicy from '@/components/Core/ContentComponents/PrivacyPolicy/PrivacyPolicy.vue';
 import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Price from '@/components/Core/ContentComponents/Price/Price.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
-//Icons
+// Icons
 import superPaymentsSvg from '@/icons/superPaymentsSvg.svg';
-import useCartStore from "@/stores/CartStore";
 
 export default {
   name: 'SuperPayments',
   components: {
     ErrorMessage,
-    MyButton,
     PrivacyPolicy,
     RadioButton,
     Recaptcha,
     Price,
-    TextField
+    TextField,
   },
-  data: function () {
+  data() {
     return {
       offerBlock: null,
       contentBlock: null,
       buttonDisabled: false,
-      isMethodSelected: true,
+      isMethodSelected: false,
       paymentVisible: true,
       errorMessage: '',
     };
   },
   computed: {
-    ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
     ...mapState(useCartStore, ['cartGrandTotal']),
+    ...mapState(useConfigStore, ['superPaymentsOpen']),
 
     getSuperPaymentsIcon() {
       return `${getStaticUrl(superPaymentsSvg)}`;
     },
   },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'super_payment_gateway') {
+          this.isMethodSelected = false;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   created() {
-    const paymentCode = 'super_payment_gateway';
-    this.paymentEmitter.emit('paymentMethodSelected', { paymentCode });
+    if (this.superPaymentsOpen) {
+      this.selectSuperPaymentMethod();
+    }
 
-    this.paymentEmitter.on('changePaymentMethodDisplay', ({visible}) => {
+    this.paymentEmitter.on('changePaymentMethodDisplay', ({ visible }) => {
       this.paymentVisible = visible;
-    });
-
-    this.paymentEmitter.on('paymentMethodSelected', ({id}) => {
-      if (id !== 'super_payment_gateway') {
-        this.isMethodSelected = false;
-      }
     });
 
     getSuperPaymentsData()
@@ -141,19 +146,16 @@ export default {
         this.contentBlock = response.description;
       }).catch((error) => {
         this.errorMessage = error;
-    });
+      });
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
-    async selectPaymentMethod() {
+    selectSuperPaymentMethod() {
       this.isMethodSelected = true;
-
-      this.paymentEmitter.emit('paymentMethodSelected', {
-        id: 'super_payment_gateway',
-        type: 'super_payment_gateway',
-      });
+      this.selectPaymentMethod('super_payment_gateway');
     },
     createPayment() {
       const paymentMethod = {
@@ -179,12 +181,11 @@ export default {
     },
 
     redirectToSuperPaymentsPage() {
-      window.location.href = getBaseUrl() + '/superpayment/payment/redirect';
-    }
+      window.location.href = `${getBaseUrl()}/superpayment/payment/redirect`;
+    },
   },
-}
+};
 </script>
-
 
 <style lang="scss" scoped>
 @import "./styles.scss";
