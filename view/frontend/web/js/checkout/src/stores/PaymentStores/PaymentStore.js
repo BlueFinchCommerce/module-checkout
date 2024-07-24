@@ -16,6 +16,7 @@ export default defineStore('paymentStore', {
     expressMethods: [],
     hasVaultedMethods: false,
     firstOpenController: 'braintree',
+    selectedMethod: null,
   }),
   getters: {
     methodsResponse: (state) => state.methodsResponse,
@@ -55,6 +56,14 @@ export default defineStore('paymentStore', {
     setPaymentMethods(paymentMethods) {
       this.setData({
         availableMethods: paymentMethods,
+      });
+
+      this.selectPaymentMethod(paymentMethods[0].code);
+    },
+
+    selectPaymentMethod(selectedMethod) {
+      this.setData({
+        selectedMethod,
       });
     },
 

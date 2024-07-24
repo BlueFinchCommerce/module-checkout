@@ -3,6 +3,8 @@ type StoreConfig {
     gene_better_checkout_enabled: String @doc(description: "Gene Checkout Enabled")
     gene_better_checkout_loqate_enabled: String @doc(description: "Gene Checkout Loqate Enabled")
     gene_better_checkout_loqate_api_key: String @doc(description: "Gene Checkout Loqate API Key")
+    gene_better_checkout_super_payments_open: Boolean @doc(description: "Gene Checkout Super Payments opened by default")
+    gene_better_checkout_super_payments_first_method: Boolean @doc(description: "Gene Checkout Super Payments first payment option")
     gene_better_checkout_newsletter_enabled: String @doc(description: "Gene Checkout Newsletter Enabled")
     gene_better_checkout_newsletter_allow_guest: String @doc(description: "Gene Checkout Newsletter Allow Guests")
     gene_better_checkout_country_state_required: String @doc(description: "Gene Checkout country needs state required")
