@@ -74,14 +74,14 @@
                         <comment><![CDATA[Your Loqate API key if using Loqate.]]></comment>
                     </field>
                 </group>
-                <group id="super_payments" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <group id="super_payments" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Super Payments Order/Default Behaviour</label>
-                    <field id="super_payments_open" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <field id="super_payments_open" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Make Super Payments open by default</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[Make Super Payments open by default.]]></comment>
                     </field>
-                    <field id="super_payments_first_method" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <field id="super_payments_first_method" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Make Super Payments first option as a payment method</label>
                         <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                         <comment><![CDATA[Make Super Payments first option as a payment method.]]></comment>

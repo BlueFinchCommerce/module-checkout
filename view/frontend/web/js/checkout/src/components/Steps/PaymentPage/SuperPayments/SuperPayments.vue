@@ -88,7 +88,7 @@ import Price from '@/components/Core/ContentComponents/Price/Price.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Icons
-import superPaymentsSvg from '@/icons/superPaymentsSvg.svg';
+import superPaymentsSvg from '@/icons/superPayments.svg';
 
 export default {
   name: 'SuperPayments',
