@@ -150,6 +150,7 @@ export default {
     stepTitle: ' ',
     stepCompleteTitle: ' ',
     nominatedDelivery: ' ',
+    nominatedDeliveryCalendar: ' ',
     tbc: ' ',
   },
   addNewAddressBtn: ' ',

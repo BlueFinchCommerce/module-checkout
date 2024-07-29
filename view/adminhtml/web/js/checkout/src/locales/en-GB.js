@@ -196,6 +196,7 @@ export default {
     stepTitle: 'Select a shipping method',
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
+    nominatedDeliveryCalendar: 'Please select a date',
     tbc: 'Calculated at next step',
   },
   addNewAddressBtn: '+ Add new address',
