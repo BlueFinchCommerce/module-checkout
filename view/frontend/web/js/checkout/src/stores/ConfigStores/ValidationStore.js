@@ -7,7 +7,6 @@ import requiredValid from '@/helpers/validation/requiredValid';
 import minLength from '@/helpers/validation/minLength';
 import maxLength from '@/helpers/validation/maxLength';
 import inputTypeValid from '@/helpers/validation/inputTypeValid';
-import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import deepClone from '@/helpers/addresses/deepClone';
 
 /**
@@ -208,12 +207,6 @@ export default defineStore('ValidationStore', {
           // If no helper function is found, assume the validation passes
           return true;
         });
-
-        // If attribute is "telephone", also check phone validation
-        if (field === 'telephone') {
-          const phoneValidationResult = getPhoneValidation(value);
-          return validationResults && phoneValidationResult;
-        }
 
         if (field === 'postcode') {
           const configStore = useConfigStore();
