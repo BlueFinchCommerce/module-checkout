@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import lodashGet from 'lodash.get';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
 import requiredValid from '@/helpers/validation/requiredValid';
@@ -20,7 +21,6 @@ export default defineStore('ValidationStore', {
       MIN_TEXT_LENGTH: minLength,
       MAX_TEXT_LENGTH: maxLength,
       INPUT_VALIDATION: inputTypeValid,
-
     },
     attributes: [
       'prefix',
@@ -48,6 +48,9 @@ export default defineStore('ValidationStore', {
   getters: {
     isFieldValid: (state) => (
       (addressType, field) => typeof state.errors[addressType][field] === 'undefined'
+    ),
+    showFieldError: (state) => (
+      (addressType, field) => state.errors[addressType][field]
     ),
     isAddressValid: (state) => (
       (addressType) => !Object.keys(state.errors[addressType]).length
@@ -97,7 +100,6 @@ export default defineStore('ValidationStore', {
           validationRules.splice(requiredIndex, 1);
         }
       }
-
       return validationRules;
     },
 
@@ -137,7 +139,7 @@ export default defineStore('ValidationStore', {
           isValid = this.validateRegion(addressType, displayErrors);
         } else if (attribute === 'street') {
           Object.entries(value).forEach(([index]) => {
-            const streetLine = `street.${parseInt(index, 10) + 1}`;
+            const streetLine = `street.${parseInt(index, 10)}`;
             const keyIsValid = this.validateField(addressType, streetLine, displayErrors);
 
             if (!keyIsValid) {
@@ -160,7 +162,7 @@ export default defineStore('ValidationStore', {
       const customerStore = useCustomerStore();
       const value = lodashGet(customerStore.selected[addressType], field);
 
-      const isValid = this.testValidationRules(value, field);
+      const isValid = this.testValidationRules(value, field, addressType);
 
       if (!isValid) {
         this.addAddressError(addressType, field, displayError);
@@ -191,7 +193,7 @@ export default defineStore('ValidationStore', {
       return isValid;
     },
 
-    testValidationRules(value, field) {
+    testValidationRules(value, field, addressType) {
       const validationRules = this.getValidationRules(field);
 
       if (validationRules) {
@@ -211,6 +213,13 @@ export default defineStore('ValidationStore', {
         if (field === 'telephone') {
           const phoneValidationResult = getPhoneValidation(value);
           return validationResults && phoneValidationResult;
+        }
+
+        if (field === 'postcode') {
+          const configStore = useConfigStore();
+          const customerStore = useCustomerStore();
+          const postcode = !configStore.postcodeRequired(customerStore.selected[addressType].country_code) || value;
+          return validationResults && postcode;
         }
 
         return validationResults;

@@ -13,10 +13,11 @@
             <TextInput
               v-model="selectedAddressType.street[index]"
               type="text"
-              :class="{'field-valid': isFieldValid(address_type, `street.${index}`),
+              :class="{'field-valid': selectedAddressType.street[index]
+                        && isFieldValid(address_type, `street.${index}`),
                       'field-error': !isFieldValid(address_type, `street.${index}`)}"
-              :error="!isFieldValid(address_type, `street.${index}`)"
-              :error-message="!isFieldValid(address_type, `street.${index}`)
+              :error="showFieldError(address_type, `street.${index}`)"
+              :error-message="showFieldError(address_type, `street.${index}`)
                 ? $t('errorMessages.streetErrorMessage') : ''"
               :placeholder="$t(
                 'yourDetailsSection.deliverySection.addressForm.addressField.placeholder',
@@ -29,7 +30,7 @@
               @input="validateField(address_type, `street.${index}`, true)"
               @focusout="validateField(address_type, `street.${index}`, true)"
             />
-            <ValidIcon v-if="isFieldValid(address_type, `street.${index}`)" />
+            <ValidIcon v-if="selectedAddressType.street[index] && isFieldValid(address_type, `street.${index}`)" />
             <div class="error-icon-block">
               <ErrorIcon v-if="!isFieldValid(address_type, `street.${index}`)" />
             </div>
@@ -40,10 +41,10 @@
           <TextInput
             v-model="selectedAddressType.city"
             type="text"
-            :class="{'field-valid': isFieldValid(address_type, 'city'),
+            :class="{'field-valid': selectedAddressType.city && isFieldValid(address_type, 'city'),
                      'field-error': !isFieldValid(address_type, 'city')}"
-            :error="!isFieldValid(address_type, 'city')"
-            :error-message="!isFieldValid(address_type, 'city')
+            :error="showFieldError(address_type, 'city')"
+            :error-message="showFieldError(address_type, 'city')
               ? $t('errorMessages.cityErrorMessage') : ''"
             :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
               'cityField.placeholder')"
@@ -55,7 +56,7 @@
             @input="validateField(address_type, 'city', true)"
             @focusout="validateField(address_type, 'city', true)"
           />
-          <ValidIcon v-if="isFieldValid(address_type, 'city')" />
+          <ValidIcon v-if="selectedAddressType.city && isFieldValid(address_type, 'city')" />
           <div class="error-icon-block">
             <ErrorIcon v-if="!isFieldValid(address_type, 'city')" />
           </div>
@@ -64,10 +65,10 @@
         <div v-if="displayState && !getRegionOptions(address_type).length">
           <TextInput
             v-model="selectedAddressType.region.region"
-            :class="{'field-valid': isFieldValid(address_type, 'region')}"
+            :class="{'field-valid': selectedAddressType.region.region && isFieldValid(address_type, 'region')}"
             type="text"
-            :error="!isFieldValid(address_type, 'region')"
-            :error-message="!isFieldValid(address_type, 'region')
+            :error="showFieldError(address_type, 'region')"
+            :error-message="showFieldError(address_type, 'region')
               ? $t('errorMessages.regionErrorMessage') : ''"
             :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
               'regionField.placeholder')"
@@ -80,7 +81,7 @@
             @focusout="validateRegion(address_type, true)"
           />
           <ValidIcon
-            v-if="isFieldValid(address_type, 'region')"
+            v-if="selectedAddressType.region.region && isFieldValid(address_type, 'region')"
           />
           <div class="error-icon-block">
             <ErrorIcon />
@@ -91,7 +92,7 @@
           v-if="displayState && getRegionOptions(address_type).length"
           v-model="selectedAddressType.region.region_id"
           :options="getRegionOptions(address_type)"
-          :error="!isFieldValid(address_type, 'region')"
+          :error="showFieldError(address_type, 'region')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
             'regionField.label')"
           :required="getRegionRequired(address_type)"
@@ -102,10 +103,10 @@
         <div>
           <TextInput
             v-model="selectedAddressType.postcode"
-            :error="!isFieldValid(address_type, 'postcode')"
-            :error-message="!isFieldValid(address_type, 'postcode')
+            :error="showFieldError(address_type, 'postcode')"
+            :error-message="showFieldError(address_type, 'postcode')
               ? `${$t('errorMessages.postCodeErrorMessage')} ${selectedAddressType.country_code}` : ''"
-            :class="{'field-valid': isFieldValid(address_type, 'postcode'),
+            :class="{'field-valid': selectedAddressType.postcode && isFieldValid(address_type, 'postcode'),
                      'field-error': !isFieldValid(address_type, 'postcode')}"
             type="text"
             :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
@@ -118,7 +119,7 @@
             @input="validateField(address_type, 'postcode', true)"
             @focusout="validateField(address_type, 'postcode', true)"
           />
-          <ValidIcon v-if="isFieldValid(address_type, 'postcode')" />
+          <ValidIcon v-if="selectedAddressType.postcode && isFieldValid(address_type, 'postcode')" />
           <div class="error-icon-block">
             <ErrorIcon v-if="!isFieldValid(address_type, 'postcode')" />
           </div>
@@ -127,7 +128,7 @@
         <SelectInput
           v-model="selectedAddressType.country_code"
           :options="selectOptions"
-          :error="!isFieldValid(address_type, 'country')"
+          :error="showFieldError(address_type, 'country')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
           :selected-option="$t('yourDetailsSection.selectPlaceholder')"
           required
@@ -243,6 +244,7 @@ export default {
   created() {
     this.setupCountry();
     this.updateRegionRequired(this.address_type);
+    this.validateAddress(this.address_type);
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -255,6 +257,7 @@ export default {
     ]),
     ...mapActions(useValidationStore, [
       'isFieldValid',
+      'showFieldError',
       'isRequired',
       'validateAddress',
       'validateField',

@@ -217,7 +217,6 @@
         @billingInfoFull="billingInfoFull"
       />
 
-      {{ errors }}
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
