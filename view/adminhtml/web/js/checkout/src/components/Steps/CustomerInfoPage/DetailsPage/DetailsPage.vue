@@ -1,11 +1,12 @@
 <template>
   <div class="details-form">
-    <div
-      v-show="isExpressPaymentsVisible"
-      class="details-form-header"
-    >
+    <div class="details-form-header"
+         v-show="isExpressPaymentsVisible">
       <div class="instantCheckout-block">
-        <TextField :text="instantCheckoutText" />
+        <TextField
+          :text="instantCheckoutText"
+          :data-cy="'instant-checkout-title'"
+        />
       </div>
       <Agreements id="detailsPage" />
       <Recaptcha
@@ -37,21 +38,33 @@
       <Newsletter v-if="emailEntered" />
 
       <div
-        v-if="custom.clickandcollectEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.shippingButton')"
-          :primary="!isClickAndCollect"
-          :tertiary="isClickAndCollect"
-          @click="setNotClickAndCollect()"
-        />
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
-          :tertiary="!isClickAndCollect"
-          :primary="isClickAndCollect"
-          @click="setClickAndCollect()"
-        />
+        <button
+          class="button details-button"
+          :class="{'button--primary': !isClickAndCollect, 'button--tertiary' : isClickAndCollect}"
+          @click="setNotClickAndCollect()">
+          <DeliveryTabIcon
+            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="$t('yourDetailsSection.deliverySection.shippingButton')"
+            :data-cy="'home-delivery-title'"
+          />
+        </button>
+        <button
+          class="button click-collect-button"
+          :class="{'button--primary': isClickAndCollect, 'button--tertiary' : !isClickAndCollect}"
+          @click="setClickAndCollect()">
+          <ClickCollectTabIcon
+            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
+            :data-cy="'click-collect-title'"
+          />
+        </button>
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
@@ -72,82 +85,75 @@
         />
       </div>
 
-      <div class="details-form-title">
-        <YourDetails fill="black" />
-        <TextField
-          :text="yourDetailsText"
-        />
-        <div class="divider-line" />
-      </div>
-      <!-- v-else -->
-
-      <NameFields
-        :address_type="address_type"
-        @isCustomerInfoFull="isCustomerInfoFull"
-      />
-      <!-- v-if="isAddressBlockVisible" -->
-      <div
-        class="delivery-section-title"
-      >
-        <Locate />
-        <div class="delivery-section-title-text">
-          <TextField
-            :text="deliverWhereText"
-          />
-        </div>
-        <div class="divider-line" />
-      </div>
-
       <AddressList
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
         @passSelectedItemId="passSelectedItemId"
-        @selectedSavedAddress="selectedSavedAddress"
       />
 
       <div class="address-form-error-message">
-        <ErrorMessage
-          v-if="addressInfoWrong"
-          :message="$t('errorMessages.addressWrongError')"
-        />
+        <ErrorMessage v-if="addressInfoWrong"
+                      :message="$t('errorMessages.addressWrongError')"/>
       </div>
 
-      <!-- Removed for UI designer only -->
-      <!-- v-if="emailEntered && (!selected[address_type].id
-          || (selected[address_type].id === 'custom' && selected[address_type].editing))
-          && !isClickAndCollect && !cart.is_virtual" -->
       <div
+        v-if="emailEntered && (!selected[address_type].id
+          || (selected[address_type].id === 'custom' && selected[address_type].editing))
+          && !isClickAndCollect && !cart.is_virtual"
         class="additional-detail-form"
       >
         <div
           class="delivery-section"
         >
-          <!-- Removed for UI designer only -->
-          <!-- v-if="customer.addresses.length <= 0" -->
+          <div v-if="customer.addresses.length <= 0"
+               class="details-form-title">
+            <YourDetails fill="black"/>
+            <TextField
+              :text="yourDetailsText"
+              :data-cy="'your-details-title'"
+            />
+            <div class="divider-line"></div>
+          </div>
+          <div v-else class="details-form-title saved-address">
+            <Locate :data-cy="`${address_type}-new-address-icon`"/>
+            <TextField
+              class="address-block__title"
+              :text="newAddressText"
+              :data-cy="`${address_type}-new-address-title`"
+            />
+            <div class="divider-line"></div>
+          </div>
+
+          <NameFields
+            :address_type="address_type"
+            @isCustomerInfoFull="isCustomerInfoFull"
+          />
+          <div
+            v-if="isAddressBlockVisible"
+            class="delivery-section-title"
+          >
+            <Locate :data-cy="`${address_type}-where-to-icon`"/>
+            <div class="delivery-section-title-text">
+              <TextField
+                :text="deliverWhereText"
+                :data-cy="`${address_type}-where-to-icon`"
+              />
+            </div>
+            <div class="divider-line"></div>
+          </div>
 
           <div>
             <div>
               <AddressFinder
                 v-if="!selected[address_type].id
                   || (selected[address_type].id === 'custom' && selected[address_type].editing)"
+                :data-cy="address_type"
               />
             </div>
           </div>
 
-          <!-- Removed for UI designer only -->
-          <!-- v-if="selected[address_type].editing || !addressFinder.enabled" -->
-          <div
-            class="details-form-title saved-address"
-          >
-            <Locate />
-            <TextField
-              class="address-block__title"
-              :text="newAddressText"
-            />
-            <div class="divider-line" />
-          </div>
-          <ShippingForm />
+          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled"/>
 
           <LinkComponent
             v-if="!selected[address_type].id
@@ -155,6 +161,7 @@
               && addressFinder.enabled"
             class="manually-button"
             :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :data-cy="'enter-address-manually-link'"
             @click.prevent="editAddress"
           />
         </div>
@@ -162,7 +169,7 @@
 
       <div
         v-if="emailEntered && !selected[address_type].editing
-          && !isSavedAddressSelected
+          && !selected[address_type].isSavedAddressSelected
           && selected[address_type].id
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
@@ -190,7 +197,7 @@
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
         >
-          <Edit />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`"/>
         </div>
       </div>
 
@@ -228,10 +235,11 @@
 </template>
 <script>
 // icons
-import { mapActions, mapState } from 'pinia';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import DeliveryTabIcon from '@/components/Core/Icons/DeliveryTabIcon/DeliveryTabIcon.vue';
+import ClickCollectTabIcon from '@/components/Core/Icons/ClickCollectTabIcon/ClickCollectTabIcon.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -259,6 +267,7 @@ import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
+import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -301,6 +310,8 @@ export default {
     ProgressBar,
     Recaptcha,
     Agreements,
+    DeliveryTabIcon,
+    ClickCollectTabIcon,
   },
   props: {
     address_type: {
@@ -311,7 +322,6 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
-      isSavedAddressSelected: false,
       savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
@@ -335,7 +345,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode', 'clickCollectTabsEnabled']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -345,7 +355,7 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
-    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
@@ -380,29 +390,9 @@ export default {
       this[types[type]] = first && last && phone;
     });
 
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
-    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
-    || this.$t('yourDetailsSection.deliverySection.title');
-    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
-    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
-    this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
-    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
-
-    document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
-    document.addEventListener(this.yourDetailsTextId, this.setYourDetailsText);
-    document.addEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
-    document.addEventListener(this.newAddressTextId, this.setNewAddressText);
-    document.addEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
-    document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
-  },
-  unmounted() {
-    document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
-    document.removeEventListener(this.yourDetailsTextId, this.setYourDetailsText);
-    document.removeEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
-    document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
-    document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayText);
+    if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
+      this.setAddressAsCustom(this.address_type);
+    }
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -496,9 +486,6 @@ export default {
       if (value !== null) {
         this.buttonEnabled = true;
       }
-    },
-    selectedSavedAddress(value) {
-      this.isSavedAddressSelected = value;
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;

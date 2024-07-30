@@ -103,8 +103,8 @@ export default defineStore('customerStore', {
         delete clonedAddress.country;
       }
 
-      // The region comes back with differnt keys than it expects so map them.
-      if (address.region.label) {
+      // The region comes back with different keys than it expects so map them.
+      if (Object.keys(address).length !== 0 && address.region.label) {
         const configStore = useConfigStore();
         clonedAddress.region.region = address.region.code;
         clonedAddress.region.region_id = configStore.getRegionId(address.country.code, address.region.code);
