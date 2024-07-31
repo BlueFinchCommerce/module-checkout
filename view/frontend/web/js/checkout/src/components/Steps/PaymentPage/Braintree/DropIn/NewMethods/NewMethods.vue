@@ -213,6 +213,19 @@ export default {
           size: 'responsive',
         },
       };
+
+      options.paypalCredit = {
+        flow: 'checkout',
+        amount: total,
+        currency: this.currencyCode,
+        buttonStyle: {
+          color: 'darkblue',
+          label: this.paypal.buttonLabel,
+          shape: this.paypal.buttonShape,
+          size: 'responsive',
+        },
+        commit: true,
+      }
     }
 
     if (this.isPaymentMethodAvailable('braintree_venmo')) {
