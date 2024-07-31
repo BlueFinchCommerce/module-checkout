@@ -8,7 +8,7 @@
           :data-cy="'instant-checkout-title'"
         />
       </div>
-      <Agreements id="detailsPage" />
+      <Agreements id="detailsPage"/>
       <Recaptcha
         id="placeOrder"
         location="expressPayments"
@@ -43,31 +43,43 @@
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent />
-      <PayWith />
+      <DividerComponent/>
+      <PayWith/>
 
-      <ProgressBar v-if="emailEntered" />
+      <ProgressBar v-if="emailEntered"/>
 
-      <EmailAddress />
+      <EmailAddress/>
 
-      <Newsletter v-if="emailEntered" />
+      <Newsletter v-if="emailEntered"/>
 
       <div
-        v-if="custom.clickandcollectEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.shippingButton')"
-          :primary="!isClickAndCollect"
-          :tertiary="isClickAndCollect"
-          @click="setNotClickAndCollect()"
-        />
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
-          :tertiary="!isClickAndCollect"
-          :primary="isClickAndCollect"
-          @click="setClickAndCollect()"
-        />
+        <button
+          class="button details-button"
+          :class="{'button--primary': !isClickAndCollect, 'button--tertiary' : isClickAndCollect}"
+          @click="setNotClickAndCollect()">
+          <DeliveryTabIcon
+            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="$t('yourDetailsSection.deliverySection.shippingButton')"
+            :data-cy="'home-delivery-title'"
+          />
+        </button>
+        <button
+          class="button click-collect-button"
+          :class="{'button--primary': isClickAndCollect, 'button--tertiary' : !isClickAndCollect}"
+          @click="setClickAndCollect()">
+          <ClickCollectTabIcon
+            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
+            :data-cy="'click-collect-title'"
+          />
+        </button>
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
@@ -92,7 +104,7 @@
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
-        @selectedSavedAddress="selectedSavedAddress"
+        @passSelectedItemId="passSelectedItemId"
       />
 
       <div class="address-form-error-message">
@@ -110,8 +122,8 @@
           class="delivery-section"
         >
           <div v-if="customer.addresses.length <= 0"
-            class="details-form-title">
-            <YourDetails fill="black" />
+               class="details-form-title">
+            <YourDetails fill="black"/>
             <TextField
               :text="yourDetailsText"
               :data-cy="'your-details-title'"
@@ -119,7 +131,7 @@
             <div class="divider-line"></div>
           </div>
           <div v-else class="details-form-title saved-address">
-            <Locate :data-cy="`${address_type}-new-address-icon`" />
+            <Locate :data-cy="`${address_type}-new-address-icon`"/>
             <TextField
               class="address-block__title"
               :text="newAddressText"
@@ -136,7 +148,7 @@
             v-if="isAddressBlockVisible"
             class="delivery-section-title"
           >
-            <Locate :data-cy="`${address_type}-where-to-icon`" />
+            <Locate :data-cy="`${address_type}-where-to-icon`"/>
             <div class="delivery-section-title-text">
               <TextField
                 :text="deliverWhereText"
@@ -156,7 +168,7 @@
             </div>
           </div>
 
-          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
+          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled"/>
 
           <LinkComponent
             v-if="!selected[address_type].id
@@ -171,7 +183,7 @@
       </div>
       <div
         v-if="emailEntered && !selected[address_type].editing
-          && !isSavedAddressSelected
+          && !selected[address_type].isSavedAddressSelected
           && selected[address_type].id
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
@@ -201,7 +213,7 @@
           @keydown.enter.prevent="editAddress"
           tabindex="0"
         >
-          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`"/>
         </div>
       </div>
 
@@ -243,6 +255,8 @@
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import DeliveryTabIcon from '@/components/Core/Icons/DeliveryTabIcon/DeliveryTabIcon.vue';
+import ClickCollectTabIcon from '@/components/Core/Icons/ClickCollectTabIcon/ClickCollectTabIcon.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -314,6 +328,8 @@ export default {
     ProgressBar,
     Recaptcha,
     Agreements,
+    DeliveryTabIcon,
+    ClickCollectTabIcon,
   },
   props: {
     address_type: {
@@ -324,7 +340,6 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
-      isSavedAddressSelected: false,
       savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
@@ -348,7 +363,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode', 'clickCollectTabsEnabled']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -450,8 +465,11 @@ export default {
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
     },
-    selectedSavedAddress(value) {
-      this.isSavedAddressSelected = value;
+    passSelectedItemId(value) {
+      this.savedAddressID = value;
+      if (value !== null) {
+        this.buttonEnabled = true;
+      }
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;

@@ -90,8 +90,8 @@ export default {
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
       newAddressTitle: 'Add new address',
-      shippingButton: 'SHIPPING ADDRESS',
-      clickandCollectButton: 'CLICK & COLLLECT',
+      shippingButton: 'Home Delivery',
+      clickandCollectButton: 'Click & Collect',
       clickandCollectOpeningTimes: 'Opening Times',
       clickandCollectThresholdHigh: 'Unfortunately, your basket value is too high for Click and Collect. If you want to collect from a store near you, your basket must be less than {price}.',
       clickandCollectThresholdLow: 'Unfortunately, your basket value is too low for Click and Collect. If you want to collect from a store near you, your basket must be more than {price}.',
@@ -194,6 +194,7 @@ export default {
     stepTitle: 'Select a shipping method',
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
+    nominatedDeliveryCalendar: 'Please select a date',
     tbc: 'Calculated at next step',
   },
   addNewAddressBtn: '+ Add new address',
@@ -244,6 +245,9 @@ export default {
     payByBankLabel: 'Pay by Bank',
     payByBankButton: 'Continue to Pay by Bank with Rvvup',
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
+  },
+  superPayments: {
+    superPaymentsTitle: 'Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',

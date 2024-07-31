@@ -141,6 +141,7 @@ export default {
       'getRegionOptions',
       'updateRegionRequired',
       'getAfdConfiguration',
+      'setSelectedSavedAddress',
     ]),
     ...mapActions(useValidationStore, ['validateAddress']),
 
@@ -196,6 +197,8 @@ export default {
 
       // Hide the list after selecting an item.
       this.displayResults = false;
+
+      this.setSelectedSavedAddress(this.address_type, false);
     },
     updateAddress(address) {
       const {

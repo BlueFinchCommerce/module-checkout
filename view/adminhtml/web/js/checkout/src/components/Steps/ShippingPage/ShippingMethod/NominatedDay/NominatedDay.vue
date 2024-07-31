@@ -1,6 +1,7 @@
 <template>
   <section class="nominated-container">
     <button
+      v-show="!showCalender"
       ref="nominated"
       class="nominated-select"
       type="button"
@@ -20,109 +21,103 @@
     </button>
 
     <!-- Calendar Start -->
-    <Transition
-      name="fade"
+    <div
+      v-show="showCalender"
+      id="nominated-calendar"
+      :key="selectedView"
+      class="calendar-container"
+      role="dialog"
+      aria-labelledby="calendar-tile"
+      aria-describedby="calendar-description"
+      :aria-modal="showCalender"
+      @keyup.esc="closeCalendar()"
     >
-      <button
-        v-show="showCalender"
-        class="nominated-overlay"
-        @click.prevent="closeCalendar"
-      />
-    </Transition>
-
-    <Transition name="slide-mobile">
-      <div
-        v-show="showCalender"
-        id="nominated-calendar"
-        :key="selectedView"
-        class="calendar-container"
-        role="dialog"
-        aria-labelledby="calendar-tile"
-        aria-describedby="calendar-description"
-        :aria-modal="showCalender"
-        @keyup.esc="closeCalendar()"
-      >
-        <header class="calendar-header">
-          <button
-            type="button"
-            class="calendar-header-button"
-            :disabled="disablePrevArrow"
-            @click="decreaseMonth()"
-          >
-            <ArrowLeft
-              width="8px"
-              stroke="black"
-            />
-          </button>
-
-          <p class="calendar-header-date">
-            {{ getMonth() }} {{ year }}
-          </p>
-
-          <button
-            type="button"
-            class="calendar-header-button"
-            :disabled="disableNextArrow"
-            @click="increaseMonth()"
-          >
-            <ArrowRight
-              width="8px"
-              stroke="black"
-            />
-          </button>
-        </header>
-
-        <ol class="calendar-week">
-          <li
-            v-for="date in weekdays"
-            :key="date"
-            class="calendar-week-day"
-          >
-            <span v-text="date.substring(0, 2)" />
-          </li>
-        </ol>
-
-        <ol class="calendar">
-          <li
-            v-for="date in emptyDays"
-            :key="date"
-            class="calendar-day"
+      <header class="calendar-header">
+        <button
+          type="button"
+          class="calendar-header-button"
+          :disabled="disablePrevArrow"
+          @click="decreaseMonth()"
+        >
+          <ArrowLeft
+            width="8px"
+            stroke="black"
           />
+        </button>
 
-          <li
-            v-for="date in numberOfDaysInMonth()"
-            :key="date"
-            class="calendar-day"
-            :class="{
+        <p class="calendar-header-date">
+          {{ getMonth() }} {{ year }}
+        </p>
+
+        <button
+          type="button"
+          class="calendar-header-button"
+          :disabled="disableNextArrow"
+          @click="increaseMonth()"
+        >
+          <ArrowRight
+            width="8px"
+            stroke="black"
+          />
+        </button>
+      </header>
+
+      <ol class="calendar-week">
+        <li
+          v-for="date in weekdays"
+          :key="date"
+          class="calendar-week-day"
+        >
+          <span v-text="date.substring(0, 2)" />
+        </li>
+      </ol>
+
+      <ol class="calendar">
+        <li
+          v-for="date in emptyDays"
+          :key="date"
+          class="calendar-day"
+        />
+
+        <li
+          v-for="date in numberOfDaysInMonth()"
+          :key="date"
+          class="calendar-day"
+          :class="{
               'calendar-day--in-past': isDateInPast(date),
               'calendar-day--available': isAvailableDate(date)
             }"
-          >
-            <template v-if="isAvailableDate(date)">
-              <button
-                type="button"
-                class="calendar-button"
-                :class="{
+        >
+          <template v-if="isAvailableDate(date)">
+            <button
+              type="button"
+              class="calendar-button"
+              :class="{
                   'active': compareDates(nominatedSelectedDate, date)
                 }"
-                @click="selectDate(date)"
-              >
+              @click="selectDate(date)"
+            >
                 <span class="calendar-radio-label">
                   <span>{{ getDateLabel(date) }}</span>
                   <span class="calendar-button-symbol" />
                 </span>
-              </button>
-            </template>
+            </button>
+          </template>
 
-            <span
-              v-else
-              class="calendar-span"
-            >{{ getDateLabel(date) }}</span>
-          </li>
-        </ol>
-      </div>
-    </Transition>
+          <span
+            v-else
+            class="calendar-span"
+          >{{ getDateLabel(date) }}</span>
+        </li>
+      </ol>
+    </div>
     <!-- Calendar End -->
+
+    <TextField
+      v-show="showCalender"
+      :text="$t('shippingStep.nominatedDeliveryCalendar')"
+      class="nominated-select-calendar-text"
+    />
   </section>
 </template>
 
@@ -165,6 +160,7 @@ export default {
       isKeyboard: false,
 
       // Calendar Specific
+      today: new Date(),
       day: null,
       month: null,
       year: null,
@@ -190,13 +186,6 @@ export default {
     ...mapState(useShippingMethodsStore, ['nominatedDates']),
 
     /**
-     * Get Today
-     */
-    today() {
-      return new Date();
-    },
-
-    /**
      * Disable prev arrow if month is this month
      */
     disablePrevArrow() {
@@ -209,13 +198,23 @@ export default {
     disableNextArrow() {
       return this.month >= (this.today.getMonth() + 1);
     },
+
+    /**
+     * Get First Available Delivery Day
+     */
+    firstAvailableDay() {
+      const availableDates = this.nominatedDates.filter(
+        (method) => new Date(method.extension_attributes.date_required),
+      );
+      return new Date(availableDates[0].extension_attributes.date_required);
+    },
   },
   mounted() {
-    // Set calendar date to now
-    const { today } = this;
-    this.day = today.getDate();
-    this.month = today.getMonth();
-    this.year = today.getFullYear();
+    // Set calendar date to first available date
+    const { firstAvailableDay } = this.firstAvailableDay;
+    this.day = firstAvailableDay.getDate();
+    this.month = firstAvailableDay.getMonth();
+    this.year = firstAvailableDay.getFullYear();
   },
   methods: {
     ...mapActions(useLoadingStore, ['setLoadingState']),
@@ -251,9 +250,8 @@ export default {
     formatedSelectedDate(date) {
       const day = date.getDate() + (date.getDate() % 10 === 1 && date.getDate() !== 11 ? 'st'
         : (date.getDate() % 10 === 2 && date.getDate() !== 12 ? 'nd'
-          : (date.getDate() % 10 === 3 && date.getDate() !== 13 ? 'rd'
-            : 'th'))); const
-        weekday = this.weekdays[date.getDay()];
+          : (date.getDate() % 10 === 3 && date.getDate() !== 13 ? 'rd' : 'th')));
+      const weekday = this.weekdays[date.getDay()];
       return `${weekday}, ${this.getMonth()} ${day} ${this.year}`;
     },
 

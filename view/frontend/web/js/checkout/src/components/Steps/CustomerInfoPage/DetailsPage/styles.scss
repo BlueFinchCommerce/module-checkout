@@ -88,8 +88,31 @@
 .shipping-type-toggle {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: var(--indent__s);
   margin-top: var(--indent__base);
+
+  .details-button,
+  .click-collect-button {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    border-width: var(--base__border-weight);
+    padding: var(--indent__m);
+
+    p {
+      margin-left: var(--indent__s);
+      font-size: var(--font__s);
+    }
+  }
+
+  .details-button {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .click-collect-button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 
 .delivery-section {
@@ -162,7 +185,7 @@
   }
 
   &.saved-address-active {
-    border-radius: var(--selectable__border-radius-large);
+    border-radius: var(--selectable__border-radius);
     padding: var(--indent__m) var(--indent__base);
     font-size: var(--font__s);
     margin-bottom: var(--indent__base);

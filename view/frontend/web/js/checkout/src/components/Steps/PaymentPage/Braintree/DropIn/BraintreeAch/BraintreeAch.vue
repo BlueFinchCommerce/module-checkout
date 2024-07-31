@@ -19,7 +19,7 @@
       >
         <div
           class="braintree-option braintree-option__ach"
-          :class="{'braintree-option__selected': selectedMethod === 'braintree-ach'}"
+          :class="{'braintree-option__selected': isMethodSelected}"
           tabindex="0"
           role="button"
         >
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div
-        v-show="selectedMethod === 'braintree-ach'"
+        v-show="isMethodSelected"
         class="braintree-ach-container"
       >
         <TextInput
@@ -184,7 +184,7 @@ export default {
   data() {
     return {
       loading: false,
-      selectedMethod: null,
+      isMethodSelected: false,
       routingNumber: '',
       accountNumber: '',
       accountType: 'checking',
@@ -207,7 +207,7 @@ export default {
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
-    ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
@@ -228,11 +228,17 @@ export default {
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
     this.paymentEmitter.on('braintreeInitComplete', () => { this.achLocation = '.braintree-sheet__container'; });
-    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
-      this.selectedMethod = id;
-    });
   },
   watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'braintree-ach') {
+          this.isMethodSelected = false;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
     routingNumber() {
       if (this.errorMessage) {
         this.clearErrorMessage();
@@ -268,9 +274,11 @@ export default {
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
     selectMethod() {
-      this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-ach' });
+      this.isMethodSelected = true;
+      this.selectPaymentMethod('braintree-ach');
     },
 
     async createInstance() {

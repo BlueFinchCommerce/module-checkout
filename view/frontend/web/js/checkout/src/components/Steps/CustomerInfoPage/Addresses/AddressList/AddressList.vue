@@ -148,6 +148,7 @@ export default {
       'setAddressAsEditing',
       'setAddressAsCustom',
       'createNewBillingAddress',
+      'setSelectedSavedAddress',
     ]),
     ...mapActions(useValidationStore, ['removeAddressError']),
 
@@ -169,7 +170,8 @@ export default {
         this.setAddressToStore(clonedAddress, 'billing');
       }
 
-      this.$emit('selectedSavedAddress', true);
+      this.setSelectedSavedAddress(this.addressType, true);
+      this.$emit('passSelectedItemId', address.id);
 
       this.isShippingNewCTA = true;
     },

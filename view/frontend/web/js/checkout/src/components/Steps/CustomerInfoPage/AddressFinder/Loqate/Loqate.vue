@@ -136,6 +136,7 @@ export default {
       'setAddressToStore',
       'updateRegionRequired',
       'setAddressAsEditing',
+      'setSelectedSavedAddress',
     ]),
     ...mapActions(useValidationStore, ['validateAddress']),
 
@@ -175,6 +176,7 @@ export default {
           this.addressList = addresses;
         });
       }
+      this.setSelectedSavedAddress(this.address_type, false);
     },
     onBlur(event) {
       // Only hide results if the relatedTarget of the blur isn't because of clicking on

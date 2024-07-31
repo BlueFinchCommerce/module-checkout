@@ -10,8 +10,8 @@
       :checked="isMethodSelected"
       :data-cy="'free-mo-payment-radio'"
       class="free-payment-radio"
-      @click="selectPaymentMethod"
-      @keydown="selectPaymentMethod"
+      @click="selectCheckMoPaymentMethod"
+      @keydown="selectCheckMoPaymentMethod"
     />
     <ErrorMessage
       v-if="errorMessage && isMethodSelected"
@@ -85,19 +85,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'isPaymentMethodAvailable', 'selectedMethod']),
     ...mapState(useCustomerStore, [
       'customer',
     ]),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== this.paymentType) {
+          this.isMethodSelected = false;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   created() {
-    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
-      if (id !== this.paymentType) {
-        this.isMethodSelected = false;
-      }
-    });
-
     this.paymentEmitter.on('changePaymentMethodDisplay', ({ visible }) => {
       this.paymentVisible = visible;
     });
@@ -105,14 +110,11 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
-    async selectPaymentMethod() {
+    selectCheckMoPaymentMethod() {
       this.isMethodSelected = true;
-
-      this.paymentEmitter.emit('paymentMethodSelected', {
-        id: this.paymentType,
-        type: this.paymentType,
-      });
+      this.selectPaymentMethod(this.paymentType);
     },
     createPayment() {
       const paymentMethod = {

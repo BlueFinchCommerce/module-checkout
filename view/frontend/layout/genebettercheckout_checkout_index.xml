@@ -19,6 +19,14 @@
                     <argument name="asset_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\Assets</argument>
                 </arguments>
             </block>
+            <block class="Magento\Framework\View\Element\Template" name="superpayments.checkout.cdn.js"
+                   template="Superpayments_SuperPayment::marketing/cdn-js.phtml" after="-"
+                   ifconfig="payment/super_payment_gateway/active">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Superpayments\SuperPayment\ViewModel\MarketingBanner
+                    </argument>
+                </arguments>
+            </block>
         </container>
 
         <container name="gene.better.checkout.analytics">
