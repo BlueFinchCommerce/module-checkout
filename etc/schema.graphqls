@@ -2,6 +2,7 @@ type StoreConfig {
     gene_better_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
     gene_better_checkout_enabled: String @doc(description: "Gene Checkout Enabled")
     gene_better_checkout_loqate_enabled: String @doc(description: "Gene Checkout Loqate Enabled")
+    gene_better_checkout_click_collect_tabs_enabled: Boolean @doc(description: "Gene Checkout Click&Collect tabs Enabled")
     gene_better_checkout_loqate_api_key: String @doc(description: "Gene Checkout Loqate API Key")
     gene_better_checkout_super_payments_open: Boolean @doc(description: "Gene Checkout Super Payments opened by default")
     gene_better_checkout_super_payments_first_method: Boolean @doc(description: "Gene Checkout Super Payments first payment option")

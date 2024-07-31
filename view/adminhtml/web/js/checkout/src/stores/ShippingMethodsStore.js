@@ -248,9 +248,11 @@ export default defineStore('shippingMethodsStore', {
       if (!this.isClickAndCollect) {
         const customerStore = useCustomerStore();
 
-        customerStore.createNewAddress('billing');
+        if (!customerStore.isLoggedIn) {
+          customerStore.createNewAddress('shipping');
+          customerStore.createNewAddress('billing');
+        }
         await customerStore.getCustomerInformation();
-        customerStore.createNewAddress('shipping');
 
         this.setData({
           isClickAndCollect: true,
@@ -269,8 +271,10 @@ export default defineStore('shippingMethodsStore', {
         this.$state.selectedMethod = {};
         await this.setAsClickAndCollect('');
 
-        customerStore.createNewAddress('shipping');
-        customerStore.createNewAddress('billing');
+        if (!customerStore.isLoggedIn) {
+          customerStore.createNewAddress('shipping');
+          customerStore.createNewAddress('billing');
+        }
         await customerStore.getCustomerInformation();
 
         this.setData({

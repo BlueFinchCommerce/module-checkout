@@ -90,8 +90,8 @@ export default {
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
       newAddressTitle: 'Add new address',
-      shippingButton: 'SHIPPING ADDRESS',
-      clickandCollectButton: 'CLICK & COLLLECT',
+      shippingButton: 'Home Delivery',
+      clickandCollectButton: 'Click & Collect',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',
