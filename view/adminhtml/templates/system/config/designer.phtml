@@ -2055,7 +2055,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </div>
                             </div>
                         </div>
-                        <div class="section-config no-user-specific-field registered-user-specific-field"
+                        <div class="section-config no-user-specific-field"
                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
@@ -2063,8 +2063,8 @@ $fontUrl = $assetViewModel->getFontUrl();
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-1-primary-buttons-tab"></span>
-                                <a data-role="title" href="#step-1-primary-buttons-tab">
+                                <span id="step-1-primary-buttons-tab-no-user"></span>
+                                <a data-role="title" href="#step-1-primary-buttons-tab-no-user">
                                     <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                 </a>
                                 <div class="config" data-role="content">
@@ -2076,6 +2076,22 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </label>
                                         <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config registered-user-specific-field"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-1-primary-buttons-tab-registered"></span>
+                                <a data-role="title" href="#step-1-primary-buttons-tab-registered">
+                                    <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
                                     <div class="fieldset registered-user-specific-field">
                                         <label for="gene-bettercheckout-signinbutton-text">
                                             <span>
@@ -2188,6 +2204,22 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                 </a>
                                 <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-homedelivery-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Home Delivery Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-homedelivery-text" data-type="checkout-wording" type="text" placeholder="Home Delivery" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-clickandcollect-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Click & Collect Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-clickandcollect-text" data-type="checkout-wording" type="text" placeholder="Click & Collect" />
+                                    </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-proceedtoshipping-text">
                                             <span>

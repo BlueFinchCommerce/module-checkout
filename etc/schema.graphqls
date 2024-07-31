@@ -144,4 +144,5 @@ enum ValidationRuleEnum @doc(description: "List of validation rule names applied
     MAX_FILE_SIZE
     MAX_IMAGE_HEIGHT
     MAX_IMAGE_WIDTH
+    IS_REQUIRED
 }

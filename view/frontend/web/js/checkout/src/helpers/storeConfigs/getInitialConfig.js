@@ -5,6 +5,7 @@ import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 export default async () => {
   const adyenStore = useAdyenStore();
@@ -12,6 +13,7 @@ export default async () => {
   const braintreeStore = useBraintreeStore();
   const configStore = useConfigStore();
   const recaptchaStore = useRecaptchaStore();
+  const validationStore = useValidationStore();
 
   const request = `{
     ${adyenStore.getInitialConfigValues()}
@@ -19,6 +21,7 @@ export default async () => {
     ${braintreeStore.getInitialConfigValues()}
     ${configStore.getInitialConfigValues()}
     ${recaptchaStore.getInitialConfigValues()}
+    ${validationStore.getInitialConfigValues()}
   }`;
 
   const { data } = await graphQlRequest(request);
