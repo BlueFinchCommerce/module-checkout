@@ -64,7 +64,7 @@
             :fill="!isClickAndCollect ? 'white' : '#0F273C'"
           />
           <TextField
-            :text="$t('yourDetailsSection.deliverySection.shippingButton')"
+            :text="homeDeliveryText"
             :data-cy="'home-delivery-title'"
           />
         </button>
@@ -76,7 +76,7 @@
             :fill="isClickAndCollect ? 'white' : '#0F273C'"
           />
           <TextField
-            :text="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
+            :text="clickAndCollectText"
             :data-cy="'click-collect-title'"
           />
         </button>
@@ -357,6 +357,10 @@ export default {
       proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      homeDeliveryText: '',
+      homeDeliveryTextId: 'gene-bettercheckout-homedelivery-text',
+      clickAndCollectText: '',
+      clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
     };
@@ -392,6 +396,10 @@ export default {
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
     this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
     || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    this.homeDeliveryText = window.geneCheckout?.[this.homeDeliveryTextId]
+    || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
+    || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     await this.getInitialConfig();
     await this.getCart();
