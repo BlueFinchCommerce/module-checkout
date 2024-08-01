@@ -32,7 +32,6 @@ import * as getLoqateUrls from '@/helpers/addresses/getLoqateUrls';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import * as getPenniesUrl from '@/helpers/payment/getPenniesUrl';
-import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getShippingExtensionAttributes from '@/helpers/shipping/getShippingExtensionAttributes';
 import getStaticPath from '@/helpers/storeConfigs/getStaticPath';
@@ -91,7 +90,6 @@ export default {
   getLocalMaskedId,
   getPaymentExtensionAttributes,
   getPenniesUrl,
-  getPhoneValidation,
   getPrivacyPolicyId,
   getShippingExtensionAttributes,
   getStaticPath,

@@ -75,7 +75,14 @@ class ValidateRules implements ResolverInterface
     private function getValidationRules(AttributeInterface $attribute): array
     {
         $validationRules = $attribute->getValidateRules();
+        $isRequired = $attribute->getIsRequired();
         $returnArray = [];
+
+        $returnArray[] = [
+            'name' => 'IS_REQUIRED',
+            'value' => $isRequired
+        ];
+
         if (empty($validationRules)) {
             return $returnArray;
         }

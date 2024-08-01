@@ -48,7 +48,7 @@
             :fill="!isClickAndCollect ? 'white' : '#0F273C'"
           />
           <TextField
-            :text="$t('yourDetailsSection.deliverySection.shippingButton')"
+            :text="homeDeliveryText"
             :data-cy="'home-delivery-title'"
           />
         </button>
@@ -60,7 +60,7 @@
             :fill="isClickAndCollect ? 'white' : '#0F273C'"
           />
           <TextField
-            :text="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
+            :text="clickAndCollectText"
             :data-cy="'click-collect-title'"
           />
         </button>
@@ -344,6 +344,10 @@ export default {
       proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      homeDeliveryText: '',
+      homeDeliveryTextId: 'gene-bettercheckout-homedelivery-text',
+      clickAndCollectText: '',
+      clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
     };
@@ -404,6 +408,10 @@ export default {
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
     this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
       || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    this.homeDeliveryText = window.geneCheckout?.[this.homeDeliveryTextId]
+      || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
+      || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.addEventListener(this.yourDetailsTextId, this.setYourDetailsText);
@@ -411,13 +419,18 @@ export default {
     document.addEventListener(this.newAddressTextId, this.setNewAddressText);
     document.addEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
+    document.addEventListener(this.homeDeliveryTextId, this.setHomeDeliveryText);
+    document.addEventListener(this.clickAndCollectTextId, this.setClickAndCollectText);
   },
   unmounted() {
     document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.removeEventListener(this.yourDetailsTextId, this.setYourDetailsText);
     document.removeEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
     document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
+    document.removeEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
     document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayText);
+    document.removeEventListener(this.homeDeliveryTextId, this.setHomeDeliveryText);
+    document.removeEventListener(this.clickAndCollectTextId, this.setClickAndCollectText);
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -539,6 +552,13 @@ export default {
     },
     setProceedToPayText(event) {
       this.proceedToPayText = event?.detail?.value || this.$t('shippingStep.proceedToPay');
+    },
+    setHomeDeliveryText(event) {
+      this.homeDeliveryText = event?.detail?.value || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    },
+    setClickAndCollectText(event) {
+      this.clickAndCollectText = event?.detail?.value
+      || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
     },
   },
 };
