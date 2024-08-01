@@ -107,6 +107,10 @@
   .details-button {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+
+    p {
+      margin-left: 8px; //not variable to match space with click&collect icon
+    }
   }
 
   .click-collect-button {

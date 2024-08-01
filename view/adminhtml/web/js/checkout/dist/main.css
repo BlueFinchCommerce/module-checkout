@@ -5484,6 +5484,9 @@ body.no-scrollable {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
+.shipping-type-toggle .details-button p[data-v-34aec2a4] {
+  margin-left: 8px;
+}
 .shipping-type-toggle .click-collect-button[data-v-34aec2a4] {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
@@ -7504,6 +7507,9 @@ body.no-scrollable {
 .shipping-type-toggle .details-button[data-v-07ce986f] {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
+}
+.shipping-type-toggle .details-button p[data-v-07ce986f] {
+  margin-left: 8px;
 }
 .shipping-type-toggle .click-collect-button[data-v-07ce986f] {
   border-bottom-left-radius: 0;
