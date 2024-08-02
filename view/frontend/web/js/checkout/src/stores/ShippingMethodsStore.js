@@ -256,9 +256,9 @@ export default defineStore('shippingMethodsStore', {
       if (!this.isClickAndCollect) {
         const customerStore = useCustomerStore();
 
-        customerStore.createNewAddress('shipping');
         customerStore.createNewAddress('billing');
         await customerStore.getCustomerInformation();
+        customerStore.createNewAddress('shipping');
 
         this.setData({
           isClickAndCollect: true,
