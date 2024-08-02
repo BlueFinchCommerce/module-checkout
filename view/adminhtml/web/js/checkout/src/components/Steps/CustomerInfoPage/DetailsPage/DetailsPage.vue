@@ -40,9 +40,9 @@
         v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
-        <button
-          class="button details-button"
-          :class="{'button--primary': !isClickAndCollect, 'button--tertiary' : isClickAndCollect}"
+      <button
+          class="button details-button button--medium"
+          :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
           @click="setNotClickAndCollect()">
           <DeliveryTabIcon
             :fill="!isClickAndCollect ? 'white' : '#0F273C'"
@@ -53,8 +53,8 @@
           />
         </button>
         <button
-          class="button click-collect-button"
-          :class="{'button--primary': isClickAndCollect, 'button--tertiary' : !isClickAndCollect}"
+          class="button click-collect-button button--medium"
+          :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
           @click="setClickAndCollect()">
           <ClickCollectTabIcon
             :fill="isClickAndCollect ? 'white' : '#0F273C'"
