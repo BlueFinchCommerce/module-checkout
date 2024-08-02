@@ -34,7 +34,7 @@
     <PrivacyPolicy />
 
     <MyButton
-      v-if="selectedMethod === 'card'"
+      v-if="selectedMethod === 'braintree'"
       label="Pay"
       primary
       @click="startPayment()"
