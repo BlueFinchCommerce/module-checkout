@@ -12,5 +12,5 @@ export default async (email) => {
       typeof response.data?.isEmailAvailable?.is_email_available !== 'undefined'
         ? response.data.isEmailAvailable.is_email_available
         : true
-  ));
+    ));
 };

@@ -21,7 +21,6 @@ export default async (payment) => {
     `;
     await graphQlRequest(request);
   }
-  
   return authenticatedRequest().post(
     buildCartUrl('payment-information'),
     {
