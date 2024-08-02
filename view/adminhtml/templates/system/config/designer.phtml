@@ -2395,22 +2395,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-homedelivery-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Home Delivery Button Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-homedelivery-text" data-type="checkout-wording" type="text" placeholder="Home Delivery" />
-                                    </div>
-                                    <div class="fieldset">
-                                        <label for="gene-bettercheckout-clickandcollect-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Click & Collect Button Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-clickandcollect-text" data-type="checkout-wording" type="text" placeholder="Click & Collect" />
-                                    </div>
-                                    <div class="fieldset">
                                         <label for="gene-bettercheckout-proceedtoshipping-text">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('Choose Your Shipping Method Button Text')) ?>
@@ -2441,6 +2425,38 @@ $fontUrl = $assetViewModel->getFontUrl();
                                             </span>
                                         </label>
                                         <input id="gene-bettercheckout-addnewaddress-button-text" data-type="checkout-wording" type="text" placeholder="+ Add new address" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                            data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-tab-buttons-tab"></span>
+                                <a data-role="title" href="#step-2-tab-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Tab Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-homedelivery-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Home Delivery Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-homedelivery-text" data-type="checkout-wording" type="text" placeholder="Home Delivery" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-clickandcollect-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Click & Collect Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-clickandcollect-text" data-type="checkout-wording" type="text" placeholder="Click & Collect" />
                                     </div>
                                 </div>
                             </div>
