@@ -298,6 +298,25 @@
     --button-blank__border: none;
 
     //
+    // Tab Buttons
+    //  ---------------------------------------------
+    --button__tab-font-color: var(--color__primary-white);
+    --button__tab-background-color: var(--color__primary-blue);
+    --button__tab-border-color: var(--color__primary-blue);
+    --button__tab-border-weight: var(--button__border);
+    --button__tab-border-box-shadow: 0;
+
+    --button__tab-font-color-hover: var(--color__primary-white);
+    --button__tab-background-color-hover: var(--color__primary-blue);
+    --button__tab-border-color-hover: var(--color__primary-blue);
+    --button__tab-border-weight-hover: var(--button__border);
+
+    --button__tab-font-color-focus: var(--color__primary-white);
+    --button__tab-background-color-focus: var(--color__primary-blue);
+    --button__tab-border-color-focus: var(--color__primary-blue);
+    --button__tab-border-weight-focus: var(--button__border);
+
+    //
     // Link Buttons
     //  ---------------------------------------------
     --button__link-font-size: var(--font__s);

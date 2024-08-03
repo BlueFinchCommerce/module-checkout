@@ -1,8 +1,10 @@
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import authenticatedRequest from '@/services/authenticatedRequest';
 import buildCartUrl from '@/helpers/cart/buildCartUrl';
+import getNewsletterMutation from '@/services/newsletter/getNewsletterMutation';
+import graphQlRequest from '@/services/graphQlRequest';
 
-export default (payment) => {
+export default async (payment) => {
   const { tokens } = useRecaptchaStore();
 
   const headers = {
@@ -10,6 +12,15 @@ export default (payment) => {
     'X-Requested-With': 'XMLHttpRequest',
   };
 
+  const newsletterMutation = getNewsletterMutation();
+  if (newsletterMutation) {
+    const request = `
+      mutation {
+        ${newsletterMutation}
+      }
+    `;
+    await graphQlRequest(request);
+  }
   return authenticatedRequest().post(
     buildCartUrl('payment-information'),
     {

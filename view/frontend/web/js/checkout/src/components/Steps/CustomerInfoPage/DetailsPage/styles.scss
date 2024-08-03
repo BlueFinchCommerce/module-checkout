@@ -95,18 +95,20 @@
     margin: 0;
     display: flex;
     align-items: center;
-    border-width: var(--base__border-weight);
     padding: var(--indent__m);
 
     p {
       margin-left: var(--indent__s);
-      font-size: var(--font__s);
     }
   }
 
   .details-button {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
+
+    p {
+      margin-left: 8px; //not variable to match space with click&collect icon
+    }
   }
 
   .click-collect-button {
