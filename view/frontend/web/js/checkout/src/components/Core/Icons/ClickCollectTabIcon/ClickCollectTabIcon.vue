@@ -2,7 +2,7 @@
   <svg :style="style"
        :role="role"
        :aria-label="ariaLabel"
-       width="25"
+       width="24"
        height="24"
        viewBox="0 0 25 24"
        fill="none"

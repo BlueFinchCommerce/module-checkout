@@ -4,6 +4,7 @@ import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import useStepsStore from '@/stores/StepsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
@@ -64,12 +65,13 @@ export default defineStore('shippingMethodsStore', {
 
       const cartStore = useCartStore();
       const customerStore = useCustomerStore();
+      const validationStore = useValidationStore();
 
       await this.getNominatedDeliveryMethods(customerStore.selected.shipping.postcode);
       const clonedAddress = cleanAddress({ ...customerStore.selected.shipping });
 
       // Check the address is valid
-      const isValid = customerStore.validateAddress('shipping') && customerStore.validatePostcode('shipping');
+      const isValid = validationStore.validateAddress('shipping');
 
       // If the address is invalid then show the address form.
       if (!isValid) {
@@ -254,11 +256,9 @@ export default defineStore('shippingMethodsStore', {
       if (!this.isClickAndCollect) {
         const customerStore = useCustomerStore();
 
-        if (!customerStore.isLoggedIn) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('billing');
         await customerStore.getCustomerInformation();
+        customerStore.createNewAddress('shipping');
 
         this.setData({
           isClickAndCollect: true,
@@ -277,10 +277,8 @@ export default defineStore('shippingMethodsStore', {
         this.$state.selectedMethod = {};
         await this.setAsClickAndCollect('');
 
-        if (!customerStore.isLoggedIn) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('shipping');
+        customerStore.createNewAddress('billing');
         await customerStore.getCustomerInformation();
 
         this.setData({

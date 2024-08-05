@@ -10,7 +10,6 @@ export default (sameAsShipping = false) => {
     },
     country_code: '',
     postcode: '',
-    company: '',
     telephone: '',
     firstname: '',
     lastname: '',

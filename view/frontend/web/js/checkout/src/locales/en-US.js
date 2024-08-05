@@ -90,6 +90,11 @@ export default {
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
       newAddressTitle: 'Add new address',
+      shippingButton: 'Home Delivery',
+      clickandCollectButton: 'Click & Collect',
+      clickandCollectOpeningTimes: 'Opening Times',
+      clickandCollectThresholdHigh: 'Unfortunately, your basket value is too high for Click and Collect. If you want to collect from a store near you, your basket must be less than {price}.',
+      clickandCollectThresholdLow: 'Unfortunately, your basket value is too low for Click and Collect. If you want to collect from a store near you, your basket must be more than {price}.',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',
@@ -99,10 +104,8 @@ export default {
         saveAddressButton: 'Use this address',
         linkText: 'Enter your address manually',
         addressField: {
-          placeholder: 'Address (line 1)',
-          unrequired: 'Address (line 2)',
-          label: 'Address (line 1)',
-          unrequiredLabel: 'Address (line 2)',
+          placeholder: 'Address (line {line})',
+          label: 'Address (line {line})',
         },
         cityField: {
           label: 'City',

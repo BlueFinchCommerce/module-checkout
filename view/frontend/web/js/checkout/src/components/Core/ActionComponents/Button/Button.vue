@@ -45,6 +45,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    tab: {
+      type: Boolean,
+      default: false,
+    },
     size: {
       type: String,
       validator(value) {
@@ -74,6 +78,7 @@ export default {
         'button--primary': reactiveProps.primary,
         'button--secondary': reactiveProps.secondary,
         'button--tertiary': reactiveProps.tertiary,
+        'button--tab': reactiveProps.tab,
         [`button--${reactiveProps.size || 'medium'}`]: true,
       })),
       style: computed(() => ({
