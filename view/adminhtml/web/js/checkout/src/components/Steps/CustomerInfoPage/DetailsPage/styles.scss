@@ -89,6 +89,7 @@
   display: grid;
   grid-auto-flow: column;
   margin-top: var(--indent__base);
+  grid-template-columns: 1fr 1fr;
 
   .details-button,
   .click-collect-button {
