@@ -43,6 +43,7 @@ export default defineStore('brainteeStore', {
       buttonColor: '',
       buttonShape: '',
       vaultActive: false,
+      creditActive: false,
     },
   }),
   getters: {
@@ -81,6 +82,7 @@ export default defineStore('brainteeStore', {
           braintree_paypal_button_location_checkout_type_paypal_color
           braintree_paypal_button_location_checkout_type_paypal_shape
           braintree_paypal_vault_active
+          braintree_paypal_credit_active
           braintree_local_payment_fallback_button_text
           braintree_local_payment_redirect_on_fail
           braintree_local_payment_allowed_methods
@@ -124,6 +126,7 @@ export default defineStore('brainteeStore', {
             buttonColor: storeConfig.braintree_paypal_button_location_checkout_type_paypal_color,
             buttonShape: storeConfig.braintree_paypal_button_location_checkout_type_paypal_shape,
             vaultActive: storeConfig.braintree_paypal_vault_active,
+            creditActive: storeConfig.braintree_paypal_credit_active,
           },
         });
       }

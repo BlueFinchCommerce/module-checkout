@@ -32,6 +32,11 @@
           v-if="isPaymentMethodAvailable('braintree_paypal')"
           :key="`braintreePayPal-${storedKey}`"
         />
+        <BraintreePayPal
+          v-if="isPaymentMethodAvailable('braintree_paypal')"
+          :key="`braintreePayPal-${storedKey}-credit`"
+          :isCredit="paypal.creditActive"
+        />
         <AdyenGooglePay
           v-if="isPaymentMethodAvailable('adyen_hpp')"
           :key="`adyenGooglePay-${storedKey}`"
@@ -292,6 +297,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -373,6 +379,7 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
+    ...mapState(useBraintreeStore, ['paypal']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {

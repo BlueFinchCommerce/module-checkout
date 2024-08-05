@@ -36,6 +36,11 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreePayPal',
+  props: {
+    isCredit: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       googlePayNoShippingMethods: '',
@@ -99,11 +104,19 @@ export default {
       }
 
       this.paypalInstance = markRaw(paypalInstance);
-      paypalInstance.loadPayPalSDK({
+
+      const sdkConfig = {
         currency: this.currencyCode,
+        'enable-funding': 'credit',
         intent: 'capture',
         vault: 'false',
-      }, () => {
+      };
+
+      if (this.environment === 'sandbox') {
+        sdkConfig['buyer-country'] = this.countryCode;
+      }
+
+      paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,
           commit: true,
@@ -150,10 +163,12 @@ export default {
               firstname: 'UNKNOWN',
               lastname: 'UNKNOWN',
             };
-            const shippingMethods = await getShippingMethods(address);
+
+            const result = await getShippingMethods(address);
+            const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
-            const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+            const fShippingMethods = methods.filter((sid) => sid.id !== 'nominated_delivery');
 
             const selectedShipping = !data.selected_shipping_option
               ? fShippingMethods[0]
@@ -204,6 +219,12 @@ export default {
         };
 
         this.paypalLoaded = true;
+
+        // If is PayPalCredit and enabled.
+        if (this.paypal.creditActive && this.isCredit) {
+          renderData.fundingSource = window.paypal.FUNDING.CREDIT;
+          renderData.style.color = 'darkblue';
+        }
 
         return window.paypal.Buttons(renderData).render('#braintree-paypal');
       });
@@ -271,7 +292,7 @@ export default {
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
-        telephone,
+        telephone: telephone !== undefined ? telephone : '000000000',
         region: {
           ...(address.state ? { region: address.state } : {}),
           ...(regionId ? { region_id: regionId } : {}),

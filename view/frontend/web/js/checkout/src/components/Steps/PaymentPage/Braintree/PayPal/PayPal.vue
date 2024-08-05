@@ -43,6 +43,11 @@ export default {
       key: 'braintreePayPal',
     };
   },
+  props: {
+    isCredit: {
+      type: Boolean,
+    },
+  },
   computed: {
     ...mapState(useBraintreeStore, ['clientToken', 'environment', 'paypal']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
@@ -90,11 +95,19 @@ export default {
       }
 
       this.paypalInstance = markRaw(paypalInstance);
-      paypalInstance.loadPayPalSDK({
+
+      const sdkConfig = {
         currency: this.currencyCode,
+        'enable-funding': 'credit',
         intent: 'capture',
         vault: 'false',
-      }, () => {
+      };
+
+      if (this.environment === 'sandbox') {
+        sdkConfig['buyer-country'] = this.countryCode;
+      }
+
+      paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,
           commit: true,
@@ -197,6 +210,12 @@ export default {
         };
 
         this.paypalLoaded = true;
+
+        // If is PayPalCredit and enabled.
+        if (this.paypal.creditActive && this.isCredit) {
+          renderData.fundingSource = window.paypal.FUNDING.CREDIT;
+          renderData.style.color = 'darkblue';
+        }
 
         return window.paypal.Buttons(renderData).render('#braintree-paypal');
       });
