@@ -33,7 +33,7 @@
           :key="`braintreePayPal-${storedKey}`"
         />
         <BraintreePayPal
-          v-if="isPaymentMethodAvailable('braintree_paypal')"
+          v-if="isPaymentMethodAvailable('braintree_paypal') && paypal.creditActive"
           :key="`braintreePayPal-${storedKey}-credit`"
           :isCredit="paypal.creditActive"
         />

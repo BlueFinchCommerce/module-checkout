@@ -489,15 +489,17 @@ export default {
           const index = Object.values(this.map).findIndex((method) => method === braintreeId);
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
 
-          if (priority !== -1) {
-            sheet.style.setProperty('--braintree-method-position', priority + 1);
+          const setBraintreeMethodPosition = (position) => {
+            sheet.style.setProperty('--braintree-method-position', position);
             sheet.prepend(matchingContainer);
-          } if (priority === -1 && braintreeId === 'paypalCredit') {
+          };
+
+          if (priority !== -1) {
+            setBraintreeMethodPosition(priority + 1);
+          } else if (braintreeId === 'paypalCredit') {
             const paypalIndex = Object.values(this.map).findIndex((method) => method === 'paypal');
             const paypalPriority = this.getPaymentPriority(Object.keys(this.map)[paypalIndex]);
-
-            sheet.style.setProperty('--braintree-method-position', paypalPriority + 2);
-            sheet.prepend(matchingContainer);
+            setBraintreeMethodPosition(paypalPriority + 2);
           }
 
           // Move the card payment icons
