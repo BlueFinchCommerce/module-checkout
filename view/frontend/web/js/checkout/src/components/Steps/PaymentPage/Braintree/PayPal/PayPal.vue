@@ -224,6 +224,8 @@ export default {
         if (this.paypal.creditActive && this.isCredit) {
           renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
           renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+          renderData.style.label = this.paypal.creditLabel;
+          renderData.style.shape = this.paypal.creditShape;
         }
 
         return window[this.namespace].Buttons(renderData).render('#braintree-paypal');

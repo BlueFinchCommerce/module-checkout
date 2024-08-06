@@ -171,6 +171,10 @@
                       xsi:type="string">payment/braintree_paypal_credit/active</item>
                 <item name="braintree_paypal_credit_color"
                       xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_color</item>
+                <item name="braintree_paypal_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_label</item>
+                <item name="braintree_paypal_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_shape</item>
                 <!-- / PayPal GraphQL config -->
                 <item name="braintree_googlepay_merchant_id"
                       xsi:type="string">payment/braintree_googlepay/merchant_id</item>

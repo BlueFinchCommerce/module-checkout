@@ -99,6 +99,8 @@ type StoreConfig {
     braintree_paypal_vault_active: Boolean @doc(description: "Braintree PayPal vault status.")
     braintree_paypal_credit_active: Boolean @doc(description: "Braintree PayPal credit status.")
     braintree_paypal_credit_color: String @doc(description: "Braintree PayPal credit button color.")
+    braintree_paypal_credit_label: String @doc(description: "Braintree PayPal credit button label.")
+    braintree_paypal_credit_shape: String @doc(description: "Braintree PayPal credit button shape.")
     braintree_googlepay_merchant_id: String @doc(description: "Braintree Google Pay merchant ID.")
     braintree_googlepay_cctypes: String @doc(description: "Braintree Google Pay Card types supported.")
     braintree_googlepay_btn_color: String @doc(description: "Braintree Google Pay button color.")

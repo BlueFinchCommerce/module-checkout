@@ -229,8 +229,8 @@ export default {
           currency: this.currencyCode,
           buttonStyle: {
             color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
-            label: this.paypal.buttonLabel,
-            shape: this.paypal.buttonShape,
+            label: this.paypal.creditLabel,
+            shape: this.paypal.creditShape,
             size: 'responsive',
           },
           commit: true,
