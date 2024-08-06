@@ -29,7 +29,7 @@ export default {
       placeholder: 'Enter promo code',
       successMessage: 'Successfully applied code "{code}".',
     },
-    giftDiscountTitle: 'Redeem Gift Card',
+    giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
       title: 'Gift card {code}',
       errorMessage: 'Please enter a valid code.',
