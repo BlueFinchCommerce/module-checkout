@@ -41,6 +41,7 @@ export default {
       paypalInstance: null,
       paypalLoaded: false,
       key: 'braintreePayPal',
+      namespace: 'paypal',
     };
   },
   props: {
@@ -96,12 +97,20 @@ export default {
 
       this.paypalInstance = markRaw(paypalInstance);
 
+      this.namespace = `${this.namespace}${this.isCredit ? '_credit' : ''}`;
+
       const sdkConfig = {
         currency: this.currencyCode,
-        'enable-funding': 'credit',
         intent: 'capture',
         vault: 'false',
+        dataAttributes: {
+          namespace: this.namespace,
+        },
       };
+
+      if (this.isCredit) {
+        sdkConfig['enable-funding'] = 'credit';
+      }
 
       if (this.environment === 'sandbox') {
         sdkConfig['buyer-country'] = this.countryCode;
@@ -118,7 +127,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window.paypal.FUNDING.PAYPAL,
+          fundingSource: window[this.namespace].FUNDING.PAYPAL,
           offerCredit: false,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
@@ -213,11 +222,11 @@ export default {
 
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
-          renderData.fundingSource = window.paypal.FUNDING.CREDIT;
-          renderData.style.color = 'darkblue';
+          renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+          renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
         }
 
-        return window.paypal.Buttons(renderData).render('#braintree-paypal');
+        return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
       });
     });
   },

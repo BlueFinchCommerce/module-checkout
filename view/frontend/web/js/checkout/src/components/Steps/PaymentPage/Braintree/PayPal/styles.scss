@@ -4,10 +4,8 @@
     height: var(--braintree-express-button-height, 48px);
   }
 
-  .paypal-buttons {
-    &:last-child {
-      margin-bottom: var(--indent__m);
-    }
+  .paypal-buttons + div {
+    margin-top: var(--indent__m);
   }
 
   > div {
