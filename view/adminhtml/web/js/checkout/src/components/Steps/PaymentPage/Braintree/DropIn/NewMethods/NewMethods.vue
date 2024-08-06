@@ -105,7 +105,7 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['currencyCode', 'websiteName', 'superPaymentsActive']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
@@ -223,9 +223,9 @@ export default {
           amount: total,
           currency: this.currencyCode,
           buttonStyle: {
-            color: 'darkblue',
-            label: this.paypal.buttonLabel,
-            shape: this.paypal.buttonShape,
+            color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+            label: this.paypal.creditLabel,
+            shape: this.paypal.creditShape,
             size: 'responsive',
           },
           commit: true,
@@ -468,15 +468,24 @@ export default {
         if (matchingContainer) {
           const index = Object.values(this.map).findIndex((method) => method === braintreeId);
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
-          if (priority !== -1) {
-            sheet.style.setProperty('--braintree-method-position', priority + 1);
+
+          const setBraintreeMethodPosition = (position) => {
+            sheet.style.setProperty('--braintree-method-position', position);
             sheet.prepend(matchingContainer);
-          } if (priority === -1 && braintreeId === 'paypalCredit') {
+          };
+
+          if (priority !== -1) {
+            setBraintreeMethodPosition(priority + 1);
+          } else if (braintreeId === 'paypalCredit') {
             const paypalIndex = Object.values(this.map).findIndex((method) => method === 'paypal');
             const paypalPriority = this.getPaymentPriority(Object.keys(this.map)[paypalIndex]);
+            setBraintreeMethodPosition(paypalPriority + 2);
+          }
 
-            sheet.style.setProperty('--braintree-method-position', paypalPriority + 2);
-            sheet.prepend(matchingContainer);
+          // Move the card payment icons
+          if (braintreeId === 'card') {
+            const icons = sheet.querySelector('.braintree-sheet__icons');
+            matchingContainer.append(icons);
           }
         }
       });
