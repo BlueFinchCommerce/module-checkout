@@ -2,7 +2,7 @@
 
 ![Better Checkout Powered by GENE](./assets/logo.svg)
 
-# Template Repo for Magento 2 Modules.
+# Template Repo for Magento 2 Modules
 
 ## What is this?
 
