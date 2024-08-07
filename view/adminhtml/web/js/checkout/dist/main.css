@@ -5440,7 +5440,6 @@ body.no-scrollable {
 .mock-laptop .modal[data-v-55bffe12],
 .mock-desktop .modal[data-v-55bffe12] {
   margin: 0 auto;
-  max-height: max-content;
 }
 .mock-laptop .amasty-modal[data-v-55bffe12],
 .mock-desktop .amasty-modal[data-v-55bffe12] {
@@ -5453,7 +5452,6 @@ body.no-scrollable {
 @media screen and (min-width: 768px) {
 .mock-full .modal[data-v-55bffe12] {
     margin: 0 auto;
-    max-height: max-content;
 }
 .mock-full .amasty-modal[data-v-55bffe12] {
     max-height: var(--modal-desktop-max-height, none);
