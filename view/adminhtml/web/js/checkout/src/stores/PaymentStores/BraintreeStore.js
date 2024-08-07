@@ -47,6 +47,8 @@ export default defineStore('brainteeStore', {
       vaultActive: false,
       creditActive: false,
       creditColor: '',
+      creditLabel: '',
+      creditShape: '',
     },
   }),
   getters: {
@@ -88,6 +90,8 @@ export default defineStore('brainteeStore', {
           braintree_paypal_vault_active
           braintree_paypal_credit_active
           braintree_paypal_credit_color
+          braintree_paypal_credit_shape
+          braintree_paypal_credit_label
           braintree_local_payment_fallback_button_text
           braintree_local_payment_redirect_on_fail
           braintree_local_payment_allowed_methods
@@ -134,6 +138,8 @@ export default defineStore('brainteeStore', {
             vaultActive: storeConfig.braintree_paypal_vault_active,
             creditActive: storeConfig.braintree_paypal_credit_active,
             creditColor: storeConfig.braintree_paypal_credit_color,
+            creditShape: storeConfig.braintree_paypal_credit_shape,
+            creditLabel: storeConfig.braintree_paypal_credit_label,
           },
         });
       }
@@ -227,7 +233,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (cart.applied_coupons) {
+      if (cart.applied_coupons && !cart.prices.discounts) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',
@@ -236,7 +242,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (Object.keys(cart.prices.discounts).length > 0) {
+      if (cart.prices.discounts && Object.keys(cart.prices.discounts).length > 0) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',

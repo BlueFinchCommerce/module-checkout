@@ -1,21 +1,31 @@
 <template v-if="address && address.city">
   <div class="address-block__address">
     <div>
-      <p v-if="showNameFields">{{ address.firstname }} {{ address.lastname }}</p>
-      <p>{{ address.street[0] }}</p>
+      <p v-if="showNameFields">
+        {{ sanitizedAddress.firstname }} {{ sanitizedAddress.lastname }}
+      </p>
       <p>
-        <template v-if="address.street[1]">
-          {{ address.street[1] }}
+        {{ sanitizedAddress.street[0] }}
+      </p>
+      <p>
+        <template v-if="sanitizedAddress.street[1]">
+          {{ sanitizedAddress.street[1] }}
         </template>
       </p>
-      <p>{{ address.city }}</p>
+      <p>
+        {{ sanitizedAddress.city }}
+      </p>
       <p>
         <template v-if="showRegion">
-          {{ address.region }}
+          {{ sanitizedAddress.region }}
         </template>
       </p>
-      <p>{{ address.postcode }}</p>
-      <p v-if="showNameFields"> {{ address.telephone }}</p>
+      <p>
+        {{ sanitizedAddress.postcode }}
+      </p>
+      <p v-if="showNameFields">
+        {{ sanitizedAddress.telephone }}
+      </p>
     </div>
   </div>
 </template>
@@ -50,6 +60,13 @@ export default {
     showRegion() {
       const { region } = this.address;
       return region && typeof region === 'string';
+    },
+    sanitizedAddress() {
+      return {
+        ...this.address,
+        firstname: this.address.firstname === 'UNKNOWN' ? '' : this.address.firstname,
+        lastname: this.address.lastname === 'UNKNOWN' ? '' : this.address.lastname,
+      };
     },
   },
 };

@@ -114,13 +114,42 @@ export default {
       return this.selected[this.address_type];
     },
   },
+  watch: {
+    selectedAddressType: {
+      handler(newValue) {
+        if (newValue.firstname === 'UNKNOWN') {
+          this.selectedAddressType.firstname = '';
+        }
+        if (newValue.lastname === 'UNKNOWN') {
+          this.selectedAddressType.lastname = '';
+        }
+        if (String(newValue.telephone) === '000000000') {
+          this.selectedAddressType.telephone = '';
+        }
+      },
+      deep: true,
+    },
+  },
   async mounted() {
     await this.getInitialConfig();
+    this.sanitizeAddressFields();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['validateInputField']),
     ...mapActions(useValidationStore, ['isRequired', 'validateField', 'showFieldError']),
+
+    sanitizeAddressFields() {
+      if (this.selectedAddressType.firstname === 'UNKNOWN') {
+        this.selectedAddressType.firstname = '';
+      }
+      if (this.selectedAddressType.lastname === 'UNKNOWN') {
+        this.selectedAddressType.lastname = '';
+      }
+      if (String(this.selectedAddressType.telephone) === '000000000') {
+        this.selectedAddressType.telephone = '';
+      }
+    },
 
     handleInputChange(event, type) {
       if (event.key === 'Enter') {

@@ -239,7 +239,7 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type)"
+        :disabled="!isAddressValid(address_type) && !selected[address_type].id"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />

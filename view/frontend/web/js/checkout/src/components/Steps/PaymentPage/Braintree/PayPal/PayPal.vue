@@ -113,7 +113,7 @@ export default {
       }
 
       if (this.environment === 'sandbox') {
-        sdkConfig['buyer-country'] = this.countryCode;
+        sdkConfig['buyer-country'] = this.paypal.merchantCountry;
       }
 
       paypalInstance.loadPayPalSDK(sdkConfig, () => {
