@@ -69,7 +69,7 @@
         @focusout="validateField(address_type, 'telephone', true)"
         @telephone-error="validateField(address_type, 'telephone', true)"
       />
-      <ValidIcon v-if="isFieldValid(address_type, 'telephone')" />
+      <ValidIcon v-if="selectedAddressType.telephone && isFieldValid(address_type, 'telephone')" />
       <div class="error-icon-block">
         <ErrorIcon v-if="!isFieldValid(address_type, 'telephone')" />
       </div>
