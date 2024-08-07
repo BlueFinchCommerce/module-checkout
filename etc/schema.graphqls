@@ -35,6 +35,7 @@ type StoreConfig {
     validation_failure_message: String @doc(description: "Recaptcha Failure Message")
 
     braintree_environment: String @doc(description: "Braintree environment.")
+    braintree_active: String @doc(description: "Braintree enabled.")
     braintree_merchant_account_id: String @doc(description: "Braintree Merchant Account ID.")
     braintree_cc_types: String @doc(description: "Braintree cc types.")
     braintree_cc_vault_active: String @doc(description: "Braintree cc vault status.")

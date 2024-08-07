@@ -11,6 +11,8 @@ export default defineStore('brainteeStore', {
   state: () => ({
     cache: {},
     environment: 'sandbox',
+    isBraintreeEnabled: null,
+    showMagentoPayments: false,
     merchantAccountId: '',
     cCTypes: [],
     clientToken: null,
@@ -65,7 +67,8 @@ export default defineStore('brainteeStore', {
     getInitialConfigValues() {
       return `
         storeConfig {
-          braintree_environment
+          braintree_environment,
+          braintree_active,
           braintree_merchant_account_id
           braintree_cc_types
           braintree_cc_vault_active
@@ -100,6 +103,7 @@ export default defineStore('brainteeStore', {
       if (storeConfig) {
         this.setData({
           environment: storeConfig.braintree_environment,
+          isBraintreeEnabled: storeConfig.braintree_active,
           merchantAccountId: storeConfig.braintree_merchant_account_id,
           cCTypes: storeConfig.braintree_cc_types.split(','),
           vaultActive: storeConfig.braintree_cc_vault_active === '1',
