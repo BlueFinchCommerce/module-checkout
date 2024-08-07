@@ -88,8 +88,34 @@
 .shipping-type-toggle {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: var(--indent__s);
   margin-top: var(--indent__base);
+  grid-template-columns: 1fr 1fr;
+
+  .details-button,
+  .click-collect-button {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: var(--indent__m);
+
+    p {
+      margin-left: var(--indent__s);
+    }
+  }
+
+  .details-button {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    p {
+      margin-left: 8px; //not variable to match space with click&collect icon
+    }
+  }
+
+  .click-collect-button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
 }
 
 .delivery-section {

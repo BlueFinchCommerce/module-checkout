@@ -65,6 +65,8 @@
 // stores
 import { mapActions, mapState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useCartStore from '@/stores/CartStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // icons
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
@@ -107,27 +109,21 @@ export default {
   },
   computed: {
     ...mapState(useCustomerStore, ['customer', 'selected']),
+    ...mapState(useCartStore, ['cart']),
   },
   watch: {
     addressType: {
       immediate: true,
       handler(newVal) {
         if (newVal === 'billing') {
-          // When the addressType changes to 'billing', select the first address
-          this.selectFirstAddress();
+          // When the addressType changes to 'billing', select the new billing address or the first address
+          this.selectCorrectAddress();
         }
       },
     },
   },
   mounted() {
     this.$emit('showAddressBlock', false);
-
-    let selectedId = null;
-    const selectedItem = this.customer.addresses.find((item) => item.id === this.selected[this.addressType].id);
-    if (selectedItem) {
-      selectedId = selectedItem.id;
-    }
-    this.$emit('passSelectedItemId', selectedId);
 
     const uniqueAddresses = {};
     // Iterate through the addresses
@@ -149,13 +145,17 @@ export default {
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'createNewAddress',
-      'removeAddressError',
       'setAddressAsEditing',
       'setAddressAsCustom',
       'createNewBillingAddress',
+      'setSelectedSavedAddress',
     ]),
-    selectFirstAddress() {
-      if (this.customer.addresses.length > 0) {
+    ...mapActions(useValidationStore, ['removeAddressError']),
+
+    selectCorrectAddress() {
+      if (this.cart.billing_address) {
+        this.selectAddress(this.cart.billing_address);
+      } else if (this.customer.addresses.length > 0) {
         const firstItem = this.customer.addresses[0];
         this.selectAddress(firstItem);
       }
@@ -170,7 +170,7 @@ export default {
         this.setAddressToStore(clonedAddress, 'billing');
       }
 
-      this.$emit('selectedSavedAddress', true);
+      this.setSelectedSavedAddress(this.addressType, true);
       this.$emit('passSelectedItemId', address.id);
 
       this.isShippingNewCTA = true;
@@ -179,7 +179,7 @@ export default {
       this.isShippingNewCTA = false;
 
       // Remove postcode error from new address form if saved address has an error.
-      this.removeAddressError(this.addressType, 'Postcode');
+      this.removeAddressError(this.addressType, 'postcode');
 
       if (this.selected[this.addressType].region_id !== null) {
         this.selected[this.addressType].region_id = null;

@@ -15,6 +15,6 @@ export default (lpmMethods) => {
   };
 
   return lpmMethods.filter((method) => (
-    methods[method]?.includes(country.code)
+    methods[method]?.includes(country?.code)
   ));
 };

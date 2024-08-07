@@ -67,6 +67,9 @@
             :key="additionalPaymentMethod"
           />
 
+          <SuperPayments
+            v-if="superPaymentsActive && superPaymentsFirstOption"
+            :key="`superPaymentsNewMethods-${paymentKey}`"/>
           <AdyenDropIn
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
@@ -90,6 +93,9 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
+          <SuperPayments
+            v-if="superPaymentsActive && !superPaymentsFirstOption"
+            :key="`superPaymentsNewMethods-${paymentKey}`"/>
         </template>
         <FreeMOCheckPayment
           v-else
@@ -131,6 +137,7 @@ import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
+import SuperPayments from '@/components/Steps/PaymentPage/SuperPayments/SuperPayments.vue';
 
 // Helpers
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
@@ -141,6 +148,7 @@ import paymentMethods from '@/extensions/paymentMethods';
 export default {
   name: 'PaymentPage',
   components: {
+    SuperPayments,
     SavedDeliveryAddress,
     SavedShippingMethod,
     AdyenDropIn,
@@ -171,6 +179,8 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
+      'superPaymentsActive',
+      'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
@@ -205,6 +215,8 @@ export default {
 
     await this.getRvvupConfig();
 
+    await this.getSuperPaymentsConfig();
+
     this.additionalPaymentMethods = Object.keys(paymentMethods());
 
     this.trackStep({
@@ -224,12 +236,8 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig', 'getSuperPaymentsConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
-    setDetailsStepActive() {
-      const element = document.getElementById('progress-bar');
-      element.classList.add('details-active');
-    },
   },
 };
 </script>

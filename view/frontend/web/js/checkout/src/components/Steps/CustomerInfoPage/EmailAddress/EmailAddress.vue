@@ -273,7 +273,7 @@ export default {
   },
   async mounted() {
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
-    this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextIdId]
+    this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextId]
     || this.$t('noAccountGuestButton');
     this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
     this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]

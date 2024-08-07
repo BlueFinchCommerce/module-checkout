@@ -8,7 +8,7 @@
           :data-cy="'instant-checkout-title'"
         />
       </div>
-      <Agreements id="detailsPage" />
+      <Agreements id="detailsPage"/>
       <Recaptcha
         id="placeOrder"
         location="expressPayments"
@@ -32,6 +32,11 @@
           v-if="isPaymentMethodAvailable('braintree_paypal')"
           :key="`braintreePayPal-${storedKey}`"
         />
+        <BraintreePayPal
+          v-if="isPaymentMethodAvailable('braintree_paypal') && paypal.creditActive"
+          :key="`braintreePayPal-${storedKey}-credit`"
+          :isCredit="paypal.creditActive"
+        />
         <AdyenGooglePay
           v-if="isPaymentMethodAvailable('adyen_hpp')"
           :key="`adyenGooglePay-${storedKey}`"
@@ -43,31 +48,43 @@
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent />
-      <PayWith />
+      <DividerComponent/>
+      <PayWith/>
 
-      <ProgressBar v-if="emailEntered" />
+      <ProgressBar v-if="emailEntered"/>
 
-      <EmailAddress />
+      <EmailAddress/>
 
-      <Newsletter v-if="emailEntered" />
+      <Newsletter v-if="emailEntered"/>
 
       <div
-        v-if="custom.clickandcollectEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.shippingButton')"
-          :primary="!isClickAndCollect"
-          :tertiary="isClickAndCollect"
-          @click="setNotClickAndCollect()"
-        />
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
-          :tertiary="!isClickAndCollect"
-          :primary="isClickAndCollect"
-          @click="setClickAndCollect()"
-        />
+        <button
+          class="button details-button button--medium"
+          :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
+          @click="setNotClickAndCollect()">
+          <DeliveryTabIcon
+            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="homeDeliveryText"
+            :data-cy="'home-delivery-title'"
+          />
+        </button>
+        <button
+          class="button click-collect-button button--medium"
+          :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
+          @click="setClickAndCollect()">
+          <ClickCollectTabIcon
+            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="clickAndCollectText"
+            :data-cy="'click-collect-title'"
+          />
+        </button>
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
@@ -92,8 +109,7 @@
         v-if="emailEntered && customer.addresses.length && !isClickAndCollect && !cart.is_virtual"
         address-type="shipping"
         @showAddressBlock="showAddressBlock"
-        @passSelectedItemId = "passSelectedItemId"
-        @selectedSavedAddress="selectedSavedAddress"
+        @passSelectedItemId="passSelectedItemId"
       />
 
       <div class="address-form-error-message">
@@ -111,8 +127,8 @@
           class="delivery-section"
         >
           <div v-if="customer.addresses.length <= 0"
-            class="details-form-title">
-            <YourDetails fill="black" />
+               class="details-form-title">
+            <YourDetails fill="black"/>
             <TextField
               :text="yourDetailsText"
               :data-cy="'your-details-title'"
@@ -120,7 +136,7 @@
             <div class="divider-line"></div>
           </div>
           <div v-else class="details-form-title saved-address">
-            <Locate :data-cy="`${address_type}-new-address-icon`" />
+            <Locate :data-cy="`${address_type}-new-address-icon`"/>
             <TextField
               class="address-block__title"
               :text="newAddressText"
@@ -137,7 +153,7 @@
             v-if="isAddressBlockVisible"
             class="delivery-section-title"
           >
-            <Locate :data-cy="`${address_type}-where-to-icon`" />
+            <Locate :data-cy="`${address_type}-where-to-icon`"/>
             <div class="delivery-section-title-text">
               <TextField
                 :text="deliverWhereText"
@@ -157,7 +173,7 @@
             </div>
           </div>
 
-          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled" />
+          <ShippingForm v-if="selected[address_type].editing || !addressFinder.enabled"/>
 
           <LinkComponent
             v-if="!selected[address_type].id
@@ -172,7 +188,7 @@
       </div>
       <div
         v-if="emailEntered && !selected[address_type].editing
-          && !isSavedAddressSelected
+          && !selected[address_type].isSavedAddressSelected
           && selected[address_type].id
           && !isUsingSavedShippingAddress
           && !isClickAndCollect
@@ -202,13 +218,13 @@
           @keydown.enter.prevent="editAddress"
           tabindex="0"
         >
-          <Edit :data-cy="`${address_type}-address-selected-edit-icon`" />
+          <Edit :data-cy="`${address_type}-address-selected-edit-icon`"/>
         </div>
       </div>
 
       <div class="address-form-error-message">
         <ErrorMessage
-          v-if="!customerInfoValidation && addressFormErrorMessage"
+          v-if="addressFormErrorMessage"
           :message="$t('errorMessages.addressFormErrorMessage')"
         />
       </div>
@@ -223,7 +239,7 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!buttonEnabled && (!customer.id || !customerInfoValidation)"
+        :disabled="!isAddressValid(address_type)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -244,6 +260,8 @@
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import DeliveryTabIcon from '@/components/Core/Icons/DeliveryTabIcon/DeliveryTabIcon.vue';
+import ClickCollectTabIcon from '@/components/Core/Icons/ClickCollectTabIcon/ClickCollectTabIcon.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -279,6 +297,8 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -314,6 +334,8 @@ export default {
     ProgressBar,
     Recaptcha,
     Agreements,
+    DeliveryTabIcon,
+    ClickCollectTabIcon,
   },
   props: {
     address_type: {
@@ -324,7 +346,6 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
-      isSavedAddressSelected: false,
       savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
@@ -342,13 +363,17 @@ export default {
       proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      homeDeliveryText: '',
+      homeDeliveryTextId: 'gene-bettercheckout-homedelivery-text',
+      clickAndCollectText: '',
+      clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode', 'clickCollectTabsEnabled']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -359,22 +384,14 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
+    ...mapState(useValidationStore, ['errors', 'isAddressValid']),
+    ...mapState(useBraintreeStore, ['paypal']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
     });
-
-    const customerStore = useCustomerStore();
-    customerStore.$subscribe((mutation) => {
-      if (mutation.type === 'direct' || (mutation.type === 'patch object'
-        && mutation.payload.selected
-        && mutation.payload.selected[this.address_type])) {
-        this.updateButtonState();
-      }
-    }, { flush: 'sync' });
-    this.updateButtonState();
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
@@ -386,24 +403,15 @@ export default {
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
     this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
     || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    this.homeDeliveryText = window.geneCheckout?.[this.homeDeliveryTextId]
+    || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
+    || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     await this.getInitialConfig();
     await this.getCart();
 
-    const types = {
-      shipping: 'customerInfoValidation',
-      billing: 'billingInfoValidation',
-    };
-
-    Object.keys(types).forEach((type) => {
-      const first = this.validateNameField(type, 'First name', this.selected[type].firstname);
-      const last = this.validateNameField(type, 'Last name', this.selected[type].lastname);
-      const phone = this.validatePhone(type, this.selected[type].telephone);
-
-      this[types[type]] = first && last && phone;
-    });
-
-    if (this.validateAddress(this.address_type)) {
+    if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
   },
@@ -413,11 +421,8 @@ export default {
     ...mapActions(useCustomerStore, [
       'setAddressAsCustom',
       'setAddressAsEditing',
-      'validateAddress',
       'addAddressError',
-      'validateNameField',
-      'validatePhone',
-      'validatePostcode',
+      'validateInputField',
       'setAddressToStore',
     ]),
     ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
@@ -428,31 +433,12 @@ export default {
       'setAddressesOnCart',
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
-    updateButtonState() {
-      const addressType = this.address_type;
+    ...mapActions(useValidationStore, ['validateAddress']),
 
-      const areNamesValid = this.validateNameField(
-        addressType,
-        'First name',
-        this.selected[addressType].firstname,
-      ) && this.validateNameField(
-        addressType,
-        'Last name',
-        this.selected[addressType].lastname,
-      ) && this.validatePhone(
-        addressType,
-        this.selected[addressType].telephone,
-      );
-
-      const validAddress = this.validateAddress(addressType);
-      const validPostcode = this.validatePostcode(this.address_type);
-
-      this.buttonEnabled = !this.inputsSanitiseError && validAddress && validPostcode && areNamesValid;
-    },
     async submitShippingOption() {
       this.requiredErrorMessage = '';
 
-      const isValid = this.validateAddress(this.address_type, true) && this.validatePostcode(this.address_type, true);
+      const isValid = this.validateAddress(this.address_type, true);
 
       if (isValid) {
         if (this.savedAddressID === null
@@ -499,9 +485,6 @@ export default {
       if (value !== null) {
         this.buttonEnabled = true;
       }
-    },
-    selectedSavedAddress(value) {
-      this.isSavedAddressSelected = value;
     },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;
