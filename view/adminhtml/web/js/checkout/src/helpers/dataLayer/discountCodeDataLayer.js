@@ -12,10 +12,10 @@ export default (type) => {
 
   if (appliedCoupons?.length) {
     const { code } = appliedCoupons[0];
-  
+
     let label = '';
     let value = 0;
-  
+
     if (prices.discounts?.length) {
       label = prices.discounts[0]?.label ?? '';
       value = prices.discounts[0]?.amount?.value ?? 0;
