@@ -27,6 +27,9 @@ const formatAddress = (address) => {
     delete clonedAddress.company;
   }
 
+  // Preserving save_in_address_book before deletion
+  const saveInAddressBook = clonedAddress.save_in_address_book;
+
   delete clonedAddress.id;
   delete clonedAddress.email;
   delete clonedAddress.editing;
@@ -42,7 +45,8 @@ const formatAddress = (address) => {
   delete clonedAddress.selected_shipping_method;
   delete clonedAddress.isSavedAddressSelected;
 
-  clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
+  // Set save_in_address_book to a boolean value based on the preserved value
+  clonedAddress.save_in_address_book = !!saveInAddressBook;
 
   return clonedAddress;
 };
