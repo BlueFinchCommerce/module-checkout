@@ -80,15 +80,9 @@
             v-if="rvvupPaymentsActive"
             :key="`rvvupNewMethods-${paymentKey}`"
           />
-          <div v-if="isPaymentMethodAvailable('checkmo') && isBraintreeEnabled !== '0'">
+          <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
-              v-if="showMagentoPayments"
-              :payment-type="'checkmo'"
-              :title="getPaymentMethodTitle('checkmo')"
-            />
-          </div>
-          <div v-if="isPaymentMethodAvailable('checkmo') && isBraintreeEnabled === '0'">
-            <FreeMOCheckPayment
+              :v-if="showMagentoPayments || isBraintreeEnabled !== '0'"
               :payment-type="'checkmo'"
               :title="getPaymentMethodTitle('checkmo')"
             />
