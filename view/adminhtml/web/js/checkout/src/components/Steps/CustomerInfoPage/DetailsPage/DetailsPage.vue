@@ -22,6 +22,7 @@
         <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
         <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
         <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
+        <BraintreePayPal :key="`braintreePayPal-${storedKey}-credit`" :isCredit="paypal.creditActive" />
         <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
         <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
       </div>
@@ -37,21 +38,33 @@
       <Newsletter v-if="emailEntered" />
 
       <div
-        v-if="custom.clickandcollectEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
         class="shipping-type-toggle"
       >
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.shippingButton')"
-          :primary="!isClickAndCollect"
-          :tertiary="isClickAndCollect"
-          @click="setNotClickAndCollect()"
-        />
-        <MyButton
-          :label="$t('yourDetailsSection.deliverySection.clickandCollectButton')"
-          :tertiary="!isClickAndCollect"
-          :primary="isClickAndCollect"
-          @click="setClickAndCollect()"
-        />
+      <button
+          class="button details-button button--medium"
+          :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
+          @click="setNotClickAndCollect()">
+          <DeliveryTabIcon
+            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="homeDeliveryText"
+            :data-cy="'home-delivery-title'"
+          />
+        </button>
+        <button
+          class="button click-collect-button button--medium"
+          :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
+          @click="setClickAndCollect()">
+          <ClickCollectTabIcon
+            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+          />
+          <TextField
+            :text="clickAndCollectText"
+            :data-cy="'click-collect-title'"
+          />
+        </button>
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
@@ -228,10 +241,11 @@
 </template>
 <script>
 // icons
-import { mapActions, mapState } from 'pinia';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import YourDetails from '@/components/Core/Icons/YourDetails/YourDetails.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
+import DeliveryTabIcon from '@/components/Core/Icons/DeliveryTabIcon/DeliveryTabIcon.vue';
+import ClickCollectTabIcon from '@/components/Core/Icons/ClickCollectTabIcon/ClickCollectTabIcon.vue';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -259,6 +273,7 @@ import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
+import { mapActions, mapState } from 'pinia';
 import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -266,6 +281,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -301,6 +317,8 @@ export default {
     ProgressBar,
     Recaptcha,
     Agreements,
+    DeliveryTabIcon,
+    ClickCollectTabIcon,
   },
   props: {
     address_type: {
@@ -311,7 +329,6 @@ export default {
   data() {
     return {
       isAddressBlockVisible: true,
-      isSavedAddressSelected: false,
       savedAddressID: null,
       customerInfoValidation: false,
       billingInfoValidation: false,
@@ -329,13 +346,17 @@ export default {
       proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
       proceedToPayText: '',
       proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      homeDeliveryText: '',
+      homeDeliveryTextId: 'gene-bettercheckout-homedelivery-text',
+      clickAndCollectText: '',
+      clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode']),
+    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode', 'clickCollectTabsEnabled']),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -346,6 +367,7 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(useBraintreeStore, ['paypal']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
@@ -383,12 +405,16 @@ export default {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
     this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
     this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
-    || this.$t('yourDetailsSection.deliverySection.title');
+      || this.$t('yourDetailsSection.deliverySection.title');
     this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
-    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+      || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
     this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
-    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+      || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    this.homeDeliveryText = window.geneCheckout?.[this.homeDeliveryTextId]
+      || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
+      || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     document.addEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.addEventListener(this.yourDetailsTextId, this.setYourDetailsText);
@@ -396,13 +422,18 @@ export default {
     document.addEventListener(this.newAddressTextId, this.setNewAddressText);
     document.addEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);
+    document.addEventListener(this.homeDeliveryTextId, this.setHomeDeliveryText);
+    document.addEventListener(this.clickAndCollectTextId, this.setClickAndCollectText);
   },
   unmounted() {
     document.removeEventListener(this.instantCheckoutTextId, this.setInstantCheckoutText);
     document.removeEventListener(this.yourDetailsTextId, this.setYourDetailsText);
     document.removeEventListener(this.deliverWhereTextId, this.setDeliverWhereText);
     document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
+    document.removeEventListener(this.proceedToShippingTextId, this.setProceedToShippingText);
     document.removeEventListener(this.proceedToPayTextId, this.setProceedToPayText);
+    document.removeEventListener(this.homeDeliveryTextId, this.setHomeDeliveryText);
+    document.removeEventListener(this.clickAndCollectTextId, this.setClickAndCollectText);
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -497,9 +528,6 @@ export default {
         this.buttonEnabled = true;
       }
     },
-    selectedSavedAddress(value) {
-      this.isSavedAddressSelected = value;
-    },
     isCustomerInfoFull(value) {
       this.customerInfoValidation = value;
     },
@@ -527,6 +555,13 @@ export default {
     },
     setProceedToPayText(event) {
       this.proceedToPayText = event?.detail?.value || this.$t('shippingStep.proceedToPay');
+    },
+    setHomeDeliveryText(event) {
+      this.homeDeliveryText = event?.detail?.value || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    },
+    setClickAndCollectText(event) {
+      this.clickAndCollectText = event?.detail?.value
+      || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
     },
   },
 };

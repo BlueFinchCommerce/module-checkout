@@ -41,7 +41,13 @@ export default {
       paypalInstance: null,
       paypalLoaded: false,
       key: 'braintreePayPal',
+      namespace: 'paypal',
     };
+  },
+  props: {
+    isCredit: {
+      type: Boolean,
+    },
   },
   computed: {
     ...mapState(useBraintreeStore, ['clientToken', 'environment', 'paypal']),
@@ -90,11 +96,27 @@ export default {
       }
 
       this.paypalInstance = markRaw(paypalInstance);
-      paypalInstance.loadPayPalSDK({
+
+      this.namespace = `${this.namespace}${this.isCredit ? '_credit' : ''}`;
+
+      const sdkConfig = {
         currency: this.currencyCode,
         intent: 'capture',
         vault: 'false',
-      }, () => {
+        dataAttributes: {
+          namespace: this.namespace,
+        },
+      };
+
+      if (this.isCredit) {
+        sdkConfig['enable-funding'] = 'credit';
+      }
+
+      if (this.environment === 'sandbox') {
+        sdkConfig['buyer-country'] = this.countryCode;
+      }
+
+      paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,
           commit: true,
@@ -105,7 +127,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window.paypal.FUNDING.PAYPAL,
+          fundingSource: window[this.namespace].FUNDING.PAYPAL,
           offerCredit: false,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
@@ -198,7 +220,15 @@ export default {
 
         this.paypalLoaded = true;
 
-        return window.paypal.Buttons(renderData).render('#braintree-paypal');
+        // If is PayPalCredit and enabled.
+        if (this.paypal.creditActive && this.isCredit) {
+          renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+          renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+          renderData.style.label = this.paypal.creditLabel;
+          renderData.style.shape = this.paypal.creditShape;
+        }
+
+        return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
       });
     });
   },

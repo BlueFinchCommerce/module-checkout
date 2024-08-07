@@ -2,7 +2,10 @@ type StoreConfig {
     gene_better_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
     gene_better_checkout_enabled: String @doc(description: "Gene Checkout Enabled")
     gene_better_checkout_loqate_enabled: String @doc(description: "Gene Checkout Loqate Enabled")
+    gene_better_checkout_click_collect_tabs_enabled: Boolean @doc(description: "Gene Checkout Click&Collect tabs Enabled")
     gene_better_checkout_loqate_api_key: String @doc(description: "Gene Checkout Loqate API Key")
+    gene_better_checkout_super_payments_open: Boolean @doc(description: "Gene Checkout Super Payments opened by default")
+    gene_better_checkout_super_payments_first_method: Boolean @doc(description: "Gene Checkout Super Payments first payment option")
     gene_better_checkout_newsletter_enabled: String @doc(description: "Gene Checkout Newsletter Enabled")
     gene_better_checkout_newsletter_allow_guest: String @doc(description: "Gene Checkout Newsletter Allow Guests")
     gene_better_checkout_country_state_required: String @doc(description: "Gene Checkout country needs state required")
@@ -94,6 +97,10 @@ type StoreConfig {
     braintree_paypal_button_location_productpage_type_messaging_logo_position: String @doc(description: "Braintree PayPal Pay Later messaging PDP style logo position.")
     braintree_paypal_button_location_productpage_type_messaging_text_color: String @doc(description: "Braintree PayPal Pay Later messaging PDP style text color.")
     braintree_paypal_vault_active: Boolean @doc(description: "Braintree PayPal vault status.")
+    braintree_paypal_credit_active: Boolean @doc(description: "Braintree PayPal credit status.")
+    braintree_paypal_credit_color: String @doc(description: "Braintree PayPal credit button color.")
+    braintree_paypal_credit_label: String @doc(description: "Braintree PayPal credit button label.")
+    braintree_paypal_credit_shape: String @doc(description: "Braintree PayPal credit button shape.")
     braintree_googlepay_merchant_id: String @doc(description: "Braintree Google Pay merchant ID.")
     braintree_googlepay_cctypes: String @doc(description: "Braintree Google Pay Card types supported.")
     braintree_googlepay_btn_color: String @doc(description: "Braintree Google Pay button color.")
@@ -141,4 +148,5 @@ enum ValidationRuleEnum @doc(description: "List of validation rule names applied
     MAX_FILE_SIZE
     MAX_IMAGE_HEIGHT
     MAX_IMAGE_WIDTH
+    IS_REQUIRED
 }

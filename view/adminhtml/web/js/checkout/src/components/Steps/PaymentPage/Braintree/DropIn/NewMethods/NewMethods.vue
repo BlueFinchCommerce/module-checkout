@@ -34,7 +34,7 @@
     <PrivacyPolicy />
 
     <MyButton
-      v-if="selectedMethod === 'card'"
+      v-if="selectedMethod === 'braintree'"
       label="Pay"
       primary
       @click="startPayment()"
@@ -105,7 +105,7 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['currencyCode', 'websiteName', 'superPaymentsActive']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
@@ -134,6 +134,14 @@ export default {
     const braintreeMethods = this.availableMethods.filter(({ code }) => code.startsWith('braintree'));
 
     this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
+
+    if (this.paymentOptionPriority.includes('paypal') && this.paypal.creditActive) {
+      const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+
+      // Insert 'paypalCredit' after 'paypal'
+      this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+      this.map.braintree_paypal_credit = 'paypalCredit';
+    }
 
     const options = {
       authorization: this.clientToken,
@@ -208,6 +216,21 @@ export default {
           size: 'responsive',
         },
       };
+
+      if (this.paypal.creditActive) {
+        options.paypalCredit = {
+          flow: 'checkout',
+          amount: total,
+          currency: this.currencyCode,
+          buttonStyle: {
+            color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+            label: this.paypal.creditLabel,
+            shape: this.paypal.creditShape,
+            size: 'responsive',
+          },
+          commit: true,
+        };
+      }
     }
 
     if (this.isPaymentMethodAvailable('braintree_venmo')) {
@@ -445,8 +468,25 @@ export default {
         if (matchingContainer) {
           const index = Object.values(this.map).findIndex((method) => method === braintreeId);
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
-          sheet.style.setProperty('--braintree-method-position', priority + 1);
-          sheet.prepend(matchingContainer);
+
+          const setBraintreeMethodPosition = (position) => {
+            sheet.style.setProperty('--braintree-method-position', position);
+            sheet.prepend(matchingContainer);
+          };
+
+          if (priority !== -1) {
+            setBraintreeMethodPosition(priority + 1);
+          } else if (braintreeId === 'paypalCredit') {
+            const paypalIndex = Object.values(this.map).findIndex((method) => method === 'paypal');
+            const paypalPriority = this.getPaymentPriority(Object.keys(this.map)[paypalIndex]);
+            setBraintreeMethodPosition(paypalPriority + 2);
+          }
+
+          // Move the card payment icons
+          if (braintreeId === 'card') {
+            const icons = sheet.querySelector('.braintree-sheet__icons');
+            matchingContainer.append(icons);
+          }
         }
       });
     },

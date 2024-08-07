@@ -74,6 +74,27 @@
                         <comment><![CDATA[Your Loqate API key if using Loqate.]]></comment>
                     </field>
                 </group>
+                <group id="click_collect_tabs" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Click and Collect shipping tabs</label>
+                    <field id="click_collect_tabs_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Click and Collect shipping tabs</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Brings tabs functionality for click and collect address to checkout]]></comment>
+                    </field>
+                </group>
+                <group id="super_payments" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Super Payments Order/Default Behaviour</label>
+                    <field id="super_payments_open" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Make Super Payments open by default</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Make Super Payments open by default.]]></comment>
+                    </field>
+                    <field id="super_payments_first_method" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Make Super Payments first option as a payment method</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Make Super Payments first option as a payment method.]]></comment>
+                    </field>
+                </group>
             </group>
         </section>
     </system>

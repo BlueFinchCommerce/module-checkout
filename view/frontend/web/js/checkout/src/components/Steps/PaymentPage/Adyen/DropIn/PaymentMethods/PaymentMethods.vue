@@ -103,7 +103,7 @@ export default {
   },
   computed: {
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'getAdyenClientKey']),
-    ...mapState(usePaymentStore, ['paymentEmitter']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'selectedMethod']),
     ...mapState(useCartStore, ['cartGrandTotal', 'cartItems']),
     ...mapState(useCustomerStore, [
       'customer',
@@ -112,7 +112,33 @@ export default {
     ...mapState(useConfigStore, ['currencyCode', 'locale', 'storeCode']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && this.checkout !== undefined) {
+          // Only do this for example if a stored payment is selected and new card is open.
+          if (this.id !== newVal && this.checkout.dropinRef) {
+            this.checkout.dropinRef.closeActivePaymentMethod();
+          }
 
+          // Set the stored payment radio field state depending on if it matches
+          // the current ID.
+          this.storedPaymentSelected = this.id === newVal;
+
+          // If the selected method isn't a stored method then reset all stored method selection.
+          if (newVal !== 'adyen-dropin-container-stored') {
+            this.storedPaymentMethods = this.storedPaymentMethods.map((storedMethod) => {
+              const updatedMethod = storedMethod;
+              updatedMethod.default = false;
+              return updatedMethod;
+            });
+          }
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   async created() {
     await this.getInitialConfig();
     await this.getCart();
@@ -231,27 +257,6 @@ export default {
       }
     });
 
-    // On payment selected close all active methods.
-    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
-      // Only do this for example if a stored payment is selected and new card is open.
-      if (this.id !== id && this.checkout.dropinRef) {
-        this.checkout.dropinRef.closeActivePaymentMethod();
-      }
-
-      // Set the stored payment radio field state depending on if it matches
-      // the current ID.
-      this.storedPaymentSelected = this.id === id;
-
-      // If the selected method isn't a stored method then reset all stored method selection.
-      if (id !== 'adyen-dropin-container-stored') {
-        this.storedPaymentMethods = this.storedPaymentMethods.map((storedMethod) => {
-          const updatedMethod = storedMethod;
-          updatedMethod.default = false;
-          return updatedMethod;
-        });
-      }
-    });
-
     this.paymentEmitter.on('adyenStoredPaymentCardSelected', ({ originalId }) => {
       // Update the selected method.
       this.storedPaymentMethods = this.storedPaymentMethods.map((storedMethod) => {
@@ -283,6 +288,7 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
     setOrderId(orderId) {
       this.orderId = orderId;
@@ -410,11 +416,8 @@ export default {
       }, 3000);
     },
 
-    onSelect(paymentMethod) {
-      this.paymentEmitter.emit('paymentMethodSelected', {
-        id: this.id,
-        type: paymentMethod.type,
-      });
+    onSelect() {
+      this.selectPaymentMethod(this.id);
       setTimeout(this.updateAgreementLocation, 0);
     },
 

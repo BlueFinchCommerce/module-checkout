@@ -179,6 +179,7 @@ export default {
     stepTitle: 'Select a shipping method',
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
+    nominatedDeliveryCalendar: 'Please select a date',
     tbc: 'Calculated at next step',
   },
   addNewAddressBtn: '+ Add new address',
@@ -227,6 +228,9 @@ export default {
     payByBankLabel: 'Pay by Bank',
     payByBankButton: 'Continue to Pay by Bank with Rvvup',
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
+  },
+  superPayments: {
+    superPaymentsTitle: 'Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',

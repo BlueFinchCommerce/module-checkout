@@ -7,7 +7,10 @@
                 <item name="gene_better_checkout_afd_enable" xsi:type="string">gene_better_checkout/general/afd/enable_afd_checkout</item>
                 <item name="gene_better_checkout_enabled" xsi:type="string">gene_better_checkout/general/enabled</item>
                 <item name="gene_better_checkout_loqate_enabled" xsi:type="string">gene_better_checkout/general/loqate/loqate_enabled</item>
+                <item name="gene_better_checkout_click_collect_tabs_enabled" xsi:type="string">gene_better_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
                 <item name="gene_better_checkout_loqate_api_key" xsi:type="string">gene_better_checkout/general/loqate/loqate_api_key</item>
+                <item name="gene_better_checkout_super_payments_open" xsi:type="string">gene_better_checkout/general/super_payments/super_payments_open</item>
+                <item name="gene_better_checkout_super_payments_first_method" xsi:type="string">gene_better_checkout/general/super_payments/super_payments_first_method</item>
                 <item name="gene_better_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
                 <item name="gene_better_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
                 <item name="gene_better_checkout_country_state_required" xsi:type="string">general/region/state_required</item>
@@ -164,6 +167,14 @@
                       xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_text_color</item>
                 <item name="braintree_paypal_vault_active"
                       xsi:type="string">payment/braintree_paypal_vault/active</item>
+                <item name="braintree_paypal_credit_active"
+                      xsi:type="string">payment/braintree_paypal_credit/active</item>
+                <item name="braintree_paypal_credit_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_color</item>
+                <item name="braintree_paypal_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_label</item>
+                <item name="braintree_paypal_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_shape</item>
                 <!-- / PayPal GraphQL config -->
                 <item name="braintree_googlepay_merchant_id"
                       xsi:type="string">payment/braintree_googlepay/merchant_id</item>

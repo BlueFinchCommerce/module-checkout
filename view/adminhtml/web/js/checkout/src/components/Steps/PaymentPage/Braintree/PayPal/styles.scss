@@ -20,6 +20,12 @@
     z-index: 102;
   }
 
+  .paypal-buttons {
+    &:last-child {
+      margin-top: var(--indent__m);
+    }
+  }
+
   &.ui-designer-disabled {
     pointer-events: none;
   }

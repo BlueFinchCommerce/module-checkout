@@ -36,7 +36,7 @@
     <PrivacyPolicy />
 
     <MyButton
-      v-if="selectedMethod === 'card'"
+      v-if="selectedMethod === 'braintree'"
       label="Pay"
       primary
       @click="startPayment()"
@@ -93,7 +93,6 @@ export default {
       additionalComponents: '',
       paymentOptionPriority: [],
       map: {},
-      selectedMethod: null,
     };
   },
   computed: {
@@ -108,15 +107,17 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['currencyCode', 'websiteName', 'superPaymentsActive']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
       'availableMethods',
+      'firstOpenController',
       'paymentEmitter',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
       'getPaymentPriority',
+      'selectedMethod',
     ]),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
@@ -138,6 +139,14 @@ export default {
     const braintreeMethods = this.availableMethods.filter(({ code }) => code.startsWith('braintree'));
 
     this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
+
+    if (this.paymentOptionPriority.includes('paypal') && this.paypal.creditActive) {
+      const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+
+      // Insert 'paypalCredit' after 'paypal'
+      this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+      this.map.braintree_paypal_credit = 'paypalCredit';
+    }
 
     const options = {
       authorization: this.clientToken,
@@ -212,6 +221,21 @@ export default {
           size: 'responsive',
         },
       };
+
+      if (this.paypal.creditActive) {
+        options.paypalCredit = {
+          flow: 'checkout',
+          amount: total,
+          currency: this.currencyCode,
+          buttonStyle: {
+            color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+            label: this.paypal.creditLabel,
+            shape: this.paypal.creditShape,
+            size: 'responsive',
+          },
+          commit: true,
+        };
+      }
     }
 
     if (this.isPaymentMethodAvailable('braintree_venmo')) {
@@ -232,7 +256,18 @@ export default {
   unmounted() {
     this.removeEventListeners();
   },
-
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && (!newVal.startsWith('braintree')
+          || newVal === 'braintree-lpm' || newVal === 'braintree-vaulted' || newVal === 'braintree-ach')) {
+          this.clearSelectedMethod(newVal);
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
@@ -247,6 +282,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
@@ -359,7 +395,16 @@ export default {
       this.instance = instance;
 
       this.attachEventListeners(instance);
+
       this.movePaymentContainers();
+
+      // If Braintree is controlling the first opened payment method then open that method.
+      if (this.selectedMethod.startsWith('braintree')) {
+        const [firstMethod] = this.paymentOptionPriority;
+
+        this.selectPaymentMethod(firstMethod);
+        this.setToCurrentViewId();
+      }
 
       this.paymentEmitter.emit('braintreeInitComplete');
 
@@ -378,7 +423,7 @@ export default {
         } else if (newViewId !== 'options') {
           this.addActiveClass(newViewId);
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
-          this.paymentEmitter.emit('paymentMethodSelected', { id });
+          this.selectPaymentMethod(id);
 
           this.selectedMethod = newViewId;
 
@@ -404,7 +449,6 @@ export default {
         }
       });
 
-      this.paymentEmitter.on('paymentMethodSelected', this.clearSelectedMethod);
       this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.on('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.on('braintreePaymentStart', this.showLoader);
@@ -412,17 +456,16 @@ export default {
     },
 
     removeEventListeners() {
-      this.paymentEmitter.off('paymentMethodSelected', this.clearSelectedMethod);
       this.paymentEmitter.off('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.off('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.off('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.off('braintreePaymentError', this.hideLoader);
     },
 
-    clearSelectedMethod({ id }) {
+    clearSelectedMethod(id) {
       this.unselectVaultedMethods();
-      if (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach') {
+      if (id !== null && (!id.startsWith('braintree')
+        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 
@@ -445,8 +488,25 @@ export default {
         if (matchingContainer) {
           const index = Object.values(this.map).findIndex((method) => method === braintreeId);
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
-          sheet.style.setProperty('--braintree-method-position', priority + 1);
-          sheet.prepend(matchingContainer);
+
+          const setBraintreeMethodPosition = (position) => {
+            sheet.style.setProperty('--braintree-method-position', position);
+            sheet.prepend(matchingContainer);
+          };
+
+          if (priority !== -1) {
+            setBraintreeMethodPosition(priority + 1);
+          } else if (braintreeId === 'paypalCredit') {
+            const paypalIndex = Object.values(this.map).findIndex((method) => method === 'paypal');
+            const paypalPriority = this.getPaymentPriority(Object.keys(this.map)[paypalIndex]);
+            setBraintreeMethodPosition(paypalPriority + 2);
+          }
+
+          // Move the card payment icons
+          if (braintreeId === 'card') {
+            const icons = sheet.querySelector('.braintree-sheet__icons');
+            matchingContainer.append(icons);
+          }
         }
       });
     },
@@ -513,9 +573,11 @@ export default {
     },
 
     clearSelectedPaymentMethod() {
-      this.instance.clearSelectedPaymentMethod();
+      if (this.instance !== null) {
+        this.instance.clearSelectedPaymentMethod();
 
-      this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+        this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+      }
     },
 
     setToCurrentViewId() {
