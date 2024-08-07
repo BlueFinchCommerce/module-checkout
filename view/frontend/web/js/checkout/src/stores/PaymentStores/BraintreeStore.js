@@ -233,7 +233,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (cart.applied_coupons) {
+      if (cart.applied_coupons && !cart.prices.discounts) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',

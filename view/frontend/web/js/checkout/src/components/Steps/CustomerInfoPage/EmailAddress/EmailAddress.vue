@@ -419,7 +419,7 @@ export default {
         this.emailRegistered = !await this.isEmailAvailable(this.customer.email);
       } else {
         // If the email is not valid then set to undefined as we don't know.
-        this.emailRegistered = undefined;
+        this.emailRegistered = false;
       }
     },
   },
