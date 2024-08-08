@@ -109,6 +109,11 @@
           v-html="getError"
         />
       </div>
+      <component
+          :is="belowShippingMethodsExtension"
+          v-for="belowShippingMethodsExtension in belowShippingMethodsExtensions"
+          :key="belowShippingMethodsExtension"
+        />
       <MyButton
         type="submit"
         primary
@@ -148,6 +153,7 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // Extensions
 import shippingMethods from '@/extensions/shippingMethods';
+import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions'
 
 export default {
   name: 'ShippingMethod',
@@ -160,6 +166,7 @@ export default {
     ProgressBar,
     RadioButton,
     ...shippingMethods(),
+    ...belowShippingMethodsExtensions(),
   },
   props: {
     buttonText: {
@@ -170,6 +177,7 @@ export default {
   data() {
     return {
       additionalShippingMethods: [],
+      belowShippingMethodsExtensions: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
@@ -191,6 +199,7 @@ export default {
   },
   async created() {
     this.additionalShippingMethods = Object.keys(shippingMethods());
+    this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
