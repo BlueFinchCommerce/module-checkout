@@ -251,12 +251,16 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (includeShipping && cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value) {
+      if (includeShipping
+        && (cart.shipping_addresses?.[0]?.selected_shipping_method?.price_incl_tax?.value
+          || cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value)) {
         items.push({
           name: this.$i18n.global.t('progressBar.shippingStepTitle'),
           kind: 'debit',
           quantity: 1,
-          unitAmount: Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
+          unitAmount: cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            ? Math.abs(cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value)
+            : Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
         });
       }
 
