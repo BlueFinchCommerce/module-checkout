@@ -9,9 +9,9 @@ export default () => {
         import(
           /* @vite-ignore */
           window.geneCheckout.ageCheckerContainer[detailField]
-          )));
+        )));
     });
   }
-  
+
   return ageCheckerContainer;
 };

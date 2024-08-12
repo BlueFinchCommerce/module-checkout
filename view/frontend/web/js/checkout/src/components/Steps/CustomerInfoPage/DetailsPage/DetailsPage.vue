@@ -234,12 +234,13 @@
         @billingInfoFull="billingInfoFull"
       />
 
-      <component
-        v-if="isAddressValid(address_type) && selected[address_type].id"
-        :is="ageCheckerExtension"
-        v-for="ageCheckerExtension in ageCheckerExtensions"
-        :key="ageCheckerExtension"
-      />
+      <template v-if="isAddressValid(address_type) && selected[address_type].id">
+        <component
+          :is="ageCheckerExtension"
+          v-for="ageCheckerExtension in ageCheckerExtensions"
+          :key="ageCheckerExtension"
+        />
+      </template>
 
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
@@ -313,7 +314,7 @@ import formatPrice from '@/helpers/payment/formatPrice';
 import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryDataLayer';
 
 // Extensions
-import ageCheckerExtensions from '@/extensions/ageCheckerExtensions'
+import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 
 export default {
   name: 'YourDetailComponent',
