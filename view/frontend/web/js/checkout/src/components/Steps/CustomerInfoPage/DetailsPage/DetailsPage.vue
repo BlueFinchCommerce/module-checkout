@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible">
+         v-show="isExpressPaymentsVisible && !ageCheckRequired">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -234,6 +234,13 @@
         @billingInfoFull="billingInfoFull"
       />
 
+      <component
+        v-if="isAddressValid(address_type) && selected[address_type].id"
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
+
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
@@ -305,6 +312,9 @@ import deepClone from '@/helpers/addresses/deepClone';
 import formatPrice from '@/helpers/payment/formatPrice';
 import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryDataLayer';
 
+// Extensions
+import ageCheckerExtensions from '@/extensions/ageCheckerExtensions'
+
 export default {
   name: 'YourDetailComponent',
   components: {
@@ -336,6 +346,7 @@ export default {
     Agreements,
     DeliveryTabIcon,
     ClickCollectTabIcon,
+    ...ageCheckerExtensions(),
   },
   props: {
     address_type: {
@@ -369,11 +380,18 @@ export default {
       clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
+      ageCheckerExtensions: [],
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
-    ...mapState(useConfigStore, ['addressFinder', 'custom', 'storeCode', 'clickCollectTabsEnabled']),
+    ...mapState(useConfigStore, [
+      'addressFinder',
+      'custom',
+      'storeCode',
+      'clickCollectTabsEnabled',
+      'ageCheckRequired',
+    ]),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
       'customer',
@@ -392,6 +410,7 @@ export default {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
     });
+    this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
