@@ -57,7 +57,8 @@
     &.sanitise-error {
 
       input,
-      select {
+      select,
+      textarea {
         border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
 
         &:focus,
@@ -245,7 +246,8 @@
   }
 
   .text-input {
-    input {
+    input,
+    textarea {
       color: var(--input__font-color);
       padding: var(--indent__s);
       margin-top: var(--input-margin-top, var(--indent__s));
@@ -277,7 +279,8 @@
     }
 
     &.error {
-      input {
+      input,
+      textarea {
         &:focus-visible,
         &:focus,
         &:active {
@@ -286,10 +289,30 @@
       }
     }
 
-    input::placeholder {
+    input::placeholder,
+    textarea::placeholder {
       color: var(--input__placeholder-font-color);
       font-size: var(--input__font-size);
       font-weight: var(--font-weight__medium);
+    }
+  }
+
+  .text-area {
+    label {
+      flex-direction: column;
+      textarea {
+        margin-top: var(--indent__base);
+        height: auto;
+      }
+    }
+    span {
+      position: relative;
+      margin: 0;
+      padding: 0;
+      font-size: var(--font__s);
+    }
+    p {
+      margin-top: var(--indent__m);
     }
   }
 
@@ -344,7 +367,8 @@
   }
 
   .text-input.field-valid {
-    input {
+    input,
+    textarea {
       border-color: var(--valid-field-border, var(--input__border-color-valid));
       border-width: var(--input__border-weight-focus);
       outline: none;
@@ -359,7 +383,8 @@
 
   //override valid class if custom validation shows error
   .custom-validation-error.field-valid {
-    input {
+    input,
+    textarea {
       border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
       outline: none;
 

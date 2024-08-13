@@ -184,6 +184,12 @@ export default {
     nominatedDelivery: 'Choose a day that suits you.',
     nominatedDeliveryCalendar: 'Please select a date',
     tbc: 'Calculated at next step',
+    deliveryInstructions: {
+      title: 'Delivery Instructions?',
+      label: 'If no one is at home to accept delivery, our drivers will automatically try a neighbour & leave a card. Alternatively, please specify delivery instructions here',
+      placeholder: 'Your delivery instructions...',
+      maxCharacters: '{maxLength} characters maximum',
+    },
   },
   addNewAddressBtn: '+ Add new address',
   saveNewAddress: 'Save in address book',
