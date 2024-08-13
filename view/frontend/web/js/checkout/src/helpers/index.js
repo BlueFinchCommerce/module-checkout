@@ -15,7 +15,6 @@ import formatAddress from '@/helpers/addresses/formatAddress';
 import formatClickAndCollectAddress from '@/helpers/addresses/formatClickAndCollectAddress';
 import formatPrice from '@/helpers/payment/formatPrice';
 import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
-import getAdyenProductionMode from '@/helpers/payment/getAdyenProductionMode';
 import getAfdUrls from '@/helpers/addresses/getAfdUrls';
 import getBaseRestUrl from '@/helpers/storeConfigs/getBaseRestUrl';
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
@@ -73,7 +72,6 @@ export default {
   formatClickAndCollectAddress,
   formatPrice,
   getAdditionalPaymentData,
-  getAdyenProductionMode,
   getAfdUrls,
   getBaseRestUrl,
   getBaseUrl,

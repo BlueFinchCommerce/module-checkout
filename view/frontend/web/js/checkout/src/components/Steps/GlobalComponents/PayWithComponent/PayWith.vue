@@ -3,7 +3,12 @@
     :style="style"
     class="pay-with__container"
   >
-    <template v-if="isAdyenAvailable">
+    <component
+      :is="footerPaymentIcon"
+      v-for="footerPaymentIcon in footerPaymentIcons"
+      :key="footerPaymentIcon"
+    />
+    <!-- <template v-if="isAdyenAvailable">
       <div>
         <ul
           v-if="Object.keys(paymentTypes).length > 0"
@@ -32,7 +37,7 @@
           </li>
         </ul>
       </div>
-    </template>
+    </template> -->
     <div>
       <ul class="pay-with__column"
       v-if="availableMethods.length > 0">
@@ -84,7 +89,6 @@
 import { mapActions, mapState } from 'pinia';
 import { computed, reactive } from 'vue';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
@@ -104,8 +108,14 @@ import DiscoverSvg from '@/icons/payments/colour/icon-discover-colour.svg';
 import DinersSvg from '@/icons/payments/colour/icon-diners-colour.svg';
 import JCBSvg from '@/icons/payments/colour/icon-jcb-colour.svg';
 
+// Extensions
+import paymentIcons from '@/extensions/paymentIcons';
+
 export default {
   name: 'PayWith',
+  components: {
+    ...paymentIcons(),
+  },
   props: {
     width: {
       type: String,
@@ -127,8 +137,12 @@ export default {
       })),
     };
   },
+  data() {
+    return {
+      paymentIcons: [],
+    };
+  },
   computed: {
-    ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods']),
     ApplePayIcon() {
@@ -163,6 +177,7 @@ export default {
     },
   },
   async created() {
+    this.paymentIcons = Object.keys(paymentIcons());
     await this.getInitialConfig();
   },
   methods: {

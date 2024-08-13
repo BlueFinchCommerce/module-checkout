@@ -105,7 +105,7 @@ export default defineStore('brainteeStore', {
           environment: storeConfig.braintree_environment,
           isBraintreeEnabled: storeConfig.braintree_active,
           merchantAccountId: storeConfig.braintree_merchant_account_id,
-          cCTypes: storeConfig.braintree_cc_types.split(','),
+          cCTypes: storeConfig.braintree_cc_types?.split(',') || [],
           vaultActive: storeConfig.braintree_cc_vault_active === '1',
           vaultVerifyCvv: storeConfig.braintree_cc_vault_cvv,
           sendCartLineItems: storeConfig.braintree_send_line_items,

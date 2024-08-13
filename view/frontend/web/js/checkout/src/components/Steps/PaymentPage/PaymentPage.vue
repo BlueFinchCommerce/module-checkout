@@ -37,12 +37,6 @@
               v-if="isPaymentMethodAvailable('braintree_cc_vault')"
               :key="`braintreeStoredMethods-${paymentKey}`"
             />
-            <AdyenPaymentMethods
-              v-if="adyenVaultEnabled"
-              id="adyen-dropin-container-stored"
-              :key="`adyenStoredMethods-${paymentKey}`"
-              :stored-payments="true"
-            />
           </template>
 
           <div
@@ -70,11 +64,8 @@
           <SuperPayments
             v-if="superPaymentsActive && superPaymentsFirstOption"
             :key="`superPaymentsNewMethods-${paymentKey}`"/>
-          <AdyenDropIn
-            v-if="isAdyenAvailable"
-            :key="`adyenNewMethods-${paymentKey}`"
-          />
-          <BraintreeDropIn v-if="isBraintreeEnabled !== '0'"
+
+          <BraintreeDropIn v-if="isBraintreeEnabled === '1'"
             :key="`braintreeNewMethods-${paymentKey}`" />
           <RvvupPayByBank
             v-if="rvvupPaymentsActive"
@@ -82,7 +73,7 @@
           />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
-              :v-if="showMagentoPayments || isBraintreeEnabled !== '0'"
+              :v-if="showMagentoPayments || isBraintreeEnabled === '1'"
               :payment-type="'checkmo'"
               :title="getPaymentMethodTitle('checkmo')"
             />
@@ -104,7 +95,6 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
@@ -116,8 +106,6 @@ import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 // Components
 import SavedDeliveryAddress from
   '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
-import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
-import AdyenPaymentMethods from '@/components/Steps/PaymentPage/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
 import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
@@ -145,8 +133,6 @@ export default {
     SuperPayments,
     SavedDeliveryAddress,
     SavedShippingMethod,
-    AdyenDropIn,
-    AdyenPaymentMethods,
     Rewards,
     FreeMOCheckPayment,
     RvvupPayByBank,
@@ -177,7 +163,6 @@ export default {
       'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
