@@ -42,7 +42,6 @@ import { computed, reactive } from 'vue';
 import { mapWritableState } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
-import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import sanitiseInputValue from '@/helpers/addresses/sanitiseInputValue';
 import debounce from 'lodash.debounce';
 import breakpoints from './style.module.scss';
@@ -51,7 +50,6 @@ export default {
   name: 'TextArea',
   components: {
     ErrorMessage,
-    TextField,
   },
   props: {
     modelValue: {

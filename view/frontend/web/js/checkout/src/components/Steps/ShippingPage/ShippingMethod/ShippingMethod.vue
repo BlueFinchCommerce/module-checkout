@@ -153,7 +153,7 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // Extensions
 import shippingMethods from '@/extensions/shippingMethods';
-import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions'
+import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
 
 export default {
   name: 'ShippingMethod',
