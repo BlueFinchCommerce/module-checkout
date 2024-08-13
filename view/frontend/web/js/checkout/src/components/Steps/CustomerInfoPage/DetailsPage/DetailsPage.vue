@@ -388,6 +388,10 @@ export default {
     ...mapState(useBraintreeStore, ['paypal']),
   },
   created() {
+    if (this.selected[this.address_type].firstname === ''
+      || this.selected[this.address_type].firstname === 'UNKNOWN') {
+      this.editAddress();
+    }
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
