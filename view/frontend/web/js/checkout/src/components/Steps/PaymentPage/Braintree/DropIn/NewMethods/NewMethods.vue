@@ -384,6 +384,7 @@ export default {
     getBraintreeMethod(type) {
       switch (type) {
         case 'AndroidPayCard': return 'braintree_googlepay';
+        case 'ApplePayCard': return 'braintree_applepay';
         case 'PayPalAccount': return 'braintree_paypal';
         default: return 'braintree';
       }

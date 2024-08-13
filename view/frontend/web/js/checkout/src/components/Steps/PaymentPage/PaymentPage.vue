@@ -67,9 +67,13 @@
             :key="additionalPaymentMethod"
           />
 
-          <SuperPayments
-            v-if="superPaymentsActive && superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
+          <template  v-if="superPaymentsActive && superPaymentsFirstOption">
+            <component
+              :is="superPaymentsContainer"
+              v-for="superPaymentsContainer in superPaymentsContainers"
+              :key="superPaymentsContainer"
+            />
+          </template>
           <AdyenDropIn
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
@@ -87,9 +91,13 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <SuperPayments
-            v-if="superPaymentsActive && !superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
+          <template  v-if="superPaymentsActive && !superPaymentsFirstOption">
+            <component
+              :is="superPaymentsContainer"
+              v-for="superPaymentsContainer in superPaymentsContainers"
+              :key="superPaymentsContainer"
+            />
+          </template>
         </template>
         <FreeMOCheckPayment
           v-else
@@ -131,18 +139,17 @@ import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
-import SuperPayments from '@/components/Steps/PaymentPage/SuperPayments/SuperPayments.vue';
 
 // Helpers
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
+import superPayments from '@/extensions/superPayments';
 
 export default {
   name: 'PaymentPage',
   components: {
-    SuperPayments,
     SavedDeliveryAddress,
     SavedShippingMethod,
     AdyenDropIn,
@@ -159,10 +166,12 @@ export default {
     TextField,
     VaultedMethods,
     ...paymentMethods(),
+    ...superPayments(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
+      superPaymentsContainers: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -212,6 +221,7 @@ export default {
     await this.getSuperPaymentsConfig();
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());
+    this.superPaymentsContainers = Object.keys(superPayments());
 
     this.trackStep({
       step: 3,

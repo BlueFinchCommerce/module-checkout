@@ -79,8 +79,7 @@
       "sepa.svg",
       "sofort.svg",
       "rvvup-payment.svg",
-      "paymentIcon.svg",
-      "superPayments.svg"
+      "paymentIcon.svg"
     ],
     "css": [
       "main.css"
@@ -400,9 +399,5 @@
   "src/icons/shippingIcon.svg": {
     "file": "promo-icon.svg",
     "src": "src/icons/shippingIcon.svg"
-  },
-  "src/icons/superPayments.svg": {
-    "file": "superPayments.svg",
-    "src": "src/icons/superPayments.svg"
   }
 }
