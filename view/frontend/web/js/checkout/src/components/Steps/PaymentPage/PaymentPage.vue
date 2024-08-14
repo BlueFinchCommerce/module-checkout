@@ -62,18 +62,11 @@
           </div>
 
           <component
-            :is="additionalPaymentMethod"
-            v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
+            :is="additionalPaymentMethodPrimary"
+            v-for="additionalPaymentMethodPrimary in additionalPaymentMethodsPrimary"
+            :key="additionalPaymentMethodPrimary"
           />
 
-          <template  v-if="superPaymentsActive && superPaymentsFirstOption">
-            <component
-              :is="superPaymentsContainer"
-              v-for="superPaymentsContainer in superPaymentsContainers"
-              :key="superPaymentsContainer"
-            />
-          </template>
           <AdyenDropIn
             v-if="isAdyenAvailable"
             :key="`adyenNewMethods-${paymentKey}`"
@@ -91,13 +84,11 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <template  v-if="superPaymentsActive && !superPaymentsFirstOption">
-            <component
-              :is="superPaymentsContainer"
-              v-for="superPaymentsContainer in superPaymentsContainers"
-              :key="superPaymentsContainer"
-            />
-          </template>
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
         </template>
         <FreeMOCheckPayment
           v-else
@@ -145,7 +136,7 @@ import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedData
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
-import superPayments from '@/extensions/superPayments';
+import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 
 export default {
   name: 'PaymentPage',
@@ -166,12 +157,12 @@ export default {
     TextField,
     VaultedMethods,
     ...paymentMethods(),
-    ...superPayments(),
+    ...paymentMethodsPrimary(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
-      superPaymentsContainers: [],
+      additionalPaymentMethodsPrimary: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -182,8 +173,6 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
-      'superPaymentsActive',
-      'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
@@ -218,10 +207,8 @@ export default {
 
     await this.getRvvupConfig();
 
-    await this.getSuperPaymentsConfig();
-
     this.additionalPaymentMethods = Object.keys(paymentMethods());
-    this.superPaymentsContainers = Object.keys(superPayments());
+    this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
 
     this.trackStep({
       step: 3,
@@ -240,7 +227,7 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig', 'getSuperPaymentsConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
   },
 };

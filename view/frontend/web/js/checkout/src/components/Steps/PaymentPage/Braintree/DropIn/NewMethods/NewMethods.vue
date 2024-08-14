@@ -109,7 +109,7 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName', 'superPaymentsActive']),
+    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
