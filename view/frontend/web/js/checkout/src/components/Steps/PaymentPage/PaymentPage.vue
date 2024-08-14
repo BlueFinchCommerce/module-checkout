@@ -56,14 +56,10 @@
           </div>
 
           <component
-            :is="additionalPaymentMethod"
-            v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
+            :is="additionalPaymentMethodPrimary"
+            v-for="additionalPaymentMethodPrimary in additionalPaymentMethodsPrimary"
+            :key="additionalPaymentMethodPrimary"
           />
-
-          <SuperPayments
-            v-if="superPaymentsActive && superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
 
           <BraintreeDropIn v-if="isBraintreeEnabled === '1'"
             :key="`braintreeNewMethods-${paymentKey}`" />
@@ -78,9 +74,11 @@
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <SuperPayments
-            v-if="superPaymentsActive && !superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
         </template>
         <FreeMOCheckPayment
           v-else
@@ -119,18 +117,17 @@ import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
-import SuperPayments from '@/components/Steps/PaymentPage/SuperPayments/SuperPayments.vue';
 
 // Helpers
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
+import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 
 export default {
   name: 'PaymentPage',
   components: {
-    SuperPayments,
     SavedDeliveryAddress,
     SavedShippingMethod,
     Rewards,
@@ -145,10 +142,12 @@ export default {
     TextField,
     VaultedMethods,
     ...paymentMethods(),
+    ...paymentMethodsPrimary(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
+      additionalPaymentMethodsPrimary: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -159,8 +158,6 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
-      'superPaymentsActive',
-      'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
@@ -194,9 +191,8 @@ export default {
 
     await this.getRvvupConfig();
 
-    await this.getSuperPaymentsConfig();
-
     this.additionalPaymentMethods = Object.keys(paymentMethods());
+    this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
 
     this.trackStep({
       step: 3,
@@ -215,7 +211,7 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig', 'getSuperPaymentsConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
   },
 };
