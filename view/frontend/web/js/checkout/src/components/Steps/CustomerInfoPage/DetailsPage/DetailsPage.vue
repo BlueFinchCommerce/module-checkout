@@ -244,7 +244,8 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type) && !selected[address_type].id"
+        :disabled="!isAddressValid(address_type) && !selected[address_type].id
+        && (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -253,7 +254,8 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
+        && (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
@@ -397,6 +399,7 @@ export default {
       'storeCode',
       'clickCollectTabsEnabled',
       'ageCheckRequired',
+      'ageCheckerErrors',
     ]),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',

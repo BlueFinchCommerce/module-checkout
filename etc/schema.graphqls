@@ -14,7 +14,6 @@ type StoreConfig {
     gene_better_checkout_clickandcollect_max_order_value: String @doc(description: "Gene Checkout Click and collect max order value")
     gene_better_checkout_clickandcollect_min_order_value: String @doc(description: "Gene Checkout Click and collect min order value")
     gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
-    gene_better_checkout_agecheck_required: Boolean @doc(description: "Enable age checker functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")
