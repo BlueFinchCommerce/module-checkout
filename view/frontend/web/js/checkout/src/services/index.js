@@ -1,5 +1,4 @@
 import authenticatedRequest from '@/services/authenticatedRequest';
-import createPayment from '@/services/payments/createPaymentGraphQl';
 import createPaymentGraphQl from '@/services/payments/createPaymentGraphQl';
 import createPaymentRest from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
@@ -10,7 +9,6 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   authenticatedRequest,
-  createPayment,
   createPaymentGraphQl,
   createPaymentRest,
   getShippingMethods,

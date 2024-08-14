@@ -123,9 +123,6 @@ export default {
         if (newValue.lastname === 'UNKNOWN') {
           this.selectedAddressType.lastname = '';
         }
-        if (String(newValue.telephone) === '000000000') {
-          this.selectedAddressType.telephone = '';
-        }
       },
       deep: true,
     },
@@ -145,9 +142,6 @@ export default {
       }
       if (this.selectedAddressType.lastname === 'UNKNOWN') {
         this.selectedAddressType.lastname = '';
-      }
-      if (String(this.selectedAddressType.telephone) === '000000000') {
-        this.selectedAddressType.telephone = '';
       }
     },
 

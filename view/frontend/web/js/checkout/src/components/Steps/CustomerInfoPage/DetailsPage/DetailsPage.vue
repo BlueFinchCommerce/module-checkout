@@ -379,6 +379,16 @@ export default {
       ageCheckerExtensions: [],
     };
   },
+  watch: {
+    selectedAddressType: {
+      handler(newValue) {
+        if (String(newValue.telephone) === '000000000') {
+          this.editAddress();
+        }
+      },
+      deep: true,
+    },
+  },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
     ...mapState(useConfigStore, [
@@ -400,14 +410,13 @@ export default {
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
     ...mapState(useBraintreeStore, ['paypal']),
+    selectedAddressType() {
+      return this.selected[this.address_type];
+    },
   },
   created() {
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
 
-    if (this.selected[this.address_type].firstname === ''
-      || this.selected[this.address_type].firstname === 'UNKNOWN') {
-      this.editAddress();
-    }
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
