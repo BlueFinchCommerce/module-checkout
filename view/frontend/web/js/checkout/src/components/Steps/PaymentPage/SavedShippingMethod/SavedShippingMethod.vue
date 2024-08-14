@@ -28,7 +28,9 @@
               />
               <Price
                 class="shipping-method-value"
-                :value="cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value"
+                :value="cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+                  ? cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+                  : cart.shipping_addresses[0].selected_shipping_method.amount.value"
                 :data-cy="'completed-step-shipping-content-price'"
               />
             </div>
