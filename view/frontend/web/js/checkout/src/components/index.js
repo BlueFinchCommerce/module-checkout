@@ -6,6 +6,7 @@ import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/R
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import TextArea from '@/components/Core/ActionComponents/Inputs/TextArea/TextArea.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
+import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
 export default {
   Agreements,
@@ -16,4 +17,5 @@ export default {
   Recaptcha,
   TextArea,
   TextField,
+  Tick,
 };

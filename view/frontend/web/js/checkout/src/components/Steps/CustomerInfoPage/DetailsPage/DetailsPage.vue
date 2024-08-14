@@ -37,13 +37,10 @@
           :key="`braintreePayPal-${storedKey}-credit`"
           :isCredit="paypal.creditActive"
         />
-        <AdyenGooglePay
-          v-if="isPaymentMethodAvailable('adyen_hpp')"
-          :key="`adyenGooglePay-${storedKey}`"
-        />
-        <AdyenApplePay
-          v-if="isPaymentMethodAvailable('adyen_hpp')"
-          :key="`adyenApplePay-${storedKey}`"
+        <component
+          :is="expressPaymentMethod"
+          v-for="expressPaymentMethod in expressPaymentMethods"
+          :key="expressPaymentMethod"
         />
       </div>
     </div>
@@ -285,8 +282,6 @@ import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressLi
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';
 import BraintreePayPal from '@/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue';
-import AdyenGooglePay from '@/components/Steps/PaymentPage/Adyen/GooglePay/GooglePay.vue';
-import AdyenApplePay from '@/components/Steps/PaymentPage/Adyen/ApplePay/ApplePay.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
@@ -298,7 +293,6 @@ import Agreements from '@/components/Core/ContentComponents/Agreements/Agreement
 
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -314,6 +308,7 @@ import formatPrice from '@/helpers/payment/formatPrice';
 import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryDataLayer';
 
 // Extensions
+import expressPaymentMethods from '@/extensions/expressPaymentMethods';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 
 export default {
@@ -335,8 +330,6 @@ export default {
     BraintreeGooglePay,
     BraintreeApplePay,
     BraintreePayPal,
-    AdyenGooglePay,
-    AdyenApplePay,
     ErrorMessage,
     BillingForm,
     Newsletter,
@@ -347,6 +340,7 @@ export default {
     Agreements,
     DeliveryTabIcon,
     ClickCollectTabIcon,
+    ...expressPaymentMethods(),
     ...ageCheckerExtensions(),
   },
   props: {
@@ -381,6 +375,7 @@ export default {
       clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
+      expressPaymentMethods: [],
       ageCheckerExtensions: [],
     };
   },
@@ -407,6 +402,8 @@ export default {
     ...mapState(useBraintreeStore, ['paypal']),
   },
   created() {
+    this.expressPaymentMethods = Object.keys(expressPaymentMethods());
+
     this.cartEmitter.on('cartUpdated', async () => {
       this.clearPaymentReponseCache();
       this.storedKey += 1;
@@ -445,7 +442,6 @@ export default {
       'validateInputField',
       'setAddressToStore',
     ]),
-    ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
     ...mapActions(useShippingMethodsStore, [
       'clearShippingMethodCache',
       'setClickAndCollect',
