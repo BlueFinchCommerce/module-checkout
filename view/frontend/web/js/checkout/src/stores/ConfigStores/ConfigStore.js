@@ -53,6 +53,7 @@ export default defineStore('configStore', {
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
+    ageCheckRequired: false,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -130,6 +131,7 @@ export default defineStore('configStore', {
         'tax_cart_display_full_summary',
         'gene_better_checkout_copyright_text',
         'gene_better_checkout_progress_bar_visible',
+        'gene_better_checkout_agecheck_required',
         'gene_better_checkout_loqate_api_key',
         'gene_better_checkout_loqate_enabled',
         'gene_better_checkout_click_collect_tabs_enabled',
@@ -185,6 +187,7 @@ export default defineStore('configStore', {
         taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
         copyrightText: storeConfig.gene_better_checkout_copyright_text,
         progressBarVisible: storeConfig.gene_better_checkout_progress_bar_visible === true,
+        ageCheckRequired: storeConfig.gene_better_checkout_agecheck_required,
         addressFinder: {
           enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
           loqate: {

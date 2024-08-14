@@ -51,13 +51,5 @@ export default defineStore('stepsStore', {
       });
       this.$router.push('/payments');
     },
-    goToAdyenAmazonReviw() {
-      this.setData({
-        yourDetailsActive: true,
-        shippingActive: true,
-        paymentActive: true,
-      });
-      this.$router.push('/adyen-amazon-review');
-    },
   },
 });
