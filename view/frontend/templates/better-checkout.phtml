@@ -51,6 +51,14 @@ $customWordings = $assetViewModel->getCustomWording();
     <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
 <?php endforeach; ?>
 
+<script>
+    window.geneCheckout.staticPath =
+        window.geneCheckout.staticPath.replace(
+            /(.+)\/Gene_BetterCheckout\//,
+            window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+        );
+</script>
+
 <?php if (array_key_exists('imports', $jsAssets)): ?>
     <?php foreach ($jsAssets['imports'] as $jsAsset): ?>
         <link rel="modulepreload" href="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>">

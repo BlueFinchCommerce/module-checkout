@@ -71,6 +71,10 @@ export default () => {
           value
           currency
         }
+        price_incl_tax {
+          value
+          currency
+        }
         carrier_code
         carrier_title
         method_code

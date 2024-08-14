@@ -152,6 +152,12 @@ export default {
     nominatedDelivery: ' ',
     nominatedDeliveryCalendar: ' ',
     tbc: ' ',
+    deliveryInstructions: {
+      title: ' ',
+      label: ' ',
+      placeholder: ' ',
+      maxCharacters: ' ',
+    },
   },
   addNewAddressBtn: ' ',
   saveNewAddress: ' ',
