@@ -37,12 +37,6 @@
               v-if="isPaymentMethodAvailable('braintree_cc_vault')"
               :key="`braintreeStoredMethods-${paymentKey}`"
             />
-            <AdyenPaymentMethods
-              v-if="adyenVaultEnabled"
-              id="adyen-dropin-container-stored"
-              :key="`adyenStoredMethods-${paymentKey}`"
-              :stored-payments="true"
-            />
           </template>
 
           <div
@@ -62,19 +56,12 @@
           </div>
 
           <component
-            :is="additionalPaymentMethod"
-            v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
+            :is="additionalPaymentMethodPrimary"
+            v-for="additionalPaymentMethodPrimary in additionalPaymentMethodsPrimary"
+            :key="additionalPaymentMethodPrimary"
           />
 
-          <SuperPayments
-            v-if="superPaymentsActive && superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
-          <AdyenDropIn
-            v-if="isAdyenAvailable"
-            :key="`adyenNewMethods-${paymentKey}`"
-          />
-          <BraintreeDropIn v-if="isBraintreeEnabled !== '0'"
+          <BraintreeDropIn v-if="isBraintreeEnabled === '1'"
             :key="`braintreeNewMethods-${paymentKey}`" />
           <RvvupPayByBank
             v-if="rvvupPaymentsActive"
@@ -82,14 +69,16 @@
           />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
-              :v-if="showMagentoPayments || isBraintreeEnabled !== '0'"
+              :v-if="showMagentoPayments || isBraintreeEnabled === '1'"
               :payment-type="'checkmo'"
               :title="getPaymentMethodTitle('checkmo')"
             />
           </div>
-          <SuperPayments
-            v-if="superPaymentsActive && !superPaymentsFirstOption"
-            :key="`superPaymentsNewMethods-${paymentKey}`"/>
+          <component
+            :is="additionalPaymentMethod"
+            v-for="additionalPaymentMethod in additionalPaymentMethods"
+            :key="additionalPaymentMethod"
+          />
         </template>
         <FreeMOCheckPayment
           v-else
@@ -104,7 +93,6 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
@@ -116,8 +104,6 @@ import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 // Components
 import SavedDeliveryAddress from
   '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
-import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
-import AdyenPaymentMethods from '@/components/Steps/PaymentPage/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
 import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
@@ -131,22 +117,19 @@ import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/VaultedMethods/VaultedMethods.vue';
-import SuperPayments from '@/components/Steps/PaymentPage/SuperPayments/SuperPayments.vue';
 
 // Helpers
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
+import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 
 export default {
   name: 'PaymentPage',
   components: {
-    SuperPayments,
     SavedDeliveryAddress,
     SavedShippingMethod,
-    AdyenDropIn,
-    AdyenPaymentMethods,
     Rewards,
     FreeMOCheckPayment,
     RvvupPayByBank,
@@ -159,10 +142,12 @@ export default {
     TextField,
     VaultedMethods,
     ...paymentMethods(),
+    ...paymentMethodsPrimary(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
+      additionalPaymentMethodsPrimary: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -173,11 +158,8 @@ export default {
       'storeCode',
       'rewardsEnabled',
       'rvvupPaymentsActive',
-      'superPaymentsActive',
-      'superPaymentsFirstOption',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',
@@ -209,9 +191,8 @@ export default {
 
     await this.getRvvupConfig();
 
-    await this.getSuperPaymentsConfig();
-
     this.additionalPaymentMethods = Object.keys(paymentMethods());
+    this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
 
     this.trackStep({
       step: 3,
@@ -230,7 +211,7 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig', 'getSuperPaymentsConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
   },
 };

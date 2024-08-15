@@ -25,9 +25,6 @@ export default defineStore('configStore', {
     locale: getLocale(),
     countryCode: undefined,
     rvvupPaymentsActive: false,
-    superPaymentsActive: false,
-    superPaymentsFirstOption: false,
-    superPaymentsOpen: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -138,8 +135,6 @@ export default defineStore('configStore', {
         'gene_better_checkout_loqate_api_key',
         'gene_better_checkout_loqate_enabled',
         'gene_better_checkout_click_collect_tabs_enabled',
-        'gene_better_checkout_super_payments_open',
-        'gene_better_checkout_super_payments_first_method',
         'gene_better_checkout_afd_enable',
       ];
 
@@ -204,8 +199,6 @@ export default defineStore('configStore', {
           },
         },
         clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
-        superPaymentsFirstOption: storeConfig.gene_better_checkout_super_payments_first_method,
-        superPaymentsOpen: storeConfig.gene_better_checkout_super_payments_open,
       });
 
       if (storeConfig.locale) {
@@ -243,18 +236,6 @@ export default defineStore('configStore', {
       if (data) {
         this.setData({
           rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
-        });
-      }
-    },
-    async getSuperPaymentsConfig() {
-      const configs = [
-        'super_payment_gateway_enabled',
-      ];
-      const data = await this.getConfig(configs);
-
-      if (data) {
-        this.setData({
-          superPaymentsActive: !!Number(data.super_payment_gateway_enabled),
         });
       }
     },

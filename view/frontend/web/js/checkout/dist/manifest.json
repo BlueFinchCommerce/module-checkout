@@ -1,32 +1,5 @@
 {
   "_adyen.min.js": {
-    "dynamicImports": [
-      "node_modules/@adyen/adyen-web/dist/es/ar.js",
-      "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js",
-      "node_modules/@adyen/adyen-web/dist/es/da-DK.js",
-      "node_modules/@adyen/adyen-web/dist/es/de-DE.js",
-      "node_modules/@adyen/adyen-web/dist/es/el-GR.js",
-      "node_modules/@adyen/adyen-web/dist/es/es-ES.js",
-      "node_modules/@adyen/adyen-web/dist/es/fi-FI.js",
-      "node_modules/@adyen/adyen-web/dist/es/fr-FR.js",
-      "node_modules/@adyen/adyen-web/dist/es/hr-HR.js",
-      "node_modules/@adyen/adyen-web/dist/es/hu-HU.js",
-      "node_modules/@adyen/adyen-web/dist/es/it-IT.js",
-      "node_modules/@adyen/adyen-web/dist/es/ja-JP.js",
-      "node_modules/@adyen/adyen-web/dist/es/ko-KR.js",
-      "node_modules/@adyen/adyen-web/dist/es/nl-NL.js",
-      "node_modules/@adyen/adyen-web/dist/es/no-NO.js",
-      "node_modules/@adyen/adyen-web/dist/es/pl-PL.js",
-      "node_modules/@adyen/adyen-web/dist/es/pt-BR.js",
-      "node_modules/@adyen/adyen-web/dist/es/pt-PT.js",
-      "node_modules/@adyen/adyen-web/dist/es/ro-RO.js",
-      "node_modules/@adyen/adyen-web/dist/es/ru-RU.js",
-      "node_modules/@adyen/adyen-web/dist/es/sk-SK.js",
-      "node_modules/@adyen/adyen-web/dist/es/sl-SI.js",
-      "node_modules/@adyen/adyen-web/dist/es/sv-SE.js",
-      "node_modules/@adyen/adyen-web/dist/es/zh-CN.js",
-      "node_modules/@adyen/adyen-web/dist/es/zh-TW.js"
-    ],
     "file": "adyen.min.js"
   },
   "main.css": {
@@ -37,16 +10,10 @@
     "assets": [
       "logo.svg",
       "lockIcon.svg",
-      "icon-applepay-white.svg",
-      "icon-googlepay-white.svg",
       "icon-amex-white.svg",
-      "icon-paypal-white.svg",
-      "icon-klarna-white.svg",
       "icon-maestro-white.svg",
       "icon-mastercard-white.svg",
       "icon-visa-white.svg",
-      "icon-clearpay-white.svg",
-      "icon-venmo-white.svg",
       "icon-discover-white.svg",
       "icon-diners-white.svg",
       "icon-jcb-white.svg",
@@ -79,8 +46,7 @@
       "sepa.svg",
       "sofort.svg",
       "rvvup-payment.svg",
-      "paymentIcon.svg",
-      "superPayments.svg"
+      "paymentIcon.svg"
     ],
     "css": [
       "main.css"
@@ -91,131 +57,6 @@
     ],
     "isEntry": true,
     "src": "main.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/ar.js": {
-    "file": "ar.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/ar.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js": {
-    "file": "cs-CZ.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/cs-CZ.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/da-DK.js": {
-    "file": "da-DK.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/da-DK.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/de-DE.js": {
-    "file": "de-DE.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/de-DE.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/el-GR.js": {
-    "file": "el-GR.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/el-GR.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/es-ES.js": {
-    "file": "es-ES.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/es-ES.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/fi-FI.js": {
-    "file": "fi-FI.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/fi-FI.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/fr-FR.js": {
-    "file": "fr-FR.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/fr-FR.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/hr-HR.js": {
-    "file": "hr-HR.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/hr-HR.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/hu-HU.js": {
-    "file": "hu-HU.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/hu-HU.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/it-IT.js": {
-    "file": "it-IT.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/it-IT.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/ja-JP.js": {
-    "file": "ja-JP.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/ja-JP.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/ko-KR.js": {
-    "file": "ko-KR.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/ko-KR.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/nl-NL.js": {
-    "file": "nl-NL.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/nl-NL.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/no-NO.js": {
-    "file": "no-NO.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/no-NO.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/pl-PL.js": {
-    "file": "pl-PL.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/pl-PL.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/pt-BR.js": {
-    "file": "pt-BR.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/pt-BR.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/pt-PT.js": {
-    "file": "pt-PT.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/pt-PT.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/ro-RO.js": {
-    "file": "ro-RO.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/ro-RO.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/ru-RU.js": {
-    "file": "ru-RU.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/ru-RU.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/sk-SK.js": {
-    "file": "sk-SK.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/sk-SK.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/sl-SI.js": {
-    "file": "sl-SI.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/sl-SI.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/sv-SE.js": {
-    "file": "sv-SE.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/sv-SE.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/zh-CN.js": {
-    "file": "zh-CN.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/zh-CN.js"
-  },
-  "node_modules/@adyen/adyen-web/dist/es/zh-TW.js": {
-    "file": "zh-TW.min.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/@adyen/adyen-web/dist/es/zh-TW.js"
   },
   "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
@@ -345,14 +186,6 @@
     "file": "icon-amex-white.svg",
     "src": "src/icons/payments/white/icon-amex-white.svg"
   },
-  "src/icons/payments/white/icon-applepay-white.svg": {
-    "file": "icon-applepay-white.svg",
-    "src": "src/icons/payments/white/icon-applepay-white.svg"
-  },
-  "src/icons/payments/white/icon-clearpay-white.svg": {
-    "file": "icon-clearpay-white.svg",
-    "src": "src/icons/payments/white/icon-clearpay-white.svg"
-  },
   "src/icons/payments/white/icon-diners-white.svg": {
     "file": "icon-diners-white.svg",
     "src": "src/icons/payments/white/icon-diners-white.svg"
@@ -361,17 +194,9 @@
     "file": "icon-discover-white.svg",
     "src": "src/icons/payments/white/icon-discover-white.svg"
   },
-  "src/icons/payments/white/icon-googlepay-white.svg": {
-    "file": "icon-googlepay-white.svg",
-    "src": "src/icons/payments/white/icon-googlepay-white.svg"
-  },
   "src/icons/payments/white/icon-jcb-white.svg": {
     "file": "icon-jcb-white.svg",
     "src": "src/icons/payments/white/icon-jcb-white.svg"
-  },
-  "src/icons/payments/white/icon-klarna-white.svg": {
-    "file": "icon-klarna-white.svg",
-    "src": "src/icons/payments/white/icon-klarna-white.svg"
   },
   "src/icons/payments/white/icon-maestro-white.svg": {
     "file": "icon-maestro-white.svg",
@@ -380,14 +205,6 @@
   "src/icons/payments/white/icon-mastercard-white.svg": {
     "file": "icon-mastercard-white.svg",
     "src": "src/icons/payments/white/icon-mastercard-white.svg"
-  },
-  "src/icons/payments/white/icon-paypal-white.svg": {
-    "file": "icon-paypal-white.svg",
-    "src": "src/icons/payments/white/icon-paypal-white.svg"
-  },
-  "src/icons/payments/white/icon-venmo-white.svg": {
-    "file": "icon-venmo-white.svg",
-    "src": "src/icons/payments/white/icon-venmo-white.svg"
   },
   "src/icons/payments/white/icon-visa-white.svg": {
     "file": "icon-visa-white.svg",
@@ -400,9 +217,5 @@
   "src/icons/shippingIcon.svg": {
     "file": "promo-icon.svg",
     "src": "src/icons/shippingIcon.svg"
-  },
-  "src/icons/superPayments.svg": {
-    "file": "superPayments.svg",
-    "src": "src/icons/superPayments.svg"
   }
 }
