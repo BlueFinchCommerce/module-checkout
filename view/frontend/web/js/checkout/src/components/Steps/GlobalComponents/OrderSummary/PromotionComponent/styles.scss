@@ -3,7 +3,7 @@
 .dropdown-button {
   &.promotion-trigger {
     border: var(--drop-down-border, var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color-highlight));
-    padding: var(--promo-products-paddings, var(--indent__m) var(--indent__xs));
+    padding: var(--promo-products-paddings, var(--indent__m) var(--indent__base));
     background: var(--dropdown__background-color-highlight);
     margin-top: var(--drop-down-trigger-margin-top, var(--indent__m));
     display: var(--promotion-visibility, flex);
@@ -14,15 +14,11 @@
 
     img {
       display: var(--promo-products-icon-visibility, block);
+      margin-right: var(--indent__s);
     }
 
     svg {
-      position: absolute;
-      right: var(--indent__base);
-    }
-
-    p {
-      margin-left: var(--indent__base);
+      min-width: 24px;
     }
 
     &.opened {
@@ -43,7 +39,7 @@
 
       div {
         display: flex;
-        margin: 0 var(--indent__base) 0 var(--indent__s);
+        margin: 0 var(--indent__base) 0 0;
 
         .bold {
           font-weight: var(--font-weight__bold);
@@ -188,23 +184,10 @@ div.dropdown.promo-dropdown {
       order: var(--promo-triggers-order, 0);
       margin: var(--indent__s) 0 var(--indent__xs);
 
-      svg {
-        position: relative;
-      }
-
       .promo-title {
         div {
           margin: 0 var(--indent__s) 0 0;
         }
-
-        &.crosssells {
-          margin-left: var(--indent__m);
-        }
-      }
-
-      img {
-        width: 50px;
-        height: 23px;
       }
     }
   }
