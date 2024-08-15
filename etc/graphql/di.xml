@@ -18,6 +18,8 @@
                 <item name="gene_better_checkout_clickandcollect_sms" xsi:type="string">carriers/collect/sms_alert</item>
                 <item name="gene_better_checkout_clickandcollect_max_order_value" xsi:type="string">carriers/collect/max_order_value</item>
                 <item name="gene_better_checkout_clickandcollect_min_order_value" xsi:type="string">carriers/collect/min_order_value</item>
+                <item name="gene_better_checkout_paypal_credit_threshold_enabled" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_enabled</item>
+                <item name="gene_better_checkout_paypal_credit_threshold_value" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_value</item>
                 <item name="optional_zip_countries" xsi:type="string">general/country/optional_zip_countries</item>
                 <item name="tax_cart_display_price" xsi:type="string">tax/cart_display/price</item>
                 <item name="tax_cart_display_subtotal" xsi:type="string">tax/cart_display/subtotal</item>
