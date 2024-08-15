@@ -42,6 +42,7 @@ export default {
       paypalLoaded: false,
       key: 'braintreePayPal',
       namespace: 'paypal',
+      method: 'braintree_paypal',
     };
   },
   props: {
@@ -69,7 +70,7 @@ export default {
     await this.getCart();
 
     const paypalConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_paypal'
+      method.code === this.method
     ));
 
     if (!paypalConfig) {
@@ -164,7 +165,7 @@ export default {
               lastname: 'UNKNOWN',
             };
 
-            const result = await getShippingMethods(address);
+            const result = await getShippingMethods(address, this.method, true);
             const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
@@ -268,7 +269,7 @@ export default {
       const payment = {
         email,
         paymentMethod: {
-          method: 'braintree_paypal',
+          method: this.method,
           additional_data: {
             payment_method_nonce: payload.nonce,
           },

@@ -5,6 +5,8 @@ import graphQlRequest from '@/services/graphQlRequest';
 import formatAddress from '@/helpers/addresses/formatAddress';
 import getFullCart from '@/helpers/cart/getFullCart';
 
+import functionExtension from '@/extensions/functionExtension';
+
 const convertBoolean = (value) => (value === 1);
 
 const mapToGraphQLString = (obj) => Object.entries(obj)
@@ -29,7 +31,7 @@ mutation {
   }
 }`;
 
-export default async (shippingAddress) => {
+export default async (shippingAddress, paymentMethod = null, express = false) => {
   const { maskedId, getMaskedId } = useCartStore();
   const formattedShippingAddress = formatAddress(shippingAddress);
 
@@ -76,6 +78,7 @@ export default async (shippingAddress) => {
         throw new Error(response.errors[0].message);
       }
 
-      return response.data.setShippingAddressesOnCart.cart;
-    });
+      return functionExtension('getShippingMethods', [response.data.setShippingAddressesOnCart.cart, paymentMethod, express]);
+    })
+    .then(([cart]) => cart);
 };

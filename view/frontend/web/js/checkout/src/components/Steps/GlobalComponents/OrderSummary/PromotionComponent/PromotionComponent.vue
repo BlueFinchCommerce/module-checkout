@@ -154,6 +154,9 @@ import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import promoSvg from '@/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'PromotionComponent',
   components: {
@@ -222,21 +225,14 @@ export default {
       await this.addCartItem(product);
     },
 
-    externalCrosssellHeader() {
+    async externalCrosssellHeader() {
       const grandTotal = this.cartGrandTotal / 100;
-      if (window?.geneCheckout?.callbacks?.getCrossSellsHeader) {
-        Object.values(window.geneCheckout.callbacks.getCrossSellsHeader).forEach(async (callback) => {
-          if (typeof callback === 'function') {
-            const [text, showIcon] = callback(this.originalCrossSellsText, grandTotal);
-            this.displayCrossSellsText = text;
-            this.displayCrossSellsIcon = showIcon;
-          } else {
-            const { default: callbackFunction } = await import(callback);
-            const [text, showIcon] = callbackFunction(this.originalCrossSellsText, grandTotal);
-            this.displayCrossSellsText = text;
-            this.displayCrossSellsIcon = showIcon;
-          }
-        });
+
+      const [text, showIcon] = await functionExtension('getCrossSellsHeader', [this.originalCrossSellsText, this.displayCrossSellsIcon, grandTotal]);
+
+      if (text) {
+        this.displayCrossSellsText = text;
+        this.displayCrossSellsIcon = showIcon;
       }
     },
   },
