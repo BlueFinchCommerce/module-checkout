@@ -175,7 +175,7 @@ export default {
       crossSellsTextId: 'gene-bettercheckout-crosssells-text',
       displayCrossSellsText: '',
       originalCrossSellsText: '',
-      displayCrossSellsIcon: false
+      displayCrossSellsIcon: false,
     };
   },
   computed: {
@@ -223,7 +223,7 @@ export default {
     },
 
     externalCrosssellHeader() {
-      let grandTotal = this.cartGrandTotal / 100;
+      const grandTotal = this.cartGrandTotal / 100;
       if (window?.geneCheckout?.callbacks?.getCrossSellsHeader) {
         Object.values(window.geneCheckout.callbacks.getCrossSellsHeader).forEach(async (callback) => {
           if (typeof callback === 'function') {
@@ -238,7 +238,7 @@ export default {
           }
         });
       }
-    }
+    },
   },
 };
 </script>
