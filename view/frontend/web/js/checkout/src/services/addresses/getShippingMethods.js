@@ -78,7 +78,11 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
         throw new Error(response.errors[0].message);
       }
 
-      return functionExtension('getShippingMethods', [response.data.setShippingAddressesOnCart.cart, paymentMethod, express]);
+      return functionExtension('getShippingMethods', [
+        response.data.setShippingAddressesOnCart.cart,
+        paymentMethod,
+        express,
+      ]);
     })
     .then(([cart]) => cart);
 };

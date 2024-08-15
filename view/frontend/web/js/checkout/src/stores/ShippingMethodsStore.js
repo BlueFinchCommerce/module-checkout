@@ -3,16 +3,12 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
-import useStepsStore from '@/stores/StepsStore';
-import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
-import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
-import getShipping from '@/services/addresses/getShippingMethods';
 import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';

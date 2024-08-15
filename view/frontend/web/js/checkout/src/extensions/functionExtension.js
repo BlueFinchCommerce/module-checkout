@@ -3,12 +3,12 @@ export default async (type, parameters) => {
     Object.values(window.geneCheckout.callbacks[type]).forEach(async (callback) => {
       if (typeof callback === 'function') {
         return callback(parameters);
-      } else {
-        const { default: callbackFunction } = await import(callback);
-        return callbackFunction(parameters);
       }
+
+      const { default: callbackFunction } = await import(callback);
+      return callbackFunction(parameters);
     });
   }
 
   return parameters;
-}
+};

@@ -228,7 +228,10 @@ export default {
     async externalCrosssellHeader() {
       const grandTotal = this.cartGrandTotal / 100;
 
-      const [text, showIcon] = await functionExtension('getCrossSellsHeader', [this.originalCrossSellsText, this.displayCrossSellsIcon, grandTotal]);
+      const [text, showIcon] = await functionExtension('getCrossSellsHeader', [
+        this.originalCrossSellsText,
+        this.displayCrossSellsIcon, grandTotal,
+      ]);
 
       if (text) {
         this.displayCrossSellsText = text;
