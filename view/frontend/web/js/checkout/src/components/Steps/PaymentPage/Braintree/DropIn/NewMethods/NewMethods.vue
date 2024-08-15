@@ -149,14 +149,13 @@ export default {
     this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
 
     if (this.paymentOptionPriority.includes('paypal') && this.paypal.creditActive) {
-      if (this.paypalCreditThresholdEnabled) {
-        if (Number(total) >= Number(this.paypalCreditThresholdValue)) {
-          const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+      if (this.paypalCreditThresholdEnabled
+        && total >= Number(this.paypalCreditThresholdValue)) {
+        const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
 
-          // Insert 'paypalCredit' after 'paypal'
-          this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
-          this.map.braintree_paypal_credit = 'paypalCredit';
-        }
+        // Insert 'paypalCredit' after 'paypal'
+        this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+        this.map.braintree_paypal_credit = 'paypalCredit';
       } else {
         const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
 
@@ -241,21 +240,20 @@ export default {
       };
 
       if (this.paypal.creditActive) {
-        if (this.paypalCreditThresholdEnabled) {
-          if (Number(total) >= Number(this.paypalCreditThresholdValue)) {
-            options.paypalCredit = {
-              flow: 'checkout',
-              amount: total,
-              currency: this.currencyCode,
-              buttonStyle: {
-                color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
-                label: this.paypal.creditLabel,
-                shape: this.paypal.creditShape,
-                size: 'responsive',
-              },
-              commit: true,
-            };
-          }
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          options.paypalCredit = {
+            flow: 'checkout',
+            amount: total,
+            currency: this.currencyCode,
+            buttonStyle: {
+              color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+              label: this.paypal.creditLabel,
+              shape: this.paypal.creditShape,
+              size: 'responsive',
+            },
+            commit: true,
+          };
         } else {
           options.paypalCredit = {
             flow: 'checkout',

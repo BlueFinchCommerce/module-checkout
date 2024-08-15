@@ -418,14 +418,7 @@ export default {
     },
   },
   created() {
-    this.paypalCreditCheck();
-
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
-
-    this.cartEmitter.on('cartUpdated', async () => {
-      this.paypalCreditCheck();
-      this.storedKey += 1;
-    });
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
   },
   async mounted() {
@@ -445,6 +438,12 @@ export default {
 
     await this.getInitialConfig();
     await this.getCart();
+    this.paypalCreditCheck();
+
+    this.cartEmitter.on('cartUpdated', async () => {
+      this.paypalCreditCheck();
+      this.storedKey += 1;
+    });
 
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);

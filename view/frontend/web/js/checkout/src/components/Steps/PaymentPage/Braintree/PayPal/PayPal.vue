@@ -104,10 +104,9 @@ export default {
       this.namespace = `${this.namespace}`;
 
       if (this.isCredit) {
-        if (this.paypalCreditThresholdEnabled) {
-          if (total >= Number(this.paypalCreditThresholdValue)) {
-            this.namespace = `${this.namespace}_credit`;
-          }
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          this.namespace = `${this.namespace}_credit`;
         } else {
           this.namespace = `${this.namespace}_credit`;
         }
@@ -123,10 +122,9 @@ export default {
       };
 
       if (this.isCredit) {
-        if (this.paypalCreditThresholdEnabled) {
-          if (total >= Number(this.paypalCreditThresholdValue)) {
-            sdkConfig['enable-funding'] = 'credit';
-          }
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          sdkConfig['enable-funding'] = 'credit';
         } else {
           sdkConfig['enable-funding'] = 'credit';
         }
@@ -242,13 +240,12 @@ export default {
 
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
-          if (this.paypalCreditThresholdEnabled) {
-            if (total >= Number(this.paypalCreditThresholdValue)) {
-              renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-              renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
-              renderData.style.label = this.paypal.creditLabel;
-              renderData.style.shape = this.paypal.creditShape;
-            }
+          if (this.paypalCreditThresholdEnabled
+            && total >= Number(this.paypalCreditThresholdValue)) {
+            renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.label = this.paypal.creditLabel;
+            renderData.style.shape = this.paypal.creditShape;
           } else {
             renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
             renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
