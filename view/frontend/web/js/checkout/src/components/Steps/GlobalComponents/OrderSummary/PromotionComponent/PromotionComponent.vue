@@ -60,10 +60,19 @@
       @click="openDropDown"
       @keydown="openDropDownKeyDown($event)"
     >
+      <div
+        v-if="displayCrossSellsIcon"
+        class="promotion-icon-container">
+        <img
+          :src="promoIconUrl"
+          alt="promo-dropdown-icon"
+          :data-cy="dataCy ? `cross-sells-shipping-icon-${dataCy}` : 'cross-sells-shipping-icon'"
+        >
+      </div>
       <div class="promo-title crosssells">
         <div>
           <TextField
-            :text="crossSellsText"
+            :text="displayCrossSellsText"
             :data-cy="dataCy ? `cross-sells-title-${dataCy}` : 'cross-sells-title'"
           />
         </div>
@@ -163,19 +172,22 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
-      crossSellsText: '',
       crossSellsTextId: 'gene-bettercheckout-crosssells-text',
+      displayCrossSellsText: '',
+      originalCrossSellsText: '',
+      displayCrossSellsIcon: false
     };
   },
   computed: {
-    ...mapState(useCartStore, ['crosssells', 'freeShipping', 'amastyEnabled']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping', 'amastyEnabled']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
   async created() {
-    this.crossSellsText = window.geneCheckout?.[this.crossSellsTextId]
+    this.originalCrossSellsText = window.geneCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
+    this.displayCrossSellsText = this.originalCrossSellsText;
 
     await this.getInitialConfig();
     await this.getCart();
@@ -183,6 +195,14 @@ export default {
       await this.getAmastyShippingData();
     }
     await this.getCrosssells();
+    this.externalCrosssellHeader();
+
+    const cartStore = useCartStore();
+    cartStore.$subscribe((mutation) => {
+      if (mutation.payload && 'cart' in mutation.payload) {
+        this.externalCrosssellHeader();
+      }
+    });
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -201,6 +221,24 @@ export default {
     async addItem(product) {
       await this.addCartItem(product);
     },
+
+    externalCrosssellHeader() {
+      let grandTotal = this.cartGrandTotal / 100;
+      if (window?.geneCheckout?.callbacks?.getCrossSellsHeader) {
+        Object.values(window.geneCheckout.callbacks.getCrossSellsHeader).forEach(async (callback) => {
+          if (typeof callback === 'function') {
+            const [text, showIcon] = callback(this.originalCrossSellsText, grandTotal);
+            this.displayCrossSellsText = text;
+            this.displayCrossSellsIcon = showIcon;
+          } else {
+            const { default: callbackFunction } = await import(callback);
+            const [text, showIcon] = callbackFunction(this.originalCrossSellsText, grandTotal);
+            this.displayCrossSellsText = text;
+            this.displayCrossSellsIcon = showIcon;
+          }
+        });
+      }
+    }
   },
 };
 </script>
