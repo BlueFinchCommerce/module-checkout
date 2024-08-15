@@ -21,10 +21,6 @@
       min-width: 24px;
     }
 
-    p {
-      // margin-left: var(--indent__base);
-    }
-
     &.opened {
       margin-bottom: 0;
       border-bottom: none;
@@ -188,24 +184,11 @@ div.dropdown.promo-dropdown {
       order: var(--promo-triggers-order, 0);
       margin: var(--indent__s) 0 var(--indent__xs);
 
-      // svg {
-      //   position: relative;
-      // }
-
       .promo-title {
         div {
           margin: 0 var(--indent__s) 0 0;
         }
-
-        // &.crosssells {
-        //   margin-left: var(--indent__m);
-        // }
       }
-
-      // img {
-      //   width: 50px;
-      //   height: 23px;
-      // }
     }
   }
 }
