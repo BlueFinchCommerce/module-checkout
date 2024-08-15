@@ -60,7 +60,6 @@
         display: flex;
         align-items: var(--shipping-methods-align-items, flex-start);
         list-style: none;
-        flex-wrap: wrap;
         font-family: var(--shipping-methods-font-family, unset);
         padding: var(--indent__base);
         border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);

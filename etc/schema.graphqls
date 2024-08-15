@@ -13,6 +13,8 @@ type StoreConfig {
     gene_better_checkout_clickandcollect_sms: Boolean @doc(description: "Gene Checkout Click and collect SMS")
     gene_better_checkout_clickandcollect_max_order_value: String @doc(description: "Gene Checkout Click and collect max order value")
     gene_better_checkout_clickandcollect_min_order_value: String @doc(description: "Gene Checkout Click and collect min order value")
+    gene_better_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
+    gene_better_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
     gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
     gene_better_checkout_agecheck_required: Boolean @doc(description: "Enable age checker functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
