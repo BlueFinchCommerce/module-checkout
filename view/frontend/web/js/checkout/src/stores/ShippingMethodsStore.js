@@ -3,16 +3,12 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
-import useStepsStore from '@/stores/StepsStore';
-import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
-import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
-import getShipping from '@/services/addresses/getShippingMethods';
 import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
@@ -53,93 +49,6 @@ export default defineStore('shippingMethodsStore', {
       });
 
       return shippingMethods;
-    },
-
-    /**
-     * Load shipping methods based on address
-     * @param {*} address
-     */
-    async getShippingMethods() {
-      const { setLoadingState } = useLoadingStore();
-      setLoadingState(true);
-
-      const cartStore = useCartStore();
-      const customerStore = useCustomerStore();
-      const validationStore = useValidationStore();
-
-      await this.getNominatedDeliveryMethods(customerStore.selected.shipping.postcode);
-      const clonedAddress = cleanAddress({ ...customerStore.selected.shipping });
-
-      // Check the address is valid
-      const isValid = validationStore.validateAddress('shipping');
-
-      // If the address is invalid then show the address form.
-      if (!isValid) {
-        setLoadingState(false);
-
-        // Go to the details page if the shipping address isn't valid at this point.
-        const stepsStore = useStepsStore();
-        stepsStore.goToYouDetails();
-        return;
-      }
-
-      const result = await this.getCachedResponse(
-        getShipping,
-        'getShippingMethods',
-        clonedAddress,
-      );
-
-      cartStore.handleCartData(result);
-
-      const methods = result.shipping_addresses[0].available_shipping_methods;
-
-      this.setShippingMethods(methods);
-
-      // Check the cart selected method is still returned in the shipping methods
-      let isMethodAvailable = false;
-      if (this.selectedMethod.carrier_code) {
-        isMethodAvailable = methods.find(
-          (method) => method.method_code === this.selectedMethod.method_code,
-        );
-      }
-
-      // Check if selected shipping = nominated_delivery method that comes from admin (not from matrix)
-      // if so then unselect nominated_delivery method and select first shipping method in the list
-      // done to prevent situation where there is no selected method on shipping step
-
-      if (this.selectedMethod.carrier_code === 'nominated_delivery') {
-        const shippingMethodsSliced = methods.slice(0, -1);
-        const cheapestFromSliced = shippingMethodsSliced.reduce((prev, curr) => (
-          prev.price_incl_tax < curr.price_incl_tax ? prev : curr
-        ), {});
-        this.selectShippingMethod(cheapestFromSliced);
-      }
-
-      // If there is no current selected method then select the cheapest by default.
-      if (methods.length && (!isMethodAvailable || !this.selectedMethod.carrier_code)) {
-        const cheapest = methods.reduce((prev, curr) => (
-          prev.carrier_code && prev.amount.value < curr.amount.value ? prev : curr
-        ), {});
-
-        // Check if cheapest shipping method = nominated_delivery method that comes from admin (not from matrix)
-        // if so then unselect nominated_delivery method and select first shipping method in the list
-        // done to prevent situation where there is no selected method on shipping step
-
-        if (cheapest.carrier_code === 'nominated_delivery'
-            || cheapest.carrier_code === 'amstorepickup') {
-          const shippingMethodsSliced = methods.slice(0, -1);
-          const cheapestFromSliced = shippingMethodsSliced.reduce((prev, curr) => (
-            prev.price_incl_tax < curr.price_incl_tax ? prev : curr
-          ), {});
-          this.selectShippingMethod(cheapestFromSliced);
-        } else {
-          this.selectShippingMethod(cheapest);
-        }
-
-        await this.submitShippingInfo(cheapest.carrier_code, cheapest.method_code);
-      }
-
-      setLoadingState(false);
     },
 
     async setDefaultShippingMethod() {
