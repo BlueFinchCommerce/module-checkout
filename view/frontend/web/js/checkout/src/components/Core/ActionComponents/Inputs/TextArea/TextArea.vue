@@ -32,7 +32,10 @@
       :message="validationErrorMessage"
       :data-cy="'field-error-message'"
     />
-    <p v-show="maxCharacterMessageShow">
+    <p
+      v-show="maxCharacterMessageShow"
+      class="max-character-message"
+    >
       {{ maxCharacterMessage }}
     </p>
   </div>

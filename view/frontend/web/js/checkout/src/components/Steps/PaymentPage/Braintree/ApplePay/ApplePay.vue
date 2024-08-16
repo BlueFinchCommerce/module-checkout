@@ -48,6 +48,7 @@ export default {
       shippingMethods: [],
       applePayConfig: null,
       key: 'braintreeApplePay',
+      method: 'braintree_applepay',
     };
   },
 
@@ -81,7 +82,7 @@ export default {
     await this.getCart();
 
     this.applePayConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_applepay'
+      method.code === this.method
     ));
 
     if (!this.applePayConfig) {
@@ -235,7 +236,7 @@ export default {
               const payment = {
                 email,
                 paymentMethod: {
-                  method: 'braintree_applepay',
+                  method: this.method,
                   additional_data: {
                     payment_method_nonce: payload.nonce,
                     device_data: this.dataCollectorInstance.deviceData,
@@ -273,7 +274,7 @@ export default {
 
       this.address = address;
 
-      const result = await getShippingMethods(address);
+      const result = await getShippingMethods(address, this.method, true);
       const methods = result.shipping_addresses[0].available_shipping_methods;
 
       const filteredMethods = methods.filter(({ method_code: methodCode }) => (

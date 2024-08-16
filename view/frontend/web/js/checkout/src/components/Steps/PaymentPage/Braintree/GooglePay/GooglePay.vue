@@ -44,6 +44,7 @@ export default {
       googlePaymentInstance: null,
       googlePayLoaded: false,
       key: 'braintreeGooglePay',
+      method: 'braintree_googlepay',
     };
   },
   computed: {
@@ -73,7 +74,7 @@ export default {
     await this.getCart();
 
     const googlePayConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_googlepay'
+      method.code === this.method
     ));
 
     if (!googlePayConfig) {
@@ -222,7 +223,7 @@ export default {
           lastname: 'UNKNOWN',
         };
 
-        getShippingMethods(address).then(async (response) => {
+        getShippingMethods(address, this.method, true).then(async (response) => {
           const methods = response.shipping_addresses[0].available_shipping_methods;
 
           const shippingMethods = methods.map((shippingMethod) => {
@@ -432,7 +433,7 @@ export default {
       const payment = {
         email: response.email,
         paymentMethod: {
-          method: 'braintree_googlepay',
+          method: this.method,
           additional_data: {
             payment_method_nonce: response.nonce,
           },
