@@ -48,6 +48,8 @@ export default defineStore('configStore', {
     },
     clickCollectTabsEnabled: false,
     paypalCreditThresholdEnabled: false,
+    googleMapEnabled: false,
+    googleMapApiKey: '',
     paypalCreditThresholdValue: null,
     websiteName: '',
     taxCartDisplayPrice: false,
@@ -140,6 +142,8 @@ export default defineStore('configStore', {
         'gene_better_checkout_afd_enable',
         'gene_better_checkout_paypal_credit_threshold_enabled',
         'gene_better_checkout_paypal_credit_threshold_value',
+        'gene_better_checkout_google_map_enabled',
+        'gene_better_checkout_google_map_api_key',
       ];
 
       if (this.$state.locale) {
@@ -205,6 +209,8 @@ export default defineStore('configStore', {
         clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
         paypalCreditThresholdEnabled: storeConfig.gene_better_checkout_paypal_credit_threshold_enabled,
         paypalCreditThresholdValue: storeConfig.gene_better_checkout_paypal_credit_threshold_value,
+        googleMapEnabled: storeConfig.gene_better_checkout_google_map_enabled,
+        googleMapApiKey: storeConfig.gene_better_checkout_google_map_api_key,
       });
 
       if (storeConfig.locale) {

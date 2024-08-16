@@ -81,6 +81,14 @@ export default {
       placeholder: 'Last name',
       label: 'Last name',
     },
+    clickAndCollectSection: {
+      clickAndCollectTitle: 'Choose a Click & Collect Location',
+      clickAndCollectInputPlaceholder: 'Search by address or postcode',
+      clickAndCollectErrorMessage: 'Something went wrong while searching for locations. Please try again later.',
+      clickAndCollectMoreLocations: 'Show more locations',
+      clickAndCollectAddresses: 'Click & Collect Address:',
+      clickAndCollectContinueButton: 'Continue To Payment',
+    },
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
       title: 'Where should we deliver it to?',

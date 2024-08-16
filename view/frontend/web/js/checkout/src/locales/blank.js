@@ -70,6 +70,14 @@ export default {
       placeholder: ' ',
       label: ' ',
     },
+    clickAndCollectSection: {
+      clickAndCollectTitle: ' ',
+      clickAndCollectInputPlaceholder: ' ',
+      clickAndCollectErrorMessage: ' ',
+      clickAndCollectMoreLocations: ' ',
+      clickAndCollectAddresses: ' ',
+      clickAndCollectContinueButton: ' ',
+    },
     deliverySection: {
       toShippingButton: ' ',
       title: ' ',
