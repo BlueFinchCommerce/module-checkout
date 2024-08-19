@@ -13,7 +13,7 @@ const mapToGraphQLString = (obj) => Object.entries(obj)
   .map(([key, value]) => (value ? `${key}: ${JSON.stringify(value)}` : ''))
   .join(', ');
 
-const buildShippingAddressMutation = (cartId, formattedAddressGraphQL) => `
+const buildShippingAddressMutation = async (cartId, formattedAddressGraphQL) => `
 mutation {
   setShippingAddressesOnCart(
     input: {
@@ -26,12 +26,13 @@ mutation {
     }
   ) {
     cart {
-      ${getFullCart()}
+      ${await getFullCart()}
     }
   }
 }`;
 
 export default async (shippingAddress, paymentMethod = null, express = false) => {
+  console.log('run')
   const { maskedId, getMaskedId } = useCartStore();
   const formattedShippingAddress = formatAddress(shippingAddress);
 

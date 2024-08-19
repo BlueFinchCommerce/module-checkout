@@ -14,7 +14,7 @@ export default async (email) => {
         }
       ) {
         cart {
-          ${getFullCart()}
+          ${await getFullCart()}
         }
       }
     }`;

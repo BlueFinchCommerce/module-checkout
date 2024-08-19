@@ -19,7 +19,7 @@ export default async (carrierCode, methodCode) => {
         }
       ) {
         cart {
-          ${getFullCart()}
+          ${await getFullCart()}
         }
       }
     }`;
