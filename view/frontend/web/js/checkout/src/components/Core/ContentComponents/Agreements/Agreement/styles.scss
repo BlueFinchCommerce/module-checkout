@@ -2,16 +2,33 @@
   width: 100%;
 
   .agreement-label {
-    font-size: var(--font__xs);
+    font-size: var(--font__s);
+  }
+
+  .agreement-open-modal {
+    color: var(--button__link-font-color);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    text-decoration: var(--button__link-text-decoration);
+    margin-left: var(--indent__xs);
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      font-weight: var(--button__link-font-weight-hover);
+      color: var(--button__link-font-color-hover);
+    }
   }
 
   .closer-container {
     .agreement-close {
-      width: var(--button__height) !important; // Override dropin styles
       font-size: var(--font__l);
       font-weight: var(--font-weight__regular);
       background: transparent;
       border: none;
+      padding: 0;
+      min-height: auto;
+      width: auto;
 
       &:hover,
       &:focus,
