@@ -11,6 +11,10 @@
     margin-top: var(--indent__base);
     min-height: var(--payment-form-min-height, 600px);
 
+    .button--primary {
+      margin-top: 0; // all payment buttons need the margin top removed
+    }
+
     .address-block {
       &__edit {
         cursor: pointer;

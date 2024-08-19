@@ -263,12 +263,15 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   superPayments: {
-    superPaymentsTitle: 'Super Payments',
+    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',
     title: 'Terms & Conditions',
-    label: 'I confirm that I have read and accept the',
+    label: {
+      manual: 'I confirm that I have read and accept the',
+      automatic: 'By placing an order you accept our',
+    },
     errorMessage: 'This is a required field.',
     paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',
   },
