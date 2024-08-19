@@ -32,7 +32,6 @@ mutation {
 }`;
 
 export default async (shippingAddress, paymentMethod = null, express = false) => {
-  console.log('run')
   const { maskedId, getMaskedId } = useCartStore();
   const formattedShippingAddress = formatAddress(shippingAddress);
 
