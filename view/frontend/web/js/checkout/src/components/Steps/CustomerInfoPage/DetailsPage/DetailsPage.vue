@@ -244,8 +244,8 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type) && !selected[address_type].id
-        && (ageCheckRequired && ageCheckerErrors)"
+        :disabled="(!isAddressValid(address_type) && !selected[address_type].id)
+        || (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -255,7 +255,7 @@
         primary
         :label="proceedToPayText"
         :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
-        && (ageCheckRequired && ageCheckerErrors)"
+        ||(ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
