@@ -442,6 +442,13 @@ export default {
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
+
+    if (window?.geneCheckout?.callbacks?.onDetailsCreate) {
+      Object.values(window.geneCheckout.callbacks.onDetailsCreate).forEach(async (callback) => {
+        const { default: callbackFunction } = await import(callback);
+        callbackFunction();
+      });
+    }
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
