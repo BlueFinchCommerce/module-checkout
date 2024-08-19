@@ -254,7 +254,7 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   superPayments: {
-    superPaymentsTitle: 'Super Payments',
+    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',
