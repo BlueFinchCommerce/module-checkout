@@ -186,9 +186,10 @@ export default {
     tbc: 'Calculated at next step',
     deliveryInstructions: {
       title: 'Delivery Instructions?',
-      label: 'If no one is at home to accept delivery, our drivers will automatically try a neighbour & leave a card. Alternatively, please specify delivery instructions here',
-      placeholder: 'Your delivery instructions...',
-      maxCharacters: '{maxLength} characters maximum',
+      label: 'Courier instructions',
+      info: 'If no one is at home to accept delivery, our drivers will automatically try a neighbour & leave a card. Alternatively, please specify delivery instructions here.',
+      placeholder: 'Eg. Leave on front porch',
+      maxCharacters: '{remainingCharacters} remaining characters',
     },
   },
   addNewAddressBtn: '+ Add new address',
@@ -239,12 +240,15 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   superPayments: {
-    superPaymentsTitle: 'Super Payments',
+    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',
     title: 'Terms & Conditions',
-    label: 'I confirm that I have read and accept the',
+    label: {
+      manual: 'I confirm that I have read and accept the',
+      automatic: 'By placing an order you accept our',
+    },
     errorMessage: 'This is a required field.',
     paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',
   },

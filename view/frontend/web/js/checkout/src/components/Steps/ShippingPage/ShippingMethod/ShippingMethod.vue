@@ -20,7 +20,8 @@
         </div>
 
         <div
-          v-if="cart.shipping_addresses?.[0]?.available_shipping_methods"
+          v-if="cart.shipping_addresses?.[0]?.available_shipping_methods
+            && cart.shipping_addresses?.[0]?.available_shipping_methods.length > 0"
           class="shipping-method__container"
         >
           <template
@@ -99,7 +100,8 @@
           />
         </div>
         <TextField
-          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods.length"
+          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods
+          || cart.shipping_addresses?.[0]?.available_shipping_methods.length === 0"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
           :data-cy="'no-shipping-methods-text'"

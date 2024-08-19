@@ -21,6 +21,7 @@
         :aria-label="ariaLabel"
         :data-cy="dataCy ? dataCy : 'input'"
         :value="modelValue"
+        :maxlength="maxLength"
         @blur="onBlur"
         @focus="(event) => { moveIntoViewport(event); onFocus() }"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -95,6 +96,9 @@ export default {
     },
     identifier: {
       type: String,
+    },
+    maxLength: {
+      type: Number,
     },
     onBlur: {
       type: Function,

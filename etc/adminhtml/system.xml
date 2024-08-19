@@ -87,6 +87,18 @@
                         <comment><![CDATA[Brings tabs functionality for click and collect address to checkout]]></comment>
                     </field>
                 </group>
+                <group id="paypal_credit_threshold" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>PayPal Credit Threshold</label>
+                    <field id="paypal_credit_threshold_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable PayPal Credit Threshold</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable PayPal Credit Threshold]]></comment>
+                    </field>
+                    <field id="paypal_credit_threshold_value" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>PayPal Credit Threshold Value</label>
+                        <comment><![CDATA[PayPal Credit Threshold Value.]]></comment>
+                    </field>
+                </group>
             </group>
         </section>
     </system>

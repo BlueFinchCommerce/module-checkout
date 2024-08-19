@@ -1,9 +1,10 @@
 import useCustomerStore from '@/stores/CustomerStore';
+import functionExtension from '@/extensions/functionExtension';
 
-export default () => {
+export default async () => {
   const customerStore = useCustomerStore();
 
-  return `
+  const fullCart = `
     email
     applied_gift_cards {
       code
@@ -190,4 +191,8 @@ export default () => {
         }`
     : ''}
   `;
+
+  const [modifiedCart] = await functionExtension('getFullCart', [fullCart]);
+
+  return modifiedCart;
 };

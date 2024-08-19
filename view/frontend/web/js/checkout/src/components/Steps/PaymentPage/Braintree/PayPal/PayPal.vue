@@ -42,6 +42,7 @@ export default {
       paypalLoaded: false,
       key: 'braintreePayPal',
       namespace: 'paypal',
+      method: 'braintree_paypal',
     };
   },
   props: {
@@ -60,6 +61,8 @@ export default {
       'countries',
       'getRegionId',
       'storeCode',
+      'paypalCreditThresholdEnabled',
+      'paypalCreditThresholdValue',
     ]),
     ...mapState(usePaymentStore, ['availableMethods']),
   },
@@ -69,7 +72,7 @@ export default {
     await this.getCart();
 
     const paypalConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_paypal'
+      method.code === this.method
     ));
 
     if (!paypalConfig) {
@@ -97,7 +100,18 @@ export default {
 
       this.paypalInstance = markRaw(paypalInstance);
 
-      this.namespace = `${this.namespace}${this.isCredit ? '_credit' : ''}`;
+      const total = (this.cartGrandTotal / 100);
+
+      this.namespace = `${this.namespace}`;
+
+      if (this.isCredit) {
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          this.namespace = `${this.namespace}_credit`;
+        } else {
+          this.namespace = `${this.namespace}_credit`;
+        }
+      }
 
       const sdkConfig = {
         currency: this.currencyCode,
@@ -109,7 +123,12 @@ export default {
       };
 
       if (this.isCredit) {
-        sdkConfig['enable-funding'] = 'credit';
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          sdkConfig['enable-funding'] = 'credit';
+        } else {
+          sdkConfig['enable-funding'] = 'credit';
+        }
       }
 
       if (this.environment === 'sandbox') {
@@ -164,7 +183,7 @@ export default {
               lastname: 'UNKNOWN',
             };
 
-            const result = await getShippingMethods(address);
+            const result = await getShippingMethods(address, this.method, true);
             const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
@@ -222,10 +241,18 @@ export default {
 
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
-          renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-          renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
-          renderData.style.label = this.paypal.creditLabel;
-          renderData.style.shape = this.paypal.creditShape;
+          if (this.paypalCreditThresholdEnabled
+            && total >= Number(this.paypalCreditThresholdValue)) {
+            renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.label = this.paypal.creditLabel;
+            renderData.style.shape = this.paypal.creditShape;
+          } else {
+            renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.label = this.paypal.creditLabel;
+            renderData.style.shape = this.paypal.creditShape;
+          }
         }
 
         return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
@@ -268,7 +295,7 @@ export default {
       const payment = {
         email,
         paymentMethod: {
-          method: 'braintree_paypal',
+          method: this.method,
           additional_data: {
             payment_method_nonce: payload.nonce,
           },

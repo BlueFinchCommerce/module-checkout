@@ -33,9 +33,9 @@
           :key="`braintreePayPal-${storedKey}`"
         />
         <BraintreePayPal
-          v-if="isPaymentMethodAvailable('braintree_paypal') && paypal.creditActive"
+          v-if="isPaymentMethodAvailable('braintree_paypal') && paypal.creditActive && isCreditComponentVisible"
           :key="`braintreePayPal-${storedKey}-credit`"
-          :isCredit="paypal.creditActive"
+          :isCredit="isCreditComponentVisible"
         />
         <component
           :is="expressPaymentMethod"
@@ -379,6 +379,7 @@ export default {
       addressInfoWrong: false,
       expressPaymentMethods: [],
       ageCheckerExtensions: [],
+      isCreditComponentVisible: false,
     };
   },
   watch: {
@@ -392,7 +393,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(useCartStore, ['cart', 'cartEmitter', 'subtotalInclTax']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartEmitter', 'subtotalInclTax']),
     ...mapState(useConfigStore, [
       'addressFinder',
       'custom',
@@ -400,6 +401,8 @@ export default {
       'clickCollectTabsEnabled',
       'ageCheckRequired',
       'ageCheckerErrors',
+      'paypalCreditThresholdEnabled',
+      'paypalCreditThresholdValue',
     ]),
     ...mapState(useCustomerStore, [
       'inputsSanitiseError',
@@ -419,11 +422,6 @@ export default {
   },
   created() {
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
-
-    this.cartEmitter.on('cartUpdated', async () => {
-      this.clearPaymentReponseCache();
-      this.storedKey += 1;
-    });
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
   },
   async mounted() {
@@ -443,6 +441,12 @@ export default {
 
     await this.getInitialConfig();
     await this.getCart();
+    this.paypalCreditCheck();
+
+    this.cartEmitter.on('cartUpdated', async () => {
+      this.paypalCreditCheck();
+      this.storedKey += 1;
+    });
 
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
@@ -466,7 +470,15 @@ export default {
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
     ...mapActions(useValidationStore, ['validateAddress']),
+    paypalCreditCheck() {
+      const total = (this.cartGrandTotal / 100);
 
+      if (this.paypalCreditThresholdEnabled) {
+        this.isCreditComponentVisible = total >= Number(this.paypalCreditThresholdValue);
+      } else {
+        this.isCreditComponentVisible = true;
+      }
+    },
     async submitShippingOption() {
       this.requiredErrorMessage = '';
 
