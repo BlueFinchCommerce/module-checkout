@@ -2,7 +2,7 @@ import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
 import getFullCart from '@/helpers/cart/getFullCart';
 
-export default () => {
+export default async () => {
   const { maskedId } = useCartStore();
   const request = `
     mutation {
@@ -10,7 +10,7 @@ export default () => {
         cart_id: "${maskedId}"
       }) {
         cart {
-          ${getFullCart()}
+          ${await getFullCart()}
         }
       }
     }`;
