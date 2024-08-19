@@ -202,7 +202,10 @@ export default {
   agreements: {
     acceptBtn: ' ',
     title: ' ',
-    label: ' ',
+    label: {
+      manual: ' ',
+      automatic: ' ',
+    },
     errorMessage: ' ',
     paymentErrorMessage: ' ',
   },
