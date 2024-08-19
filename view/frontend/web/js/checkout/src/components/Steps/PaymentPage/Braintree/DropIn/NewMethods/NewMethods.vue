@@ -19,6 +19,7 @@
       v-if="isLoggedIn && (
         (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
         || (selectedMethod === 'paypal' && paypal.vaultActive)
+        || (selectedMethod === 'paypalCredit' && paypal.creditActive)
       )"
       id="braintree-store-method"
       class="braintree-store-method"
@@ -468,6 +469,8 @@ export default {
             this.additionalComponents = '.braintree-form__flexible-fields';
           } else if (newViewId === 'paypal') {
             this.additionalComponents = 'div[data-braintree-id="paypal-button"]';
+          } else if (newViewId === 'paypalCredit') {
+            this.additionalComponents = 'div[data-braintree-id="paypal-credit-button"]';
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'applePay') {
