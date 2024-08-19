@@ -86,6 +86,15 @@
             :address_type="address_type"
             :data-cy="address_type"
           />
+          <LinkComponent
+            v-if="!selected[address_type].id
+              && !selected[address_type].editing && address_type === 'billing'
+              && addressFinder.enabled"
+            class="manually-button"
+            :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :data-cy="'enter-address-manually-link'"
+            @click.prevent="editBillingAddress"
+          />
         </div>
 
         <AddressForm
@@ -113,6 +122,7 @@ import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressFor
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import AddressFinder from '@/components/Steps/CustomerInfoPage/AddressFinder/AddressFinder.vue';
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link//Link.vue';
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
@@ -133,6 +143,7 @@ export default {
     AddressFinder,
     AddressList,
     Locate,
+    LinkComponent,
   },
   props: {
     showCheckbox: {
@@ -159,8 +170,10 @@ export default {
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
   },
   mounted() {
-    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
-    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+    this.newAddressText = this.isClickAndCollect
+      ? this.$t('yourDetailsSection.deliverySection.yourBillingAddress')
+      : (window.geneCheckout?.[this.newAddressTextId]
+        || this.$t('yourDetailsSection.deliverySection.newAddressTitle'));
   },
   methods: {
     ...mapActions(useCustomerStore, [

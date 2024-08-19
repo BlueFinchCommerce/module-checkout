@@ -97,6 +97,7 @@ export default {
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       shippingButton: 'Home Delivery',
       clickandCollectButton: 'Click & Collect',

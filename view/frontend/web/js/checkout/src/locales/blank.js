@@ -86,6 +86,7 @@ export default {
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
+      yourBillingAddress: ' ',
       newAddressTitle: ' ',
       addressFinder: {
         title: ' ',
