@@ -28,7 +28,7 @@
       border: none;
       padding: 0;
       min-height: auto;
-      width: auto;
+      width: auto !important; //override braintree button styles
 
       &:hover,
       &:focus,
