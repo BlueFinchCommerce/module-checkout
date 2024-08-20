@@ -244,12 +244,18 @@ export default {
           if (this.paypalCreditThresholdEnabled
             && total >= Number(this.paypalCreditThresholdValue)) {
             renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'black';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           } else {
             renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'black';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           }
