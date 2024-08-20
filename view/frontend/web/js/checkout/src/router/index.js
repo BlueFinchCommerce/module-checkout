@@ -3,8 +3,6 @@ import DetailsPage from '@/components/Steps/CustomerInfoPage/DetailsPage/Details
 import ShippingPage from '@/components/Steps/ShippingPage/ShippingPage.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
 
-// TODO: Add in Adyen Amazon Pay
-
 const routes = [
   {
     path: '/',
