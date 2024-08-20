@@ -231,13 +231,11 @@
         @billingInfoFull="billingInfoFull"
       />
 
-      <template v-if="isAddressValid(address_type) && selected[address_type].id">
-        <component
-          :is="ageCheckerExtension"
-          v-for="ageCheckerExtension in ageCheckerExtensions"
-          :key="ageCheckerExtension"
-        />
-      </template>
+      <component
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
 
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
