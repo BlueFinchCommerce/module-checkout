@@ -121,7 +121,9 @@
         primary
         :data-cy="'proceed-to-payment-button'"
         :label="proceedToPayText"
-        :disabled="!cart.shipping_addresses?.[0]?.available_shipping_methods?.length || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
+        :disabled="(!cart.shipping_addresses?.[0]?.available_shipping_methods?.length
+        || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
+        && (ageCheckRequired && ageCheckerErrors)"
         @click="goToPayment"
       />
     </div>
@@ -190,7 +192,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping']),
+    ...mapState(useConfigStore, ['taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
