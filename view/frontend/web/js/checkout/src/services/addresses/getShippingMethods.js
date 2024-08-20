@@ -70,7 +70,7 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
   }
 
   const formattedAddressGraphQL = mapToGraphQLString(formattedAddress);
-  const request = buildShippingAddressMutation(cartId, formattedAddressGraphQL);
+  const request = await buildShippingAddressMutation(cartId, formattedAddressGraphQL);
 
   return graphQlRequest(request)
     .then((response) => {
