@@ -12,6 +12,11 @@
     <div class="payment-page">
       <div class="payment-form">
         <ProgressBar />
+        <component
+          :is="ageCheckerExtension"
+          v-for="ageCheckerExtension in ageCheckerExtensions"
+          :key="ageCheckerExtension"
+        />
         <template v-if="cartGrandTotal">
           <ErrorMessage
             v-if="rvvupErrorMessage !== ''"
@@ -124,6 +129,7 @@ import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedData
 // Extensions
 import paymentMethods from '@/extensions/paymentMethods';
 import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
+import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 
 export default {
   name: 'PaymentPage',
@@ -143,11 +149,13 @@ export default {
     VaultedMethods,
     ...paymentMethods(),
     ...paymentMethodsPrimary(),
+    ...ageCheckerExtensions(),
   },
   data() {
     return {
       additionalPaymentMethods: [],
       additionalPaymentMethodsPrimary: [],
+      ageCheckerExtensions: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -193,6 +201,7 @@ export default {
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
+    this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
 
     this.trackStep({
       step: 3,
