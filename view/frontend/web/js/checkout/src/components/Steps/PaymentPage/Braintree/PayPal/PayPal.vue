@@ -247,7 +247,7 @@ export default {
             renderData.style.color = this.paypal.creditColor !== 'gold'
             && this.paypal.creditColor !== 'blue'
             && this.paypal.creditColor !== 'silver'
-              ? this.paypal.creditColor : 'black';
+              ? this.paypal.creditColor : 'darkblue';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           } else {
@@ -255,7 +255,7 @@ export default {
             renderData.style.color = this.paypal.creditColor !== 'gold'
             && this.paypal.creditColor !== 'blue'
             && this.paypal.creditColor !== 'silver'
-              ? this.paypal.creditColor : 'black';
+              ? this.paypal.creditColor : 'darkblue';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           }
