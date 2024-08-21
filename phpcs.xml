@@ -18,5 +18,5 @@
     <arg value="sp"/>
     <file>.</file>
     <exclude-pattern>vendor</exclude-pattern>
-<!--    <exclude-pattern>view/frontend/web/js/checkout/node_modules</exclude-pattern> TODO: confirm path to node_modules folder-->
+    <exclude-pattern>view/frontend/web/js/checkout/node_modules</exclude-pattern>
 </ruleset>
