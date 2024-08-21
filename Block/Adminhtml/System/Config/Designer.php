@@ -15,7 +15,7 @@ class Designer extends Field
      *
      * @var string
      */
-    protected string $_template = 'Gene_BetterCheckout::system/config/designer.phtml';
+    protected $_template = 'Gene_BetterCheckout::system/config/designer.phtml';
 
     /**
      * @param Assets $assets
