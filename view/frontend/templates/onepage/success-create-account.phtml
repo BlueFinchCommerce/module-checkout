@@ -13,11 +13,11 @@ if ($orderViewViewModel) {
     $order = $orderViewViewModel->getLastOrder();
 }
 ?>
-<?php if ($order->getCustomerIsGuest()):?>
+<?php if ($order->getCustomerIsGuest()): ?>
     <div class="checkout-success-sign-up">
         <p class="checkout-success-title"><?= $escaper->escapeHtml(__('Save your details for faster checkout'))?></p>
         <form class="form create account form-create-account"
-            action="<?= $block->escapeUrl($block->getUrl('customer/account/createpost')) ?>"
+            action="<?= $escaper->escapeHtmlAttr($block->getUrl('customer/account/createpost')) ?>"
             method="post"
             id="form-validate-create-customer-success"
             enctype="multipart/form-data"
@@ -46,8 +46,8 @@ if ($orderViewViewModel) {
                             <div id="password-strength-meter" class="password-strength-meter">
                                 <?= $escaper->escapeHtml(__('Password Strength')) ?>:
                                 <span id="password-strength-meter-label" data-role="password-strength-meter-label">
-                                            <?= $escaper->escapeHtml(__('empty')) ?>
-                                        </span>
+                                    <?= $escaper->escapeHtml(__('empty')) ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -56,9 +56,9 @@ if ($orderViewViewModel) {
                     <?= $escaper->escapeHtml(__('Create an Account')) ?>
                 </button>
             </fieldset>
-            <input type="hidden" name="firstname" value="<?= $order->getCustomerFirstname() ?>">
-            <input type="hidden" name="lastname" value="<?= $order->getCustomerLastname() ?>">
-            <input type="hidden" name="email" value="<?= $order->getCustomerEmail() ?>">
+            <input type="hidden" name="firstname" value="<?= $escaper->escapeHtmlAttr($order->getCustomerFirstname()) ?>">
+            <input type="hidden" name="lastname" value="<?= $escaper->escapeHtmlAttr($order->getCustomerLastname()) ?>">
+            <input type="hidden" name="email" value="<?= $escaper->escapeHtmlAttr($order->getCustomerEmail()) ?>">
             <input type="hidden" name="password_confirmation" id="password-confirmation" value="">
         </form>
         <?php $orderViewViewModel->assignOrderToNewCustomer();?>

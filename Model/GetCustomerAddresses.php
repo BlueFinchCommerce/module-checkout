@@ -6,6 +6,7 @@ namespace Gene\BetterCheckout\Model;
 
 use Exception;
 use Gene\BetterCheckout\Api\GetCustomerAddressesInterface;
+use Magento\Customer\Api\Data\AddressInterface;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -25,9 +26,12 @@ class GetCustomerAddresses implements GetCustomerAddressesInterface
     }
 
     /**
+     * Return customer addresses
+     *
      * @return string
      */
-    public function execute(): string {
+    public function execute(): string
+    {
         try {
             $customer = $this->session->getCustomer();
             $resultAddresses = [];
@@ -51,7 +55,9 @@ class GetCustomerAddresses implements GetCustomerAddressesInterface
     }
 
     /**
-     * @param $address
+     * Return formatted array of address data
+     *
+     * @param AddressInterface $address
      * @return array
      */
     protected function formatAddressData($address): array

@@ -9,6 +9,8 @@ use Magento\Config\Model\Config\Backend\File as CoreFile;
 class File extends CoreFile
 {
     /**
+     * Return allowed file extensions
+     *
      * @return string[]
      */
     protected function _getAllowedExtensions()

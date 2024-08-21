@@ -21,6 +21,8 @@ class GetGuestCheckoutData implements GetGuestCheckoutDataInterface
     }
 
     /**
+     * Return checkout data for guests
+     *
      * @param string $cartId
      * @return string
      */

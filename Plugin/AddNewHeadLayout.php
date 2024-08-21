@@ -4,31 +4,39 @@ declare(strict_types=1);
 namespace Gene\BetterCheckout\Plugin;
 
 use Magento\Framework\Escaper;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Filesystem\Io\File;
 use Magento\Framework\Stdlib\StringUtils;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Asset\AssetInterface;
 use Magento\Framework\View\Asset\GroupedCollection;
 use Magento\Framework\View\Asset\MergeService;
+use Magento\Framework\View\Asset\PropertyGroup;
+use Magento\Framework\View\Element\BlockInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\View\LayoutInterface;
 use Magento\Framework\View\Page\Config;
 use Magento\Framework\View\Page\Config\Renderer;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class AddNewHeadLayout
- */
 class AddNewHeadLayout extends Renderer
 {
     /**
      * Array of allowed css files
+     *
      * @var array
      */
-    protected $allowedCssFiles = ['checkout.css', 'checkout.min.css'];
+    protected array $allowedCssFiles = ['checkout.css', 'checkout.min.css'];
 
     /**
      * @var LayoutInterface
      */
     protected LayoutInterface $layout;
+
+    /**
+     * @var File
+     */
+    protected File $filesystem;
 
     /**
      * @param Config $pageConfig
@@ -38,6 +46,7 @@ class AddNewHeadLayout extends Renderer
      * @param StringUtils $string
      * @param LoggerInterface $logger
      * @param Context $context
+     * @param File $filesystem
      */
     public function __construct(
         Config $pageConfig,
@@ -46,7 +55,8 @@ class AddNewHeadLayout extends Renderer
         Escaper $escaper,
         StringUtils $string,
         LoggerInterface $logger,
-        Context $context
+        Context $context,
+        File $filesystem
     ) {
         parent::__construct(
             $pageConfig,
@@ -57,13 +67,15 @@ class AddNewHeadLayout extends Renderer
             $logger
         );
         $this->layout = $context->getLayout();
+        $this->filesystem = $filesystem;
     }
 
     /**
      * If the layout block 'checkout.head.additional' exists replace the normal head content
+     *
      * @param Renderer $subject
-     * @param $result
-     * @return bool|\Magento\Framework\View\Element\BlockInterface|string
+     * @param string $result
+     * @return bool|BlockInterface|string
      */
     public function afterRenderHeadContent(Renderer $subject, $result)
     {
@@ -82,13 +94,14 @@ class AddNewHeadLayout extends Renderer
 
     /**
      * Get checkout css and ICO files (favicons)
+     *
      * @return string
      */
     public function getCheckoutAssets()
     {
         $result = '';
 
-        /** @var $group \Magento\Framework\View\Asset\PropertyGroup */
+        /** @var $group PropertyGroup */
         foreach ($this->pageConfig->getAssetCollection()->getGroups() as $group) {
             $type = $group->getProperty(GroupedCollection::PROPERTY_CONTENT_TYPE);
 
@@ -97,7 +110,7 @@ class AddNewHeadLayout extends Renderer
                 $attributes = $this->getGroupAttributes($group);
 
                 try {
-                    /** @var $asset \Magento\Framework\View\Asset\AssetInterface */
+                    /** @var $asset AssetInterface */
                     foreach ($assets as $asset) {
                         // Only render the file if its in the allowed types
                         if ($this->canRenderCss($asset->getUrl()) || $type == 'ico') {
@@ -109,7 +122,7 @@ class AddNewHeadLayout extends Renderer
                             $result .= sprintf($template, $asset->getUrl());
                         }
                     }
-                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                } catch (LocalizedException $e) {
                     $this->logger->critical($e);
                     $result .= sprintf($template, $this->urlBuilder->getUrl('', ['_direct' => 'core/index/notFound']));
                 }
@@ -119,13 +132,14 @@ class AddNewHeadLayout extends Renderer
     }
 
     /**
-     * @param $url
+     * Check if can render CSS
+     *
+     * @param string $url
      * @return bool|int
      */
     public function canRenderCss($url)
     {
-        $path = basename($url);
+        $path = $this->filesystem->getPathInfo($url)[PATHINFO_BASENAME] ?? null;
         return in_array($path, $this->allowedCssFiles);
     }
-
 }

@@ -7,6 +7,8 @@ namespace Gene\BetterCheckout\Api;
 interface GetCustomerAddressesInterface
 {
     /**
+     * Return a json with customer addresses
+     *
      * @return string
      */
     public function execute(): string;

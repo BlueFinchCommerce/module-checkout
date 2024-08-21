@@ -12,15 +12,15 @@ $fontUrl = $assetViewModel->getFontUrl();
 
 <script>
     window.geneCheckout = window.geneCheckout || {
-        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
+        staticPath: "<?= $escaper->escapeJs($block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/')) ?>",
     };
 </script>
 
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontUrl !== null): ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';
-            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+            src: url(<?= $escaper->escapeCss($fontUrl) ?>) format(<?= $escaper->escapeCss($assetViewModel->getFontFormat($fontUrl)) ?>);
         }
     </style>
 <?php endif; ?>

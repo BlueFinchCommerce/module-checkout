@@ -7,6 +7,8 @@ namespace Gene\BetterCheckout\Api;
 interface GetCheckoutDataInterface
 {
     /**
+     * Return checkout data
+     *
      * @param mixed $cartId
      * @return string
      */

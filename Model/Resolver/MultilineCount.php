@@ -38,6 +38,8 @@ class MultilineCount implements ResolverInterface
     }
 
     /**
+     * Return an entity type of the value
+     *
      * @param array $value
      * @return string
      * @throws LocalizedException

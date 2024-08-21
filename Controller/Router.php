@@ -9,25 +9,22 @@ use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\RouterInterface;
 
-/**
- * Class Router
- */
 class Router implements RouterInterface
 {
     /**
      * Router constructor.
      *
      * @param ConfigurationInterface $configuration
-     * @return void
      */
-    public function __construct (
+    public function __construct(
         private readonly ConfigurationInterface $configuration
     ) {
     }
 
     /**
-     * @param RequestInterface $request
+     * Match the router to request
      *
+     * @param RequestInterface $request
      * @return ActionInterface|void
      */
     public function match(RequestInterface $request)

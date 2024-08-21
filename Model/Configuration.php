@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
      * Return whether debug mode is enabled from config
      *
      * @param string $scopeType
-     * @param null $scopeCode
+     * @param string|null $scopeCode
      * @return bool
      */
     public function getIsEnabled(
