@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent/>
+      <DividerComponent v-if="!ageCheckRequired" />
       <PayWith/>
 
       <ProgressBar v-if="emailEntered"/>

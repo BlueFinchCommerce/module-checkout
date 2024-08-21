@@ -216,6 +216,17 @@ export default {
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+
+    // Check if the selected method meets the condition and filter methods accordingly
+    console.log(this.selectedMethod);
+    if (
+      this.selectedMethod
+      && this.selectedMethod.extension_attributes
+      && this.selectedMethod.extension_attributes[0]
+      && this.selectedMethod.extension_attributes[0].is_dpd_ship_to_store
+    ) {
+      this.$set(this.cart.shipping_addresses[0], 'available_shipping_methods', [this.selectedMethod]);
+    }
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [
