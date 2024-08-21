@@ -10,6 +10,7 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 export default {
   useAgreementStore,
@@ -24,4 +25,5 @@ export default {
   useRecaptchaStore,
   useShippingMethodsStore,
   useStepsStore,
+  useValidationStore,
 };

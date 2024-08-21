@@ -221,20 +221,19 @@
         @billingInfoFull="billingInfoFull"
       />
 
-      <template v-if="isAddressValid(address_type) && selected[address_type].id">
-        <component
-          :is="ageCheckerExtension"
-          v-for="ageCheckerExtension in ageCheckerExtensions"
-          :key="ageCheckerExtension"
-        />
-      </template>
+      <component
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
 
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type) && !selected[address_type].id"
+        :disabled="(!isAddressValid(address_type) && !selected[address_type].id)
+        || (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -243,7 +242,8 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
+        ||(ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
@@ -391,6 +391,7 @@ export default {
       'storeCode',
       'clickCollectTabsEnabled',
       'ageCheckRequired',
+      'ageCheckerErrors',
       'paypalCreditThresholdEnabled',
       'paypalCreditThresholdValue',
     ]),

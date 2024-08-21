@@ -18,7 +18,6 @@ type StoreConfig {
     gene_better_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
     gene_better_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
     gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
-    gene_better_checkout_agecheck_required: Boolean @doc(description: "Enable age checker functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")

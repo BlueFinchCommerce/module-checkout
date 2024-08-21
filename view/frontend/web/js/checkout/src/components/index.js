@@ -15,6 +15,9 @@ import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/R
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Search from '@/components/Core/Icons/Search/Search.vue';
 import TextArea from '@/components/Core/ActionComponents/Inputs/TextArea/TextArea.vue';
+import SavedDeliveryAddress
+  from '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
+import SavedShippingMethod from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
@@ -37,6 +40,8 @@ export default {
   RadioButton,
   Recaptcha,
   TextArea,
+  SavedDeliveryAddress,
+  SavedShippingMethod,
   TextField,
   TextInput,
   Tick,

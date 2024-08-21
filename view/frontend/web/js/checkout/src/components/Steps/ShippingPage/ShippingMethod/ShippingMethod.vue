@@ -2,6 +2,11 @@
   <section>
     <div class="checkout-section checkout-shipping">
       <ProgressBar />
+      <component
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
           <div class="checkout-shipping-methods__title-icon">
@@ -121,7 +126,9 @@
         primary
         :data-cy="'proceed-to-payment-button'"
         :label="proceedToPayText"
-        :disabled="!cart.shipping_addresses?.[0]?.available_shipping_methods?.length || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
+        :disabled="(!cart.shipping_addresses?.[0]?.available_shipping_methods?.length
+        || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
+        && (ageCheckRequired && ageCheckerErrors)"
         @click="goToPayment"
       />
     </div>
@@ -156,6 +163,7 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 // Extensions
 import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
+import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 
 export default {
   name: 'ShippingMethod',
@@ -169,6 +177,7 @@ export default {
     RadioButton,
     ...shippingMethods(),
     ...belowShippingMethodsExtensions(),
+    ...ageCheckerExtensions(),
   },
   props: {
     buttonText: {
@@ -180,6 +189,7 @@ export default {
     return {
       additionalShippingMethods: [],
       belowShippingMethodsExtensions: [],
+      ageCheckerExtensions: [],
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
@@ -190,7 +200,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping']),
+    ...mapState(useConfigStore, ['taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
@@ -202,6 +212,7 @@ export default {
   async created() {
     this.additionalShippingMethods = Object.keys(shippingMethods());
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
+    this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
