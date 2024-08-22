@@ -115,13 +115,13 @@
                 <item name="braintree_paypal_button_location_productpage_type_paylater_shape"
                       xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paylater_shape</item>
                 <item name="braintree_paypal_button_location_cart_type_credit_show"
-                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_show</item>
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_show</item>
                 <item name="braintree_paypal_button_location_cart_type_credit_label"
-                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_label</item>
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_label</item>
                 <item name="braintree_paypal_button_location_cart_type_credit_color"
-                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_color</item>
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_color</item>
                 <item name="braintree_paypal_button_location_cart_type_credit_shape"
-                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_shape</item>
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_shape</item>
                 <item name="braintree_paypal_button_location_checkout_type_credit_show"
                       xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_show</item>
                 <item name="braintree_paypal_button_location_checkout_type_credit_label"
