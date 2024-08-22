@@ -16,8 +16,8 @@
       </div>
 
       <AddressList
-        v-if="emailEntered && customer.addresses.length
-          && (!selected[address_type].same_as_shipping || cart.is_virtual)"
+        v-if="emailEntered && customer.addresses.length &&
+            (!showCheckbox || !selected[address_type].same_as_shipping || cart.is_virtual)"
         :display-title="true"
         address-type="billing"
       />
