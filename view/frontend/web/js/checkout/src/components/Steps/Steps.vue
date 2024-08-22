@@ -26,6 +26,14 @@ export default {
   components: {
     OrderSummaryDesktop,
   },
+  async created() {
+    if (window?.geneCheckout?.callbacks?.onDetailsCreate) {
+      Object.values(window.geneCheckout.callbacks.onStepsCreated).forEach(async (callback) => {
+        const { default: callbackFunction } = await import(callback);
+        callbackFunction();
+      });
+    }
+  },
 };
 </script>
 
