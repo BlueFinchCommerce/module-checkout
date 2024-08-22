@@ -164,6 +164,7 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'ShippingMethod',
@@ -218,11 +219,12 @@ export default {
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     if (window?.geneCheckout?.callbacks?.onShippingMethodMounted) {
-      Object.values(window.geneCheckout.callbacks.onShippingMethodMounted).forEach(async (callback) => {
-        const { default: callbackFunction } = await import(callback);
-        callbackFunction();
-      });
+      console.log(2)
+
+      await functionExtension('onShippingMethodMounted');
     }
+
+    console.log(1)
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [
