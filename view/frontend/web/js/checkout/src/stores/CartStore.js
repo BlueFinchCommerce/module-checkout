@@ -382,7 +382,8 @@ export default defineStore('cartStore', {
 
       try {
         const cart = await addCartItem(product);
-        this.setData({ cart });
+        this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         console.warn('Unable to add cart item', error.message);
       }
