@@ -55,7 +55,7 @@ export default defineStore('shippingMethodsStore', {
       const cartStore = useCartStore();
 
       // Check if we have shipping methods but not one selected.
-      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
+      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
         && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
         const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
@@ -165,10 +165,8 @@ export default defineStore('shippingMethodsStore', {
       if (!this.isClickAndCollect) {
         const customerStore = useCustomerStore();
 
-        if (customerStore.inputsSanitiseError) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('shipping');
+        customerStore.createNewAddress('billing');
 
         await customerStore.getCustomerInformation();
         customerStore.selected.billing.same_as_shipping = true;
@@ -186,14 +184,15 @@ export default defineStore('shippingMethodsStore', {
       // Only need to do this if we're on click and collect.
       if (this.isClickAndCollect) {
         const customerStore = useCustomerStore();
+        const cartStore = useCartStore();
+
+        await cartStore.getCart();
 
         this.$state.selectedMethod = {};
         await this.setAsClickAndCollect('');
 
-        if (customerStore.inputsSanitiseError) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('shipping');
+        customerStore.createNewAddress('billing');
 
         await customerStore.getCustomerInformation();
         customerStore.selected.billing.same_as_shipping = true;

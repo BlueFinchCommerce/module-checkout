@@ -20,11 +20,15 @@
 // components
 import OrderSummaryDesktop from
   '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'AppSteps',
   components: {
     OrderSummaryDesktop,
+  },
+  async created() {
+    await functionExtension('onStepsCreated');
   },
 };
 </script>

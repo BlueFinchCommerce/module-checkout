@@ -99,6 +99,18 @@
                         <comment><![CDATA[PayPal Credit Threshold Value.]]></comment>
                     </field>
                 </group>
+                <group id="google_map_configs" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Map Configuration</label>
+                    <field id="google_map_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Google Map Functionality</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable Google Map Functionality]]></comment>
+                    </field>
+                    <field id="google_map_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>Google Map API Key</label>
+                        <comment><![CDATA[Google Map API Key.]]></comment>
+                    </field>
+                </group>
             </group>
         </section>
     </system>

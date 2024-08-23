@@ -34,6 +34,7 @@
             :key="item.carrier_code"
           >
             <span
+              v-if="item.isVisible"
               class="shipping-method__label"
               @click="handleChange(item)"
               @keydown.enter="handleChange(item)"
@@ -164,6 +165,7 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'ShippingMethod',
@@ -216,6 +218,9 @@ export default {
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+  },
+  async mounted() {
+    await functionExtension('onShippingMethodMounted');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

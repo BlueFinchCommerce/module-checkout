@@ -15,6 +15,8 @@ type StoreConfig {
     gene_better_checkout_clickandcollect_min_order_value: String @doc(description: "Gene Checkout Click and collect min order value")
     gene_better_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
     gene_better_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
+    gene_better_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
+    gene_better_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
     gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")

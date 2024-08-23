@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent/>
+      <DividerComponent v-if="!ageCheckRequired" />
       <PayWith/>
 
       <ProgressBar v-if="emailEntered"/>
@@ -85,20 +85,10 @@
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
-        <ClickAndCollect
-          v-if="subtotalInclTax >= custom.clickandcollectMin && subtotalInclTax <= custom.clickandcollectMax"
-        />
-        <TextField
-          v-else-if="subtotalInclTax < custom.clickandcollectMin"
-          class="click-and-collect-unavilable"
-          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdLow',
-                    { price: formatPrice(custom.clickandcollectMin) })"
-        />
-        <TextField
-          v-else
-          class="click-and-collect-unavilable"
-          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdHigh',
-                    { price: formatPrice(custom.clickandcollectMax) })"
+        <component
+          :is="clickAndCollectComponent"
+          v-for="clickAndCollectComponent in clickAndCollectComponents"
+          :key="clickAndCollectComponent"
         />
       </div>
 
@@ -277,7 +267,7 @@ import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressFor
 import ShippingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/ShippingForm/ShippingForm.vue';
 import AddressBlock from '@/components/Steps/CustomerInfoPage/Addresses/AddressBlock/AddressBlock.vue';
 import EmailAddress from '@/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue';
-import LinkComponent from '@/components/Core/ActionComponents/Link//Link.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';
@@ -310,6 +300,7 @@ import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryD
 // Extensions
 import expressPaymentMethods from '@/extensions/expressPaymentMethods';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import clickAndCollectComponents from '@/extensions/clickAndCollectComponents';
 
 export default {
   name: 'YourDetailComponent',
@@ -342,6 +333,7 @@ export default {
     ClickCollectTabIcon,
     ...expressPaymentMethods(),
     ...ageCheckerExtensions(),
+    ...clickAndCollectComponents(),
   },
   props: {
     address_type: {
@@ -377,6 +369,7 @@ export default {
       addressInfoWrong: false,
       expressPaymentMethods: [],
       ageCheckerExtensions: [],
+      clickAndCollectComponents: [],
       isCreditComponentVisible: false,
     };
   },
@@ -421,6 +414,7 @@ export default {
   created() {
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
+    this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
