@@ -20,6 +20,7 @@
 // components
 import OrderSummaryDesktop from
   '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'AppSteps',
@@ -27,12 +28,7 @@ export default {
     OrderSummaryDesktop,
   },
   async created() {
-    if (window?.geneCheckout?.callbacks?.onDetailsCreate) {
-      Object.values(window.geneCheckout.callbacks.onStepsCreated).forEach(async (callback) => {
-        const { default: callbackFunction } = await import(callback);
-        callbackFunction();
-      });
-    }
+    await functionExtension('onStepsCreated');
   },
 };
 </script>

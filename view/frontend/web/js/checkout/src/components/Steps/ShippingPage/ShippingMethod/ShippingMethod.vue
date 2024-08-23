@@ -220,9 +220,7 @@ export default {
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
   },
   async mounted() {
-    if (window?.geneCheckout?.callbacks?.onShippingMethodMounted) {
-      await functionExtension('onShippingMethodMounted');
-    }
+    await functionExtension('onShippingMethodMounted');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

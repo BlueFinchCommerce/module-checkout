@@ -122,7 +122,7 @@ import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressFor
 import CheckboxComponent from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import AddressFinder from '@/components/Steps/CustomerInfoPage/AddressFinder/AddressFinder.vue';
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
-import LinkComponent from '@/components/Core/ActionComponents/Link//Link.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 
 // Icons
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
