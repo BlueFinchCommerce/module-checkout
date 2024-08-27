@@ -5,7 +5,8 @@
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
           <div class="checkout-shipping-methods__title-icon">
-            <Shipping fill="black"
+            <Shipping
+              fill="black"
               :data-cy="'select-shipping-icon'"
             />
           </div>
@@ -18,7 +19,6 @@
           </div>
           <div class="divider-line" />
         </div>
-
         <div
           v-if="cart.shipping_addresses?.[0]?.available_shipping_methods
             && cart.shipping_addresses?.[0]?.available_shipping_methods.length > 0"
@@ -29,67 +29,40 @@
             :key="item.carrier_code"
           >
             <span
+              v-if="item.isVisible"
               class="shipping-method__label"
-              @click="handleChange(item)"
-              @keydown.enter="handleChange(item)"
               :class="{
                 'selected': (
                   item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
                 )
               }"
+              @click="handleChange(item)"
+              @keydown.enter="handleChange(item)"
             >
-              <template v-if="item.method_code !== nominatedId">
-                <span class="shipping-method__input">
-                  <RadioButton
-                    :data-cy="`${item.method_code}-radio-input`"
-                    :id="item.method_code"
-                    :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                    name="shipping-option"
-                  />
-                </span>
-                <span class="shipping-method__content">
-                  <TextField
-                    :text="item.method_title"
-                    :data-cy="`${item.method_code}-method-title`"
-                  />
-                  <TextField
-                    :text="item.carrier_title"
-                    :data-cy="`${item.method_code}-carrier-title`"
-                  />
-                </span>
-              </template>
-
-              <template v-else>
-                <span class="shipping-method__input">
-                  <RadioButton
-                    :data-cy="`${nominatedId}-radio-input`"
-                    :id="nominatedId"
-                    :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
-                    name="shipping-option"
-                  />
-                </span>
-                <span class="shipping-method__content">
-                  <TextField
-                    :text="item.method_title"
-                    :data-cy="`${nominatedId}-method-title`"
-                  />
-                  <TextField
-                    :text="item.carrier_title"
-                    :data-cy="`${nominatedId}-carrier-title`"
-                  />
-                </span>
-              </template>
+              <span class="shipping-method__input">
+                <RadioButton
+                  :id="item.method_code"
+                  :data-cy="`${item.method_code}-radio-input`"
+                  :checked="item.method_code === cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code"
+                  name="shipping-option"
+                />
+              </span>
+              <span class="shipping-method__content">
+                <TextField
+                  :text="item.method_title"
+                  :data-cy="`${item.method_code}-method-title`"
+                />
+                <TextField
+                  :text="item.carrier_title"
+                  :data-cy="`${item.method_code}-carrier-title`"
+                />
+              </span>
               <TextField
                 class="shipping-method__price"
                 :text="taxCartDisplayShipping
                   ? formatPrice(item.price_incl_tax.value)
                   : formatPrice(item.price_excl_tax.value)"
                 :data-cy="`${item.method_code}-price`"
-              />
-              <NominatedDay
-                v-if="item.carrier_code === nominatedId
-                  && nominatedDayEnabled && selectedMethod.carrier_code === nominatedId"
-                :item="item"
               />
             </span>
           </template>
@@ -101,7 +74,7 @@
         </div>
         <TextField
           v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods
-          || cart.shipping_addresses?.[0]?.available_shipping_methods.length === 0"
+            || cart.shipping_addresses?.[0]?.available_shipping_methods.length === 0"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
           :data-cy="'no-shipping-methods-text'"
@@ -112,18 +85,18 @@
         />
       </div>
       <component
-          :is="belowShippingMethodsExtension"
-          v-for="belowShippingMethodsExtension in belowShippingMethodsExtensions"
-          :key="belowShippingMethodsExtension"
-        />
+        :is="belowShippingMethodsExtension"
+        v-for="belowShippingMethodsExtension in belowShippingMethodsExtensions"
+        :key="belowShippingMethodsExtension"
+      />
       <MyButton
         type="submit"
         primary
         :data-cy="'proceed-to-payment-button'"
         :label="proceedToPayText"
         :disabled="(!cart.shipping_addresses?.[0]?.available_shipping_methods?.length
-        || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
-        && (ageCheckRequired && ageCheckerErrors)"
+          || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
+          && (ageCheckRequired && ageCheckerErrors)"
         @click="goToPayment"
       />
     </div>
@@ -145,14 +118,11 @@ import formatPrice from '@/helpers/payment/formatPrice';
 
 // Components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
-import NominatedDay from
-  '@/components/Steps/ShippingPage/ShippingMethod/NominatedDay/NominatedDay.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import RadioButton from '@/components/Core/ActionComponents/Inputs/RadioButton/RadioButton.vue';
 
 // Icons
-import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 
 // Extensions
@@ -163,9 +133,7 @@ export default {
   name: 'ShippingMethod',
   components: {
     TextField,
-    Loader,
     Shipping,
-    NominatedDay,
     MyButton,
     ProgressBar,
     RadioButton,
@@ -182,7 +150,6 @@ export default {
     return {
       additionalShippingMethods: [],
       belowShippingMethodsExtensions: [],
-      nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
       shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
@@ -196,8 +163,6 @@ export default {
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
-      'nominatedDayEnabled',
-      'nominatedPrice',
       'selectedMethod',
     ]),
   },

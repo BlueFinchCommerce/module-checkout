@@ -8811,6 +8811,7 @@ body.no-scrollable {
   cursor: pointer;
 }
 #gene-better-checkout-root .checkout-shipping-methods .shipping-method__container .shipping-method__label .shipping-method__price {
+  text-align: right;
   font-size: var(--shipping-cost-font-size, var(--font__s));
   font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
 }

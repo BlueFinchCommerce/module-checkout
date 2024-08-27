@@ -151,6 +151,14 @@ export default defineStore('cartStore', {
         return;
       }
 
+      if (cart?.shipping_addresses?.[0]?.available_shipping_methods) {
+        cart.shipping_addresses[0].available_shipping_methods = cart.shipping_addresses[0]
+          .available_shipping_methods.map((method) => ({
+            isVisible: true,
+            ...method,
+          }));
+      }
+
       this.setData({
         cart,
         discountCode: cart?.applied_coupons?.[0]?.code ?? '',
