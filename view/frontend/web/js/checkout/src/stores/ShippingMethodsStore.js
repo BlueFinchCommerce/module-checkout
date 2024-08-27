@@ -49,8 +49,14 @@ export default defineStore('shippingMethodsStore', {
       const cartStore = useCartStore();
 
       // Check if we have shipping methods but not one selected.
-      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
-        && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
+      if (cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length === 1) {
+        if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
+          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
+          const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+          this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
+        }
+      } else if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
+          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
         const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
       }
