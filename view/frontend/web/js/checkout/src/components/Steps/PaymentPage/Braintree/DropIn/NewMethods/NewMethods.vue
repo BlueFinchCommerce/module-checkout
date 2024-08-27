@@ -392,7 +392,7 @@ export default {
           },
         }, (error, payload) => {
           if (error) {
-            //show user error message if not supported card used
+            // show user error message if not supported card used
             alert(error.message);
             reject(error);
           } else if (payload.liabilityShifted
