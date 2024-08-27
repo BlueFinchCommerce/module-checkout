@@ -70,6 +70,14 @@ export default {
       placeholder: ' ',
       label: ' ',
     },
+    clickAndCollectSection: {
+      clickAndCollectTitle: ' ',
+      clickAndCollectInputPlaceholder: ' ',
+      clickAndCollectErrorMessage: ' ',
+      clickAndCollectMoreLocations: ' ',
+      clickAndCollectAddresses: ' ',
+      clickAndCollectContinueButton: ' ',
+    },
     deliverySection: {
       toShippingButton: ' ',
       title: ' ',
@@ -78,6 +86,7 @@ export default {
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
+      yourBillingAddress: ' ',
       newAddressTitle: ' ',
       addressFinder: {
         title: ' ',

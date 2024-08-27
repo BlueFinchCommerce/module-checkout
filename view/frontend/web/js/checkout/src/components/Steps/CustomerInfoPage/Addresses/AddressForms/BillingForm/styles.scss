@@ -6,6 +6,17 @@
   display: var(--divider-line-display, block);
 }
 
+.manually-button {
+  padding-top: var(--manually-padding-top, 0);
+  margin-top: var(--manually-padding-top, 0);
+  color: var(--manually-button-color, var(--button__link-font-color));
+  width: 100%;
+  text-align: left;
+  font-family: var(--manually-button__font-family, unset);
+  text-decoration: var(--manually-button__text-decoration, var(--button__link-text-decoration));
+  cursor: pointer;
+}
+
 .address-block {
   position: relative;
 

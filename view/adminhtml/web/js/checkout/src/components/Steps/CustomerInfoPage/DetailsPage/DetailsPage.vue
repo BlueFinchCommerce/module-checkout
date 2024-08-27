@@ -256,7 +256,7 @@ import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressFor
 import ShippingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/ShippingForm/ShippingForm.vue';
 import AddressBlock from '@/components/Steps/CustomerInfoPage/Addresses/AddressBlock/AddressBlock.vue';
 import EmailAddress from '@/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue';
-import LinkComponent from '@/components/Core/ActionComponents/Link//Link.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';

@@ -10,7 +10,7 @@ import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import amastyConsentLogic from '@/services/content/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
-import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
 import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
 import formatAddress from '@/helpers/addresses/formatAddress';

@@ -91,6 +91,7 @@ export default {
       info: 'Wohin sollen wir versenden?',
       billingAddressTitle: 'Rechnungsadresse',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Lieferadresse',
       addressFinder: {

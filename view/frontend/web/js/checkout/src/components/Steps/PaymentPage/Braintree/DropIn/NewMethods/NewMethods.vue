@@ -248,7 +248,10 @@ export default {
               amount: total,
               currency: this.currencyCode,
               buttonStyle: {
-                color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+                color: this.paypal.creditColor !== 'gold'
+                && this.paypal.creditColor !== 'blue'
+                && this.paypal.creditColor !== 'silver'
+                  ? this.paypal.creditColor : 'darkblue',
                 label: this.paypal.creditLabel,
                 shape: this.paypal.creditShape,
                 size: 'responsive',
@@ -262,7 +265,10 @@ export default {
             amount: total,
             currency: this.currencyCode,
             buttonStyle: {
-              color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+              color: this.paypal.creditColor !== 'gold'
+              && this.paypal.creditColor !== 'blue'
+              && this.paypal.creditColor !== 'silver'
+                ? this.paypal.creditColor : 'darkblue',
               label: this.paypal.creditLabel,
               shape: this.paypal.creditShape,
               size: 'responsive',

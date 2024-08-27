@@ -83,6 +83,7 @@
   text-align: left;
   font-family: var(--manually-button__font-family, unset);
   text-decoration: var(--manually-button__text-decoration, var(--button__link-text-decoration));
+  cursor: pointer;
 }
 
 .shipping-type-toggle {

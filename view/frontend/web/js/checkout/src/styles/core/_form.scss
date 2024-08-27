@@ -428,6 +428,14 @@
     }
   }
 
+  .billing-form-address {
+    margin-top: var(--indent__base);
+
+    .loqate__field svg {
+      top: 25px;
+    }
+  }
+
   .dropdown {
     input {
       margin: 0;

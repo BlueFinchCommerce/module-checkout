@@ -6,7 +6,7 @@ export default (error) => {
   } else if (error.message) {
     message = error.message;
   } else {
-    message = this.$t('errorMessages.unexpectedPaymentError');
+    message = this.$t ? this.$t('errorMessages.unexpectedPaymentError') : 'An unexpected error occurred';
   }
   throw new Error(message);
 };

@@ -2,6 +2,11 @@
   <section>
     <div class="checkout-section checkout-shipping">
       <ProgressBar />
+      <component
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
       <div class="checkout-shipping-methods">
         <div class="checkout-shipping-methods__title">
           <div class="checkout-shipping-methods__title-icon">
@@ -128,6 +133,8 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 // Extensions
 import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
+import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'ShippingMethod',
@@ -139,6 +146,7 @@ export default {
     RadioButton,
     ...shippingMethods(),
     ...belowShippingMethodsExtensions(),
+    ...ageCheckerExtensions(),
   },
   props: {
     buttonText: {
@@ -150,6 +158,7 @@ export default {
     return {
       additionalShippingMethods: [],
       belowShippingMethodsExtensions: [],
+      ageCheckerExtensions: [],
       hasSubmitted: false,
       shippingStepText: '',
       shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
@@ -169,9 +178,13 @@ export default {
   async created() {
     this.additionalShippingMethods = Object.keys(shippingMethods());
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
+    this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+  },
+  async mounted() {
+    await functionExtension('onShippingMethodMounted');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

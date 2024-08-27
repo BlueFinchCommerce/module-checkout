@@ -152,6 +152,7 @@ export default defineStore('cartStore', {
       }
 
       if (cart?.shipping_addresses?.[0]?.available_shipping_methods) {
+        // eslint-disable-next-line no-param-reassign
         cart.shipping_addresses[0].available_shipping_methods = cart.shipping_addresses[0]
           .available_shipping_methods.map((method) => ({
             isVisible: true,
@@ -390,7 +391,8 @@ export default defineStore('cartStore', {
 
       try {
         const cart = await addCartItem(product);
-        this.setData({ cart });
+        this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         console.warn('Unable to add cart item', error.message);
       }
