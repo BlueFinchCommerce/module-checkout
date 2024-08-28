@@ -2,6 +2,8 @@ import AddressBlock from '@/components/Steps/CustomerInfoPage/Addresses/AddressB
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
+import Calendar from '@/components/Core/ActionComponents/Calendar/Calendar.vue';
+import Checkbox from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbox.vue';
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import GoogleMap from '@/components/Steps/CustomerInfoPage/Addresses/GoogleMap/GoogleMap.vue';
@@ -28,6 +30,8 @@ export default {
   AddressList,
   Agreements,
   BillingForm,
+  Calendar,
+  Checkbox,
   Edit,
   ErrorMessage,
   GoogleMap,

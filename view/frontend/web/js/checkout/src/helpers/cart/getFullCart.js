@@ -165,6 +165,13 @@ export default async () => {
         value
         currency
       }
+      applied_taxes {
+        label
+        amount {
+          value
+          currency
+        }
+      }
       subtotal_including_tax {
         value
         currency

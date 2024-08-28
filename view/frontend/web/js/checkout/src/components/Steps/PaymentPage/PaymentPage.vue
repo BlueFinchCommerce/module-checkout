@@ -1,5 +1,11 @@
 <template>
   <div class="payment-step">
+    <ErrorMessage
+      v-if="errorMessage"
+      :message="errorMessage"
+      :attached="false"
+      :margin="false"
+    />
     <Recaptcha
       v-if="!isRecaptchaVisible('placeOrder')"
       id="placeOrder"
@@ -59,6 +65,13 @@
             />
             <div class="divider-line" />
           </div>
+
+          <ErrorMessage
+            v-if="paymentErrorMessage"
+            :message="paymentErrorMessage"
+            :attached="false"
+            :margin="false"
+          />
 
           <component
             :is="additionalPaymentMethodPrimary"
@@ -175,6 +188,7 @@ export default {
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
       'rvvupErrorMessage',
+      'paymentErrorMessage',
     ]),
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'cartGrandTotal']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
@@ -192,6 +206,7 @@ export default {
     await this.getInitialConfig();
     await this.getCart();
     await this.getVaultedMethods();
+    this.setPaymentErrorMessage('');
 
     // The titles need to be reflective of the state we're in.
     this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
@@ -218,6 +233,7 @@ export default {
     });
   },
   methods: {
+    ...mapActions(usePaymentStore, ['setPaymentErrorMessage']),
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
