@@ -265,7 +265,7 @@ export default {
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     ...mapState(useConfigStore, ['storeCode']),
     proceedAsGuestInvalid() {
-      return this.emailError;
+      return this.emailError || this.customer.email.length === 0;
     },
     passwordInputType() {
       return this.showPassword ? 'text' : 'password';
