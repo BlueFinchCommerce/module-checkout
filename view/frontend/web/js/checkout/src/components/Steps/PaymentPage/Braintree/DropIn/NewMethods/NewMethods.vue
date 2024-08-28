@@ -324,7 +324,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod', 'setPaymentErrorMessage']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
@@ -392,7 +392,8 @@ export default {
           },
         }, (error, payload) => {
           if (error) {
-            reject(error);
+            this.setPaymentErrorMessage(error.message);
+            reject(error.message);
           } else if (payload.liabilityShifted
             || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
             || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
