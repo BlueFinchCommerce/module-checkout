@@ -9,7 +9,6 @@ import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmitt
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
-import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
@@ -17,11 +16,6 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 export default defineStore('shippingMethodsStore', {
   state: () => ({
     shippingMethods: [],
-    nominatedDayEnabled: false,
-    nominatedDates: false,
-    nominatedSelectedMethod: false,
-    nominatedSelectedDate: false,
-    nominatedSelectedDateFormatted: false,
     selectedMethod: {},
     cache: {},
     isClickAndCollect: false,
@@ -55,38 +49,16 @@ export default defineStore('shippingMethodsStore', {
       const cartStore = useCartStore();
 
       // Check if we have shipping methods but not one selected.
-      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
-        && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
+      if (cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length === 1) {
+        if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
+          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
+          const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+          this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
+        }
+      } else if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
+          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
         const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
-      }
-    },
-
-    /**
-     * Get Nominated Delivery Methods
-     */
-    async getNominatedDeliveryMethods(postcode) {
-      this.nominatedDates = false;
-
-      try {
-        const nominatedDates = await this.getCachedResponse(
-          getNominatedDates,
-          'getNominatedDeliveryMethods',
-          postcode,
-        );
-
-        if (nominatedDates) {
-          // Check dates are not empty
-          if (Object.keys(nominatedDates) < 1) {
-            this.nominatedDayEnabled = false;
-            return;
-          }
-
-          this.nominatedDates = nominatedDates;
-          this.nominatedDayEnabled = true;
-        }
-      } catch {
-        //
       }
     },
 
@@ -256,7 +228,7 @@ export default defineStore('shippingMethodsStore', {
     },
 
     clearShippingMethodCache() {
-      this.clearCaches(['getNominatedDeliveryMethods', 'getShippingMethods']);
+      this.clearCaches(['getShippingMethods']);
       this.clearSubmitShippingInfoCache();
     },
 

@@ -1,36 +1,14 @@
 <template>
-  <section class="nominated-container">
-    <button
-      v-show="!showCalender"
-      ref="nominated"
-      class="nominated-select"
-      type="button"
-      @click.prevent="openCalendar"
-    >
-      <TextField
-        v-if="nominatedSelectedDate"
-        :text="formatedSelectedDate(nominatedSelectedDate)"
-        class="nominated-select-textfield"
-      />
-      <TextField
-        v-else
-        :text="$t('shippingStep.nominatedDelivery')"
-        class="nominated-select-textfield"
-      />
-      <Calendar stroke="black" />
-    </button>
-
-    <!-- Calendar Start -->
+  <section class="calendar-wrapper">
     <div
-      v-show="showCalender"
-      id="nominated-calendar"
+      v-show="showCalendar && selectedDate"
+      id="calendar-component"
       :key="selectedView"
       class="calendar-container"
       role="dialog"
       aria-labelledby="calendar-tile"
       aria-describedby="calendar-description"
-      :aria-modal="showCalender"
-      @keyup.esc="closeCalendar()"
+      :aria-modal="showCalendar"
     >
       <header class="calendar-header">
         <button
@@ -84,23 +62,28 @@
           :key="date"
           class="calendar-day"
           :class="{
-              'calendar-day--in-past': isDateInPast(date),
-              'calendar-day--available': isAvailableDate(date)
-            }"
+            'calendar-day--in-past': isDateInPast(date),
+            'calendar-day--available': isAvailableDate(date)
+          }"
         >
           <template v-if="isAvailableDate(date)">
             <button
               type="button"
               class="calendar-button"
               :class="{
-                  'active': compareDates(nominatedSelectedDate, date)
-                }"
-              @click="selectDate(date)"
+                'active': compareDates(selectedDate, date)
+              }"
+              @click="() => {
+                selectDate(date)
+              }"
             >
-                <span class="calendar-radio-label">
-                  <span>{{ getDateLabel(date) }}</span>
-                  <span class="calendar-button-symbol" />
-                </span>
+              <span class="calendar-radio-label">
+                <span>{{ getDateLabel(date) }}</span>
+                <span
+                  v-if="showAvailableSymbol"
+                  class="calendar-button-symbol"
+                />
+              </span>
             </button>
           </template>
 
@@ -112,55 +95,70 @@
       </ol>
     </div>
     <!-- Calendar End -->
-
-    <TextField
-      v-show="showCalender"
-      :text="$t('shippingStep.nominatedDeliveryCalendar')"
-      class="nominated-select-calendar-text"
-    />
+    <div
+      v-show="showCalendar"
+      class="calendar-wrapper-footer-text"
+    >
+      <TextField
+        v-if="additionalFooterText"
+        :text="additionalFooterText"
+        class="calendar-wrapper-footer-text--additional"
+      />
+      <TextField
+        :text="selectedDate ? formatedSelectedDate(selectedDate) : selectDateText"
+        class="calendar-wrapper-footer-text--date"
+      />
+    </div>
   </section>
 </template>
 
 <script>
-// Stores
-import { mapState, mapActions, mapWritableState } from 'pinia';
-import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
-import useLoadingStore from '@/stores/LoadingStore';
-
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // icons
-import Calendar from '@/components/Core/Icons/Calendar/Calendar.vue';
 import ArrowLeft from '@/components/Core/Icons/ArrowLeft/ArrowLeft.vue';
 import ArrowRight from '@/components/Core/Icons/ArrowRight/ArrowRight.vue';
 
 export default {
-  name: 'NominatedDay',
+  name: 'CalendarComponent',
   components: {
     TextField,
-    Calendar,
     ArrowLeft,
     ArrowRight,
   },
   props: {
-    item: {
-      type: Object,
-      default() {
-        return {
-          method_code: '',
-          carrier_code: '',
-        };
-      },
+    availableDates: {
+      type: Array,
+      default: () => [],
+    },
+    selectDate: {
+      type: Function,
+      default: () => {},
+    },
+    showCalendar: {
+      type: Boolean,
+      default: false,
+    },
+    selectedDate: {
+      type: String,
+      default: '',
+    },
+    showAvailableSymbol: {
+      type: Boolean,
+      default: false,
+    },
+    additionalFooterText: {
+      type: String,
+      default: '',
+    },
+    selectDateText: {
+      type: String,
+      default: '',
     },
   },
   data() {
     return {
-      showCalender: false,
-      isKeyboard: false,
-
-      // Calendar Specific
-      // Calendar Specific
       today: new Date(),
       day: null,
       month: null,
@@ -180,15 +178,9 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(
-      useShippingMethodsStore,
-      ['nominatedSelectedMethod', 'nominatedSelectedDate', 'nominatedSelectedDateFormatted'],
-    ),
-    ...mapState(useShippingMethodsStore, ['nominatedDates']),
-
     /**
-     * Disable prev arrow if month is this month
-     */
+    * Disable prev arrow if month is this month
+    */
     disablePrevArrow() {
       return this.month <= this.today.getMonth();
     },
@@ -200,50 +192,16 @@ export default {
       return this.month >= (this.today.getMonth() + 1);
     },
 
-    /**
-     * Get First Available Delivery Day
-     */
-    firstAvailableDay() {
-      const availableDates = this.nominatedDates.filter(
-        (method) => new Date(method.extension_attributes.date_required),
-      );
-      return new Date(availableDates[0].extension_attributes.date_required);
-    },
   },
+
   mounted() {
     // Set calendar date to first available date
-    const { firstAvailableDay } = this.firstAvailableDay;
+    const firstAvailableDay = this.availableDates[0];
     this.day = firstAvailableDay.getDate();
     this.month = firstAvailableDay.getMonth();
     this.year = firstAvailableDay.getFullYear();
   },
   methods: {
-    ...mapActions(useLoadingStore, ['setLoadingState']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
-
-    /**
-     * Show Calendar
-     */
-    openCalendar() {
-      this.showCalender = true;
-    },
-
-    /**
-     * Close Calendar
-     */
-    closeCalendar() {
-      this.showCalender = false;
-    },
-
-    /**
-     * Get Month Label
-     */
-    getMonth(month = false) {
-      const months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'];
-      return month ? months[month] : months[this.month];
-    },
-
     /**
      * Return the formated date as per the designs (Thursday, 26th May 2022)
      */
@@ -257,21 +215,12 @@ export default {
     },
 
     /**
-     * Select a day
+     * Get Month Label
      */
-    async selectDate(date) {
-      this.setLoadingState(true);
-      this.nominatedSelectedDate = date;
-      this.nominatedSelectedDateFormatted = this.formatedSelectedDate(date);
-      // Update shipping method
-      this.selectShippingMethod({
-        nominatedSelectedDate: this.nominatedSelectedDate,
-        nominatedSelectedDateFormatted: this.nominatedSelectedDateFormatted,
-        ...this.item,
-      });
-      await this.submitShippingInfo();
-      this.setLoadingState(false);
-      this.closeCalendar();
+    getMonth(month = false) {
+      const months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+      return month ? months[month] : months[this.month];
     },
 
     /**
@@ -338,15 +287,13 @@ export default {
       if (this.isDateInPast(currentDate)) {
         return false;
       }
-      // Filter dates
-      /* eslint-disable array-callback-return */
-      /* eslint-disable consistent-return */
-      return this.nominatedDates.filter((method) => {
-        if (method) {
-          const date = new Date(method);
-          return date.getTime() === currentDate.getTime();
+
+      return this.availableDates.some((availableDate) => {
+        if (availableDate) {
+          return this.compareDates(availableDate, currentDate);
         }
-      }).length > 0;
+        return false;
+      });
     },
 
     /**
@@ -354,8 +301,19 @@ export default {
      */
     /* eslint-disable no-param-reassign */
     compareDates(firstDate, secondDate) {
-      firstDate = new Date(firstDate);
-      return firstDate.getTime() === secondDate.getTime();
+      const normalisedFirstDate = this.normaliseDate(firstDate);
+      const normalisedSecondDate = this.normaliseDate(secondDate);
+      return normalisedFirstDate.getTime() === normalisedSecondDate.getTime();
+    },
+
+    /**
+     * Normalise Date
+     */
+    normaliseDate(date) {
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const day = date.getDate();
+      return new Date(year, month, day);
     },
   },
 };
