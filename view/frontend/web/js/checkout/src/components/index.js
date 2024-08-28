@@ -5,6 +5,7 @@ import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressFo
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import GoogleMap from '@/components/Steps/CustomerInfoPage/Addresses/GoogleMap/GoogleMap.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
@@ -30,6 +31,7 @@ export default {
   Edit,
   ErrorMessage,
   GoogleMap,
+  LinkComponent,
   Loader,
   Locate,
   MyButton,
