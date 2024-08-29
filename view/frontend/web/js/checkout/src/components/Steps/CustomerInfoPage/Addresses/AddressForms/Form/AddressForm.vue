@@ -161,7 +161,7 @@
             class="select-address-btn"
             type="submit"
             primary
-            :disabled="!isAddressValid(address_type)"
+            :disabled="!isAddressValid(address_type) || inputsSanitiseError"
             :label="$t('yourDetailsSection.deliverySection' +
               '.addressForm.saveAddressButton')"
             :data-cy="`${address_type}-address-use-button`"
@@ -222,9 +222,9 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'postCodeValid', 'inputsSanitiseError']),
-    ...mapState(useConfigStore, ['countries', 'stateRequired', 'displayState',
-      'countryCode', 'optionalZipCountries', 'postcodeRequired']),
+    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'inputsSanitiseError']),
+    ...mapState(useConfigStore, ['countries', 'displayState',
+      'countryCode', 'postcodeRequired']),
     ...mapState(useValidationStore, ['isAddressValid', 'validationItems']),
     selectedAddressType() {
       return this.selected[this.address_type];
