@@ -8,6 +8,7 @@
   &-line {
     border-bottom: var(--divider__border);
     flex-grow: 1;
+    min-width: var(--indent__xl);
   }
 
   p {
