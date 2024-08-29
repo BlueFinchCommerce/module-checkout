@@ -98,7 +98,7 @@
         </div>
 
         <AddressForm
-          v-if="showFullBillingForm || selected[address_type].editing || !addressFinder.enabled"
+          v-if="selected[address_type].editing || !addressFinder.enabled"
           :address_type="address_type"
         />
       </div>
@@ -149,10 +149,6 @@ export default {
     showCheckbox: {
       type: Boolean,
       default: true,
-    },
-    showFullBillingForm: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: [
