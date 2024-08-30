@@ -11,10 +11,10 @@ $fontUrl = $assetViewModel->getFontUrl();
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {
-        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
-    };
+        window.geneCheckout = window.geneCheckout || {};
+        window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
 </script>
+
 
 <?php if ($fontUrl !== null) : ?>
     <style>
@@ -38,6 +38,14 @@ $fontUrl = $assetViewModel->getFontUrl();
 }}'>
     <?= $escaper->escapeHtml(__('Open Designer')) ?>
 </button>
+
+<script>
+    window.geneCheckout.staticPath =
+        window.geneCheckout.staticPath.replace(
+            /(.+)\/Gene_BetterCheckout\//,
+            window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+        );
+</script>
 
 <div id="gene-bettercheckout-designer" style="display: none;" class="open">
     <button class="toggle action-close"></button>
