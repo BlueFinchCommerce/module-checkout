@@ -1,10 +1,16 @@
 <template>
-  <div class="text-input" :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }">
-    <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
+  <div
+    class="text-input"
+    :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }"
+  >
+    <label
+      :for="identifier"
+      :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }"
+    >
       <span
         v-if="label"
         :class="(modelValue.length > 0 || isInputActive) ? 'text-input-has-value'
-        : 'text-input-no-value'"
+          : 'text-input-no-value'"
       >
         {{ required ? label + ' *' : label }}
       </span>
@@ -29,11 +35,13 @@
       >
       <slot name="icon" />
     </label>
-    <ErrorMessage v-if="errorMessage !== ''"
+    <ErrorMessage
+      v-if="errorMessage !== ''"
       :message="errorMessage"
       :data-cy="'field-error-message'"
     />
-    <ErrorMessage v-if="validationErrorMessage !== ''"
+    <ErrorMessage
+      v-if="validationErrorMessage !== ''"
       :message="validationErrorMessage"
       :data-cy="'field-error-message'"
     />
@@ -42,10 +50,10 @@
 <script>
 import { computed, reactive } from 'vue';
 import { mapWritableState } from 'pinia';
+import debounce from 'lodash.debounce';
 import useCustomerStore from '@/stores/CustomerStore';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import sanitiseInputValue from '@/helpers/addresses/sanitiseInputValue';
-import debounce from 'lodash.debounce';
 import breakpoints from './style.module.scss';
 
 export default {
@@ -141,16 +149,18 @@ export default {
       const isValid = sanitiseInputValue(inputValue, inputType);
 
       if (this.identifier !== 'password') {
+        this.$emit('update:modelValue', inputValue);
+
         if (isValid) {
-          this.$emit('update:modelValue', inputValue);
           this.validationErrorMessage = '';
         } else {
-          this.$emit('update:modelValue', inputValue);
+          const sanitiseErrorMsg = this.$t('errorMessages.sanitiseError');
+
           if (inputType === 'tel') {
             this.$emit('telephone-error');
-          } else {
-            this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
           }
+
+          this.validationErrorMessage = sanitiseErrorMsg;
         }
 
         // Use $nextTick to check for errors after the DOM is updated
