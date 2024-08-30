@@ -125,39 +125,6 @@ export default defineStore('ValidationStore', {
       * @param {*} addressType
       * @returns
       */
-    // validateAddress(addressType, displayErrors = false) {
-    //   const customerStore = useCustomerStore();
-
-    //   let isValid = true;
-
-    //   Object.entries(customerStore.selected[addressType]).forEach(([attribute, value]) => {
-    //     if (!this.$state.attributes.includes(attribute)) {
-    //       return;
-    //     }
-
-    //     if (attribute === 'region') {
-    //       isValid = this.validateRegion(addressType, displayErrors);
-    //     } else if (attribute === 'street') {
-    //       Object.entries(value).forEach(([index]) => {
-    //         const streetLine = `street.${parseInt(index, 10)}`;
-    //         const keyIsValid = this.validateField(addressType, streetLine, displayErrors);
-
-    //         if (!keyIsValid) {
-    //           isValid = false;
-    //         }
-    //       });
-    //     } else {
-    //       const keyIsValid = this.validateField(addressType, attribute, displayErrors);
-
-    //       if (!keyIsValid) {
-    //         isValid = false;
-    //       }
-    //     }
-    //   });
-
-    //   return isValid;
-    // },
-
     validateAddress(addressType, displayErrors = false) {
       const customerStore = useCustomerStore();
       let isValid = true;
