@@ -35,6 +35,8 @@ import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
 
+import functionExtension from '@/extensions/functionExtension';
+
 export default defineStore('cartStore', {
   state: () => ({
     id: null,
@@ -135,7 +137,7 @@ export default defineStore('cartStore', {
     },
 
     // This handles storing the cart data in the correct store location.
-    handleCartData(cart) {
+    async handleCartData(cart) {
       if (cart && cart.items.length) {
         const localItems = getCartItems();
         const mappedCartItems = cart.items.map((item) => (
@@ -159,6 +161,8 @@ export default defineStore('cartStore', {
             ...method,
           }));
       }
+
+      await functionExtension('onHandleCartData', [cart]);
 
       this.setData({
         cart,
