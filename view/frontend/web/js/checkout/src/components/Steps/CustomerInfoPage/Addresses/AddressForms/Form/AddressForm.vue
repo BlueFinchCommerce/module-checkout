@@ -225,7 +225,7 @@ export default {
     ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'inputsSanitiseError']),
     ...mapState(useConfigStore, ['countries', 'displayState',
       'countryCode', 'postcodeRequired']),
-    ...mapState(useValidationStore, ['isAddressValid', 'validationItems']),
+    ...mapState(useValidationStore, ['isAddressValid', 'validationItems', 'addressFinderError']),
     selectedAddressType() {
       return this.selected[this.address_type];
     },
@@ -244,7 +244,7 @@ export default {
   created() {
     this.setupCountry();
     this.updateRegionRequired(this.address_type);
-    this.validateAddress(this.address_type);
+    this.validateAddress(this.address_type, this.addressFinderError);
   },
   methods: {
     ...mapActions(useCustomerStore, [

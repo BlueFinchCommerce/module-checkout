@@ -138,7 +138,7 @@ export default {
       'setAddressAsEditing',
       'setSelectedSavedAddress',
     ]),
-    ...mapActions(useValidationStore, ['validateAddress']),
+    ...mapActions(useValidationStore, ['validateAddress', 'setAddressFinderError']),
 
     editAddress() {
       this.address = false;
@@ -246,6 +246,9 @@ export default {
       // allowing User's the ability to edit.
       if (!isValid || this.inputsSanitiseError) {
         this.setAddressAsEditing(this.address_type, true);
+        this.setAddressFinderError(true);
+      } else {
+        this.setAddressFinderError(false);
       }
     },
   },
