@@ -42,6 +42,7 @@ export default defineStore('ValidationStore', {
       billing: {},
       shipping: {},
     },
+    addressFinderError: false,
   }),
 
   getters: {
@@ -126,32 +127,40 @@ export default defineStore('ValidationStore', {
       */
     validateAddress(addressType, displayErrors = false) {
       const customerStore = useCustomerStore();
-
       let isValid = true;
 
-      Object.entries(customerStore.selected[addressType]).forEach(([attribute, value]) => {
+      Object.entries(customerStore.selected[addressType]).some(([attribute, value]) => {
         if (!this.$state.attributes.includes(attribute)) {
-          return;
+          return false; // Skip attributes that are not in the attributes list
         }
 
         if (attribute === 'region') {
           isValid = this.validateRegion(addressType, displayErrors);
+          if (!isValid) return true; // Stop if region is invalid
         } else if (attribute === 'street') {
-          Object.entries(value).forEach(([index]) => {
+          Object.entries(value).some(([index]) => {
             const streetLine = `street.${parseInt(index, 10)}`;
             const keyIsValid = this.validateField(addressType, streetLine, displayErrors);
 
             if (!keyIsValid) {
               isValid = false;
+              return true; // Stop the street validation on failure
             }
+
+            return false; // Continue if valid
           });
+
+          if (!isValid) return true; // Stop if any street line is invalid
         } else {
           const keyIsValid = this.validateField(addressType, attribute, displayErrors);
 
           if (!keyIsValid) {
             isValid = false;
+            return true; // Stop further validation on failure
           }
         }
+
+        return false; // Continue validation if the field is valid
       });
 
       return isValid;
@@ -162,7 +171,6 @@ export default defineStore('ValidationStore', {
       const value = lodashGet(customerStore.selected[addressType], field);
 
       const isValid = this.testValidationRules(value, field, addressType);
-
       if (!isValid) {
         this.addAddressError(addressType, field, displayError);
       } else {
@@ -241,6 +249,10 @@ export default defineStore('ValidationStore', {
           [addressType]: errors,
         },
       });
+    },
+
+    setAddressFinderError(value) {
+      this.setData({ addressFinderError: value });
     },
   },
 });
