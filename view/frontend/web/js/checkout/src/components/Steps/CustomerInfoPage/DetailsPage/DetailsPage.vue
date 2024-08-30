@@ -61,7 +61,7 @@
         <button
           class="button details-button button--medium"
           :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
-          @click="setNotClickAndCollect()">
+          @click="deliveryTabEvent">
           <DeliveryTabIcon
             :fill="!isClickAndCollect ? 'white' : '#0F273C'"
           />
@@ -232,7 +232,8 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="(!isAddressValid(address_type) && !selected[address_type].id)
+        :disabled="!isAddressValid(address_type)
+        || inputsSanitiseError
         || (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
@@ -301,6 +302,7 @@ import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryD
 import expressPaymentMethods from '@/extensions/expressPaymentMethods';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 import clickAndCollectComponents from '@/extensions/clickAndCollectComponents';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'YourDetailComponent',
@@ -530,6 +532,10 @@ export default {
     },
     formatPrice(price) {
       return formatPrice(price);
+    },
+    async deliveryTabEvent() {
+      await functionExtension('onDeliveryTabEvent');
+      this.setNotClickAndCollect();
     },
   },
 };

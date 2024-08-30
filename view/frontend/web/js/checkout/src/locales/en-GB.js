@@ -83,10 +83,10 @@ export default {
     },
     clickAndCollectSection: {
       clickAndCollectTitle: 'Choose a Click & Collect Location',
-      clickAndCollectInputPlaceholder: 'Search by address or postcode',
+      clickAndCollectInputPlaceholder: 'Search by postcode',
       clickAndCollectErrorMessage: 'Something went wrong while searching for locations. Please try again later.',
       clickAndCollectMoreLocations: 'Show more locations',
-      clickAndCollectAddresses: 'Click & Collect Address:',
+      clickAndCollectAddresses: 'Chosen Click & Collect Address:',
       clickAndCollectContinueButton: 'Continue To Payment',
     },
     deliverySection: {
