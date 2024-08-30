@@ -88,6 +88,7 @@ export default {
       clickAndCollectMoreLocations: 'Show more locations',
       clickAndCollectAddresses: 'Chosen Click & Collect Address:',
       clickAndCollectContinueButton: 'Continue To Payment',
+      clickAndCollectFindButton: 'Find',
     },
     deliverySection: {
       toShippingButton: 'Choose your shipping method',

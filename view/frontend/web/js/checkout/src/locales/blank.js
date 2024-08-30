@@ -77,6 +77,7 @@ export default {
       clickAndCollectMoreLocations: ' ',
       clickAndCollectAddresses: ' ',
       clickAndCollectContinueButton: ' ',
+      clickAndCollectFindButton: ' ',
     },
     deliverySection: {
       toShippingButton: ' ',
