@@ -19,6 +19,7 @@
       flex-shrink: 0;
       justify-content: end;
       width: var(--header-logo__width--mobile);
+      padding-top: var(--indent__xs);
 
       img {
         width: 100%;

@@ -71,6 +71,10 @@ import VisaPaySvg from '@/icons/payments/white/icon-visa-white.svg';
 import DiscoverSvg from '@/icons/payments/white/icon-discover-white.svg';
 import DinersSvg from '@/icons/payments/white/icon-diners-white.svg';
 import JCBSvg from '@/icons/payments/white/icon-jcb-white.svg';
+import ApplePaySvg from '@/icons/payments/white/icon-applepay-white.svg';
+import GooglePaySvg from '@/icons/payments/white/icon-googlepay-white.svg';
+import PayPalSvg from '@/icons/payments/white/icon-paypal-white.svg';
+import VenmoPayIcon from '@/icons/payments/white/icon-venmo-white.svg';
 
 // Extensions
 import footerPaymentIcons from '@/extensions/footerPaymentIcons';
@@ -103,6 +107,18 @@ export default {
   computed: {
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods', 'getPaymentPriority', 'isPaymentMethodAvailable']),
+    ApplePayIcon() {
+      return getStaticUrl(ApplePaySvg);
+    },
+    GooglePayIcon() {
+      return getStaticUrl(GooglePaySvg);
+    },
+    PayPalIcon() {
+      return getStaticUrl(PayPalSvg);
+    },
+    VenmoPayIcon() {
+      return getStaticUrl(VenmoPayIcon);
+    },
   },
   created() {
     this.footerPaymentIcons = Object.keys(footerPaymentIcons());
