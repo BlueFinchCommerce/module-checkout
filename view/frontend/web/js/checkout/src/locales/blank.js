@@ -161,6 +161,10 @@ export default {
     stepCompleteTitle: ' ',
     nominatedDelivery: ' ',
     nominatedDeliveryCalendar: ' ',
+    specifiedDayDeliveryTitle: ' ',
+    specifiedDayDeliveryDescription: ' ',
+    specifiedDayDeliveryDetails: ' ',
+    specifiedDayCalendar: ' ',
     tbc: ' ',
     deliveryInstructions: {
       title: ' ',

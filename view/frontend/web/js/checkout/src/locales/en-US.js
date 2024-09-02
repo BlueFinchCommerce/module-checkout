@@ -193,6 +193,10 @@ export default {
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
     nominatedDeliveryCalendar: 'Please select a date',
+    specifiedDayDeliveryTitle: 'Specified Date',
+    specifiedDayDeliveryDescription: 'Choose a day that suits you',
+    specifiedDayDeliveryDetails: 'Deliveries made',
+    specifiedDayCalendar: 'Your order will be delivered on',
     tbc: 'Calculated at next step',
     deliveryInstructions: {
       title: 'Delivery Instructions?',

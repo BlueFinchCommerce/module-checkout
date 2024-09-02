@@ -211,7 +211,7 @@ export default {
         : (date.getDate() % 10 === 2 && date.getDate() !== 12 ? 'nd'
           : (date.getDate() % 10 === 3 && date.getDate() !== 13 ? 'rd' : 'th')));
       const weekday = this.weekdays[date.getDay()];
-      return `${weekday}, ${this.getMonth()} ${day} ${this.year}`;
+      return `${weekday} ${day} ${this.getMonth()} ${this.year}`;
     },
 
     /**
