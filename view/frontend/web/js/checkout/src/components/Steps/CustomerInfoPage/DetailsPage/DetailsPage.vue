@@ -55,7 +55,7 @@
       <Newsletter v-if="emailEntered"/>
 
       <div
-        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual && !ageCheckRequired"
         class="shipping-type-toggle"
       >
         <button
