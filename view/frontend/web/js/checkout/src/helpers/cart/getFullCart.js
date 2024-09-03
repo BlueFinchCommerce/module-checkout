@@ -134,6 +134,9 @@ export default async () => {
             }
           }
         }
+        ... on SimpleProduct {
+          weight
+        }
       }
       quantity
       errors {

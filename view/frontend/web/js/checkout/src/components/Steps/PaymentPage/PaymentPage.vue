@@ -48,6 +48,12 @@
               v-if="isPaymentMethodAvailable('braintree_cc_vault')"
               :key="`braintreeStoredMethods-${paymentKey}`"
             />
+
+            <component
+              :is="additionalVaultedMethod"
+              v-for="additionalVaultedMethod in additionalVaultedMethods"
+              :key="additionalVaultedMethod"
+            />
           </template>
 
           <div
@@ -140,6 +146,7 @@ import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/Vaul
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
+import additionalVaultedMethods from '@/extensions/additionalVaultedMethods';
 import paymentMethods from '@/extensions/paymentMethods';
 import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
@@ -160,6 +167,7 @@ export default {
     ProgressBar,
     TextField,
     VaultedMethods,
+    ...additionalVaultedMethods(),
     ...paymentMethods(),
     ...paymentMethodsPrimary(),
     ...ageCheckerExtensions(),
@@ -167,6 +175,7 @@ export default {
   data() {
     return {
       additionalPaymentMethods: [],
+      additionalVaultedMethods: [],
       additionalPaymentMethodsPrimary: [],
       ageCheckerExtensions: [],
       storedStepText: '',
@@ -216,6 +225,8 @@ export default {
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
+    this.additionalVaultedMethods = Object.keys(additionalVaultedMethods());
+    console.log(this.additionalVaultedMethods);
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
 
     this.trackStep({

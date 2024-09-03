@@ -104,6 +104,9 @@ export default {
       clickandCollectOpeningTimes: 'Opening Times',
       clickandCollectThresholdHigh: 'Unfortunately, your basket value is too high for Click and Collect. If you want to collect from a store near you, your basket must be less than {price}.',
       clickandCollectThresholdLow: 'Unfortunately, your basket value is too low for Click and Collect. If you want to collect from a store near you, your basket must be more than {price}.',
+      clickandCollectThresholdHighWeight: 'Unfortunately, your basket weight is too high for Click and Collect.',
+      clickandCollectThresholdLowWeight: 'Unfortunately, your basket weight is too low for Click and Collect.',
+
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',
