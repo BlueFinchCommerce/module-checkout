@@ -145,6 +145,7 @@ div.dropdown.promo-dropdown {
     button {
       padding: var(--indent__s) var(--indent__xs);
       word-break: break-word;
+      text-transform: var(--button__text-transform);
     }
   }
 
