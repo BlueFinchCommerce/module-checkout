@@ -23,6 +23,7 @@
               class="pay-with__content"
             >
               <img
+                :class="cCType"
                 :alt="cCType"
                 :src="getCCIcon(cCType)"
                 :data-cy="generateDataCY(cCType, 'braintree')"

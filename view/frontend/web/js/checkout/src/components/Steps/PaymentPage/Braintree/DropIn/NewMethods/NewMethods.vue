@@ -29,8 +29,7 @@
     />
     <Agreements id="braintreeNew" />
     <Recaptcha
-      v-if="isRecaptchaVisible('placeOrder')"
-      id="placeOrder"
+      id="braintree"
       location="braintreeNewMethods"
     />
     <PrivacyPolicy />

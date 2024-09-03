@@ -8,7 +8,7 @@ export default async (payment) => {
   const { tokens } = useRecaptchaStore();
 
   const headers = {
-    'X-ReCaptcha': tokens.placeOrder,
+    'X-ReCaptcha': tokens.placeOrder ? tokens.placeOrder : tokens.braintree,
     'X-Requested-With': 'XMLHttpRequest',
   };
 
@@ -25,7 +25,7 @@ export default async (payment) => {
     buildCartUrl('payment-information'),
     {
       ...payment,
-      'g-recaptcha-response': tokens.placeOrder,
+      'g-recaptcha-response': tokens.placeOrder ? tokens.placeOrder : tokens.braintree,
     },
     { headers },
   ).then((response) => response.data);
