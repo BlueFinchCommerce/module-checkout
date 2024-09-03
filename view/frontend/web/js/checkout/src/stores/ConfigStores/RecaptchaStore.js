@@ -56,7 +56,7 @@ export default defineStore('RecaptchaStore', {
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
           placeOrder: storeConfig.recaptcha_place_order,
-          braintree: storeConfig.recaptcha_braintree
+          braintree: storeConfig.recaptcha_braintree,
         },
       });
     },
