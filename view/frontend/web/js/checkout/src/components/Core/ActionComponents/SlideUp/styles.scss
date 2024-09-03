@@ -18,7 +18,7 @@
   overflow: auto;
   position: fixed;
   width: 100%;
-  z-index: 160; // High to be in front of Google Pay
+  z-index: 200; // High to be in front of Google Pay
 }
 
 .slideup-header {
