@@ -34,6 +34,7 @@ type StoreConfig {
     recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
     recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
     recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
+    recaptcha_braintree: String @doc(description: "Recaptcha Braintree Type")
     validation_failure_message: String @doc(description: "Recaptcha Failure Message")
 
     braintree_environment: String @doc(description: "Braintree environment.")

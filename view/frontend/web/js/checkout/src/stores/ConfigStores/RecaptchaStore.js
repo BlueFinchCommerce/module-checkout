@@ -11,6 +11,7 @@ export default defineStore('RecaptchaStore', {
     enabled: {
       customerLogin: false,
       placeOrder: false,
+      braintree: false,
     },
     tokens: {},
     errors: {},
@@ -40,6 +41,7 @@ export default defineStore('RecaptchaStore', {
           recaptcha_v3_invisible_key
           recaptcha_customer_login
           recaptcha_place_order
+          recaptcha_braintree
           validation_failure_message
         }
       `;
@@ -54,6 +56,7 @@ export default defineStore('RecaptchaStore', {
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
           placeOrder: storeConfig.recaptcha_place_order,
+          braintree: storeConfig.recaptcha_braintree
         },
       });
     },
