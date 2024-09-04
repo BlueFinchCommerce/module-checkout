@@ -42,7 +42,7 @@
       <div class="order-summary-title">
         <TextField
           class="order-summary-title-text"
-          :text="orderSummaryText + ': '"
+          :text="orderSummaryText + ':'"
           :data-cy="'collapsed-order-summary-title-mobile'"
         />
         <Price
