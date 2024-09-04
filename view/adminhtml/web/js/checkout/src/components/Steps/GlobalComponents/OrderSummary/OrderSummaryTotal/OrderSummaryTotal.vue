@@ -28,7 +28,7 @@
         <div class="total__row">
           <TextField
             class="total__text title"
-            :text="discount.label"
+            :text="$t('orderSummary.giftCardDiscount.title')"
           />
           <Price
             class="total__text discount"

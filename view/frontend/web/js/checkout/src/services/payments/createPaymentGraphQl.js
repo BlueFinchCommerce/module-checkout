@@ -41,8 +41,8 @@ export default (paymentMethod) => {
 
   const customHeaders = {};
 
-  if (tokens.placeOrder) {
-    customHeaders['X-ReCaptcha'] = tokens.placeOrder;
+  if (tokens.placeOrder || tokens.braintree) {
+    customHeaders['X-ReCaptcha'] = tokens.placeOrder ? tokens.placeOrder : tokens.braintree;
   }
 
   return beforePaymentRequest()

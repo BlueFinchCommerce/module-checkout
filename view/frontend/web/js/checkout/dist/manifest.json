@@ -64,7 +64,7 @@
   },
   "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
+    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   },
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
     "file": "bancontact.svg",
@@ -236,6 +236,6 @@
   },
   "src/icons/shippingIcon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
+    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   }
 }
