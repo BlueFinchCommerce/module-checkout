@@ -34,7 +34,7 @@
         <div class="total__row">
           <TextField
             class="total__text title"
-            :text="discount.label"
+            :text="$t('orderSummary.giftCardDiscount.title')"
             :data-cy="dataCy ? `discount-title-${dataCy}` : 'discount-title'"
           />
           <Price
