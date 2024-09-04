@@ -13,7 +13,7 @@
 .instantCheckout-block {
   p {
     font-size: var(--font__heading--mobile);
-    font-weight: var(--font-weight__semibold);
+    font-weight: var(--instant-checkout-weight, var(--font-weight__semibold));
     color: var(--font__color);
     font-family: var(--font-family__header);
     text-align: var(--instant-checkout__text-align);
