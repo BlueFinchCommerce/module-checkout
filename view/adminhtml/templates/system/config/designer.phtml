@@ -1954,14 +1954,6 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         <input id="gene-bettercheckout-crosssells-text" data-type="checkout-wording" type="text" placeholder="You may also like these items..." />
                                     </div>
                                     <div class="fieldset">
-                                        <label for="gene-bettercheckout-crosssells-cta-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('"Cross Sells Add to Basket Button" Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="gene-bettercheckout-crosssells-cta-text" data-type="checkout-wording" type="text" placeholder="Add to Basket" />
-                                    </div>
-                                    <div class="fieldset">
                                         <label for="gene-bettercheckout-coupondiscount-text">
                                             <span>
                                                 <?= $escaper->escapeHtml(__('"Promo Code" Text')) ?>
@@ -2091,6 +2083,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <!-- gene-bettercheckout-removeitem-text still available to change in component but currently hidden by css -->
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-crosssells-cta-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Cross Sells Add to Basket Button" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-crosssells-cta-text" data-type="checkout-wording" type="text" placeholder="Add to Basket" />
+                                    </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-applybutton-text">
                                             <span>
