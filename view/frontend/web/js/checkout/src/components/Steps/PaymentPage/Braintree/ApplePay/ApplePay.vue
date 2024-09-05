@@ -22,7 +22,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
@@ -130,16 +129,14 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     click(event) {
       event.preventDefault();
       this.setErrorMessage('');
-      // Check that the agreements (if any) and recpatcha is valid.
+      // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!agreementsValid) {
         return;
       }
 
@@ -411,6 +408,16 @@ export default {
         "We're unable to take payments through Apple Pay at the moment. Please try an alternative payment method.",
       );
     },
+  },
+
+  unmounted() {
+    if (this.instance) {
+      this.instance.teardown();
+    }
+
+    if (this.applePayInstance) {
+      this.applePayInstance.teardown();
+    }
   },
 };
 </script>

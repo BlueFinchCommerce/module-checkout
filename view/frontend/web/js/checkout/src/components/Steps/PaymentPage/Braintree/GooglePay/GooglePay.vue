@@ -20,7 +20,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
@@ -43,6 +42,7 @@ export default {
       googleClient: null,
       googlePaymentInstance: null,
       googlePayLoaded: false,
+      threeDSecureInstance: null,
       key: 'braintreeGooglePay',
       method: 'braintree_googlepay',
     };
@@ -142,15 +142,13 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     onClick(type) {
       this.setErrorMessage('');
-      // Check that the agreements (if any) and recpatcha is valid.
+      // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!agreementsValid) {
         return false;
       }
 
@@ -365,7 +363,7 @@ export default {
         });
       }
 
-      const threeDSecureInstance = await braintree.threeDSecure
+      this.threeDSecureInstance = await braintree.threeDSecure
         .create({
           version: 2,
           client: this.instance,
@@ -389,7 +387,7 @@ export default {
           },
         };
 
-        threeDSecureInstance.verifyCard(threeDSecureParameters, (err, threeDSResponse) => {
+        this.threeDSecureInstance.verifyCard(threeDSecureParameters, (err, threeDSResponse) => {
           if (err) {
             if (err.code === 'THREEDS_LOOKUP_VALIDATION_ERROR') {
               const errorMessage = err.details.originalError.details.originalError.error.message;
@@ -466,6 +464,19 @@ export default {
         },
       };
     },
+  },
+  unmounted() {
+    if (this.instance) {
+      this.instance.teardown();
+    }
+
+    if (this.googlePaymentInstance) {
+      this.googlePaymentInstance.teardown();
+    }
+
+    if (this.threeDSecureInstance) {
+      this.threeDSecureInstance.teardown();
+    }
   },
 };
 </script>
