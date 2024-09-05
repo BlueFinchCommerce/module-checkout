@@ -226,7 +226,6 @@ export default {
     this.additionalPaymentMethods = Object.keys(paymentMethods());
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
     this.additionalVaultedMethods = Object.keys(additionalVaultedMethods());
-    console.log(this.additionalVaultedMethods);
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
 
     this.trackStep({
