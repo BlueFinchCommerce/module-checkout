@@ -7,8 +7,11 @@ import Checkbox from '@/components/Core/ActionComponents/Inputs/Checkbox/Checkbo
 import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import GoogleMap from '@/components/Steps/CustomerInfoPage/Addresses/GoogleMap/GoogleMap.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
+import IframeComponent from '@/components/Core/ActionComponents/Iframe/Iframe.vue';
+import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/Form/Name/Name.vue';
 import Price from '@/components/Core/ContentComponents/Price/Price.vue';
@@ -24,6 +27,7 @@ import TextField from '@/components/Core/ContentComponents/TextField/TextField.v
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
+// Components
 export default {
   AddressBlock,
   AddressList,
@@ -34,8 +38,11 @@ export default {
   Edit,
   ErrorMessage,
   GoogleMap,
+  LinkComponent,
   Loader,
   Locate,
+  IframeComponent,
+  Modal,
   MyButton,
   NameFields,
   Price,

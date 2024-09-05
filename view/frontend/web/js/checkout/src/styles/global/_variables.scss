@@ -300,21 +300,34 @@
     //
     // Tab Buttons
     //  ---------------------------------------------
-    --button__tab-font-color: var(--color__primary-white);
-    --button__tab-background-color: var(--color__primary-blue);
-    --button__tab-border-color: var(--color__primary-blue);
-    --button__tab-border-weight: var(--button__border);
+
+    --button__tab-font-color: var(--button-primary__font-color);
+    --button__tab-background-color: var(--button-primary__background-color);
+    --button__tab-border-color: var(--button-primary__border-color);
+    --button__tab-border-weight: var(--button-primary__border-weight);
     --button__tab-border-box-shadow: 0;
 
-    --button__tab-font-color-hover: var(--color__primary-white);
-    --button__tab-background-color-hover: var(--color__primary-blue);
-    --button__tab-border-color-hover: var(--color__primary-blue);
-    --button__tab-border-weight-hover: var(--button__border);
+    --button__tab-font-color-hover: var(--button-primary__font-color-hover);
+    --button__tab-background-color-hover: var(--button-primary__background-color-hover);
+    --button__tab-border-color-hover: var(--button-primary__border-color-hover);
+    --button__tab-border-weight-hover: var(--button-primary__border-weight-hover);
 
-    --button__tab-font-color-focus: var(--color__primary-white);
-    --button__tab-background-color-focus: var(--color__primary-blue);
-    --button__tab-border-color-focus: var(--color__primary-blue);
-    --button__tab-border-weight-focus: var(--button__border);
+    --button__tab-font-color-focus: var(--button-primary__font-color-focus);
+    --button__tab-background-color-focus: var(--button-primary__background-color-focus);
+    --button__tab-border-color-focus: var(--button-primary__border-color-focus);
+    --button__tab-border-weight-focus: var(--button-primary__border-weight-focus);
+
+    --button__tab__unselected-color: var(--button-secondary__font-color);
+    --button__tab__unselected-background-color: var(--button-secondary__background-color);
+    --button__tab__unselected-border-color: var(--button-secondary__border-color);
+
+    --button__tab__unselected-color-hover: var(--button-secondary__font-color-hover);
+    --button__tab__unselected-background-color-hover: var(--button-secondary__background-color-hover);
+    --button__tab__unselected-border-color-hover: var(--button-secondary__border-color-hover);
+
+    --button__tab__unselected-color-focus: var(--button-secondary__font-color-focus);
+    --button__tab__unselected-background-color-focus: var(--button-secondary__background-color-focus);
+    --button__tab__unselected-border-color-focus: var(--button-secondary__border-color-focus);
 
     //
     // Link Buttons

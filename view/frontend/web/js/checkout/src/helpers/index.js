@@ -12,7 +12,6 @@ import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
 import expressPaymentOnClick from '@/helpers/payment/expressPaymentOnClick';
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
 import formatAddress from '@/helpers/addresses/formatAddress';
-import formatClickAndCollectAddress from '@/helpers/addresses/formatClickAndCollectAddress';
 import formatPrice from '@/helpers/payment/formatPrice';
 import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData';
 import getAfdUrls from '@/helpers/addresses/getAfdUrls';
@@ -69,7 +68,6 @@ export default {
   expressPaymentOnClick,
   expressPaymentOnClickDataLayer,
   formatAddress,
-  formatClickAndCollectAddress,
   formatPrice,
   getAdditionalPaymentData,
   getAfdUrls,

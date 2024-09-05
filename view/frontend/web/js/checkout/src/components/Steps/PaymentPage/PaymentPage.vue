@@ -24,10 +24,6 @@
           :key="ageCheckerExtension"
         />
         <template v-if="cartGrandTotal">
-          <ErrorMessage
-            v-if="rvvupErrorMessage !== ''"
-            :message="rvvupErrorMessage"
-          />
           <template v-if="isLoggedIn && hasVaultedMethods">
             <div
               class="braintree-payment__title"
@@ -47,6 +43,12 @@
             <VaultedMethods
               v-if="isPaymentMethodAvailable('braintree_cc_vault')"
               :key="`braintreeStoredMethods-${paymentKey}`"
+            />
+
+            <component
+              :is="additionalVaultedMethod"
+              v-for="additionalVaultedMethod in additionalVaultedMethods"
+              :key="additionalVaultedMethod"
             />
           </template>
 
@@ -79,11 +81,9 @@
             :key="additionalPaymentMethodPrimary"
           />
 
-          <BraintreeDropIn v-if="isBraintreeEnabled === '1'"
-            :key="`braintreeNewMethods-${paymentKey}`" />
-          <RvvupPayByBank
-            v-if="rvvupPaymentsActive"
-            :key="`rvvupNewMethods-${paymentKey}`"
+          <BraintreeDropIn
+            v-if="isBraintreeEnabled === '1'"
+            :key="`braintreeNewMethods-${paymentKey}`"
           />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
@@ -128,7 +128,6 @@ import SavedShippingMethod
 import Rewards from '@/components/Core/ContentComponents/Rewards/Rewards.vue';
 import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.vue';
 import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
-import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
@@ -140,6 +139,7 @@ import VaultedMethods from '@/components/Steps/PaymentPage/Braintree/DropIn/Vaul
 import paymentMethodSelected from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 
 // Extensions
+import additionalVaultedMethods from '@/extensions/additionalVaultedMethods';
 import paymentMethods from '@/extensions/paymentMethods';
 import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
@@ -151,7 +151,6 @@ export default {
     SavedShippingMethod,
     Rewards,
     FreeMOCheckPayment,
-    RvvupPayByBank,
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
@@ -160,6 +159,7 @@ export default {
     ProgressBar,
     TextField,
     VaultedMethods,
+    ...additionalVaultedMethods(),
     ...paymentMethods(),
     ...paymentMethodsPrimary(),
     ...ageCheckerExtensions(),
@@ -167,6 +167,7 @@ export default {
   data() {
     return {
       additionalPaymentMethods: [],
+      additionalVaultedMethods: [],
       additionalPaymentMethodsPrimary: [],
       ageCheckerExtensions: [],
       storedStepText: '',
@@ -178,7 +179,6 @@ export default {
       'currencyCode',
       'storeCode',
       'rewardsEnabled',
-      'rvvupPaymentsActive',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
@@ -187,7 +187,6 @@ export default {
       'hasVaultedMethods',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
-      'rvvupErrorMessage',
       'paymentErrorMessage',
     ]),
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'cartGrandTotal']),
@@ -212,10 +211,9 @@ export default {
     this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
-    await this.getRvvupConfig();
-
     this.additionalPaymentMethods = Object.keys(paymentMethods());
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
+    this.additionalVaultedMethods = Object.keys(additionalVaultedMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
 
     this.trackStep({
@@ -236,7 +234,7 @@ export default {
     ...mapActions(usePaymentStore, ['setPaymentErrorMessage']),
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
   },
 };

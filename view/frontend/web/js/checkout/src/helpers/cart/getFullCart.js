@@ -5,6 +5,7 @@ export default async () => {
   const customerStore = useCustomerStore();
 
   const fullCart = `
+    id
     email
     applied_gift_cards {
       code
@@ -133,6 +134,9 @@ export default async () => {
               value
             }
           }
+        }
+        ... on SimpleProduct {
+          weight
         }
       }
       quantity

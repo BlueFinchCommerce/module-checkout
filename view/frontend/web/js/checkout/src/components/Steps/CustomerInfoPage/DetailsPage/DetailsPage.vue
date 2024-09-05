@@ -277,7 +277,6 @@ import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMess
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
-import ClickAndCollect from '@/components/Steps/CustomerInfoPage/Addresses/ClickAndCollect/ClickAndCollect.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -327,7 +326,6 @@ export default {
     BillingForm,
     Newsletter,
     MyButton,
-    ClickAndCollect,
     ProgressBar,
     Recaptcha,
     Agreements,
