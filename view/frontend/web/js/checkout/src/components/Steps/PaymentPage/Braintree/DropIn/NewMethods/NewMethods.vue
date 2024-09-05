@@ -397,7 +397,6 @@ export default {
           } else if (payload.liabilityShifted
             || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
             || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
-            this.setPaymentErrorMessage('There was an error completing validation, please try again.');
             resolve(payload);
           } else {
             reject(new Error('There was an error completing validation, please try again.'));
