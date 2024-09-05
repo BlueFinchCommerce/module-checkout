@@ -77,6 +77,7 @@ export default {
       clickAndCollectMoreLocations: ' ',
       clickAndCollectAddresses: ' ',
       clickAndCollectContinueButton: ' ',
+      clickAndCollectFindButton: ' ',
     },
     deliverySection: {
       toShippingButton: ' ',
@@ -160,6 +161,10 @@ export default {
     stepCompleteTitle: ' ',
     nominatedDelivery: ' ',
     nominatedDeliveryCalendar: ' ',
+    specifiedDayDeliveryTitle: ' ',
+    specifiedDayDeliveryDescription: ' ',
+    specifiedDayDeliveryDetails: ' ',
+    specifiedDayCalendar: ' ',
     tbc: ' ',
     deliveryInstructions: {
       title: ' ',

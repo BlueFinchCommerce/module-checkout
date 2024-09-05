@@ -8,10 +8,11 @@
   &-line {
     border-bottom: var(--divider__border);
     flex-grow: 1;
+    min-width: var(--indent__xl);
   }
 
   p {
-    font-weight: var(--font-weight__semibold);
+    font-weight: var(--dividers-font-weight, var(--font-weight__semibold));
     font-family: var(--font-family__copy);
     font-size: var(--font__heading--mobile);
     margin: 0 var(--indent__s);

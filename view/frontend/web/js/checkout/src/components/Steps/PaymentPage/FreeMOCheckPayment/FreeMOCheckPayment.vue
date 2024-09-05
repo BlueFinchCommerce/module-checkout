@@ -24,8 +24,8 @@
     />
     <PrivacyPolicy v-if="isMethodSelected" />
     <Recaptcha
-      v-if="isMethodSelected && isRecaptchaVisible('placeOrder')"
-      id="placeOrder"
+      v-if="isMethodSelected &&  (getTypeByPlacement('placeOrder') || getTypeByPlacement('braintree'))"
+      :id="getTypeByPlacement('placeOrder') ? 'placeOrder' : 'braintree'"
       location="freeMoCheckPayment"
     />
     <MyButton
@@ -89,7 +89,7 @@ export default {
     ...mapState(useCustomerStore, [
       'customer',
     ]),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   watch: {
     selectedMethod: {

@@ -29,8 +29,8 @@
     />
     <Agreements id="braintreeNew" />
     <Recaptcha
-      v-if="isRecaptchaVisible('placeOrder')"
-      id="placeOrder"
+      v-if="getTypeByPlacement('braintree')"
+      id="braintree"
       location="braintreeNewMethods"
     />
     <PrivacyPolicy />
@@ -126,7 +126,7 @@ export default {
       'getPaymentPriority',
       'selectedMethod',
     ]),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
@@ -397,7 +397,7 @@ export default {
           } else if (payload.liabilityShifted
             || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
             || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
-            this.showLoader();
+            this.setPaymentErrorMessage('There was an error completing validation, please try again.');
             resolve(payload);
           } else {
             reject(new Error('There was an error completing validation, please try again.'));

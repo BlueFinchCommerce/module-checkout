@@ -83,11 +83,12 @@ export default {
     },
     clickAndCollectSection: {
       clickAndCollectTitle: 'Choose a Click & Collect Location',
-      clickAndCollectInputPlaceholder: 'Search by address or postcode',
+      clickAndCollectInputPlaceholder: 'Search by postcode',
       clickAndCollectErrorMessage: 'Something went wrong while searching for locations. Please try again later.',
       clickAndCollectMoreLocations: 'Show more locations',
-      clickAndCollectAddresses: 'Click & Collect Address:',
+      clickAndCollectAddresses: 'Chosen Click & Collect Address:',
       clickAndCollectContinueButton: 'Continue To Payment',
+      clickAndCollectFindButton: 'Find',
     },
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
@@ -207,6 +208,10 @@ export default {
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
     nominatedDeliveryCalendar: 'Please select a date',
+    specifiedDayDeliveryTitle: 'Specified Date',
+    specifiedDayDeliveryDescription: 'Choose a day that suits you',
+    specifiedDayDeliveryDetails: 'Deliveries made',
+    specifiedDayCalendar: 'Your order will be delivered on',
     tbc: 'Calculated at next step',
     deliveryInstructions: {
       title: 'Delivery Instructions?',

@@ -11,22 +11,28 @@ $fontUrl = $assetViewModel->getFontUrl();
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {
-        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
-    };
+  window.geneCheckout = window.geneCheckout || {};
+  window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
 </script>
+
 
 <?php if ($fontUrl !== null) : ?>
     <style>
-        @font-face {
-            font-family: 'BetterCheckoutFont';
-            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
-        }
+      @font-face {
+        font-family: 'BetterCheckoutFont';
+        src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+      }
     </style>
 <?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>
     <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+<?php endforeach; ?>
+
+<?php foreach ($jsAssets['main'] as $jsAsset): ?>
+    <script>
+      window.geneCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
+    </script>
 <?php endforeach; ?>
 
 <button data-mage-init='{"Gene_BetterCheckout/js/designer": {
@@ -39,12 +45,20 @@ $fontUrl = $assetViewModel->getFontUrl();
     <?= $escaper->escapeHtml(__('Open Designer')) ?>
 </button>
 
+<script>
+  window.geneCheckout.staticPath =
+    window.geneCheckout.staticPath.replace(
+      /(.+)\/Gene_BetterCheckout\//,
+      window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+    );
+</script>
+
 <div id="gene-bettercheckout-designer" style="display: none;" class="open">
     <button class="toggle action-close"></button>
     <div class="sidebar">
         <div class="fields">
             <div class="section-config"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -57,7 +71,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -70,7 +84,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -207,7 +221,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -245,7 +259,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -308,7 +322,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -342,7 +356,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -380,7 +394,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -416,7 +430,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config desktop-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -452,7 +466,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config shipping-specific-field payment-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -488,7 +502,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -535,7 +549,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -548,7 +562,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -646,7 +660,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -682,7 +696,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -721,7 +735,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -821,7 +835,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -855,7 +869,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -868,7 +882,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -926,7 +940,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -984,7 +998,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                            data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                                 "animate": 200,
                                                 "collapsible": true,
                                                 "openedState": "active"
@@ -1045,7 +1059,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1058,7 +1072,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1116,7 +1130,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1174,7 +1188,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1182,7 +1196,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     >
                                         <div class="admin__collapsible-block">
                                             <span id="master-styles-secondary-button-focus-tab"></span>
-                                        <a data-role="title" class="subheading" href="#master-styles-secondary-button-focus-tab">
+                                            <a data-role="title" class="subheading" href="#master-styles-secondary-button-focus-tab">
                                                 <?= $escaper->escapeHtml(__('Focus Properties')) ?>
                                             </a>
                                             <div class="config" data-role="content">
@@ -1235,7 +1249,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config details-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1248,7 +1262,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1306,7 +1320,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1364,7 +1378,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                            data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                                 "animate": 200,
                                                 "collapsible": true,
                                                 "openedState": "active"
@@ -1425,7 +1439,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1438,7 +1452,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1474,7 +1488,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1501,7 +1515,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1531,7 +1545,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1629,7 +1643,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1678,7 +1692,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config details-specific-field payment-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1766,7 +1780,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1796,7 +1810,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -1809,7 +1823,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1841,7 +1855,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1919,7 +1933,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2024,7 +2038,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2056,7 +2070,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2069,6 +2083,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <!-- gene-bettercheckout-removeitem-text still available to change in component but currently hidden by css -->
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-crosssells-cta-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Cross Sells Add to Basket Button" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-crosssells-cta-text" data-type="checkout-wording" type="text" placeholder="Add to Basket" />
+                                    </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-applybutton-text">
                                             <span>
@@ -2089,7 +2111,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config desktop-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2125,7 +2147,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config mobile-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2174,7 +2196,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config sign-in-specific-field details-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2209,7 +2231,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config sign-in-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2222,7 +2244,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2246,7 +2268,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config no-user-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2270,7 +2292,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config registered-user-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2294,7 +2316,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config guest-user-specific-field registered-user-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2329,7 +2351,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config details-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2342,7 +2364,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2382,7 +2404,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2406,7 +2428,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2430,7 +2452,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2462,7 +2484,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2492,7 +2514,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config shipping-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2505,7 +2527,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2530,7 +2552,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                         </div>
                         <div class="config" data-role="content">
                             <div class="section-config"
-                                data-mage-init='{"collapsible": {
+                                 data-mage-init='{"collapsible": {
                                     "animate": 200,
                                     "collapsible": true,
                                     "openedState": "active"
@@ -2558,7 +2580,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config payment-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2571,7 +2593,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2603,7 +2625,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"

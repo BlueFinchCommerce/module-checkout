@@ -17,13 +17,17 @@
       list-style: none;
       margin: var(--footer-icon-margin-mobile, 0 10px);
 
-      .google_pay {
-        top: 2px;
+      .VI {
+        top: -4px;
       }
 
       .card,
       .venmo {
         width: 30px;
+      }
+
+      .paypal {
+        width: 50px;
       }
 
       .klarna-icon {

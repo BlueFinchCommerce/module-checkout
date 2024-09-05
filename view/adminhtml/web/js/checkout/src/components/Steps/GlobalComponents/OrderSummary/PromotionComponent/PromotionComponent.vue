@@ -93,7 +93,7 @@
           <div class="product-actions">
             <MyButton
               primary
-              :label="$t('orderSummary.addToCart')"
+              :label="crossSellsCTAText"
               @click="addItem(product)"
             />
           </div>
@@ -134,7 +134,9 @@ export default {
     return {
       isDropDownVisible: false,
       crossSellsText: '',
+      crossSellsCTAText: '',
       crossSellsTextId: 'gene-bettercheckout-crosssells-text',
+      crossSellsCTATextId: 'gene-bettercheckout-crosssells-cta-text',
     };
   },
   computed: {
@@ -147,10 +149,15 @@ export default {
     this.crossSellsText = window.geneCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
 
+    this.crossSellsCTAText = window.geneCheckout?.[this.crossSellsCTATextId]
+      || this.$t('orderSummary.addToCart');
+
     document.addEventListener(this.crossSellsTextId, this.setCrossSellsText);
+    document.addEventListener(this.crossSellsCTATextId, this.setCrossSellsCTAText);
   },
   unmounted() {
     document.removeEventListener(this.crossSellsTextId, this.setCrossSellsText);
+    document.removeEventListener(this.crossSellsCTATextId, this.setCrossSellsCTAText);
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -160,6 +167,9 @@ export default {
 
     setCrossSellsText(event) {
       this.crossSellsText = event?.detail?.value || this.$t('orderSummary.crossSellsTitle');
+    },
+    setCrossSellsCTAText(event) {
+      this.crossSellsCTAText = event?.detail?.value || this.$t('orderSummary.addToCart');
     },
 
     openDropDown() {
