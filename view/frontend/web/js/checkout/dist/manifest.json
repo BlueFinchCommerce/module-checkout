@@ -49,7 +49,6 @@
       "p24.svg",
       "sepa.svg",
       "sofort.svg",
-      "rvvup-payment.svg",
       "paymentIcon.svg"
     ],
     "css": [
@@ -229,10 +228,6 @@
   "src/icons/payments/white/icon-visa-white.svg": {
     "file": "icon-visa-white.svg",
     "src": "src/icons/payments/white/icon-visa-white.svg"
-  },
-  "src/icons/rvvup-payment.svg": {
-    "file": "rvvup-payment.svg",
-    "src": "src/icons/rvvup-payment.svg"
   },
   "src/icons/shippingIcon.svg": {
     "file": "promo-icon.svg",

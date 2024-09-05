@@ -10,6 +10,8 @@ import GoogleMap from '@/components/Steps/CustomerInfoPage/Addresses/GoogleMap/G
 import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
+import IframeComponent from '@/components/Core/ActionComponents/Iframe/Iframe.vue';
+import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/Form/Name/Name.vue';
 import Price from '@/components/Core/ContentComponents/Price/Price.vue';
@@ -25,6 +27,7 @@ import TextField from '@/components/Core/ContentComponents/TextField/TextField.v
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import Tick from '@/components/Core/Icons/Tick/Tick.vue';
 
+// Components
 export default {
   AddressBlock,
   AddressList,
@@ -38,6 +41,8 @@ export default {
   LinkComponent,
   Loader,
   Locate,
+  IframeComponent,
+  Modal,
   MyButton,
   NameFields,
   Price,

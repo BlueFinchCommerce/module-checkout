@@ -11,7 +11,6 @@ export default defineStore('paymentStore', {
     cache: {},
     errorMessage: '',
     paymentErrorMessage: '',
-    rvvupErrorMessage: '',
     paymentEmitter: mitt(),
     availableMethods: getCartPaymentMethods(),
     expressMethods: [],
@@ -50,11 +49,6 @@ export default defineStore('paymentStore', {
     setPaymentErrorMessage(message) {
       this.setData({
         paymentErrorMessage: message,
-      });
-    },
-    setRvvupErrorMessage(message) {
-      this.setData({
-        rvvupErrorMessage: message,
       });
     },
 

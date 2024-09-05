@@ -5,6 +5,7 @@ export default async () => {
   const customerStore = useCustomerStore();
 
   const fullCart = `
+    id
     email
     applied_gift_cards {
       code
