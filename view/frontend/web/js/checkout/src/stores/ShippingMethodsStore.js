@@ -48,16 +48,19 @@ export default defineStore('shippingMethodsStore', {
     async setDefaultShippingMethod() {
       const cartStore = useCartStore();
 
+      const availableMethods = cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods || [];
+      const filteredMethods = availableMethods.filter(({ available }) => available);
+
       // Check if we have shipping methods but not one selected.
-      if (cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length === 1) {
+      if (filteredMethods?.length === 1) {
         if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
-          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
-          const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+          && availableMethods?.length) {
+          const shippingMethod = filteredMethods[0];
           this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
         }
       } else if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
-          && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
-        const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+          && filteredMethods?.length) {
+        const shippingMethod = filteredMethods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
       }
     },
@@ -96,10 +99,14 @@ export default defineStore('shippingMethodsStore', {
     async setAddressesOnCart() {
       const customerStore = useCustomerStore();
       const cartStore = useCartStore();
+      const { setLoadingState } = useLoadingStore();
 
+      setLoadingState(true);
       const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
 
       cartStore.handleCartData(response.cart);
+
+      setLoadingState(false);
     },
 
     async submitShippingInfo(carrierCode, methodCode) {
