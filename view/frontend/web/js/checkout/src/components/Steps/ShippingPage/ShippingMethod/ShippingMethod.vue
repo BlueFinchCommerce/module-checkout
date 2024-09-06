@@ -25,16 +25,14 @@
           <div class="divider-line" />
         </div>
         <div
-          v-if="cart.shipping_addresses?.[0]?.available_shipping_methods
-            && cart.shipping_addresses?.[0]?.available_shipping_methods.length > 0"
+          v-if="getShippingMethods && getShippingMethods.length > 0"
           class="shipping-method__container"
         >
           <template
-            v-for="(item) in cart.shipping_addresses?.[0]?.available_shipping_methods"
+            v-for="(item) in getShippingMethods"
             :key="item.carrier_code"
           >
             <span
-              v-if="item.isVisible"
               class="shipping-method__label"
               :class="{
                 'selected': (
@@ -78,8 +76,7 @@
           />
         </div>
         <TextField
-          v-else-if="!cart.shipping_addresses?.[0]?.available_shipping_methods
-            || cart.shipping_addresses?.[0]?.available_shipping_methods.length === 0"
+          v-else-if="!getShippingMethods || getShippingMethods.length === 0"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
           :data-cy="'no-shipping-methods-text'"
@@ -99,9 +96,9 @@
         primary
         :data-cy="'proceed-to-payment-button'"
         :label="proceedToPayText"
-        :disabled="(!cart.shipping_addresses?.[0]?.available_shipping_methods?.length
+        :disabled="(!getShippingMethods || !getShippingMethods.length
           || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
-          && (ageCheckRequired && ageCheckerErrors)"
+          || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         @click="goToPayment"
       />
     </div>
@@ -167,7 +164,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cart']),
+    ...mapState(useCartStore, ['cart', 'getShippingMethods']),
     ...mapState(useConfigStore, ['taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [

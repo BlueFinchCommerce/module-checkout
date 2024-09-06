@@ -56,7 +56,7 @@ export default defineStore('configStore', {
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
-    ageCheckRequired: false,
+    ageCheckRequired: undefined,
     ageCheckerErrors: false,
   }),
   getters: {

@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible && !ageCheckRequired">
+         v-show="isExpressPaymentsVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent v-if="!ageCheckRequired" />
+      <DividerComponent v-if="(typeof ageCheckRequired === 'undefined' || !ageCheckRequired)" />
       <PayWith/>
 
       <ProgressBar v-if="emailEntered"/>
@@ -55,7 +55,8 @@
       <Newsletter v-if="emailEntered"/>
 
       <div
-        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual && !ageCheckRequired"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual
+          && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)"
         class="shipping-type-toggle"
       >
         <button
@@ -233,8 +234,8 @@
         primary
         :label="proceedToShippingText"
         :disabled="!isAddressValid(address_type)
-        || inputsSanitiseError
-        || (ageCheckRequired && ageCheckerErrors)"
+          || inputsSanitiseError
+          || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -244,7 +245,7 @@
         primary
         :label="proceedToPayText"
         :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
-        ||(ageCheckRequired && ageCheckerErrors)"
+          || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />

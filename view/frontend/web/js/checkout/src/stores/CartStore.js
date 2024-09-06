@@ -102,6 +102,11 @@ export default defineStore('cartStore', {
         return prev + curr.gift_wrapping.price.value;
       }, state.cart.gift_wrapping?.price?.value || 0)
     ),
+    getShippingMethods: (state) => (
+      state.cart.shipping_addresses?.[0]?.available_shipping_methods?.filter(({ available, isVisible }) => (
+        available && isVisible
+      ))
+    ),
   },
   actions: {
     setData(data) {
