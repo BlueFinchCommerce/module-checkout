@@ -175,14 +175,14 @@
     padding: var(--button__padding-large);
   }
 
-  // &--blank {
-  //   background: var(--button-background-color);
-  //   border: var(--button-blank-border);
-  //   font-weight: var(--font-weight__regular);
-  //   font-family: var(--font-family__copy);
-  //   font-size: var(--button-blank-font-size, initial);
-  //   color: var(--text__color);
-  // }
+  &--blank {
+    background: transparent;
+    border: none;
+    font-weight: var(--font-weight__regular);
+    font-family: var(--font-family__copy);
+    font-size: initial;
+    color: var(--text__color);
+  }
 
   &--full {
     width: 100%;
