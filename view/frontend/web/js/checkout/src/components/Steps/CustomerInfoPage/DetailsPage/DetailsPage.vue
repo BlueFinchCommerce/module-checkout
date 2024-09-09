@@ -233,9 +233,11 @@
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type)
-          || inputsSanitiseError
-          || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
+        :disabled="isLoggedIn
+        ? (!isAddressValid(address_type) && !selected[address_type].id)
+        || inputsSanitiseError || (ageCheckRequired && ageCheckerErrors)
+        : (!isAddressValid(address_type)) || inputsSanitiseError
+        || (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />

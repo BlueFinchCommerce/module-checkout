@@ -296,6 +296,9 @@ export default {
 
   unmounted() {
     this.removeEventListeners();
+    if (this.instance) {
+      this.instance.teardown();
+    }
   },
   watch: {
     selectedMethod: {
