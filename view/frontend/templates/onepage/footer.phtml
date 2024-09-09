@@ -47,7 +47,7 @@ if ($orderViewViewModel) {
         <?php if ((float)$order->getGiftCardsAmount()): ?>
             <div class="checkout-success-summary-columns">
                 <span><?= $escaper->escapeHtml(__('Gift Card')) ?></span>
-                <span><?= $order->formatPrice($order->getGiftCardsAmount()) ?></span>
+                <span><?= '-' . $order->formatPrice($order->getGiftCardsAmount()) ?></span>
             </div>
         <?php endif; ?>
         <div class="checkout-success-summary-columns total-container">
