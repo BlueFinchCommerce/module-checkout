@@ -10,7 +10,7 @@ export default () => {
     prices: {
       row_total_including_tax: {
         value: item.product_price_value,
-      }
+      },
     },
     product: {
       name: item.product_name,
