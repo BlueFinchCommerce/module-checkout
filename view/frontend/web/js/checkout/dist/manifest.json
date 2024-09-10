@@ -22,10 +22,7 @@
       "icon-paypal-white.svg",
       "icon-venmo-white.svg",
       "loader.gif",
-      "bin.svg",
       "promo-icon.svg",
-      "gift-icon.svg",
-      "coupon-icon.svg",
       "delivery.svg",
       "detailsIcon.svg",
       "icon-applepay-colour.svg",
@@ -97,14 +94,6 @@
     "file": "sofort.svg",
     "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
   },
-  "src/icons/bin.svg": {
-    "file": "bin.svg",
-    "src": "src/icons/bin.svg"
-  },
-  "src/icons/coupon-icon.svg": {
-    "file": "coupon-icon.svg",
-    "src": "src/icons/coupon-icon.svg"
-  },
   "src/icons/delivery.svg": {
     "file": "delivery.svg",
     "src": "src/icons/delivery.svg"
@@ -112,10 +101,6 @@
   "src/icons/detailsIcon.svg": {
     "file": "detailsIcon.svg",
     "src": "src/icons/detailsIcon.svg"
-  },
-  "src/icons/gift-icon.svg": {
-    "file": "gift-icon.svg",
-    "src": "src/icons/gift-icon.svg"
   },
   "src/icons/loader.gif": {
     "file": "loader.gif",

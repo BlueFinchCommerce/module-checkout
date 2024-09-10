@@ -8,12 +8,7 @@
     @keydown="openDropDownKeyDown($event)"
   >
     <div class="coupon-discount-icon-container">
-      <img
-        :src="CouponCodeIcon"
-        alt="coupon-dropdown-icon"
-        :data-cy="dataCy ? `coupon-discount-icon-${dataCy}` : 'coupon-discount-icon'"
-
-      >
+      <CouponIcon />
     </div>
     <TextField
       :text="couponDiscountText"
@@ -81,14 +76,13 @@
   </DropDown>
 </template>
 <script>
-// helpers
-import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // components
 import DropDown from '@/components/Core/ActionComponents/DropDown/DropDown.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
+import CouponIcon from '@/components/Core/Icons/CouponIcon/CouponIcon.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
@@ -100,8 +94,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useLoadingStore from '@/stores/LoadingStore';
 
-import CouponCode from '@/icons/coupon-icon.svg';
-
 export default {
   name: 'CouponDiscount',
   components: {
@@ -109,6 +101,7 @@ export default {
     TextField,
     ArrowDown,
     ArrowUp,
+    CouponIcon,
     TextInput,
     MyButton,
     ErrorMessage,
@@ -145,9 +138,6 @@ export default {
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
     ...mapWritableState(useCartStore, ['discountCode']),
-    CouponCodeIcon() {
-      return `${getStaticUrl(CouponCode)}`;
-    },
   },
   methods: {
     ...mapActions(useCartStore, ['addDiscountCode', 'removeDiscountCode']),

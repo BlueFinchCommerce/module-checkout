@@ -8,9 +8,10 @@
       height="23"
       viewBox="0 0 23 23"
       fill="none"
+      class="search-icon"
       xmlns="http://www.w3.org/2000/svg">
-    <circle cx="9" cy="9" r="8" stroke="#343434" stroke-width="2"/>
-    <path d="M15 15L21.5 21.5" stroke="#343434" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="9" cy="9" r="8" stroke-width="2"/>
+    <path d="M15 15L21.5 21.5" stroke-width="2" stroke-linecap="round"/>
   </svg>
 </template>
 
