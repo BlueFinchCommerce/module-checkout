@@ -364,10 +364,7 @@ export default defineStore('customerStore', {
 
     async submitEmail(email) {
       if (this.customer.tokenType === tokenTypes.guestUser) {
-        const cart = await setGuestEmailOnCart(email);
-
-        const cartStore = useCartStore();
-        cartStore.handleCartData(cart);
+        await setGuestEmailOnCart(email);
       }
     },
 
