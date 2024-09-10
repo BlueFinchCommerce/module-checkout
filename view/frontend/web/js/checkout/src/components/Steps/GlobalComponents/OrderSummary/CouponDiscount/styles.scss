@@ -20,6 +20,10 @@
     .coupon-discount-icon-container {
       display: flex;
       justify-content: center;
+
+      svg {
+        position: unset;
+      }
     }
 
     .coupon-discount-title {
