@@ -20,6 +20,10 @@
     .gift-discount-icon-container {
       display: flex;
       justify-content: center;
+
+      svg {
+        position: unset;
+      }
     }
 
     .gift-discount-title {

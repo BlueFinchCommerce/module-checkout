@@ -57,6 +57,12 @@ body {
     fill: var(--icon__fill-color);
   }
 
+  .search-icon {
+    position: unset;
+    fill: none;
+    stroke: var(--icon__fill-color);
+  }
+
   @media screen and (min-width: $screen__m) {
     .root {
       background: var(--page__background-color--desktop);
