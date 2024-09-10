@@ -8,11 +8,7 @@
     @keydown="openDropDownKeyDown($event)"
   >
     <div class="gift-discount-icon-container">
-      <img
-        :src="GiftIcon"
-        alt="gift-dropdown-icon"
-        :data-cy="dataCy ? `gift-card-icon-${dataCy}` : 'gift-card-icon'"
-      >
+      <GiftCardIcon/>
     </div>
     <TextField
       :text="giftCardText"
@@ -81,14 +77,12 @@
   </DropDown>
 </template>
 <script>
-// helpers
-import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
-
 // components
 import DropDown from '@/components/Core/ActionComponents/DropDown/DropDown.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
+import GiftCardIcon from '@/components/Core/Icons/GiftCardIcon/GiftCardIcon.vue';
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
@@ -100,8 +94,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useLoadingStore from '@/stores/LoadingStore';
 
-import GiftIcon from '@/icons/gift-icon.svg';
-
 export default {
   name: 'GiftCardDiscount',
   components: {
@@ -109,6 +101,7 @@ export default {
     TextField,
     ArrowDown,
     ArrowUp,
+    GiftCardIcon,
     TextInput,
     MyButton,
     ErrorMessage,
@@ -144,9 +137,6 @@ export default {
   computed: {
     ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),
     ...mapWritableState(useCartStore, ['giftCardCode']),
-    GiftIcon() {
-      return `${getStaticUrl(GiftIcon)}`;
-    },
   },
   methods: {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),
