@@ -1,5 +1,4 @@
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -13,7 +12,6 @@ import useStepsStore from '@/stores/StepsStore';
 
 export default {
   useAgreementStore,
-  useAdyenStore,
   useBraintreeStore,
   useCartStore,
   useConfigStore,

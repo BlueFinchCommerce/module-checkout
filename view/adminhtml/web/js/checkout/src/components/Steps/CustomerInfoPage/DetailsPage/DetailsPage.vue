@@ -23,8 +23,6 @@
         <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
         <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
         <BraintreePayPal :key="`braintreePayPal-${storedKey}-credit`" :isCredit="paypal.creditActive" />
-        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
       </div>
     </div>
     <div class="details-form-body">
@@ -261,8 +259,6 @@ import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressLi
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';
 import BraintreePayPal from '@/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue';
-import AdyenGooglePay from '@/components/Steps/PaymentPage/Adyen/GooglePay/GooglePay.vue';
-import AdyenApplePay from '@/components/Steps/PaymentPage/Adyen/ApplePay/ApplePay.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
@@ -274,7 +270,6 @@ import Agreements from '@/components/Core/ContentComponents/Agreements/Agreement
 
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -307,8 +302,6 @@ export default {
     BraintreeGooglePay,
     BraintreeApplePay,
     BraintreePayPal,
-    AdyenGooglePay,
-    AdyenApplePay,
     ErrorMessage,
     BillingForm,
     Newsletter,
@@ -371,7 +364,6 @@ export default {
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
-      this.clearPaymentReponseCache();
       this.storedKey += 1;
     });
 
@@ -448,7 +440,6 @@ export default {
       'validatePostcode',
       'setAddressToStore',
     ]),
-    ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
     ...mapActions(useShippingMethodsStore, [
       'clearShippingMethodCache',
       'setClickAndCollect',

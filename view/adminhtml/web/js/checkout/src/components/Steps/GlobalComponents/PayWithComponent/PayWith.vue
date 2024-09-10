@@ -81,7 +81,6 @@
 import { mapActions, mapState } from 'pinia';
 import { computed, reactive } from 'vue';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
@@ -125,7 +124,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods']),
     ApplePayIcon() {
