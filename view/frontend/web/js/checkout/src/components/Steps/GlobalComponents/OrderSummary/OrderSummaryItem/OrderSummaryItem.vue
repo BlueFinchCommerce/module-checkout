@@ -25,7 +25,7 @@
           />
           <div class="product-item-price">
             <Price v-if="item.__typename !== 'GiftCardCartItem'"
-              :value="item.product?.price_range?.minimum_price?.final_price?.value"
+              :value="item.prices?.row_total_including_tax?.value"
               :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
             />
             <Price v-else

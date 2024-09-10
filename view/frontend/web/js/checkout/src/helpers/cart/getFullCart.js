@@ -120,6 +120,14 @@ export default async () => {
           value
         }
       }
+      prices {
+        row_total {
+          value
+        }
+        row_total_including_tax {
+          value
+        }
+      }
       product {
         name
         sku
@@ -135,6 +143,7 @@ export default async () => {
             }
           }
         }
+        special_price
         ... on SimpleProduct {
           weight
         }
