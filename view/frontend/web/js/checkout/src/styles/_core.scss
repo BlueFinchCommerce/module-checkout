@@ -57,7 +57,8 @@ body {
     fill: var(--icon__fill-color);
   }
 
-  .search-icon {
+  .search-icon,
+  .coupon-icon {
     position: unset;
     fill: none;
     stroke: var(--icon__fill-color);
