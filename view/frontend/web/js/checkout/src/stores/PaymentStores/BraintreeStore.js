@@ -184,7 +184,7 @@ export default defineStore('brainteeStore', {
       Object.values(cartItems).forEach((cartItem) => {
         const unitAmount = cartItem.__typename === 'GiftCardCartItem'
           ? cartItem.amount.value
-          : cartItem.item.prices?.row_total_including_tax?.value;
+          : cartItem.prices?.row_total_including_tax?.value;
         items.push({
           name: cartItem.product.name,
           kind: 'debit',
