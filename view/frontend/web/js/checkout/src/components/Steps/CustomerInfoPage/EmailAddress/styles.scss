@@ -75,6 +75,7 @@
   }
 
   .forgot-pass {
+    color: var(--button__link-font-color);
     p {
       text-align: left;
       margin: var(--indent__s) 0 var(--indent__xs);

@@ -69,6 +69,25 @@ body {
     }
   }
 
+  .privacy-modal {
+    .modal-header {
+      justify-content: flex-end;
+    }
+
+    .modal-footer {
+      border-top: 0;
+      justify-content: center;
+
+      .button {
+        width: auto;
+
+        &--secondary {
+          margin-right: var(--indent__base);
+        }
+      }
+    }
+  }
+
   @media screen and (min-width: $screen__m) {
     .root {
       background: var(--page__background-color--desktop);
