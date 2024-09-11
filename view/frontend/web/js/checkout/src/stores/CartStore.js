@@ -341,7 +341,6 @@ export default defineStore('cartStore', {
     },
 
     async removeGiftCardCode(code) {
-      giftCardCodeDataLayer('giftCardCodeRemoved');
       try {
         const cart = await removeGiftCardCode(code);
 
@@ -351,6 +350,7 @@ export default defineStore('cartStore', {
           cart,
           giftCardErrorMessage: null,
         });
+        giftCardCodeDataLayer('giftCardCodeRemoved');
       } catch (error) {
         this.setData({
           giftCardErrorMessage: error.message,
