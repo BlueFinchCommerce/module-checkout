@@ -35,12 +35,6 @@
               v-if="isPaymentMethodAvailable('braintree_cc_vault')"
               :key="`braintreeStoredMethods-${paymentKey}`"
             />
-            <AdyenPaymentMethods
-              v-if="adyenVaultEnabled"
-              id="adyen-dropin-container-stored"
-              :key="`adyenStoredMethods-${paymentKey}`"
-              :stored-payments="true"
-            />
           </template>
 
           <div
@@ -56,10 +50,6 @@
             />
             <div class="divider-line" />
           </div>
-          <AdyenDropIn
-            v-if="isAdyenAvailable"
-            :key="`adyenNewMethods-${paymentKey}`"
-          />
           <BraintreeDropIn :key="`braintreeNewMethods-${paymentKey}`" />
           <RvvupPayByBank
             v-if="rvvupPaymentsActive"
@@ -91,7 +81,6 @@
 <script>
 // Stores
 import { mapActions, mapState } from 'pinia';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCartStore from '@/stores/CartStore';
@@ -103,8 +92,6 @@ import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 // Components
 import SavedDeliveryAddress from
   '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
-import AdyenDropIn from '@/components/Steps/PaymentPage/Adyen/DropIn/DropIn.vue';
-import AdyenPaymentMethods from '@/components/Steps/PaymentPage/Adyen/DropIn/PaymentMethods/PaymentMethods.vue';
 import BraintreeDropIn from '@/components/Steps/PaymentPage/Braintree/DropIn/DropIn.vue';
 import SavedShippingMethod
   from '@/components/Steps/PaymentPage/SavedShippingMethod/SavedShippingMethod.vue';
@@ -127,8 +114,6 @@ export default {
   components: {
     SavedDeliveryAddress,
     SavedShippingMethod,
-    AdyenDropIn,
-    AdyenPaymentMethods,
     Rewards,
     FreeMOCheckPayment,
     RvvupPayByBank,
@@ -161,7 +146,6 @@ export default {
       'rvvupPaymentsActive',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
-    ...mapState(useAdyenStore, ['adyenVaultEnabled', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
     ...mapState(usePaymentStore, [
       'paymentEmitter',

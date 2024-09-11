@@ -22,8 +22,6 @@
         <BraintreeGooglePay :key="`braintreeGooglePay-${storedKey}`" />
         <BraintreeApplePay :key="`braintreeApplePay-${storedKey}`" />
         <BraintreePayPal :key="`braintreePayPal-${storedKey}`" />
-        <AdyenGooglePay :key="`adyenGooglePay-${storedKey}`" />
-        <AdyenApplePay :key="`adyenApplePay-${storedKey}`" />
       </div>
     </div>
     <div class="details-form-body">
@@ -45,15 +43,12 @@ import EmailAddress from '@/components/Steps/CustomerInfoPage/EmailAddress/Email
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';
 import BraintreePayPal from '@/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue';
-import AdyenGooglePay from '@/components/Steps/PaymentPage/Adyen/GooglePay/GooglePay.vue';
-import AdyenApplePay from '@/components/Steps/PaymentPage/Adyen/ApplePay/ApplePay.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import Loader from '@/components/Core/Icons/Loader/Loader.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
@@ -76,8 +71,6 @@ export default {
     BraintreeGooglePay,
     BraintreeApplePay,
     BraintreePayPal,
-    AdyenGooglePay,
-    AdyenApplePay,
     ErrorMessage,
     Loader,
     Recaptcha,
@@ -122,7 +115,6 @@ export default {
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
-      this.clearPaymentReponseCache();
       this.storedKey += 1;
     });
 
@@ -176,7 +168,6 @@ export default {
       'validatePostcode',
       'setAddressToStore',
     ]),
-    ...mapActions(useAdyenStore, ['clearPaymentReponseCache']),
     ...mapActions(useShippingMethodsStore, [
       'clearShippingMethodCache',
       'setClickAndCollect',
