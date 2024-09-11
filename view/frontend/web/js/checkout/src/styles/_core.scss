@@ -63,6 +63,12 @@ body {
     stroke: var(--icon__fill-color);
   }
 
+  .steps-container {
+    .container {
+      padding-bottom: var(--indent__xl);
+    }
+  }
+
   @media screen and (min-width: $screen__m) {
     .root {
       background: var(--page__background-color--desktop);
