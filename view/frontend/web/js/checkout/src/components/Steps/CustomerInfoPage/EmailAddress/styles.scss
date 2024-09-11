@@ -135,6 +135,16 @@
   }
 
   &__footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: var(--indent__s);
+
+    #password_help_text {
+      max-width: 470px;
+    }
+
     a {
       font-size: var(--button__link-font-size);
       font-weight: var(--button__link-font-weight);
@@ -174,5 +184,11 @@
 @media screen and (min-width: $screen__m) {
   .welcome-message-title {
     margin-top: 10px;
+  }
+
+  .checkout-email {
+    &__footer {
+      flex-wrap: nowrap;
+    }
   }
 }
