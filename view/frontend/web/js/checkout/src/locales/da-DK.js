@@ -65,6 +65,7 @@ export default {
       infoMessage: 'Vi vil kun bruge dette nummer til at kontakte dig angående din levering.',
       placeholder: 'Indtast telefonnummer',
       label: 'Telefonnummer',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Indtast e-mail-adresse',

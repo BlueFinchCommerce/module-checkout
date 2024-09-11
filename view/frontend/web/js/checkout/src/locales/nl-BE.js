@@ -65,6 +65,7 @@ export default {
       infoMessage: 'We gebruiken dit nummer alleen om contact met je op te nemen over je levering.',
       placeholder: 'Voer telefoonnummer in',
       label: 'Telefoonnummer',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'E-mailadres invoeren',

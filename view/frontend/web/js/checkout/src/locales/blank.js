@@ -53,6 +53,7 @@ export default {
       infoMessage: ' ',
       placeholder: ' ',
       label: ' ',
+      info: ' ',
     },
     emailAddress: {
       placeholder: ' ',

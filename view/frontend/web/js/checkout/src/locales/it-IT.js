@@ -65,6 +65,7 @@ export default {
       infoMessage: 'Utilizzeremo questo numero solo se avremo bisogno di contattarti per la consegna.',
       placeholder: 'Inserisci il numero di telefono',
       label: 'Numero di telefono',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: "Inserisci l'indirizzo e-mail",

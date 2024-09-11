@@ -73,6 +73,11 @@
       <div class="error-icon-block">
         <ErrorIcon v-if="!isFieldValid(address_type, 'telephone')" />
       </div>
+      <TextField
+        class="phone-field-info"
+        :data-cy="'phone-field-info'"
+        :text="$t('yourDetailsSection.phoneField.info')"
+      />
     </div>
   </div>
 </template>
@@ -86,6 +91,7 @@ import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // Components
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Icons
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
@@ -97,6 +103,7 @@ export default {
     TextInput,
     ValidIcon,
     ErrorIcon,
+    TextField,
   },
   props: {
     address_type: {

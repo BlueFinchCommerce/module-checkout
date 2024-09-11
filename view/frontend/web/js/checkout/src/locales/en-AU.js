@@ -63,6 +63,7 @@ export default {
       infoMessage: 'We will use this for delivery questions',
       placeholder: 'Enter your phone number',
       label: 'Phone number',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Enter your email address',

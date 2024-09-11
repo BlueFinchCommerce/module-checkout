@@ -63,6 +63,7 @@ export default {
       infoMessage: 'Pour les questions de livraison',
       placeholder: 'Numéro de téléphone',
       label: 'Téléphone',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Saisissez votre email',
