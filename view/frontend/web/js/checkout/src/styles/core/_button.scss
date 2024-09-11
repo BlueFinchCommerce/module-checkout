@@ -59,10 +59,11 @@
     }
 
     &:disabled {
-      background-color: var(--button-primary__background-color-disabled, var(--button-primary__background-color));
-      border-color: var(--button-primary__border-color-disabled, var(--button-primary__background-color-disabled));
-      color: var(--button-primary-color-disabled, var(--button-primary__font-color));
+      background-color: var(--button-primary__background-color-disabled, var(--color__primary-grey7));
+      border-color: var(--button-primary__border-color-disabled, var(--color__primary-grey7));
+      color: var(--button-primary-color-disabled, var(--color__primary-grey9));
       border-width: var(--button-primary__border-weight);
+      opacity: 1;
     }
   }
 
