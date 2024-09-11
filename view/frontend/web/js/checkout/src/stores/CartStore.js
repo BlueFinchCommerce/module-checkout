@@ -2,6 +2,7 @@
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
@@ -167,7 +168,8 @@ export default defineStore('cartStore', {
           }));
       }
 
-      await functionExtension('onHandleCartData', [cart]);
+      const configStore = useConfigStore();
+      await functionExtension('onHandleCartData', [cart, configStore]);
 
       this.setData({
         cart,
