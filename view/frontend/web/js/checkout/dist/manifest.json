@@ -23,8 +23,6 @@
       "icon-venmo-white.svg",
       "loader.gif",
       "promo-icon.svg",
-      "delivery.svg",
-      "detailsIcon.svg",
       "icon-applepay-colour.svg",
       "icon-googlepay-colour.svg",
       "icon-amex-colour.svg",
@@ -60,7 +58,7 @@
   },
   "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
+    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   },
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
     "file": "bancontact.svg",
@@ -93,14 +91,6 @@
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg": {
     "file": "sofort.svg",
     "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
-  },
-  "src/icons/delivery.svg": {
-    "file": "delivery.svg",
-    "src": "src/icons/delivery.svg"
-  },
-  "src/icons/detailsIcon.svg": {
-    "file": "detailsIcon.svg",
-    "src": "src/icons/detailsIcon.svg"
   },
   "src/icons/loader.gif": {
     "file": "loader.gif",
@@ -213,9 +203,5 @@
   "src/icons/payments/white/icon-visa-white.svg": {
     "file": "icon-visa-white.svg",
     "src": "src/icons/payments/white/icon-visa-white.svg"
-  },
-  "src/icons/shippingIcon.svg": {
-    "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
   }
 }
