@@ -30,6 +30,7 @@ export default defineStore('ValidationStore', {
       'company',
       'street',
       'country_id',
+      'country_code',
       'region',
       'city',
       'postcode',
@@ -83,7 +84,7 @@ export default defineStore('ValidationStore', {
       this.attributes.forEach((attribute) => {
         this.setData({
           validationItems: {
-            [attribute]: data[attribute],
+            [attribute]: data[attribute === 'country_code' ? 'country_id' : attribute],
           },
         });
       });
@@ -221,6 +222,13 @@ export default defineStore('ValidationStore', {
           const customerStore = useCustomerStore();
           const postcode = !configStore.postcodeRequired(customerStore.selected[addressType].country_code) || value;
           return validationResults && postcode;
+        }
+
+        // Additional check for country being inside of the allowed countires.
+        if (field === 'country_code') {
+          const configStore = useConfigStore();
+
+          return validationResults && configStore.countries.some(({ id }) => id === value);
         }
 
         return validationResults;
