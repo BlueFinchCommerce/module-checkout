@@ -23,20 +23,31 @@
       </select>
       <ArrowDown />
     </label>
+    <ErrorMessage
+      v-if="errorMessage !== ''"
+      :message="errorMessage"
+      :data-cy="'field-error-message'"
+    />
   </div>
 </template>
 <script>
 import { computed, reactive } from 'vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 
 export default {
   name: 'SelectInput',
   components: {
     ArrowDown,
+    ErrorMessage,
   },
   props: {
     error: {
       type: Boolean,
+    },
+    errorMessage: {
+      type: String,
+      default: '',
     },
     dataCy: {
       type: String,

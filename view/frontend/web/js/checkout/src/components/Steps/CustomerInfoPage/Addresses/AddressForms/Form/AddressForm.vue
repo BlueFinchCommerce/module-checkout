@@ -128,16 +128,13 @@
         <SelectInput
           v-model="selectedAddressType.country_code"
           :options="selectOptions"
-          :error="showFieldError(address_type, 'country')"
+          :error="showFieldError(address_type, 'country_code')"
+          :error-message="showFieldError(address_type, 'country_code') && $t('errorMessages.countryErrorMessage')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
           :selected-option="$t('yourDetailsSection.selectPlaceholder')"
           required
           :data-cy="`${address_type}-country-select`"
           @change="countryUpdated($event)"
-        />
-        <ErrorMessage
-          v-if="!isFieldValid(address_type, 'country')"
-          :message="$t('errorMessages.countryErrorMessage')"
         />
         <ErrorMessage
           v-if="requiredErrorMessage"
@@ -288,6 +285,7 @@ export default {
       this.clearRegion(this.address_type);
       this.updateRegionRequired(this.address_type);
       this.validateField(this.address_type, 'postcode', true);
+      this.validateField(this.address_type, 'country_code', true);
       this.validateRegion(this.address_type, true);
     },
 
