@@ -91,8 +91,6 @@ export default defineStore('customerStore', {
     },
 
     setAddressToStore(address, addressType) {
-      const configStore = useConfigStore();
-
       // Create new addess to be able to be changed.
       const clonedAddress = deepClone(address);
 
@@ -104,6 +102,7 @@ export default defineStore('customerStore', {
 
       // The region comes back with different keys than it expects so map them.
       if (Object.keys(address).length !== 0 && address.region.label) {
+        const configStore = useConfigStore();
         clonedAddress.region.region = address.region.code;
         clonedAddress.region.region_id = configStore.getRegionId(address.country.code, address.region.code);
         delete clonedAddress.region.label;
