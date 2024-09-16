@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Inserisci il codice promozionale',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Inserisci il codice',
       successMessage: 'Il codice "{code}" è stato inserito correttamente',

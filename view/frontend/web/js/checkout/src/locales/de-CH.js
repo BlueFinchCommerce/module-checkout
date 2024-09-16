@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
