@@ -21,17 +21,18 @@ export default defineStore('paymentStore', {
   getters: {
     methodsResponse: (state) => state.methodsResponse,
     clientKey: (state) => state.clientKey,
-    isPaymentMethodAvailable: (state) => (
-      (paymentMethod) => state.availableMethods.some(({ code }) => code === paymentMethod)
-    ),
+    isPaymentMethodAvailable: (state) => (paymentMethod) => Array.isArray(state.availableMethods)
+      && state.availableMethods.some(({ code }) => code === paymentMethod),
     getPaymentMethodTitle: (state) => (
       (paymentMethod) => {
-        const method = state.availableMethods.find(({ code }) => code === paymentMethod);
+        const method = Array.isArray(state.availableMethods)
+          && state.availableMethods.find(({ code }) => code === paymentMethod);
         return method ? method.title : null;
       }
     ),
     getPaymentPriority: (state) => (
-      (paymentMethod) => state.availableMethods.findIndex(({ code }) => code === paymentMethod)
+      (paymentMethod) => Array.isArray(state.availableMethods)
+        && state.availableMethods.findIndex(({ code }) => code === paymentMethod)
     ),
     isExpressPaymentsVisible: (state) => (
       state.expressMethods.length

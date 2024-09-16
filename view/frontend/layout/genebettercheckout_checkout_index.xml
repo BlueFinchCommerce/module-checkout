@@ -17,6 +17,7 @@
             <block name="gene.better.checkout" template="Gene_BetterCheckout::better-checkout.phtml" before="-">
                 <arguments>
                     <argument name="asset_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\Assets</argument>
+                    <argument name="cart_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CartMaskedId</argument>
                 </arguments>
             </block>
         </container>
