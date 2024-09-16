@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Indtast Promo kode',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Indtast kode',
       successMessage: 'koden er indtastet "{code}".',
