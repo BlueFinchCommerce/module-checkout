@@ -3,7 +3,6 @@
  * @var \Magento\Catalog\Block\Product\View $block
  * @var \Magento\Framework\Escaper $escaper
  * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
- * @var \Gene\BetterCheckout\ViewModel\CartMaskedId $cartViewModel
  */
 $assetViewModel = $block->getAssetViewModel();
 $cartViewModel = $block->getCartViewModel();
@@ -13,7 +12,6 @@ $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
 $customWordings = $assetViewModel->getCustomWording();
-$maskedCartId = $cartViewModel->getMaskedCartId();
 ?>
 
 <script>
@@ -80,12 +78,3 @@ $maskedCartId = $cartViewModel->getMaskedCartId();
         </div>
     </div>
 </div>
-<script>
-  const mageCacheStorage = JSON.parse(localStorage.getItem('mage-cache-storage')) || {};
-  // Ensure the cart object exists
-  mageCacheStorage.cart = mageCacheStorage.cart || {};
-  // Assign the masked cart ID from the ViewModel to the guest_masked_id
-  mageCacheStorage.cart.guest_masked_id = "<?= $escaper->escapeJs($maskedCartId) ?>";
-  // Store the updated object back in localStorage
-  localStorage.setItem('mage-cache-storage', JSON.stringify(mageCacheStorage));
-</script>
