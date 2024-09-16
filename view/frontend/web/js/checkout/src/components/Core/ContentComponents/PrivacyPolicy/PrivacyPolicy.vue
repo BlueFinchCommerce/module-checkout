@@ -39,13 +39,6 @@
           aria-label="Back"
           @click="closeModal"
         />
-        <ButtonComponent
-          class="modal-footer-btn-close"
-          primary
-          label="Accept"
-          aria-label="Accept"
-          @click="closeModal"
-        />
       </template>
     </modal>
   </template>
