@@ -494,8 +494,12 @@ export default {
         }
 
         await this.setAddressesOnCart();
-        this.goToShipping();
-        continueToDeliveryDataLayer();
+        if (this.ageCheckRequired) {
+          await functionExtension('onSubmitShippingOptionAgeCheck');
+        } else {
+          this.goToShipping();
+          continueToDeliveryDataLayer();
+        }
       } else {
         const fieldErrors = this.selected.formErrors[this.address_type];
         Object.entries(fieldErrors).forEach(([value]) => {
