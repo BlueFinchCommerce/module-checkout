@@ -113,5 +113,14 @@
                 </group>
             </group>
         </section>
+        <section id="recaptcha_frontend">
+            <group id="type_for">
+                <field id="customer_create_success" translate="label" type="select" sortOrder="132" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable for Create New Customer Account on Order Success</label>
+                    <source_model>Magento\ReCaptchaAdminUi\Model\OptionSource\Type</source_model>
+                </field>
+            </group>
+        </section>
     </system>
 </config>

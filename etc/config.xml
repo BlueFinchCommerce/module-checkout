@@ -14,5 +14,10 @@
                 </loqate>
             </general>
         </gene_better_checkout>
+        <recaptcha_frontend>
+            <type_for>
+                <customer_create_success/>
+            </type_for>
+        </recaptcha_frontend>
     </default>
 </config>
