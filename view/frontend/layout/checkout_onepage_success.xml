@@ -21,6 +21,22 @@
                         <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
                     </arguments>
                 </block>
+                <block class="Magento\ReCaptchaUi\Block\ReCaptcha"
+                       name="recaptcha"
+                       after="-"
+                       template="Magento_ReCaptchaFrontendUi::recaptcha.phtml"
+                       ifconfig="recaptcha_frontend/type_for/customer_create_success">
+                    <arguments>
+                        <argument name="recaptcha_for" xsi:type="string">success_page</argument>
+                        <argument name="jsLayout" xsi:type="array">
+                            <item name="components" xsi:type="array">
+                                <item name="recaptcha" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_ReCaptchaFrontendUi/js/reCaptcha</item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
             </container>
 
             <container name="onepagesuccess.footer.container" label="Onepage Success Footer" after="-">
