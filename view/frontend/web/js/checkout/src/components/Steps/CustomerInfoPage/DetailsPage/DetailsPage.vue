@@ -145,7 +145,7 @@
             <div class="delivery-section-title-text">
               <TextField
                 :text="deliverWhereText"
-                :data-cy="`${address_type}-where-to-icon`"
+                :data-cy="`${address_type}-where-to-title`"
               />
             </div>
             <div class="divider-line"></div>

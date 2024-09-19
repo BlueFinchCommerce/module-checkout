@@ -7,7 +7,7 @@
     viewBox="0 0 24 24"
     fill="none"
     class="coupon-icon"
-    data-cy="gift-card-icon"
+    :data-cy="'coupon-card-icon-' + dataCy"
     xmlns="http://www.w3.org/2000/svg">
     <path d="M9 15L15 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M9.5 10C9.77614 10 10 9.77614 10 9.5C10 9.22386 9.77614 9 9.5 9C9.22386 9 9 9.22386 9 9.5C9 9.77614 9.22386 10 9.5 10Z" fill="#3F5D7C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,6 +24,9 @@ export default {
       type: String,
     },
     ariaLabel: {
+      type: String,
+    },
+    dataCy: {
       type: String,
     },
   },
