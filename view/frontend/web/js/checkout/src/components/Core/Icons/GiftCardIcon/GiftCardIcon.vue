@@ -26,7 +26,7 @@ export default {
     },
     dataCy: {
       type: String,
-    }
+    },
   },
 };
 </script>
