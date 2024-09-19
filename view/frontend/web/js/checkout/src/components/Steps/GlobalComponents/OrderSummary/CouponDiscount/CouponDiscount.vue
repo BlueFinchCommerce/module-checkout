@@ -8,7 +8,7 @@
     @keydown="openDropDownKeyDown($event)"
   >
     <div class="coupon-discount-icon-container">
-      <CouponIcon />
+      <CouponIcon :data-cy="dataCy"/>
     </div>
     <TextField
       :text="couponDiscountText"
