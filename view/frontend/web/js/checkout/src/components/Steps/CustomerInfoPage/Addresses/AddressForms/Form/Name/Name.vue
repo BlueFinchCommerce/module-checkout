@@ -15,7 +15,7 @@
       type="text"
       :required="isRequired('firstname')"
       autocomplete="given-name"
-      @keyup="validateField(address_type, 'firstname', true); handleInputChange($event, 'firstname');"
+      @keyup="handleInputChange($event, 'firstname');"
       @focusout="validateField(address_type, 'firstname', true)"
     />
     <ValidIcon v-if="selectedAddressType.firstname && isFieldValid(address_type, 'firstname')" />
@@ -39,7 +39,7 @@
       type="text"
       :required="isRequired('lastname')"
       autocomplete="family-name"
-      @keyup="validateField(address_type, 'lastname', true); handleInputChange($event, 'lastname')"
+      @keyup="handleInputChange($event, 'firstname');"
       @focusout="validateField(address_type, 'lastname', true)"
     />
     <ValidIcon v-if="selectedAddressType.lastname && isFieldValid(address_type, 'lastname')" />
@@ -64,7 +64,7 @@
         :data-cy="`${address_type}-phone-number-input`"
         :required="isRequired('telephone')"
         autocomplete="tel"
-        @keyup="handleInputChange($event)"
+        @keyup="handleInputChange($event, 'telephone')"
         @input="validateField(address_type, 'telephone', true)"
         @focusout="validateField(address_type, 'telephone', true)"
         @telephone-error="validateField(address_type, 'telephone', true)"
@@ -153,9 +153,10 @@ export default {
     },
 
     handleInputChange(event, type) {
-      if (event.key === 'Enter') {
-        this.validateField(this.address_type, type, true);
+      if (event.key === 'Tab') {
+        return;
       }
+      this.validateField(this.address_type, type, true);
     },
   },
 };
