@@ -182,9 +182,16 @@ export default defineStore('brainteeStore', {
       } = useCartStore();
 
       Object.values(cartItems).forEach((cartItem) => {
-        const unitAmount = cartItem.__typename === 'GiftCardCartItem'
-          ? cartItem.amount.value
-          : cartItem.prices?.row_total_including_tax?.value;
+        let unitAmount;
+
+        if (cartItem.__typename === 'GiftCardCartItem') {
+          unitAmount = cartItem.amount.value;
+        } else if (cart?.prices?.applied_taxes?.[0]?.amount?.value > 0) {
+          unitAmount = cartItem.prices?.row_total?.value;
+        } else {
+          unitAmount = cartItem.prices?.row_total_including_tax?.value;
+        }
+
         items.push({
           name: cartItem.product.name,
           kind: 'debit',
@@ -251,16 +258,19 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (includeShipping
-        && (cart.shipping_addresses?.[0]?.selected_shipping_method?.price_incl_tax?.value
-          || cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value)) {
+      if (includeShipping && cart.shipping_addresses?.[0]?.selected_shipping_method) {
+        const selectedShippingMethod = cart.shipping_addresses[0].selected_shipping_method;
+        const hasTaxes = cart?.prices?.applied_taxes?.[0]?.amount?.value > 0;
+
+        const unitAmount = hasTaxes
+          ? Math.abs(selectedShippingMethod.amount.value)
+          : Math.abs(selectedShippingMethod.price_incl_tax?.value || 0);
+
         items.push({
           name: this.$i18n.global.t('progressBar.shippingStepTitle'),
           kind: 'debit',
           quantity: 1,
-          unitAmount: cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
-            ? Math.abs(cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value)
-            : Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
+          unitAmount,
         });
       }
 
