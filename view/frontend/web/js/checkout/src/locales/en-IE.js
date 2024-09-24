@@ -94,6 +94,7 @@ export default {
       newAddressTitle: 'Add new address',
       shippingButton: 'Home Delivery',
       clickandCollectButton: 'Click & Collect',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       addressFinder: {
         title: 'Address Finder',
         placeholder: 'Search by street name or postcode',

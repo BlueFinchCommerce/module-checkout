@@ -41,7 +41,7 @@
       :data-cy="'field-error-message'"
     />
     <ErrorMessage
-      v-if="validationErrorMessage !== ''"
+      v-if="validationErrorMessage !== '' && errorMessage === ''"
       :message="validationErrorMessage"
       :data-cy="'field-error-message'"
     />

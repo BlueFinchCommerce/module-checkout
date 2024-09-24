@@ -264,17 +264,6 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (cart?.prices?.applied_taxes[0]?.amount?.value > 0) {
-        items.push({
-          name: this.$i18n.global.t('orderSummary.inclTaxTitle'),
-          kind: 'debit',
-          quantity: 1,
-          unitAmount: cart.prices.applied_taxes[0].amount.value
-            ? Math.abs(cart.prices.applied_taxes[0].amount.value)
-            : 0,
-        });
-      }
-
       return items;
     },
 

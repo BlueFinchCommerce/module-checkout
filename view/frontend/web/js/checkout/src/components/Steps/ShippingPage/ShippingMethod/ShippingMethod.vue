@@ -24,6 +24,11 @@
           </div>
           <div class="divider-line" />
         </div>
+        <component
+          :is="shippingMethodAdditionalContainer"
+          v-for="shippingMethodAdditionalContainer in shippingMethodAdditionalContainers"
+          :key="shippingMethodAdditionalContainer"
+        />
         <div
           v-if="getShippingMethods && getShippingMethods.length > 0"
           class="shipping-method__container"
@@ -132,6 +137,7 @@ import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 import functionExtension from '@/extensions/functionExtension';
+import shippingMethodAdditionalContainers from '@/extensions/shippingMethodAdditionalContainers';
 
 export default {
   name: 'ShippingMethod',
@@ -144,6 +150,7 @@ export default {
     ...shippingMethods(),
     ...belowShippingMethodsExtensions(),
     ...ageCheckerExtensions(),
+    ...shippingMethodAdditionalContainers(),
   },
   props: {
     buttonText: {
@@ -156,6 +163,7 @@ export default {
       additionalShippingMethods: [],
       belowShippingMethodsExtensions: [],
       ageCheckerExtensions: [],
+      shippingMethodAdditionalContainers: [],
       hasSubmitted: false,
       shippingStepText: '',
       shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
@@ -176,6 +184,7 @@ export default {
     this.additionalShippingMethods = Object.keys(shippingMethods());
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
+    this.shippingMethodAdditionalContainers = Object.keys(shippingMethodAdditionalContainers());
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
