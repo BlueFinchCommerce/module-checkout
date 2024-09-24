@@ -1,6 +1,9 @@
 import axios from 'axios';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
+import setMageCacheStorage from '@/helpers/customer/setMageCacheStorage';
+import setMageCookieSectionIds from '@/helpers/customer/setMageCookieSectionIds';
+
 export default (sections = []) => {
   const { secureBaseUrl } = useConfigStore();
 
@@ -18,10 +21,11 @@ export default (sections = []) => {
   return axios.get(url, { headers })
     .then((response) => response.data)
     .then((data) => {
-      const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));
-      sections.forEach((section) => {
-        mageCache[section] = data[section];
-      });
-      localStorage.setItem('mage-cache-storage', JSON.stringify(mageCache));
+      setMageCacheStorage(data, sections);
+
+      // If we have a new customer set the refresh date to the cookie too.
+      if (sections.includes('customer')) {
+        setMageCookieSectionIds('customer', data.customer.data_id);
+      }
     });
 };
