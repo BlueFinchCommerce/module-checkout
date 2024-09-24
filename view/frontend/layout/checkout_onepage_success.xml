@@ -27,7 +27,7 @@
                        template="Magento_ReCaptchaFrontendUi::recaptcha.phtml"
                        ifconfig="recaptcha_frontend/type_for/customer_create_success">
                     <arguments>
-                        <argument name="recaptcha_for" xsi:type="string">success_page</argument>
+                        <argument name="recaptcha_for" xsi:type="string">customer_create_success</argument>
                         <argument name="jsLayout" xsi:type="array">
                             <item name="components" xsi:type="array">
                                 <item name="recaptcha" xsi:type="array">
