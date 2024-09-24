@@ -86,6 +86,7 @@ export default {
     },
     deliverySection: {
       toShippingButton: 'Vælg forsendelsesmetoder',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       title: 'Leveringsadresse',
       savedAddressesTitle: 'Vælg din gemte leveringsadresse',
       shipHere: 'Send her',

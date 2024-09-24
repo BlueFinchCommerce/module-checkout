@@ -290,6 +290,20 @@ export default {
         payload.details.lastName,
       );
 
+      // If billingAddress is missing fields, use values from shippingAddress
+      // added in case if billing address not required on braintree account
+      if (billingAddress) {
+        if (!billingAddress.city && shippingAddress?.city) {
+          billingAddress.city = shippingAddress.city;
+        }
+        if (!billingAddress.postcode && shippingAddress?.postcode) {
+          billingAddress.postcode = shippingAddress.postcode;
+        }
+        if (!billingAddress.street[0] && shippingAddress?.street[0]) {
+          [billingAddress.street[0]] = shippingAddress.street;
+        }
+      }
+
       return setAddressesOnCart(shippingAddress, billingAddress, payload.details.email)
         .then(() => ({ payload, email: payload.details.email }));
     },

@@ -332,6 +332,7 @@ export default {
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');
+      this.setLoadingState(true);
       this.requestPaymentMethod()
         .then(this.getPaymentData)
         .then(createPayment)
@@ -340,6 +341,7 @@ export default {
         .catch((paymentError) => {
           this.clearSelectedPaymentMethod();
           this.setToCurrentViewId();
+          this.setLoadingState(false);
 
           if (paymentError.name !== 'DropinError') {
             this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);

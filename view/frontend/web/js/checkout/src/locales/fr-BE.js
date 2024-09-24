@@ -86,6 +86,7 @@ export default {
     },
     deliverySection: {
       toShippingButton: 'Choisissez votre mode d\'expédition',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       title: 'Adresse de livraison',
       savedAddressesTitle: 'Sélectionnez une adresse de livraison déjà enregistrée.',
       shipHere: 'Expédier ici',

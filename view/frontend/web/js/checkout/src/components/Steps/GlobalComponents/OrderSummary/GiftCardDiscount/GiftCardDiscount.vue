@@ -8,7 +8,7 @@
     @keydown="openDropDownKeyDown($event)"
   >
     <div class="gift-discount-icon-container">
-      <GiftCardIcon/>
+      <GiftCardIcon :data-cy="dataCy"/>
     </div>
     <TextField
       :text="giftCardText"

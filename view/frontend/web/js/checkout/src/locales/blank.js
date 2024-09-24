@@ -82,6 +82,7 @@ export default {
     },
     deliverySection: {
       toShippingButton: ' ',
+      clickandCollectToPaymentButton: ' ',
       title: ' ',
       savedAddressesTitle: ' ',
       shipHere: ' ',
