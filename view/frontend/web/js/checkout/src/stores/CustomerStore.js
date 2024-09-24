@@ -20,6 +20,8 @@ import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
 
+import functionExtension from '@/extensions/functionExtension';
+
 export default defineStore('customerStore', {
   state: () => ({
     customer: { addresses: [], email: '', ...getUrlTokens },
@@ -267,6 +269,8 @@ export default defineStore('customerStore', {
 
       this.clearCaches(['getCustomerInformation']);
       await this.getCustomerInformation();
+
+      await functionExtension('onLogin');
 
       return data;
     },
