@@ -12,6 +12,7 @@ if ($orderViewViewModel) {
     /** @var \Magento\Sales\Model\Order $order */
     $order = $orderViewViewModel->getLastOrder();
 }
+$recaptchaEnabled = $orderViewViewModel->getRecaptchaSuccessEnabled();
 ?>
 <?php if ($order->getCustomerIsGuest()):?>
     <div class="checkout-success-sign-up">

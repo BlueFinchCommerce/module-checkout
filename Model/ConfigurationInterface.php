@@ -14,6 +14,8 @@ interface ConfigurationInterface
     const VUE_CHECKOUT_ENABLED_XML_PATH = 'gene_better_checkout/general/enabled';
     /** @var string */
     const VUE_CHECKOUT_FONT_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_upload';
+    /** @var string */
+    const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
 
     /**
      * @param string $scopeType
