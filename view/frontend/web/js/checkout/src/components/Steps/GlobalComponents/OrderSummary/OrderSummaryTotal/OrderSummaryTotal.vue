@@ -27,24 +27,6 @@
         />
       </div>
       <div
-        v-for="(giftCard, index) in cart?.applied_gift_cards"
-        :key="index"
-        class="order-total"
-      >
-        <div class="total__row">
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.giftCardDiscount.title', { code: giftCard.code})"
-            :data-cy="dataCy ? `gift-card-title-${dataCy}` : 'gift-card-title'"
-          />
-          <Price
-            class="total__text discount"
-            :value="'-' + giftCard.current_balance.value"
-            :data-cy="dataCy ? `gift-card-price-${dataCy}` : 'gift-card-price'"
-          />
-        </div>
-      </div>
-      <div
         v-for="(discount, index) in cart?.prices?.discounts"
         :key="index"
         class="order-total"
