@@ -12,7 +12,6 @@ if ($orderViewViewModel) {
     /** @var \Magento\Sales\Model\Order $order */
     $order = $orderViewViewModel->getLastOrder();
 }
-$recaptchaEnabled = $orderViewViewModel->getRecaptchaSuccessEnabled();
 ?>
 <?php if ($order->getCustomerIsGuest()):?>
     <div class="checkout-success-sign-up">
@@ -56,6 +55,9 @@ $recaptchaEnabled = $orderViewViewModel->getRecaptchaSuccessEnabled();
                 <button type="submit" class="action primary button-standard" title="<?= $escaper->escapeHtmlAttr(__('Create an Account')) ?>">
                     <?= $escaper->escapeHtml(__('Create an Account')) ?>
                 </button>
+                <?php if ($orderViewViewModel->getRecaptchaSuccessEnabled()):?>
+                    <?php echo $block->getChildHtml('form_additional_info') ?>
+                <?php endif;?>
             </fieldset>
             <input type="hidden" name="firstname" value="<?= $order->getCustomerFirstname() ?>">
             <input type="hidden" name="lastname" value="<?= $order->getCustomerLastname() ?>">
