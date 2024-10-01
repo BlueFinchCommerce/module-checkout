@@ -58,11 +58,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-
-      ${shippingAddress && shippingAddress.firstname ? `
-        $shippingAddresses: [ShippingAddressInput]!,
-        ` : ''}
-
+      $shippingAddresses: [ShippingAddressInput],
       $billingAddress: BillingAddressInput!
       ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
@@ -79,21 +75,12 @@ export default async (shippingAddress, billingAddress, email = false) => {
           }
         }` : ''}
 
-      ${shippingAddress && shippingAddress.firstname ? `
-        setShippingAddressesOnCart(
-          input: {
-            cart_id: $cartId
-            shipping_addresses: $shippingAddresses
-          }
-        ) {
-          cart {
-            id
-          }
-        }` : ''}
-
-      setBillingAddressOnCart(
+      setAddressesOnCart(
         input: {
           cart_id: $cartId
+          ${shippingAddress?.firstname ? `
+            shipping_addresses: $shippingAddresses
+          ` : ''}
           billing_address: $billingAddress
         }
       ) {
@@ -105,21 +92,23 @@ export default async (shippingAddress, billingAddress, email = false) => {
 
   const variables = {
     cartId: maskedId,
-    shippingAddresses: [{
-      address: formatAddress(shippingAddress),
-    }],
     billingAddress: {
       address: formatAddress(billingAddress),
     },
     ...(email ? { email } : {}),
   };
 
+  if (shippingAddress?.firstname) {
+    variables.shippingAddresses = [{
+      address: formatAddress(shippingAddress)
+    }];
+  }
   return graphQlRequest(request, variables)
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
       }
 
-      return response.data.setBillingAddressOnCart;
+      return response.data.setAddressesOnCart;
     });
 };
