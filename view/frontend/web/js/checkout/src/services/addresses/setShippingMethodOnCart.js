@@ -1,6 +1,6 @@
 import useCartStore from '@/stores/CartStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getPartialCart from '@/helpers/cart/getPartialCart';
+import getFullCart from '@/helpers/cart/getFullCart';
 
 export default async (carrierCode, methodCode) => {
   const { maskedId } = useCartStore();
@@ -19,7 +19,7 @@ export default async (carrierCode, methodCode) => {
         }
       ) {
         cart {
-          ${await getPartialCart()}
+          ${await getFullCart()}
         }
       }
     }`;
