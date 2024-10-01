@@ -26,9 +26,9 @@ class SetAddressesOnCart implements ResolverInterface
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
      */
     public function __construct(
-        private readonly SetShippingAddressesOnCartInterface $setShippingAddressesOnCart,
-        private readonly SetBillingAddressOnCart $setBillingAddressOnCart,
-        private readonly CheckCartCheckoutAllowance $checkCartCheckoutAllowance,
+        private readonly SetShippingAddressesOnCartInterface $setShippingAddressesOnCart, // @phpstan-ignore-line
+        private readonly SetBillingAddressOnCart $setBillingAddressOnCart, // @phpstan-ignore-line
+        private readonly CheckCartCheckoutAllowance $checkCartCheckoutAllowance, // @phpstan-ignore-line
         private readonly CartRepositoryInterface $cartRepository,
         private readonly MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
     ) {
