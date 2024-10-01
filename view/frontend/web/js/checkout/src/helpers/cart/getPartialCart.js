@@ -1,8 +1,6 @@
-import useCustomerStore from '@/stores/CustomerStore';
 import functionExtension from '@/extensions/functionExtension';
 
 export default async () => {
-  const customerStore = useCustomerStore();
 
   const partialCart = `
     id

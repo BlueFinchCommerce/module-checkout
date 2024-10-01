@@ -100,7 +100,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
 
   if (shippingAddress?.firstname) {
     variables.shippingAddresses = [{
-      address: formatAddress(shippingAddress)
+      address: formatAddress(shippingAddress),
     }];
   }
   return graphQlRequest(request, variables)
