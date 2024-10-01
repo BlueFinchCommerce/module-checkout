@@ -1,7 +1,4 @@
 {
-  "_adyen.min.js": {
-    "file": "adyen.min.js"
-  },
   "main.css": {
     "file": "main.css",
     "src": "main.css"
@@ -50,9 +47,6 @@
       "main.css"
     ],
     "file": "main.min.js",
-    "imports": [
-      "_adyen.min.js"
-    ],
     "isEntry": true,
     "src": "main.js"
   },
