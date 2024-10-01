@@ -12,23 +12,21 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Magento\Quote\Model\Quote;
-use Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance;
-use Magento\QuoteGraphQl\Model\Cart\SetBillingAddressOnCart as SetBillingAddressOnCartModel;
-use Magento\QuoteGraphQl\Model\Cart\SetShippingAddressesOnCartInterface;
 
 class SetAddressesOnCart implements ResolverInterface
 {
     /**
-     * @param SetShippingAddressesOnCartInterface $setShippingAddressesOnCart
-     * @param SetBillingAddressOnCartModel $setBillingAddressOnCart
-     * @param CheckCartCheckoutAllowance $checkCartCheckoutAllowance
+     * @param \Magento\QuoteGraphQl\Model\Cart\SetShippingAddressesOnCartInterface $setShippingAddressesOnCart
+     * @param \Magento\QuoteGraphQl\Model\Cart\SetBillingAddressOnCart $setBillingAddressOnCart
+     * @param \Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance $checkCartCheckoutAllowance
      * @param CartRepositoryInterface $cartRepository
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
      */
     public function __construct(
-        private readonly SetShippingAddressesOnCartInterface $setShippingAddressesOnCart,
-        private readonly SetBillingAddressOnCartModel $setBillingAddressOnCart,
-        private readonly CheckCartCheckoutAllowance $checkCartCheckoutAllowance,
+        private readonly \Magento\QuoteGraphQl\Model\Cart\SetShippingAddressesOnCartInterface
+        $setShippingAddressesOnCart,
+        private readonly \Magento\QuoteGraphQl\Model\Cart\SetBillingAddressOnCart $setBillingAddressOnCart,
+        private readonly \Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance $checkCartCheckoutAllowance,
         private readonly CartRepositoryInterface $cartRepository,
         private readonly MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
     ) {
