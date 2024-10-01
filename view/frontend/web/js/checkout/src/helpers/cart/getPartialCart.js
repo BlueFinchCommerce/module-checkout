@@ -1,7 +1,6 @@
 import functionExtension from '@/extensions/functionExtension';
 
 export default async () => {
-
   const partialCart = `
     id
     available_payment_methods {
