@@ -45,7 +45,7 @@ const router = createRouter({
   routes,
   scrollBehavior() {
     return {
-      el: '#vue-checkout-root',
+      el: '.root',
       behavior: 'smooth',
     };
   },
