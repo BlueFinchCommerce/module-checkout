@@ -48,7 +48,7 @@
             <component
               :is="additionalVaultedMethod"
               v-for="additionalVaultedMethod in additionalVaultedMethods"
-              :key="additionalVaultedMethod"
+              :key="`${additionalVaultedMethod}-${paymentKey}`"
             />
           </template>
 
@@ -78,7 +78,7 @@
           <component
             :is="additionalPaymentMethodPrimary"
             v-for="additionalPaymentMethodPrimary in additionalPaymentMethodsPrimary"
-            :key="additionalPaymentMethodPrimary"
+            :key="`${additionalPaymentMethodPrimary}-${paymentKey}`"
           />
 
           <BraintreeDropIn
@@ -95,7 +95,7 @@
           <component
             :is="additionalPaymentMethod"
             v-for="additionalPaymentMethod in additionalPaymentMethods"
-            :key="additionalPaymentMethod"
+            :key="`${additionalPaymentMethod}-${paymentKey}`"
           />
         </template>
         <FreeMOCheckPayment

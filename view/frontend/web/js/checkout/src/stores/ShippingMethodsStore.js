@@ -52,14 +52,7 @@ export default defineStore('shippingMethodsStore', {
       const filteredMethods = availableMethods.filter(({ available }) => available);
 
       // Check if we have shipping methods but not one selected.
-      if (filteredMethods?.length === 1) {
-        if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code
-          && availableMethods?.length) {
-          const shippingMethod = filteredMethods[0];
-          this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
-        }
-      } else if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
-          && filteredMethods?.length) {
+      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code && filteredMethods?.length) {
         const shippingMethod = filteredMethods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
       }

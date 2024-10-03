@@ -99,7 +99,10 @@ export default {
 
     setDetailsStepActive() {
       const element = document.getElementById('progress-bar');
-      element.classList.add('shipping-active');
+
+      if (element) {
+        element.classList.add('shipping-active');
+      }
       this.goToShipping();
     },
   },

@@ -1,8 +1,11 @@
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/cart/getFullCart';
 import deepClone from '@/helpers/addresses/deepClone';
+
+import getBillingAddress from '@/helpers/cart/queryData/getBillingAddress';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 
 const formatAddress = (address) => {
   if (!address) {
@@ -98,7 +101,11 @@ export default async (shippingAddress, billingAddress, email = false) => {
         }
       ) {
         cart {
-          ${await getFullCart()}
+          ${await getBillingAddress()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;
