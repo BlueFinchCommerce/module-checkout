@@ -75,7 +75,6 @@ class SetAddressesOnCart implements ResolverInterface
         }
         $this->cartRepository->getActive($cartId)->setTotalsCollectedFlag(true);
         $this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
-        $cart = $this->cartRepository->getActive($cartId)->setTotalsCollectedFlag(true);
 
         return [
             'cart' => [
