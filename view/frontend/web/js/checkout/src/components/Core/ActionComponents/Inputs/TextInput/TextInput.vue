@@ -143,7 +143,7 @@ export default {
     ...mapWritableState(useCustomerStore, ['inputsSanitiseError']),
   },
   methods: {
-    customValidation() {
+    customValidation(event) {
       const inputValue = this.$refs.input.value;
       const inputType = this.type;
       const isValid = sanitiseInputValue(inputValue, inputType);
@@ -155,12 +155,16 @@ export default {
           this.validationErrorMessage = '';
         } else {
           const sanitiseErrorMsg = this.$t('errorMessages.sanitiseError');
+          this.validationErrorMessage = sanitiseErrorMsg;
 
           if (inputType === 'tel') {
-            this.$emit('telephone-error');
+            if (event.key !== 'Tab') {
+              this.$emit('telephone-error');
+              this.validationErrorMessage = sanitiseErrorMsg;
+            } else {
+              this.validationErrorMessage = '';
+            }
           }
-
-          this.validationErrorMessage = sanitiseErrorMsg;
         }
 
         // Use $nextTick to check for errors after the DOM is updated
