@@ -246,7 +246,7 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
+        :disabled="!validateAddress('billing')
           || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
