@@ -2,9 +2,12 @@
 
 .agreement-container {
   width: 100%;
+  font-size: var(--font__m);
 
   .agreement-label {
-    font-size: var(--font__m);
+    span {
+      font-size: var(--font__m);
+    }
   }
 
   .agreement-open-modal {
@@ -46,8 +49,12 @@
 
 @media screen and (min-width: $screen__m) {
   .agreement-container {
+    font-size: var(--font__s);
+
     .agreement-label {
-      font-size: var(--font__s);
+      span {
+        font-size: var(--font__s);
+      }
     }
   }
 }
