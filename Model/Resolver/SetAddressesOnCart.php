@@ -15,6 +15,7 @@ use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance;
 use Magento\QuoteGraphQl\Model\Cart\SetBillingAddressOnCart;
 use Magento\QuoteGraphQl\Model\Cart\SetShippingAddressesOnCartInterface;
+use Gene\BetterCheckout\Model\DataCollector;
 
 class SetAddressesOnCart implements ResolverInterface
 {
@@ -24,13 +25,15 @@ class SetAddressesOnCart implements ResolverInterface
      * @param CheckCartCheckoutAllowance $checkCartCheckoutAllowance
      * @param CartRepositoryInterface $cartRepository
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+     * @param DataCollector $dataCollector
      */
     public function __construct(
         private readonly SetShippingAddressesOnCartInterface $setShippingAddressesOnCart, // @phpstan-ignore-line
         private readonly SetBillingAddressOnCart $setBillingAddressOnCart, // @phpstan-ignore-line
         private readonly CheckCartCheckoutAllowance $checkCartCheckoutAllowance, // @phpstan-ignore-line
         private readonly CartRepositoryInterface $cartRepository,
-        private readonly MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+        private readonly MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
+        private readonly DataCollector $dataCollector
     ) {
     }
 
@@ -68,13 +71,22 @@ class SetAddressesOnCart implements ResolverInterface
             );
         }
 
-        $cart->setTotalsCollectedFlag(true);
         $this->checkCartCheckoutAllowance->execute($cart);
         if ($shippingAddresses) {
+            // prevent calling of collectTotals and requestShippingRates
+            $this->dataCollector->setRatesCollected(true)
+                ->setTotalsCollected(true);
             $this->setShippingAddressesOnCart->execute($context, $cart, $shippingAddresses);
         }
-        $this->cartRepository->getActive($cartId)->setTotalsCollectedFlag(true);
+        // prevent calling of collectTotals and requestShippingRates
+        $this->dataCollector->setRatesCollected(true)
+            ->setTotalsCollected(true);
         $this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
+        $cart->collectTotals();
+        $cart->getShippingAddress()->collectShippingRates();
+        // requestShippingRates must be called in the following availableShippingMethods resolver
+        $this->dataCollector->setRatesCollected(false)
+            ->setTotalsCollected(false);
 
         return [
             'cart' => [
