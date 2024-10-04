@@ -1,6 +1,11 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
-import getFullCart from '@/helpers/cart/getFullCart';
+
+import getIsVirtual from '@/helpers/cart/queryData/getIsVirtual';
+import getItems from '@/helpers/cart/queryData/getItems';
+import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 
 export default async (product) => {
   const { maskedId } = useCartStore();
@@ -20,7 +25,15 @@ export default async (product) => {
         ]
       }) {
         cart {
-          ${await getFullCart()}
+          ${await getIsVirtual()}
+
+          ${await getItems()}
+
+          ${await getPaymentMethods()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;

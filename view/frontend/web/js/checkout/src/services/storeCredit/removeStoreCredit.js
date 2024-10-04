@@ -1,6 +1,11 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
-import getFullCart from '@/helpers/cart/getFullCart';
+
+import getAppliedStoreCredit from '@/helpers/cart/queryData/getAppliedStoreCredit';
+import getItems from '@/helpers/cart/queryData/getItems';
+import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 
 export default async () => {
   const { maskedId } = useCartStore();
@@ -8,7 +13,15 @@ export default async () => {
     mutation {
       removeStoreCreditFromCart(input: { cart_id: "${maskedId}" }) {
         cart {
-          ${await getFullCart()}
+          ${await getAppliedStoreCredit()}
+
+          ${await getItems()}
+
+          ${await getPaymentMethods()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;
