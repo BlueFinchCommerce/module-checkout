@@ -40,7 +40,7 @@
         <component
           :is="expressPaymentMethod"
           v-for="expressPaymentMethod in expressPaymentMethods"
-          :key="expressPaymentMethod"
+          :key="`${expressPaymentMethod}-${storedKey}`"
         />
       </div>
     </div>
