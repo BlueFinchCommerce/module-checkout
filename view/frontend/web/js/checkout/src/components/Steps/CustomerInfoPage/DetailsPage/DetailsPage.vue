@@ -524,9 +524,7 @@ export default {
     async editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
-      if (this.ageCheckRequired) {
-        await functionExtension('onEditAddressAgeCheck');
-      }
+      await functionExtension('onEditAddress');
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
