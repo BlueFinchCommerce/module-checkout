@@ -521,9 +521,12 @@ export default {
       this.goToPayment();
     },
 
-    editAddress() {
+    async editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
+      if (this.ageCheckRequired) {
+        await functionExtension('onEditAddressAgeCheck');
+      }
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
