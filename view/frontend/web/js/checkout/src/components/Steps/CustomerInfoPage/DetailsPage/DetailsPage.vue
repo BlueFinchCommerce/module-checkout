@@ -521,9 +521,10 @@ export default {
       this.goToPayment();
     },
 
-    editAddress() {
+    async editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
+      await functionExtension('onEditAddress');
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
