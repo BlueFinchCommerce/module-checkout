@@ -147,7 +147,6 @@ export default {
             tagline: false,
           },
           fundingSource: this.isCredit ? window[this.namespace].FUNDING.CREDIT : window[this.namespace].FUNDING.PAYPAL,
-          offerCredit: this.isCredit,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
             flow: 'checkout',
