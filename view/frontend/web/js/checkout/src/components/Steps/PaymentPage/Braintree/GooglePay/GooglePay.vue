@@ -87,7 +87,7 @@ export default {
     await this.createClientToken();
 
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
-      environment: this.environment === 'sandbox' ? 'TEST' : 'LIVE',
+      environment: this.environment === 'sandbox' ? 'TEST' : 'PRODUCTION',
       paymentDataCallbacks: {
         ...(this.cart.is_virtual ? {} : { onPaymentDataChanged: this.onPaymentDataChanged }),
         onPaymentAuthorized: this.onPaymentAuthorized,
