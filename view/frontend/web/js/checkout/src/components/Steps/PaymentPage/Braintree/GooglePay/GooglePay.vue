@@ -158,7 +158,7 @@ export default {
         callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
       }
 
-      const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
+      const paymentRequest = {
         transactionInfo: {
           countryCode: this.countryCode,
           currencyCode: this.currencyCode,
@@ -172,7 +172,15 @@ export default {
         },
         shippingOptionRequired: !this.cart.is_virtual,
         callbackIntents,
-      });
+      };
+
+      if (this.environment !== 'sandbox') {
+        paymentRequest.merchantInfo = {
+          merchantId: this.google.merchantId,
+        };
+      }
+
+      const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest(paymentRequest);
 
       const cardPaymentMethod = paymentDataRequest.allowedPaymentMethods[0];
       cardPaymentMethod.parameters.billingAddressRequired = true;
