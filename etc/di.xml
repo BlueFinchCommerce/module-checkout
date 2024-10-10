@@ -23,4 +23,10 @@
     <type name="Magento\Checkout\CustomerData\Cart">
         <plugin name="geneAddAdditionalDataCart" type="Gene\BetterCheckout\Plugin\CustomerData\Cart" />
     </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="geneCollectShippingRates" type="Gene\BetterCheckout\Plugin\Quote\Address" />
+    </type>
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="geneCollectTotals" type="Gene\BetterCheckout\Plugin\Quote" />
+    </type>
 </config>

@@ -114,7 +114,6 @@
 // Stores
 import { mapState, mapActions } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -197,7 +196,6 @@ export default {
       'submitShippingInfo',
       'selectShippingMethod',
     ]),
-    ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useStepsStore, ['goToPayment']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
 
