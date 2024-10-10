@@ -61,7 +61,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-      $shippingAddresses: [ShippingAddressInput],
+      ${shippingAddress?.firstname ? ' $shippingAddresses: [ShippingAddressInput],' : ''}
       $billingAddress: BillingAddressInput!
       ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {

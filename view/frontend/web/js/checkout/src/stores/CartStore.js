@@ -31,6 +31,7 @@ import pennies from '@/services/payments/penniesCharityBox';
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartPrices from '@/helpers/cart/getCartPrices';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getIsVirtual from '@/helpers/cart/getIsVirtual';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
@@ -44,6 +45,7 @@ export default defineStore('cartStore', {
     cart: {
       items: getCartItems(),
       prices: getCartPrices(),
+      is_virtual: getIsVirtual(),
     },
     customer_is_guest: null,
     subtotalInclTax: null,
