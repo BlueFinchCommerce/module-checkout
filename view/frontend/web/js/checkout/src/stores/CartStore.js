@@ -144,7 +144,13 @@ export default defineStore('cartStore', {
 
     // This handles storing the cart data in the correct store location.
     async handleCartData(cart) {
-      if (cart && cart.items.length) {
+      // If there is no cart whatsoever or we have got items but the array is empty then redirect ot basket.
+      if (!cart || ('items' in cart && !cart.items.length)) {
+        redirectToBasketPage();
+        return;
+      }
+
+      if (cart.items) {
         const localItems = getCartItems();
         const mappedCartItems = cart.items.map((item) => (
           { ...localItems[item.id], ...item }
@@ -154,9 +160,6 @@ export default defineStore('cartStore', {
             items: mappedCartItems,
           },
         });
-      } else {
-        redirectToBasketPage();
-        return;
       }
 
       if (cart?.shipping_addresses?.[0]?.available_shipping_methods) {
@@ -189,11 +192,12 @@ export default defineStore('cartStore', {
 
       if (cart.shipping_addresses.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
+        shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
       }
 
-      paymentStore.setPaymentMethods(cart.available_payment_methods);
-
-      shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
+      if (cart.available_payment_methods) {
+        paymentStore.setPaymentMethods(cart.available_payment_methods);
+      }
     },
 
     async updateQuantity(updateItem, change) {
