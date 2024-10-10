@@ -217,6 +217,9 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
 import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLayer';
 
+// extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'EmailAddress',
   components: {
@@ -274,10 +277,10 @@ export default {
   async mounted() {
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
     this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextId]
-    || this.$t('noAccountGuestButton');
+      || this.$t('noAccountGuestButton');
     this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
     this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
-    || this.$t('accountGuestButton');
+      || this.$t('accountGuestButton');
 
     await this.getInitialConfig();
     await this.getCart();
@@ -320,6 +323,9 @@ export default {
         await this.login(this.customer.email, this.password);
         this.loginErrorMessage = '';
         this.proceed();
+        await functionExtension('onUserProceed', [
+          this.customer.email,
+        ]);
         customerLoginDataLayer();
       } catch (error) {
         this.loginErrorMessage = error.message;
@@ -363,9 +369,12 @@ export default {
       }
     },
 
-    proceedAsGuest() {
+    async proceedAsGuest() {
       continueAsGuestDataLayer();
       this.proceed();
+      await functionExtension('onUserProceed', [
+        this.customer.email,
+      ]);
     },
 
     proceed() {
