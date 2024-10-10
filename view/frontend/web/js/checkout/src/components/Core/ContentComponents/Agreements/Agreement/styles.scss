@@ -1,8 +1,13 @@
+@import '@/styles/global/_breakpoints';
+
 .agreement-container {
   width: 100%;
+  font-size: var(--font__m);
 
   .agreement-label {
-    font-size: var(--font__s);
+    span {
+      font-size: var(--font__m);
+    }
   }
 
   .agreement-open-modal {
@@ -35,6 +40,20 @@
       &:active {
         background: transparent;
         border: none;
+      }
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .agreement-container {
+    font-size: var(--font__s);
+
+    .agreement-label {
+      span {
+        font-size: var(--font__s);
       }
     }
   }

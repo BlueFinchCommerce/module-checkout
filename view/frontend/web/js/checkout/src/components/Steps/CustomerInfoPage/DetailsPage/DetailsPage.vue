@@ -40,7 +40,7 @@
         <component
           :is="expressPaymentMethod"
           v-for="expressPaymentMethod in expressPaymentMethods"
-          :key="expressPaymentMethod"
+          :key="`${expressPaymentMethod}-${storedKey}`"
         />
       </div>
     </div>
@@ -246,7 +246,7 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)
+        :disabled="!validateAddress('billing')
           || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
@@ -521,9 +521,10 @@ export default {
       this.goToPayment();
     },
 
-    editAddress() {
+    async editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
+      await functionExtension('onEditAddress');
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;

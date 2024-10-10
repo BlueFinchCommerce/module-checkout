@@ -103,6 +103,7 @@ export default {
       if (element) {
         element.classList.add('shipping-active');
       }
+
       this.goToShipping();
     },
   },
