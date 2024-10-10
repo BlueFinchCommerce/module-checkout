@@ -3,6 +3,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import graphQlRequest from '@/services/graphQlRequest';
 import deepClone from '@/helpers/addresses/deepClone';
 
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 import getBillingAddress from '@/helpers/cart/queryData/getBillingAddress';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
@@ -88,6 +89,8 @@ export default async (shippingAddress, billingAddress, email = false) => {
         }
       ) {
         cart {
+          ${await getEmailField()}
+          
           ${await getBillingAddress()}
 
           ${await getPrices()}
