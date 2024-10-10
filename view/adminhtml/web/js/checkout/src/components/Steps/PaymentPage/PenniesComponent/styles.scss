@@ -1,0 +1,122 @@
+@import '@/styles/global/_breakpoints';
+
+.pennies-trigger,
+.pennies-container__dropdown {
+  max-width: none;
+}
+
+.pennies-trigger {
+  margin: var(--indent__s) 0;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  cursor: pointer;
+
+  p {
+    font-size: var(--font__m);
+    font-weight: var(--font-weight__bold);
+    line-height: 24px;
+  }
+}
+
+.pennies-container {
+  &__dropdown {
+    background: var(--color__primary-grey6);
+    margin-bottom: var(--indent__l);
+    padding: var(--indent__m);
+    text-align: center;
+    border: none;
+  }
+
+  &__logo {
+    &__img {
+      width: 70px;
+    }
+
+    img {
+      &:first-child {
+        margin-right: var(--indent__m);
+      }
+    }
+  }
+
+  &__divider {
+    border: var(--divider__weight) var(--base__border-style) var(--divider__color);
+    margin: var(--indent__s) auto var(--indent__s);
+    max-width: 130px;
+  }
+
+  &__donate-text {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    span,
+    p {
+      font-size: var(--font__s);
+      font-weight: var(--font-weight__bold);
+      line-height: 20px;
+      word-break: break-word;
+    }
+  }
+
+  &__subtitle {
+    font-size: 11px;
+    font-weight: var(--font-weight__medium);
+    padding: 0 var(--indent__s);
+    line-height: 20px;
+
+    .full {
+      margin-right: var(--indent__xs);
+      word-break: break-word;
+    }
+
+    .hidden {
+      line-height: 22px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-right: 60px;
+    }
+    
+    .more,
+    .less {
+      cursor: pointer;
+    }
+
+    .less {
+      position: absolute;
+      right: 0;
+      top: 1px;
+    }
+  }
+
+  &__donate-buttons {
+    margin: var(--indent__m) 0;
+
+    button {
+      background: var(--color__semantic-success);
+      color: var(--color__primary-white);
+      font-weight: var(--font-weight__semibold);
+      width: 70%;
+    }
+  }
+}
+
+//Styles for mobile
+@media screen and (max-width: $screen__m) {
+  .pennies-container {
+    &__logo {
+      &__img {
+        width: 50px;
+      }
+    }
+
+    &__donate-buttons {
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

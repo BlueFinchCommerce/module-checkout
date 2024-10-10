@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <gene_better_checkout>
+            <general>
+                <enable>0</enable>
+                <adyen>
+                    <auth_token></auth_token>
+                </adyen>
+                <loqate>
+                    <loqate_enabled>0</loqate_enabled>
+                    <loqate_api_key></loqate_api_key>
+                </loqate>
+            </general>
+        </gene_better_checkout>
+        <recaptcha_frontend>
+            <type_for>
+                <customer_create_success/>
+            </type_for>
+        </recaptcha_frontend>
+    </default>
+</config>

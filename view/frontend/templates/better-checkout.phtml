@@ -1,0 +1,79 @@
+<?php
+/**
+ * @var \Magento\Catalog\Block\Product\View $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
+ */
+$assetViewModel = $block->getAssetViewModel();
+$jsAssets = $assetViewModel->getAssetsByType('js');
+$cssAssets = $assetViewModel->getAssetsByType('css');
+$designerStyles = $assetViewModel->getStyles();
+$logo = $assetViewModel->getLogo();
+$fontUrl = $assetViewModel->getFontUrl();
+$customWordings = $assetViewModel->getCustomWording();
+?>
+
+<script>
+    window.geneCheckout = window.geneCheckout || {};
+
+    window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+    window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
+    window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
+    window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
+    window.geneCheckout.shippingMethods = window.geneCheckout.shippingMethods || {};
+
+    <?php if ($customWordings): ?>
+        <?php foreach (json_decode($customWordings) as $key => $value): ?>
+            window.geneCheckout["<?= $key ?>"] = "<?= $value ?>";
+        <?php endforeach; ?>
+    <?php endif; ?>
+</script>
+
+<link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
+
+<?php if ($fontUrl !== null) : ?>
+    <style>
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
+    </style>
+<?php endif; ?>
+
+<?php foreach ($cssAssets as $cssAsset): ?>
+    <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+<?php endforeach; ?>
+
+<?php foreach ($jsAssets['main'] as $jsAsset): ?>
+    <script>
+        window.geneCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
+    </script>
+    <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
+<?php endforeach; ?>
+
+<script>
+    window.geneCheckout.staticPath =
+        window.geneCheckout.staticPath.replace(
+            /(.+)\/Gene_BetterCheckout\//,
+            window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+        );
+</script>
+
+<?php if (array_key_exists('imports', $jsAssets)): ?>
+    <?php foreach ($jsAssets['imports'] as $jsAsset): ?>
+        <link rel="modulepreload" href="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>">
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<div id="gene-better-checkout-root"
+     class="full-width container"
+     data-static-path="<?= $escaper->escapeUrl($block->getViewFileUrl('')) ?>"
+     style="min-height: 100%; <?= $designerStyles ?>">
+    <div class="loading-mask">
+        <div class="loader">
+            <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
+                 alt="<?= $escaper->escapeHtmlAttr(__('Loading...')) ?>"
+                 style="width: 50px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        </div>
+    </div>
+</div>

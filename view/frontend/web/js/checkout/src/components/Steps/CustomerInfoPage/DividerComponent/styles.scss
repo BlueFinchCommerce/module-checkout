@@ -1,0 +1,32 @@
+@import '@/styles/global/_breakpoints';
+
+.divider {
+  display: var(--divider__display);
+  align-items: center;
+  justify-content: center;
+
+  &-line {
+    border-bottom: var(--divider__border);
+    flex-grow: 1;
+    min-width: var(--indent__xl);
+  }
+
+  p {
+    font-weight: var(--dividers-font-weight, var(--font-weight__semibold));
+    font-family: var(--font-family__copy);
+    font-size: var(--font__heading--mobile);
+    margin: 0 var(--indent__s);
+    text-align: center;
+  }
+}
+
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .divider {
+    p {
+      font-size: var(--font__heading--desktop);
+    }
+  }
+}

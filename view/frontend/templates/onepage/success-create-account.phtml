@@ -1,0 +1,135 @@
+<?php
+/**
+ * Create account form template for use in the order success page.
+ *
+ * @var \Magento\Checkout\Block\Onepage\Success $block
+ * @var Magento\Framework\Escaper $escaper
+ * @var Gene\BetterCheckout\ViewModel\CheckoutSuccess $orderViewViewModel */
+
+$orderViewViewModel = $block->getData('order_view_view_model');
+
+if ($orderViewViewModel) {
+    /** @var \Magento\Sales\Model\Order $order */
+    $order = $orderViewViewModel->getLastOrder();
+}
+?>
+<?php if ($order->getCustomerIsGuest()):?>
+    <div class="checkout-success-sign-up">
+        <p class="checkout-success-title"><?= $escaper->escapeHtml(__('Save your details for faster checkout'))?></p>
+        <form class="form create account form-create-account"
+            action="<?= $block->escapeUrl($block->getUrl('customer/account/createpost')) ?>"
+            method="post"
+            id="form-validate-create-customer-success"
+            enctype="multipart/form-data"
+            autocomplete="off">
+            <?= /* @noEscape */ $block->getBlockHtml('formkey'); ?>
+            <fieldset class="fieldset create account">
+                <div class="field password required">
+                    <label for="password" class="label"><span><?= $escaper->escapeHtml(__('Enter password')) ?></span></label>
+                    <div class="control">
+                        <input type="password" name="password" id="password"
+                            title="<?= $escaper->escapeHtmlAttr(__('Password')) ?>"
+                            class="input-text"
+                            data-password-min-length="<?= $escaper->escapeHtmlAttr($orderViewViewModel->getMinimumPasswordLength()) ?>"
+                            data-password-min-character-sets="<?= $escaper->escapeHtmlAttr($orderViewViewModel->getRequiredCharacterClassesNumber()) ?>"
+                            data-validate="{required:true, 'validate-customer-password':true}"
+                            autocomplete="off">
+                        <span class="password-visible">
+                                    <svg width="25" height="18" style="display: none" class="icon icon-eye-closed">
+                                        <use xlink:href="#icon-eye-closed"></use>
+                                    </svg>
+                                    <svg width="25" height="18" class="icon icon-eye-opened">
+                                        <use xlink:href="#icon-eye-opened"></use>
+                                    </svg>
+                                </span>
+                        <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
+                            <div id="password-strength-meter" class="password-strength-meter">
+                                <?= $escaper->escapeHtml(__('Password Strength')) ?>:
+                                <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+                                            <?= $escaper->escapeHtml(__('empty')) ?>
+                                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="action primary button-standard" title="<?= $escaper->escapeHtmlAttr(__('Create an Account')) ?>">
+                    <?= $escaper->escapeHtml(__('Create an Account')) ?>
+                </button>
+                <?php if ($orderViewViewModel->getRecaptchaSuccessEnabled()):?>
+                    <?php echo $block->getChildHtml('form_additional_info') ?>
+                <?php endif;?>
+            </fieldset>
+            <input type="hidden" name="firstname" value="<?= $order->getCustomerFirstname() ?>">
+            <input type="hidden" name="lastname" value="<?= $order->getCustomerLastname() ?>">
+            <input type="hidden" name="email" value="<?= $order->getCustomerEmail() ?>">
+            <input type="hidden" name="password_confirmation" id="password-confirmation" value="">
+        </form>
+        <?php $orderViewViewModel->assignOrderToNewCustomer();?>
+
+        <p class="privacy-notice"><?= $escaper->escapeHtml(__('We treat your personal data with care, view our')) ?>
+            <a href="/privacy-policy"><?= $escaper->escapeHtml(__('privacy notice')) ?></a>
+
+        <script type="text/javascript">
+            require(['jquery'],function($){
+                $('#form-validate-create-customer-success').submit(function() {
+                    $('#password-confirmation').val($('#password').val());
+                });
+
+                $('.password-visible').click(function () {
+                    $(this).toggleClass('show');
+                    if(!$(this).hasClass('show')) {
+                        $('#password').attr('type', 'password');
+                        $(".icon-eye-opened").show();
+                        $(".icon-eye-closed").hide();
+                    }
+                    else {
+                        $('#password').attr('type', 'text');
+                        $(".icon-eye-opened").hide();
+                        $(".icon-eye-closed").show();
+                    }
+                });
+            });
+        </script>
+        <script>
+            require([
+                'jquery',
+                'mage/mage'
+            ], function($){
+                // Remove the class hiding the features from display for account holders.
+                $('.checkout-success-features-hidden').removeClass('checkout-success-features-hidden');
+
+                var dataForm = $('#form-validate-create-customer-success');
+
+                dataForm.mage('validation', {
+                    errorPlacement: function(error, element) {
+                        if (element.prop('id').search('full') !== -1) {
+                            var dobElement = $(element).parents('.customer-dob'),
+                                errorClass = error.prop('class');
+                            error.insertAfter(element.parent());
+                            dobElement.find('.validate-custom').addClass(errorClass)
+                                .after('<div class="' + errorClass + '"></div>');
+                        }
+                        else {
+                            error.insertAfter(element);
+                        }
+                    }
+                }).find('input:text').attr('autocomplete', 'off');
+
+            });
+        </script>
+        <script type="text/x-magento-init">
+        {
+            ".field.password": {
+                "passwordStrengthIndicator": {
+                    "formSelector": "form.form-create-account"
+                }
+            },
+
+            "#form-validate-create-customer-success": {
+                "validation": {}
+            }
+
+        }
+        </script>
+    </div>
+<?php endif;?>

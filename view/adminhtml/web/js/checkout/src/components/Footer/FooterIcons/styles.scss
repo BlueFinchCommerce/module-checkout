@@ -1,0 +1,49 @@
+@import '@/styles/global/_breakpoints';
+
+.footer-icons {
+  width: var(--footer-icons-width-mobile, auto);
+  min-height: var(--footer-icons-min-height, 65px); //prevent cls jump
+
+  ul {
+    padding: 0;
+    margin: var(--footer-icons-margin-mobile, var(--indent__s) 0);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: var(--footer-icons-align-items, center);
+    justify-content: center;
+
+    li {
+      display: block;
+      list-style: none;
+      margin: var(--footer-icon-margin-mobile, 0 10px);
+
+      .google_pay {
+        top: 2px;
+      }
+
+      .card,
+      .venmo {
+        width: 30px;
+      }
+
+      .klarna-icon {
+        margin-bottom: 2px;
+      }
+    }
+  }
+}
+
+@media (min-width: $screen__m) {
+  .footer-icons {
+    width: var(--footer-icons-width-desktop, auto);
+    min-height: var(--footer-icons-min-height, 25px); //prevent cls jump
+
+    ul {
+      margin: 0 0 0;
+
+      li {
+        margin: var(--footer-icon-margin, 0 10px);
+      }
+    }
+  }
+}

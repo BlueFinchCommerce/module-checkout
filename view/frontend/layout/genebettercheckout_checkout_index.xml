@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="css/styles-m.css"/>
+        <remove src="css/styles-l.css"/>
+        <remove src="requirejs/require.js"/>
+        <remove src="mage/requirejs/mixins.js"/>
+        <remove src="requirejs-config.js"/>
+    </head>
+
+    <body>
+        <!-- Remove core layout -->
+        <referenceContainer name="root" remove="true" />
+
+        <!-- Add Better Checkout -->
+        <container name="gene.better.checkout.container" htmlTag="div" htmlId="gene-better-checkout-container">
+            <block name="gene.better.checkout" template="Gene_BetterCheckout::better-checkout.phtml" before="-">
+                <arguments>
+                    <argument name="asset_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\Assets</argument>
+                </arguments>
+            </block>
+        </container>
+
+        <container name="gene.better.checkout.analytics">
+            <referenceBlock name="google_gtag_analyticsgtm">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Gene_BetterCheckout::gtag_ga.phtml</argument>
+                </action>
+            </referenceBlock>
+        </container>
+        <move element="google_gtag_analyticsgtm" destination="gene.better.checkout.analytics" />
+    </body>
+</page>

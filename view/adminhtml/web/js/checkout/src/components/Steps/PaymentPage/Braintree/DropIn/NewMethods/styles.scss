@@ -1,0 +1,240 @@
+#gene-better-checkout-root .braintree-drop-in {
+  .braintree-dropin {
+    font-family: var(--font-family__copy);
+  }
+
+  .braintree-loading {
+    margin-top: var(--indent__base);
+
+    .braintree-upper-container:before {
+      border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+      border-radius: var(--radio-input-wrapper__border-radius);
+    }
+
+    .braintree-sheet__container {
+      display: none;
+    }
+  }
+
+  .braintree-heading,
+  .braintree-placeholder,
+  .braintree-toggle {
+    display: none;
+  }
+
+  .braintree-sheet {
+    background: var(--color__transparent);
+    border: none;
+    display: block;
+    grid-row: var(--braintree-method-position);
+
+    &--loading {
+      .braintree-sheet--loading {
+        opacity: 1;
+      }
+    }
+
+    &__header,
+    &__content {
+      display: none;
+    }
+
+    &__container {
+      display: grid;
+    }
+
+    &__content {
+      &--form {
+        .braintree-form {
+          &__flexible-fields {
+            gap: var(--indent__base);
+            margin-top: var(--indent__base);
+
+            button {
+              pointer-events: none; // Disabled buttons for UI designer only
+            }
+          }
+
+          &__field-group {
+            margin-bottom: 0;
+            padding-left: 0;
+
+            &--has-error {
+              .braintree-form__hosted-field {
+                border: var(--input-error-border, var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color));
+              }
+            }
+
+            label {
+              display: flex;
+              gap: var(--indent__s);
+            }
+          }
+
+          &__field {
+            flex: 1;
+
+            &-error {
+              background: var(--notification__error-background-color);
+              border: var(--notification__border-weight) var(--base__border-style) var(--notification__error-border-color);
+              border-radius: var(--messages-border-radius, var(--notification__border-radius));
+              border-width: var(--error-message-border-width, var(--notification__border-weight));
+              color: var(--notification__error-font-color);
+              font-size: var(--error-message-font-size, var(--font__xs));
+              font-weight: var(--error-message-font-weight, var(--font-weight__semibold));
+              min-height: var(--messages-min-height, auto);
+              padding: var(--message-padding, var(--indent__xs));
+            }
+          }
+
+          &__hosted-field {
+            border: var(--input-border, var(--input__border-weight) var(--base__border-style) var(--input__border-color));
+            border-radius: var(--input__border-radius);
+          }
+
+          &__descriptor {
+            color: var(--font__color);
+            display: block;
+            font-size: var(--font-size__s);
+            font-weight: var(--font-weight__regular);
+            margin-left: 0;
+          }
+
+          &__notice-of-collection {
+            pointer-events: none; // Disabled buttons for UI designer only
+            flex: 100%;
+            a {
+              color: var(--button__link-font-color);
+              font-size: var(--button__link-font-size);
+              font-weight: var(--button__link-font-weight);
+              text-decoration: var(--button__link-text-decoration);
+
+              &:hover,
+              &:focus,
+              &:focus-visible {
+                font-weight: var(--button__link-font-weight-focus);
+                color: var(--button__link-font-color-hover);
+              }
+            }
+          }
+        }
+      }
+
+      &--button {
+        min-height: 0;
+        padding: 0;
+        text-align: left;
+      }
+    }
+
+    [data-braintree-id="google-pay-button"] button,
+    .braintree-option__applePay.braintree-option__selected ~ .braintree-sheet__content,
+    .braintree-option__venmo.braintree-option__selected ~ .braintree-sheet__content,
+    &__button--venmo {
+      pointer-events: none; // Disabled buttons for UI designer only
+      height: var(--button__height);
+      width: 100%;
+    }
+
+    &__button--paypal,
+    [data-braintree-id="google-pay-button"],
+    [data-braintree-id="apple-pay-button"] {
+      pointer-events: none; // Disabled buttons for UI designer only
+      display: grid;
+      gap: var(--indent__base);
+    }
+
+    &__error {
+      display: none;
+    }
+
+    &.braintre-hidden {
+      display: none;
+    }
+  }
+
+  .braintree-store-method {
+    width: 100%;
+  }
+
+  .braintree-upper-container:before {
+    background-color: transparent;
+  }
+
+  .braintree-options {
+    display: block;
+    height: auto;
+    visibility: visible;
+
+    &.braintree-hidden {
+      display: none;
+    }
+  }
+
+  .braintree-option {
+    background-color: var(--radio-input-wrapper__background-color);
+    border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
+    border-radius: var(--radio-input-wrapper__border-radius);
+    flex-wrap: wrap;
+    line-height: 1;
+    margin-top: var(--indent__base);
+    padding: var(--indent__base);
+
+    &:before {
+      box-shadow: var(--radio-input__box-shadow);
+      border: var(--radio-input__border);
+      content: '';
+      display: block;
+      width: var(--radio-input__width);
+      height: var(--radio-input__height);
+      border-radius: 50%;
+    }
+
+    &__selected {
+      background-color: var(--radio-input-wrapper__background-color-active);
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-color: var(--radio-input-wrapper__border-color-active);
+      border-width: var(--radio-input-wrapper__border-weight-active);
+
+      &:before {
+        border: var(--radio-input__border-checked);
+        box-shadow: var(--radio-input__box-shadow-checked);
+      }
+
+      ~.braintree-sheet__content {
+        background-color: var(--radio-input-wrapper__background-color-active);
+        border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+        border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+        border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
+        border-top: 0;
+        display: block;
+        opacity: 1;
+        padding: 0 var(--indent__base) var(--indent__base);
+      }
+    }
+
+    &__logo {
+      order: 3;
+    }
+
+    &__label {
+      flex-grow: 1;
+      font-size: var(--font-size__s);
+      font-weight: var(--font-weight__semibold);
+      margin-left: var(--indent__s);
+      width: auto;
+    }
+
+    &:hover {
+      .braintree-option__label {
+        font-weight: var(--font-weight__semibold);
+      }
+    }
+  }
+
+  .braintree-delete-confirmation {
+    display: none;
+  }
+}

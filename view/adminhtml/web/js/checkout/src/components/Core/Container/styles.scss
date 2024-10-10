@@ -1,0 +1,15 @@
+@import '@/styles/global/_breakpoints';
+
+.column {
+    padding: var(--indent__base);
+}
+
+@media (min-width: $screen__m) {
+    .container {
+        display: flex;
+    }
+
+    .column {
+        flex: 1;
+    }
+}

@@ -1,0 +1,79 @@
+@import '@/styles/global/_breakpoints';
+
+.header-container {
+  background: var(--header__background-color);
+  padding: var(--indent__m) var(--indent__base);
+  border-bottom: var(--header__border-bottom);
+  min-height: var(--header__min-height, 80px);
+  display: flex;
+
+  .header-content {
+    max-width: calc(var(--layout__max-width) - var(--indent__xl));
+    padding: var(--header-container-mobile-paddings, 0);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .header-logo {
+      display: flex;
+      flex-shrink: 0;
+      justify-content: end;
+      width: var(--header-logo__width--mobile);
+      padding-top: var(--indent__xs);
+
+      img {
+        width: 100%;
+      }
+
+      &.logo-no-width {
+        width: auto;
+      }
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+      min-height: 18px;
+
+      img {
+        top: -2px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .secure-text {
+        font-size: var(--font__xs);
+        font-weight: var(--font-weight__medium);
+        line-height: var(--font__s);
+        color: var(--secure-header-text-color, var(--color__primary-white));
+        margin: 0 0 0 var(--indent__xs);
+        font-family: var(--font-family__copy);
+        min-width: 100px; //prevent cls jump
+      }
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .header-container {
+    .header-content {
+      padding: var(--header-container-paddings, 0);
+
+      .header-logo {
+        width: var(--header-logo__width--desktop);
+      }
+    }
+
+    &.story-book {
+      .header-content {
+        padding: 20px;
+      }
+    }
+  }
+}

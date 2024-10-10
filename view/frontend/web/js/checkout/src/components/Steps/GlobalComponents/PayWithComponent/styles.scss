@@ -1,0 +1,72 @@
+@import '@/styles/global/_breakpoints';
+
+.pay-with {
+  &__container {
+    align-items: var(--pay-with__align-items);
+    display: flex;
+    flex-direction: var(--pay-with__flex-direction);
+    flex-wrap: wrap;
+    margin: var(--indent__s) var(--indent__s) var(--indent__m);
+    min-height: var(--pay-with-container-min-height, 55px);
+    justify-content: var(--pay-with-justify-content, center);
+
+    &.story-book {
+      display: block;
+      text-align: center;
+
+      .pay-with__message {
+        display: block;
+        min-height: auto;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &__column {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    padding-left: 0;
+    margin: var(--pay-with-column-margin, unset);
+
+    img {
+        width: var(--pay-with-image-max-width, 35px);
+        height: var(--pay-with-image-max-height, auto);
+
+      &.card {
+        border: 1px solid var(--color__primary-dark-blue);
+      }
+    }
+  }
+
+  &__content {
+    padding: 0 0 0 8px;
+    margin: 0;
+    height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  &__content:last-of-type{
+    padding-right: 0;
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .pay-with {
+    &__container {
+      margin: var(--indent__base) var(--indent__base) 0;
+    }
+
+    &__column {
+      padding: var(--indent__s);
+    }
+
+    &__message {
+      font-size: var(--font__heading--desktop);
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <container name="onepagesuccess.header.container" label="Onepage Success Header" before="-">
+                <referenceBlock name="checkout.success">
+                    <arguments>
+                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                    </arguments>
+                    <action method="setTemplate">
+                        <argument name="template" xsi:type="string">Gene_BetterCheckout::onepage/success.phtml</argument>
+                    </action>
+                </referenceBlock>
+            </container>
+
+            <container name="onepagesuccess.registration.container" label="Onepage Success Registration">
+                <container name="onepagesuccess.signup.features" label="Onepage Success Features" htmlTag="div" htmlClass="checkout-success-sign-up checkout-success-features-hidden" />
+                <!-- add create account section-->
+                <block class="Magento\Checkout\Block\Registration" name="checkout.success.create.account" as="create-account-basket" template="Gene_BetterCheckout::onepage/success-create-account.phtml">
+                    <arguments>
+                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                    </arguments>
+                    <container name="form.additional.info" as="form_additional_info"/>
+                </block>
+            </container>
+
+            <container name="onepagesuccess.footer.container" label="Onepage Success Footer" after="-">
+                <block class="Magento\Checkout\Block\Onepage\Success" name="onepagesuccess.footer" template="Gene_BetterCheckout::onepage/footer.phtml">
+                    <arguments>
+                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceBlock name="checkout.registration" remove="true" />
+        <referenceContainer name="form.additional.info">
+            <block class="Magento\ReCaptchaUi\Block\ReCaptcha"
+                   name="recaptcha"
+                   after="-"
+                   template="Magento_ReCaptchaFrontendUi::recaptcha.phtml"
+                   ifconfig="recaptcha_frontend/type_for/customer_create_success">
+                <arguments>
+                    <argument name="recaptcha_for" xsi:type="string">customer_create_success</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="recaptcha" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_ReCaptchaFrontendUi/js/reCaptcha</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

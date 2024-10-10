@@ -1,0 +1,55 @@
+@import '@/styles/global/_breakpoints';
+
+.address-block__address {
+  font-size: var(--steps-complete__font-size-sub--mobile);
+  font-family: var(--font-family__copy);
+
+  p {
+    font-size: var(--short-info-size, var(--steps-complete__font-size-sub--mobile));
+    color: var(--font__color-light);
+    font-weight: var(--font-weight__medium);
+  }
+}
+
+.shipping-billing-steps {
+  margin-right: var(--indent__xl);
+  max-height: var(--short-info-height, 55px);
+  padding-left: var(--section-left-space, 44px);
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+
+  strong {
+    display: block;
+    width: 100%;
+  }
+
+  div {
+    display: var(--shipping-address-bisplay, -webkit-box);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: var(--shipping-address-width, none);
+  }
+}
+
+//Styles for desktop
+
+@mixin largeWidth() {
+  .address-block__address {
+    p {
+      font-size: var(--steps-complete__font-size-sub--desktop);
+    }
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

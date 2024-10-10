@@ -1,0 +1,106 @@
+// --border-color, #7A8086;
+// --odd-child-background, #fbfbfb;
+// --results-box-shadow, 0px 12px 15px 2px #E6E6E6;
+
+.afd-postcode {
+  &__title {
+    margin-bottom: var(--indent__m);
+  }
+
+  &__field {
+    position: relative;
+
+    svg {
+      position: absolute;
+      bottom: calc(var(--input__height) / 2);
+      right: 20px;
+      transform: translateY(50%);
+      width: 17px;
+    }
+  }
+
+  &__results {
+    padding: 0;
+    box-shadow: var(--results-box-shadow ,0px 12px 15px 2px #E6E6E6);
+    max-height: var(--postcode-lookup__max-height);
+    overflow-y: scroll;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+
+    li {
+      list-style: none;
+      padding: var(--indent__m) 0;
+      margin: 0;
+
+      &:nth-child(odd) {
+        background: var(--odd-child-background, #fbfbfb);
+      }
+
+      &:nth-child(even) {
+        background: var(--even-child-background, #fff);
+      }
+    }
+
+    button {
+      color: var(--color__primary-blue);
+      font-size: var(--font__s);
+      background: transparent;
+      text-align: left;
+      border: none;
+      cursor: pointer;
+      padding: 1px 16px;
+      line-height: 25px;
+
+      &:hover {
+        color: var(--color__primary-blue);
+      }
+    }
+  }
+}
+
+.address-block {
+  margin: 10px 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  &__edit {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+
+    button {
+      margin-left: var(--indent__s);
+      box-shadow: none;
+      padding: 0;
+    }
+  }
+
+  &__title {
+    &.selected {
+      font-size: var(--font__s);
+    }
+  }
+
+  &.saved-address-active {
+    border-radius: var(--selectable__border-radius);
+    padding: var(--indent__m) var(--indent__base);
+    font-size: var(--font__s);
+    margin-bottom: var(--indent__base);
+    font-weight: var(--font-weight__semibold);
+    background: var(--address-list-selected-background, var(--selectable__background-color-active));
+    border: var(--selected-border, var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active));
+    box-shadow: var(--selected-address-box-shadow, none);
+
+    .address-block__edit {
+      top: var(--indent__m);
+    }
+  }
+}
+
+.billing-form-address {
+  .afd-postcode__container {
+    margin-top: 40px;
+  }
+}

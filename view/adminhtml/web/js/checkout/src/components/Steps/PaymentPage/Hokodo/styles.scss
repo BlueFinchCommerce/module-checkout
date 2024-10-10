@@ -1,0 +1,63 @@
+// hokodo styles
+.hokodo-method-title {
+  margin-bottom: var(--indent__m);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  cursor: pointer;
+  position: relative;
+  top: -5px;
+
+  &__info {
+    font-size: var(--font__s);
+    font-family: var(--font-family__copy);
+    color: var(--adyen-font-color, #00112c);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    p {
+      font-weight: var(--font-weight__semibold);
+    }
+
+    .hokodo-logo,
+    .hokodo-more-info {
+      margin: var(--indent__xs);
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: var(--indent__xs);
+      width: 43px;
+    }
+  }
+
+  .more-info-button {
+    color: var(--button__link-font-color);
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    text-decoration: var(--button__link-text-decoration);
+    cursor: pointer;
+    background: var(--button__link-background-color);
+    border: var(--button__link-border);
+  }
+}
+
+.hokodo-button {
+  background: transparent;
+  border: none;
+
+  &.payment-method {
+    align-items: baseline;
+  }
+}
+
+#hokodoCompanySearch {
+  margin-bottom: var(--indent__l);
+}

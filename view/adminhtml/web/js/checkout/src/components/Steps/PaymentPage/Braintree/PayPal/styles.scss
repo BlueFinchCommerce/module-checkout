@@ -1,0 +1,48 @@
+// For UI designer only
+.fake-button {
+  position: absolute;
+  height: 55px;
+  width: 100%;
+  cursor: pointer;
+  z-index: 101;
+  background: black;
+  opacity: 0;
+
+  &:hover {
+    opacity: 0.2;
+  }
+}
+
+#braintree-paypal {
+  &.text-loading {
+    border-radius: var(--button__text-placeholder-bg-radius);
+    height: var(--braintree-express-button-height, 48px);
+    z-index: 102;
+  }
+
+  .paypal-buttons {
+    &:last-child {
+      margin-top: var(--indent__m);
+    }
+  }
+
+  &.ui-designer-disabled {
+    pointer-events: none;
+  }
+
+  > div {
+    display: flex;
+  }
+
+  button {
+    border-radius: var(--button__border-radius);
+    height: var(--braintree-express-button-height, 48px);
+    overflow: hidden;
+    width: 100%;
+
+    .gpay-card-info-iframe {
+      height: 40px;
+      position: relative;
+    }
+  }
+}

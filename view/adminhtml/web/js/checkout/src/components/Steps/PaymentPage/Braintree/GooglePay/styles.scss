@@ -1,0 +1,22 @@
+#braintree-google-pay {
+  &.text-loading {
+    border-radius: var(--button__text-placeholder-bg-radius);
+    height: var(--braintree-express-button-height, 48px);
+  }
+
+  > div {
+    display: flex;
+  }
+
+  button {
+    border-radius: var(--button__border-radius);
+    height: var(--braintree-express-button-height, 48px);
+    overflow: hidden;
+    width: 100%;
+
+    .gpay-card-info-iframe {
+      height: 40px;
+      position: relative;
+    }
+  }
+}

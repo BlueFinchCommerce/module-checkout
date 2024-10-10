@@ -1,0 +1,121 @@
+// --order-summary-background - #f4f4f4;
+// --order-summary-box-shadow - inset 0px -1px 5px rgba(0, 0, 0, 0.1);
+
+.order-summary {
+  &-container {
+    align-items: center;
+    background: var(--slide-up__background-color-closed);
+    border-top: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey3);
+    box-shadow: var(--order-summary-box-shadow, var(--slide-up__box-shadow-closed));
+    bottom: 0;
+    display: flex;
+    height: var(--slide-up__height);
+    justify-content: space-between;
+    padding: var(--indent__base);
+    position: fixed;
+    width: 100%;
+    z-index: 200;
+
+    .gene-checkout-threeds-opened & {
+      pointer-events: none;
+    }
+
+    p {
+      margin: 0;
+      text-decoration: underline;
+    }
+  }
+
+  &-header {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &-title {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+
+    p {
+      text-decoration: none;
+    }
+
+    &-text {
+      font-size: var(--slide-up__font-size-title-closed);
+      font-weight: var(--font-weight__bold);
+      color: var(--font__color);
+    }
+
+    .price {
+      font-size: var(--slide-up__font-size-price-closed);
+      font-weight: var(--font-weight__bold);
+      color: var(--font__color);
+    }
+  }
+
+  &-description {
+    font-size: var(--button__link-font-size);
+    font-weight: var(--button__link-font-weight);
+    color: var(--button__link-font-color);
+    text-decoration: var(--button__link-text-decoration);
+  }
+
+  &-icon {
+    align-items: center;
+    display: flex;
+    grid-row: span 2;
+    justify-content: flex-end;
+  }
+
+  &-close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+
+  p {
+    margin-left: var(--indent__s) !important; //override storybook styles
+  }
+
+  + p {
+    margin-left: 30px !important; //override storybook styles
+  }
+}
+
+.product-items {
+  margin-top: var(--indent__m);
+  order: var(--order-summary-order, 4);
+}
+
+//Styles for empty StoryBook data
+
+.storyBookEmptyPrice {
+  display: none;
+}
+
+#root {
+  p {
+    margin: 0;
+  }
+
+  .storyBookEmptyPrice {
+    margin-left: var(--indent__s);
+    display: block;
+  }
+
+  .order-summary-amount {
+    margin-bottom: var(--indent__s);
+
+    .price {
+      display: none;
+    }
+  }
+}

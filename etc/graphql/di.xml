@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
+        <arguments>
+            <argument name="extendedConfigData" xsi:type="array">
+                <item name="gene_better_checkout_afd_enable" xsi:type="string">gene_better_checkout/general/afd/enable_afd_checkout</item>
+                <item name="gene_better_checkout_enabled" xsi:type="string">gene_better_checkout/general/enabled</item>
+                <item name="gene_better_checkout_loqate_enabled" xsi:type="string">gene_better_checkout/general/loqate/loqate_enabled</item>
+                <item name="gene_better_checkout_click_collect_tabs_enabled" xsi:type="string">gene_better_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
+                <item name="gene_better_checkout_loqate_api_key" xsi:type="string">gene_better_checkout/general/loqate/loqate_api_key</item>
+                <item name="gene_better_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
+                <item name="gene_better_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
+                <item name="gene_better_checkout_country_state_required" xsi:type="string">general/region/state_required</item>
+                <item name="gene_better_checkout_country_display_state" xsi:type="string">general/region/display_all</item>
+                <item name="gene_better_checkout_google_map_key" xsi:type="string">carriers/collect/google_map_key</item>
+                <item name="gene_better_checkout_paypal_credit_threshold_enabled" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_enabled</item>
+                <item name="gene_better_checkout_paypal_credit_threshold_value" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_value</item>
+                <item name="gene_better_checkout_google_map_enabled" xsi:type="string">gene_better_checkout/general/google_map_configs/google_map_enabled</item>
+                <item name="gene_better_checkout_google_map_api_key" xsi:type="string">gene_better_checkout/general/google_map_configs/google_map_api_key</item>
+                <item name="optional_zip_countries" xsi:type="string">general/country/optional_zip_countries</item>
+                <item name="tax_cart_display_price" xsi:type="string">tax/cart_display/price</item>
+                <item name="tax_cart_display_subtotal" xsi:type="string">tax/cart_display/subtotal</item>
+                <item name="tax_cart_display_shipping" xsi:type="string">tax/cart_display/shipping</item>
+                <item name="tax_cart_display_grandtotal" xsi:type="string">tax/cart_display/grandtotal</item>
+                <item name="tax_cart_display_full_summary" xsi:type="string">tax/cart_display/full_summary</item>
+                <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
+                <item name="gene_better_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
+                <item name="gene_better_checkout_progress_bar_visible" xsi:type="string">gene_better_checkout/general/progress_bar_visible</item>
+                <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
+                <item name="gtm_active" xsi:type="string">google/analytics/active</item>
+
+                <!-- Recaptch config -->
+                <item name="recaptcha_v2_checkbox_key" xsi:type="string">recaptcha_frontend/type_recaptcha/public_key</item>
+                <item name="recaptcha_v2_invisible_key" xsi:type="string">recaptcha_frontend/type_invisible/public_key</item>
+                <item name="recaptcha_v3_invisible_key" xsi:type="string">recaptcha_frontend/type_recaptcha_v3/public_key</item>
+                <item name="recaptcha_customer_login" xsi:type="string">recaptcha_frontend/type_for/customer_login</item>
+                <item name="recaptcha_place_order" xsi:type="string">recaptcha_frontend/type_for/place_order</item>
+                <item name="recaptcha_braintree" xsi:type="string">recaptcha_frontend/type_for/braintree</item>
+                <item name="validation_failure_message" xsi:type="string">recaptcha_frontend/failure_messages/validation_failure_message</item>
+
+                <!-- Braintree Config -->
+                <item name="braintree_environment" xsi:type="string">payment/braintree/environment</item>
+                <item name="braintree_active" xsi:type="string">payment/braintree/active</item>
+                <item name="braintree_merchant_account_id"
+                      xsi:type="string">payment/braintree/merchant_account_id</item>
+                  <item name="braintree_cc_types"
+                      xsi:type="string">payment/braintree/cctypes</item>
+                <item name="braintree_cc_vault_active"
+                      xsi:type="string">payment/braintree_cc_vault/active</item>
+                <item name="braintree_cc_vault_cvv"
+                      xsi:type="string">payment/braintree_cc_vault/cvv</item>
+                <item name="braintree_send_line_items"
+                      xsi:type="string">payment/braintree/send_line_items</item>
+                <!-- PayPal GraphQL config -->
+                <item name="braintree_paypal_merchant_name_override"
+                      xsi:type="string">payment/braintree_paypal/merchant_name_override</item>
+                <item name="braintree_paypal_merchant_country"
+                      xsi:type="string">paypal/general/merchant_country</item>
+                <item name="braintree_paypal_require_billing_address"
+                      xsi:type="string">payment/braintree_paypal/require_billing_address</item>
+                <item name="braintree_paypal_display_on_shopping_cart"
+                      xsi:type="string">payment/braintree_paypal/display_on_shopping_cart</item>
+                <item name="braintree_paypal_credit_uk_merchant_name"
+                      xsi:type="string">payment/braintree_paypal_credit/uk_merchant_name</item>
+                <item name="braintree_paypal_button_location_cart_type_paypal_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paypal_show</item>
+                <item name="braintree_paypal_button_location_cart_type_paypal_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paypal_label</item>
+                <item name="braintree_paypal_button_location_cart_type_paypal_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paypal_color</item>
+                <item name="braintree_paypal_button_location_cart_type_paypal_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paypal_shape</item>
+                <item name="braintree_paypal_button_location_checkout_type_paypal_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paypal_show</item>
+                <item name="braintree_paypal_button_location_checkout_type_paypal_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paypal_label</item>
+                <item name="braintree_paypal_button_location_checkout_type_paypal_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paypal_color</item>
+                <item name="braintree_paypal_button_location_checkout_type_paypal_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paypal_shape</item>
+                <item name="braintree_paypal_button_location_productpage_type_paypal_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paypal_show</item>
+                <item name="braintree_paypal_button_location_productpage_type_paypal_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paypal_label</item>
+                <item name="braintree_paypal_button_location_productpage_type_paypal_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paypal_color</item>
+                <item name="braintree_paypal_button_location_productpage_type_paypal_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paypal_shape</item>
+                <item name="braintree_paypal_button_location_cart_type_paylater_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paylater_show</item>
+                <item name="braintree_paypal_button_location_cart_type_paylater_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paylater_label</item>
+                <item name="braintree_paypal_button_location_cart_type_paylater_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paylater_color</item>
+                <item name="braintree_paypal_button_location_cart_type_paylater_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_paylater_shape</item>
+                <item name="braintree_paypal_button_location_checkout_type_paylater_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paylater_show</item>
+                <item name="braintree_paypal_button_location_checkout_type_paylater_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paylater_label</item>
+                <item name="braintree_paypal_button_location_checkout_type_paylater_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paylater_color</item>
+                <item name="braintree_paypal_button_location_checkout_type_paylater_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_paylater_shape</item>
+                <item name="braintree_paypal_button_location_productpage_type_paylater_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paylater_show</item>
+                <item name="braintree_paypal_button_location_productpage_type_paylater_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paylater_label</item>
+                <item name="braintree_paypal_button_location_productpage_type_paylater_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paylater_color</item>
+                <item name="braintree_paypal_button_location_productpage_type_paylater_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_paylater_shape</item>
+                <item name="braintree_paypal_button_location_cart_type_credit_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_show</item>
+                <item name="braintree_paypal_button_location_cart_type_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_label</item>
+                <item name="braintree_paypal_button_location_cart_type_credit_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_color</item>
+                <item name="braintree_paypal_button_location_cart_type_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_shape</item>
+                <item name="braintree_paypal_button_location_checkout_type_credit_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_show</item>
+                <item name="braintree_paypal_button_location_checkout_type_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_label</item>
+                <item name="braintree_paypal_button_location_checkout_type_credit_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_color</item>
+                <item name="braintree_paypal_button_location_checkout_type_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_credit_shape</item>
+                <item name="braintree_paypal_button_location_productpage_type_credit_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_credit_show</item>
+                <item name="braintree_paypal_button_location_productpage_type_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_credit_label</item>
+                <item name="braintree_paypal_button_location_productpage_type_credit_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_credit_color</item>
+                <item name="braintree_paypal_button_location_productpage_type_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_credit_shape</item>
+                <item name="braintree_paypal_button_location_cart_type_messaging_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_messaging_show</item>
+                <item name="braintree_paypal_button_location_cart_type_messaging_layout"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_messaging_layout</item>
+                <item name="braintree_paypal_button_location_cart_type_messaging_logo"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_messaging_logo</item>
+                <item name="braintree_paypal_button_location_cart_type_messaging_logo_position"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_messaging_logo_position</item>
+                <item name="braintree_paypal_button_location_cart_type_messaging_text_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_messaging_text_color</item>
+                <item name="braintree_paypal_button_location_checkout_type_messaging_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_messaging_show</item>
+                <item name="braintree_paypal_button_location_checkout_type_messaging_layout"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_messaging_layout</item>
+                <item name="braintree_paypal_button_location_checkout_type_messaging_logo"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_messaging_logo</item>
+                <item name="braintree_paypal_button_location_checkout_type_messaging_logo_position"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_messaging_logo_position</item>
+                <item name="braintree_paypal_button_location_checkout_type_messaging_text_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_checkout_type_messaging_text_color</item>
+                <item name="braintree_paypal_button_location_productpage_type_messaging_show"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_show</item>
+                <item name="braintree_paypal_button_location_productpage_type_messaging_layout"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_layout</item>
+                <item name="braintree_paypal_button_location_productpage_type_messaging_logo"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_logo</item>
+                <item name="braintree_paypal_button_location_productpage_type_messaging_logo_position"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_logo_position</item>
+                <item name="braintree_paypal_button_location_productpage_type_messaging_text_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_text_color</item>
+                <item name="braintree_paypal_vault_active"
+                      xsi:type="string">payment/braintree_paypal_vault/active</item>
+                <item name="braintree_paypal_credit_active"
+                      xsi:type="string">payment/braintree_paypal_credit/active</item>
+                <item name="braintree_paypal_credit_color"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_color</item>
+                <item name="braintree_paypal_credit_label"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_label</item>
+                <item name="braintree_paypal_credit_shape"
+                      xsi:type="string">payment/braintree_paypal/button_location_cart_type_credit_shape</item>
+                <!-- / PayPal GraphQL config -->
+                <item name="braintree_googlepay_merchant_id"
+                      xsi:type="string">payment/braintree_googlepay/merchant_id</item>
+                <item name="braintree_googlepay_cctypes"
+                      xsi:type="string">payment/braintree_googlepay/cctypes</item>
+                <item name="braintree_googlepay_btn_color"
+                      xsi:type="string">payment/braintree_googlepay/btn_color</item>
+                <item name="braintree_googlepay_vault_active"
+                      xsi:type="string">payment/braintree_googlepay_vault/active</item>
+                <item name="braintree_applepay_merchant_name"
+                      xsi:type="string">payment/braintree_applepay/merchant_name</item>
+                <item name="braintree_applepay_vault_active"
+                      xsi:type="string">payment/braintree_applepay_vault/active</item>
+                <item name="braintree_ach_direct_debit_vault_active"
+                      xsi:type="string">payment/braintree_ach_direct_debit_vault/active</item>
+                <item name="braintree_local_payment_fallback_button_text"
+                      xsi:type="string">payment/braintree_local_payment/fallback_button_text</item>
+                <item name="braintree_local_payment_redirect_on_fail"
+                      xsi:type="string">payment/braintree_local_payment/redirect_on_fail</item>
+                <item name="braintree_local_payment_allowed_methods"
+                      xsi:type="string">payment/braintree_local_payment/allowed_methods</item>
+                <item name="braintree_3dsecure_verify_3dsecure"
+                      xsi:type="string">payment/braintree/verify_3dsecure</item>
+                <item name="braintree_3dsecure_always_request_3ds"
+                      xsi:type="string">payment/braintree/always_request_3ds</item>
+                <item name="braintree_3dsecure_threshold_amount"
+                      xsi:type="string">payment/braintree/threshold_amount</item>
+                <item name="braintree_3dsecure_allowspecific"
+                      xsi:type="string">payment/braintree/verify_all_countries</item>
+                <item name="braintree_3dsecure_specificcountry"
+                      xsi:type="string">payment/braintree/verify_specific_countries</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

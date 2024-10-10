@@ -1,0 +1,152 @@
+type StoreConfig {
+    gene_better_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
+    gene_better_checkout_enabled: String @doc(description: "Gene Checkout Enabled")
+    gene_better_checkout_loqate_enabled: String @doc(description: "Gene Checkout Loqate Enabled")
+    gene_better_checkout_click_collect_tabs_enabled: Boolean @doc(description: "Gene Checkout Click&Collect tabs Enabled")
+    gene_better_checkout_loqate_api_key: String @doc(description: "Gene Checkout Loqate API Key")
+    gene_better_checkout_newsletter_enabled: String @doc(description: "Gene Checkout Newsletter Enabled")
+    gene_better_checkout_newsletter_allow_guest: String @doc(description: "Gene Checkout Newsletter Allow Guests")
+    gene_better_checkout_country_state_required: String @doc(description: "Gene Checkout country needs state required")
+    gene_better_checkout_country_display_state: String @doc(description: "Gene Checkout country display state")
+    gene_better_checkout_google_map_key: String @doc(description: "Gene Checkout Google Maps API  Key")
+    gene_better_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
+    gene_better_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
+    gene_better_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
+    gene_better_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
+    gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
+    optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
+    tax_cart_display_price: String @doc(description: "Tax Display Prices")
+    tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")
+    tax_cart_display_shipping: String @doc(description: "Tax Display Shipping")
+    tax_cart_display_grandtotal: String @doc(description: "Tax Display Grandtotal")
+    tax_cart_display_full_summary: String @doc(description: "Tax Display Full summary")
+    tax_cart_display_zero_tax: String @doc(description: "Tax Display Zero tax")
+    gene_better_checkout_copyright_text: String @doc(description: "Checkout copyright text")
+    gtm_container_id: String @doc(description: "GTM Container ID")
+    gtm_active: String @doc(description: "GTM Active")
+
+    recaptcha_v2_checkbox_key: String @doc(description: "Recaptcha v2 checkbox key")
+    recaptcha_v2_invisible_key: String @doc(description: "Recaptcha v2 invisible key")
+    recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
+    recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
+    recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
+    recaptcha_braintree: String @doc(description: "Recaptcha Braintree Type")
+    validation_failure_message: String @doc(description: "Recaptcha Failure Message")
+
+    braintree_environment: String @doc(description: "Braintree environment.")
+    braintree_active: String @doc(description: "Braintree enabled.")
+    braintree_merchant_account_id: String @doc(description: "Braintree Merchant Account ID.")
+    braintree_cc_types: String @doc(description: "Braintree cc types.")
+    braintree_cc_vault_active: String @doc(description: "Braintree cc vault status.")
+    braintree_cc_vault_cvv: Boolean @doc(description: "Braintree cc vault CVV re-verification enabled status.")
+    braintree_send_line_items: Boolean @doc(description: "Does Braintree PayPal require the order line items?")
+    braintree_paypal_merchant_name_override: String @doc(description: "Braintree PayPal override for Merchant Name.")
+    braintree_paypal_merchant_country: String @doc(description: "Braintree PayPal merchant's country.")
+    braintree_paypal_require_billing_address: Boolean @doc(description: "Does Braintree PayPal require the customer's billing address?")
+    braintree_paypal_display_on_shopping_cart: Boolean @doc(description: "Should display Braintree PayPal in mini-cart & cart?")
+    braintree_paypal_credit_uk_merchant_name: String @doc(description: "Braintree PayPal Credit Merchant Name on the FCA Register.")
+    braintree_paypal_button_location_cart_type_paypal_show: Boolean @doc(description: "Braintree PayPal mini-cart & cart button show.")
+    braintree_paypal_button_location_cart_type_paypal_label: String @doc(description: "Braintree PayPal mini-cart & cart button style label.")
+    braintree_paypal_button_location_cart_type_paypal_color: String @doc(description: "Braintree PayPal mini-cart & cart button style color.")
+    braintree_paypal_button_location_cart_type_paypal_shape: String @doc(description: "Braintree PayPal mini-cart & cart button style shape.")
+    braintree_paypal_button_location_checkout_type_paypal_show: Boolean @doc(description: "Braintree PayPal checkout button show.")
+    braintree_paypal_button_location_checkout_type_paypal_label: String @doc(description: "Braintree PayPal checkout button style label.")
+    braintree_paypal_button_location_checkout_type_paypal_color: String @doc(description: "Braintree PayPal checkout button style color.")
+    braintree_paypal_button_location_checkout_type_paypal_shape: String @doc(description: "Braintree PayPal checkout button style shape.")
+    braintree_paypal_button_location_productpage_type_paypal_show: Boolean @doc(description: "Braintree PayPal PDP button show.")
+    braintree_paypal_button_location_productpage_type_paypal_label: String @doc(description: "Braintree PayPal PDP button style label.")
+    braintree_paypal_button_location_productpage_type_paypal_color: String @doc(description: "Braintree PayPal PDP button style color.")
+    braintree_paypal_button_location_productpage_type_paypal_shape: String @doc(description: "Braintree PayPal PDP button style shape.")
+    braintree_paypal_button_location_cart_type_paylater_show: Boolean @doc(description: "Braintree PayPal Pay Later mini-cart & cart button show status.")
+    braintree_paypal_button_location_cart_type_paylater_label: String @doc(description: "Braintree PayPal Pay Later mini-cart & cart button style label.")
+    braintree_paypal_button_location_cart_type_paylater_color: String @doc(description: "Braintree PayPal Pay Later mini-cart & cart button style color.")
+    braintree_paypal_button_location_cart_type_paylater_shape: String @doc(description: "Braintree PayPal Pay Later mini-cart & cart button style shape.")
+    braintree_paypal_button_location_checkout_type_paylater_show: Boolean @doc(description: "Braintree PayPal Pay Later checkout button show status.")
+    braintree_paypal_button_location_checkout_type_paylater_label: String @doc(description: "Braintree PayPal Pay Later checkout button style label.")
+    braintree_paypal_button_location_checkout_type_paylater_color: String @doc(description: "Braintree PayPal Pay Later checkout button style color.")
+    braintree_paypal_button_location_checkout_type_paylater_shape: String @doc(description: "Braintree PayPal Pay Later checkout button style shape.")
+    braintree_paypal_button_location_productpage_type_paylater_show: Boolean @doc(description: "Braintree PayPal Pay Later PDP button show status.")
+    braintree_paypal_button_location_productpage_type_paylater_label: String @doc(description: "Braintree PayPal Pay Later PDP button style label.")
+    braintree_paypal_button_location_productpage_type_paylater_color: String @doc(description: "Braintree PayPal Pay Later PDP button style color.")
+    braintree_paypal_button_location_productpage_type_paylater_shape: String @doc(description: "Braintree PayPal Pay Later PDP button style shape.")
+    braintree_paypal_button_location_cart_type_credit_show: Boolean @doc(description: "Braintree PayPal Credit mini-cart & cart button show status.")
+    braintree_paypal_button_location_cart_type_credit_label: String @doc(description: "Braintree PayPal Credit mini-cart & cart button style label.")
+    braintree_paypal_button_location_cart_type_credit_color: String @doc(description: "Braintree PayPal Credit mini-cart & cart button style color.")
+    braintree_paypal_button_location_cart_type_credit_shape: String @doc(description: "Braintree PayPal Credit mini-cart & cart button style shape.")
+    braintree_paypal_button_location_checkout_type_credit_show: Boolean @doc(description: "Braintree PayPal Credit checkout button show status.")
+    braintree_paypal_button_location_checkout_type_credit_label: String @doc(description: "Braintree PayPal Credit checkout button style label.")
+    braintree_paypal_button_location_checkout_type_credit_color: String @doc(description: "Braintree PayPal Credit checkout button style color.")
+    braintree_paypal_button_location_checkout_type_credit_shape: String @doc(description: "Braintree PayPal Credit checkout button style shape.")
+    braintree_paypal_button_location_productpage_type_credit_show: Boolean @doc(description: "Braintree PayPal Credit PDP button show status.")
+    braintree_paypal_button_location_productpage_type_credit_label: String @doc(description: "Braintree PayPal Credit PDP button style label.")
+    braintree_paypal_button_location_productpage_type_credit_color: String @doc(description: "Braintree PayPal Credit PDP button style color.")
+    braintree_paypal_button_location_productpage_type_credit_shape: String @doc(description: "Braintree PayPal Credit PDP button style shape.")
+    braintree_paypal_button_location_cart_type_messaging_show: Boolean @doc(description: "Braintree PayPal Pay Later messaging mini-cart & cart show status.")
+    braintree_paypal_button_location_cart_type_messaging_layout: String @doc(description: "Braintree PayPal Pay Later messaging mini-cart & cart style layout.")
+    braintree_paypal_button_location_cart_type_messaging_logo: String @doc(description: "Braintree PayPal Pay Later messaging mini-cart & cart style logo.")
+    braintree_paypal_button_location_cart_type_messaging_logo_position: String @doc(description: "Braintree PayPal Pay Later messaging mini-cart & cart style logo position.")
+    braintree_paypal_button_location_cart_type_messaging_text_color: String @doc(description: "Braintree PayPal Pay Later messaging checkout style text color.")
+    braintree_paypal_button_location_checkout_type_messaging_show: Boolean @doc(description: "Braintree PayPal Pay Later messaging checkout show status.")
+    braintree_paypal_button_location_checkout_type_messaging_layout: String @doc(description: "Braintree PayPal Pay Later messaging checkout style layout.")
+    braintree_paypal_button_location_checkout_type_messaging_logo: String @doc(description: "Braintree PayPal Pay Later messaging checkout style logo.")
+    braintree_paypal_button_location_checkout_type_messaging_logo_position: String @doc(description: "Braintree PayPal Pay Later messaging checkout style logo position.")
+    braintree_paypal_button_location_checkout_type_messaging_text_color: String @doc(description: "Braintree PayPal Pay Later messaging checkout style text color.")
+    braintree_paypal_button_location_productpage_type_messaging_show: Boolean @doc(description: "Braintree PayPal Pay Later messaging PDP show status.")
+    braintree_paypal_button_location_productpage_type_messaging_layout: String @doc(description: "Braintree PayPal Pay Later messaging PDP style layout.")
+    braintree_paypal_button_location_productpage_type_messaging_logo: String @doc(description: "Braintree PayPal Pay Later messaging PDP style logo.")
+    braintree_paypal_button_location_productpage_type_messaging_logo_position: String @doc(description: "Braintree PayPal Pay Later messaging PDP style logo position.")
+    braintree_paypal_button_location_productpage_type_messaging_text_color: String @doc(description: "Braintree PayPal Pay Later messaging PDP style text color.")
+    braintree_paypal_vault_active: Boolean @doc(description: "Braintree PayPal vault status.")
+    braintree_paypal_credit_active: Boolean @doc(description: "Braintree PayPal credit status.")
+    braintree_paypal_credit_color: String @doc(description: "Braintree PayPal credit button color.")
+    braintree_paypal_credit_label: String @doc(description: "Braintree PayPal credit button label.")
+    braintree_paypal_credit_shape: String @doc(description: "Braintree PayPal credit button shape.")
+    braintree_googlepay_merchant_id: String @doc(description: "Braintree Google Pay merchant ID.")
+    braintree_googlepay_cctypes: String @doc(description: "Braintree Google Pay Card types supported.")
+    braintree_googlepay_btn_color: String @doc(description: "Braintree Google Pay button color.")
+    braintree_googlepay_vault_active: Boolean @doc(description: "Braintree Google Pay vault status.")
+    braintree_applepay_merchant_name: String @doc(description: "Braintree Apple Pay merchant name.")
+    braintree_applepay_vault_active: Boolean @doc(description: "Braintree Apple Pay vault status.")
+    braintree_ach_direct_debit_vault_active: Boolean @doc(description: "Braintree ACH vault status.")
+    braintree_local_payment_fallback_button_text: String @doc(description: "Braintree Local Payment Methods fallback button text.")
+    braintree_local_payment_redirect_on_fail: String @doc(description: "Braintree Local Payment Methods redirect URL on failed payment.")
+    braintree_local_payment_allowed_methods: String @doc(description: "Braintree Local Payment Methods allowed payment methods.")
+    braintree_3dsecure_verify_3dsecure: Boolean @doc(description: "Braintree 3D Secure enabled/active status.")
+    braintree_3dsecure_always_request_3ds: Boolean @doc(description: "Braintree 3D Secure, always request 3D Secure flag.")
+    braintree_3dsecure_threshold_amount: String @doc(description: "Braintree 3D Secure, threshold above which 3D Secure should be requested.")
+    braintree_3dsecure_allowspecific: Boolean @doc(description: "Braintree 3D Secure, should 3D Secure be used for specific countries.")
+    braintree_3dsecure_specificcountry: String @doc(description: "Braintree 3D Secure, the specific countries to use 3D Secure in, to be used if allow specific is status is enabled.")
+}
+
+type Query {
+    storecode(
+        store_id: String! @doc(description: "Store ID")
+    ): StoreCode @resolver(class:"Gene\\BetterCheckout\\Model\\Resolver\\StoreCode")
+}
+
+type StoreCode @doc(description: "Returns current store code") {
+    store_code: String
+}
+
+type Attribute {
+    multiline_count: Int! @doc(description: "The number of lines of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\MultilineCount")
+    validate_rules: [ValidationRule] @doc(description: "The validation rules of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\ValidateRules")
+}
+
+type ValidationRule @doc(description: "Defines a customer attribute validation rule.") {
+    name: ValidationRuleEnum @doc(description: "Validation rule name applied to a customer attribute.")
+    value: String @doc(description: "Validation rule value.")
+}
+
+enum ValidationRuleEnum @doc(description: "List of validation rule names applied to a customer attribute.") {
+    DATE_RANGE_MAX
+    DATE_RANGE_MIN
+    FILE_EXTENSIONS
+    INPUT_VALIDATION
+    MAX_TEXT_LENGTH
+    MIN_TEXT_LENGTH
+    MAX_FILE_SIZE
+    MAX_IMAGE_HEIGHT
+    MAX_IMAGE_WIDTH
+    IS_REQUIRED
+}

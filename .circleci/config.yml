@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Waiting for MySQL startup
           command: |
-            for i in `seq 1 10`;
+            for i in `seq 1 20`;
             do
               nc -z 127.0.0.1 3306 && echo Success && exit 0
               echo -n .
@@ -85,6 +85,8 @@ jobs:
           name: Install Module @ CI Build Branch/Commit
           command: |
             composer config repositories.gene-packages '{"type": "composer", "url": "https://repo.packagist.com/gene/", "canonical": false}'
+            composer config minimum-stability dev
+            composer config prefer-stable true
             composer require gene/module-better-checkout:dev-${CIRCLE_BRANCH}#${CIRCLE_SHA1} --no-interaction
       - run:
           name: Install Magento
@@ -116,6 +118,10 @@ jobs:
       - run:
           name: DI Compile
           command: php -d memory_limit=-1 bin/magento setup:di:compile
+      - run:
+          name: Install composer modules within Better Checkout
+          command: |
+            composer install --working-dir=vendor/gene/module-better-checkout  --dev
       - persist_to_workspace:
           root: .
           paths:
@@ -133,14 +139,17 @@ jobs:
             ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
       - run:
           name: PHPStan
-          command: ./vendor/bin/phpstan analyse vendor/gene/module-better-checkout
+          working_directory: ./vendor/gene/module-better-checkout
+          command: ./vendor/bin/phpstan analyse . --configuration=./phpstan.neon
       - run:
           name: Configure PHPunit
+          working_directory: ./vendor/gene/module-better-checkout
           command: |
             mkdir -p ~/phpunit
       - run:
-          name: PHPUnit
-          command: ./vendor/bin/phpunit -v --debug --log-junit ~/phpunit/junit.xml vendor/gene/module-better-checkout
+         name: PHPUnit
+         working_directory: ./vendor/gene/module-better-checkout
+         command: ./vendor/bin/phpunit -c phpunit.xml
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
@@ -152,11 +161,23 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Npm install
+          name: NPM install to root module
           command: npm --prefix vendor/gene/module-better-checkout i
       - run:
-          name: ESLint run
+          name: NPM install to checkout app
+          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout i
+      - run:
+          name: NPM install to admin app
+          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout i
+      - run:
+          name: ESLint run against root module
           command: npm --prefix vendor/gene/module-better-checkout run lint
+      - run:
+          name: ESLint run against checkout app
+          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout run lint
+      - run:
+          name: ESLint run against admin app
+          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout run lint
 workflows:
   build-test:
     jobs:

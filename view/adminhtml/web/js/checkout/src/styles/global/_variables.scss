@@ -1,0 +1,490 @@
+//
+//  Global Variables
+//  ---------------------------------------------
+#gene-better-checkout-root {
+
+    //
+    //  Colors
+    //  ---------------------------------------------
+    --color__primary-navy: #000b14;
+    --color__primary-dark-blue: #042138;
+    --color__primary-blue: #063967;
+    --color__primary-grey1: #3f5d7c;
+    --color__primary-grey2: #8193a6;
+    --color__primary-grey3: #abb4bf;
+    --color__primary-grey4: #ccd2da;
+    --color__primary-grey5: #e8edf3;
+    --color__primary-grey6: #f5f9fe;
+    --color__primary-grey7: #f5f5f5;
+    --color__primary-white: #ffffff;
+
+    --color__accent-mint: #00b2ad;
+    --color__accent-mint-light: #ecfffe;
+
+    --color__semantic-error: #bd0005;
+    --color__semantic-error-light: #f8e6e6;
+    --color__semantic-success: #24b53b;
+    --color__semantic-success-light: #e9f8eb;
+
+    --color__transparent: transparent;
+
+    --color__adyen-gradient-green: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
+
+    //
+    //  Page
+    //  ---------------------------------------------
+    --page__background-color--mobile: var(--color__primary-white);
+    --page__background-color--desktop: var(--color__primary-grey7);
+
+    //
+    //  Skeleton Placeholder
+    //  ---------------------------------------------
+    --text-placeholder__bg-color: var(--color__primary-grey6);
+    --text-placeholder__bg-color-darker: var(--color__primary-grey4);
+
+    //
+    // States
+    //  ---------------------------------------------
+    --opacity__light: 0.4;
+    --opacity__heavy: 0.8;
+
+    //
+    //  Layout
+    //  ---------------------------------------------
+    --layout__max-width: 1280px;
+    --indent__base: 20px;
+    --indent__base--desktop: 25px;
+    --indent__base--mobile: 20px;
+    --indent__xxs: 2px;
+    --indent__xs: 5px;
+    --indent__s: 10px;
+    --indent__m: 15px;
+    --indent__l: 30px;
+    --indent__xl: 40px;
+    --indent__xxl: 70px;
+
+    //
+    //  Fonts
+    //  ---------------------------------------------
+    --font__s: 14px;
+    --font__xs: calc(var(--font__s) * 0.8571);  /* ~12px */
+    --font__m: calc(var(--font__s) * 1.1429);  /* ~16px */
+    --font__l: calc(var(--font__s) * 1.2857);  /* ~18px */
+
+    --font-weight__regular: 400;
+    --font-weight__medium: 500;
+    --font-weight__semibold: 600;
+    --font-weight__bold: 700;
+
+    --font-family__base: 'BetterCheckoutFont', 'Montserrat', sans-serif;
+    --font-family__header: var(--font-family__base);
+    --font-family__copy: var(--font-family__base);
+
+    --font__heading--desktop: var(--font__l);
+    --font__heading--mobile: var(--font__m);
+
+    --font__color-light: var(--color__primary-blue);
+    --font__color: var(--color__primary-dark-blue);
+
+    //
+    // Header
+    //  ---------------------------------------------
+    --header__background-color: var(--color__primary-blue);
+    --header__border-bottom: none;
+    --header-logo__width--mobile: 130px;
+    --header-logo__width--desktop: 150px;
+
+    //
+    // Footer
+    //  ---------------------------------------------
+    --footer__background-color: var(--color__primary-blue);
+    --footer__display: block;
+    --footer__border-top: none;
+
+    //
+    // Instant Checkout
+    //  ---------------------------------------------
+    --instant-checkout__background-color: var(--color__primary-grey5);
+
+    //
+    // Steps
+    //  ---------------------------------------------
+    --steps__background-color--desktop: var(--color__primary-white);
+    --steps__border-radius--desktop: var(--base__border-radius-large);
+    --steps-complete__background-color: var(--color__primary-grey5);
+    --steps-complete__radius--desktop: var(--base__border-radius-large);
+    --steps-complete__font-size-title--desktop: var(--font__m);
+    --steps-complete__font-size-title--mobile: var(--font__s);
+    --steps-complete__font-size-sub--desktop: var(--font__s);
+    --steps-complete__font-size-sub--mobile: var(--font__xs);
+
+    //
+    // Order Summary Desktop
+    //  ---------------------------------------------
+    --summary__background-color--desktop: var(--color__primary-white);
+    --summary__border-radius--desktop: var(--base__border-radius-large);
+
+    //
+    // Base Borders
+    //  ---------------------------------------------
+    --base__border-radius: 4px;
+    --base__border-radius-large: 8px;
+    --base__border-weight: 1px;
+    --base__border-weight-active: 2px;
+    --base__border-style: solid;
+    --base__border-color: var(--color__primary-grey4);
+    --base__border-color-active: var(--color__primary-blue);
+
+    //
+    // Selectable Components (Saved Addresses & Stored Cards)
+    //  ---------------------------------------------
+    --selectable__border-radius: var(--base__border-radius-large);
+    --selectable__border-weight: var(--base__border-weight);
+    --selectable__border-weight-active: var(--base__border-weight-active);
+    --selectable__border-color: var(--base__border-color);
+    --selectable__border-color-active: var(--base__border-color-active);
+    --selectable__background-color: var(--color__primary-white);
+    --selectable__background-color-active: var(--color__primary-grey5);
+
+    //
+    // Buttons
+    //  ---------------------------------------------
+    --button__font-family: var(--font-family__copy);
+    --button__font-weight: var(--font-weight__bold);
+    --button__border-weight: 2px;
+    --button__border-style: var(--base__border-style);
+    --button__border-radius: var(--base__border-radius);
+    --button__display: inline-block;
+    --button__line-height: 1em;
+    --button__box-shadow: rgba(0, 0, 0, 0.15) 0 0 0 1px inset;
+    --button__padding-s: 12px;
+    --button__padding-base: 16px;
+    --button__padding-l: 20px;
+    --button__padding-xl: 24px;
+    --button__height: 55px;
+    --button__width: 100%;
+    --button__width-fixed-size: 247px;
+    --button__text-transform: none;
+    --button__text-placeholder-bg-radius: var(--button__border-radius);
+
+    //
+    // Small Buttons
+    //  ---------------------------------------------
+    --button__font-small: var(--font__xs);
+    --button__padding-small: var(--button__padding-s) var(--button__padding-base);
+
+    //
+    // Medium Buttons
+    //  ---------------------------------------------
+    --button__font-medium: var(--font__m);
+    --button__padding-medium: var(--button__padding-s) var(--button__padding-l);
+
+    //
+    // Large Buttons
+    //  ---------------------------------------------
+    --button__font-large: var(--font__l);
+    --button__padding-large: var(--button__padding-s) var(--button__padding-xl);
+
+    //
+    // Adyen Buttons
+    //  ---------------------------------------------
+    --button-adyen-pay__background-color: var(--color__adyen-gradient-green);
+    --button-adyen-pay__background-color-hover: var(--color__adyen-gradient-green);
+    --button-adyen-pay__border-color-hover: var(--color__adyen-gradient-green);
+    --button-adyen-pay__border-radius: var(--button__border-radius);
+
+    //
+    // Adyen Cards
+    //  ---------------------------------------------
+    --adyen-saved-card__background-color: var(--selectable__background-color);
+    --adyen-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --adyen-saved-card__font-color: var(--font__color-light);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --adyen-saved-card__background-color-active: var(--selectable__background-color-active);
+    --adyen-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+
+    //
+    // Braintree Cards
+    //  ---------------------------------------------
+    --braintree-saved-card__background-color: var(--selectable__background-color);
+    --braintree-saved-card__border: var(--selectable__border-weight) var(--base__border-style) var(--selectable__border-color);
+    --braintree-saved-card__font-color: var(--font__color-light);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+    --braintree-saved-card__background-color-active: var(--selectable__background-color-active);
+    --braintree-saved-card__border-active: var(--selectable__border-weight-active) var(--base__border-style) var(--selectable__border-color-active);
+
+    //
+    // Adyen Icons
+    //  ---------------------------------------------
+    --adyen-payment-icon__display: block;
+
+    //
+    // Adyen Icons
+    //  ---------------------------------------------
+    --adyen-payment-threeds__max-height: 650px;
+    --adyen-payment-threeds__max-width: 450px;
+
+    //
+    // Privacy Policy Close Button
+    //  ---------------------------------------------
+    --button-privacy-policy__border: var(--button-blank__border);
+    --button-privacy-policy__background-color-hover: var(--color__transparent);
+    --button-privacy-policy__font-color: var(--button-primary__font-color);
+    --button-privacy-policy__font-color-hover: var(--button__link-font-color-hover);
+
+    //
+    // Primary Buttons
+    //  ---------------------------------------------
+    --button-primary__font-color: var(--color__primary-white);
+    --button-primary__background-color: var(--color__primary-navy);
+    --button-primary__border-color: var(--color__primary-navy);
+    --button-primary__border-weight: var(--button__border);
+    --button-primary__border-box-shadow: 0;
+
+    --button-primary__font-color-hover: var(--color__primary-white);
+    --button-primary__background-color-hover: var(--color__primary-dark-blue);
+    --button-primary__border-color-hover: var(--color__primary-dark-blue);
+    --button-primary__border-weight-hover: var(--button__border);
+
+    --button-primary__font-color-focus: var(--color__primary-white);
+    --button-primary__background-color-focus: var(--color__primary-dark-blue);
+    --button-primary__border-color-focus: var(--color__primary-dark-blue);
+    --button-primary__border-weight-focus: var(--button__border);
+
+    --button-primary__text-placeholder-bg: var(--button-primary__background-color);
+    --button-primary__text-placeholder-bg-gradient: var(--button-primary__font-color-hover);
+
+    //
+    // Secondary Buttons
+    //  ---------------------------------------------
+    --button-secondary__font-color: var(--color__primary-blue);
+    --button-secondary__background-color: var(--color__primary-white);
+    --button-secondary__border-color: var(--color__primary-blue);
+    --button-secondary__border-weight: var(--button__border);
+    --button-secondary__border-box-shadow: 0;
+
+    --button-secondary__font-color-hover: var(--color__primary-blue);
+    --button-secondary__background-color-hover: var(--color__primary-grey4);
+    --button-secondary__border-color-hover: var(--color__primary-blue);
+    --button-secondary__border-weight-hover: var(--button__border);
+
+    --button-secondary__font-color-focus: var(--color__primary-blue);
+    --button-secondary__background-color-focus: var(--color__primary-grey4);
+    --button-secondary__border-color-focus: var(--color__primary-blue);
+    --button-secondary__border-weight-focus: var(--button__border);
+
+    --button-secondary__text-placeholder-bg: var(--button-secondary__background-color);
+    --button-secondary__text-placeholder-bg-gradient: var(--button-secondary__border-color-hover);
+
+    //
+    // Tertiary Buttons
+    //  ---------------------------------------------
+    // --button-tertiary-text-color: var(--text__color);
+    // --button-tertiary-background-color: var(--color__primary-grey6);
+    // --button-tertiary-border-color: var(--color__primary-grey6);
+    // --button-tertiary-border-box-shadow: var(--button__box-shadow);
+
+    // --button-tertiary-text-color-hover: var(--text__color);
+    // --button-tertiary-background-color-hover: var(--color__primary-grey6);
+    // --button-tertiary-background-color-focus: var(--color__primary-grey6);
+    // --button-tertiary-border-color-hover: var(--color__primary-grey6);
+
+    // --text-placeholder__bg-color-tertiary: var(--button-tertiary-background-color);
+    // --text-placeholder__bg-color-tertiary-gradient: var(--button-tertiary-background-color-hover);
+
+    //
+    // Blank Buttons
+    //  ---------------------------------------------
+    --button-blank__border: none;
+
+    //
+    // Tab Buttons
+    //  ---------------------------------------------
+    --button__tab-font-color: var(--color__primary-white);
+    --button__tab-background-color: var(--color__primary-blue);
+    --button__tab-border-color: var(--color__primary-blue);
+    --button__tab-border-weight: var(--button__border);
+    --button__tab-border-box-shadow: 0;
+
+    --button__tab-font-color-hover: var(--color__primary-white);
+    --button__tab-background-color-hover: var(--color__primary-blue);
+    --button__tab-border-color-hover: var(--color__primary-blue);
+    --button__tab-border-weight-hover: var(--button__border);
+
+    --button__tab-font-color-focus: var(--color__primary-white);
+    --button__tab-background-color-focus: var(--color__primary-blue);
+    --button__tab-border-color-focus: var(--color__primary-blue);
+    --button__tab-border-weight-focus: var(--button__border);
+
+    //
+    // Link Buttons
+    //  ---------------------------------------------
+    --button__link-font-size: var(--font__s);
+    --button__link-font-weight: var(--font-weight__medium);
+    --button__link-font-color: var(--color__primary-blue);
+    --button__link-background-color: var(--color__transparent);
+    --button__link-border: none;
+    --button__link-text-decoration: underline;
+    --button__link-padding: 0;
+
+    --button__link-font-weight-hover: var(--font-weight__semibold);
+    --button__link-font-color-hover: var(--color__primary-blue);
+
+    --button__link-font-weight-focus: var(--font-weight__semibold);
+    --button__link-font-color-focus: var(--color__primary-blue);
+
+    //
+    // Inputs
+    //  ---------------------------------------------
+    --input__font-color: var(--color__primary-dark-blue);
+    --input__font-size: var(--font__m);
+    --input__font-weight: var(--font-weight__semibold);
+    --input__background-color: var(--color__primary-white);
+    --input__background-color-logged-in: var(--color__primary-grey6);
+    --input__border-color: var(--color__primary-grey2);
+    --input__border-color-hover: var(--color__primary-grey2);
+    --input__border-color-focus: var(--input__border-color);
+    --input__border-color-valid: var(--base__border-color-active);
+    --input__border-color-error: var(--color__semantic-error);
+    --input__border-radius: var(--base__border-radius);
+    --input__border-weight: var(--base__border-weight);
+    --input__border-weight-hover: var(--base__border-weight);
+    --input__border-weight-focus: var(--base__border-weight-active);
+    --input__height: 55px;
+    --input__label-font-color: var(--color__primary-navy);
+    --input__label-padding: var(--indent__s);
+    --input__placeholder-font-color: var(--color__primary-grey1);
+    --input__placeholder-font-weight: var(--font-weight__medium);
+    --input__border-left-radius: var(--input__border-radius) 0 0 var(--input__border-radius);
+    --input__inline-label-display: flex;
+
+    //
+    // Qty Input
+    //  ---------------------------------------------
+    --qty__box-shadow: 0;
+    --qty__height: 30px;
+    --qty__border-weight: var(--base__border-weight);
+    --qty__border-color: var(--base__border-color);
+    --qty__border: var(--qty__border-weight) var(--base__border-style) var(--qty__border-color);
+    --qty__border-radius: var(--base__border-radius);
+
+    --qty-input__font-weight: var(--font-weight__semibold);
+    --qty-input__font-size: var(--font__s);
+    --qty-input__background-color: var(--color__primary-white);
+    --qty-input__font-color: var(--color__primary-dark-blue);
+    --qty-input__border: var(--qty__border-weight) var(--base__border-style) var(--qty__border-color);
+    --qty-input__border-bottom: none;
+    --qty-input__border-top: none;
+    --qty-input__border-radius: 0;
+
+    --qty-button__border: none;
+    --qty-button__border-radius: 0;
+    --qty-button__background-color: var(--qty-input__background-color);
+    --qty-button__font-color: var(--color__primary-grey1);
+    --qty-button__font-size: 22px;
+
+    //
+    // Radio Inputs
+    //  ---------------------------------------------
+    --radio-input__width: 24px;
+    --radio-input__height: 24px;
+    --radio-input__color: var(--color__primary-grey2);
+    --radio-input__border: var(--base__border-style) var(--base__border-weight) var(--radio-input__color);
+    --radio-input__border-radius: 50%;
+    --radio-input__color-checked: var(--color__primary-blue);
+    --radio-input__box-shadow: inset 0 0 0 3px var(--color__primary-white), inset 0 0 0 40px var(--color__primary-white);
+    --radio-input__box-shadow-checked: inset 0px 0px 0px 3px var(--color__primary-white), inset 0px 0px 0px 40px var(--radio-input__color-checked);
+    --radio-input__border-checked: var(--base__border-weight-active) var(--base__border-style) var(--radio-input__color-checked);
+
+    --radio-input-wrapper__border-radius: var(--base__border-radius-large);
+    --radio-input-wrapper__border-weight: var(--base__border-weight);
+    --radio-input-wrapper__border-weight-active: var(--base__border-weight-active);
+    --radio-input-wrapper__border-color: var(--base__border-color);
+    --radio-input-wrapper__border-color-active: var(--radio-input__color-checked);
+    --radio-input-wrapper__background-color: var(--color__primary-white);
+    --radio-input-wrapper__background-color-active: var(--color__primary-white);
+
+    //
+    // Checkbox Inputs
+    //  ---------------------------------------------
+    --checkbox-input__height: 24px;
+    --checkbox-input__width: 24px;
+    --checkbox-input__border-color: var(--color__primary-grey2);
+    --checkbox-input__border-weight: var(--base__border-weight);
+    --checkbox-input__border-radius: var(--base__border-radius);
+    --checkbox-input__tick-height: 14px;
+    --checkbox-input__tick-width: 8px;
+    --checkbox-input__tick-top: 2px;
+    --checkbox-input__tick-left: 7px;
+    --checkbox-input__tick-thickness: 0 2px 2px 0;
+    --checkbox-input__border-weight-focus: var(--base__border-weight-active);
+    --checkbox-input__background-color: var(--color__primary-white);
+    --checkbox-input__background-color-checked: var(--color__primary-blue);
+    --checkbox-input__border-color-checked: var(--checkbox-input__background-color-checked);
+
+    //
+    // Dropdowns
+    //  ---------------------------------------------
+    --dropdown__background-color: var(--color__primary-white);
+    --dropdown__border-color: var(--base__border-color);
+    --dropdown__border-radius: var(--base__border-radius-large);
+    --dropdown__border-weight: var(--base__border-weight);
+    --dropdown__border: var(--dropdown__border-weight) var(--base__border-style) var(--dropdown__border-color);
+
+    --dropdown__border-color-highlight: var(--color__accent-mint);
+    --dropdown__background-color-highlight: var(--color__accent-mint-light);
+
+    //
+    // Notifications
+    //  ---------------------------------------------
+    --notification__success-font-color: var(--color__primary-navy);
+    --notification__success-background-color: var(--color__semantic-success-light);
+    --notification__succss-border-color: var(--color__semantic-success);
+    --notification__error-font-color: var(--color__semantic-error);
+    --notification__error-background-color: var(--color__semantic-error-light);
+    --notification__error-border-color: var(--color__semantic-error);
+    --notification__border-weight: var(--base__border-weight-active);
+    --notification__border-radius: var(--base__border-radius);
+    --notification__margin: var(--indent__m) 0;
+
+    //
+    // Slide Up
+    //  ---------------------------------------------
+    --slide-up__background-color-closed: var(--color__primary-grey5);
+    --slide-up__font-size-title-closed: var(--font__s);
+    --slide-up__font-size-price-closed: var(--font__m);
+    --slide-up__box-shadow-closed: 0px -5px 20px 5px rgba(0, 0, 0, 0.20);
+    --slide-up__height: initial;
+    --slide-up__border-radius: var(--base__border-radius-large);
+    --slide-up__background-color-open: var(--color__primary-white);
+
+    //
+    // Instant Checkout
+    //  ---------------------------------------------
+    --instant-checkout__text-align: center;
+
+    //
+    // Pay With
+    //  ---------------------------------------------
+    --pay-with__flex-direction: row;
+    --pay-with__align-items: center;
+
+    //
+    // Divider
+    //  ---------------------------------------------
+    --divider__display: flex;
+    --divider__color: var(--base__border-color);
+    --divider__weight: var(--base__border-weight);
+    --divider__border: var(--divider__weight) var(--base__border-style) var(--divider__color);
+
+    //
+    // Google Maps
+    //  ---------------------------------------------
+    --google-map__height: 200px;
+    --google-map__width: 100%;
+
+    //
+    // Postcode lookup
+    //  ---------------------------------------------
+    --postcode-lookup__max-height: 185px;
+}

@@ -1,0 +1,37 @@
+@import '@/styles/global/_breakpoints';
+
+@mixin largeWidth() {
+  .braintree-ach-container {
+    background: var(--radio-input-wrapper__background-color-active);
+    border: var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active);
+    border-bottom-left-radius: var(--radio-input-wrapper__border-radius);
+    border-bottom-right-radius: var(--radio-input-wrapper__border-radius);
+    border-top: 0;
+    column-gap: var(--indent__base);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 var(--indent__base) var(--indent__base);
+  }
+
+  .braintree-ach-mandate,
+  .braintree-ach-business-name {
+    grid-column: 1 / span 2;
+  }
+
+  .braintree-ach-mandate {
+    display: grid;
+    gap: var(--indent__base);
+    margin-top: var(--indent__m);
+  }
+}
+
+.mock-laptop,
+.mock-desktop {
+    @include largeWidth;
+}
+
+@media screen and (min-width: $screen__m) {
+  .mock-full {
+      @include largeWidth;
+  }
+}

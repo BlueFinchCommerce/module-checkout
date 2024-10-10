@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="gene" translate="label" sortOrder="130">
+            <label>Gene</label>
+        </tab>
+        <section id="gene_better_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
+            <label>Better Checkout</label>
+            <tab>gene</tab>
+            <resource>Gene_BetterCheckout::config</resource>
+            <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <comment>
+                    <![CDATA[Version: 0.0.1<br>Better Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
+                </comment>
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
+                </field>
+                <field id="progress_bar_visible" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Progress Bar Functionality</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable progress bar functionality on checkout.]]></comment>
+                </field>
+                <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable AFD Postcode Lookup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
+                </field>
+                <field id="agecheck_required" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Age Checker functionality on checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable Age Checker functionality on checkout.]]></comment>
+                </field>
+                <group id="checkout_designer" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Designer</label>
+                    <field id="designer_trigger" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Open Designer</label>
+                        <depends>
+                            <field id="enabled">1</field>
+                        </depends>
+                        <frontend_model>Gene\BetterCheckout\Block\Adminhtml\System\Config\Designer</frontend_model>
+                    </field>
+                    <field id="designer_values" translate="label comment" type="textarea" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Designer Values</label>
+                    </field>
+                    <field id="custom_wording" translate="label comment" type="textarea" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Custom Wording</label>
+                    </field>
+                    <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                        <label>Checkout Logo</label>
+                        <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                        <upload_dir config="system" scope_info="1">gene_better_checkout</upload_dir>
+                        <base_url type="media" scope_info="1">gene_better_checkout</base_url>
+                        <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
+                    </field>
+                    <field id="font_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Checkout Font File</label>
+                        <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
+                        <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
+                        <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
+                    </field>
+                </group>
+                <group id="loqate" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Loqate</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <field id="loqate_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Loqate</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable or disable Loqate in the Checkout.]]></comment>
+                    </field>
+                    <field id="loqate_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>Loqate API Key</label>
+                        <comment><![CDATA[Your Loqate API key if using Loqate.]]></comment>
+                    </field>
+                </group>
+                <group id="click_collect_tabs" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Click and Collect shipping tabs</label>
+                    <field id="click_collect_tabs_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Click and Collect shipping tabs</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Brings tabs functionality for click and collect address to checkout]]></comment>
+                    </field>
+                </group>
+                <group id="paypal_credit_threshold" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>PayPal Credit Threshold</label>
+                    <field id="paypal_credit_threshold_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable PayPal Credit Threshold</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable PayPal Credit Threshold]]></comment>
+                    </field>
+                    <field id="paypal_credit_threshold_value" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>PayPal Credit Threshold Value</label>
+                        <comment><![CDATA[PayPal Credit Threshold Value.]]></comment>
+                    </field>
+                </group>
+                <group id="google_map_configs" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Map Configuration</label>
+                    <field id="google_map_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Google Map Functionality</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable Google Map Functionality]]></comment>
+                    </field>
+                    <field id="google_map_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>Google Map API Key</label>
+                        <comment><![CDATA[Google Map API Key.]]></comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+        <section id="recaptcha_frontend">
+            <group id="type_for">
+                <field id="customer_create_success" translate="label" type="select" sortOrder="132" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable for Create New Customer Account on Order Success</label>
+                    <source_model>Magento\ReCaptchaAdminUi\Model\OptionSource\Type</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

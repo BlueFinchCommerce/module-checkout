@@ -1,0 +1,132 @@
+/*Gene Vue Checkout App*/
+/*---------------------------------------------*/
+
+/*Core Checkout Styles*/
+/*---------------------------------------------*/
+
+@import "core/_form.scss";
+@import "core/_button.scss";
+@import "core/_payment-method.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+}
+
+html,
+body,
+#gene-better-checkout-container,
+#gene-better-checkout-root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+#gene-better-checkout-root {
+  color: var(--font__color);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family__base);
+  font-size: var(--font__s);
+  line-height: 1.6;
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  .root {
+    background: var(--page__background-color--mobile);
+    flex: 1;
+
+    ul {
+      margin-bottom: 0;
+    }
+  }
+
+  .disabled {
+    pointer-events: none;
+    opacity: var(--disabled-buttons-opacity, 0.5);
+  }
+
+  svg {
+    fill: var(--icon__fill-color);
+  }
+
+  .search-icon,
+  .coupon-icon {
+    fill: none;
+    stroke: var(--icon__fill-color);
+  }
+
+  .steps-container {
+    .container {
+      padding-bottom: var(--indent__xl);
+    }
+  }
+
+  .privacy-modal {
+    .modal-header {
+      justify-content: flex-end;
+    }
+
+    .modal-footer {
+      border-top: 0;
+      justify-content: center;
+
+      .button {
+        width: auto;
+
+        &--secondary {
+          margin-right: var(--indent__base);
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: $screen__m) {
+    .root {
+      background: var(--page__background-color--desktop);
+    }
+
+    .steps-container {
+      .container {
+        max-width: var(--layout__max-width);
+        padding: calc(var(--indent__base) * 4) var(--indent__base);
+        display: flex;
+        flex-direction: row-reverse;
+        margin: 0 auto;
+
+        .summary {
+          width: 40%;
+        }
+
+        .content {
+          margin-right: var(--indent__l);
+          width: 60%;
+        }
+      }
+    }
+
+    .is-hidden-desktop,
+    .is-hidden-tablet {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: $screen__m) {
+    .is-hidden-mobile {
+      display: none !important;
+    }
+  }
+}
+
+body {
+  &.no-scrollable {
+    overflow: hidden;
+  }
+}

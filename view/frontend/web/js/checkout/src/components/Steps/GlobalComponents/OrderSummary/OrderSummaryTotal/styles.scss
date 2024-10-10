@@ -1,0 +1,106 @@
+@import '@/styles/global/_breakpoints';
+
+// --order-summary-total-header-border - 1px solid #D9DADB;
+
+.order-total {
+  &-container {
+    order: var(--order-total-container-order, 7);
+    margin-bottom: var(--indent__s);
+  }
+
+  &-wrapper {
+    padding: var(--order-total-padding, 20px 0 10px);;
+    min-height: 91px;
+
+    .total__row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--order-total-item-padding, 0);
+
+      .total__text {
+        max-width: 350px;
+
+        &.title {
+          text-align: left;
+          font-weight: var(--font-weight__medium);
+        }
+      }
+
+      p {
+        color: var(--font__color);
+        margin-bottom: var(--indent__xs);
+        min-width: 110px;
+        text-align: right;
+        font-size: var(--totals-row-text__font-size, var(--font__s));
+        font-weight: var(--totals-row-text__font-weight, var(--font-weight__semibold));
+      }
+
+      .discount {
+        color: var(--color__semantic-error);
+      }
+    }
+  }
+
+  &-title {
+    font-family: var(--font-family__header);
+    display: var(--order-summary-title-mobile-display, none);
+    order: var(--order-summary-title-order, -1);
+
+    &-amount {
+      margin-left: var(--indent__xs);
+    }
+
+    p {
+      font-size: var(--font__heading--mobile);
+      font-weight: var(--totals-row-text__font-weight, var(--font-weight__semibold));
+      color: var(--font__color);
+    }
+  }
+
+  &-grand {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--grand-total-padding, 20px 0);
+    border-top: var(--divider__weight) var(--base__border-style) var(--divider__color);
+
+    .title {
+      font-size: var(--font__m);
+      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__semibold));
+    }
+
+    p {
+      font-size: var(--font__l);
+      color: var(--font__color);
+      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__bold));
+    }
+  }
+}
+
+//Styles for desktop
+@media screen and (min-width: $screen__m) {
+  .order-total {
+    &-container {
+      order: var(--order-total-container-order, 2);
+      margin-bottom: var(--indent__s);
+    }
+
+
+    &-wrapper {
+      padding: var(--order-total-wrapper, var(--indent__m) 0);
+    }
+
+    &-title {
+      display: var(--order-summary-title-desktop-display, flex);
+      padding-bottom: var(--indent__s);
+      padding-top: 0;
+
+      p {
+        font-size: var(--font__heading--desktop);
+      }
+    }
+
+    &-grand {
+      padding: var(--grand-total-padding, 20px 0 10px);
+    }
+  }
+}
