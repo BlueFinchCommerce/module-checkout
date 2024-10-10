@@ -322,10 +322,7 @@ export default {
       try {
         await this.login(this.customer.email, this.password);
         this.loginErrorMessage = '';
-        this.proceed();
-        await functionExtension('onUserProceed', [
-          this.customer.email,
-        ]);
+        await this.proceed();
         customerLoginDataLayer();
       } catch (error) {
         this.loginErrorMessage = error.message;
@@ -371,15 +368,15 @@ export default {
 
     async proceedAsGuest() {
       continueAsGuestDataLayer();
-      this.proceed();
+      await this.proceed();
+    },
+
+    async proceed() {
+      this.setEmailEntered();
+      this.submitEmail(this.customer.email);
       await functionExtension('onUserProceed', [
         this.customer.email,
       ]);
-    },
-
-    proceed() {
-      this.setEmailEntered();
-      this.submitEmail(this.customer.email);
     },
 
     /**
