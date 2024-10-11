@@ -30,7 +30,7 @@
     list-style: none;
     padding-left: 0;
     margin: var(--pay-with-column-margin, unset);
-    min-height: 35px;
+    min-height: var(--pay-with-column-min-height, 35px);
 
     img {
         width: var(--pay-with-image-max-width, 35px);
