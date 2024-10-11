@@ -11,11 +11,12 @@ import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getRewardPoints from '@/helpers/cart/queryData/getRewardPoints';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 export default async () => {
   const fullCart = `
     id
-    email
+    ${await getEmailField()}
 
     ${await getAppliedCoupons()}
 
