@@ -3,6 +3,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
+import useStepsStore from '@/stores/StepsStore';
 
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
@@ -84,9 +85,18 @@ export default defineStore('shippingMethodsStore', {
 
     setShippingDataFromCartData(data) {
       this.setData({
-        shippingMethods: data.shipping_addresses?.[0].available_shipping_methods,
         selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
       });
+
+      this.setShippingMethods(data.shipping_addresses[0].available_shipping_methods);
+
+      // If we're on the shipping step but no longer have a shipping method then go back to shipping.
+      if (!data.shipping_addresses?.[0]?.selected_shipping_method) {
+        const stepsStore = useStepsStore();
+        if (stepsStore.paymentActive) {
+          stepsStore.goToShipping();
+        }
+      }
     },
 
     async setAddressesOnCart() {
