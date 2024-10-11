@@ -13,6 +13,7 @@ use Magento\Payment\Model\MethodList;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use PayPal\Braintree\Helper\CcType;
 
 class Cart
 {
@@ -24,13 +25,14 @@ class Cart
      * @param Resolver $localeResolver
      * @param StoreManagerInterface $storeManager
      * @param MethodList $methodList
-     */
+    */
     public function __construct(
         private readonly Session $checkoutSession,
         private readonly QuoteIdToMaskedQuoteIdInterface $maskedQuote,
         private readonly Resolver $localeResolver,
         private readonly StoreManagerInterface $storeManager,
-        private readonly MethodList $methodList
+        private readonly MethodList $methodList,
+        private readonly CcType $ccTypeHelper
     ) {
     }
 
@@ -67,6 +69,7 @@ class Cart
         $result['currencyCode'] = $quote->getQuoteCurrencyCode();
         $result['locale'] = $this->localeResolver->getLocale();
         $result['storeCode'] = $this->storeManager->getStore()->getCode();
+        $result['braintreeCcTypes'] = $this->ccTypeHelper->getCcTypes();
 
         return $result;
     }
