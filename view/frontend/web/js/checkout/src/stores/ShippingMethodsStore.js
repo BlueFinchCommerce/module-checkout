@@ -16,6 +16,7 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
+    shippingErrorMessage: '',
     shippingMethods: [],
     selectedMethod: {},
     cache: {},
@@ -85,6 +86,10 @@ export default defineStore('shippingMethodsStore', {
 
     setShippingDataFromCartData(data) {
       this.setData({
+        shippingErrorMessage: null,
+      });
+
+      this.setData({
         selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
       });
 
@@ -116,18 +121,28 @@ export default defineStore('shippingMethodsStore', {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);
 
-      const cart = await setShippingMethodOnCart(carrierCode, methodCode);
+      this.setData({
+        shippingErrorMessage: null,
+      });
 
-      const cartStore = useCartStore();
-      cartStore.handleCartData(cart);
+      try {
+        const cart = await setShippingMethodOnCart(carrierCode, methodCode);
 
-      // Allow custom behaviour after setting the shipping information.
-      await afterSubmittingShippingInformation();
+        const cartStore = useCartStore();
+        cartStore.handleCartData(cart);
 
-      // Track this event.
-      setShippingMethodDataLayer();
+        // Allow custom behaviour after setting the shipping information.
+        await afterSubmittingShippingInformation();
 
-      setLoadingState(false);
+        // Track this event.
+        setShippingMethodDataLayer();
+      } catch (error) {
+        this.setData({
+          shippingErrorMessage: error.message,
+        });
+      } finally {
+        setLoadingState(false);
+      }
     },
 
     async setAsClickAndCollect(agentId) {

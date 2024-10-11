@@ -24,7 +24,7 @@ export default async (carrierCode, methodCode) => {
       ) {
         cart {
           ${await getEmailField()}
-         
+
           ${await getPaymentMethods()}
 
           ${await getPrices()}
@@ -35,5 +35,11 @@ export default async (carrierCode, methodCode) => {
     }`;
 
   return graphQlRequest(request)
-    .then((response) => response.data.setShippingMethodsOnCart.cart);
+    .then((response) => {
+      if (response.errors) {
+        throw new Error(response.errors[0].message);
+      }
+
+      return response.data.setShippingMethodsOnCart.cart;
+    });
 };
