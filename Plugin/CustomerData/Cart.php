@@ -25,6 +25,7 @@ class Cart
      * @param Resolver $localeResolver
      * @param StoreManagerInterface $storeManager
      * @param MethodList $methodList
+     * @param CcType $ccTypeHelper
     */
     public function __construct(
         private readonly Session $checkoutSession,
