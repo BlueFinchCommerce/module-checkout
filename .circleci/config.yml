@@ -134,7 +134,7 @@ jobs:
       - run:
           name: Check ./view/frontend/web/js/checkout/dist directory condition based on branch name
           command: |
-            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+            BRANCH_NAME=$CIRCLE_BRANCH
             
             if [[ "$BRANCH_NAME" == *-dist ]]; then
               echo "Branch ends with '-dist'. Checking if directory exists."
