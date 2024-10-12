@@ -1,0 +1,44 @@
+name: Generate dist
+
+on:
+  push:
+    branches:
+      - automate-workflow # todo swap to `main` and add one for `develop`
+
+jobs:
+  upgrade-magento:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Prepare git
+        shell: bash
+        run: |
+          git config --global user.name "github-action[bot]"
+          git config --global user.email "github-action[bot]@users.noreply.github.com"
+
+      - name: Check out the src branch
+        uses: actions/checkout@v3
+        with:
+          ref: automate-workflow
+
+      - name: Check out the dist branch
+        uses: actions/checkout@v3
+        with:
+          ref: automate-workflow-dist
+
+      - name: Generate dist
+        shell: bash
+        run: |
+          set -v
+          
+          git checkout automate-workflow-dist
+          git pull --no-edit --rebase origin automate-workflow 
+          
+          cd view/frontend/web/js/checkout/
+          npm ci
+          npm run build
+          git add -f ./dist
+          git commit --allow-empty -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
+          git push
+
