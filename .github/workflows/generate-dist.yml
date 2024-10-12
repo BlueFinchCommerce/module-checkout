@@ -33,7 +33,11 @@ jobs:
           set -v
           
           git checkout automate-workflow-dist
-          git pull --no-edit --rebase origin automate-workflow 
+          
+          git config --global pull.rebase false
+          git fetch --unshallow || true
+          
+          git merge origin/automate-workflow --no-edit --verbose
           
           cd view/frontend/web/js/checkout/
           npm ci
