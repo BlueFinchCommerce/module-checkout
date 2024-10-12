@@ -132,13 +132,26 @@ jobs:
       - attach_workspace:
             at: .
       - run:
-          name: Verify ./view/frontend/web/js/checkout/dist directory does not exist
+          name: Check ./view/frontend/web/js/checkout/dist directory condition based on branch name
           command: |
-            if [ -d "./view/frontend/web/js/checkout/dist" ]; then
-              echo "Directory ./view/frontend/web/js/checkout/dist exists. Failing the build."
-              exit 1
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+            
+            if [[ "$BRANCH_NAME" == *-dist ]]; then
+              echo "Branch ends with '-dist'. Checking if directory exists."
+              if [ -d "./view/frontend/web/js/checkout/dist" ]; then
+                echo "Directory ./view/frontend/web/js/checkout/dist exists. Continuing."
+              else
+                echo "Directory ./view/frontend/web/js/checkout/dist does not exist. Failing the build."
+                exit 1
+              fi
             else
-              echo "Directory ./view/frontend/web/js/checkout/dist does not exist. Continuing."
+              echo "Branch does not end with '-dist'. Checking if directory does not exist."
+              if [ -d "./view/frontend/web/js/checkout/dist" ]; then
+                echo "Directory ./view/frontend/web/js/checkout/dist exists. Failing the build."
+                exit 1
+              else
+                echo "Directory ./view/frontend/web/js/checkout/dist does not exist. Continuing."
+              fi
             fi
       - run:
           name: PHPCS
