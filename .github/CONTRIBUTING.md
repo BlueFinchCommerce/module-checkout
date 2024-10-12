@@ -9,15 +9,18 @@ The main branches are as follows
 
 For hotfixes
 - Branch off of `main`
-- Merge to `develop` for testing
+- Merge to `develop` 
+- Wait for the github action to generate `develop-dist` for testing, test it.
 - Merge to `main`
 - Wait for the github action to generate `main-dist`
 - Tag `main-dist` as the new version
 
 For feature work
-- Branch of of `develop`
+- Branch off `develop`
 - Merge to `develop`
+- Wait for the github action to generate `develop-dist` for testing, test it.
 - When the release candidate is ready it can be merged to `main`
+- Wait for the github action to generate `main-dist`
 - Tag `main-dist` as the new version
 
 # Making a release
