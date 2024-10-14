@@ -6,6 +6,7 @@ import getItems from '@/helpers/cart/queryData/getItems';
 import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 export default async (uid) => {
   const { maskedId } = useCartStore();
@@ -16,6 +17,8 @@ export default async (uid) => {
         cart_item_uid: "${uid}"
       }) {
         cart {
+          ${await getEmailField()}
+        
           ${await getIsVirtual()}
 
           ${await getItems()}
