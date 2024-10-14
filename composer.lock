@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17ac7bb0ac3f3877288139c3b992f8d8",
+    "content-hash": "500172a6ddb992b407f48853840926d4",
     "packages": [
+        {
+            "name": "braintree/braintree_php",
+            "version": "6.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/braintree/braintree_php.git",
+                "reference": "c7bdef50c9692f1f9f9bf982e452aec0d137f5ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/c7bdef50c9692f1f9f9bf982e452aec0d137f5ec",
+                "reference": "c7bdef50c9692f1f9f9bf982e452aec0d137f5ec",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://repo.packagist.com/gene/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "ext-hash": "*",
+                "ext-openssl": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Braintree\\": "lib/Braintree"
+                }
+            },
+            "notification-url": "https://repo.packagist.com/gene/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Braintree",
+                    "homepage": "https://www.braintreepayments.com"
+                }
+            ],
+            "description": "Braintree PHP Client Library",
+            "support": {
+                "issues": "https://github.com/braintree/braintree_php/issues",
+                "source": "https://github.com/braintree/braintree_php/tree/6.13.0"
+            },
+            "time": "2023-08-30T21:46:13+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.11.0",
@@ -3036,6 +3091,40 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-advanced-search",
+            "version": "100.4.5-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-advanced-search/magento-module-advanced-search-100.4.5.0-patch3.zip",
+                "shasum": "e870339a66167c5c07aebb337e2be2522eaaa6eb"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-search": "102.0.*",
+                "magento/module-config": "101.2.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-search": "101.1.*",
+                "magento/module-store": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\AdvancedSearch\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-asynchronous-operations",
             "version": "100.4.6",
             "dist": {
@@ -3318,6 +3407,49 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-catalog-graph-ql",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-catalog-graph-ql/magento-module-catalog-graph-ql-100.4.7.0.zip",
+                "shasum": "3c0c7faf9eadc1768e72b7ee2ff51468d84cf9c5"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-advanced-search": "100.4.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-inventory": "100.4.*",
+                "magento/module-catalog-search": "102.0.*",
+                "magento/module-config": "101.2.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-eav-graph-ql": "100.4.*",
+                "magento/module-graph-ql": "100.4.*",
+                "magento/module-graph-ql-resolver-cache": "100.4.*",
+                "magento/module-search": "101.1.*",
+                "magento/module-store": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-graph-ql-cache": "100.4.*",
+                "magento/module-store-graph-ql": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\CatalogGraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-catalog-import-export",
             "version": "101.1.6-p4",
             "dist": {
@@ -3426,6 +3558,47 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-catalog-search",
+            "version": "102.0.7-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-catalog-search/magento-module-catalog-search-102.0.7.0-patch3.zip",
+                "shasum": "1f970f2ff4897cc5dfed9c94e8761bbff7a25c4b"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-inventory": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-indexer": "100.4.*",
+                "magento/module-search": "101.1.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-theme": "101.1.*",
+                "magento/module-ui": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-config": "101.2.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\CatalogSearch\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Catalog search"
         },
         {
             "name": "magento/module-catalog-url-rewrite",
@@ -3650,6 +3823,54 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-configurable-product",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-configurable-product/magento-module-configurable-product-100.4.7.0.zip",
+                "shasum": "9972988bf20d961b544b2ad097065afbecf70440"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-inventory": "100.4.*",
+                "magento/module-checkout": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-media-storage": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-ui": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-catalog-widget": "100.4.*",
+                "magento/module-configurable-sample-data": "Sample Data version: 100.4.*",
+                "magento/module-msrp": "100.4.*",
+                "magento/module-product-links-sample-data": "Sample Data version: 100.4.*",
+                "magento/module-product-video": "100.4.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-sales-rule": "101.2.*",
+                "magento/module-tax": "100.4.*",
+                "magento/module-webapi": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ConfigurableProduct\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-contact",
             "version": "100.4.5",
             "dist": {
@@ -3712,6 +3933,36 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-csp",
+            "version": "100.4.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-csp/magento-module-csp-100.4.6.0.zip",
+                "shasum": "f61e5774f44e5f8e19f76778450a6ed2ce6122a5"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-deploy": "100.4.*",
+                "magento/module-require-js": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\Csp\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "CSP module enables Content Security Policies for Magento"
+        },
+        {
             "name": "magento/module-customer",
             "version": "103.0.6-p4",
             "dist": {
@@ -3753,6 +4004,45 @@
                 ],
                 "psr-4": {
                     "Magento\\Customer\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-customer-graph-ql",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-customer-graph-ql/magento-module-customer-graph-ql-100.4.7.0.zip",
+                "shasum": "efdc3d02d58590d96a2472e925a41d6b7ffe0531"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-eav-graph-ql": "100.4.*",
+                "magento/module-graph-ql": "100.4.*",
+                "magento/module-graph-ql-cache": "100.4.*",
+                "magento/module-graph-ql-resolver-cache": "100.4.*",
+                "magento/module-integration": "100.4.*",
+                "magento/module-newsletter": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-tax": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\CustomerGraphQl\\": ""
                 }
             },
             "license": [
@@ -3932,6 +4222,37 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-eav-graph-ql",
+            "version": "100.4.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-eav-graph-ql/magento-module-eav-graph-ql-100.4.4.0.zip",
+                "shasum": "c1f151c415228fc671b6b78272412dcb6006c596"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-eav": "102.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-graph-ql": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\EavGraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-email",
             "version": "101.1.6-p4",
             "dist": {
@@ -4010,6 +4331,142 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-graph-ql",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-graph-ql/magento-module-graph-ql-100.4.7.0.zip",
+                "shasum": "2f9332743bd2665fb8352af5db7a6e372531b10f"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-webapi": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0",
+                "webonyx/graphql-php": "^15.0"
+            },
+            "suggest": {
+                "magento/module-graph-ql-cache": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\GraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-graph-ql-cache",
+            "version": "100.4.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-graph-ql-cache/magento-module-graph-ql-cache-100.4.4.0.zip",
+                "shasum": "df318f3e3ba9367738e4e2390bfe9c796a9702fa"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-graph-ql": "100.4.*",
+                "magento/module-integration": "100.4.*",
+                "magento/module-page-cache": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\GraphQlCache\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-graph-ql-resolver-cache",
+            "version": "100.4.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-graph-ql-resolver-cache/magento-module-graph-ql-resolver-cache-100.4.0.0.zip",
+                "shasum": "5e8473c6e916120411ec9471eb1d81afb2f666d6"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-graph-ql": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\GraphQlResolverCache\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-grouped-product",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-grouped-product/magento-module-grouped-product-100.4.7.0.zip",
+                "shasum": "c2b37c35be7fbd4501b9f19afff6a568e9c0ed2d"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-inventory": "100.4.*",
+                "magento/module-checkout": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-media-storage": "100.4.*",
+                "magento/module-msrp": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-ui": "101.2.*",
+                "magento/module-wishlist": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-grouped-product-sample-data": "Sample Data version: 100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\GroupedProduct\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-import-export",
             "version": "101.0.6-p4",
             "dist": {
@@ -4063,6 +4520,40 @@
                 ],
                 "psr-4": {
                     "Magento\\Indexer\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-instant-purchase",
+            "version": "100.4.6-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-instant-purchase/magento-module-instant-purchase-100.4.6.0-patch3.zip",
+                "shasum": "69338cccc6bb131d815d82a48095e16162b4c5b2"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-shipping": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-vault": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\InstantPurchase\\": ""
                 }
             },
             "license": [
@@ -4177,6 +4668,43 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-multishipping",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-multishipping/magento-module-multishipping-100.4.7.0.zip",
+                "shasum": "ef813346d4d5526f975c1aa21e68b6b3d613edb2"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-captcha": "100.4.*",
+                "magento/module-checkout": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-payment": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-tax": "100.4.*",
+                "magento/module-theme": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\Multishipping\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-newsletter",
             "version": "100.4.6-p4",
             "dist": {
@@ -4279,6 +4807,55 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-paypal",
+            "version": "101.0.7-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-paypal/magento-module-paypal-101.0.7.0-patch3.zip",
+                "shasum": "bbadd208fec3c4526c6a880539364ddbdd5ecc01"
+            },
+            "require": {
+                "lib-libxml": "*",
+                "magento/framework": "103.0.*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-checkout": "100.4.*",
+                "magento/module-config": "101.2.*",
+                "magento/module-csp": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-eav": "102.1.*",
+                "magento/module-instant-purchase": "100.4.*",
+                "magento/module-payment": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-tax": "100.4.*",
+                "magento/module-theme": "101.1.*",
+                "magento/module-ui": "101.2.*",
+                "magento/module-vault": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-checkout-agreements": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\Paypal\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-product-alert",
             "version": "100.4.5",
             "dist": {
@@ -4359,6 +4936,320 @@
                 "AFL-3.0"
             ],
             "description": "N/A"
+        },
+        {
+            "name": "magento/module-quote-graph-ql",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-quote-graph-ql/magento-module-quote-graph-ql-100.4.7.0.zip",
+                "shasum": "6c2d960e02838c04145e49d88c2c6aeb15daabec"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-inventory": "100.4.*",
+                "magento/module-checkout": "100.4.*",
+                "magento/module-customer": "103.0.*",
+                "magento/module-customer-graph-ql": "100.4.*",
+                "magento/module-directory": "100.4.*",
+                "magento/module-eav-graph-ql": "100.4.*",
+                "magento/module-gift-message": "100.4.*",
+                "magento/module-graph-ql": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-sales-graph-ql": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-catalog-inventory-graph-ql": "100.4.*",
+                "magento/module-graph-ql-cache": "100.4.*",
+                "magento/module-payment-graph-ql": "100.4.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\QuoteGraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-re-captcha-admin-ui",
+            "version": "1.1.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-admin-ui/magento-module-re-captcha-admin-ui-1.1.4.0.zip",
+                "shasum": "f043957561d99e0797ae1e21f89152eaa78d78ea"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-config": "*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-store": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaAdminUi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-frontend-ui",
+            "version": "1.1.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-frontend-ui/magento-module-re-captcha-frontend-ui-1.1.5.0.zip",
+                "shasum": "c36367b0aa9b7120a10298b012b4e5595f4362ce"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-store": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaFrontendUi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-ui",
+            "version": "1.1.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-ui/magento-module-re-captcha-ui-1.1.4.0.zip",
+                "shasum": "627fb12305748f74e15c82d644670a097e19f024"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaUi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Riccardo Tempesta",
+                    "email": "riccardo.tempesta@magespecialist.it"
+                }
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-validation-api",
+            "version": "1.1.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-validation-api/magento-module-re-captcha-validation-api-1.1.3.0.zip",
+                "shasum": "759f1f9b2d6babd29b84f4b507cb3bc652229217"
+            },
+            "require": {
+                "magento/framework": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaValidationApi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-version-2-checkbox",
+            "version": "2.0.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-version-2-checkbox/magento-module-re-captcha-version-2-checkbox-2.0.4.0.zip",
+                "shasum": "18d15f40048765c88027484e1313d292537c59c3"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "magento/module-store": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-config": "*",
+                "magento/module-re-captcha-admin-ui": "1.1.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaVersion2Checkbox\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-version-2-invisible",
+            "version": "2.0.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-version-2-invisible/magento-module-re-captcha-version-2-invisible-2.0.4.0.zip",
+                "shasum": "662f8d3f9c24cd48bc61aa8b56da78443cfe4e7a"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "magento/module-store": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-config": "*",
+                "magento/module-re-captcha-admin-ui": "1.1.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaVersion2Invisible\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-version-3-invisible",
+            "version": "2.0.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-version-3-invisible/magento-module-re-captcha-version-3-invisible-2.0.4.0.zip",
+                "shasum": "6c267964d91cf3863ca1345c77219423e0b6f7df"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "magento/module-store": "*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-config": "*",
+                "magento/module-re-captcha-admin-ui": "1.1.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaVersion3Invisible\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-webapi-api",
+            "version": "1.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-webapi-api/magento-module-re-captcha-webapi-api-1.0.3.0.zip",
+                "shasum": "410e9910328f965d0ac6a435779b4f381b290105"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaWebapiApi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
+        },
+        {
+            "name": "magento/module-re-captcha-webapi-ui",
+            "version": "1.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-re-captcha-webapi-ui/magento-module-re-captcha-webapi-ui-1.0.3.0.zip",
+                "shasum": "9d962010016e122513278e01944541a49968423d"
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-re-captcha-frontend-ui": "1.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\ReCaptchaWebapiUi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Google reCAPTCHA integration for Magento2"
         },
         {
             "name": "magento/module-reports",
@@ -4587,6 +5478,41 @@
             "description": "N/A"
         },
         {
+            "name": "magento/module-sales-graph-ql",
+            "version": "100.4.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-sales-graph-ql/magento-module-sales-graph-ql-100.4.7.0.zip",
+                "shasum": "b06d781a55f194302d63213675c1b751415e7033"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-catalog": "104.0.*",
+                "magento/module-catalog-graph-ql": "100.4.*",
+                "magento/module-graph-ql": "100.4.*",
+                "magento/module-quote": "101.2.*",
+                "magento/module-sales": "103.0.*",
+                "magento/module-shipping": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-tax": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\SalesGraphQl\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
             "name": "magento/module-sales-rule",
             "version": "101.2.6-p4",
             "dist": {
@@ -4656,6 +5582,38 @@
                 ],
                 "psr-4": {
                     "Magento\\SalesSequence\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
+        },
+        {
+            "name": "magento/module-search",
+            "version": "101.1.7-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-search/magento-module-search-101.1.7.0-patch3.zip",
+                "shasum": "9ac9640341f0fc5dee0b26181791946f9ab9aea9"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-catalog-search": "102.0.*",
+                "magento/module-reports": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "magento/module-ui": "101.2.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\Search\\": ""
                 }
             },
             "license": [
@@ -5069,6 +6027,41 @@
                 "OSL-3.0",
                 "AFL-3.0"
             ]
+        },
+        {
+            "name": "magento/module-webapi",
+            "version": "100.4.6-p1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magento/module-webapi/magento-module-webapi-100.4.6.0-patch1.zip",
+                "shasum": "281d027d335cfe16b967796c9cb2f37167e213f6"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-backend": "102.0.*",
+                "magento/module-integration": "100.4.*",
+                "magento/module-store": "101.1.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "suggest": {
+                "magento/module-customer": "103.0.*",
+                "magento/module-user": "101.2.*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magento\\Webapi\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "N/A"
         },
         {
             "name": "magento/module-widget",
@@ -5620,6 +6613,74 @@
                 }
             ],
             "time": "2023-10-27T15:25:26+00:00"
+        },
+        {
+            "name": "paypal/module-braintree-core",
+            "version": "4.6.1-p3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/paypal/module-braintree-core/paypal-module-braintree-core-4.6.1.0-patch3.zip",
+                "shasum": "103e37facd2b6f7c4e0cb88ab1fc0b3ed978f626"
+            },
+            "require": {
+                "braintree/braintree_php": "6.13.0",
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "magento/framework": "*",
+                "magento/module-authorization": "100.4.*",
+                "magento/module-backend": "100.2.*||101.0.*||^102.0.0",
+                "magento/module-catalog": "102.0.*||103.0.*||^104.0.0",
+                "magento/module-checkout": "100.2.*||100.3.*||^100.4.0",
+                "magento/module-checkout-agreements": "100.4.*",
+                "magento/module-config": "101.0.*||101.1.*||^101.2.0",
+                "magento/module-configurable-product": "100.4.*",
+                "magento/module-customer": "101.0.*||102.0.*||^103.0.0",
+                "magento/module-directory": "100.2.*||100.3.*||^100.4.0",
+                "magento/module-downloadable": "100.4.*",
+                "magento/module-grouped-product": "100.4.*",
+                "magento/module-instant-purchase": "100.4.*",
+                "magento/module-multishipping": "100.4.*",
+                "magento/module-payment": "100.2.*||100.3.*||^100.4.0",
+                "magento/module-paypal": "100.2.*||100.3.*||^101.0.0",
+                "magento/module-quote": "101.0.*||101.1.*||^101.2.0",
+                "magento/module-quote-graph-ql": "^100",
+                "magento/module-re-captcha-admin-ui": "1.1.*",
+                "magento/module-re-captcha-frontend-ui": "1.1.*",
+                "magento/module-re-captcha-ui": "1.1.*",
+                "magento/module-re-captcha-validation-api": "1.1.*",
+                "magento/module-re-captcha-version-2-checkbox": "2.0.*",
+                "magento/module-re-captcha-version-2-invisible": "2.0.*",
+                "magento/module-re-captcha-version-3-invisible": "2.0.*",
+                "magento/module-re-captcha-webapi-api": "1.0.*",
+                "magento/module-re-captcha-webapi-ui": "1.0.*",
+                "magento/module-sales": "101.0.*||102.0.*||^102.1.0||^103",
+                "magento/module-store": "101.1.*",
+                "magento/module-theme": "100.2.*||101.0.*||^101.1.0",
+                "magento/module-ui": "101.0.*||101.1.*||^101.2.0",
+                "magento/module-vault": "101.0.*||101.1.*||^101.2.0",
+                "magento/module-webapi": "100.4.*",
+                "php": "~8.1.0||~8.2.0||~8.3.0"
+            },
+            "conflict": {
+                "gene/module-braintree": "*",
+                "magento/module-braintree": "*"
+            },
+            "require-dev": {
+                "magento/magento-coding-standard": "^32.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "PayPal\\Braintree\\": ""
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Fork from the Magento Braintree 2.2.0 module by Gene Commerce for PayPal."
         },
         {
             "name": "psr/container",
@@ -10055,9 +11116,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "gene/module-better-checkout-adyen": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

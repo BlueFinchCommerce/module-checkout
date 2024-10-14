@@ -204,7 +204,11 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.getCart();
-    await this.getVaultedMethods();
+
+    if (this.isPaymentMethodAvailable('braintree_cc_vault') && this.isLoggedIn) {
+      await this.getVaultedMethods();
+    }
+
     this.setPaymentErrorMessage('');
 
     // The titles need to be reflective of the state we're in.
