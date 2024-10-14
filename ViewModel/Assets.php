@@ -19,7 +19,12 @@ class Assets implements ArgumentInterface
     /** @var string */
     const ASSETS_DEF_FILE = 'manifest.json';
     /** @var string */
-    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
+    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist-dev/';
+    /** @var string */
+    const ASSETS_BASE_DIR_DEV = 'Gene_BetterCheckout::js/checkout/dist-dev/';
+    // If store config flag gene/bettercheckout/vite-watch-mode-on=yes
+    // try and get asset from dist-dev, if fail, get from dis
+    // this will cover adyen extensions etc not being watched, as well as the core product being watched
     /** @var string */
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
     /** @var string */
