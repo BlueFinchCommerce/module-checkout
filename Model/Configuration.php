@@ -65,4 +65,23 @@ class Configuration implements ConfigurationInterface
             $scopeCode
         );
     }
+
+    /**
+     * Return whether vite watch mode is enabled
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return bool
+     */
+    public function getIsDeveloperViteWatchModeEnabled(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+               $scopeCode = null
+    ): bool {
+        return (bool) $this->scopeConfig->getValue(
+            self::VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE,
+            $scopeType,
+            $scopeCode
+        );
+    }
+
 }

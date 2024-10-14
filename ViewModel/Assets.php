@@ -22,9 +22,6 @@ class Assets implements ArgumentInterface
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist-dev/';
     /** @var string */
     const ASSETS_BASE_DIR_DEV = 'Gene_BetterCheckout::js/checkout/dist-dev/';
-    // If store config flag gene/bettercheckout/vite-watch-mode-on=yes
-    // try and get asset from dist-dev, if fail, get from dis
-    // this will cover adyen extensions etc not being watched, as well as the core product being watched
     /** @var string */
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
     /** @var string */
@@ -82,13 +79,7 @@ class Assets implements ArgumentInterface
         if (count($this->assetFilesByType)) {
             return $this->assetFilesByType;
         }
-        $params = [
-            'area' => $area
-        ];
-        $assetDefinitionFile = $this->assetRepository->createAsset(
-            self::ASSETS_BASE_DIR . self::ASSETS_DEF_FILE,
-            $params
-        );
+        $assetDefinitionFile = $this->createAsset(self::ASSETS_DEF_FILE, $area);
         $assetDefinitionContent = $assetDefinitionFile->getContent();
         $assetDefinitionArray = json_decode($assetDefinitionContent, true);
         $this->assetFilesByType = [];
@@ -139,10 +130,25 @@ class Assets implements ArgumentInterface
     public function createAsset(string $fileName, string $area = 'frontend'): File
     {
         $params = ['area' => $area];
-        return $this->assetRepository->createAsset(
-            self::ASSETS_BASE_DIR . $fileName,
-            $params
-        );
+
+        $assetDefinitionFile = null;
+        if ($this->configuration->getIsDeveloperViteWatchModeEnabled()) {
+            try {
+                // Try and get the asset from the vite watch directory
+                $assetDefinitionFile = $this->assetRepository->createAsset(
+                    self::ASSETS_BASE_DIR_DEV . $fileName,
+                    $params
+                );
+            } catch (\Throwable) {
+            }
+        }
+        if (!$assetDefinitionFile) {
+            $assetDefinitionFile = $this->assetRepository->createAsset(
+                self::ASSETS_BASE_DIR . $fileName,
+                $params
+            );
+        }
+        return $assetDefinitionFile;
     }
 
     /**

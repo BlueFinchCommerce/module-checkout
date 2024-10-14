@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - develop
+      - automate-workflow # todo remove once completed
       - "hotfix/*"
 
 jobs:

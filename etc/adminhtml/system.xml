@@ -39,6 +39,11 @@
                     <label>Enable debugging on checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable local developer vite watch mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[For local developer use only, do not enable on production]]></comment>
+                </field>
                 <group id="checkout_designer" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Checkout Designer</label>
                     <field id="designer_trigger" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
