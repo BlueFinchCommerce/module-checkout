@@ -1,6 +1,6 @@
 import useCartStore from '@/stores/CartStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/cart/getFullCart';
+import getFullCart from '@/helpers/cart/queryData/getFullCart';
 
 export default async () => {
   const { maskedId } = useCartStore();

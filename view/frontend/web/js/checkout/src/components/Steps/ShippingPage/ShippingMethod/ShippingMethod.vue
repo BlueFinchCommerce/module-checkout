@@ -2,6 +2,7 @@
   <section>
     <div class="checkout-section checkout-shipping">
       <ProgressBar />
+
       <component
         :is="ageCheckerExtension"
         v-for="ageCheckerExtension in ageCheckerExtensions"
@@ -24,6 +25,11 @@
           </div>
           <div class="divider-line" />
         </div>
+        <ErrorMessage
+          v-if="shippingErrorMessage"
+          :message="shippingErrorMessage"
+          :attached="false"
+        />
         <component
           :is="shippingMethodAdditionalContainer"
           v-for="shippingMethodAdditionalContainer in shippingMethodAdditionalContainers"
@@ -114,7 +120,6 @@
 // Stores
 import { mapState, mapActions } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
-import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -124,6 +129,7 @@ import useStepsStore from '@/stores/StepsStore';
 import formatPrice from '@/helpers/payment/formatPrice';
 
 // Components
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
@@ -142,6 +148,7 @@ import shippingMethodAdditionalContainers from '@/extensions/shippingMethodAddit
 export default {
   name: 'ShippingMethod',
   components: {
+    ErrorMessage,
     TextField,
     Shipping,
     MyButton,
@@ -178,6 +185,7 @@ export default {
     ...mapState(useShippingMethodsStore, [
       'getError',
       'selectedMethod',
+      'shippingErrorMessage',
     ]),
   },
   async created() {
@@ -197,7 +205,6 @@ export default {
       'submitShippingInfo',
       'selectShippingMethod',
     ]),
-    ...mapActions(usePaymentStore, ['setPaymentMethods']),
     ...mapActions(useStepsStore, ['goToPayment']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
 

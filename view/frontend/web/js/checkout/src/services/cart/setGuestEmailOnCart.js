@@ -1,6 +1,5 @@
 import useCartStore from '@/stores/CartStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/cart/getFullCart';
 
 export default async (email) => {
   const { maskedId } = useCartStore();
@@ -14,7 +13,7 @@ export default async (email) => {
         }
       ) {
         cart {
-          ${await getFullCart()}
+          email
         }
       }
     }`;

@@ -1,6 +1,6 @@
 <template>
   <div
-    id="braintree-paypal"
+    :id="`braintree-paypal-${namespace}`"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
     :data-cy="'instant-checkout-braintreePayPal'"
@@ -113,6 +113,7 @@ export default {
       }
 
       const sdkConfig = {
+        components: 'buttons,funding-eligibility',
         currency: this.currencyCode,
         intent: 'capture',
         vault: 'false',
@@ -145,8 +146,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window[this.namespace].FUNDING.PAYPAL,
-          offerCredit: false,
+          fundingSource: this.isCredit ? window[this.namespace].FUNDING.CREDIT : window[this.namespace].FUNDING.PAYPAL,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
             flow: 'checkout',
@@ -235,8 +235,6 @@ export default {
           },
         };
 
-        this.paypalLoaded = true;
-
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
           if (this.paypalCreditThresholdEnabled
@@ -259,7 +257,12 @@ export default {
           }
         }
 
-        return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
+        return window[this.namespace].Buttons(renderData).render(`#braintree-paypal-${this.namespace}`)
+          .then((response) => {
+            this.paypalLoaded = true;
+
+            return response;
+          });
       });
     });
   },

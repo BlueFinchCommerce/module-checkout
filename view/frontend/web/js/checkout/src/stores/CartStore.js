@@ -144,7 +144,13 @@ export default defineStore('cartStore', {
 
     // This handles storing the cart data in the correct store location.
     async handleCartData(cart) {
-      if (cart && cart.items.length) {
+      // If there is no cart whatsoever or we have got items but the array is empty then redirect ot basket.
+      if (!cart || ('items' in cart && !cart.items.length)) {
+        redirectToBasketPage();
+        return;
+      }
+
+      if (cart.items) {
         const localItems = getCartItems();
         const mappedCartItems = cart.items.map((item) => (
           { ...localItems[item.id], ...item }
@@ -154,9 +160,6 @@ export default defineStore('cartStore', {
             items: mappedCartItems,
           },
         });
-      } else {
-        redirectToBasketPage();
-        return;
       }
 
       if (cart?.shipping_addresses?.[0]?.available_shipping_methods) {
@@ -171,10 +174,20 @@ export default defineStore('cartStore', {
       const configStore = useConfigStore();
       await functionExtension('onHandleCartData', [cart, configStore]);
 
+      if (typeof cart.applied_coupons !== 'undefined') {
+        this.setData({
+          discountCode: cart?.applied_coupons?.[0]?.code ?? '',
+        });
+      }
+
+      if (typeof cart.applied_gift_cards !== 'undefined') {
+        this.setData({
+          giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
+        });
+      }
+
       this.setData({
         cart,
-        discountCode: cart?.applied_coupons?.[0]?.code ?? '',
-        giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
       });
 
       const customerStore = useCustomerStore();
@@ -189,11 +202,12 @@ export default defineStore('cartStore', {
 
       if (cart.shipping_addresses.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
+        shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
-      paymentStore.setPaymentMethods(cart.available_payment_methods);
-
-      shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
+      if (cart.available_payment_methods) {
+        paymentStore.setPaymentMethods(cart.available_payment_methods);
+      }
     },
 
     async updateQuantity(updateItem, change) {
