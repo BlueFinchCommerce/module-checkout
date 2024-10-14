@@ -62,7 +62,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-      ${shippingAddress?.firstname ? ' $shippingAddresses: [ShippingAddressInput],' : ''}
+      ${shippingAddress?.firstname ? '$shippingAddresses: [ShippingAddressInput]' : ''},
       $billingAddress: BillingAddressInput!
       ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
@@ -90,7 +90,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
       ) {
         cart {
           ${await getEmailField()}
-          
+
           ${await getBillingAddress()}
 
           ${await getPrices()}
