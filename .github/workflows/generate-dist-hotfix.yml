@@ -38,6 +38,11 @@ jobs:
           
           git merge origin/${{ env.SOURCE_BRANCH }} --no-edit --verbose
           
+          # Store the sha that matches to the dist, we can then back track to the "clean" version without dist files
+          # Can be useful in future for convenient hotfixing specifically tagged versions
+          echo "${{ github.sha }}" > .github/sha.txt
+          git add -f .github/sha.txt
+          
           cd view/frontend/web/js/checkout/
           npm ci
           npm run build
