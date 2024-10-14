@@ -1,9 +1,9 @@
-name: Generate dist for main
+name: Generate dist for develop
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   generate-dist:
@@ -20,24 +20,24 @@ jobs:
       - name: Check out the src branch
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: develop
 
       - name: Check out the dist branch
         uses: actions/checkout@v3
         with:
-          ref: main-dist
+          ref: develop-dist
 
       - name: Generate dist
         shell: bash
         run: |
           set -v
           
-          git checkout main-dist
+          git checkout develop-dist
           
           git config --global pull.rebase false
           git fetch --unshallow || true
           
-          git merge origin/main --no-edit --verbose
+          git merge origin/develop --no-edit --verbose
           
           # Store the sha that matches to the dist, we can then back track to the "clean" version without dist files
           # Can be useful in future for convenient hotfixing specifically tagged versions
