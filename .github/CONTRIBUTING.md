@@ -4,16 +4,8 @@ The main branches are as follows
 
 - `main` - The main branch
 - `develop` - The develop branch
-- `main-dist` - The main branch with all checkout assets prepared for distribution. This branch is never committed to directly.
-- `develop-dist` - The develop branch with all checkout assets prepared for distribution. This branch is never committed to directly.
-
-For hotfixes
-- Branch off of `main`
-- Merge to `develop` 
-- Wait for the github action to generate `develop-dist` for testing, test it.
-- Merge to `main`
-- Wait for the github action to generate `main-dist`
-- Tag `main-dist` as the new version
+- `main-dist` - The main branch with all checkout assets prepared for distribution. This branch is never committed to or checked out directly.
+- `develop-dist` - The develop branch with all checkout assets prepared for distribution. This branch is never committed to or checked out directly.
 
 For feature work
 - Branch off `develop`
@@ -22,6 +14,21 @@ For feature work
 - When the release candidate is ready it can be merged to `main`
 - Wait for the github action to generate `main-dist`
 - Tag `main-dist` as the new version
+
+For hotfixes to the current main tag
+- Branch off of `main`
+- Merge to `develop` 
+- Wait for the github action to generate `develop-dist` for testing, test it.
+- Merge to `main`
+- Wait for the github action to generate `main-dist`
+- Tag `main-dist` as the new version
+
+For hotfixes from an older tag
+- Find the tag you need to hotfix
+- Branch off of the sha detailed in `.github/sha.txt`, this is the clean version the dist was generated from
+- Call your branch `hotfix/abc123`
+- This will generate `hotfix/abc123-dist`
+- At this point you will be able to have the flexibility to do what you need, either tagging a `-p1` off that tag or merging it into `main` etc
 
 # Making a release
 
