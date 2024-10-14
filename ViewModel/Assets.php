@@ -139,6 +139,7 @@ class Assets implements ArgumentInterface
                     self::ASSETS_BASE_DIR_DEV . $fileName,
                     $params
                 );
+                $assetDefinitionFile->getSourceFile(); // trigger file resolution
             } catch (\Throwable) {
             }
         }
