@@ -19,7 +19,7 @@ class Assets implements ArgumentInterface
     /** @var string */
     const ASSETS_DEF_FILE = 'manifest.json';
     /** @var string */
-    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist-dev/';
+    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
     /** @var string */
     const ASSETS_BASE_DIR_DEV = 'Gene_BetterCheckout::js/checkout/dist-dev/';
     /** @var string */
