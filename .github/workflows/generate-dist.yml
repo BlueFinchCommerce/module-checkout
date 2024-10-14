@@ -38,5 +38,7 @@ jobs:
           npm run build
           git add -f ./dist
           
-          git commit -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
-          git push
+          if ! git diff-index --quiet HEAD; then
+            git commit -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
+            git push
+          fi
