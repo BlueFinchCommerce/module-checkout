@@ -580,8 +580,6 @@ export default {
         };
       }
 
-      console.log('here');
-
       if (this.isPaymentMethodAvailable('braintree_venmo')) {
         const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
           .bind(this.instance._mainView._views.venmo.venmoInstance);
