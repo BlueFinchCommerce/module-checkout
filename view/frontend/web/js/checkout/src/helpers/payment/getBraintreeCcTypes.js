@@ -1,9 +1,9 @@
 export default () => {
   const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));
 
-  if (!mageCache?.cart?.paymentMethodList?.length) {
+  if (!mageCache?.cart?.braintreeCcTypes?.length) {
     return [];
   }
 
-  return mageCache.cart.paymentMethodList;
+  return mageCache.cart.braintreeCcTypes.map(({ value }) => value);
 };

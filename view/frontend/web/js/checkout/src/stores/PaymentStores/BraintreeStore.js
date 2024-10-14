@@ -5,6 +5,8 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import createClientToken from '@/services/braintree/createClientToken';
 import getVaultedMethods from '@/services/braintree/getVaultedMethods';
+
+import getCcTypes from '@/helpers/payment/getBraintreeCcTypes';
 import getFilteredLpmMethods from '@/helpers/payment/getFilteredLpmMethods';
 
 export default defineStore('brainteeStore', {
@@ -14,7 +16,7 @@ export default defineStore('brainteeStore', {
     isBraintreeEnabled: null,
     showMagentoPayments: false,
     merchantAccountId: '',
-    cCTypes: [],
+    cCTypes: getCcTypes(),
     clientToken: null,
     clientInstance: null,
     threeDSecureInstance: null,

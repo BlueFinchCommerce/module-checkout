@@ -235,8 +235,6 @@ export default {
           },
         };
 
-        this.paypalLoaded = true;
-
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
           if (this.paypalCreditThresholdEnabled
@@ -259,7 +257,12 @@ export default {
           }
         }
 
-        return window[this.namespace].Buttons(renderData).render(`#braintree-paypal-${this.namespace}`);
+        return window[this.namespace].Buttons(renderData).render(`#braintree-paypal-${this.namespace}`)
+          .then((response) => {
+            this.paypalLoaded = true;
+
+            return response;
+          });
       });
     });
   },
