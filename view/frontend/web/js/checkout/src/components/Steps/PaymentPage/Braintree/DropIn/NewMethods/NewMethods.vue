@@ -340,7 +340,6 @@ export default {
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
           this.clearSelectedPaymentMethod();
-          this.setToCurrentViewId();
           this.setLoadingState(false);
 
           if (paymentError.name !== 'DropinError') {
@@ -564,50 +563,58 @@ export default {
     },
 
     modifyTokenize() {
-      const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
-        .bind(toRaw(this.instance._mainView._views.googlePay));
+      if (this.isPaymentMethodAvailable('braintree_googlepay')) {
+        const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
+          .bind(toRaw(this.instance._mainView._views.googlePay));
 
-      this.instance._mainView._views.googlePay.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.googlePay.tokenize = () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-        return originalGooglePay();
-      };
+          return originalGooglePay();
+        };
+      }
 
-      const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
-        .bind(this.instance._mainView._views.venmo.venmoInstance);
+      console.log('here');
 
-      this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+      if (this.isPaymentMethodAvailable('braintree_venmo')) {
+        const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
+          .bind(this.instance._mainView._views.venmo.venmoInstance);
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+        this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        return originalVenmo();
-      };
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-      const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
-        .bind(this.instance._mainView._views.paypal.paypalInstance);
+          return originalVenmo();
+        };
+      }
 
-      this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+      if (this.isPaymentMethodAvailable('braintree_paypal')) {
+        const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
+          .bind(this.instance._mainView._views.paypal.paypalInstance);
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.reject();
-        }
+        this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        return originalPayPal(configuration);
-      };
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.reject();
+          }
+
+          return originalPayPal(configuration);
+        };
+      }
     },
 
     addActiveClass(type) {
