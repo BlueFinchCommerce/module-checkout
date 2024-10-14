@@ -6,7 +6,7 @@ on:
       - automate-workflow # todo swap to `main` and add one for `develop`
 
 jobs:
-  upgrade-magento:
+  generate-dist:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,6 +38,11 @@ jobs:
           git fetch --unshallow || true
           
           git merge origin/automate-workflow --no-edit --verbose
+          
+          # Store the sha that matches to the dist, we can then back track to the "clean" version without dist files
+          # Can be useful in future for convenient hotfixing specifically tagged versions
+          echo "${{ github.sha }}" > .github/sha.txt
+          git add -f .github/sha.txt
           
           cd view/frontend/web/js/checkout/
           npm ci
