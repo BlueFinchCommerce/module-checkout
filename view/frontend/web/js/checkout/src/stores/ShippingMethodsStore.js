@@ -3,6 +3,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
+import useStepsStore from '@/stores/StepsStore';
 
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
@@ -15,6 +16,7 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
+    shippingErrorMessage: '',
     shippingMethods: [],
     selectedMethod: {},
     cache: {},
@@ -84,9 +86,22 @@ export default defineStore('shippingMethodsStore', {
 
     setShippingDataFromCartData(data) {
       this.setData({
-        shippingMethods: data.shipping_addresses?.[0].available_shipping_methods,
+        shippingErrorMessage: null,
+      });
+
+      this.setData({
         selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
       });
+
+      this.setShippingMethods(data.shipping_addresses[0].available_shipping_methods);
+
+      // If we're on the shipping step but no longer have a shipping method then go back to shipping.
+      if (!data.shipping_addresses?.[0]?.selected_shipping_method) {
+        const stepsStore = useStepsStore();
+        if (stepsStore.paymentActive) {
+          stepsStore.goToShipping();
+        }
+      }
     },
 
     async setAddressesOnCart() {
@@ -106,18 +121,28 @@ export default defineStore('shippingMethodsStore', {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);
 
-      const cart = await setShippingMethodOnCart(carrierCode, methodCode);
+      this.setData({
+        shippingErrorMessage: null,
+      });
 
-      const cartStore = useCartStore();
-      cartStore.handleCartData(cart);
+      try {
+        const cart = await setShippingMethodOnCart(carrierCode, methodCode);
 
-      // Allow custom behaviour after setting the shipping information.
-      await afterSubmittingShippingInformation();
+        const cartStore = useCartStore();
+        cartStore.handleCartData(cart);
 
-      // Track this event.
-      setShippingMethodDataLayer();
+        // Allow custom behaviour after setting the shipping information.
+        await afterSubmittingShippingInformation();
 
-      setLoadingState(false);
+        // Track this event.
+        setShippingMethodDataLayer();
+      } catch (error) {
+        this.setData({
+          shippingErrorMessage: error.message,
+        });
+      } finally {
+        setLoadingState(false);
+      }
     },
 
     async setAsClickAndCollect(agentId) {

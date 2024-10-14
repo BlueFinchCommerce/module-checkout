@@ -202,7 +202,7 @@ export default defineStore('cartStore', {
 
       if (cart.shipping_addresses.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
-        shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
+        shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
       if (cart.available_payment_methods) {
