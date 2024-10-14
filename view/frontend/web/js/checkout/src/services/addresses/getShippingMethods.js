@@ -3,7 +3,8 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 import graphQlRequest from '@/services/graphQlRequest';
 import formatAddress from '@/helpers/addresses/formatAddress';
-import getFullCart from '@/helpers/cart/getFullCart';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 import functionExtension from '@/extensions/functionExtension';
 
@@ -26,7 +27,8 @@ mutation {
     }
   ) {
     cart {
-      ${await getFullCart()}
+      ${await getEmailField()}
+      ${await getShippingAddresses()}
     }
   }
 }`;

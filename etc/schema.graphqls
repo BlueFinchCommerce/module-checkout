@@ -150,3 +150,14 @@ enum ValidationRuleEnum @doc(description: "List of validation rule names applied
     MAX_IMAGE_WIDTH
     IS_REQUIRED
 }
+
+type Mutation {
+    setAddressesOnCart(input: SetAddressesOnCartInput @doc(description: "An input object defining shipping and billing addresses to be assigned to the cart")): SetShippingAddressesOnCartOutput @resolver(class: "\\Gene\\BetterCheckout\\Model\\Resolver\\SetAddressesOnCart") @doc(description: "Set one or more addresses on a specific cart.")
+}
+
+input SetAddressesOnCartInput @doc(description: "Specifies an array of addresses to use for cart.") {
+    cart_id: String! @doc(description: "The unique ID of a `Cart` object.")
+    shipping_addresses: [ShippingAddressInput] @doc(description: "An array of shipping addresses.")
+    billing_address: BillingAddressInput! @doc(description: "The billing address.")
+}
+

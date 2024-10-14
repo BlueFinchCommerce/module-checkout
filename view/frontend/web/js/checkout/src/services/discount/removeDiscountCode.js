@@ -1,6 +1,12 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
-import getFullCart from '@/helpers/cart/getFullCart';
+
+import getAppliedCoupons from '@/helpers/cart/queryData/getAppliedCoupons';
+import getItems from '@/helpers/cart/queryData/getItems';
+import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 export default async () => {
   const { maskedId } = useCartStore();
@@ -10,7 +16,17 @@ export default async () => {
         cart_id: "${maskedId}"
       }) {
         cart {
-          ${await getFullCart()}
+          ${await getEmailField()}
+          
+          ${await getAppliedCoupons()}
+
+          ${await getItems()}
+
+          ${await getPaymentMethods()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;

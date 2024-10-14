@@ -1,6 +1,10 @@
 import useCartStore from '@/stores/CartStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/cart/getFullCart';
+
+import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 export default async (carrierCode, methodCode) => {
   const { maskedId } = useCartStore();
@@ -19,7 +23,13 @@ export default async (carrierCode, methodCode) => {
         }
       ) {
         cart {
-          ${await getFullCart()}
+          ${await getEmailField()}
+         
+          ${await getPaymentMethods()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;
