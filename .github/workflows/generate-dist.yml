@@ -1,9 +1,11 @@
-name: Generate dist for main
+name: Generate dist
 
 on:
   push:
     branches:
       - main
+      - develop
+      - "hotfix/*"
 
 jobs:
   generate-dist:
@@ -20,34 +22,20 @@ jobs:
       - name: Check out the src branch
         uses: actions/checkout@v3
         with:
-          ref: main
-
-      - name: Check out the dist branch
-        uses: actions/checkout@v3
-        with:
-          ref: main-dist
+          ref: ${{ github.ref_name }}
 
       - name: Generate dist
         shell: bash
         run: |
           set -v
           
-          git checkout main-dist
-          
           git config --global pull.rebase false
           git fetch --unshallow || true
-          
-          git merge origin/main --no-edit --verbose
-          
-          # Store the sha that matches to the dist, we can then back track to the "clean" version without dist files
-          # Can be useful in future for convenient hotfixing specifically tagged versions
-          echo "${{ github.sha }}" > .github/sha.txt
-          git add -f .github/sha.txt
-          
+                    
           cd view/frontend/web/js/checkout/
           npm ci
           npm run build
           git add -f ./dist
-          git commit --allow-empty -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
+          
+          git commit -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
           git push
-
