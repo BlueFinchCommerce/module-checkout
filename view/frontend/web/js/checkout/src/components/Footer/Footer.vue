@@ -3,7 +3,7 @@
     class="footer-container"
     :style="style"
   >
-    <div class="footer-block">
+    <div class="footer-block some-fun-class">
       <FooterIcons />
       <TextField
         :data-cy="'copyright-text'"
