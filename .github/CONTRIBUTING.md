@@ -15,7 +15,7 @@ For feature work
 
 For hotfixes to the current main tag
 - Branch off of `main`
-- Merge to `develop`
+- Merge to `develop`, if you have conflicts on the dist files accept either version, they will be re-generated.
 - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory for testing, test it.
 - When the release candidate is ready it can be merged to `main`
 - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory for testing, test it.
