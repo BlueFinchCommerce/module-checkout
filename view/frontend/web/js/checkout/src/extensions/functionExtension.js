@@ -1,17 +1,20 @@
-export default async (type, parameters) => {
+export default (type, parameters) => {
   if (window?.geneCheckout?.callbacks?.[type]) {
-    let callbackReturn = null;
+    let callbackReturn = Promise.resolve(parameters);
 
-    Object.values(window.geneCheckout.callbacks[type]).forEach(async (callback) => {
+    Object.values(window.geneCheckout.callbacks[type]).forEach((callback) => {
       if (typeof callback === 'function') {
-        callbackReturn = callback(parameters);
+        callbackReturn = callbackReturn.then((response) => callback(response));
         return;
       }
 
-      const { default: callbackFunction } = await import(callback);
-      callbackReturn = callbackFunction(parameters);
+      callbackReturn = callbackReturn.then(async (response) => {
+        const { default: callbackFunction } = await import(callback);
+        return callbackFunction(response);
+      });
     });
 
+    console.log(callbackReturn);
     return callbackReturn;
   }
 
