@@ -14,7 +14,6 @@ export default (type, parameters) => {
       });
     });
 
-    console.log(callbackReturn);
     return callbackReturn;
   }
 
