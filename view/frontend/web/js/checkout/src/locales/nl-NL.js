@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Kortingscode invoeren',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Code invoeren',
       successMessage: 'Code succesvol ingevoerd "{code}".',
@@ -65,6 +65,7 @@ export default {
       infoMessage: 'We gebruiken dit nummer alleen om contact met je op te nemen over je levering.',
       placeholder: 'Voer telefoonnummer in',
       label: 'Telefoonnummer',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'E-mailadres invoeren',
@@ -85,12 +86,14 @@ export default {
     },
     deliverySection: {
       toShippingButton: 'Verzendmethode selecteren',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       title: 'Leveringsadres',
       savedAddressesTitle: 'Selecteer je opgeslagen leveringsadres',
       shipHere: 'Hier verzenden',
       info: 'Waar moeten we naartoe verzenden?',
       billingAddressTitle: 'Factuuradres',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveringsadres',
       addressFinder: {

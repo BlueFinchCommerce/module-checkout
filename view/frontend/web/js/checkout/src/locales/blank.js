@@ -53,6 +53,7 @@ export default {
       infoMessage: ' ',
       placeholder: ' ',
       label: ' ',
+      info: ' ',
     },
     emailAddress: {
       placeholder: ' ',
@@ -70,14 +71,25 @@ export default {
       placeholder: ' ',
       label: ' ',
     },
+    clickAndCollectSection: {
+      clickAndCollectTitle: ' ',
+      clickAndCollectInputPlaceholder: ' ',
+      clickAndCollectErrorMessage: ' ',
+      clickAndCollectMoreLocations: ' ',
+      clickAndCollectAddresses: ' ',
+      clickAndCollectContinueButton: ' ',
+      clickAndCollectFindButton: ' ',
+    },
     deliverySection: {
       toShippingButton: ' ',
+      clickandCollectToPaymentButton: ' ',
       title: ' ',
       savedAddressesTitle: ' ',
       shipHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
+      yourBillingAddress: ' ',
       newAddressTitle: ' ',
       addressFinder: {
         title: ' ',
@@ -151,6 +163,10 @@ export default {
     stepCompleteTitle: ' ',
     nominatedDelivery: ' ',
     nominatedDeliveryCalendar: ' ',
+    specifiedDayDeliveryTitle: ' ',
+    specifiedDayDeliveryDescription: ' ',
+    specifiedDayDeliveryDetails: ' ',
+    specifiedDayCalendar: ' ',
     tbc: ' ',
     deliveryInstructions: {
       title: ' ',
@@ -202,7 +218,10 @@ export default {
   agreements: {
     acceptBtn: ' ',
     title: ' ',
-    label: ' ',
+    label: {
+      manual: ' ',
+      automatic: ' ',
+    },
     errorMessage: ' ',
     paymentErrorMessage: ' ',
   },

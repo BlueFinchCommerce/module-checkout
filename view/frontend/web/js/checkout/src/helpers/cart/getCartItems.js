@@ -7,15 +7,13 @@ export default () => {
   return mageCache.cart.items.map((item) => ({
     ...item,
     quantity: item.qty,
+    prices: {
+      row_total_including_tax: {
+        value: item.product_price_value,
+      },
+    },
     product: {
       name: item.product_name,
-      price_range: {
-        minimum_price: {
-          final_price: {
-            value: item.product_price_value,
-          },
-        },
-      },
       thumbnail: {
         url: item.product_image.src,
       },

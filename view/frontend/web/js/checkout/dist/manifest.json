@@ -1,7 +1,4 @@
 {
-  "_adyen.min.js": {
-    "file": "adyen.min.js"
-  },
   "main.css": {
     "file": "main.css",
     "src": "main.css"
@@ -17,13 +14,12 @@
       "icon-discover-white.svg",
       "icon-diners-white.svg",
       "icon-jcb-white.svg",
+      "icon-applepay-white.svg",
+      "icon-googlepay-white.svg",
+      "icon-paypal-white.svg",
+      "icon-venmo-white.svg",
       "loader.gif",
-      "bin.svg",
       "promo-icon.svg",
-      "gift-icon.svg",
-      "coupon-icon.svg",
-      "delivery.svg",
-      "detailsIcon.svg",
       "icon-applepay-colour.svg",
       "icon-googlepay-colour.svg",
       "icon-amex-colour.svg",
@@ -45,22 +41,18 @@
       "p24.svg",
       "sepa.svg",
       "sofort.svg",
-      "rvvup-payment.svg",
       "paymentIcon.svg"
     ],
     "css": [
       "main.css"
     ],
     "file": "main.min.js",
-    "imports": [
-      "_adyen.min.js"
-    ],
     "isEntry": true,
     "src": "main.js"
   },
   "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
     "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
+    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   },
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
     "file": "bancontact.svg",
@@ -93,26 +85,6 @@
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg": {
     "file": "sofort.svg",
     "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
-  },
-  "src/icons/bin.svg": {
-    "file": "bin.svg",
-    "src": "src/icons/bin.svg"
-  },
-  "src/icons/coupon-icon.svg": {
-    "file": "coupon-icon.svg",
-    "src": "src/icons/coupon-icon.svg"
-  },
-  "src/icons/delivery.svg": {
-    "file": "delivery.svg",
-    "src": "src/icons/delivery.svg"
-  },
-  "src/icons/detailsIcon.svg": {
-    "file": "detailsIcon.svg",
-    "src": "src/icons/detailsIcon.svg"
-  },
-  "src/icons/gift-icon.svg": {
-    "file": "gift-icon.svg",
-    "src": "src/icons/gift-icon.svg"
   },
   "src/icons/loader.gif": {
     "file": "loader.gif",
@@ -186,6 +158,10 @@
     "file": "icon-amex-white.svg",
     "src": "src/icons/payments/white/icon-amex-white.svg"
   },
+  "src/icons/payments/white/icon-applepay-white.svg": {
+    "file": "icon-applepay-white.svg",
+    "src": "src/icons/payments/white/icon-applepay-white.svg"
+  },
   "src/icons/payments/white/icon-diners-white.svg": {
     "file": "icon-diners-white.svg",
     "src": "src/icons/payments/white/icon-diners-white.svg"
@@ -193,6 +169,10 @@
   "src/icons/payments/white/icon-discover-white.svg": {
     "file": "icon-discover-white.svg",
     "src": "src/icons/payments/white/icon-discover-white.svg"
+  },
+  "src/icons/payments/white/icon-googlepay-white.svg": {
+    "file": "icon-googlepay-white.svg",
+    "src": "src/icons/payments/white/icon-googlepay-white.svg"
   },
   "src/icons/payments/white/icon-jcb-white.svg": {
     "file": "icon-jcb-white.svg",
@@ -206,16 +186,16 @@
     "file": "icon-mastercard-white.svg",
     "src": "src/icons/payments/white/icon-mastercard-white.svg"
   },
+  "src/icons/payments/white/icon-paypal-white.svg": {
+    "file": "icon-paypal-white.svg",
+    "src": "src/icons/payments/white/icon-paypal-white.svg"
+  },
+  "src/icons/payments/white/icon-venmo-white.svg": {
+    "file": "icon-venmo-white.svg",
+    "src": "src/icons/payments/white/icon-venmo-white.svg"
+  },
   "src/icons/payments/white/icon-visa-white.svg": {
     "file": "icon-visa-white.svg",
     "src": "src/icons/payments/white/icon-visa-white.svg"
-  },
-  "src/icons/rvvup-payment.svg": {
-    "file": "rvvup-payment.svg",
-    "src": "src/icons/rvvup-payment.svg"
-  },
-  "src/icons/shippingIcon.svg": {
-    "file": "promo-icon.svg",
-    "src": "src/icons/shippingIcon.svg"
   }
 }

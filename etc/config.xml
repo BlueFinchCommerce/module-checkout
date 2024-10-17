@@ -5,6 +5,7 @@
         <gene_better_checkout>
             <general>
                 <enable>0</enable>
+                <enable_debug>0</enable_debug>
                 <adyen>
                     <auth_token></auth_token>
                 </adyen>
@@ -14,5 +15,10 @@
                 </loqate>
             </general>
         </gene_better_checkout>
+        <recaptcha_frontend>
+            <type_for>
+                <customer_create_success/>
+            </type_for>
+        </recaptcha_frontend>
     </default>
 </config>

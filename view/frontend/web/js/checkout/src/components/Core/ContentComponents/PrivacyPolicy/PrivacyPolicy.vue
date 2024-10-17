@@ -12,6 +12,7 @@
     </div>
     <modal
       :visible="isModalVisible"
+      classes="privacy-modal"
       @close="closeModal"
     >
       <template #header>
@@ -33,8 +34,9 @@
       <template #footer>
         <ButtonComponent
           class="modal-footer-btn-close"
-          label="Close"
-          aria-label="close"
+          secondary
+          label="Back"
+          aria-label="Back"
           @click="closeModal"
         />
       </template>
@@ -49,11 +51,13 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // Components
 import Modal from '@/components/Core/ActionComponents/Modal/Modal.vue';
+import ButtonComponent from '@/components/Core/ActionComponents/Button/Button.vue';
 
 export default {
   name: 'PrivacyPolicy',
   components: {
     Modal,
+    ButtonComponent,
   },
   data() {
     return {

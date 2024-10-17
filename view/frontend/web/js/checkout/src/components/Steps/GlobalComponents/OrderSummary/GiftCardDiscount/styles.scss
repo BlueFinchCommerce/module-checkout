@@ -20,6 +20,10 @@
     .gift-discount-icon-container {
       display: flex;
       justify-content: center;
+
+      svg {
+        position: unset;
+      }
     }
 
     .gift-discount-title {
@@ -27,7 +31,7 @@
       flex-grow: 1;
       font-size: var(--drop-down-trigger-title-font-size, var(--font__s));
       font-family: var(--font-family__copy);
-      font-weight: var(--font-weight__semibold);
+      font-weight: var(--drop-down-trigger-title-font-wight, var(--font-weight__semibold));;
       margin: 0;
       padding: var(--drop-down-trigger-title-padding, 0 var(--indent__base) 0 var(--indent__s));
     }

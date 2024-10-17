@@ -8,15 +8,12 @@ type StoreConfig {
     gene_better_checkout_newsletter_allow_guest: String @doc(description: "Gene Checkout Newsletter Allow Guests")
     gene_better_checkout_country_state_required: String @doc(description: "Gene Checkout country needs state required")
     gene_better_checkout_country_display_state: String @doc(description: "Gene Checkout country display state")
-    gene_better_checkout_clickandcollect_enabled: Boolean @doc(description: "Gene Checkout Click and collect enabled")
     gene_better_checkout_google_map_key: String @doc(description: "Gene Checkout Google Maps API  Key")
-    gene_better_checkout_clickandcollect_sms: Boolean @doc(description: "Gene Checkout Click and collect SMS")
-    gene_better_checkout_clickandcollect_max_order_value: String @doc(description: "Gene Checkout Click and collect max order value")
-    gene_better_checkout_clickandcollect_min_order_value: String @doc(description: "Gene Checkout Click and collect min order value")
     gene_better_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
     gene_better_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
+    gene_better_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
+    gene_better_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
     gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
-    gene_better_checkout_agecheck_required: Boolean @doc(description: "Enable age checker functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")
@@ -33,6 +30,7 @@ type StoreConfig {
     recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
     recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
     recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
+    recaptcha_braintree: String @doc(description: "Recaptcha Braintree Type")
     validation_failure_message: String @doc(description: "Recaptcha Failure Message")
 
     braintree_environment: String @doc(description: "Braintree environment.")
@@ -152,3 +150,14 @@ enum ValidationRuleEnum @doc(description: "List of validation rule names applied
     MAX_IMAGE_WIDTH
     IS_REQUIRED
 }
+
+type Mutation {
+    setAddressesOnCart(input: SetAddressesOnCartInput @doc(description: "An input object defining shipping and billing addresses to be assigned to the cart")): SetShippingAddressesOnCartOutput @resolver(class: "\\Gene\\BetterCheckout\\Model\\Resolver\\SetAddressesOnCart") @doc(description: "Set one or more addresses on a specific cart.")
+}
+
+input SetAddressesOnCartInput @doc(description: "Specifies an array of addresses to use for cart.") {
+    cart_id: String! @doc(description: "The unique ID of a `Cart` object.")
+    shipping_addresses: [ShippingAddressInput] @doc(description: "An array of shipping addresses.")
+    billing_address: BillingAddressInput! @doc(description: "The billing address.")
+}
+

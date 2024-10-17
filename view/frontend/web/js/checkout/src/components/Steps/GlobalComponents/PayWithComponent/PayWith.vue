@@ -4,40 +4,10 @@
     class="pay-with__container"
   >
     <component
-      :is="footerPaymentIcon"
-      v-for="footerPaymentIcon in footerPaymentIcons"
-      :key="footerPaymentIcon"
+      :is="paymentIcon"
+      v-for="paymentIcon in paymentIcons"
+      :key="paymentIcon"
     />
-    <!-- <template v-if="isAdyenAvailable">
-      <div>
-        <ul
-          v-if="Object.keys(paymentTypes).length > 0"
-          class="pay-with__column"
-        >
-          <li
-            v-for="(paymentType, index) in paymentTypes"
-            :key="index"
-            class="pay-with__content"
-          >
-            <img
-              v-if="!paymentType.icon.includes('klarna_account')"
-              :src="paymentType.icon.includes('klarna') ? KlarnaIcon
-                : paymentType.icon.includes('clearpay') ? ClearpayIcon
-                  : paymentType.icon.includes('paypal') ? PayPalIcon
-                    : paymentType.icon.includes('amex') ? ExpressPayIcon
-                      : paymentType.icon.includes('mc') ? MastercardPayIcon
-                        : paymentType.icon.includes('visa') ? VisaPayIcon
-                          : paymentType.icon.includes('google') ? GooglePayIcon
-                            : paymentType.icon.includes('apple') ? ApplePayIcon
-                              : paymentType.icon"
-              :alt="paymentType.name"
-              :class="generateClass(paymentType.name)"
-              :data-cy="generateDataCY(paymentType.icon, 'adyen')"
-            >
-          </li>
-        </ul>
-      </div>
-    </template> -->
     <div>
       <ul class="pay-with__column"
       v-if="availableMethods.length > 0">

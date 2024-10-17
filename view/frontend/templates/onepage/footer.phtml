@@ -44,6 +44,12 @@ if ($orderViewViewModel) {
                 <span><?= $escaper->escapeHtml($order->formatPrice($order->getDiscountAmount())) ?></span>
             </div>
         <?php endif; ?>
+        <?php if ((float)$order->getGiftCardsAmount()): ?>
+            <div class="checkout-success-summary-columns">
+                <span><?= $escaper->escapeHtml(__('Gift Card')) ?></span>
+                <span><?= '-' . $escaper->escapeHtml($order->formatPrice($order->getGiftCardsAmount())) ?></span>
+            </div>
+        <?php endif; ?>
         <div class="checkout-success-summary-columns total-container">
             <span><strong><?= $escaper->escapeHtml(__('Total to Pay')) ?></strong></span>
             <span><strong><?= $escaper->escapeHtml($order->formatPrice($order->getGrandTotal())) ?></strong></span>

@@ -52,7 +52,7 @@
 
     p {
       font-size: var(--font__heading--mobile);
-      font-weight: var(--font-weight__semibold);
+      font-weight: var(--totals-row-text__font-weight, var(--font-weight__semibold));
       color: var(--font__color);
     }
   }
@@ -65,7 +65,7 @@
 
     .title {
       font-size: var(--font__m);
-      font-weight: var(--font-weight__semibold);
+      font-weight: var(--totals-row-grand-text__font-weight, var(--font-weight__semibold));
     }
 
     p {

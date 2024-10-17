@@ -15,7 +15,7 @@
       type="text"
       :required="isRequired('firstname')"
       autocomplete="given-name"
-      @keyup="validateField(address_type, 'firstname', true); handleInputChange($event, 'firstname');"
+      @keyup="handleInputChange($event, 'firstname');"
       @focusout="validateField(address_type, 'firstname', true)"
     />
     <ValidIcon v-if="selectedAddressType.firstname && isFieldValid(address_type, 'firstname')" />
@@ -39,7 +39,7 @@
       type="text"
       :required="isRequired('lastname')"
       autocomplete="family-name"
-      @keyup="validateField(address_type, 'lastname', true); handleInputChange($event, 'lastname')"
+      @keyup="handleInputChange($event, 'firstname');"
       @focusout="validateField(address_type, 'lastname', true)"
     />
     <ValidIcon v-if="selectedAddressType.lastname && isFieldValid(address_type, 'lastname')" />
@@ -64,7 +64,7 @@
         :data-cy="`${address_type}-phone-number-input`"
         :required="isRequired('telephone')"
         autocomplete="tel"
-        @keyup="handleInputChange($event)"
+        @keyup="handleInputChange($event, 'telephone')"
         @input="validateField(address_type, 'telephone', true)"
         @focusout="validateField(address_type, 'telephone', true)"
         @telephone-error="validateField(address_type, 'telephone', true)"
@@ -73,6 +73,11 @@
       <div class="error-icon-block">
         <ErrorIcon v-if="!isFieldValid(address_type, 'telephone')" />
       </div>
+      <TextField
+        class="phone-field-info"
+        :data-cy="'phone-field-info'"
+        :text="$t('yourDetailsSection.phoneField.info')"
+      />
     </div>
   </div>
 </template>
@@ -86,6 +91,7 @@ import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 // Components
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
+import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // Icons
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
@@ -97,6 +103,7 @@ export default {
     TextInput,
     ValidIcon,
     ErrorIcon,
+    TextField,
   },
   props: {
     address_type: {
@@ -146,9 +153,10 @@ export default {
     },
 
     handleInputChange(event, type) {
-      if (event.key === 'Enter') {
-        this.validateField(this.address_type, type, true);
+      if (event.key === 'Tab') {
+        return;
       }
+      this.validateField(this.address_type, type, true);
     },
   },
 };

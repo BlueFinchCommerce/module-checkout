@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible && !ageCheckRequired">
+         v-show="isInstantCheckoutVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -40,12 +40,12 @@
         <component
           :is="expressPaymentMethod"
           v-for="expressPaymentMethod in expressPaymentMethods"
-          :key="expressPaymentMethod"
+          :key="`${expressPaymentMethod}-${storedKey}`"
         />
       </div>
     </div>
     <div class="details-form-body">
-      <DividerComponent/>
+      <DividerComponent v-if="(typeof ageCheckRequired === 'undefined' || !ageCheckRequired)" />
       <PayWith/>
 
       <ProgressBar v-if="emailEntered"/>
@@ -55,13 +55,14 @@
       <Newsletter v-if="emailEntered"/>
 
       <div
-        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual"
+        v-if="clickCollectTabsEnabled && emailEntered && !cart.is_virtual
+          && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)"
         class="shipping-type-toggle"
       >
         <button
           class="button details-button button--medium"
           :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
-          @click="setNotClickAndCollect()">
+          @click="deliveryTabEvent">
           <DeliveryTabIcon
             :fill="!isClickAndCollect ? 'white' : '#0F273C'"
           />
@@ -85,20 +86,10 @@
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
-        <ClickAndCollect
-          v-if="subtotalInclTax >= custom.clickandcollectMin && subtotalInclTax <= custom.clickandcollectMax"
-        />
-        <TextField
-          v-else-if="subtotalInclTax < custom.clickandcollectMin"
-          class="click-and-collect-unavilable"
-          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdLow',
-                    { price: formatPrice(custom.clickandcollectMin) })"
-        />
-        <TextField
-          v-else
-          class="click-and-collect-unavilable"
-          :text="$t('yourDetailsSection.deliverySection.clickandCollectThresholdHigh',
-                    { price: formatPrice(custom.clickandcollectMax) })"
+        <component
+          :is="clickAndCollectComponent"
+          v-for="clickAndCollectComponent in clickAndCollectComponents"
+          :key="clickAndCollectComponent"
         />
       </div>
 
@@ -154,7 +145,7 @@
             <div class="delivery-section-title-text">
               <TextField
                 :text="deliverWhereText"
-                :data-cy="`${address_type}-where-to-icon`"
+                :data-cy="`${address_type}-where-to-title`"
               />
             </div>
             <div class="divider-line"></div>
@@ -231,20 +222,22 @@
         @billingInfoFull="billingInfoFull"
       />
 
-      <template v-if="isAddressValid(address_type) && selected[address_type].id">
-        <component
-          :is="ageCheckerExtension"
-          v-for="ageCheckerExtension in ageCheckerExtensions"
-          :key="ageCheckerExtension"
-        />
-      </template>
+      <component
+        :is="ageCheckerExtension"
+        v-for="ageCheckerExtension in ageCheckerExtensions"
+        :key="ageCheckerExtension"
+      />
 
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
         primary
         :label="proceedToShippingText"
-        :disabled="!isAddressValid(address_type) && !selected[address_type].id"
+        :disabled="isLoggedIn
+        ? (!isAddressValid(address_type) && !selected[address_type].id)
+        || inputsSanitiseError || (ageCheckRequired && ageCheckerErrors)
+        : (!isAddressValid(address_type)) || inputsSanitiseError
+        || (ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-shipping-button'"
         @click="submitShippingOption();"
       />
@@ -253,7 +246,8 @@
         type="submit"
         primary
         :label="proceedToPayText"
-        :disabled="!selected.billing.id || (!customer.id && !billingInfoValidation)"
+        :disabled="!validateAddress('billing')
+          || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         :data-cy="'proceed-to-payment-button-virtual'"
         @click="submitBillingInfo();"
       />
@@ -277,7 +271,7 @@ import NameFields from '@/components/Steps/CustomerInfoPage/Addresses/AddressFor
 import ShippingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/ShippingForm/ShippingForm.vue';
 import AddressBlock from '@/components/Steps/CustomerInfoPage/Addresses/AddressBlock/AddressBlock.vue';
 import EmailAddress from '@/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue';
-import LinkComponent from '@/components/Core/ActionComponents/Link//Link.vue';
+import LinkComponent from '@/components/Core/ActionComponents/Link/Link.vue';
 import AddressList from '@/components/Steps/CustomerInfoPage/Addresses/AddressList/AddressList.vue';
 import BraintreeGooglePay from '@/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue';
 import BraintreeApplePay from '@/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue';
@@ -286,7 +280,6 @@ import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMess
 import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressForms/BillingForm/BillingForm.vue';
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
-import ClickAndCollect from '@/components/Steps/CustomerInfoPage/Addresses/ClickAndCollect/ClickAndCollect.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -310,6 +303,8 @@ import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryD
 // Extensions
 import expressPaymentMethods from '@/extensions/expressPaymentMethods';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import clickAndCollectComponents from '@/extensions/clickAndCollectComponents';
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'YourDetailComponent',
@@ -334,7 +329,6 @@ export default {
     BillingForm,
     Newsletter,
     MyButton,
-    ClickAndCollect,
     ProgressBar,
     Recaptcha,
     Agreements,
@@ -342,6 +336,7 @@ export default {
     ClickCollectTabIcon,
     ...expressPaymentMethods(),
     ...ageCheckerExtensions(),
+    ...clickAndCollectComponents(),
   },
   props: {
     address_type: {
@@ -377,7 +372,9 @@ export default {
       addressInfoWrong: false,
       expressPaymentMethods: [],
       ageCheckerExtensions: [],
+      clickAndCollectComponents: [],
       isCreditComponentVisible: false,
+      isInstantCheckoutVisible: true,
     };
   },
   watch: {
@@ -398,6 +395,7 @@ export default {
       'storeCode',
       'clickCollectTabsEnabled',
       'ageCheckRequired',
+      'ageCheckerErrors',
       'paypalCreditThresholdEnabled',
       'paypalCreditThresholdValue',
     ]),
@@ -420,6 +418,7 @@ export default {
   created() {
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
+    this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
@@ -448,6 +447,10 @@ export default {
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
+
+    // assign isExpressPaymentsVisible state
+    // to data isInstantCheckoutVisible after payments loaded
+    this.isInstantCheckoutVisible = this.isExpressPaymentsVisible;
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -483,7 +486,7 @@ export default {
 
       if (isValid) {
         if (this.savedAddressID === null
-        || this.selected[this.address_type].id === null) {
+          || this.selected[this.address_type].id === null) {
           this.setAddressAsCustom(this.address_type);
         }
 
@@ -496,8 +499,12 @@ export default {
         }
 
         await this.setAddressesOnCart();
-        this.goToShipping();
-        continueToDeliveryDataLayer();
+        if (this.ageCheckRequired) {
+          await functionExtension('onSubmitShippingOptionAgeCheck');
+        } else {
+          this.goToShipping();
+          continueToDeliveryDataLayer();
+        }
       } else {
         const fieldErrors = this.selected.formErrors[this.address_type];
         Object.entries(fieldErrors).forEach(([value]) => {
@@ -514,9 +521,10 @@ export default {
       this.goToPayment();
     },
 
-    editAddress() {
+    async editAddress() {
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
+      await functionExtension('onEditAddress');
     },
     showAddressBlock(value) {
       this.isAddressBlockVisible = value;
@@ -535,6 +543,10 @@ export default {
     },
     formatPrice(price) {
       return formatPrice(price);
+    },
+    async deliveryTabEvent() {
+      await functionExtension('onDeliveryTabEvent');
+      this.setNotClickAndCollect();
     },
   },
 };

@@ -128,16 +128,13 @@
         <SelectInput
           v-model="selectedAddressType.country_code"
           :options="selectOptions"
-          :error="showFieldError(address_type, 'country')"
+          :error="showFieldError(address_type, 'country_code')"
+          :error-message="showFieldError(address_type, 'country_code') && $t('errorMessages.countryErrorMessage')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
           :selected-option="$t('yourDetailsSection.selectPlaceholder')"
           required
           :data-cy="`${address_type}-country-select`"
           @change="countryUpdated($event)"
-        />
-        <ErrorMessage
-          v-if="!isFieldValid(address_type, 'country')"
-          :message="$t('errorMessages.countryErrorMessage')"
         />
         <ErrorMessage
           v-if="requiredErrorMessage"
@@ -161,7 +158,7 @@
             class="select-address-btn"
             type="submit"
             primary
-            :disabled="!isAddressValid(address_type)"
+            :disabled="!isAddressValid(address_type) || inputsSanitiseError"
             :label="$t('yourDetailsSection.deliverySection' +
               '.addressForm.saveAddressButton')"
             :data-cy="`${address_type}-address-use-button`"
@@ -222,10 +219,10 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'postCodeValid', 'inputsSanitiseError']),
-    ...mapState(useConfigStore, ['countries', 'stateRequired', 'displayState',
-      'countryCode', 'optionalZipCountries', 'postcodeRequired']),
-    ...mapState(useValidationStore, ['isAddressValid', 'validationItems']),
+    ...mapWritableState(useCustomerStore, ['selected', 'isLoggedIn', 'inputsSanitiseError']),
+    ...mapState(useConfigStore, ['countries', 'displayState',
+      'countryCode', 'postcodeRequired']),
+    ...mapState(useValidationStore, ['isAddressValid', 'validationItems', 'addressFinderError']),
     selectedAddressType() {
       return this.selected[this.address_type];
     },
@@ -244,7 +241,7 @@ export default {
   created() {
     this.setupCountry();
     this.updateRegionRequired(this.address_type);
-    this.validateAddress(this.address_type);
+    this.validateAddress(this.address_type, this.addressFinderError);
   },
   methods: {
     ...mapActions(useCustomerStore, [
@@ -288,6 +285,7 @@ export default {
       this.clearRegion(this.address_type);
       this.updateRegionRequired(this.address_type);
       this.validateField(this.address_type, 'postcode', true);
+      this.validateField(this.address_type, 'country_code', true);
       this.validateRegion(this.address_type, true);
     },
 

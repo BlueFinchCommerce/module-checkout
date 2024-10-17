@@ -3,7 +3,8 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 import graphQlRequest from '@/services/graphQlRequest';
 import formatAddress from '@/helpers/addresses/formatAddress';
-import getFullCart from '@/helpers/cart/getFullCart';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
 
 import functionExtension from '@/extensions/functionExtension';
 
@@ -13,7 +14,7 @@ const mapToGraphQLString = (obj) => Object.entries(obj)
   .map(([key, value]) => (value ? `${key}: ${JSON.stringify(value)}` : ''))
   .join(', ');
 
-const buildShippingAddressMutation = (cartId, formattedAddressGraphQL) => `
+const buildShippingAddressMutation = async (cartId, formattedAddressGraphQL) => `
 mutation {
   setShippingAddressesOnCart(
     input: {
@@ -26,7 +27,8 @@ mutation {
     }
   ) {
     cart {
-      ${getFullCart()}
+      ${await getEmailField()}
+      ${await getShippingAddresses()}
     }
   }
 }`;
@@ -51,7 +53,8 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
     region: formattedShippingAddress.region,
     region_id: formattedShippingAddress.region_id || null,
     postcode: formattedShippingAddress.postcode,
-    country_code: formattedShippingAddress.country_code,
+    country_code: formattedShippingAddress.country_code
+      ? formattedShippingAddress.country_code : formattedShippingAddress.country.code,
     telephone: formattedShippingAddress.telephone,
     save_in_address_book: convertBoolean(formattedShippingAddress.save_in_address_book),
   };
@@ -70,7 +73,7 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
   }
 
   const formattedAddressGraphQL = mapToGraphQLString(formattedAddress);
-  const request = buildShippingAddressMutation(cartId, formattedAddressGraphQL);
+  const request = await buildShippingAddressMutation(cartId, formattedAddressGraphQL);
 
   return graphQlRequest(request)
     .then((response) => {

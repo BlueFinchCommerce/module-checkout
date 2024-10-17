@@ -21,6 +21,7 @@ use Magento\Sales\Api\OrderCustomerDelegateInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
 use Magento\Tax\Model\Config;
+use Gene\BetterCheckout\Model\ConfigurationInterface;
 
 class CheckoutSuccess implements ArgumentInterface
 {
@@ -194,6 +195,24 @@ class CheckoutSuccess implements ArgumentInterface
             ScopeInterface::SCOPE_STORE,
             $store
         ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
+    }
+
+    /**
+     * Check if recaptcha config is enabled
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string
+     */
+    public function getRecaptchaSuccessEnabled(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        string $scopeCode = null
+    ): string {
+        return $this->scopeConfig->getValue(
+            ConfigurationInterface::RECAPTCHA_FRONTEND_SUCCESS_XML_PATH,
+            $scopeType,
+            $scopeCode
+        ) ?? '';
     }
 
     /**

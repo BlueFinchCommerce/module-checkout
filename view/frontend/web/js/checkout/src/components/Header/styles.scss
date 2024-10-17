@@ -5,6 +5,7 @@
   padding: var(--indent__m) var(--indent__base);
   border-bottom: var(--header__border-bottom);
   min-height: var(--header__min-height, 80px);
+  display: flex;
 
   .header-content {
     max-width: calc(var(--layout__max-width) - var(--indent__xl));
@@ -13,12 +14,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 
     .header-logo {
       display: flex;
       flex-shrink: 0;
       justify-content: end;
       width: var(--header-logo__width--mobile);
+      padding-top: var(--indent__xs);
 
       img {
         width: 100%;

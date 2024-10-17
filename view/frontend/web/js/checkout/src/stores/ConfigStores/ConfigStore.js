@@ -24,7 +24,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    rvvupPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -48,6 +47,8 @@ export default defineStore('configStore', {
     },
     clickCollectTabsEnabled: false,
     paypalCreditThresholdEnabled: false,
+    googleMapEnabled: false,
+    googleMapApiKey: '',
     paypalCreditThresholdValue: null,
     websiteName: '',
     taxCartDisplayPrice: false,
@@ -55,7 +56,8 @@ export default defineStore('configStore', {
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
-    ageCheckRequired: false,
+    ageCheckRequired: undefined,
+    ageCheckerErrors: false,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -133,13 +135,14 @@ export default defineStore('configStore', {
         'tax_cart_display_full_summary',
         'gene_better_checkout_copyright_text',
         'gene_better_checkout_progress_bar_visible',
-        'gene_better_checkout_agecheck_required',
         'gene_better_checkout_loqate_api_key',
         'gene_better_checkout_loqate_enabled',
         'gene_better_checkout_click_collect_tabs_enabled',
         'gene_better_checkout_afd_enable',
         'gene_better_checkout_paypal_credit_threshold_enabled',
         'gene_better_checkout_paypal_credit_threshold_value',
+        'gene_better_checkout_google_map_enabled',
+        'gene_better_checkout_google_map_api_key',
       ];
 
       if (this.$state.locale) {
@@ -191,7 +194,6 @@ export default defineStore('configStore', {
         taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
         copyrightText: storeConfig.gene_better_checkout_copyright_text,
         progressBarVisible: storeConfig.gene_better_checkout_progress_bar_visible === true,
-        ageCheckRequired: storeConfig.gene_better_checkout_agecheck_required,
         addressFinder: {
           enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
           loqate: {
@@ -205,6 +207,8 @@ export default defineStore('configStore', {
         clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
         paypalCreditThresholdEnabled: storeConfig.gene_better_checkout_paypal_credit_threshold_enabled,
         paypalCreditThresholdValue: storeConfig.gene_better_checkout_paypal_credit_threshold_value,
+        googleMapEnabled: storeConfig.gene_better_checkout_google_map_enabled,
+        googleMapApiKey: storeConfig.gene_better_checkout_google_map_api_key,
       });
 
       if (storeConfig.locale) {
@@ -233,18 +237,6 @@ export default defineStore('configStore', {
       });
     },
 
-    async getRvvupConfig() {
-      const configs = [
-        'rvvup_payments_active',
-      ];
-      const data = await this.getConfig(configs);
-
-      if (data) {
-        this.setData({
-          rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
-        });
-      }
-    },
     createCacheKey(configs) {
       return configs.join('-');
     },

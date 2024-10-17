@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Return whether debug mode is enabled from config
+     * Return whether checkout is enabled from config
      *
      * @param string $scopeType
      * @param string|null $scopeCode
@@ -46,5 +46,23 @@ class Configuration implements ConfigurationInterface
             $scopeType,
             $scopeCode
         ) ?? '';
+    }
+
+    /**
+     * Return whether debug mode is enabled from config
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return bool
+     */
+    public function getIsDebugEnabled(
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        $scopeCode = null
+    ): bool {
+        return (bool) $this->scopeConfig->getValue(
+            self::VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH,
+            $scopeType,
+            $scopeCode
+        );
     }
 }

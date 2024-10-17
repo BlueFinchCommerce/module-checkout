@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Entrez votre code to réduction',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Entrez le code',
       successMessage: 'Coupon appliqué "{code}".',
@@ -63,6 +63,7 @@ export default {
       infoMessage: 'Pour les questions de livraison',
       placeholder: 'Numéro de téléphone',
       label: 'Téléphone',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Saisissez votre email',
@@ -83,12 +84,14 @@ export default {
     },
     deliverySection: {
       toShippingButton: 'Options de livraison',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       title: 'Ou devons-nous livrer votre commande?',
       savedAddressesTitle: 'Vos adresses enregistrées',
       shipHere: 'Livrer ici',
       deliveryAddressTitle: 'Adresse de livraison',
       billingAddressTitle: 'Adresse de facturation',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       addressFinder: {
         title: 'Recherche d\'adresse',
@@ -231,7 +234,7 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   superPayments: {
-    superPaymentsTitle: 'Super Payments',
+    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',

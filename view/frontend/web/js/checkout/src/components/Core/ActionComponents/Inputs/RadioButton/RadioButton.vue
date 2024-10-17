@@ -13,7 +13,7 @@
         @change="changeHandler"
       >
       <slot name="icon" />
-      <span :style="style"> {{ text }} </span>
+      <span :style="style">{{ text }}<slot /></span>
     </label>
     <p v-show="subtextShow">
       {{ subtext }}

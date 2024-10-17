@@ -59,10 +59,11 @@
     }
 
     &:disabled {
-      background-color: var(--button-primary__background-color-disabled, var(--button-primary__background-color));
-      border-color: var(--button-primary__border-color-disabled, var(--button-primary__background-color-disabled));
-      color: var(--button-primary-color-disabled, var(--button-primary__font-color));
+      background-color: var(--button-primary__background-color-disabled, var(--color__primary-grey7));
+      border-color: var(--button-primary__border-color-disabled, var(--color__primary-grey7));
+      color: var(--button-primary-color-disabled, var(--color__primary-grey9));
       border-width: var(--button-primary__border-weight);
+      opacity: 1;
     }
   }
 
@@ -142,15 +143,20 @@
 
     &__unselected {
       // Unselected will be white with text and border to match the selected tab
-      color: var(--button__tab-background-color);
-      background-color: var(--color__primary-white);
-      border-color: var(--button__tab-border-color);
+      color: var(--button__tab__unselected-color);
+      background-color: var(--button__tab__unselected-background-color);
+      border-color: var(--button__tab__unselected-border-color);
 
-      &:hover,
+      &:hover {
+        color: var(--button__tab__unselected-color-hover);
+        background-color: var(--button__tab__unselected-background-color-hover);
+        border-color: var(--button__tab__unselected-border-color-hover);
+      }
+
       &:focus {
-        color: var(--button__tab-background-color);
-        background-color: var(--color__primary-white);
-        border-color: var(--button__tab-border-color);
+        color: var(--button__tab__unselected-color-focus);
+        background-color: var(--button__tab__unselected-background-color-focus);
+        border-color: var(--button__tab__unselected-border-color-focus);
       }
     }
   }
@@ -170,14 +176,14 @@
     padding: var(--button__padding-large);
   }
 
-  // &--blank {
-  //   background: var(--button-background-color);
-  //   border: var(--button-blank-border);
-  //   font-weight: var(--font-weight__regular);
-  //   font-family: var(--font-family__copy);
-  //   font-size: var(--button-blank-font-size, initial);
-  //   color: var(--text__color);
-  // }
+  &--blank {
+    background: transparent;
+    border: none;
+    font-weight: var(--font-weight__regular);
+    font-family: var(--font-family__copy);
+    font-size: initial;
+    color: var(--text__color);
+  }
 
   &--full {
     width: 100%;

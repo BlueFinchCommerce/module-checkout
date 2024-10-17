@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Lägg till en promo kod',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Ange koden här',
       successMessage: 'Koden "{code}" har matats in.',
@@ -65,6 +65,7 @@ export default {
       infoMessage: 'Vi kommer endast att använda detta nummer om vi behöver kontakta dig angående din leverans.',
       placeholder: 'Ange ditt telefonnummer',
       label: 'Ditt telefonnummer',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Ange din e-postadress',
@@ -85,12 +86,14 @@ export default {
     },
     deliverySection: {
       toShippingButton: 'Välj din fraktmetod',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       title: 'Leveransadress',
       savedAddressesTitle: 'Välj din sparade leveransadress',
       shipHere: 'Skicka här',
       info: 'Vart ska vi leverera den till?',
       billingAddressTitle: 'Faktureringsadress',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       deliveryAddressTitle: 'Leveransadress',
       addressFinder: {

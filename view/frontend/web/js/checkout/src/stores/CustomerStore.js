@@ -10,7 +10,7 @@ import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import amastyConsentLogic from '@/services/content/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
-import cleanAddress from '@/helpers/cart/redirectToBasketPage';
+import cleanAddress from '@/helpers/addresses/cleanAddress';
 import deepClone from '@/helpers/addresses/deepClone';
 import doAddressesMatch from '@/helpers/addresses/doAddressesMatch';
 import formatAddress from '@/helpers/addresses/formatAddress';
@@ -19,6 +19,8 @@ import getEmptyAddress from '@/helpers/addresses/getEmptyAddress';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getUrlTokens from '@/helpers/tokens/getUrlTokens';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
+
+import functionExtension from '@/extensions/functionExtension';
 
 export default defineStore('customerStore', {
   state: () => ({
@@ -268,6 +270,8 @@ export default defineStore('customerStore', {
       this.clearCaches(['getCustomerInformation']);
       await this.getCustomerInformation();
 
+      await functionExtension('onLogin');
+
       return data;
     },
 
@@ -364,10 +368,7 @@ export default defineStore('customerStore', {
 
     async submitEmail(email) {
       if (this.customer.tokenType === tokenTypes.guestUser) {
-        const cart = await setGuestEmailOnCart(email);
-
-        const cartStore = useCartStore();
-        cartStore.handleCartData(cart);
+        await setGuestEmailOnCart(email);
       }
     },
 

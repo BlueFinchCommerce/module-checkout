@@ -29,8 +29,8 @@
     />
     <Agreements id="braintreeNew" />
     <Recaptcha
-      v-if="isRecaptchaVisible('placeOrder')"
-      id="placeOrder"
+      v-if="getTypeByPlacement('braintree')"
+      id="braintree"
       location="braintreeNewMethods"
     />
     <PrivacyPolicy />
@@ -126,7 +126,7 @@ export default {
       'getPaymentPriority',
       'selectedMethod',
     ]),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
@@ -149,13 +149,14 @@ export default {
     this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
 
     if (this.paymentOptionPriority.includes('paypal') && this.paypal.creditActive) {
-      if (this.paypalCreditThresholdEnabled
-        && total >= Number(this.paypalCreditThresholdValue)) {
-        const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+      if (this.paypalCreditThresholdEnabled) {
+        if (total >= Number(this.paypalCreditThresholdValue)) {
+          const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
 
-        // Insert 'paypalCredit' after 'paypal'
-        this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
-        this.map.braintree_paypal_credit = 'paypalCredit';
+          // Insert 'paypalCredit' after 'paypal'
+          this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+          this.map.braintree_paypal_credit = 'paypalCredit';
+        }
       } else {
         const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
 
@@ -240,27 +241,34 @@ export default {
       };
 
       if (this.paypal.creditActive) {
-        if (this.paypalCreditThresholdEnabled
-          && total >= Number(this.paypalCreditThresholdValue)) {
-          options.paypalCredit = {
-            flow: 'checkout',
-            amount: total,
-            currency: this.currencyCode,
-            buttonStyle: {
-              color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
-              label: this.paypal.creditLabel,
-              shape: this.paypal.creditShape,
-              size: 'responsive',
-            },
-            commit: true,
-          };
+        if (this.paypalCreditThresholdEnabled) {
+          if (total >= Number(this.paypalCreditThresholdValue)) {
+            options.paypalCredit = {
+              flow: 'checkout',
+              amount: total,
+              currency: this.currencyCode,
+              buttonStyle: {
+                color: this.paypal.creditColor !== 'gold'
+                && this.paypal.creditColor !== 'blue'
+                && this.paypal.creditColor !== 'silver'
+                  ? this.paypal.creditColor : 'darkblue',
+                label: this.paypal.creditLabel,
+                shape: this.paypal.creditShape,
+                size: 'responsive',
+              },
+              commit: true,
+            };
+          }
         } else {
           options.paypalCredit = {
             flow: 'checkout',
             amount: total,
             currency: this.currencyCode,
             buttonStyle: {
-              color: this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black',
+              color: this.paypal.creditColor !== 'gold'
+              && this.paypal.creditColor !== 'blue'
+              && this.paypal.creditColor !== 'silver'
+                ? this.paypal.creditColor : 'darkblue',
               label: this.paypal.creditLabel,
               shape: this.paypal.creditShape,
               size: 'responsive',
@@ -288,6 +296,9 @@ export default {
 
   unmounted() {
     this.removeEventListeners();
+    if (this.instance) {
+      this.instance.teardown();
+    }
   },
   watch: {
     selectedMethod: {
@@ -316,11 +327,12 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod', 'setPaymentErrorMessage']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');
+      this.setLoadingState(true);
       this.requestPaymentMethod()
         .then(this.getPaymentData)
         .then(createPayment)
@@ -328,7 +340,7 @@ export default {
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
           this.clearSelectedPaymentMethod();
-          this.setToCurrentViewId();
+          this.setLoadingState(false);
 
           if (paymentError.name !== 'DropinError') {
             this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
@@ -384,11 +396,11 @@ export default {
           },
         }, (error, payload) => {
           if (error) {
-            reject(error);
+            this.setPaymentErrorMessage(error.message);
+            reject(error.message);
           } else if (payload.liabilityShifted
             || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
             || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
-            this.showLoader();
             resolve(payload);
           } else {
             reject(new Error('There was an error completing validation, please try again.'));
@@ -468,6 +480,8 @@ export default {
             this.additionalComponents = '.braintree-form__flexible-fields';
           } else if (newViewId === 'paypal') {
             this.additionalComponents = 'div[data-braintree-id="paypal-button"]';
+          } else if (newViewId === 'paypalCredit') {
+            this.additionalComponents = 'div[data-braintree-id="paypal-credit-button"]';
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'applePay') {
@@ -549,50 +563,56 @@ export default {
     },
 
     modifyTokenize() {
-      const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
-        .bind(toRaw(this.instance._mainView._views.googlePay));
+      if (this.isPaymentMethodAvailable('braintree_googlepay')) {
+        const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
+          .bind(toRaw(this.instance._mainView._views.googlePay));
 
-      this.instance._mainView._views.googlePay.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.googlePay.tokenize = () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-        return originalGooglePay();
-      };
+          return originalGooglePay();
+        };
+      }
 
-      const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
-        .bind(this.instance._mainView._views.venmo.venmoInstance);
+      if (this.isPaymentMethodAvailable('braintree_venmo')) {
+        const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
+          .bind(this.instance._mainView._views.venmo.venmoInstance);
 
-      this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-        return originalVenmo();
-      };
+          return originalVenmo();
+        };
+      }
 
-      const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
-        .bind(this.instance._mainView._views.paypal.paypalInstance);
+      if (this.isPaymentMethodAvailable('braintree_paypal')) {
+        const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
+          .bind(this.instance._mainView._views.paypal.paypalInstance);
 
-      this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = this.validateToken('placeOrder');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.reject();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.reject();
+          }
 
-        return originalPayPal(configuration);
-      };
+          return originalPayPal(configuration);
+        };
+      }
     },
 
     addActiveClass(type) {

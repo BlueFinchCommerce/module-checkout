@@ -103,15 +103,15 @@
           </TextInput>
         </div>
 
-        <div id="password_help_text">
-          <TextField
-            class="field__help-text"
-            :text="$t('errorMessages.passwordHelpText')"
-            :data-cy="'password-description'"
-          />
-        </div>
-
         <div class="checkout-email__footer">
+          <div id="password_help_text">
+            <TextField
+              class="field__help-text"
+              :text="$t('errorMessages.passwordHelpText')"
+              :data-cy="'password-description'"
+            />
+          </div>
+
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
@@ -217,6 +217,9 @@ import scrollToTarget from '@/helpers/scrollToTarget';
 import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
 import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLayer';
 
+// extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'EmailAddress',
   components: {
@@ -265,7 +268,7 @@ export default {
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     ...mapState(useConfigStore, ['storeCode']),
     proceedAsGuestInvalid() {
-      return this.emailError;
+      return this.emailError || this.customer.email.length === 0;
     },
     passwordInputType() {
       return this.showPassword ? 'text' : 'password';
@@ -274,10 +277,10 @@ export default {
   async mounted() {
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
     this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextId]
-    || this.$t('noAccountGuestButton');
+      || this.$t('noAccountGuestButton');
     this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
     this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
-    || this.$t('accountGuestButton');
+      || this.$t('accountGuestButton');
 
     await this.getInitialConfig();
     await this.getCart();
@@ -319,7 +322,7 @@ export default {
       try {
         await this.login(this.customer.email, this.password);
         this.loginErrorMessage = '';
-        this.proceed();
+        await this.proceed();
         customerLoginDataLayer();
       } catch (error) {
         this.loginErrorMessage = error.message;
@@ -363,14 +366,17 @@ export default {
       }
     },
 
-    proceedAsGuest() {
+    async proceedAsGuest() {
       continueAsGuestDataLayer();
-      this.proceed();
+      await this.proceed();
     },
 
-    proceed() {
+    async proceed() {
       this.setEmailEntered();
       this.submitEmail(this.customer.email);
+      await functionExtension('onUserProceed', [
+        this.customer.email,
+      ]);
     },
 
     /**

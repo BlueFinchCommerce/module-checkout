@@ -31,7 +31,7 @@ export default {
     },
     giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
-      title: 'Gift card {code}',
+      title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
@@ -63,6 +63,7 @@ export default {
       infoMessage: 'We will use this for delivery questions',
       placeholder: 'Enter your phone number',
       label: 'Phone number',
+      info: 'We will use this for delivery questions',
     },
     emailAddress: {
       placeholder: 'Enter your email address',
@@ -81,6 +82,15 @@ export default {
       placeholder: 'Last name',
       label: 'Last name',
     },
+    clickAndCollectSection: {
+      clickAndCollectTitle: 'Choose a Click & Collect Location',
+      clickAndCollectInputPlaceholder: 'Search by postcode',
+      clickAndCollectErrorMessage: 'Something went wrong while searching for locations. Please try again later.',
+      clickAndCollectMoreLocations: 'Show more locations',
+      clickAndCollectAddresses: 'Chosen Click & Collect Address:',
+      clickAndCollectContinueButton: 'Continue To Payment',
+      clickAndCollectFindButton: 'Find',
+    },
     deliverySection: {
       toShippingButton: 'Choose your shipping method',
       title: 'Where should we deliver it to?',
@@ -89,9 +99,11 @@ export default {
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
+      yourBillingAddress: 'Your billing address',
       newAddressTitle: 'Add new address',
       shippingButton: 'Home Delivery',
       clickandCollectButton: 'Click & Collect',
+      clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       clickandCollectOpeningTimes: 'Opening Times',
       clickandCollectThresholdHigh: 'Unfortunately, your basket value is too high for Click and Collect. If you want to collect from a store near you, your basket must be less than {price}.',
       clickandCollectThresholdLow: 'Unfortunately, your basket value is too low for Click and Collect. If you want to collect from a store near you, your basket must be more than {price}.',
@@ -183,6 +195,10 @@ export default {
     stepCompleteTitle: 'Shipping',
     nominatedDelivery: 'Choose a day that suits you.',
     nominatedDeliveryCalendar: 'Please select a date',
+    specifiedDayDeliveryTitle: 'Specified Date',
+    specifiedDayDeliveryDescription: 'Choose a day that suits you',
+    specifiedDayDeliveryDetails: 'Deliveries made',
+    specifiedDayCalendar: 'Your order will be delivered on',
     tbc: 'Calculated at next step',
     deliveryInstructions: {
       title: 'Delivery Instructions?',
@@ -240,12 +256,15 @@ export default {
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
   superPayments: {
-    superPaymentsTitle: 'Super Payments',
+    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',
     title: 'Terms & Conditions',
-    label: 'I confirm that I have read and accept the',
+    label: {
+      manual: 'I confirm that I have read and accept the',
+      automatic: 'By placing an order you accept our',
+    },
     errorMessage: 'This is a required field.',
     paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',
   },

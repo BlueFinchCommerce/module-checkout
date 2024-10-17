@@ -35,6 +35,10 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable Age Checker functionality on checkout.]]></comment>
                 </field>
+                <field id="enable_debug" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable debugging on checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <group id="checkout_designer" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Checkout Designer</label>
                     <field id="designer_trigger" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
@@ -99,6 +103,27 @@
                         <comment><![CDATA[PayPal Credit Threshold Value.]]></comment>
                     </field>
                 </group>
+                <group id="google_map_configs" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Map Configuration</label>
+                    <field id="google_map_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Google Map Functionality</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <comment><![CDATA[Enable Google Map Functionality]]></comment>
+                    </field>
+                    <field id="google_map_api_key" translate="label comment" sortOrder="20" type="text" showInDefault="1" showInWebsite="1" showInStore="0" >
+                        <label>Google Map API Key</label>
+                        <comment><![CDATA[Google Map API Key.]]></comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+        <section id="recaptcha_frontend">
+            <group id="type_for">
+                <field id="customer_create_success" translate="label" type="select" sortOrder="132" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable for Create New Customer Account on Order Success</label>
+                    <source_model>Magento\ReCaptchaAdminUi\Model\OptionSource\Type</source_model>
+                </field>
             </group>
         </section>
     </system>

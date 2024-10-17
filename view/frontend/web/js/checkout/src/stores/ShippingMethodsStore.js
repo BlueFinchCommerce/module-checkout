@@ -3,25 +3,21 @@ import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useCartStore from '@/stores/CartStore';
 import useLoadingStore from '@/stores/LoadingStore';
+import useStepsStore from '@/stores/StepsStore';
 
 import deepClone from '@/helpers/addresses/deepClone';
 import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmittingShippingInformation';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
-import getNominatedDates from '@/services/shipping/getNominatedShippingMethods';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
   state: () => ({
+    shippingErrorMessage: '',
     shippingMethods: [],
-    nominatedDayEnabled: false,
-    nominatedDates: false,
-    nominatedSelectedMethod: false,
-    nominatedSelectedDate: false,
-    nominatedSelectedDateFormatted: false,
     selectedMethod: {},
     cache: {},
     isClickAndCollect: false,
@@ -54,39 +50,19 @@ export default defineStore('shippingMethodsStore', {
     async setDefaultShippingMethod() {
       const cartStore = useCartStore();
 
+      const availableMethods = cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods || [];
+      const filteredMethods = availableMethods.filter(({ available, isVisible }) => available && isVisible);
+
+      const {
+        method_code: methodCode,
+      } = cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method || {};
+
       // Check if we have shipping methods but not one selected.
-      if (!cartStore.cart.shipping_addresses?.[0]?.selected_shipping_method?.length
-        && cartStore.cart.shipping_addresses?.[0]?.available_shipping_methods?.length) {
-        const shippingMethod = cartStore.cart.shipping_addresses[0].available_shipping_methods[0];
+      /* eslint-disable  camelcase */
+      if (filteredMethods?.length && (!methodCode
+        || !filteredMethods.some(({ method_code }) => methodCode === method_code))) {
+        const shippingMethod = filteredMethods[0];
         this.submitShippingInfo(shippingMethod.carrier_code, shippingMethod.method_code);
-      }
-    },
-
-    /**
-     * Get Nominated Delivery Methods
-     */
-    async getNominatedDeliveryMethods(postcode) {
-      this.nominatedDates = false;
-
-      try {
-        const nominatedDates = await this.getCachedResponse(
-          getNominatedDates,
-          'getNominatedDeliveryMethods',
-          postcode,
-        );
-
-        if (nominatedDates) {
-          // Check dates are not empty
-          if (Object.keys(nominatedDates) < 1) {
-            this.nominatedDayEnabled = false;
-            return;
-          }
-
-          this.nominatedDates = nominatedDates;
-          this.nominatedDayEnabled = true;
-        }
-      } catch {
-        //
       }
     },
 
@@ -116,36 +92,63 @@ export default defineStore('shippingMethodsStore', {
 
     setShippingDataFromCartData(data) {
       this.setData({
-        shippingMethods: data.shipping_addresses?.[0].available_shipping_methods,
+        shippingErrorMessage: null,
+      });
+
+      this.setData({
         selectedMethod: data.shipping_addresses?.[0].selected_shipping_method,
       });
+
+      this.setShippingMethods(data.shipping_addresses[0].available_shipping_methods);
+
+      // If we're on the shipping step but no longer have a shipping method then go back to shipping.
+      if (!data.shipping_addresses?.[0]?.selected_shipping_method) {
+        const stepsStore = useStepsStore();
+        if (stepsStore.paymentActive) {
+          stepsStore.goToShipping();
+        }
+      }
     },
 
     async setAddressesOnCart() {
       const customerStore = useCustomerStore();
       const cartStore = useCartStore();
+      const { setLoadingState } = useLoadingStore();
 
+      setLoadingState(true);
       const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
 
       cartStore.handleCartData(response.cart);
+
+      setLoadingState(false);
     },
 
     async submitShippingInfo(carrierCode, methodCode) {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);
 
-      const cart = await setShippingMethodOnCart(carrierCode, methodCode);
+      this.setData({
+        shippingErrorMessage: null,
+      });
 
-      const cartStore = useCartStore();
-      cartStore.handleCartData(cart);
+      try {
+        const cart = await setShippingMethodOnCart(carrierCode, methodCode);
 
-      // Allow custom behaviour after setting the shipping information.
-      await afterSubmittingShippingInformation();
+        const cartStore = useCartStore();
+        cartStore.handleCartData(cart);
 
-      // Track this event.
-      setShippingMethodDataLayer();
+        // Allow custom behaviour after setting the shipping information.
+        await afterSubmittingShippingInformation();
 
-      setLoadingState(false);
+        // Track this event.
+        setShippingMethodDataLayer();
+      } catch (error) {
+        this.setData({
+          shippingErrorMessage: error.message,
+        });
+      } finally {
+        setLoadingState(false);
+      }
     },
 
     async setAsClickAndCollect(agentId) {
@@ -165,10 +168,8 @@ export default defineStore('shippingMethodsStore', {
       if (!this.isClickAndCollect) {
         const customerStore = useCustomerStore();
 
-        if (customerStore.inputsSanitiseError) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('shipping');
+        customerStore.createNewAddress('billing');
 
         await customerStore.getCustomerInformation();
         customerStore.selected.billing.same_as_shipping = true;
@@ -186,14 +187,15 @@ export default defineStore('shippingMethodsStore', {
       // Only need to do this if we're on click and collect.
       if (this.isClickAndCollect) {
         const customerStore = useCustomerStore();
+        const cartStore = useCartStore();
+
+        await cartStore.getCart();
 
         this.$state.selectedMethod = {};
         await this.setAsClickAndCollect('');
 
-        if (customerStore.inputsSanitiseError) {
-          customerStore.createNewAddress('shipping');
-          customerStore.createNewAddress('billing');
-        }
+        customerStore.createNewAddress('shipping');
+        customerStore.createNewAddress('billing');
 
         await customerStore.getCustomerInformation();
         customerStore.selected.billing.same_as_shipping = true;
@@ -257,7 +259,7 @@ export default defineStore('shippingMethodsStore', {
     },
 
     clearShippingMethodCache() {
-      this.clearCaches(['getNominatedDeliveryMethods', 'getShippingMethods']);
+      this.clearCaches(['getShippingMethods']);
       this.clearSubmitShippingInfoCache();
     },
 

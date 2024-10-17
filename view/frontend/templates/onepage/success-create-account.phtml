@@ -55,6 +55,9 @@ if ($orderViewViewModel) {
                 <button type="submit" class="action primary button-standard" title="<?= $escaper->escapeHtmlAttr(__('Create an Account')) ?>">
                     <?= $escaper->escapeHtml(__('Create an Account')) ?>
                 </button>
+                <?php if ($orderViewViewModel->getRecaptchaSuccessEnabled()):?>
+                    <?= $block->getChildHtml('form_additional_info') ?>
+                <?php endif;?>
             </fieldset>
             <input type="hidden" name="firstname" value="<?= $escaper->escapeHtmlAttr($order->getCustomerFirstname()) ?>">
             <input type="hidden" name="lastname" value="<?= $escaper->escapeHtmlAttr($order->getCustomerLastname()) ?>">

@@ -13,9 +13,6 @@ export default defineConfig({
         entryFileNames: '[name].min.js',
         chunkFileNames: '[name].min.js',
         assetFileNames: '[name].[ext]',
-        manualChunks: {
-          adyen: ['@adyen/adyen-web'],
-        },
       },
       preserveEntrySignatures: 'allow-extension',
     },

@@ -1,6 +1,6 @@
 <template>
   <div
-    id="braintree-paypal"
+    :id="`braintree-paypal-${namespace}`"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
     :data-cy="'instant-checkout-braintreePayPal'"
@@ -19,7 +19,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
@@ -114,6 +113,7 @@ export default {
       }
 
       const sdkConfig = {
+        components: 'buttons,funding-eligibility',
         currency: this.currencyCode,
         intent: 'capture',
         vault: 'false',
@@ -146,8 +146,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window[this.namespace].FUNDING.PAYPAL,
-          offerCredit: false,
+          fundingSource: this.isCredit ? window[this.namespace].FUNDING.CREDIT : window[this.namespace].FUNDING.PAYPAL,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
             flow: 'checkout',
@@ -160,11 +159,10 @@ export default {
           }),
           onClick: () => {
             this.setErrorMessage('');
-            // Check that the agreements (if any) and recpatcha is valid.
+            // Check that the agreements (if any) is valid.
             const agreementsValid = this.validateAgreements();
-            const recaptchaValid = this.validateToken('placeOrder');
 
-            if (!agreementsValid || !recaptchaValid) {
+            if (!agreementsValid) {
               return false;
             }
 
@@ -237,25 +235,34 @@ export default {
           },
         };
 
-        this.paypalLoaded = true;
-
         // If is PayPalCredit and enabled.
         if (this.paypal.creditActive && this.isCredit) {
           if (this.paypalCreditThresholdEnabled
             && total >= Number(this.paypalCreditThresholdValue)) {
             renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'darkblue';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           } else {
             renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
-            renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'darkblue';
             renderData.style.label = this.paypal.creditLabel;
             renderData.style.shape = this.paypal.creditShape;
           }
         }
 
-        return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
+        return window[this.namespace].Buttons(renderData).render(`#braintree-paypal-${this.namespace}`)
+          .then((response) => {
+            this.paypalLoaded = true;
+
+            return response;
+          });
       });
     });
   },
@@ -271,7 +278,6 @@ export default {
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     setInformationToQuote(payload) {
       const shippingAddress = !this.cart.is_virtual ? this.mapAddress(
@@ -286,6 +292,20 @@ export default {
         payload.details.firstName,
         payload.details.lastName,
       );
+
+      // If billingAddress is missing fields, use values from shippingAddress
+      // added in case if billing address not required on braintree account
+      if (billingAddress) {
+        if (!billingAddress.city && shippingAddress?.city) {
+          billingAddress.city = shippingAddress.city;
+        }
+        if (!billingAddress.postcode && shippingAddress?.postcode) {
+          billingAddress.postcode = shippingAddress.postcode;
+        }
+        if (!billingAddress.street[0] && shippingAddress?.street[0]) {
+          [billingAddress.street[0]] = shippingAddress.street;
+        }
+      }
 
       return setAddressesOnCart(shippingAddress, billingAddress, payload.details.email)
         .then(() => ({ payload, email: payload.details.email }));
@@ -332,6 +352,15 @@ export default {
     redirectToSuccess() {
       window.location.href = getSuccessPageUrl();
     },
+  },
+  unmounted() {
+    if (this.instance) {
+      this.instance.teardown();
+    }
+
+    if (this.paypalInstance) {
+      this.paypalInstance.teardown();
+    }
   },
 };
 </script>

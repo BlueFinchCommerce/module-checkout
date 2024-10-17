@@ -2,6 +2,7 @@
 import mitt from 'mitt';
 import { defineStore } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
@@ -30,10 +31,13 @@ import pennies from '@/services/payments/penniesCharityBox';
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartPrices from '@/helpers/cart/getCartPrices';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getIsVirtual from '@/helpers/cart/getIsVirtual';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
 import giftCardCodeDataLayer from '@/helpers/dataLayer/giftCardCodeDataLayer';
+
+import functionExtension from '@/extensions/functionExtension';
 
 export default defineStore('cartStore', {
   state: () => ({
@@ -41,6 +45,7 @@ export default defineStore('cartStore', {
     cart: {
       items: getCartItems(),
       prices: getCartPrices(),
+      is_virtual: getIsVirtual(),
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -100,6 +105,11 @@ export default defineStore('cartStore', {
         return prev + curr.gift_wrapping.price.value;
       }, state.cart.gift_wrapping?.price?.value || 0)
     ),
+    getShippingMethods: (state) => (
+      state.cart.shipping_addresses?.[0]?.available_shipping_methods?.filter(({ available, isVisible }) => (
+        available && isVisible
+      ))
+    ),
   },
   actions: {
     setData(data) {
@@ -135,8 +145,14 @@ export default defineStore('cartStore', {
     },
 
     // This handles storing the cart data in the correct store location.
-    handleCartData(cart) {
-      if (cart && cart.items.length) {
+    async handleCartData(cart) {
+      // If there is no cart whatsoever or we have got items but the array is empty then redirect ot basket.
+      if (!cart || ('items' in cart && !cart.items.length)) {
+        redirectToBasketPage();
+        return;
+      }
+
+      if (cart.items) {
         const localItems = getCartItems();
         const mappedCartItems = cart.items.map((item) => (
           { ...localItems[item.id], ...item }
@@ -146,15 +162,34 @@ export default defineStore('cartStore', {
             items: mappedCartItems,
           },
         });
-      } else {
-        redirectToBasketPage();
-        return;
+      }
+
+      if (cart?.shipping_addresses?.[0]?.available_shipping_methods) {
+        // eslint-disable-next-line no-param-reassign
+        cart.shipping_addresses[0].available_shipping_methods = cart.shipping_addresses[0]
+          .available_shipping_methods.map((method) => ({
+            isVisible: true,
+            ...method,
+          }));
+      }
+
+      const configStore = useConfigStore();
+      await functionExtension('onHandleCartData', [cart, configStore]);
+
+      if (typeof cart.applied_coupons !== 'undefined') {
+        this.setData({
+          discountCode: cart?.applied_coupons?.[0]?.code ?? '',
+        });
+      }
+
+      if (typeof cart.applied_gift_cards !== 'undefined') {
+        this.setData({
+          giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
+        });
       }
 
       this.setData({
         cart,
-        discountCode: cart?.applied_coupons?.[0]?.code ?? '',
-        giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
       });
 
       const customerStore = useCustomerStore();
@@ -169,11 +204,12 @@ export default defineStore('cartStore', {
 
       if (cart.shipping_addresses.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
+        shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
-      paymentStore.setPaymentMethods(cart.available_payment_methods);
-
-      shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
+      if (cart.available_payment_methods) {
+        paymentStore.setPaymentMethods(cart.available_payment_methods);
+      }
     },
 
     async updateQuantity(updateItem, change) {
@@ -254,6 +290,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addDiscountCode(code);
 
+        this.handleCartData(cart);
         this.emitUpdate();
         this.setData({
           cart,
@@ -278,6 +315,7 @@ export default defineStore('cartStore', {
         discountCodeDataLayer('discountCodeRemoved');
         const cart = await removeDiscountCode();
 
+        this.handleCartData(cart);
         this.emitUpdate();
         this.setData({
           cart,
@@ -300,6 +338,7 @@ export default defineStore('cartStore', {
       try {
         const cart = await addGiftCardCode(code);
 
+        this.handleCartData(cart);
         this.emitUpdate();
         this.setData({
           cart,
@@ -320,15 +359,16 @@ export default defineStore('cartStore', {
     },
 
     async removeGiftCardCode(code) {
-      giftCardCodeDataLayer('giftCardCodeRemoved');
       try {
         const cart = await removeGiftCardCode(code);
 
+        this.handleCartData(cart);
         this.emitUpdate();
         this.setData({
           cart,
           giftCardErrorMessage: null,
         });
+        giftCardCodeDataLayer('giftCardCodeRemoved');
       } catch (error) {
         this.setData({
           giftCardErrorMessage: error.message,
@@ -382,7 +422,8 @@ export default defineStore('cartStore', {
 
       try {
         const cart = await addCartItem(product);
-        this.setData({ cart });
+        this.handleCartData(cart);
+        this.emitUpdate();
       } catch (error) {
         console.warn('Unable to add cart item', error.message);
       }

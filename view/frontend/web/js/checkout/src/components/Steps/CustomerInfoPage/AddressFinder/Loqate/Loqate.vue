@@ -124,7 +124,7 @@ export default {
     };
   },
   computed: {
-    ...mapWritableState(useCustomerStore, ['selected', 'customer']),
+    ...mapWritableState(useCustomerStore, ['selected', 'customer', 'inputsSanitiseError']),
     ...mapState(useConfigStore, ['countryCode', 'stateRequired', 'countries']),
     selectedAddressType() {
       return this.selected[this.address_type];
@@ -138,7 +138,7 @@ export default {
       'setAddressAsEditing',
       'setSelectedSavedAddress',
     ]),
-    ...mapActions(useValidationStore, ['validateAddress']),
+    ...mapActions(useValidationStore, ['validateAddress', 'setAddressFinderError']),
 
     editAddress() {
       this.address = false;
@@ -176,7 +176,10 @@ export default {
           this.addressList = addresses;
         });
       }
-      this.setSelectedSavedAddress(this.address_type, false);
+      const isValid = this.validateAddress(this.address_type, true);
+      if (this.inputsSanitiseError || !isValid) {
+        this.setSelectedSavedAddress(this.address_type, false);
+      }
     },
     onBlur(event) {
       // Only hide results if the relatedTarget of the blur isn't because of clicking on
@@ -241,8 +244,11 @@ export default {
 
       // If the address we get back from Loqate is not valid or details are not filled in then open the form
       // allowing User's the ability to edit.
-      if (!isValid) {
+      if (!isValid || this.inputsSanitiseError) {
         this.setAddressAsEditing(this.address_type, true);
+        this.setAddressFinderError(true);
+      } else {
+        this.setAddressFinderError(false);
       }
     },
   },
