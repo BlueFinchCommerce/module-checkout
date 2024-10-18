@@ -119,7 +119,7 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo', 'setNotClickAndCollect']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
