@@ -119,15 +119,15 @@ export default {
         },
         countryField: {
           label: 'Country',
-          placeholder: 'County',
+          placeholder: 'Country',
         },
         postCodeField: {
           label: 'Post Code',
           placeholder: 'Post Code',
         },
         regionField: {
-          label: 'County',
-          placeholder: 'County',
+          label: 'State/Province',
+          placeholder: 'State/Province',
         },
       },
     },
