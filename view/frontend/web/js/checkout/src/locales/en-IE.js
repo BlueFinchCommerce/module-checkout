@@ -150,6 +150,7 @@ export default {
     countryErrorMessage: 'Please choose your country',
     streetErrorMessage: 'Please enter a valid address',
     cityErrorMessage: 'Please enter a valid city',
+    regionErrorMessage: 'Please enter a valid state/province',
     googlePayShippingError: 'The shipping method is missing. Please select the shipping method and try again.',
     googlePayNominatedDayError: 'Unfortunately we cannot offer Express Payment on orders with Nominated Day Delivery.',
     noShippingMethods: 'No shipping methods found for the selected address.',
