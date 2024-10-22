@@ -67,7 +67,7 @@ export default {
       'getRegionId',
       'storeCode',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
 
   async created() {
@@ -417,7 +417,9 @@ export default {
   },
 
   unmounted() {
-    if (this.instance) {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')
+      && !this.isPaymentMethodAvailable('braintree_paypal')) {
       this.instance.teardown();
     }
 

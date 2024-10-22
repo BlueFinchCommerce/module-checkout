@@ -66,7 +66,7 @@ export default {
       'paypalCreditThresholdEnabled',
       'paypalCreditThresholdValue',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
   async created() {
     this.addExpressMethod(this.key);
@@ -360,7 +360,8 @@ export default {
     },
   },
   unmounted() {
-    if (this.instance) {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')) {
       this.instance.teardown();
     }
 
