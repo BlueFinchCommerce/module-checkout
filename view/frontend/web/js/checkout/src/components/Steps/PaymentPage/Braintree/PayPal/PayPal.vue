@@ -30,6 +30,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreePayPal',
   data() {
@@ -157,7 +160,7 @@ export default {
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
           }),
-          onClick: () => {
+          onClick: async () => {
             this.setErrorMessage('');
             // Check that the agreements (if any) is valid.
             const agreementsValid = this.validateAgreements();
@@ -165,6 +168,9 @@ export default {
             if (!agreementsValid) {
               return false;
             }
+
+            await functionExtension('onBraintreeExpressInit');
+            this.setNotClickAndCollect();
 
             return true;
           },
@@ -269,7 +275,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
