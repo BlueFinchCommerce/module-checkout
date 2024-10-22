@@ -221,7 +221,8 @@ export default {
       ));
     },
 
-    onPaymentDataChanged(data) {
+    async onPaymentDataChanged(data) {
+      await functionExtension('onPaymentDataChanged');
       return new Promise((resolve) => {
         const address = {
           city: data.shippingAddress.locality,
