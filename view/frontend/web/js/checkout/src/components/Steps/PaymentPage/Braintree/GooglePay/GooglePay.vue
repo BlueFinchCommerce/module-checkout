@@ -33,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeGooglePay',
   data() {
@@ -133,7 +136,7 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useLoadingStore, ['setLoadingState']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -143,7 +146,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
-    onClick(type) {
+    async onClick(type) {
       this.setErrorMessage('');
       // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
@@ -151,6 +154,9 @@ export default {
       if (!agreementsValid) {
         return false;
       }
+
+      await functionExtension('onBraintreeExpressInit');
+      this.setNotClickAndCollect();
 
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 

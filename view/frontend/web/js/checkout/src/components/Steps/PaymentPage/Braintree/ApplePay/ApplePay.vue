@@ -33,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeApplePay',
 
@@ -119,7 +122,7 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -173,7 +176,10 @@ export default {
       }
     },
 
-    onValidateMerchant(event, session) {
+    async onValidateMerchant(event, session) {
+      await functionExtension('onBraintreeExpressInit');
+      this.setNotClickAndCollect();
+
       return this.applePayInstance.performValidation(
         {
           validationURL: event.validationURL,
