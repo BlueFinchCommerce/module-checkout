@@ -71,8 +71,6 @@ export default {
       this.renderV2();
     } else if (recapchaType === recapchaTypes.invisible) {
       this.renderV2Invisible();
-    } else if (recapchaType === recapchaTypes.recaptchaV3) {
-      this.renderV3();
     }
   },
   methods: {
@@ -102,15 +100,6 @@ export default {
         'expired-callback': () => {
           this.setToken(this.id, null);
         },
-      });
-      window.grecaptcha.execute();
-    },
-
-    renderV3() {
-      window.grecaptcha.ready(() => {
-        window.grecaptcha.execute(this.v3Invisible, { action: 'submit' }).then((token) => {
-          this.setToken(this.id, token);
-        });
       });
     },
   },
