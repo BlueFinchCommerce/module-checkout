@@ -115,7 +115,10 @@ export default {
           placeholder: ' ',
         },
         regionField: {
+          label: ' ',
           placeholder: ' ',
+          defaultLabel: ' ',
+          defaultPlaceholder: ' ',
         },
       },
     },
