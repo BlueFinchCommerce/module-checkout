@@ -177,6 +177,7 @@ export default {
           onShippingChange: async (data) => {
             const address = {
               city: data.shipping_address.city,
+              company: '',
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,

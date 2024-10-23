@@ -226,6 +226,7 @@ export default {
       return new Promise((resolve) => {
         const address = {
           city: data.shippingAddress.locality,
+          company: '',
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
