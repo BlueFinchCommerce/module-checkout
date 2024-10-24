@@ -132,10 +132,8 @@ export default {
           placeholder: 'Postcode',
         },
         regionField: {
-          label: 'County',
-          placeholder: 'County',
-          defaultLabel: 'State/Province',
-          defaultPlaceholder: 'State/Province',
+          label: 'State/Province',
+          placeholder: 'State/Province',
         },
       },
     },

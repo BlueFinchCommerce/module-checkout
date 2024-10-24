@@ -117,8 +117,6 @@ export default {
         regionField: {
           label: ' ',
           placeholder: ' ',
-          defaultLabel: ' ',
-          defaultPlaceholder: ' ',
         },
       },
     },

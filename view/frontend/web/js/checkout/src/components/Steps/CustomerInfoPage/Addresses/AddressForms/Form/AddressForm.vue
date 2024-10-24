@@ -70,11 +70,10 @@
             :error="showFieldError(address_type, 'region')"
             :error-message="showFieldError(address_type, 'region')
               ? $t('errorMessages.regionErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.'
-              + (selectedAddressType.country_code === 'GB' ? 'regionField.placeholder'
-              : 'regionField.defaultPlaceholder'))"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.'
-            + (selectedAddressType.country_code === 'GB' ? 'regionField.label' : 'regionField.defaultLabel'))"
+            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
+              'regionField.placeholder')"
+            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+              'regionField.label')"
             autocomplete="address-level1"
             :data-cy="`${address_type}-region-input`"
             :required="getRegionRequired(address_type)"
@@ -94,8 +93,8 @@
           v-model="selectedAddressType.region.region_id"
           :options="getRegionOptions(address_type)"
           :error="showFieldError(address_type, 'region')"
-          :label="$t('yourDetailsSection.deliverySection.addressForm.'
-            + (selectedAddressType.country_code === 'GB' ? 'regionField.label' : 'regionField.defaultLabel'))"
+          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
+            'regionField.label')"
           :required="getRegionRequired(address_type)"
           :data-cy="`${address_type}-state-select`"
           @change="setRegion($event)"

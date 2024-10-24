@@ -147,8 +147,6 @@ export default {
         regionField: {
           label: 'County',
           placeholder: 'County',
-          defaultLabel: 'State/Province',
-          defaultPlaceholder: 'State/Province',
         },
       },
     },
