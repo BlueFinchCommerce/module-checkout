@@ -126,8 +126,8 @@ export default {
           placeholder: 'Post Code',
         },
         regionField: {
-          label: 'State/Province',
-          placeholder: 'State/Province',
+          label: 'County',
+          placeholder: 'County',
         },
       },
     },
