@@ -89,6 +89,7 @@
 .shipping-method__content {
   flex-grow: 1;
   top: var(--shipping-methods-top-value, 0);
+  padding-right: var(--indent__s);
 
   p:first-child {
     font-size: var(--shipping-method-title-font-size, var(--font__s));

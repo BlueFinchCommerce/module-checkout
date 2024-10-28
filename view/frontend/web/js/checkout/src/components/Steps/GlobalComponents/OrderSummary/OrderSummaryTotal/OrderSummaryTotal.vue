@@ -77,6 +77,7 @@
           :data-cy="dataCy ? `shipping-price-${dataCy}` : 'shipping-price'"
         />
         <TextField
+          v-else
           class="total__text"
           :text="$t('shippingStep.tbc')"
           :data-cy="dataCy ? `shipping-price-tbc-${dataCy}` : 'shipping-price-tbc'"

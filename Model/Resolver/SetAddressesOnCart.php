@@ -81,7 +81,10 @@ class SetAddressesOnCart implements ResolverInterface
         // prevent calling of collectTotals and requestShippingRates
         $this->dataCollector->setRatesCollected(true)
             ->setTotalsCollected(true);
-        $this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
+	$this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
+        // cart reloaded as $cart above does not retain billingAddress when logged in
+        $cart = $this->cartRepository->getActive($cartId);
+
         $cart->collectTotals();
         $cart->getShippingAddress()->collectShippingRates();
         // requestShippingRates must be called in the following availableShippingMethods resolver

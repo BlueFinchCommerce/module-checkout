@@ -97,7 +97,16 @@ export default defineStore('RecaptchaStore', {
       });
     },
 
-    validateToken(id) {
+    async validateToken(id) {
+      const recapchaType = this.getTypeByPlacement(id);
+
+      if (recapchaType === recapchaTypes.invisible) {
+        await window.grecaptcha.execute();
+      } else if (recapchaType === recapchaTypes.recaptchaV3) {
+        const token = await window.grecaptcha.execute(this.$state.v3Invisible, { action: 'submit' });
+        this.setToken(id, token);
+      }
+
       if (this.$state.enabled[id] && !this.$state.tokens[id]) {
         this.setData({
           errors: {

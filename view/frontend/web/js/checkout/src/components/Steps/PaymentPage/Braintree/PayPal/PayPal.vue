@@ -30,6 +30,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreePayPal',
   data() {
@@ -63,7 +66,7 @@ export default {
       'paypalCreditThresholdEnabled',
       'paypalCreditThresholdValue',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
   async created() {
     this.addExpressMethod(this.key);
@@ -157,7 +160,7 @@ export default {
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
           }),
-          onClick: () => {
+          onClick: async () => {
             this.setErrorMessage('');
             // Check that the agreements (if any) is valid.
             const agreementsValid = this.validateAgreements();
@@ -166,11 +169,15 @@ export default {
               return false;
             }
 
+            await functionExtension('onBraintreeExpressInit');
+            this.setNotClickAndCollect();
+
             return true;
           },
           onShippingChange: async (data) => {
             const address = {
               city: data.shipping_address.city,
+              company: '',
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
@@ -269,7 +276,7 @@ export default {
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -354,7 +361,8 @@ export default {
     },
   },
   unmounted() {
-    if (this.instance) {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')) {
       this.instance.teardown();
     }
 

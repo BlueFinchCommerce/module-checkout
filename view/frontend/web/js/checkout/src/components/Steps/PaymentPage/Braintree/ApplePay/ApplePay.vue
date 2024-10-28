@@ -33,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeApplePay',
 
@@ -64,7 +67,7 @@ export default {
       'getRegionId',
       'storeCode',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
 
   async created() {
@@ -119,7 +122,7 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -173,7 +176,10 @@ export default {
       }
     },
 
-    onValidateMerchant(event, session) {
+    async onValidateMerchant(event, session) {
+      await functionExtension('onBraintreeExpressInit');
+      this.setNotClickAndCollect();
+
       return this.applePayInstance.performValidation(
         {
           validationURL: event.validationURL,
@@ -259,6 +265,7 @@ export default {
     async onShippingContactSelect(data, session) {
       const address = {
         city: data.shippingContact.locality,
+        company: '',
         region: data.shippingContact.administrativeArea,
         region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
         country_code: data.shippingContact.countryCode.toUpperCase(),
@@ -411,7 +418,9 @@ export default {
   },
 
   unmounted() {
-    if (this.instance) {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')
+      && !this.isPaymentMethodAvailable('braintree_paypal')) {
       this.instance.teardown();
     }
 

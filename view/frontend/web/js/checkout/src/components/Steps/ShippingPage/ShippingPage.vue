@@ -19,6 +19,9 @@ import SavedDeliveryAddress
   from '@/components/Steps/CustomerInfoPage/Addresses/SavedDeliveryAddess/SavedDeliveryAddess.vue';
 import ShippingMethod from '@/components/Steps/ShippingPage/ShippingMethod/ShippingMethod.vue';
 
+// extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'ShippingPage',
   components: {
@@ -31,6 +34,7 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.getCart();
+    await functionExtension('onShippingMethodMounted');
 
     this.setDefaultShippingMethod();
 
