@@ -33,7 +33,7 @@ export default {
     giftCardDiscount: {
       title: 'Gift card "{code}"',
       errorMessage: 'Please enter a valid code.',
-      placeholder: 'Enter Gift Card Code',
+      placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
     },
     crossSellsTitle: 'You may also like these items...',
