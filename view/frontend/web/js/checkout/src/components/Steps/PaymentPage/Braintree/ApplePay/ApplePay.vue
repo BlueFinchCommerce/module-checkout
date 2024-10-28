@@ -265,6 +265,7 @@ export default {
     async onShippingContactSelect(data, session) {
       const address = {
         city: data.shippingContact.locality,
+        company: '',
         region: data.shippingContact.administrativeArea,
         region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
         country_code: data.shippingContact.countryCode.toUpperCase(),

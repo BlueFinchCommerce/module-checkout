@@ -113,8 +113,9 @@ export default {
           apiVersionMinor: 0,
           allowedPaymentMethods: googlePaymentInstance.createPaymentDataRequest().allowedPaymentMethods,
           existingPaymentMethodRequired: true,
-        }).then((isReadyToPay) => {
+        }).then(async (isReadyToPay) => {
           if (isReadyToPay) {
+            await functionExtension('onBraintreeExpressInit');
             const button = this.googleClient.createButton({
               buttonColor: this.google.buttonColor,
               buttonType: 'buy',
@@ -146,7 +147,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail']),
 
-    async onClick(type) {
+    onClick(type) {
       this.setErrorMessage('');
       // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
@@ -155,7 +156,6 @@ export default {
         return false;
       }
 
-      await functionExtension('onBraintreeExpressInit');
       this.setNotClickAndCollect();
 
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
@@ -221,10 +221,12 @@ export default {
       ));
     },
 
-    onPaymentDataChanged(data) {
+    async onPaymentDataChanged(data) {
+      await functionExtension('onPaymentDataChanged');
       return new Promise((resolve) => {
         const address = {
           city: data.shippingAddress.locality,
+          company: '',
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,

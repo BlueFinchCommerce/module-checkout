@@ -19,7 +19,7 @@
             :data-cy="dataCy ? `product-name-${dataCy}` : 'product-name'"
           />
           <ProductOptions
-            v-if="item?.configurable_options"
+            v-if="item?.configurable_options || item?.customizable_options"
             :item="item"
             :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
           />
