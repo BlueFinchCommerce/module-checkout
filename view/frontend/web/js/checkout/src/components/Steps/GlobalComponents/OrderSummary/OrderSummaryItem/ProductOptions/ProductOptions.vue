@@ -46,7 +46,7 @@
         class="option-value"
       >
         <TextField
-          :text="`${option.label}: ${option.label}`"
+          :text="`${option.label}`"
           :data-cy="dataCy ? `${dataCy}-option` : 'product-options-option'"
         />
       </div>
