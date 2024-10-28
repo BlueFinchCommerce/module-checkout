@@ -37,12 +37,14 @@ class Assets implements ArgumentInterface
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param ConfigurationInterface $configuration
+     * @param UrlInterface $urlInterface
      */
     public function __construct(
         private readonly AssetRepository $assetRepository,
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly StoreManagerInterface $storeManager,
-        private readonly ConfigurationInterface $configuration
+        private readonly ConfigurationInterface $configuration,
+        private readonly UrlInterface $urlInterface
     ) {}
 
     /**
@@ -141,6 +143,7 @@ class Assets implements ArgumentInterface
                 );
                 $assetDefinitionFile->getSourceFile(); // trigger file resolution
             } catch (\Throwable) {
+                $assetDefinitionFile = null;
             }
         }
         if (!$assetDefinitionFile) {
@@ -150,6 +153,24 @@ class Assets implements ArgumentInterface
             );
         }
         return $assetDefinitionFile;
+    }
+
+    /**
+     * Retrieve url of a view file
+     *
+     * @param string $fileId
+     * @param array $params
+     * @return string
+     */
+    public function getViewFileUrl($fileId, array $params = [])
+    {
+        // TODO figure out how to safely handle the hardcoded /dist/ values and check whether to translate to `/dist-dev/
+        try {
+            $params = array_merge(['_secure' => true], $params);
+            return $this->assetRepository->getUrlWithParams($fileId, $params);
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            return $this->urlInterface->getUrl('', ['_direct' => 'core/index/notFound']);
+        }
     }
 
     /**
