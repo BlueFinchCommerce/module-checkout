@@ -43,6 +43,15 @@ interface ConfigurationInterface
     public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
 
     /**
+     * Retrieve the font family name from the CDN URL
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string
+     */
+    public function getFontFamilyFromCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
+
+    /**
      * Is debugging enabled
      *
      * @param string $scopeType

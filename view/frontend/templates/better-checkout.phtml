@@ -12,20 +12,8 @@ $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
 $fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $customWordings = $assetViewModel->getCustomWording();
+$fontFamily = $assetViewModel->getFontFamily();
 
-// Default fallback font
-$fontFamily = 'Montserrat';
-
-// Extract font family name using parse_url and parse_str
-if ($fontCdnUrl) {
-    $urlParts = parse_url($fontCdnUrl);
-    if (isset($urlParts['query'])) {
-        parse_str($urlParts['query'], $queryParams);
-        if (isset($queryParams['family'])) {
-            $fontFamily = str_replace('+', ' ', $queryParams['family']); // Replace '+' with space for CSS compatibility
-        }
-    }
-}
 ?>
 
 <script>
