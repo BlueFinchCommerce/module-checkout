@@ -59,6 +59,14 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getFontCdnUrl(): ?string
+    {
+        return $this->configuration->getFontCdnUrl();
+    }
+
+    /**
      * @param string $fontUrl
      * @return string
      */

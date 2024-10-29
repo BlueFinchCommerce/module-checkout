@@ -15,9 +15,11 @@ interface ConfigurationInterface
     /** @var string */
     const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'gene_better_checkout/general/enable_debug';
     /** @var string */
+    const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
+    /** @var string */
     const VUE_CHECKOUT_FONT_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_upload';
     /** @var string */
-    const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
+    const VUE_CHECKOUT_FONT_CDN_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_cdn';
 
     /**
      * @param string $scopeType
@@ -32,6 +34,13 @@ interface ConfigurationInterface
      * @return string
      */
     public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
+
+    /**
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string
+     */
+    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
 
     /**
      * Is debugging enabled

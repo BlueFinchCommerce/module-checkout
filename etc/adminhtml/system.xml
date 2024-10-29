@@ -67,6 +67,10 @@
                         <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
                         <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
                     </field>
+                    <field id="font_cdn" translate="label comment" sortOrder="40" type="text" showInDefault="1" showInWebsite="1" showInStore="1" >
+                        <label>Checkout Font CDN</label>
+                        <comment><![CDATA[Enter the font CDN url. Font CDN must be saved before being available in admin designer. (Note using a CDN will take precedence over an uploaded font)]]></comment>
+                    </field>
                 </group>
                 <group id="loqate" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Loqate</label>

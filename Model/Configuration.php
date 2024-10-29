@@ -49,6 +49,18 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
+    {
+        return $this->scopeConfig->getValue(
+                self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
+                $scopeType,
+                $scopeCode
+            ) ?? '';
+    }
+
+    /**
      * Return whether debug mode is enabled from config
      *
      * @param string $scopeType
