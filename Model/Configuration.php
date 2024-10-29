@@ -66,10 +66,10 @@ class Configuration implements ConfigurationInterface
     * @param string $scopeType
     * @param string|null $scopeCode
     * @return string
-        */
-        public function getFontFamilyFromCdnUrl(
-        string $scopeType = ScopeInterface::SCOPE_STORE,
-        string $scopeCode = null
+    */
+    public function getFontFamilyFromCdnUrl(
+    string $scopeType = ScopeInterface::SCOPE_STORE,
+    string $scopeCode = null
     ): string {
         $fontCdnUrl = $this->getFontCdnUrl($scopeType, $scopeCode);
         $defaultFontFamily = 'Montserrat';
