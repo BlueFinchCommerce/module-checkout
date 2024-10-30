@@ -8,6 +8,9 @@ $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
 $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
@@ -15,13 +18,19 @@ $fontUrl = $assetViewModel->getFontUrl();
   window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
 </script>
 
-
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontCdnUrl) : ?>
+    <link rel="stylesheet" href="<?= $escaper->escapeUrl($fontCdnUrl) ?>">
     <style>
-      @font-face {
-        font-family: 'BetterCheckoutFont';
-        src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
-      }
+        #gene-better-checkout-root {
+            --font-family__base: '<?= $fontFamily ?>', 'Montserrat', sans-serif !important;
+        }
+    </style>
+<?php elseif ($fontUrl) : ?>
+    <style>
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
     </style>
 <?php endif; ?>
 
