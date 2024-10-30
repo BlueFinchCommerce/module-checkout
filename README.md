@@ -3,6 +3,7 @@
 ![Better Checkout Powered by GENE](./assets/logo.svg)
 
 # Template Repo for Magento 2 Modules
+**[here](https://github.com/genecommerce/better-checkout-new-module-template)**.
 
 ## What is this?
 
@@ -14,11 +15,30 @@ The idea behind this is to have everything you need to easily create a module an
 
 ## Why should we do this?
 
-By adding functionailty in as a module we can make them easy to upgrade and reuse across different projects.
+By adding functionality in as a module we can make them easy to upgrade and reuse across different projects.
 
 We can also make sure that we are using the same standards across all projects and showing our best work here at Gene.
 
 ---
+
+## Installation Guide
+
+## Install BetterCheckout Module
+
+To install the BetterCheckout module, run the following command in your Magento 2 root directory:
+
+``` composer require gene/module-better-checkout:^1.0 ```
+
+## Default Payment Support
+
+Out of the box, BetterCheckout includes support for Braintree payments. 
+If your site is using Adyen as the payment provider, you can enhance BetterCheckout with BetterCheckout_Adyen 
+support by installing an additional package that integrates with Magento_GraphQl and Adyen_Payment dependencies.
+
+**[link to betterCheckout_Adyen repo](https://github.com/genecommerce/module-better-checkout-adyen)**.
+
+---
+
 ## What does this example contain
 
 1. Example ReadMe file for you to edit
@@ -95,7 +115,6 @@ Then in command line.
 You will now be able to see this in the releases in GitHub.
 
 ---
-
 
 
 
