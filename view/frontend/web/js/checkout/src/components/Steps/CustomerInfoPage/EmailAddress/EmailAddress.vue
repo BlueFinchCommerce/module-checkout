@@ -104,14 +104,6 @@
         </div>
 
         <div class="checkout-email__footer">
-          <div id="password_help_text">
-            <TextField
-              class="field__help-text"
-              :text="$t('errorMessages.passwordHelpText')"
-              :data-cy="'password-description'"
-            />
-          </div>
-
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"
