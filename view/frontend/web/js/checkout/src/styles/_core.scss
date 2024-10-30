@@ -70,8 +70,14 @@ body {
   }
 
   .privacy-modal {
+    height: fit-content;
+
     .modal-header {
       justify-content: flex-end;
+    }
+
+    .modal-body {
+      max-height: 400px;
     }
 
     .modal-footer {
