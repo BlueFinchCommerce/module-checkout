@@ -1,18 +1,19 @@
 # Gene Better Checkout Module - Custom Extension Guide
 
 This guide covers how to extend the Gene_BetterCheckout module by adding new components, 
-integrating additional functionality, creating callback functions, and running your code effectively.
+integrating additional functionality, creating callback functions and running your code effectively..
 
-Template of example module placed **[here](https://github.com/genecommerce/better-checkout-new-module-template)**.
+You can find our template for creating Better Checkout modules **[here](https://github.com/genecommerce/better-checkout-new-module-template)**.
 
 ---
 
 ## How to Extend Gene_BetterCheckout Functionality with a Custom Module
 To use this functionality, follow these steps:
 
-1. Create new magento2 module as per magento standarts.
-2. Create templates dir to add module.phtml where later you will declare custom callback/components/styles.
-3. Create layouts folder with genebettercheckout_checkout_index.xml file where you register your module.phtml file.
+1. Create new Magento 2 module as per Magento standards.
+   **[Magento2 documentation](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module)**.
+2. Create a `templates` folder to add a .phtml template file for your module, in which you can declare custom callback, components, styles etc.
+3. Create a `layouts` folder containing a `genebettercheckout_checkout_index.xml` XML layout file where you can register your modules .phtml template file.
 
 ---
 ## How to Add a New Component
@@ -23,20 +24,20 @@ Here, create your component file in the components' directory.
 Each new component file should have a unique name and relevant logic for your checkout modification.
 
 ### Register the Component:
-To make the component functional you can use already existed componentExtension points:
+To make the component functional you can use already existed componentExtension points in alphabetical order:
 
-1. paymentMethod
-2. paymentMethodsPrimary
-3. vaultedMethod
-4. ageCheckerExtension
-5. footerPaymentIcon
-6. belowShippingMethods
-7. additionalShippingMethod
-8. shippingMethodAdditionalContainer
-9. paymentIcon
-10. orderSummaryMessagesContainer
-11. expressPaymentMethod
-12. clickAndCollectComponent 
+1. additionalShippingMethod 
+2. ageCheckerExtension 
+3. belowShippingMethods 
+4. clickAndCollectComponent 
+5. expressPaymentMethod 
+6. footerPaymentIcon 
+7. orderSummaryMessagesContainer 
+8. paymentIcon 
+9. paymentMethod 
+10. paymentMethodsPrimary 
+11. shippingMethodAdditionalContainer 
+12. vaultedMethod
 
 After you selected required placement or your customer component you need to register it in the module.phtml file.
 Example can be found in the template module.
@@ -49,33 +50,42 @@ Callback functions enable you to define custom responses to various checkout eve
 
 ### Choose from the available callback extension points to integrate your function effectively:
 
-1. onLogin
-2. onSetShippingStep
-3. onHandleCartData
-4. onBraintreeExpressInit
-5. onUserProceed
-6. onSubmitShippingOptionAgeCheck
-7. onEditAddress
-8. onDeliveryTabEvent
-9. getCrossSellsHeader
-10. getAppliedCoupons
-11. onShippingMethodMounted
-12. getRewardPoints
-13. getPrices
-14. getItems
-15. getPaymentMethods
-16. getIsVirtual
-17. getShippingAddresses
-18. getGiftWrapping
-19. getGiftCards
-20. getFullCart
-21. getBillingAddress
-22. getStoreCredit
-23. onStepCreated
-24. belowEmailFieldExtension
-25. onCreate
-26. onPaymentDataChanged
-27. getShippingMethods
+Event-based Extension Points
+1. onBraintreeExpressInit 
+2. onCreate 
+3. onDeliveryTabEvent 
+4. onEditAddress 
+5. onHandleCartData 
+6. onLogin 
+7. onPaymentDataChanged 
+8. onSetShippingStep 
+9. onShippingMethodMounted 
+10. onStepCreated 
+11. onSubmitShippingOptionAgeCheck 
+12. onUserProceed
+
+Function Extension Points
+1. belowEmailFieldExtension 
+2. getAppliedCoupons 
+3. getBillingAddress 
+4. getCrossSellsHeader 
+5. getFullCart 
+6. getGiftCards 
+7. getGiftWrapping 
+8. getIsVirtual 
+9. getItems 
+10. getPaymentMethods 
+11. getPrices 
+12. getRewardPoints 
+13. getShippingAddresses 
+14. getShippingMethods 
+15. getStoreCredit
+
+These extension points can be leveraged across services, helpers, stores, 
+and components to enrich checkout functionality. 
+Use them, for example, to incorporate custom fields into GraphQL requests or to streamline the integration of any additional checkout requirements.
+
+---
 
 ### Add Your Code:
 
