@@ -17,8 +17,8 @@
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
-        (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
-        || (selectedMethod === 'paypal' && paypal.vaultActive)
+        (selectedMethod === 'braintree' && vaultActive) || (selectedMethod === 'braintree_googlePay' && google.vaultActive)
+        || (selectedMethod === 'braintree_paypal' && paypal.vaultActive)
       )"
       id="braintree-store-method"
       class="braintree-store-method"
