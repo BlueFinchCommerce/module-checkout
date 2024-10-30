@@ -175,7 +175,7 @@ export default {
     },
   },
   welcomeMessages: {
-    accountBody: 'Sign in to your account to checkout or continue as a guest.',
+    accountBody: 'Sign in or continue as a guest.',
     accountTitle: 'Welcome back!',
     getStarted: 'Enter your email to get started.',
     guestBody: "Looks like you're new here! Continue to checkout as a guest with the option to create an account once you've placed your order.",
