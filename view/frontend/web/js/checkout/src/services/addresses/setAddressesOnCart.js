@@ -27,10 +27,6 @@ const formatAddress = (address) => {
     delete clonedAddress.region;
   }
 
-  if (!clonedAddress.company) {
-    delete clonedAddress.company;
-  }
-
   // Preserving save_in_address_book before deletion
   const saveInAddressBook = clonedAddress.save_in_address_book;
 
