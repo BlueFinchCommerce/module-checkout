@@ -69,15 +69,17 @@ body {
     }
   }
 
-  .privacy-modal {
+  .modal {
     height: fit-content;
-
-    .modal-header {
-      justify-content: flex-end;
-    }
 
     .modal-body {
       max-height: 400px;
+    }
+  }
+
+  .privacy-modal {
+    .modal-header {
+      justify-content: flex-end;
     }
 
     .modal-footer {
