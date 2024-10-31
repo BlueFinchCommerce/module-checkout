@@ -61,7 +61,7 @@
     padding-right: var(--indent__base);
     overflow: auto;
     position: relative;
-    margin: 0 var(--indent__base);
+    margin: 0 var(--indent__base) var(--indent__m);
 
     &::-webkit-scrollbar-track {
       background-color: var(--color__primary-grey5);
