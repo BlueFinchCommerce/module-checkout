@@ -21,8 +21,6 @@ class Assets implements ArgumentInterface
     /** @var string */
     const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
     /** @var string */
-    const ASSETS_BASE_DIR_DEV = 'Gene_BetterCheckout::js/checkout/dist-dev/';
-    /** @var string */
     const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
     /** @var string */
     const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/custom_wording';
@@ -99,30 +97,30 @@ class Assets implements ArgumentInterface
         if (count($this->assetFilesByType)) {
             return $this->assetFilesByType;
         }
-        $assetDefinitionFile = $this->createAsset(self::ASSETS_DEF_FILE, $area);
+        $assetDefinitionFile = $this->createAsset(self::ASSETS_BASE_DIR . self::ASSETS_DEF_FILE, $area);
         $assetDefinitionContent = $assetDefinitionFile->getContent();
         $assetDefinitionArray = json_decode($assetDefinitionContent, true);
         $this->assetFilesByType = [];
         $this->assetFilesByType['js'] = [];
         if (array_key_exists('assets', $assetDefinitionArray['main.js'])) {
             foreach($assetDefinitionArray['main.js']['assets'] as $fileName) {
-                $this->createAsset($fileName, $area);
+                $this->createAsset(self::ASSETS_BASE_DIR . $fileName, $area);
             }
         }
         if (array_key_exists('css', $assetDefinitionArray['main.js'])) {
             $this->assetFilesByType['css'] = [
-                $this->createAsset($assetDefinitionArray['main.js']['css'][0], $area)
+                $this->createAsset(self::ASSETS_BASE_DIR . $assetDefinitionArray['main.js']['css'][0], $area)
             ];
         }
         if (array_key_exists('file', $assetDefinitionArray['main.js'])) {
             $this->assetFilesByType['js']['main'] = [
-                $this->createAsset($assetDefinitionArray['main.js']['file'], $area)
+                $this->createAsset(self::ASSETS_BASE_DIR . $assetDefinitionArray['main.js']['file'], $area)
             ];
         }
         if (array_key_exists('imports', $assetDefinitionArray['main.js'])) {
             foreach($assetDefinitionArray['main.js']['imports'] as $fileName) {
                 $this->assetFilesByType['js']['imports'][] = $this->createAsset(
-                    $assetDefinitionArray[$fileName]['file'], $area
+                    self::ASSETS_BASE_DIR . $assetDefinitionArray[$fileName]['file'], $area
                 );
             }
         }
@@ -152,16 +150,12 @@ class Assets implements ArgumentInterface
     {
         $params['area'] = $area;
 
-        if (str_starts_with($fileName, self::ASSETS_BASE_DIR)) {
-            $fileName = str_replace(self::ASSETS_BASE_DIR, '', $fileName);
-        }
-
         $assetDefinitionFile = null;
         if ($this->configuration->getIsDeveloperViteWatchModeEnabled()) {
             try {
                 // Try and get the asset from the vite watch directory
                 $assetDefinitionFile = $this->assetRepository->createAsset(
-                    self::ASSETS_BASE_DIR_DEV . $fileName,
+                    str_replace('js/checkout/dist/', 'js/checkout/dist-dev/', $fileName),
                     $params
                 );
                 $assetDefinitionFile->getSourceFile(); // trigger file resolution
@@ -171,7 +165,7 @@ class Assets implements ArgumentInterface
         }
         if (!$assetDefinitionFile) {
             $assetDefinitionFile = $this->assetRepository->createAsset(
-                self::ASSETS_BASE_DIR . $fileName,
+                $fileName,
                 $params
             );
         }
