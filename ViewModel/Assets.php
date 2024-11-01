@@ -144,12 +144,17 @@ class Assets implements ArgumentInterface
     /**
      * @param string $fileName
      * @param string $area
+     * @param array $params
      * @return File
      * @throws LocalizedException
      */
-    public function createAsset(string $fileName, string $area = 'frontend'): File
+    public function createAsset(string $fileName, string $area = 'frontend', array $params = []): File
     {
-        $params = ['area' => $area];
+        $params['area'] = $area;
+
+        if (str_starts_with($fileName, self::ASSETS_BASE_DIR)) {
+            $fileName = str_replace(self::ASSETS_BASE_DIR, '', $fileName);
+        }
 
         $assetDefinitionFile = null;
         if ($this->configuration->getIsDeveloperViteWatchModeEnabled()) {
@@ -174,19 +179,32 @@ class Assets implements ArgumentInterface
     }
 
     /**
-     * Retrieve url of a view file
+     * Retrieve url of a view file, with better checkout developer mode handling for the dist directory
+     *
+     * @see \Magento\Framework\View\Element\AbstractBlock::getViewFileUrl()
+     *
+     * This method is analogous to the above, however instead of falling back to the following
+     * public function getUrlWithParams($fileId, array $params)
+     * {
+     *    $asset = $this->createAsset($fileId, $params);
+     *    return $asset->getUrl();
+     * }
+     *
+     * We can use our own asset handling logic, which will allow us to fall back to dist-dev when appropriate
      *
      * @param string $fileId
      * @param array $params
      * @return string
      */
-    public function getViewFileUrl($fileId, array $params = [])
+    public function getDistViewFileUrl($fileId, array $params = [])
     {
-        // TODO figure out how to safely handle the hardcoded /dist/ values and check whether to translate to `/dist-dev/
         try {
-            $params = array_merge(['_secure' => true], $params);
-            return $this->assetRepository->getUrlWithParams($fileId, $params);
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $params['_secure'] = true;
+            $area = $params['area'] ?? 'frontend';
+            $asset = $this->createAsset($fileId, $area, $params);
+            $url = $asset->getUrl();
+            return $url;
+        } catch (\Exception $e) {
             return $this->urlInterface->getUrl('', ['_direct' => 'core/index/notFound']);
         }
     }

@@ -19,7 +19,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 <script>
     window.geneCheckout = window.geneCheckout || {};
 
-    window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+    window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
     window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
     window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
     window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};

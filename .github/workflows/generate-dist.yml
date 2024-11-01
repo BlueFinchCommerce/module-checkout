@@ -28,15 +28,21 @@ jobs:
         shell: bash
         run: |
           set -v
-          
+
           git config --global pull.rebase false
           git fetch --unshallow || true
-                    
+
           cd view/frontend/web/js/checkout/
           npm ci
           npm run build
           git add -f ./dist
-          
+          cd -
+
+          cd view/adminhtml/web/js/checkout/
+          npm ci
+          npm run build
+          git add -f ./dist
+
           if ! git diff-index --quiet HEAD; then
             git commit -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
             git push
