@@ -75,6 +75,12 @@ body {
     .modal-body {
       max-height: 400px;
     }
+
+    .closer-container {
+      button {
+        height: auto !important; //override braintree styles
+      }
+    }
   }
 
   .privacy-modal {

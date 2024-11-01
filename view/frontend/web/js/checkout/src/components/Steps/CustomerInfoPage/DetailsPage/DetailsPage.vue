@@ -93,6 +93,7 @@
           :key="clickAndCollectComponent"
         />
         <TextField
+          class="no-click-collect-text"
           v-if="clickAndCollectComponents.length === 0"
           :text="$t('yourDetailsSection.deliverySection.clickandCollectNotAvailable')"/>
       </div>

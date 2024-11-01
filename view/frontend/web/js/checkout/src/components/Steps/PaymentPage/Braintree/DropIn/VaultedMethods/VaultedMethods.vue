@@ -205,8 +205,6 @@ export default {
         return;
       }
 
-      this.selectPaymentMethod('braintree-vaulted');
-
       // Remove any existing hosted fields if they exist.
       if (this.hostedFieldsInstance) {
         this.hostedFieldsInstance.teardown();
