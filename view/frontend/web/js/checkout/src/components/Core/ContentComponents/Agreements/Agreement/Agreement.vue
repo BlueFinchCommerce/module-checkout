@@ -40,6 +40,7 @@
     <modal
       :data-cy="`${id}-terms-modal`"
       :visible="isModalVisible"
+      classes="agreement-modal"
       @close="closeModal"
     >
       <template #header>
