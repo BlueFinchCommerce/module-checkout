@@ -519,7 +519,7 @@ export default {
     clearSelectedMethod(id) {
       this.unselectVaultedMethods();
       if (id !== null && (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach')) {
+        || id === 'braintree-lpm' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 
