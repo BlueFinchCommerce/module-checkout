@@ -65,6 +65,7 @@ import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
 import handleServiceError from '@/helpers/validation/handleServiceError';
 import inputTypeValid from '@/helpers/validation/inputTypeValid';
 import isEmailValid from '@/helpers/validation/isEmailValid';
+import loadFromCheckout from "@/helpers/extensionData/loadFromCheckout";
 import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import maxLength from '@/helpers/validation/maxLength';
 import minLength from '@/helpers/validation/minLength';
@@ -147,6 +148,7 @@ export default {
   handleServiceError,
   inputTypeValid,
   isEmailValid,
+  loadFromCheckout,
   mapCustomConfigs,
   maxLength,
   minLength,
