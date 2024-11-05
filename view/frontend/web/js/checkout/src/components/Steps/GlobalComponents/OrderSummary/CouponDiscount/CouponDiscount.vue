@@ -130,7 +130,7 @@ export default {
     this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.couponDiscountText = window.geneCheckout?.[this.couponDiscountTextId]
       || this.$t('orderSummary.couponDiscountTitle');
-    this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountTextId]
+    this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountPlaceholderTextId]
       || this.$t('orderSummary.couponDiscount.placeholder');
 
     await this.getInitialConfig();
