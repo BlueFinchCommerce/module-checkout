@@ -1,6 +1,6 @@
 <template>
   <div class="agreement-container">
-    <div v-if="agreement.mode === 'MANUAL'">
+    <div v-if="agreement.mode === 'MANUAL'" class="agreement-container__manual">
       <CheckboxComponent
         class="agreement-checkbox"
         :id="`${agreement.agreement_id}-${id}`"
