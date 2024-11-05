@@ -90,6 +90,11 @@
     top: calc(var(--input__height) / 2);
     text-align: right;
 
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
     button {
       text-align: right;
       width: 100%;

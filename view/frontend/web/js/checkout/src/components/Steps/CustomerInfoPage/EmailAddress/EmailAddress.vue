@@ -37,9 +37,10 @@
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
 
-                <div
+        <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
+          :class="inputsSanitiseError ? 'disabled' : ''"
           @click="changeEmail()"
           @keydown.enter="changeEmail()"
         >
