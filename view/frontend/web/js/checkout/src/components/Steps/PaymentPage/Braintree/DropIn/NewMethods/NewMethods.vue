@@ -305,7 +305,7 @@ export default {
     selectedMethod: {
       handler(newVal) {
         if (newVal !== null && (!newVal.startsWith('braintree')
-          || newVal === 'braintree-lpm' || newVal === 'braintree-vaulted' || newVal === 'braintree-ach')) {
+          || newVal === 'braintree-lpm' || newVal === 'braintree-ach')) {
           this.clearSelectedMethod(newVal);
         }
       },
