@@ -3,10 +3,7 @@
 .braintree-vault {
   display: grid;
   gap: var(--indent__base);
-
-  .braintree-vaulted-methods-container {
-    padding-bottom: var(--indent__m);
-  }
+  padding-bottom: var(--indent__m);
 
   &__title {
     display: flex;

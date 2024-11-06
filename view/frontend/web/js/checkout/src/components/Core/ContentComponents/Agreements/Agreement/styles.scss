@@ -12,7 +12,7 @@
 
   .agreement-open-modal {
     color: var(--button__link-font-color);
-    font-size: var(--button__link-font-size);
+    font-size: var(--font__m);
     font-weight: var(--button__link-font-weight);
     text-decoration: var(--button__link-text-decoration);
     margin-left: var(--indent__xs);
@@ -43,6 +43,18 @@
       }
     }
   }
+
+  &__manual {
+    .agreement-open-modal {
+      margin-left: 0;
+    }
+
+    .agreement-checkbox {
+      label {
+        align-items: unset !important; //override checkout label styles
+      }
+    }
+  }
 }
 
 //Styles for desktop
@@ -55,6 +67,10 @@
       span {
         font-size: var(--font__s);
       }
+    }
+
+    .agreement-open-modal {
+      font-size: var(--font__s);
     }
   }
 }

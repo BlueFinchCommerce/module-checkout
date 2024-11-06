@@ -69,15 +69,35 @@ body {
     }
   }
 
-  .privacy-modal {
+  .modal {
     height: fit-content;
-
-    .modal-header {
-      justify-content: flex-end;
-    }
 
     .modal-body {
       max-height: 400px;
+    }
+
+    .closer-container {
+      button {
+        height: auto !important; //override braintree styles
+      }
+    }
+  }
+
+  // move modal a bit higher as braintree drop in
+  // makes modal sit under summary container on mobile
+  .braintree-dropin {
+    .agreement-modal {
+      top: var(--indent__s);
+
+      .modal-body {
+        max-height: 350px;
+      }
+    }
+  }
+
+  .privacy-modal {
+    .modal-header {
+      justify-content: flex-end;
     }
 
     .modal-footer {
