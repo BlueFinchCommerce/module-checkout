@@ -10,7 +10,10 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $customWordings = $assetViewModel->getCustomWording();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
@@ -31,11 +34,18 @@ $customWordings = $assetViewModel->getCustomWording();
 
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
 
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontCdnUrl) : ?>
+    <link rel="stylesheet" href="<?= $escaper->escapeUrl($fontCdnUrl) ?>">
+    <style>
+        .vue-checkout-active #gene-better-checkout-root {
+            --font-family__base: '<?= $fontFamily ?>', 'Montserrat', sans-serif;
+        }
+    </style>
+<?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';
-            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
         }
     </style>
 <?php endif; ?>
