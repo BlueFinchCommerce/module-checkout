@@ -234,9 +234,15 @@ export default {
               try {
                 handleServiceError(err);
               } catch (formattedError) {
+                // clear shipping address form
+                this.createNewAddress('shipping');
                 this.setErrorMessage(formattedError);
               }
             }),
+          onCancel: () => {
+            // clear shipping address form
+            this.createNewAddress('shipping');
+          },
           onError: (err) => {
             this.setErrorMessage(err);
           },
@@ -284,7 +290,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'createNewAddress']),
 
     setInformationToQuote(payload) {
       const shippingAddress = !this.cart.is_virtual ? this.mapAddress(
