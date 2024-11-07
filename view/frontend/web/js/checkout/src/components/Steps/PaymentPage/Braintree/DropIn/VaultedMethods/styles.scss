@@ -65,6 +65,7 @@
   grid-gap: var(--indent__s);
   grid-template-columns: unset;
   overflow-x: auto;
+  padding-bottom: var(--indent__s);
 
   &::-webkit-scrollbar {
     height: var(--scroll-bar-height, 4px);
