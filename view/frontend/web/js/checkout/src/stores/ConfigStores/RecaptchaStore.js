@@ -97,7 +97,9 @@ export default defineStore('RecaptchaStore', {
       });
     },
 
-    async validateToken(id) {
+    async validateToken(ids) {
+      const placementIds = Array.isArray(ids) ? ids : [ids];
+      const id = placementIds.find(this.getTypeByPlacement);
       const recapchaType = this.getTypeByPlacement(id);
 
       if (recapchaType === recapchaTypes.invisible) {
