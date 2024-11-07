@@ -6,7 +6,7 @@
 
 ## What is this?
 
-This is a project to allow you to easily setup a module for Magento 2.
+This is a project to allow you to easily setup a module for Magento 2. 
 
 The idea behind this is to have everything you need to easily create a module and keep it up to date.
 
