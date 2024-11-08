@@ -10,8 +10,6 @@ import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmitt
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
-import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
-import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
@@ -22,9 +20,6 @@ export default defineStore('shippingMethodsStore', {
     cache: {},
     isClickAndCollect: false,
     clickAndCollectLocation: {},
-    amastyClickAndCollectData: {},
-    amastySelectedStore: null,
-    amastyClickCollectUpdatedStores: {},
   }),
   getters: {
     getError: (state) => state.shippingMethods.filter((rate) => rate.error_message !== '')[0],
@@ -150,16 +145,7 @@ export default defineStore('shippingMethodsStore', {
         setLoadingState(false);
       }
     },
-
-    async setAsClickAndCollect(agentId) {
-      const { setLoadingState } = useLoadingStore();
-      setLoadingState(true);
-
-      await setClickAndCollectAgent(agentId);
-
-      setLoadingState(false);
-    },
-
+    
     /**
      * Set the method to click and collect.
      */
@@ -192,7 +178,6 @@ export default defineStore('shippingMethodsStore', {
         await cartStore.getCart();
 
         this.$state.selectedMethod = {};
-        await this.setAsClickAndCollect('');
 
         customerStore.createNewAddress('shipping');
         customerStore.createNewAddress('billing');
@@ -215,19 +200,6 @@ export default defineStore('shippingMethodsStore', {
           ...location,
           lat: parseFloat(location.lat),
           long: parseFloat(location.long),
-        },
-      });
-    },
-
-    /**
-     * Search thought all stores in Amasty click and collect shipping modal
-     */
-    async searchAmastyClickCollectStores(radius, lat, lng) {
-      const response = await updateAmastyClickCollectStores(radius, lat, lng);
-      const stores = response.items;
-      this.setData({
-        amastyClickCollectUpdatedStores: {
-          stores,
         },
       });
     },
