@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isInstantCheckoutVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
+         v-show="isExpressPaymentsVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -380,7 +380,6 @@ export default {
       ageCheckerExtensions: [],
       clickAndCollectComponents: [],
       isCreditComponentVisible: false,
-      isInstantCheckoutVisible: true,
     };
   },
   watch: {
@@ -456,10 +455,6 @@ export default {
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
-
-    // assign isExpressPaymentsVisible state
-    // to data isInstantCheckoutVisible after payments loaded
-    this.isInstantCheckoutVisible = this.isExpressPaymentsVisible;
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
