@@ -43,7 +43,13 @@ jobs:
           npm run build
           git add -f ./dist
 
+          git status
+
           if ! git diff-index --quiet HEAD; then
+            echo "Adding changes to git"
             git commit -am "[bot] generate dist ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
             git push
+          else
+            echo "exiting"
+            exit 0;
           fi
