@@ -29,9 +29,6 @@ export default defineStore('shippingMethodsStore', {
     cache: {},
     isClickAndCollect: false,
     clickAndCollectLocation: {},
-    amastyClickAndCollectData: {},
-    amastySelectedStore: null,
-    amastyClickCollectUpdatedStores: {},
   }),
   getters: {
     getError: (state) => state.shippingMethods.filter((rate) => rate.error_message !== '')[0],
@@ -305,20 +302,7 @@ export default defineStore('shippingMethodsStore', {
         },
       });
     },
-
-    /**
-     * Search thought all stores in Amasty click and collect shipping modal
-     */
-    async searchAmastyClickCollectStores(radius, lat, lng) {
-      const response = await updateAmastyClickCollectStores(radius, lat, lng);
-      const stores = response.items;
-      this.setData({
-        amastyClickCollectUpdatedStores: {
-          stores,
-        },
-      });
-    },
-
+    
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];
