@@ -19,12 +19,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 </script>
 
 <?php if ($fontCdnUrl) : ?>
-    <link rel="stylesheet" href="<?= $escaper->escapeUrl($fontCdnUrl) ?>">
-    <style>
-        #gene-better-checkout-root {
-            --font-family__base: '<?= $fontFamily ?>', 'Montserrat', sans-serif !important;
-        }
-    </style>
+    <?= $fontCdnUrl ?>
 <?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
