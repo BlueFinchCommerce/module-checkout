@@ -129,7 +129,6 @@ export default defineStore('cartStore', {
 
     async getCartData() {
       const data = await this.getCachedResponse(getCartData, 'getCartData');
-      const customerStore = useCustomerStore();
       return data;
     },
 
@@ -389,7 +388,7 @@ export default defineStore('cartStore', {
       });
       return crosssells;
     },
-    
+
     async addCartItem(product) {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);
