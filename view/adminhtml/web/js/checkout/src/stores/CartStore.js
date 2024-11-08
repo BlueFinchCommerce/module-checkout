@@ -357,21 +357,6 @@ export default defineStore('cartStore', {
       return crosssells;
     },
 
-    async getAmastyShippingData() {
-      const data = await this.getCachedResponse(getAmastyShippingInfo, 'getAmastyShippingInfo');
-      if (Object.keys(data).length > 0) {
-        this.setData({
-          amastyData: data,
-          amastyEnabled: true,
-        });
-      } else {
-        this.setData({
-          amastyEnabled: false,
-        });
-      }
-      this.calculateFreeShipping();
-    },
-
     async addCartItem(product) {
       const { setLoadingState } = useLoadingStore();
       setLoadingState(true);

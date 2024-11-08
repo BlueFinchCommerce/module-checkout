@@ -416,7 +416,17 @@ export default defineStore('cartStore', {
 
       setLoadingState(false);
     },
-    
+
+    calculateFreeShipping() {
+      const { goal } = this.amastyData;
+
+      if (goal) {
+        this.setData({
+          freeShipping: goal - this.subtotalInclTax,
+        });
+      }
+    },
+
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];
