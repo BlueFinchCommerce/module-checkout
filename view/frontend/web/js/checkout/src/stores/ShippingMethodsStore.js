@@ -10,6 +10,7 @@ import afterSubmittingShippingInformation from '@/helpers/addresses/afterSubmitt
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
+import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
@@ -145,7 +146,16 @@ export default defineStore('shippingMethodsStore', {
         setLoadingState(false);
       }
     },
-    
+
+    async setAsClickAndCollect(agentId) {
+      const { setLoadingState } = useLoadingStore();
+      setLoadingState(true);
+
+      await setClickAndCollectAgent(agentId);
+
+      setLoadingState(false);
+    },
+
     /**
      * Set the method to click and collect.
      */
@@ -178,6 +188,7 @@ export default defineStore('shippingMethodsStore', {
         await cartStore.getCart();
 
         this.$state.selectedMethod = {};
+        await this.setAsClickAndCollect('');
 
         customerStore.createNewAddress('shipping');
         customerStore.createNewAddress('billing');
