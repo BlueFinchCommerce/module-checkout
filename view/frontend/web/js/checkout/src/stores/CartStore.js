@@ -11,7 +11,6 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import addCartItem from '@/services/cart/addCartItem';
 import addGiftCardCode from '@/services/giftCard/addGiftCardCode';
 import addDiscountCode from '@/services/discount/addDiscountCode';
-import getAmastyShippingInfo from '@/services/shipping/getAmastyShippingInfo';
 import getCart from '@/services/cart/getCart';
 import getCartData from '@/services/cart/getCartData';
 import getCrosssells from '@/services/cart/getCrosssells';
@@ -56,8 +55,6 @@ export default defineStore('cartStore', {
     giftCardErrorMessage: null,
     data: {},
     crosssells: [],
-    amastyData: {},
-    amastyEnabled: false,
     freeShipping: null,
     cache: {},
     cartEmitter: mitt(),
@@ -132,15 +129,6 @@ export default defineStore('cartStore', {
 
     async getCartData() {
       const data = await this.getCachedResponse(getCartData, 'getCartData');
-      const customerStore = useCustomerStore();
-      const { amastySubs } = customerStore;
-      if (!Object.keys(amastySubs).length && data.checkboxes) {
-        Object.keys(data.checkboxes).forEach((checkbox) => {
-          customerStore.updateAmastySubscription({
-            [checkbox]: data.checkboxes[checkbox].is_prechecked,
-          });
-        });
-      }
       return data;
     },
 
@@ -399,21 +387,6 @@ export default defineStore('cartStore', {
         crosssells,
       });
       return crosssells;
-    },
-
-    async getAmastyShippingData() {
-      const data = await this.getCachedResponse(getAmastyShippingInfo, 'getAmastyShippingInfo');
-      if (Object.keys(data).length > 0) {
-        this.setData({
-          amastyData: data,
-          amastyEnabled: true,
-        });
-      } else {
-        this.setData({
-          amastyEnabled: false,
-        });
-      }
-      this.calculateFreeShipping();
     },
 
     async addCartItem(product) {
