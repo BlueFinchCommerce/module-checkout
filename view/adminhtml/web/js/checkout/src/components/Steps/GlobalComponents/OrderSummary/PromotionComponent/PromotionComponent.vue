@@ -140,7 +140,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['crosssells', 'freeShipping']),
+    ...mapState(useCartStore, ['crosssells', 'freeShipping', 'amastyEnabled']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
