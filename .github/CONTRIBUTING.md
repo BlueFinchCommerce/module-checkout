@@ -50,6 +50,7 @@ For hotfixes from an older tag
 1. Go to https://github.com/genecommerce/module-better-checkout/releases
 1. "Draft a new release"
 1. Choose your tag (https://semver.org/) 
+1. Update the version for admin display in etc/adminhtml/system.xml 
 1. Pick the target `main`
 1. Hit "Generate Release Notes"
 1. Tidy up the release notes as needed and "Publish release"
