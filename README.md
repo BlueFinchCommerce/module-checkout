@@ -82,7 +82,7 @@ To get this module into composer we need to make a release.
 
 To do this first.
 
-Make sure your composer.json file has the latest up to date version number.
+Make sure /etc/adminhtml/system.xml has the latest up to date version number.
 
 You have added the change to the readme file.
 
