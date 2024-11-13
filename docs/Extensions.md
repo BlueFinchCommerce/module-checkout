@@ -1,114 +1,149 @@
-# Gene Better Checkout Module - Custom Extension Guide
+# Better Checkout - Custom Extension Guide
 
-This guide covers how to extend the Gene_BetterCheckout module by adding new components, 
-integrating additional functionality, creating callback functions and running your code effectively..
+This guide covers how to extend Better Checkout by adding new components, 
+integrating additional functionality, creating callback functions and running your code effectively.
 
-You can find our template for creating Better Checkout modules **[here](https://github.com/genecommerce/better-checkout-new-module-template)**.
+## How to extend Better Checkout functionality with a custom module
+To use this functionality, the high level steps to follow are:
 
----
+1. Create a new Magento 2 module as per [Magento standards](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module).
+1. Create a `templates` directory to add a .phtml template file for your module, in which you can declare custom callbacks, components, styles etc.
+1. Create a `layouts` directory containing a `genebettercheckout_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores Better Checkout page.
 
-## How to Extend Gene_BetterCheckout Functionality with a Custom Module
-To use this functionality, follow these steps:
+**Please refer to our template for creating Better Checkout modules [here](https://github.com/genecommerce/better-checkout-new-module-template)**, which has all the necssary files required, including those for building the front end assets.
 
-1. Create new Magento 2 module as per Magento standards.
-   **[Magento2 documentation](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module)**.
-2. Create a `templates` folder to add a .phtml template file for your module, in which you can declare custom callback, components, styles etc.
-3. Create a `layouts` folder containing a `genebettercheckout_checkout_index.xml` XML layout file where you can register your modules .phtml template file.
+## How to add a new component
 
----
-## How to Add a New Component
+### Set up a component file:
+1. Navigate to the `view/frontend/js/checkout/src` directory within your module.
+1. Here, create your component file in the `components` directory. 
+1. Each new component file should have a unique name and relevant logic for your checkout modification.
 
-### Set Up Component File:
-Navigate to the view/frontend/js/checkout/src directory within your module.
-Here, create your component file in the components' directory. 
-Each new component file should have a unique name and relevant logic for your checkout modification.
+### Render the component:
 
-### Register the Component:
-To make the component functional you can use already existed componentExtension points in alphabetical order:
+We use Vue dynamic components with the `<component` element to provide component extension points, where you can render your component(s) (in alphabetical order):
 
-1. additionalShippingMethod 
-2. ageCheckerExtension 
-3. belowShippingMethods 
-4. clickAndCollectComponent 
-5. expressPaymentMethod 
-6. footerPaymentIcon 
-7. orderSummaryMessagesContainer 
-8. paymentIcon 
-9. paymentMethod 
-10. paymentMethodsPrimary 
-11. shippingMethodAdditionalContainer 
-12. vaultedMethod
+1. additionalShippingMethod
+1. additionalVaultedMethod
+1. ageCheckerExtension
+1. belowEmailFieldExtension
+1. belowShippingMethods
+1. clickAndCollectComponent
+1. expressPaymentMethod
+1. footerPaymentIcon
+1. orderSummaryMessagesContainer
+1. paymentIcon
+1. paymentMethod
+1. paymentMethodsPrimary
+1. shippingMethodAdditionalContainer
 
-After you selected required placement or your customer component you need to register it in the module.phtml file.
-Example can be found in the template module.
+Example of an extension point in Better Checkout:
 
----
+```html
+<component
+    :is="additionalShippingMethod"
+    v-for="additionalShippingMethod in additionalShippingMethods"
+    :key="additionalShippingMethod"
+/>
+```
 
-## How to Create Callback Functions
+After you have selected the component extension point for your custom component, you need to register it in the modules .phtml file, via the global `window.geneCheckout` namespace:
+
+1. Add the global `window.geneCheckout` namespace.
+1. Add the component extension point namespace, to the global `window.geneCheckout` namespace.
+1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
+
+Example:
+
+```html
+<script>
+    window.geneCheckout = window.geneCheckout || {};
+    window.geneCheckout.belowShippingMethods = window.geneCheckout.belowShippingMethods || {};
+
+    window.geneCheckout.belowShippingMethods.newComponent = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/components/NewComponent/NewComponent.min.js')) ?>";
+</script>
+```
+To render your component, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
+
+## How to create callback functions
 Callback functions enable you to define custom responses to various checkout events.
 
+You can choose from the available callback extension points listed below, to integrate your functionionality effectively:
 
-### Choose from the available callback extension points to integrate your function effectively:
-
-Event-based Extension Points
+### Event-based Extension Points
 1. onBraintreeExpressInit 
-2. onCreate 
-3. onDeliveryTabEvent 
-4. onEditAddress 
-5. onHandleCartData 
-6. onLogin 
-7. onPaymentDataChanged 
-8. onSetShippingStep 
-9. onShippingMethodMounted 
-10. onStepCreated 
-11. onSubmitShippingOptionAgeCheck 
-12. onUserProceed
+1. onCreate 
+1. onDeliveryTabEvent 
+1. onEditAddress 
+1. onHandleCartData 
+1. onLogin 
+1. onPaymentDataChanged 
+1. onSetShippingStep 
+1. onShippingMethodMounted 
+1. onStepsCreated 
+1. onSubmitShippingOptionAgeCheck 
+1. onUserProceed
 
-Function Extension Points
-1. belowEmailFieldExtension 
-2. getAppliedCoupons 
-3. getBillingAddress 
-4. getCrossSellsHeader 
-5. getFullCart 
-6. getGiftCards 
-7. getGiftWrapping 
-8. getIsVirtual 
-9. getItems 
-10. getPaymentMethods 
-11. getPrices 
-12. getRewardPoints 
-13. getShippingAddresses 
-14. getShippingMethods 
-15. getStoreCredit
+### Function Extension Points
+1. getAppliedCoupons 
+1. getBillingAddress 
+1. getCrossSellsHeader 
+1. getFullCart 
+1. getGiftCards 
+1. getGiftWrapping 
+1. getIsVirtual 
+1. getItems 
+1. getPaymentMethods 
+1. getPrices 
+1. getRewardPoints 
+1. getShippingAddresses 
+1. getShippingMethods 
+1. getStoreCredit
 
-These extension points can be leveraged across services, helpers, stores, 
-and components to enrich checkout functionality. 
-Use them, for example, to incorporate custom fields into GraphQL requests or to streamline the integration of any additional checkout requirements.
+### Add your code:
 
----
+After you have selected the function extension point for your custom component, you need to create a callback file in your modules `view/frontend/js/checkout/src/callbacks` directory.
 
-### Add Your Code:
+Better Checkout exports it's components, helpers, router, services and stores, so you can load any of these in for use in your custom module using:
 
-Navigate to view/frontend/js/checkout/src/callbacks and create your custom callback file.
-Write the logic to trigger on your selected event and register it in the appropriate checkout configuration.
-You can use an example of callback function in the template module to extend existing event functionality.
+`view/frontend/web/js/checkout/src/helpers/extensionData/loadFromCheckout.js` 
 
----
+Please refer to the `index.js` in each of their respective directories under `src` to see what is available.
+
+You then you can register your callback in the modules .phtml file, via the global `window.geneCheckout` namespace:
+
+1. Add the global `window.geneCheckout` namespace.
+1. Add the `callbacks` namespace to the `window.geneCheckout` namespace.
+1. Add the function extension point namespace, to the global `window.geneCheckout` namespace.
+1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
+
+Example:
+
+```html
+<script>
+    window.geneCheckout = window.geneCheckout || {};
+    window.geneCheckout.callbacks = window.geneCheckout.callbacks || {};
+    window.geneCheckout.callbacks.onLogin = window.geneCheckout.callbacks.onLogin || {};
+
+    window.geneCheckout.callbacks.onLogin.newModuleOnLogin = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/callbacks/onLogin.min.js')) ?>";
+</script>
+```
+
+To test your function extension on the front end, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
 
 ## How to change styling
 
-For changing styling of your component you need
-1. create new styles.scss file
-2. register it in the module.phtml as per template module
-3. run build command as per instructions below
+For adding styles for your **component**, you can:
+1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/styles.scss` with your required styles.
+1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/styles.css')) ?>" />`
+1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
 
-For changes in the checkout styles without creation extension functionality:
-1. you can use admin designer and change variables for colours/font/text
-2. you can go with magento2 flow and create Gene_BetterCheckout folder in your magento theme. 
-After that create web/css folder and create checkout.less file where you could override checkout variables in the code.
-In this case your changes will override admin designer values from admin panel.
 
-example of code for second option:
+You also have two other options for changing styles:
+1. We provide an Admin designer where you change variables for colours/font/text via configuration.
+    1. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > Gene > Better Checkout > General > Checkout Designer
+    1. Click on the `Open Designer` button and you can change these values in our interactive preview.
+1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and overriding the variables and/or styles. Example:
 
 ``` 
 :root.vue-checkout-active #gene-better-checkout-root {
@@ -117,26 +152,3 @@ example of code for second option:
     --font-weight__bold: 700;
 }
 ```
-
----
-
-## How to Run Your Code
-Once you have completed the setup, follow these steps to build and run your code:
-
-### Navigate to the Checkout Directory:
-
-
-``` cd view/frontend/js/checkout ``` 
-
-Install Dependencies:
-Ensure all necessary packages are installed:
-
-``` npm install ```
-
-Build the Project:
-Compile your code with:
-
-``` npm run build ```
-After building, your code should be ready to test.
-
----
