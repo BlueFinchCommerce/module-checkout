@@ -1,14 +1,14 @@
 # Better Checkout - Custom Extension Guide
 
-This guide covers how to extend Better Checkout by adding new components, 
-integrating additional functionality, creating callback functions and running your code effectively.
+This guide covers how to extend Better Checkout with custom modules by adding new components, integrating additional functionality, creating callback functions and running your code effectively.
 
 ## How to extend Better Checkout functionality with a custom module
 To use this functionality, the high level steps to follow are:
 
 1. Create a new Magento 2 module as per [Magento standards](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module).
-1. Create a `templates` directory to add a .phtml template file for your module, in which you can declare custom callbacks, components, styles etc.
-1. Create a `layouts` directory containing a `genebettercheckout_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores Better Checkout page.
+1. Create a `view/frontend/templates` directory to add a .phtml template file for your module, in which you can declare custom callbacks, components, styles etc.
+1. Create a `view/frontend/layouts` directory containing a `genebettercheckout_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores Better Checkout page.
+1. Create a `view/frontend/web/js/checkout/src/` directory containing your Better Checkout extension code.
 
 **Please refer to our template for creating Better Checkout modules [here](https://github.com/genecommerce/better-checkout-new-module-template)**, which has all the necssary files required, including those for building the front end assets.
 
@@ -21,7 +21,7 @@ To use this functionality, the high level steps to follow are:
 
 ### Render the component:
 
-We use Vue dynamic components with the `<component` element to provide component extension points, where you can render your component(s) (in alphabetical order):
+We use Vue dynamic components and the `<component>` element, to provide component extension points to render your component(s):
 
 1. additionalShippingMethod
 1. additionalVaultedMethod
@@ -63,7 +63,7 @@ Example:
     window.geneCheckout.belowShippingMethods.newComponent = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/components/NewComponent/NewComponent.min.js')) ?>";
 </script>
 ```
-To render your component, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
+To render your component locally, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
 
 ## How to create callback functions
 Callback functions enable you to define custom responses to various checkout events.

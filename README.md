@@ -9,7 +9,7 @@
 
 ## Installation
 
-To install the BetterCheckout module, run the following command in your Magento 2 root directory:
+To install the Better Checkout module, run the following command in your Magento 2 root directory:
 
 ``` composer require gene/module-better-checkout:^1.0 ```
 
@@ -17,7 +17,7 @@ Better Checkout follows the standard installation process for Adobe Commerce.
 
 For information about a module installation in Adobe Commerce, see [Enable or disable modules](https://experienceleague.adobe.com/en/docs/commerce-operations/installation-guide/tutorials/manage-modules).
 
-To enable the Better Checkout on your store, log into th eMagento admin area, then:
+To enable the Better Checkout on your store, log into the Magento admin area, then:
 
 Stores > Configuration (Select your store if multi store) > Gene > Better Checkout > General - Enable Module: Yes
 
@@ -39,37 +39,8 @@ You can find our template for creating Better Checkout extension modules **[here
 
 By default, Better Checkout includes support for Braintree payments. 
 
-If your site is using Adyen as the payment provider, you can install the  [Better Checkout Adyen module](https://github.com/genecommerce/module-better-checkout-adyen) 
+If your site is using Adyen as the payment provider, you can install the [Better Checkout Adyen module](https://github.com/genecommerce/module-better-checkout-adyen) 
 which integrates with Magento_GraphQl and Adyen_Payment dependencies.
-
-## Versioning
-
-We use Semantic Versioning to release our packages:
-
-**Major** - A version where incompatible change has been made to the module meaning it will not longer work with existing versions.
-
-**Minor** - A version where you have added additional functionailty in a backwards compatible manner.
-
-**Patch** - A version where you make backwards compatible bug fixes.
-
-For more information about Semantic Versioning see **[here](https://semver.org/)**.
-
-## Tagging a new release
-To get this module into composer we need to make a release.
-
-To do this first.
-
-Make sure /etc/adminhtml/system.xml has the latest up to date version number.
-
-You have added the change to the readme file. 
-  
-Then in command line.
-
-```git tag [Your version number here]```
-
-```git push origin --tags```
-
-You will now be able to see this in the releases in GitHub.
 
 ## CircleCi
 
