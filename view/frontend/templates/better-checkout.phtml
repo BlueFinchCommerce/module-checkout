@@ -19,7 +19,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 <script>
     window.geneCheckout = window.geneCheckout || {};
 
-    window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+    window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
     window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
     window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
     window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
@@ -35,12 +35,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
 
 <?php if ($fontCdnUrl) : ?>
-    <link rel="stylesheet" href="<?= $escaper->escapeUrl($fontCdnUrl) ?>">
-    <style>
-        .vue-checkout-active #gene-better-checkout-root {
-            --font-family__base: '<?= $fontFamily ?>', 'Montserrat', sans-serif;
-        }
-    </style>
+    <?= $fontCdnUrl ?>
 <?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
