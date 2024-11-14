@@ -405,7 +405,6 @@ export default defineStore('cartStore', {
       }
       this.clearCaches(['getCrosssells']);
       await this.getCrosssells();
-      this.calculateFreeShipping();
 
       // Also trigger refresh of User's cart data.
       refreshCustomerData(getCartSectionNames());
@@ -414,16 +413,6 @@ export default defineStore('cartStore', {
       gtmStore.addToCartEvent(product);
 
       setLoadingState(false);
-    },
-
-    calculateFreeShipping() {
-      const { goal } = this.amastyData;
-
-      if (goal) {
-        this.setData({
-          freeShipping: goal - this.subtotalInclTax,
-        });
-      }
     },
 
     getCachedResponse(request, cacheKey, args = {}) {
