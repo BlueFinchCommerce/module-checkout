@@ -134,10 +134,9 @@ To test your function extension on the front end, see [local workflow](../.githu
 ## How to change styling
 
 For adding styles for your **component**, you can:
-1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/styles.scss` with your required styles.
-1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/styles.css')) ?>" />`
+1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles.
+1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
 1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
-
 
 You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.
