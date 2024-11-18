@@ -16,6 +16,7 @@ import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
 import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
 import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -144,7 +145,7 @@ export default defineStore('configStore', {
       ];
 
       // Conditionally add reward config based on Magento Edition
-      if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+      if (getMagentoSolutionType()) {
         configs.push('magento_reward_general_is_enabled');
       }
 

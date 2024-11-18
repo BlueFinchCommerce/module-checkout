@@ -19,6 +19,9 @@ import PromotionComponent
 import GiftCardDiscount from '@/components/Steps/GlobalComponents/OrderSummary/GiftCardDiscount/GiftCardDiscount.vue';
 import CouponDiscount from '@/components/Steps/GlobalComponents/OrderSummary/CouponDiscount/CouponDiscount.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryDesktop',
   components: {
@@ -35,8 +38,7 @@ export default {
     };
   },
   created() {
-    this.giftCardAvailable = window.geneCheckout
-      && window.geneCheckout.magentoEdition !== 'Community';
+    this.giftCardAvailable = getMagentoSolutionType();
   },
 };
 </script>

@@ -1,4 +1,5 @@
 import functionExtension from '@/extensions/functionExtension';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default async () => {
   // Initialize the gift_wrapping query part based on Magento edition
@@ -7,7 +8,7 @@ export default async () => {
   let giftWrappingQuery = '';
   let giftCardItemQuery = '';
 
-  if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+  if (getMagentoSolutionType()) {
     giftWrappingQuerySimple = `
     ... on SimpleCartItem {
         gift_wrapping {

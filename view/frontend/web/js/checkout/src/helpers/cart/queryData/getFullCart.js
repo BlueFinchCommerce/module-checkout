@@ -12,6 +12,7 @@ import getPrices from '@/helpers/cart/queryData/getPrices';
 import getRewardPoints from '@/helpers/cart/queryData/getRewardPoints';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 import getEmailField from '@/helpers/cart/queryData/getEmailField';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default async () => {
   // Initialize the fullCart with mandatory fields
@@ -28,7 +29,7 @@ export default async () => {
   `;
 
   // Conditionally add gift wrapping and gift cards for Enterprise edition only
-  if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+  if (getMagentoSolutionType()) {
     fullCart += `
       ${await getGiftCards()}
       ${await getGiftWrapping()}

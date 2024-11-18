@@ -1,13 +1,14 @@
 import useCustomerStore from '@/stores/CustomerStore';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
 import graphQlRequest from '@/services/graphQlRequest';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default async () => {
   // Initialize the rewards and store credit query part based on Magento edition
   let rewardPointsQuery = '';
-  let storeCreditPonitsQuery = '';
+  let storeCreditPointsQuery = '';
 
-  if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+  if (getMagentoSolutionType()) {
     rewardPointsQuery = `
       reward_points {
         balance {
@@ -22,7 +23,7 @@ export default async () => {
       }
     `;
 
-    storeCreditPonitsQuery = `
+    storeCreditPointsQuery = `
      store_credit {
         enabled
         current_balance {
@@ -59,7 +60,7 @@ export default async () => {
         telephone
       }
       ${rewardPointsQuery}
-      ${storeCreditPonitsQuery}
+      ${storeCreditPointsQuery}
       created_at
       is_subscribed
     }
