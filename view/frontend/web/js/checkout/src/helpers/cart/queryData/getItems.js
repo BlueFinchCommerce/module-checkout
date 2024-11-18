@@ -1,37 +1,43 @@
 import functionExtension from '@/extensions/functionExtension';
 
 export default async () => {
-  const items = `
-    items {
-      __typename
-      id
-      uid
-      ... on SimpleCartItem {
+  // Initialize the gift_wrapping query part based on Magento edition
+  let giftWrappingQuerySimple = '';
+  let giftWrappingQueryBundle = '';
+  let giftWrappingQuery = '';
+  let giftCardItemQuery = '';
+
+  if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+    giftWrappingQuerySimple = `
+    ... on SimpleCartItem {
         gift_wrapping {
           price {
             value
           }
         }
       }
-      ... on BundleCartItem {
+    `;
+
+    giftWrappingQueryBundle = `
+    ... on BundleCartItem {
         gift_wrapping {
           price {
             value
           }
         }
       }
-      ... on ConfigurableCartItem {
-        configurable_options {
-          option_label
-          value_label
-        }
-        gift_wrapping {
-          price {
-            value
-          }
-        }
-      }
-      ... on GiftCardCartItem {
+    `;
+
+    giftWrappingQuery = `
+       gift_wrapping {
+         price {
+           value
+         }
+       }
+    `;
+
+    giftCardItemQuery = `
+     ... on GiftCardCartItem {
         recipient_name
         sender_name
         message
@@ -39,6 +45,25 @@ export default async () => {
           value
         }
       }
+    `;
+  }
+
+  // Build the full cart items query string
+  const items = `
+    items {
+      __typename
+      id
+      uid
+      ${giftWrappingQuerySimple}
+      ${giftWrappingQueryBundle}
+      ... on ConfigurableCartItem {
+        configurable_options {
+          option_label
+          value_label
+        }
+        ${giftWrappingQuery}
+      }
+      ${giftCardItemQuery}
       prices {
         row_total {
           value
@@ -75,6 +100,7 @@ export default async () => {
     }
   `;
 
+  // Perform the function extension with the built query
   const [modifiedCart] = await functionExtension('getItems', [items]);
 
   return modifiedCart;

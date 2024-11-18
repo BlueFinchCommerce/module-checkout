@@ -2,7 +2,8 @@
   <div class="order-summary-desktop">
     <PromotionComponent :data-cy="deviceType" />
     <CouponDiscount :data-cy="deviceType" />
-    <GiftCardDiscount :data-cy="deviceType" />
+    <GiftCardDiscount v-if="giftCardAvailable"
+                      :data-cy="deviceType" />
     <div class="order-summary-desktop-items">
       <OrderSummaryItem :data-cy="deviceType"/>
     </div>
@@ -30,7 +31,12 @@ export default {
   data() {
     return {
       deviceType: 'desktop',
+      giftCardAvailable: true,
     };
+  },
+  created() {
+    this.giftCardAvailable = window.geneCheckout
+      && window.geneCheckout.magentoEdition !== 'Community';
   },
 };
 </script>

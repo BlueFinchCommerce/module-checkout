@@ -21,7 +21,8 @@
     <template #body>
       <PromotionComponent :data-cy="deviceType" />
       <CouponDiscount :data-cy="deviceType" />
-      <GiftCardDiscount :data-cy="deviceType" />
+      <GiftCardDiscount v-if="giftCardAvailable"
+                        :data-cy="deviceType" />
       <div class="product-items">
         <OrderSummaryItem :data-cy="deviceType" />
       </div>
@@ -61,7 +62,7 @@
           <ArrowUp :data-cy="'collapsed-order-summary-arrow-up-mobile'" />
         </div>
         <ArrowDown :data-cy="'collapsed-order-summary-arrow-down-mobile'"
-          v-else
+                   v-else
         />
       </div>
       <div class="order-summary-description">
@@ -141,6 +142,7 @@ export default {
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
+      giftCardAvailable: true,
     };
   },
   computed: {
@@ -158,6 +160,9 @@ export default {
     await this.getCart();
 
     await this.getCustomerInformation();
+
+    this.giftCardAvailable = window.geneCheckout
+      && window.geneCheckout.magentoEdition !== 'Community';
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

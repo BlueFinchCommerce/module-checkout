@@ -127,8 +127,6 @@ export default defineStore('configStore', {
         'gene_better_checkout_newsletter_allow_guest',
         'gene_better_checkout_country_state_required',
         'gene_better_checkout_country_display_state',
-        'magento_reward_general_is_enabled',
-        'magento_reward_general_is_enabled_on_front',
         'optional_zip_countries',
         'tax_cart_display_price',
         'tax_cart_display_shipping',
@@ -145,6 +143,11 @@ export default defineStore('configStore', {
         'gene_better_checkout_google_map_api_key',
       ];
 
+      // Conditionally add reward config based on Magento Edition
+      if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+        configs.push('magento_reward_general_is_enabled');
+      }
+
       if (this.$state.locale) {
         this.setLocale(this.$state.locale);
       } else {
@@ -154,22 +157,22 @@ export default defineStore('configStore', {
       const allConfigs = configs.concat(getCustomConfigs);
 
       return `
-        storeConfig {
-          ${allConfigs.join(' ')}
-        }
+    storeConfig {
+      ${allConfigs.join(' ')}
+    }
 
-        countries {
-          id
-          two_letter_abbreviation
-          three_letter_abbreviation
-          full_name_locale
-          available_regions {
-            id
-            code
-            name
-          }
-        }
-      `;
+    countries {
+      id
+      two_letter_abbreviation
+      three_letter_abbreviation
+      full_name_locale
+      available_regions {
+        id
+        code
+        name
+      }
+    }
+  `;
     },
 
     async handleInitialConfig({ countries, storeConfig }) {

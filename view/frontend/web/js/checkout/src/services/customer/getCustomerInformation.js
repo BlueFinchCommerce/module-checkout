@@ -3,6 +3,36 @@ import tokenTypes from '@/helpers/tokens/getTokenTypes';
 import graphQlRequest from '@/services/graphQlRequest';
 
 export default async () => {
+  // Initialize the rewards and store credit query part based on Magento edition
+  let rewardPointsQuery = '';
+  let storeCreditPonitsQuery = '';
+
+  if (window.geneCheckout && window.geneCheckout.magentoEdition !== 'Community') {
+    rewardPointsQuery = `
+      reward_points {
+        balance {
+          points
+          money {
+            value
+          }
+        }
+        subscription_status {
+          balance_updates
+        }
+      }
+    `;
+
+    storeCreditPonitsQuery = `
+     store_credit {
+        enabled
+        current_balance {
+          value
+          currency
+        }
+      }
+    `;
+  }
+
   const request = `{
     customer {
       default_billing
@@ -28,25 +58,9 @@ export default async () => {
         street
         telephone
       }
+      ${rewardPointsQuery}
+      ${storeCreditPonitsQuery}
       created_at
-      reward_points {
-        balance {
-          points
-          money {
-            value
-          }
-        }
-        subscription_status {
-          balance_updates
-        }
-      }
-      store_credit {
-        enabled
-        current_balance {
-          value
-          currency
-        }
-      }
       is_subscribed
     }
   }`;
