@@ -1,7 +1,7 @@
 define([
-      'jquery'
-    ], function ($) {
-      'use strict';
+    'jquery'
+], function ($) {
+    'use strict';
       return function (target) {
         $.validator.addMethod(
           'validate-cdn-field',
@@ -18,5 +18,5 @@ define([
           $.mage.__('Please enter valid HTML.')
         );
         return target;
-      };
+    };
 });
