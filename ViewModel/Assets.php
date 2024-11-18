@@ -5,6 +5,7 @@ namespace Gene\BetterCheckout\ViewModel;
 
 use Gene\BetterCheckout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
@@ -30,20 +31,38 @@ class Assets implements ArgumentInterface
     /** @var array */
     private $assetFilesByType = [];
 
+    private ProductMetadataInterface $productMetadata;
+
     /**
      * @param AssetRepository $assetRepository
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param ConfigurationInterface $configuration
      * @param UrlInterface $urlInterface
+     * @param ProductMetadataInterface $productMetadata
      */
     public function __construct(
         private readonly AssetRepository $assetRepository,
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly StoreManagerInterface $storeManager,
         private readonly ConfigurationInterface $configuration,
-        private readonly UrlInterface $urlInterface
-    ) {}
+        private readonly UrlInterface $urlInterface,
+        ProductMetadataInterface $productMetadata
+    ) {
+        $this->productMetadata = $productMetadata;
+    }
+
+
+    /**
+     * Get the Magento Edition (e.g., Community, Enterprise).
+     *
+     * @return string
+     */
+    public function getMagentoEdition(): string
+    {
+        return $this->productMetadata->getEdition();
+    }
+
 
     /**
      * @return string|null

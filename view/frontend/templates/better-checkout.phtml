@@ -18,6 +18,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 
 <script>
     window.geneCheckout = window.geneCheckout || {};
+    window.geneCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
 
     window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
     window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
