@@ -146,6 +146,7 @@ export default defineStore('configStore', {
 
       // Conditionally add reward config based on Magento Edition
       if (getMagentoSolutionType()) {
+        configs.push('magento_reward_general_is_enabled_on_front');
         configs.push('magento_reward_general_is_enabled');
       }
 
