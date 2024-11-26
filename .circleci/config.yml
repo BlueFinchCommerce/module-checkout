@@ -119,10 +119,6 @@ jobs:
           name: DI Compile
           command: php -d memory_limit=-1 bin/magento setup:di:compile
       - run:
-          name: Install composer modules within Better Checkout
-          command: |
-            composer install --working-dir=vendor/gene/module-better-checkout  --dev
-      - run:
           name: PHPCS
           command: |
             ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
