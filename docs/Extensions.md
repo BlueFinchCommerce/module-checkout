@@ -21,7 +21,7 @@ To use this functionality, the high level steps to follow are:
 
 ### Render the component:
 
-We use Vue dynamic components and the `<component>` element, to provide component extension points to render your component(s):
+We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-basics#dynamic-components] and the `<component>` element, to provide component extension points to render your component(s):
 
 1. additionalShippingMethod
 1. additionalVaultedMethod
@@ -134,7 +134,7 @@ To test your function extension on the front end, see [local workflow](../.githu
 ## How to change styling
 
 For adding styles for your **component**, you can:
-1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles.
+1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles. **We recommend that the name of your scss file(s) should be unique within your module.** This helps to avoid any build time compilation issues, when you have the need for multiple components, each with it's own scss file.
 1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
 1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
 
@@ -142,7 +142,7 @@ You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.
     1. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > Gene > Better Checkout > General > Checkout Designer
     1. Click on the `Open Designer` button and you can change these values in our interactive preview.
-1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and overriding the variables and/or styles. Example:
+1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and and overriding the variables and/or styles from the Better Checkout theme and admin designer settings. Example:
 
 ``` 
 :root.vue-checkout-active #gene-better-checkout-root {
@@ -151,3 +151,7 @@ You also have two other options for changing styles:
     --font-weight__bold: 700;
 }
 ```
+
+## Remove checkout styles from your theme
+
+We recommend that you remove any checkout related styles that are generated from your theme, that are not Better Checkout related, so they are not included in the CSS for the rest of your site.
