@@ -154,4 +154,4 @@ You also have two other options for changing styles:
 
 ## Remove checkout styles from your theme
 
-We recommend that you remove any checkout related styles that are generated from your theme, that are not Better Checkout related, so they are not included in the CSS for the rest of your site.
+We recommend that you remove any unused Magento Checkout styles within your custom theme, that are not Better Checkout related, so they are not generated in the CSS for the rest of your site.
