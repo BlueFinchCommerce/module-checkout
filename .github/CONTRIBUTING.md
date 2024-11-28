@@ -55,4 +55,14 @@ For hotfixes from an older tag
 1. Hit "Generate Release Notes"
 1. Tidy up the release notes as needed and "Publish release"
 
+## Versioning
 
+We use Semantic Versioning to release our packages:
+
+**Major** - A version where incompatible change has been made to the module meaning it will not longer work with existing versions.
+
+**Minor** - A version where you have added additional functionailty in a backwards compatible manner.
+
+**Patch** - A version where you make backwards compatible bug fixes.
+
+For more information about Semantic Versioning see **[here](https://semver.org/)**.
