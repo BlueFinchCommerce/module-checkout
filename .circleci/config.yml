@@ -3,11 +3,11 @@ jobs:
   build:
     docker:
       - image: cimg/php:8.3-browsers
-      - image: cimg/mariadb:10.4
+      - image: cimg/mariadb:10.6
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: m2build
-      - image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+      - image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
         environment:
           transport.host: 127.0.0.1
           network.host: 127.0.0.1
@@ -73,7 +73,7 @@ jobs:
       - run:
           name: Composer Create Project
           command: |
-            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 . --no-install --no-plugins
+            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.7 . --no-install --no-plugins
             php -d memory_limit=-1 /usr/local/bin/composer require --no-update colinmollenhour/php-redis-session-abstract:"<v1.6.0"
       - run:
           name: Composer Install
