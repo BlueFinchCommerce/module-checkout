@@ -37,9 +37,9 @@ You can find our template for creating Better Checkout extension modules **[here
 
 ## Default payment support
 
-By default, Better Checkout includes support for Braintree payments. 
+By default, Better Checkout includes support for Braintree payments.
 
-If your site is using Adyen as the payment provider, you can install the [Better Checkout Adyen module](https://github.com/genecommerce/module-better-checkout-adyen) 
+If your site is using Adyen as the payment provider, you can install the [Better Checkout Adyen module](https://github.com/genecommerce/module-better-checkout-adyen)
 which integrates with Magento_GraphQl and Adyen_Payment dependencies.
 
 ## CircleCi
