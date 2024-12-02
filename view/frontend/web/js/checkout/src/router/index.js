@@ -43,11 +43,15 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior() {
-    return {
-      el: '.root',
-      behavior: 'smooth',
-    };
+  scrollBehavior(to, from) {
+    if (from.name) {
+      return {
+        el: '.root',
+        behavior: 'smooth',
+      };
+    }
+
+    return { top: 0 };
   },
 });
 

@@ -2,6 +2,7 @@
   <section>
     <div class="checkout-section checkout-shipping">
       <ProgressBar />
+
       <component
         :is="ageCheckerExtension"
         v-for="ageCheckerExtension in ageCheckerExtensions"
@@ -24,6 +25,11 @@
           </div>
           <div class="divider-line" />
         </div>
+        <ErrorMessage
+          v-if="shippingErrorMessage"
+          :message="shippingErrorMessage"
+          :attached="false"
+        />
         <component
           :is="shippingMethodAdditionalContainer"
           v-for="shippingMethodAdditionalContainer in shippingMethodAdditionalContainers"
@@ -123,6 +129,7 @@ import useStepsStore from '@/stores/StepsStore';
 import formatPrice from '@/helpers/payment/formatPrice';
 
 // Components
+import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
@@ -135,12 +142,12 @@ import Shipping from '@/components/Core/Icons/Shipping/Shipping.vue';
 import shippingMethods from '@/extensions/shippingMethods';
 import belowShippingMethodsExtensions from '@/extensions/belowShippingMethodsExtensions';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
-import functionExtension from '@/extensions/functionExtension';
 import shippingMethodAdditionalContainers from '@/extensions/shippingMethodAdditionalContainers';
 
 export default {
   name: 'ShippingMethod',
   components: {
+    ErrorMessage,
     TextField,
     Shipping,
     MyButton,
@@ -177,6 +184,7 @@ export default {
     ...mapState(useShippingMethodsStore, [
       'getError',
       'selectedMethod',
+      'shippingErrorMessage',
     ]),
   },
   async created() {
@@ -187,9 +195,6 @@ export default {
     await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
-  },
-  async mounted() {
-    await functionExtension('onShippingMethodMounted');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

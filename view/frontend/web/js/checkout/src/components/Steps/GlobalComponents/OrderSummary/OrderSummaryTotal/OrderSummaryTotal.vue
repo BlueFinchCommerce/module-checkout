@@ -59,7 +59,10 @@
           :data-cy="dataCy ? `giftwrap-price-${dataCy}` : 'giftwrap-price'"
         />
       </div>
-      <div class="total__row">
+      <div
+        v-if="!cart.is_virtual"
+        class="total__row"
+      >
         <TextField
           class="total__text title"
           :text="$t('progressBar.shippingStepTitle')"

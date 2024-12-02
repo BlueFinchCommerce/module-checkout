@@ -1,0 +1,21 @@
+name: Slack notification on tagged version
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "${{  github.ref_name }} has been tagged, see release notes at https://github.com/genecommerce/module-better-checkout/releases"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_RELEASE }}

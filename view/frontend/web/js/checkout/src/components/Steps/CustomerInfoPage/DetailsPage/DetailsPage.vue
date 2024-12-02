@@ -10,6 +10,7 @@
       </div>
       <Agreements id="detailsPage"/>
       <Recaptcha
+        v-if="isRecaptchaVisible('placeOrder')"
         id="placeOrder"
         location="expressPayments"
       />
@@ -294,6 +295,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -406,6 +408,9 @@ export default {
       'emailEntered',
       'selected',
       'isUsingSavedShippingAddress',
+    ]),
+    ...mapState(useRecaptchaStore, [
+      'isRecaptchaVisible',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),

@@ -33,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeGooglePay',
   data() {
@@ -110,8 +113,9 @@ export default {
           apiVersionMinor: 0,
           allowedPaymentMethods: googlePaymentInstance.createPaymentDataRequest().allowedPaymentMethods,
           existingPaymentMethodRequired: true,
-        }).then((isReadyToPay) => {
+        }).then(async (isReadyToPay) => {
           if (isReadyToPay) {
+            await functionExtension('onBraintreeExpressInit');
             const button = this.googleClient.createButton({
               buttonColor: this.google.buttonColor,
               buttonType: 'buy',
@@ -133,7 +137,7 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useLoadingStore, ['setLoadingState']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -151,6 +155,8 @@ export default {
       if (!agreementsValid) {
         return false;
       }
+
+      this.setNotClickAndCollect();
 
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 
@@ -215,10 +221,12 @@ export default {
       ));
     },
 
-    onPaymentDataChanged(data) {
+    async onPaymentDataChanged(data) {
+      await functionExtension('onPaymentDataChanged');
       return new Promise((resolve) => {
         const address = {
           city: data.shippingAddress.locality,
+          company: '',
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,

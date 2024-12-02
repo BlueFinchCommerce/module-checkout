@@ -56,13 +56,13 @@ const formatAddress = (address) => {
 };
 
 export default async (shippingAddress, billingAddress, email = false) => {
-  const { maskedId } = useCartStore();
+  const { maskedId, cart } = useCartStore();
   const { isLoggedIn } = useCustomerStore();
 
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-      $shippingAddresses: [ShippingAddressInput],
+      ${!cart.is_virtual ? '$shippingAddresses: [ShippingAddressInput]' : ''},
       $billingAddress: BillingAddressInput!
       ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
@@ -82,7 +82,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
       setAddressesOnCart(
         input: {
           cart_id: $cartId
-          ${shippingAddress?.firstname ? `
+          ${!cart.is_virtual ? `
             shipping_addresses: $shippingAddresses
           ` : ''}
           billing_address: $billingAddress
@@ -90,7 +90,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
       ) {
         cart {
           ${await getEmailField()}
-          
+
           ${await getBillingAddress()}
 
           ${await getPrices()}
@@ -108,7 +108,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
     ...(email ? { email } : {}),
   };
 
-  if (shippingAddress?.firstname) {
+  if (!cart.is_virtual) {
     variables.shippingAddresses = [{
       address: formatAddress(shippingAddress),
     }];

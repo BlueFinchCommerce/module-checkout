@@ -68,7 +68,7 @@
           <ErrorMessage
             :data-cy="dataCy ? `coupon-discount-error-${dataCy}` : 'coupon-discount-error'"
             v-if="discountErrorMessage"
-            :message="discountErrorMessage"
+            :message="$t('orderSummary.couponDiscount.errorMessage')"
           />
         </div>
       </div>

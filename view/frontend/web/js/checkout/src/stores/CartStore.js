@@ -31,6 +31,7 @@ import pennies from '@/services/payments/penniesCharityBox';
 import getCartItems from '@/helpers/cart/getCartItems';
 import getCartPrices from '@/helpers/cart/getCartPrices';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
+import getIsVirtual from '@/helpers/cart/getIsVirtual';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
 import discountCodeDataLayer from '@/helpers/dataLayer/discountCodeDataLayer';
@@ -44,6 +45,7 @@ export default defineStore('cartStore', {
     cart: {
       items: getCartItems(),
       prices: getCartPrices(),
+      is_virtual: getIsVirtual(),
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -174,10 +176,20 @@ export default defineStore('cartStore', {
       const configStore = useConfigStore();
       await functionExtension('onHandleCartData', [cart, configStore]);
 
+      if (typeof cart.applied_coupons !== 'undefined') {
+        this.setData({
+          discountCode: cart?.applied_coupons?.[0]?.code ?? '',
+        });
+      }
+
+      if (typeof cart.applied_gift_cards !== 'undefined') {
+        this.setData({
+          giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
+        });
+      }
+
       this.setData({
         cart,
-        discountCode: cart?.applied_coupons?.[0]?.code ?? '',
-        giftCardCode: cart?.applied_gift_cards?.[0]?.code ?? '',
       });
 
       const customerStore = useCustomerStore();
@@ -192,7 +204,7 @@ export default defineStore('cartStore', {
 
       if (cart.shipping_addresses.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
-        shippingMethodsStore.setShippingMethods(cart?.shipping_addresses?.[0]?.available_shipping_methods ?? []);
+        shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
       if (cart.available_payment_methods) {
