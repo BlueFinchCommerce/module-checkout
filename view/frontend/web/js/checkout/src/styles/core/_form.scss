@@ -14,25 +14,7 @@
 // --inputs-height - 55px
 // --inputs-border-radius
 
-//Styles for amasty click&collect OKA
-
 #gene-better-checkout-root {
-  .amasty-click-collect {
-    .select-input {
-      svg {
-        top: var(--click-collect-select-icon-top, 45px);
-      }
-    }
-  }
-
-  .amlocator-wrapper {
-    .text-input {
-      input {
-        padding: var(--indent__s) 13px;
-      }
-    }
-  }
-
   label {
     position: relative;
     cursor: pointer;

@@ -185,7 +185,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping', 'amastyEnabled']),
+    ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
@@ -201,9 +201,6 @@ export default {
 
     await this.getInitialConfig();
     await this.getCart();
-    if (this.amastyEnabled) {
-      await this.getAmastyShippingData();
-    }
     await this.getCrosssells();
     this.externalCrosssellHeader();
 
@@ -217,7 +214,7 @@ export default {
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCartStore, [
-      'getCart', 'getCrosssells', 'getAmastyShippingData', 'addCartItem',
+      'getCart', 'getCrosssells', 'addCartItem',
     ]),
     openDropDown() {
       this.isDropDownVisible = !this.isDropDownVisible;

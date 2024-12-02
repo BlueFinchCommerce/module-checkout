@@ -130,7 +130,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'createNewAddress']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
 
     click(event) {
@@ -169,6 +169,11 @@ export default {
           session.onshippingcontactselected = (data) => this.onShippingContactSelect(data, session);
           session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
         }
+
+        // Event handler for canceling the Apple Pay session
+        session.oncancel = () => {
+          this.createNewAddress('shipping');
+        };
 
         session.begin();
       } catch (err) {
@@ -257,6 +262,8 @@ export default {
             });
         } catch (error) {
           console.log(error);
+          // clear shipping address form
+          this.createNewAddress('shipping');
           session.completePayment(window.ApplePaySession.STATUS_FAILURE);
         }
       });

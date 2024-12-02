@@ -37,9 +37,10 @@
         <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
         <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
 
-                <div
+        <div
           v-if="emailEntered && !isLoggedIn"
           class="email-address-edit-btn"
+          :class="inputsSanitiseError ? 'disabled' : ''"
           @click="changeEmail()"
           @keydown.enter="changeEmail()"
         >
@@ -104,14 +105,6 @@
         </div>
 
         <div class="checkout-email__footer">
-          <div id="password_help_text">
-            <TextField
-              class="field__help-text"
-              :text="$t('errorMessages.passwordHelpText')"
-              :data-cy="'password-description'"
-            />
-          </div>
-
           <a
             :href="baseURL + '/customer/account/forgotpassword/'"
             class="forgot-pass"

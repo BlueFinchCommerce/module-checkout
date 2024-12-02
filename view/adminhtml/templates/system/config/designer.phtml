@@ -8,20 +8,24 @@ $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
 $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
   window.geneCheckout = window.geneCheckout || {};
-  window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+  window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
 </script>
 
-
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontCdnUrl) : ?>
+    <?= $fontCdnUrl ?>
+<?php elseif ($fontUrl) : ?>
     <style>
-      @font-face {
-        font-family: 'BetterCheckoutFont';
-        src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
-      }
+        @font-face {
+            font-family: 'BetterCheckoutFont';
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+        }
     </style>
 <?php endif; ?>
 

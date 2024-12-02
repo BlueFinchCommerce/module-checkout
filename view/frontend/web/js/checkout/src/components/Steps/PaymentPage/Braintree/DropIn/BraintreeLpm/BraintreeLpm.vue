@@ -19,7 +19,7 @@
       >
         <div
           class="braintree-option braintree-option__lpm"
-          :class="{'braintree-option__selected': selectedMethod === 'braintree-lpm'}"
+          :class="{'braintree-option__selected': isMethodSelected}"
           tabindex="0"
           role="button"
         >
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div
-        v-show="selectedMethod === 'braintree-lpm'"
+        v-show="isMethodSelected"
         class="braintree-lpm-container"
       >
         <template v-if="getFilteredLpmMethods?.length">
@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       loading: false,
-      selectedMethod: null,
+      isMethodSelected: false,
       lpmLocation: null,
     };
   },
@@ -147,7 +147,7 @@ export default {
     ...mapState(useConfigStore, ['currencyCode']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
-    ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
@@ -157,11 +157,18 @@ export default {
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
     this.paymentEmitter.on('braintreeInitComplete', () => { this.lpmLocation = '.braintree-sheet__container'; });
-    this.paymentEmitter.on('paymentMethodSelected', ({ id }) => {
-      this.selectedMethod = id;
-    });
   },
-
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'braintree-lpm') {
+          this.isMethodSelected = false;
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
@@ -172,13 +179,15 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(usePaymentStore, ['getPaymentMethodTitle']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
     getIcon(method) {
       return getStaticUrl(images[method]);
     },
 
     selectMethod() {
-      this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-lpm' });
+      this.isMethodSelected = true;
+      this.selectPaymentMethod('braintree-lpm');
     },
 
     async initialiseLpm(allowedMethod) {

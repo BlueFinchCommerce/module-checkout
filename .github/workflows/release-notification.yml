@@ -15,7 +15,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "${{  github.ref_name }} has been tagged, see release notes at https://github.com/genecommerce/module-better-checkout/releases"
+              "text": "${{ github.event.release.tag_name }} has been tagged, see release notes at https://github.com/genecommerce/module-better-checkout/releases"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_RELEASE }}

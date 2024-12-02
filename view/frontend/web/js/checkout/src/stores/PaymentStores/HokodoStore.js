@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import getHokodoCustomerData from '@/services/payments/getHokodoCustomerData';
+import getHokodoCustomerData from '@/services/customer/getHokodoCustomerData';
 
 export default defineStore('HokodoStore', {
   state: () => ({

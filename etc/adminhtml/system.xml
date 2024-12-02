@@ -12,7 +12,7 @@
             <resource>Gene_BetterCheckout::config</resource>
             <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <comment>
-                    <![CDATA[Version: 0.0.1<br>Better Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
+                    <![CDATA[Version: 1.0.10<br>Better Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
                 </comment>
                 <label>General</label>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
@@ -38,6 +38,11 @@
                 <field id="enable_debug" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable debugging on checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable local developer vite watch mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[For local developer use only, do not enable on production]]></comment>
                 </field>
                 <group id="checkout_designer" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Checkout Designer</label>
@@ -66,6 +71,24 @@
                         <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
                         <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
                         <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
+                    </field>
+                    <field id="font_cdn" translate="label comment" sortOrder="40" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Checkout Font CSS Snippet</label>
+                        <validate>validate-cdn-field</validate>
+                        <comment><![CDATA[
+        Use this field to include custom CSS for your checkout page.<br/>
+        You can add a <code>&lt;style&gt;</code> element with an @import link to a font CDN and define global font family variables for the checkout root element (<code>#gene-better-checkout-root</code>).<br/>
+        Ensure the HTML is valid.<br/><br/>
+        Example:<br/>
+        <code>
+        &lt;style&gt;<br/>
+        @import url('your-link');<br/>
+        :root.vue-checkout-active #gene-better-checkout-root {<br/>
+            --font-family__base: 'YourFontName', sans-serif;<br/>
+        }<br/>
+        &lt;/style&gt;
+        </code>
+    ]]></comment>
                     </field>
                 </group>
                 <group id="loqate" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">

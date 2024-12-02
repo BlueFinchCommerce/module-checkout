@@ -105,6 +105,7 @@ export default {
       clickandCollectButton: 'Click & Collect',
       clickandCollectToPaymentButton: 'Confirm Your Shipping Method',
       clickandCollectOpeningTimes: 'Opening Times',
+      clickandCollectNotAvailable: 'Click & Collect is currently unavailable. Please try another delivery method.',
       clickandCollectThresholdHigh: 'Unfortunately, your basket value is too high for Click and Collect. If you want to collect from a store near you, your basket must be less than {price}.',
       clickandCollectThresholdLow: 'Unfortunately, your basket value is too low for Click and Collect. If you want to collect from a store near you, your basket must be more than {price}.',
       addressFinder: {
@@ -175,7 +176,7 @@ export default {
     },
   },
   welcomeMessages: {
-    accountBody: 'Sign in to your account to checkout or continue as a guest.',
+    accountBody: 'Sign in or continue as a guest.',
     accountTitle: 'Welcome back!',
     getStarted: 'Enter your email to get started.',
     guestBody: "Looks like you're new here! Continue to checkout as a guest with the option to create an account once you've placed your order.",

@@ -145,7 +145,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'createNewAddress']),
 
     onClick(type) {
       this.setErrorMessage('');
@@ -210,6 +210,8 @@ export default {
           try {
             handleServiceError(err);
           } catch (formattedError) {
+            // clear shipping address form
+            this.createNewAddress('shipping');
             this.setErrorMessage(formattedError);
           }
         });
