@@ -67,7 +67,7 @@ jobs:
       - restore_cache:
           name: 'Loading composer cache'
           keys:
-            - composer-cache
+            - composer-cache-dir
       - run:
           name: Composer Configure
           command: |
@@ -87,9 +87,9 @@ jobs:
             composer install --prefer-source --no-interaction --dev
       - save_cache:
           name: "Saving composer cache"
-          key: composer-cache
+          key: composer-cache-dir
           paths:
-            - /root/.composer/cache
+            - /home/circleci/.cache/composer
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
