@@ -64,6 +64,10 @@ jobs:
             sysvshm \
             xsl
             sudo composer self-update
+      - restore_cache:
+          name: 'Loading composer cache'
+          keys:
+            - composer-cache
       - run:
           name: Composer Configure
           command: |
@@ -81,6 +85,11 @@ jobs:
             COMPOSER_ALLOW_SUPERUSER: 1
           command: |
             composer install --prefer-source --no-interaction --dev
+      - save_cache:
+          name: "Saving composer cache"
+          key: composer-cache
+          paths:
+            - /root/.composer/cache
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
