@@ -285,9 +285,12 @@ export default {
       };
     }
 
-    if (this.threeDSEnabled) {
+    const price = this.cartGrandTotal / 100;
+    const threshold = this.threeDSThresholdAmount;
+
+    if (this.threeDSEnabled && price >= threshold) {
       options.threeDSecure = {
-        amount: this.cartGrandTotal / 100,
+        amount: price,
       };
     }
 
@@ -385,8 +388,7 @@ export default {
           };
 
           const price = this.cartGrandTotal / 100;
-          const threshold = this.threeDSThresholdAmount;
-          const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+          const challengeRequested = this.alwaysRequestThreeDS;
 
           this.instance.requestPaymentMethod({
             threeDSecure: {
