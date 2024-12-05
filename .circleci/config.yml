@@ -64,10 +64,6 @@ jobs:
             sysvshm \
             xsl
             sudo composer self-update
-      - restore_cache:
-          name: 'Loading composer cache'
-          keys:
-            - composer-cache-dir
       - run:
           name: Composer Configure
           command: |
@@ -77,11 +73,6 @@ jobs:
       - run:
           name: Composer Create Project
           command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
-      - save_cache:
-          name: "Saving composer cache"
-          key: composer-cache-dir
-          paths:
-            - /home/circleci/.cache/composer
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
