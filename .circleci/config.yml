@@ -72,15 +72,7 @@ jobs:
             composer config -g allow-plugins true
       - run:
           name: Composer Create Project
-          command: |
-            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 . --no-install --no-plugins
-            php -d memory_limit=-1 /usr/local/bin/composer require --no-update colinmollenhour/php-redis-session-abstract:"<v1.6.0"
-      - run:
-          name: Composer Install
-          environment:
-            COMPOSER_ALLOW_SUPERUSER: 1
-          command: |
-            composer install --prefer-source --no-interaction --dev
+          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
