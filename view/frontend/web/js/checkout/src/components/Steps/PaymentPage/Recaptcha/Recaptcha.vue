@@ -90,17 +90,20 @@ export default {
       });
     },
 
-    renderV2Invisible() {
+    async renderV2Invisible() {
       window.grecaptcha.render(this.location, {
         sitekey: this.v2InvisibleKey,
         size: 'invisible',
         callback: (token) => {
+          console.log("reCAPTCHA token received:", token);
           this.setToken(this.id, token);
         },
         'expired-callback': () => {
+          console.log("expired-callback:");
           this.setToken(this.id, null);
         },
       });
+      await window.grecaptcha.execute();
     },
   },
 };
