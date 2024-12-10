@@ -69,8 +69,6 @@ export default {
 
     if (recapchaType === recapchaTypes.recaptchaV2) {
       this.renderV2();
-    } else if (recapchaType === recapchaTypes.invisible) {
-      this.renderV2Invisible();
     }
   },
   methods: {
@@ -88,20 +86,6 @@ export default {
           this.setToken(this.id, null);
         },
       });
-    },
-
-    async renderV2Invisible() {
-      window.grecaptcha.render(this.location, {
-        sitekey: this.v2InvisibleKey,
-        size: 'invisible',
-        callback: (token) => {
-          this.setToken(this.id, token);
-        },
-        'expired-callback': () => {
-          this.setToken(this.id, null);
-        },
-      });
-      await window.grecaptcha.execute();
     },
   },
 };

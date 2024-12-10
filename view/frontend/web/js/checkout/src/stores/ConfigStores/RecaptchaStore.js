@@ -97,12 +97,24 @@ export default defineStore('RecaptchaStore', {
       });
     },
 
-    async validateToken(ids) {
+    async validateToken(ids, location = 'braintreeNewMethods') {
       const placementIds = Array.isArray(ids) ? ids : [ids];
       const id = placementIds.find(this.getTypeByPlacement);
       const recapchaType = this.getTypeByPlacement(id);
 
-      if (recapchaType === recapchaTypes.recaptchaV3) {
+      if (recapchaType === recapchaTypes.invisible) {
+        await window.grecaptcha.execute();
+        window.grecaptcha.render(location, {
+          sitekey: this.$state.v2InvisibleKey,
+          size: 'invisible',
+          callback: (token) => {
+            this.setToken(id, token);
+          },
+          'expired-callback': () => {
+            this.setToken(id, null);
+          },
+        });
+      } else if (recapchaType === recapchaTypes.recaptchaV3) {
         const token = await window.grecaptcha.execute(this.$state.v3Invisible, { action: 'submit' });
         this.setToken(id, token);
       }
