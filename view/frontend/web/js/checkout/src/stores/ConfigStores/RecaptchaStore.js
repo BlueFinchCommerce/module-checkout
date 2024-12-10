@@ -7,6 +7,7 @@ export default defineStore('RecaptchaStore', {
     v2CheckboxKey: null,
     v2InvisibleKey: null,
     v3Invisible: null,
+    recaptchaId: null,
     failureMessage: '',
     enabled: {
       customerLogin: false,
@@ -104,23 +105,30 @@ export default defineStore('RecaptchaStore', {
 
       if (recapchaType === recapchaTypes.invisible) {
         await new Promise((resolve) => {
-          const recaptchaId = window.grecaptcha.render(location, {
-            sitekey: this.$state.v2InvisibleKey,
-            size: 'invisible',
-            callback: (token) => {
-              this.setToken(id, token);
-              resolve();
-            },
-            'error-callback': () => {
-              this.setToken(id, null);
-              window.grecaptcha.reset(recaptchaId);
-            },
-            'expired-callback': () => {
-              this.setToken(id, null);
-              window.grecaptcha.reset(recaptchaId);
-            },
-          });
-          window.grecaptcha.execute();
+          if (this.$state.recaptchaId === null) {
+            const recaptchaId = window.grecaptcha.render(location, {
+              sitekey: this.$state.v2InvisibleKey,
+              size: 'invisible',
+              callback: (token) => {
+                this.setToken(id, token);
+                resolve();
+              },
+              'error-callback': () => {
+                this.setToken(id, null);
+                window.grecaptcha.reset(recaptchaId);
+              },
+              'expired-callback': () => {
+                this.setToken(id, null);
+                window.grecaptcha.reset(recaptchaId);
+              },
+            });
+            window.grecaptcha.execute(recaptchaId);
+            this.setData({ recaptchaId });
+          } else {
+            const { recaptchaId } = this.$state;
+            window.grecaptcha.reset(recaptchaId);
+            window.grecaptcha.execute(recaptchaId).then(resolve);
+          }
         });
       } else if (recapchaType === recapchaTypes.recaptchaV3) {
         const token = await window.grecaptcha.execute(this.$state.v3Invisible, { action: 'submit' });
@@ -134,6 +142,7 @@ export default defineStore('RecaptchaStore', {
           },
         });
 
+        console.log('fail');
         return false;
       }
 
