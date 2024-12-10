@@ -141,12 +141,9 @@ export default defineStore('RecaptchaStore', {
             [id]: this.$state.failureMessage,
           },
         });
-
-        console.log('fail');
         return false;
       }
 
-      console.log('pass');
       return true;
     },
 
