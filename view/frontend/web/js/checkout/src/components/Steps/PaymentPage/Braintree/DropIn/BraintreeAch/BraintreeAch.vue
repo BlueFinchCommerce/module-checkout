@@ -333,7 +333,7 @@ export default {
         return false;
       }
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder', 'braintreeAch')) {
         this.paymentEmitter.emit('braintreePaymentError');
         return false;
       }

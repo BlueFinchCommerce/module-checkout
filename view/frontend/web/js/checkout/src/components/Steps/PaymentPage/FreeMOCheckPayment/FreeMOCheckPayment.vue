@@ -124,7 +124,7 @@ export default {
 
       // Check that the agreements (if any) and recpatcha is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
+      const recaptchaValid = this.validateToken('placeOrder', 'freeMoCheckPayment');
 
       if (!agreementsValid || !recaptchaValid) {
         return;
