@@ -69,8 +69,6 @@ export default {
 
     if (recapchaType === recapchaTypes.recaptchaV2) {
       this.renderV2();
-    } else if (recapchaType === recapchaTypes.invisible) {
-      this.renderV2Invisible();
     }
   },
   methods: {
@@ -81,19 +79,6 @@ export default {
       this.resetToken(this.id);
       window.grecaptcha.render(this.location, {
         sitekey: this.v2CheckboxKey,
-        callback: (token) => {
-          this.setToken(this.id, token);
-        },
-        'expired-callback': () => {
-          this.setToken(this.id, null);
-        },
-      });
-    },
-
-    renderV2Invisible() {
-      window.grecaptcha.render(this.location, {
-        sitekey: this.v2InvisibleKey,
-        size: 'invisible',
         callback: (token) => {
           this.setToken(this.id, token);
         },

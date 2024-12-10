@@ -356,7 +356,7 @@ export default {
         this.setErrorMessage('');
         (async () => {
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
           if (!agreementsValid || !recaptchaValid) {
             const error = new Error();
@@ -573,7 +573,7 @@ export default {
         this.instance._mainView._views.googlePay.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
           if (!agreementsValid || !recaptchaValid) {
             return Promise.resolve();
@@ -590,7 +590,7 @@ export default {
         this.instance._mainView._views.venmo.venmoInstance.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
           if (!agreementsValid || !recaptchaValid) {
             return Promise.resolve();
@@ -607,7 +607,7 @@ export default {
         this.instance._mainView._views.paypal.paypalInstance.createPayment = async (configuration) => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
           if (!agreementsValid || !recaptchaValid) {
             return Promise.reject();

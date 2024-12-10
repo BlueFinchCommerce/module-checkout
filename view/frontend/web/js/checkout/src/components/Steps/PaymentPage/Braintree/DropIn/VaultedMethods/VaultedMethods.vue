@@ -240,7 +240,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder', 'braintreeVaultedMethods')) {
         return;
       }
 
