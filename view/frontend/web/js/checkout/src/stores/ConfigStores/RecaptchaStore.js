@@ -103,16 +103,24 @@ export default defineStore('RecaptchaStore', {
       const recapchaType = this.getTypeByPlacement(id);
 
       if (recapchaType === recapchaTypes.invisible) {
-        await window.grecaptcha.execute();
-        window.grecaptcha.render(location, {
-          sitekey: this.$state.v2InvisibleKey,
-          size: 'invisible',
-          callback: (token) => {
-            this.setToken(id, token);
-          },
-          'expired-callback': () => {
-            this.setToken(id, null);
-          },
+        await new Promise((resolve) => {
+          const recaptchaId = window.grecaptcha.render(location, {
+            sitekey: this.$state.v2InvisibleKey,
+            size: 'invisible',
+            callback: (token) => {
+              this.setToken(id, token);
+              resolve();
+            },
+            'error-callback': () => {
+              this.setToken(id, null);
+              window.grecaptcha.reset(recaptchaId);
+            },
+            'expired-callback': () => {
+              this.setToken(id, null);
+              window.grecaptcha.reset(recaptchaId);
+            },
+          });
+          window.grecaptcha.execute();
         });
       } else if (recapchaType === recapchaTypes.recaptchaV3) {
         const token = await window.grecaptcha.execute(this.$state.v3Invisible, { action: 'submit' });
@@ -129,6 +137,7 @@ export default defineStore('RecaptchaStore', {
         return false;
       }
 
+      console.log('pass');
       return true;
     },
 
