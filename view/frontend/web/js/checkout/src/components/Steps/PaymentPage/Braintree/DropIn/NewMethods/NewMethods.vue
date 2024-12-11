@@ -299,6 +299,7 @@ export default {
     this.removeEventListeners();
     if (this.instance) {
       this.instance.teardown();
+      this.setThreeDSInstance(null);
     }
   },
   watch: {
