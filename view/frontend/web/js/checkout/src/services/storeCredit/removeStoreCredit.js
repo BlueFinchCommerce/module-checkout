@@ -15,7 +15,7 @@ export default async () => {
       removeStoreCreditFromCart(input: { cart_id: "${maskedId}" }) {
         cart {
           ${await getEmailField()}
-          
+
           ${await getAppliedStoreCredit()}
 
           ${await getItems()}
@@ -28,7 +28,7 @@ export default async () => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

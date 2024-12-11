@@ -67,7 +67,7 @@ export default async () => {
   }`;
 
   try {
-    const response = await graphQlRequest(request);
+    const response = await graphQlRequest(request, {}, {}, 'BetterCheckoutCustomer');
     return response.data.customer;
   } catch (error) {
     // If there is an error, assume the user is a guest.

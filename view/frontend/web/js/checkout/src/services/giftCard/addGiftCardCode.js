@@ -18,7 +18,7 @@ export default async (code) => {
       }) {
         cart {
           ${await getEmailField()}
-        
+
           ${await getGiftCards()}
 
           ${await getItems()}
@@ -31,7 +31,7 @@ export default async (code) => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

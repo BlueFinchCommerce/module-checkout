@@ -50,7 +50,7 @@ export default (items) => {
     }
   }`;
 
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
     .then((data) => (
       data.data.products.items.length
         ? mergeProductCrosssells(data.data.products.items)

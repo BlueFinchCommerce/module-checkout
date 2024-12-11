@@ -5,5 +5,5 @@ export default () => {
     mutation {
       createBraintreeClientToken
     }`;
-  return graphQlRequest(request);
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutBraintreeToken');
 };

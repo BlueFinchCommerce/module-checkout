@@ -18,14 +18,14 @@ export default {
         hokodo_more_info
       },
     }`;
-    return graphQlRequest(request).then((response) => response.data);
+    return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreConfig').then((response) => response.data);
   },
 
   getHokodoCompanyId() {
     const request = `{
       hokodoUser
     }`;
-    return graphQlRequest(request).then((response) => response.data);
+    return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreConfig').then((response) => response.data);
   },
 
   getHokodoScripts(url) {

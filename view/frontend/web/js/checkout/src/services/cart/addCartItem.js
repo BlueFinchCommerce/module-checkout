@@ -27,7 +27,7 @@ export default async (product) => {
       }) {
         cart {
           ${await getEmailField()}
-        
+
           ${await getIsVirtual()}
 
           ${await getItems()}
@@ -40,7 +40,7 @@ export default async (product) => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

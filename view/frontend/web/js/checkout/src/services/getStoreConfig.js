@@ -6,5 +6,5 @@ export default (configs = []) => {
       ${configs.join(' ')}
     }
   }`;
-  return graphQlRequest(request).then((response) => response.data?.storeConfig);
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreConfig').then((response) => response.data?.storeConfig);
 };
