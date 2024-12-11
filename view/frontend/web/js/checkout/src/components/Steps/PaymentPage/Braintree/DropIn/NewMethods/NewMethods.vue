@@ -285,9 +285,12 @@ export default {
       };
     }
 
-    if (this.threeDSEnabled) {
+    const price = this.cartGrandTotal / 100;
+    const threshold = this.threeDSThresholdAmount;
+
+    if (this.threeDSEnabled && price >= threshold) {
       options.threeDSecure = {
-        amount: this.cartGrandTotal / 100,
+        amount: price,
       };
     }
 
@@ -335,6 +338,7 @@ export default {
       this.setLoadingState(true);
       this.requestPaymentMethod()
         .then(this.getPaymentData)
+        .then(this.validateRecaptcha)
         .then(createPayment)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
@@ -355,9 +359,8 @@ export default {
         this.setErrorMessage('');
         (async () => {
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             const error = new Error();
             error.name = 'DropinError';
             reject(error);
@@ -385,8 +388,7 @@ export default {
           };
 
           const price = this.cartGrandTotal / 100;
-          const threshold = this.threeDSThresholdAmount;
-          const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+          const challengeRequested = this.alwaysRequestThreeDS;
 
           this.instance.requestPaymentMethod({
             threeDSecure: {
@@ -423,6 +425,16 @@ export default {
           extension_attributes: getPaymentExtensionAttributes(),
         },
       };
+    },
+
+    async validateRecaptcha(payload) {
+      const recaptchaValid = await this.validateToken('braintree');
+
+      if (!recaptchaValid) {
+        throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
+      }
+
+      return payload;
     },
 
     getBraintreeMethod(type) {
@@ -572,9 +584,8 @@ export default {
         this.instance._mainView._views.googlePay.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.resolve();
           }
 
@@ -589,9 +600,8 @@ export default {
         this.instance._mainView._views.venmo.venmoInstance.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.resolve();
           }
 
@@ -606,9 +616,8 @@ export default {
         this.instance._mainView._views.paypal.paypalInstance.createPayment = async (configuration) => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = await this.validateToken('braintree');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.reject();
           }
 

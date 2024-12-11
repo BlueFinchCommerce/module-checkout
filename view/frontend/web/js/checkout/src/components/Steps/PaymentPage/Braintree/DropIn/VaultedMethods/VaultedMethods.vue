@@ -234,7 +234,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements()) {
         return;
       }
 
@@ -254,7 +254,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || (!this.alwaysRequestThreeDS && this.vaultVerifyCvv && price < threshold)) {
+        if (!this.threeDSEnabled || this.vaultVerifyCvv || price < threshold) {
           resolve({
             nonce,
           });
@@ -322,8 +322,14 @@ export default {
 
           return true;
         });
-      })).then((response) => {
+      })).then(async (response) => {
         const paymentData = this.getPaymentData(response);
+
+        const recaptchaValid = await this.validateToken('placeOrder');
+
+        if (!recaptchaValid) {
+          throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
+        }
 
         return createPayment(paymentData)
           .then(() => refreshCustomerData(['cart']))
