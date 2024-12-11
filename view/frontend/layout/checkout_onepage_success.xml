@@ -2,8 +2,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block name="checkout.success.cart.clear" template="Magento_Checkout::checkout/cart-clear.phtml"/>
-
             <container name="onepagesuccess.header.container" label="Onepage Success Header" before="-">
                 <referenceBlock name="checkout.success">
                     <arguments>
