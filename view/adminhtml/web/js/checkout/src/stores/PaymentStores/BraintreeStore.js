@@ -11,6 +11,8 @@ export default defineStore('brainteeStore', {
   state: () => ({
     cache: {},
     environment: 'sandbox',
+    isBraintreeEnabled: null,
+    showMagentoPayments: false,
     merchantAccountId: '',
     cCTypes: [],
     clientToken: null,
@@ -43,6 +45,10 @@ export default defineStore('brainteeStore', {
       buttonColor: '',
       buttonShape: '',
       vaultActive: false,
+      creditActive: false,
+      creditColor: '',
+      creditLabel: '',
+      creditShape: '',
     },
   }),
   getters: {
@@ -61,7 +67,8 @@ export default defineStore('brainteeStore', {
     getInitialConfigValues() {
       return `
         storeConfig {
-          braintree_environment
+          braintree_environment,
+          braintree_active,
           braintree_merchant_account_id
           braintree_cc_types
           braintree_cc_vault_active
@@ -81,6 +88,10 @@ export default defineStore('brainteeStore', {
           braintree_paypal_button_location_checkout_type_paypal_color
           braintree_paypal_button_location_checkout_type_paypal_shape
           braintree_paypal_vault_active
+          braintree_paypal_credit_active
+          braintree_paypal_credit_color
+          braintree_paypal_credit_shape
+          braintree_paypal_credit_label
           braintree_local_payment_fallback_button_text
           braintree_local_payment_redirect_on_fail
           braintree_local_payment_allowed_methods
@@ -92,8 +103,9 @@ export default defineStore('brainteeStore', {
       if (storeConfig) {
         this.setData({
           environment: storeConfig.braintree_environment,
+          isBraintreeEnabled: storeConfig.braintree_active,
           merchantAccountId: storeConfig.braintree_merchant_account_id,
-          cCTypes: storeConfig.braintree_cc_types.split(','),
+          cCTypes: storeConfig.braintree_cc_types?.split(',') || [],
           vaultActive: storeConfig.braintree_cc_vault_active === '1',
           vaultVerifyCvv: storeConfig.braintree_cc_vault_cvv,
           sendCartLineItems: storeConfig.braintree_send_line_items,
@@ -124,6 +136,10 @@ export default defineStore('brainteeStore', {
             buttonColor: storeConfig.braintree_paypal_button_location_checkout_type_paypal_color,
             buttonShape: storeConfig.braintree_paypal_button_location_checkout_type_paypal_shape,
             vaultActive: storeConfig.braintree_paypal_vault_active,
+            creditActive: storeConfig.braintree_paypal_credit_active,
+            creditColor: storeConfig.braintree_paypal_credit_color,
+            creditShape: storeConfig.braintree_paypal_credit_shape,
+            creditLabel: storeConfig.braintree_paypal_credit_label,
           },
         });
       }
@@ -217,7 +233,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (cart.applied_coupons) {
+      if (cart.applied_coupons && !cart.prices.discounts) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',
@@ -226,7 +242,7 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (Object.keys(cart.prices.discounts).length > 0) {
+      if (cart.prices.discounts && Object.keys(cart.prices.discounts).length > 0) {
         items.push({
           name: this.$i18n.global.t('couponDiscount.title'),
           kind: 'credit',
@@ -235,12 +251,16 @@ export default defineStore('brainteeStore', {
         });
       }
 
-      if (includeShipping && cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value) {
+      if (includeShipping
+        && (cart.shipping_addresses?.[0]?.selected_shipping_method?.price_incl_tax?.value
+          || cart.shipping_addresses?.[0]?.selected_shipping_method?.amount?.value)) {
         items.push({
           name: this.$i18n.global.t('progressBar.shippingStepTitle'),
           kind: 'debit',
           quantity: 1,
-          unitAmount: Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
+          unitAmount: cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            ? Math.abs(cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value)
+            : Math.abs(cart.shipping_addresses[0].selected_shipping_method.amount.value),
         });
       }
 

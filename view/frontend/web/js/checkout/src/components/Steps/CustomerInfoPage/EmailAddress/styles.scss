@@ -75,6 +75,7 @@
   }
 
   .forgot-pass {
+    color: var(--button__link-font-color);
     p {
       text-align: left;
       margin: var(--indent__s) 0 var(--indent__xs);
@@ -88,6 +89,11 @@
     right: var(--indent__m);
     top: calc(var(--input__height) / 2);
     text-align: right;
+
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
 
     button {
       text-align: right;
@@ -135,6 +141,15 @@
   }
 
   &__footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: end;
+    margin-bottom: var(--indent__s);
+
+    #password_help_text {
+      max-width: 470px;
+    }
+
     a {
       font-size: var(--button__link-font-size);
       font-weight: var(--button__link-font-weight);

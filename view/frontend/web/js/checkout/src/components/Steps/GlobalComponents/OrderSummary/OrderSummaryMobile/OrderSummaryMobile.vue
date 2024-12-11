@@ -21,7 +21,8 @@
     <template #body>
       <PromotionComponent :data-cy="deviceType" />
       <CouponDiscount :data-cy="deviceType" />
-      <GiftCardDiscount :data-cy="deviceType" />
+      <GiftCardDiscount v-if="giftCardAvailable"
+                        :data-cy="deviceType" />
       <div class="product-items">
         <OrderSummaryItem :data-cy="deviceType" />
       </div>
@@ -42,7 +43,7 @@
       <div class="order-summary-title">
         <TextField
           class="order-summary-title-text"
-          :text="orderSummaryText + ': '"
+          :text="orderSummaryText + ':'"
           :data-cy="'collapsed-order-summary-title-mobile'"
         />
         <Price
@@ -61,7 +62,7 @@
           <ArrowUp :data-cy="'collapsed-order-summary-arrow-up-mobile'" />
         </div>
         <ArrowDown :data-cy="'collapsed-order-summary-arrow-down-mobile'"
-          v-else
+                   v-else
         />
       </div>
       <div class="order-summary-description">
@@ -104,6 +105,9 @@ import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryMobile',
   components: {
@@ -141,6 +145,7 @@ export default {
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
+      giftCardAvailable: true,
     };
   },
   computed: {
@@ -158,6 +163,8 @@ export default {
     await this.getCart();
 
     await this.getCustomerInformation();
+
+    this.giftCardAvailable = getMagentoSolutionType();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

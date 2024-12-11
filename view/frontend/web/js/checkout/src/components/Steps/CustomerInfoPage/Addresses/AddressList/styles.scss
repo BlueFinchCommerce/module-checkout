@@ -57,7 +57,7 @@
       box-shadow: var(--selected-address-box-shadow, none);
 
       svg {
-        fill: var(--selected-address-svg-colour, var(--color__semantic-success));
+        fill: var(--selected-address-svg-colour,var(--color__semantic-success)) !important;
         position: absolute;
         right: var(--indent__base);
         top: var(--indent__m);

@@ -1,5 +1,4 @@
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
@@ -11,10 +10,10 @@ import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 
 export default {
   useAgreementStore,
-  useAdyenStore,
   useBraintreeStore,
   useCartStore,
   useConfigStore,
@@ -26,4 +25,5 @@ export default {
   useRecaptchaStore,
   useShippingMethodsStore,
   useStepsStore,
+  useValidationStore,
 };

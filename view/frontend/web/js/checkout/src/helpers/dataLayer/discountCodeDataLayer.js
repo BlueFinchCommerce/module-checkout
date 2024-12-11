@@ -12,8 +12,12 @@ export default (type) => {
 
   if (appliedCoupons?.length) {
     const { code } = appliedCoupons[0];
-    const { label } = prices.discounts[0];
-    const { value } = prices.discounts[0].amount;
+    let label = '';
+    let value = 0;
+    if (prices.discounts?.length) {
+      label = prices.discounts[0]?.label ?? '';
+      value = prices.discounts[0]?.amount?.value ?? 0;
+    }
 
     gtmStore.trackGtmEvent({
       event: type,

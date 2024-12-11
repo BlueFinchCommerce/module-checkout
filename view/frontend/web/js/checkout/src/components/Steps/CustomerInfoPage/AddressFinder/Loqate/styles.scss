@@ -47,7 +47,7 @@
     }
 
     button {
-      color: var(--button__link-font-color);
+      color: var(--input__font-color);
       font-size: var(--font__s);
       background: transparent;
       text-align: left;
@@ -57,8 +57,8 @@
       line-height: 25px;
 
       &:hover {
-        color: var(--button__link-font-color-hover);
-        font-weight: var(--button__link-font-weight-hover);
+        color: var(--input__font-color);
+        font-weight: var(--input__font-color);
       }
     }
   }

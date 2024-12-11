@@ -20,7 +20,6 @@ import OrderSummaryMobile from
 import Steps from '@/components/Steps/Steps.vue';
 
 // Helpers
-import getUrlQuery from '@/helpers/storeConfigs/getUrlQuery';
 import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
 
 export default {
@@ -38,17 +37,19 @@ export default {
     await this.getInitialConfig();
 
     this.setInitialStepState();
-    // If we have a Amazon redirect URL then go to that page.
-    if (getUrlQuery('amazonCheckoutSessionId')) {
-      const stepsStore = useStepsStore();
-      stepsStore.goToAdyenAmazonReviw();
+
+    if (window?.geneCheckout?.callbacks?.onCreate) {
+      Object.values(window.geneCheckout.callbacks.onCreate).forEach(async (callback) => {
+        const { default: callbackFunction } = await import(callback);
+        callbackFunction();
+      });
     }
 
     beginCheckoutDataLayer();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useStepsStore, ['setInitialStepState', 'goToAdyenAmazonReviw']),
+    ...mapActions(useStepsStore, ['setInitialStepState']),
   },
 };
 </script>

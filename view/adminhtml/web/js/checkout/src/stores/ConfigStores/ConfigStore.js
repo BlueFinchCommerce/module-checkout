@@ -25,6 +25,7 @@ export default defineStore('configStore', {
     locale: getLocale(),
     countryCode: undefined,
     rvvupPaymentsActive: false,
+    superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -46,6 +47,7 @@ export default defineStore('configStore', {
       loqate: {},
       afd: {},
     },
+    clickCollectTabsEnabled: false,
     websiteName: '',
     taxCartDisplayPrice: false,
     taxCartDisplayShipping: false,
@@ -132,6 +134,7 @@ export default defineStore('configStore', {
         'gene_better_checkout_progress_bar_visible',
         'gene_better_checkout_loqate_api_key',
         'gene_better_checkout_loqate_enabled',
+        'gene_better_checkout_click_collect_tabs_enabled',
         'gene_better_checkout_afd_enable',
       ];
 
@@ -194,6 +197,7 @@ export default defineStore('configStore', {
             enabled: storeConfig.gene_better_checkout_afd_enable,
           },
         },
+        clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
       });
 
       if (storeConfig.locale) {

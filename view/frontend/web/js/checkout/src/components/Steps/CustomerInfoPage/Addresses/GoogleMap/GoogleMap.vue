@@ -31,31 +31,33 @@ export default {
     },
   },
   computed: {
-    ...mapState(useConfigStore, ['custom']),
+    ...mapState(useConfigStore, ['googleMapEnabled', 'googleMapApiKey']),
   },
   async created() {
-    const loader = new Loader({
-      apiKey: this.custom.googleMapKey,
-    });
+    if (this.googleMapEnabled && this.googleMapApiKey !== '') {
+      const loader = new Loader({
+        apiKey: this.googleMapApiKey,
+      });
 
-    const position = {
-      lat: this.lat,
-      lng: this.lng,
-    };
+      const position = {
+        lat: this.lat,
+        lng: this.lng,
+      };
 
-    const mapOptions = {
-      center: position,
-      zoom: this.zoom,
-      disableDefaultUI: true,
-    };
+      const mapOptions = {
+        center: position,
+        zoom: this.zoom,
+        disableDefaultUI: true,
+      };
 
-    const google = await loader.load();
-    const map = new google.maps.Map(this.$refs.googleMap, mapOptions);
-    // eslint-disable-next-line no-new
-    new google.maps.Marker({
-      position,
-      map,
-    });
+      const google = await loader.load();
+      const map = new google.maps.Map(this.$refs.googleMap, mapOptions);
+      // eslint-disable-next-line no-new
+      new google.maps.Marker({
+        position,
+        map,
+      });
+    }
   },
 };
 </script>

@@ -13,7 +13,7 @@
 .instantCheckout-block {
   p {
     font-size: var(--font__heading--mobile);
-    font-weight: var(--font-weight__semibold);
+    font-weight: var(--instant-checkout-weight, var(--font-weight__semibold));
     color: var(--font__color);
     font-family: var(--font-family__header);
     text-align: var(--instant-checkout__text-align);
@@ -83,13 +83,44 @@
   text-align: left;
   font-family: var(--manually-button__font-family, unset);
   text-decoration: var(--manually-button__text-decoration, var(--button__link-text-decoration));
+  cursor: pointer;
 }
 
 .shipping-type-toggle {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: var(--indent__s);
   margin-top: var(--indent__base);
+  grid-template-columns: 1fr 1fr;
+
+  .details-button,
+  .click-collect-button {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: var(--indent__m);
+
+    p {
+      margin-left: var(--indent__s);
+    }
+  }
+
+  .details-button {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+
+    p {
+      margin-left: 8px; //not variable to match space with click&collect icon
+    }
+  }
+
+  .click-collect-button {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+  }
+}
+
+.no-click-collect-text {
+  padding-top: var(--indent__base);
 }
 
 .delivery-section {
@@ -97,7 +128,7 @@
     border-top: var(--delivery-section-title__border-top, unset);
     padding-bottom: var(--indent__s);
     padding-top: var(--delivery-section-title__padding-top, unset);
-    margin-top: var(--delivery-section-title__margin-top, var(--indent__base));
+    margin-top: var(--delivery-section-title__margin-top, var(--indent_l));
     align-items: center;
     display: flex;
 

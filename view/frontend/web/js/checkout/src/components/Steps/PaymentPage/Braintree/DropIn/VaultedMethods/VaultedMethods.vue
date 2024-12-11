@@ -169,11 +169,12 @@ export default {
       'threeDSThresholdAmount',
       'alwaysRequestThreeDS',
       'errorMessage',
+      'unselectVaultedMethods',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
-    ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
@@ -184,6 +185,17 @@ export default {
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
+  },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'braintree-vaulted') {
+          this.unselectVaultedMethods();
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
@@ -197,6 +209,7 @@ export default {
     ]),
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod']),
 
     async selectPaymentCard(vaultedMethod) {
       // If the method is the same as the one already selected then we can return early.
@@ -204,15 +217,9 @@ export default {
         return;
       }
 
-      this.paymentEmitter.emit('paymentMethodSelected', { id: 'braintree-vaulted' });
-
-      // Remove any existing hosted fields if they exist.
-      if (this.hostedFieldsInstance) {
-        this.hostedFieldsInstance.teardown();
-      }
-
       this.clearErrorMessage();
-      this.selectVaultedMethod(vaultedMethod);
+      await this.selectVaultedMethod(vaultedMethod);
+      this.selectPaymentMethod('braintree-vaulted');
       this.paymentEmitter.emit('braintreeStoredPaymentCardSelected', { publicHash: vaultedMethod.publicHash });
 
       if (this.vaultVerifyCvv) {
@@ -233,7 +240,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements() || !this.validateToken('placeOrder', 'braintreeVaultedMethods')) {
         return;
       }
 

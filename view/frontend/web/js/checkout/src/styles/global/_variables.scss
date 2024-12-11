@@ -15,7 +15,9 @@
     --color__primary-grey4: #ccd2da;
     --color__primary-grey5: #e8edf3;
     --color__primary-grey6: #f5f9fe;
-    --color__primary-grey7: #f5f5f5;
+    --color__primary-grey7: #d9dadb;
+    --color__primary-grey8: #f5f5f5;
+    --color__primary-grey9: #989EA3;
     --color__primary-white: #ffffff;
 
     --color__accent-mint: #00b2ad;
@@ -29,6 +31,11 @@
     --color__transparent: transparent;
 
     --color__adyen-gradient-green: linear-gradient(93.51deg, #48814A 26.02%, #379E3C 79.69%);
+
+    //
+    //  Icons
+    //  ---------------------------------------------
+    --icon__fill-color: var(--color__primary-blue);
 
     //
     //  Page
@@ -298,6 +305,38 @@
     --button-blank__border: none;
 
     //
+    // Tab Buttons
+    //  ---------------------------------------------
+
+    --button__tab-font-color: var(--button-primary__font-color);
+    --button__tab-background-color: var(--button-primary__background-color);
+    --button__tab-border-color: var(--button-primary__border-color);
+    --button__tab-border-weight: var(--button-primary__border-weight);
+    --button__tab-border-box-shadow: 0;
+
+    --button__tab-font-color-hover: var(--button-primary__font-color-hover);
+    --button__tab-background-color-hover: var(--button-primary__background-color-hover);
+    --button__tab-border-color-hover: var(--button-primary__border-color-hover);
+    --button__tab-border-weight-hover: var(--button-primary__border-weight-hover);
+
+    --button__tab-font-color-focus: var(--button-primary__font-color-focus);
+    --button__tab-background-color-focus: var(--button-primary__background-color-focus);
+    --button__tab-border-color-focus: var(--button-primary__border-color-focus);
+    --button__tab-border-weight-focus: var(--button-primary__border-weight-focus);
+
+    --button__tab__unselected-color: var(--button-secondary__font-color);
+    --button__tab__unselected-background-color: var(--button-secondary__background-color);
+    --button__tab__unselected-border-color: var(--button-secondary__border-color);
+
+    --button__tab__unselected-color-hover: var(--button-secondary__font-color-hover);
+    --button__tab__unselected-background-color-hover: var(--button-secondary__background-color-hover);
+    --button__tab__unselected-border-color-hover: var(--button-secondary__border-color-hover);
+
+    --button__tab__unselected-color-focus: var(--button-secondary__font-color-focus);
+    --button__tab__unselected-background-color-focus: var(--button-secondary__background-color-focus);
+    --button__tab__unselected-border-color-focus: var(--button-secondary__border-color-focus);
+
+    //
     // Link Buttons
     //  ---------------------------------------------
     --button__link-font-size: var(--font__s);
@@ -432,7 +471,7 @@
     // Slide Up
     //  ---------------------------------------------
     --slide-up__background-color-closed: var(--color__primary-grey5);
-    --slide-up__font-size-title-closed: var(--font__s);
+    --slide-up__font-size-title-closed: var(--font__m);
     --slide-up__font-size-price-closed: var(--font__m);
     --slide-up__box-shadow-closed: 0px -5px 20px 5px rgba(0, 0, 0, 0.20);
     --slide-up__height: initial;

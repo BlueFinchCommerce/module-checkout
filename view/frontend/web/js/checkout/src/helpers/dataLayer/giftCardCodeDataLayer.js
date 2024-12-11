@@ -6,20 +6,19 @@ export default (type) => {
   const {
     cart: {
       applied_gift_cards: appliedGiftCards,
-      prices,
     },
   } = useCartStore();
 
   if (appliedGiftCards?.length) {
-    const { code } = appliedGiftCards[0];
-    const { label } = prices.discounts[0];
-    const { value } = prices.discounts[0].amount;
+    const {
+      code,
+      applied_balance: { value },
+    } = appliedGiftCards[0];
 
     gtmStore.trackGtmEvent({
       event: type,
-      discountCode: code,
-      dicountTitle: label,
-      discountAmount: value,
+      giftCardCode: code,
+      giftCardValue: value,
     });
   }
 };

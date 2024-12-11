@@ -1,8 +1,14 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
-import getFullCart from '@/helpers/cart/getFullCart';
 
-export default (uid) => {
+import getIsVirtual from '@/helpers/cart/queryData/getIsVirtual';
+import getItems from '@/helpers/cart/queryData/getItems';
+import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
+
+export default async (uid) => {
   const { maskedId } = useCartStore();
   const request = `
     mutation {
@@ -11,7 +17,17 @@ export default (uid) => {
         cart_item_uid: "${uid}"
       }) {
         cart {
-          ${getFullCart()}
+          ${await getEmailField()}
+        
+          ${await getIsVirtual()}
+
+          ${await getItems()}
+
+          ${await getPaymentMethods()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;

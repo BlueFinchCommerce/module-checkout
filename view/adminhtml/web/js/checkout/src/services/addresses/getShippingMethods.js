@@ -55,7 +55,8 @@ export default async (shippingAddress) => {
     region: formattedShippingAddress.region,
     region_id: formattedShippingAddress.region_id || null,
     postcode: formattedShippingAddress.postcode,
-    country_code: formattedShippingAddress.country_code,
+    country_code: formattedShippingAddress.country_code
+      ? formattedShippingAddress.country_code : formattedShippingAddress.country.code,
     telephone: formattedShippingAddress.telephone,
     save_in_address_book: convertBoolean(formattedShippingAddress.save_in_address_book),
   };

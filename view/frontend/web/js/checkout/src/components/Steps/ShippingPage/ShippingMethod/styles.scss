@@ -60,7 +60,6 @@
         display: flex;
         align-items: var(--shipping-methods-align-items, flex-start);
         list-style: none;
-        flex-wrap: wrap;
         font-family: var(--shipping-methods-font-family, unset);
         padding: var(--indent__base);
         border: var(--radio-input-wrapper__border-weight) var(--base__border-style) var(--radio-input-wrapper__border-color);
@@ -68,6 +67,7 @@
         cursor: pointer;
 
         .shipping-method__price {
+          text-align: right;
           font-size: var(--shipping-cost-font-size, var(--font__s));
           font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
         }
@@ -89,6 +89,7 @@
 .shipping-method__content {
   flex-grow: 1;
   top: var(--shipping-methods-top-value, 0);
+  padding-right: var(--indent__s);
 
   p:first-child {
     font-size: var(--shipping-method-title-font-size, var(--font__s));

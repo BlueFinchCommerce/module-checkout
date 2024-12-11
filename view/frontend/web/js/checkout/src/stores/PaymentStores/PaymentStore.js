@@ -10,27 +10,29 @@ export default defineStore('paymentStore', {
     clientKey: '',
     cache: {},
     errorMessage: '',
-    rvvupErrorMessage: '',
+    paymentErrorMessage: '',
     paymentEmitter: mitt(),
     availableMethods: getCartPaymentMethods(),
     expressMethods: [],
     hasVaultedMethods: false,
     firstOpenController: 'braintree',
+    selectedMethod: null,
   }),
   getters: {
     methodsResponse: (state) => state.methodsResponse,
     clientKey: (state) => state.clientKey,
-    isPaymentMethodAvailable: (state) => (
-      (paymentMethod) => state.availableMethods.some(({ code }) => code === paymentMethod)
-    ),
+    isPaymentMethodAvailable: (state) => (paymentMethod) => Array.isArray(state.availableMethods)
+      && state.availableMethods.some(({ code }) => code === paymentMethod),
     getPaymentMethodTitle: (state) => (
       (paymentMethod) => {
-        const method = state.availableMethods.find(({ code }) => code === paymentMethod);
+        const method = Array.isArray(state.availableMethods)
+          && state.availableMethods.find(({ code }) => code === paymentMethod);
         return method ? method.title : null;
       }
     ),
     getPaymentPriority: (state) => (
-      (paymentMethod) => state.availableMethods.findIndex(({ code }) => code === paymentMethod)
+      (paymentMethod) => Array.isArray(state.availableMethods)
+        && state.availableMethods.findIndex(({ code }) => code === paymentMethod)
     ),
     isExpressPaymentsVisible: (state) => (
       state.expressMethods.length
@@ -45,16 +47,23 @@ export default defineStore('paymentStore', {
         errorMessage: message,
       });
     },
-
-    setRvvupErrorMessage(message) {
+    setPaymentErrorMessage(message) {
       this.setData({
-        rvvupErrorMessage: message,
+        paymentErrorMessage: message,
       });
     },
 
     setPaymentMethods(paymentMethods) {
       this.setData({
         availableMethods: paymentMethods,
+      });
+
+      this.selectPaymentMethod(paymentMethods[0].code);
+    },
+
+    selectPaymentMethod(selectedMethod) {
+      this.setData({
+        selectedMethod,
       });
     },
 

@@ -1,7 +1,12 @@
-#braintree-paypal {
+#braintree-paypal-credit,
+#braintree-paypal-paypal {
   &.text-loading {
     border-radius: var(--button__text-placeholder-bg-radius);
-    height: var(--braintree-express-button-height, 48px);
+    height: var(--braintree-express-button-height, 45px);
+  }
+
+  .paypal-buttons + div {
+    margin-top: var(--indent__m);
   }
 
   > div {
@@ -10,7 +15,7 @@
 
   button {
     border-radius: var(--button__border-radius);
-    height: var(--braintree-express-button-height, 48px);
+    height: var(--braintree-express-button-height, 45px);
     overflow: hidden;
     width: 100%;
 

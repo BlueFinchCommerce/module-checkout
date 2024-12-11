@@ -1,8 +1,12 @@
 import useCartStore from '@/stores/CartStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import graphQlRequest from '@/services/graphQlRequest';
-import getFullCart from '@/helpers/cart/getFullCart';
 import deepClone from '@/helpers/addresses/deepClone';
+
+import getEmailField from '@/helpers/cart/queryData/getEmailField';
+import getBillingAddress from '@/helpers/cart/queryData/getBillingAddress';
+import getPrices from '@/helpers/cart/queryData/getPrices';
+import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 
 const formatAddress = (address) => {
   if (!address) {
@@ -23,9 +27,8 @@ const formatAddress = (address) => {
     delete clonedAddress.region;
   }
 
-  if (!clonedAddress.company) {
-    delete clonedAddress.company;
-  }
+  // Preserving save_in_address_book before deletion
+  const saveInAddressBook = clonedAddress.save_in_address_book;
 
   delete clonedAddress.id;
   delete clonedAddress.email;
@@ -42,23 +45,20 @@ const formatAddress = (address) => {
   delete clonedAddress.selected_shipping_method;
   delete clonedAddress.isSavedAddressSelected;
 
-  clonedAddress.save_in_address_book = !!clonedAddress.save_in_address_book;
+  // Set save_in_address_book to a boolean value based on the preserved value
+  clonedAddress.save_in_address_book = !!saveInAddressBook;
 
   return clonedAddress;
 };
 
 export default async (shippingAddress, billingAddress, email = false) => {
-  const { maskedId } = useCartStore();
+  const { maskedId, cart } = useCartStore();
   const { isLoggedIn } = useCustomerStore();
 
   const request = `
     mutation SetAddresses(
       $cartId: String!,
-
-      ${shippingAddress && shippingAddress.firstname ? `
-        $shippingAddresses: [ShippingAddressInput]!,
-        ` : ''}
-
+      ${!cart.is_virtual ? '$shippingAddresses: [ShippingAddressInput]' : ''},
       $billingAddress: BillingAddressInput!
       ${email && !isLoggedIn ? '$email: String!' : ''}
     ) {
@@ -75,47 +75,46 @@ export default async (shippingAddress, billingAddress, email = false) => {
           }
         }` : ''}
 
-      ${shippingAddress && shippingAddress.firstname ? `
-        setShippingAddressesOnCart(
-          input: {
-            cart_id: $cartId
-            shipping_addresses: $shippingAddresses
-          }
-        ) {
-          cart {
-            id
-          }
-        }` : ''}
-
-      setBillingAddressOnCart(
+      setAddressesOnCart(
         input: {
           cart_id: $cartId
+          ${!cart.is_virtual ? `
+            shipping_addresses: $shippingAddresses
+          ` : ''}
           billing_address: $billingAddress
         }
       ) {
         cart {
-          ${getFullCart()}
+          ${await getEmailField()}
+
+          ${await getBillingAddress()}
+
+          ${await getPrices()}
+
+          ${await getShippingAddresses()}
         }
       }
     }`;
 
   const variables = {
     cartId: maskedId,
-    shippingAddresses: [{
-      address: formatAddress(shippingAddress),
-    }],
     billingAddress: {
       address: formatAddress(billingAddress),
     },
     ...(email ? { email } : {}),
   };
 
+  if (!cart.is_virtual) {
+    variables.shippingAddresses = [{
+      address: formatAddress(shippingAddress),
+    }];
+  }
   return graphQlRequest(request, variables)
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
       }
 
-      return response.data.setBillingAddressOnCart;
+      return response.data.setAddressesOnCart;
     });
 };

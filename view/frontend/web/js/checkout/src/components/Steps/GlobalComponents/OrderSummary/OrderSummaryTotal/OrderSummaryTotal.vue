@@ -59,7 +59,10 @@
           :data-cy="dataCy ? `giftwrap-price-${dataCy}` : 'giftwrap-price'"
         />
       </div>
-      <div class="total__row">
+      <div
+        v-if="!cart.is_virtual"
+        class="total__row"
+      >
         <TextField
           class="total__text title"
           :text="$t('progressBar.shippingStepTitle')"
@@ -68,7 +71,9 @@
         <Price
           v-if="cart.shipping_addresses?.[0]?.selected_shipping_method"
           class="total__text"
-          :value="cart.shipping_addresses[0].selected_shipping_method.amount.value"
+          :value="cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            ? cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            : cart.shipping_addresses[0].selected_shipping_method.amount.value"
           :data-cy="dataCy ? `shipping-price-${dataCy}` : 'shipping-price'"
         />
         <TextField
@@ -90,6 +95,11 @@
         :data-cy="dataCy ? `grand-total-price-${dataCy}` : 'grand-total-price'"
       />
     </div>
+    <component
+      :is="orderSummaryMessagesContainer"
+      v-for="orderSummaryMessagesContainer in orderSummaryMessagesContainers"
+      :key="orderSummaryMessagesContainer"
+    />
   </div>
 </template>
 <script>
@@ -103,11 +113,15 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
+// Extensions
+import orderSummaryMessagesContainers from '@/extensions/orderSummaryMessagesContainers';
+
 export default {
   name: 'OrderSummaryTotal',
   components: {
     Price,
     TextField,
+    ...orderSummaryMessagesContainers(),
   },
   props: {
     dataCy: {
@@ -120,6 +134,7 @@ export default {
       orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
       grandTotalText: '',
       grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
+      orderSummaryMessagesContainers: [],
     };
   },
   computed: {
@@ -131,6 +146,7 @@ export default {
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
     await this.getInitialConfig();
+    this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

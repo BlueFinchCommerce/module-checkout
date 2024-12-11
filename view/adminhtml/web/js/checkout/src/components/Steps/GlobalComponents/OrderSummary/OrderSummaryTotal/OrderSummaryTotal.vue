@@ -28,7 +28,7 @@
         <div class="total__row">
           <TextField
             class="total__text title"
-            :text="discount.label"
+            :text="$t('orderSummary.giftCardDiscount.title')"
           />
           <Price
             class="total__text discount"
@@ -57,7 +57,9 @@
         <Price
           v-if="cart.shipping_addresses?.[0]?.selected_shipping_method"
           class="total__text"
-          :value="cart.shipping_addresses[0].selected_shipping_method.amount.value"
+          :value="cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            ? cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+            : cart.shipping_addresses[0].selected_shipping_method.amount.value"
         />
         <TextField
           v-else

@@ -1,17 +1,39 @@
+@import '@/styles/global/_breakpoints';
+
 .agreement-container {
   width: 100%;
+  font-size: var(--font__m);
 
   .agreement-label {
-    font-size: var(--font__xs);
+    span {
+      font-size: var(--font__m);
+    }
+  }
+
+  .agreement-open-modal {
+    color: var(--button__link-font-color);
+    font-size: var(--font__m);
+    font-weight: var(--button__link-font-weight);
+    text-decoration: var(--button__link-text-decoration);
+    margin-left: var(--indent__xs);
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      font-weight: var(--button__link-font-weight-hover);
+      color: var(--button__link-font-color-hover);
+    }
   }
 
   .closer-container {
     .agreement-close {
-      width: var(--button__height) !important; // Override dropin styles
       font-size: var(--font__l);
       font-weight: var(--font-weight__regular);
       background: transparent;
       border: none;
+      padding: 0;
+      min-height: auto;
+      width: auto !important; //override braintree button styles
 
       &:hover,
       &:focus,
@@ -19,6 +41,36 @@
         background: transparent;
         border: none;
       }
+    }
+  }
+
+  &__manual {
+    .agreement-open-modal {
+      margin-left: 0;
+    }
+
+    .agreement-checkbox {
+      label {
+        align-items: unset !important; //override checkout label styles
+      }
+    }
+  }
+}
+
+//Styles for desktop
+
+@media screen and (min-width: $screen__m) {
+  .agreement-container {
+    font-size: var(--font__s);
+
+    .agreement-label {
+      span {
+        font-size: var(--font__s);
+      }
+    }
+
+    .agreement-open-modal {
+      font-size: var(--font__s);
     }
   }
 }

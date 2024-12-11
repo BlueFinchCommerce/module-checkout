@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 
+import functionExtension from '@/extensions/functionExtension';
+
 export default defineStore('stepsStore', {
   state: () => ({
     yourDetailsActive: true,
@@ -28,10 +30,10 @@ export default defineStore('stepsStore', {
       });
       this.$router.push('/');
     },
-    goToShipping() {
+    async goToShipping() {
       // If all products within the cart do not require shipping then whenever this is called go directly to payment.
       const { cart } = useCartStore();
-
+      await functionExtension('onSetShippingStep');
       if (!cart.is_virtual) {
         this.setData({
           yourDetailsActive: true,
@@ -50,14 +52,6 @@ export default defineStore('stepsStore', {
         paymentActive: true,
       });
       this.$router.push('/payments');
-    },
-    goToAdyenAmazonReviw() {
-      this.setData({
-        yourDetailsActive: true,
-        shippingActive: true,
-        paymentActive: true,
-      });
-      this.$router.push('/adyen-amazon-review');
     },
   },
 });

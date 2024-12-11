@@ -8,25 +8,35 @@ $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js', 'adminhtml');
 $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {
-        staticPath: "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>",
-    };
+  window.geneCheckout = window.geneCheckout || {};
+  window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
 </script>
 
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontCdnUrl) : ?>
+    <?= $fontCdnUrl ?>
+<?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';
-            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
         }
     </style>
 <?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>
     <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+<?php endforeach; ?>
+
+<?php foreach ($jsAssets['main'] as $jsAsset): ?>
+    <script>
+      window.geneCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
+    </script>
 <?php endforeach; ?>
 
 <button data-mage-init='{"Gene_BetterCheckout/js/designer": {
@@ -39,12 +49,20 @@ $fontUrl = $assetViewModel->getFontUrl();
     <?= $escaper->escapeHtml(__('Open Designer')) ?>
 </button>
 
+<script>
+  window.geneCheckout.staticPath =
+    window.geneCheckout.staticPath.replace(
+      /(.+)\/Gene_BetterCheckout\//,
+      window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+    );
+</script>
+
 <div id="gene-bettercheckout-designer" style="display: none;" class="open">
     <button class="toggle action-close"></button>
     <div class="sidebar">
         <div class="fields">
             <div class="section-config"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -57,7 +75,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -70,7 +88,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -207,7 +225,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -245,7 +263,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -308,7 +326,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -342,7 +360,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -380,7 +398,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -416,7 +434,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config desktop-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -452,7 +470,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config shipping-specific-field payment-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -488,7 +506,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -535,7 +553,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -548,7 +566,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -646,7 +664,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -682,7 +700,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -721,7 +739,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -821,7 +839,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -855,7 +873,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -868,7 +886,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -926,7 +944,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -984,7 +1002,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                            data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                                 "animate": 200,
                                                 "collapsible": true,
                                                 "openedState": "active"
@@ -1045,7 +1063,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1058,7 +1076,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1116,7 +1134,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1174,7 +1192,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1182,7 +1200,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                     >
                                         <div class="admin__collapsible-block">
                                             <span id="master-styles-secondary-button-focus-tab"></span>
-                                        <a data-role="title" class="subheading" href="#master-styles-secondary-button-focus-tab">
+                                            <a data-role="title" class="subheading" href="#master-styles-secondary-button-focus-tab">
                                                 <?= $escaper->escapeHtml(__('Focus Properties')) ?>
                                             </a>
                                             <div class="config" data-role="content">
@@ -1234,8 +1252,198 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </div>
                             </div>
                         </div>
+                        <div class="section-config details-specific-field"
+                             data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="master-styles-tab-button-tab"></span>
+                                <a data-role="title" href="#master-styles-tab-button-tab">
+                                    <?= $escaper->escapeHtml(__('Tab Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="section-config"
+                                         data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-tab-button-base-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-tab-button-base-tab">
+                                                <?= $escaper->escapeHtml(__('Base Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-text-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Text Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-text-color" data-type="color-picker" data-css-variable="--button__tab-font-color" placeholder="#ffffff"/>
+                                                        <div id="--button__tab-font-color-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-color" data-type="color-picker" data-css-variable="--button__tab-background-color" placeholder="#063967"/>
+                                                        <div id="--button__tab-background-color-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-color">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-border-color" data-type="color-picker" data-css-variable="--button__tab-border-color" placeholder="#063967"/>
+                                                        <div id="--button__tab-border-color-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-stroke-weight">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-tab-button-border-stroke-weight" type="number" placeholder="1" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-tab-button-border-stroke-weight_hidden" type="text" data-css-variable="--button__tab-border-weight" placeholder="1px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                         data-mage-init='{"collapsible": {
+                                            "animate": 200,
+                                            "collapsible": true,
+                                            "openedState": "active"
+                                        }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-tab-button-hover-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-tab-button-hover-tab">
+                                                <?= $escaper->escapeHtml(__('Hover Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-text-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Text Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-text-color-hover" data-type="color-picker" data-css-variable="--button__tab-font-color-hover" placeholder="#ffffff"/>
+                                                        <div id="--button__tab-font-color-hover-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-color-hover" data-type="color-picker" data-css-variable="--button__tab-background-color-hover" placeholder="#063967"/>
+                                                        <div id="--button__tab-background-color-hover-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-color-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Hover Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-border-color-hover" data-type="color-picker" data-css-variable="--button__tab-border-color-hover" placeholder="#063967"/>
+                                                        <div id="--button__tab-border-color-hover-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-stroke-weight-hover">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Hover Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-tab-button-border-stroke-weight-hover" type="number" placeholder="1" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-tab-button-border-stroke-weight-hover_hidden" type="text" data-css-variable="--button__tab-border-weight-hover" placeholder="1px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-config"
+                                         data-mage-init='{"collapsible": {
+                                                "animate": 200,
+                                                "collapsible": true,
+                                                "openedState": "active"
+                                            }}'
+                                    >
+                                        <div class="admin__collapsible-block">
+                                            <span id="master-styles-tab-button-focus-tab"></span>
+                                            <a data-role="title" class="subheading" href="#master-styles-tab-button-focus-tab">
+                                                <?= $escaper->escapeHtml(__('Focus Properties')) ?>
+                                            </a>
+                                            <div class="config" data-role="content">
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-text-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Text Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-text-color-focus" data-type="color-picker" data-css-variable="--button__tab-font-color-focus" placeholder="#ffffff"/>
+                                                        <div id="--button__tab-font-color-focus-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-color-focus" data-type="color-picker" data-css-variable="--button__tab-background-color-focus" placeholder="#063967"/>
+                                                        <div id="--button__tab-background-color-focus-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-color-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Focus Colour')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <div class="color-input-wrapper">
+                                                        <input id="gene-bettercheckout-tab-button-border-color-focus" data-type="color-picker" data-css-variable="--button__tab-border-color-focus" placeholder="#063967"/>
+                                                        <div id="--button__tab-border-color-focus-swatch" class="color-input-swatch"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="fieldset">
+                                                    <label for="gene-bettercheckout-tab-button-border-stroke-weight-focus">
+                                                        <span>
+                                                            <?= $escaper->escapeHtml(__('Tab Button Border Focus Stroke Weight')) ?>
+                                                        </span>
+                                                    </label>
+                                                    <input class="pixel-input" id="gene-bettercheckout-tab-button-border-stroke-weight-focus" type="number" placeholder="1" max="10"/>
+                                                    <input class="hidden" id="gene-bettercheckout-tab-button-border-stroke-weight-focus_hidden" type="text" data-css-variable="--button__tab-border-weight-focus" placeholder="1px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1248,7 +1456,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1284,7 +1492,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1311,7 +1519,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </div>
                                     </div>
                                     <div class="section-config"
-                                        data-mage-init='{"collapsible": {
+                                         data-mage-init='{"collapsible": {
                                             "animate": 200,
                                             "collapsible": true,
                                             "openedState": "active"
@@ -1341,7 +1549,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1439,7 +1647,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1488,7 +1696,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config details-specific-field payment-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1576,7 +1784,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1606,7 +1814,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -1619,7 +1827,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1651,7 +1859,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1729,7 +1937,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1834,7 +2042,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1866,7 +2074,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1879,6 +2087,14 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </a>
                                 <div class="config" data-role="content">
                                     <!-- gene-bettercheckout-removeitem-text still available to change in component but currently hidden by css -->
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-crosssells-cta-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('"Cross Sells Add to Basket Button" Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-crosssells-cta-text" data-type="checkout-wording" type="text" placeholder="Add to Basket" />
+                                    </div>
                                     <div class="fieldset">
                                         <label for="gene-bettercheckout-applybutton-text">
                                             <span>
@@ -1899,7 +2115,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config desktop-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1935,7 +2151,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config mobile-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -1984,7 +2200,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config sign-in-specific-field details-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2019,7 +2235,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config sign-in-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2032,7 +2248,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2055,16 +2271,16 @@ $fontUrl = $assetViewModel->getFontUrl();
                                 </div>
                             </div>
                         </div>
-                        <div class="section-config no-user-specific-field registered-user-specific-field"
-                            data-mage-init='{"collapsible": {
+                        <div class="section-config no-user-specific-field"
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
                             }}'
                         >
                             <div class="admin__collapsible-block">
-                                <span id="step-1-primary-buttons-tab"></span>
-                                <a data-role="title" href="#step-1-primary-buttons-tab">
+                                <span id="step-1-primary-buttons-tab-no-user"></span>
+                                <a data-role="title" href="#step-1-primary-buttons-tab-no-user">
                                     <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
                                 </a>
                                 <div class="config" data-role="content">
@@ -2076,6 +2292,22 @@ $fontUrl = $assetViewModel->getFontUrl();
                                         </label>
                                         <input id="gene-bettercheckout-continuebutton-text" data-type="checkout-wording" type="text" placeholder="Continue" />
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config registered-user-specific-field"
+                             data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-1-primary-buttons-tab-registered"></span>
+                                <a data-role="title" href="#step-1-primary-buttons-tab-registered">
+                                    <?= $escaper->escapeHtml(__('Primary Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
                                     <div class="fieldset registered-user-specific-field">
                                         <label for="gene-bettercheckout-signinbutton-text">
                                             <span>
@@ -2088,7 +2320,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config guest-user-specific-field registered-user-specific-field"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2123,7 +2355,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config details-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2136,7 +2368,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2176,7 +2408,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2200,7 +2432,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2224,7 +2456,39 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
+                                "animate": 200,
+                                "collapsible": true,
+                                "openedState": "active"
+                            }}'
+                        >
+                            <div class="admin__collapsible-block">
+                                <span id="step-2-tab-buttons-tab"></span>
+                                <a data-role="title" href="#step-2-tab-buttons-tab">
+                                    <?= $escaper->escapeHtml(__('Tab Buttons')) ?>
+                                </a>
+                                <div class="config" data-role="content">
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-homedelivery-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Home Delivery Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-homedelivery-text" data-type="checkout-wording" type="text" placeholder="Home Delivery" />
+                                    </div>
+                                    <div class="fieldset">
+                                        <label for="gene-bettercheckout-clickandcollect-text">
+                                            <span>
+                                                <?= $escaper->escapeHtml(__('Click & Collect Button Text')) ?>
+                                            </span>
+                                        </label>
+                                        <input id="gene-bettercheckout-clickandcollect-text" data-type="checkout-wording" type="text" placeholder="Click & Collect" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="section-config"
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2254,7 +2518,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config shipping-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2267,7 +2531,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2292,7 +2556,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                         </div>
                         <div class="config" data-role="content">
                             <div class="section-config"
-                                data-mage-init='{"collapsible": {
+                                 data-mage-init='{"collapsible": {
                                     "animate": 200,
                                     "collapsible": true,
                                     "openedState": "active"
@@ -2320,7 +2584,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                 </div>
             </div>
             <div class="section-config payment-specific-field"
-                data-mage-init='{"collapsible": {
+                 data-mage-init='{"collapsible": {
                     "animate": 200,
                     "collapsible": true,
                     "openedState": "active"
@@ -2333,7 +2597,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                     </a>
                     <div class="config" data-role="content">
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"
@@ -2365,7 +2629,7 @@ $fontUrl = $assetViewModel->getFontUrl();
                             </div>
                         </div>
                         <div class="section-config"
-                            data-mage-init='{"collapsible": {
+                             data-mage-init='{"collapsible": {
                                 "animate": 200,
                                 "collapsible": true,
                                 "openedState": "active"

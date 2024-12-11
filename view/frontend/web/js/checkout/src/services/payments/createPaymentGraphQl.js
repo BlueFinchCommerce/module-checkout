@@ -41,15 +41,17 @@ export default (paymentMethod) => {
 
   const customHeaders = {};
 
-  if (tokens.placeOrder) {
-    customHeaders['X-ReCaptcha'] = tokens.placeOrder;
+  if (tokens.placeOrder || tokens.braintree) {
+    customHeaders['X-ReCaptcha'] = tokens.placeOrder ? tokens.placeOrder : tokens.braintree;
   }
 
   return beforePaymentRequest()
     .then(() => graphQlRequest(request, variables, customHeaders))
     .then((response) => {
-      if (response.errors) {
+      if (response?.errors) {
         throw new Error(response.errors[0].message);
+      } else if (response?.data?.placeOrder?.errors) {
+        throw new Error(response.data.placeOrder.errors[0].message);
       }
 
       // Add tracking in on payment complete.

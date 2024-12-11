@@ -19,13 +19,13 @@
             :data-cy="dataCy ? `product-name-${dataCy}` : 'product-name'"
           />
           <ProductOptions
-            v-if="item?.configurable_options"
+            v-if="item?.configurable_options || item?.customizable_options"
             :item="item"
             :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
           />
           <div class="product-item-price">
             <Price v-if="item.__typename !== 'GiftCardCartItem'"
-              :value="item.product?.price_range?.minimum_price?.final_price?.value"
+              :value="item.prices?.row_total_including_tax?.value"
               :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
             />
             <Price v-else

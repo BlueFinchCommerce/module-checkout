@@ -43,6 +43,7 @@
     display: flex;
     position: relative;
     justify-content: var(--modal-header-justify-content, space-between);
+    margin: var(--indent__base) var(--indent__m) var(--indent__base) var(--indent__base);
   }
 
   &-footer {
@@ -59,9 +60,25 @@
   }
 
   &-body {
-    padding: var(--indent__base);
+    padding-right: var(--indent__base);
     overflow: auto;
     position: relative;
+    margin: 0 var(--indent__base);
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--color__primary-grey5);
+      border-radius: var(--border-radius, 6px);
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: var(--color__primary-grey5);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color__primary-grey2);
+      border-radius: var(--border-radius, 6px);
+    }
   }
 }
 
@@ -162,7 +179,6 @@
 @mixin largeWidth() {
   .modal {
     margin: 0 auto;
-    max-height: max-content;
   }
 
   .amasty-modal {

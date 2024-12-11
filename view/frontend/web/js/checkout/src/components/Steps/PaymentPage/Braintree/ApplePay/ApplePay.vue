@@ -22,7 +22,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getCartSectionNames from '@/helpers/cart/getCartSectionNames';
@@ -33,6 +32,9 @@ import createPayment from '@/services/payments/createPaymentRest';
 import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
+
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
 
 export default {
   name: 'BraintreeApplePay',
@@ -48,6 +50,7 @@ export default {
       shippingMethods: [],
       applePayConfig: null,
       key: 'braintreeApplePay',
+      method: 'braintree_applepay',
     };
   },
 
@@ -64,7 +67,7 @@ export default {
       'getRegionId',
       'storeCode',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
 
   async created() {
@@ -81,7 +84,7 @@ export default {
     await this.getCart();
 
     this.applePayConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_applepay'
+      method.code === this.method
     ));
 
     if (!this.applePayConfig) {
@@ -119,7 +122,7 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -127,18 +130,16 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'validatePostcode']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'createNewAddress']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
 
     click(event) {
       event.preventDefault();
       this.setErrorMessage('');
-      // Check that the agreements (if any) and recpatcha is valid.
+      // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!agreementsValid) {
         return;
       }
 
@@ -169,13 +170,21 @@ export default {
           session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
         }
 
+        // Event handler for canceling the Apple Pay session
+        session.oncancel = () => {
+          this.createNewAddress('shipping');
+        };
+
         session.begin();
       } catch (err) {
         this.setApplePayError();
       }
     },
 
-    onValidateMerchant(event, session) {
+    async onValidateMerchant(event, session) {
+      await functionExtension('onBraintreeExpressInit');
+      this.setNotClickAndCollect();
+
       return this.applePayInstance.performValidation(
         {
           validationURL: event.validationURL,
@@ -235,7 +244,7 @@ export default {
               const payment = {
                 email,
                 paymentMethod: {
-                  method: 'braintree_applepay',
+                  method: this.method,
                   additional_data: {
                     payment_method_nonce: payload.nonce,
                     device_data: this.dataCollectorInstance.deviceData,
@@ -253,6 +262,8 @@ export default {
             });
         } catch (error) {
           console.log(error);
+          // clear shipping address form
+          this.createNewAddress('shipping');
           session.completePayment(window.ApplePaySession.STATUS_FAILURE);
         }
       });
@@ -261,6 +272,7 @@ export default {
     async onShippingContactSelect(data, session) {
       const address = {
         city: data.shippingContact.locality,
+        company: '',
         region: data.shippingContact.administrativeArea,
         region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
         country_code: data.shippingContact.countryCode.toUpperCase(),
@@ -273,7 +285,7 @@ export default {
 
       this.address = address;
 
-      const result = await getShippingMethods(address);
+      const result = await getShippingMethods(address, this.method, true);
       const methods = result.shipping_addresses[0].available_shipping_methods;
 
       const filteredMethods = methods.filter(({ method_code: methodCode }) => (
@@ -410,6 +422,18 @@ export default {
         "We're unable to take payments through Apple Pay at the moment. Please try an alternative payment method.",
       );
     },
+  },
+
+  unmounted() {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')
+      && !this.isPaymentMethodAvailable('braintree_paypal')) {
+      this.instance.teardown();
+    }
+
+    if (this.applePayInstance) {
+      this.applePayInstance.teardown();
+    }
   },
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div
-    v-if="item.configurable_options && item.configurable_options.length"
+    v-if="(item.configurable_options && item.configurable_options.length)
+    || (item.customizable_options && item.customizable_options.length)"
     class="product-options"
   >
     <div
@@ -21,7 +22,7 @@
       />
     </div>
     <div
-      v-if="productOptionsVisible"
+      v-if="productOptionsVisible && item.configurable_options"
       class="product-option"
     >
       <div
@@ -31,6 +32,21 @@
       >
         <TextField
           :text="`${option.option_label}: ${option.value_label}`"
+          :data-cy="dataCy ? `${dataCy}-option` : 'product-options-option'"
+        />
+      </div>
+    </div>
+    <div
+      v-if="productOptionsVisible && item.customizable_options"
+      class="product-option"
+    >
+      <div
+        v-for="(option, index) in item.customizable_options"
+        :key="index"
+        class="option-value"
+      >
+        <TextField
+          :text="`${option.label}`"
           :data-cy="dataCy ? `${dataCy}-option` : 'product-options-option'"
         />
       </div>

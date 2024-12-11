@@ -4,33 +4,12 @@
     class="footer-icons"
     data-cy="footer-icons"
   >
-    <template v-if="isAdyenAvailable">
-      <div>
-        <ul v-if="Object.keys(paymentTypes).length > 0">
-          <li
-            v-for="(paymentType, index) in paymentTypes"
-            :key="index"
-            class="pay-with__content"
-          >
-            <img
-              v-if="!paymentType.icon.includes('klarna_account')"
-              :src="paymentType.icon.includes('klarna') ? KlarnaIcon
-                : paymentType.icon.includes('clearpay') ? ClearpayIcon
-                  : paymentType.icon.includes('paypal') ? PayPalIcon
-                    : paymentType.icon.includes('amex') ? ExpressPayIcon
-                      : paymentType.icon.includes('mc') ? MastercardPayIcon
-                        : paymentType.icon.includes('visa') ? VisaPayIcon
-                          : paymentType.icon.includes('google') ? GooglePayIcon
-                            : paymentType.icon.includes('apple') ? ApplePayIcon
-                              : paymentType.icon"
-              :alt="paymentType.name"
-              :class="generateClass(paymentType.name)"
-              :data-cy="generateDataCY(paymentType.icon, 'adyen')"
-            >
-          </li>
-        </ul>
-      </div>
-    </template>
+    <component
+      :is="footerPaymentIcon"
+      v-for="footerPaymentIcon in footerPaymentIcons"
+      :key="footerPaymentIcon"
+    />
+
     <div>
       <ul v-if="availableMethods.length > 0">
         <template
@@ -44,6 +23,7 @@
               class="pay-with__content"
             >
               <img
+                :class="cCType"
                 :alt="cCType"
                 :src="getCCIcon(cCType)"
                 :data-cy="generateDataCY(cCType, 'braintree')"
@@ -80,73 +60,69 @@
 // Stores
 import { mapState } from 'pinia';
 import { computed, reactive } from 'vue';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
 
 // Icons
-import ApplePaySvg from '@/icons/payments/white/icon-applepay-white.svg';
-import GooglePaySvg from '@/icons/payments/white/icon-googlepay-white.svg';
 import ExpressPaySvg from '@/icons/payments/white/icon-amex-white.svg';
-import PayPalSvg from '@/icons/payments/white/icon-paypal-white.svg';
-import KlarnaSvg from '@/icons/payments/white/icon-klarna-white.svg';
 import MaestroPaySvg from '@/icons/payments/white/icon-maestro-white.svg';
 import MastercardPaySvg from '@/icons/payments/white/icon-mastercard-white.svg';
 import VisaPaySvg from '@/icons/payments/white/icon-visa-white.svg';
-import ClearpaySvg from '@/icons/payments/white/icon-clearpay-white.svg';
-import VenmoPayIcon from '@/icons/payments/white/icon-venmo-white.svg';
 import DiscoverSvg from '@/icons/payments/white/icon-discover-white.svg';
 import DinersSvg from '@/icons/payments/white/icon-diners-white.svg';
 import JCBSvg from '@/icons/payments/white/icon-jcb-white.svg';
+import ApplePaySvg from '@/icons/payments/white/icon-applepay-white.svg';
+import GooglePaySvg from '@/icons/payments/white/icon-googlepay-white.svg';
+import PayPalSvg from '@/icons/payments/white/icon-paypal-white.svg';
+import VenmoPayIcon from '@/icons/payments/white/icon-venmo-white.svg';
+
+// Extensions
+import footerPaymentIcons from '@/extensions/footerPaymentIcons';
 
 export default {
   name: 'FooterIcons',
+  components: {
+    ...footerPaymentIcons(),
+  },
   props: {
     visibility: {
       type: String,
     },
   },
+  setup(props) {
+    const reactiveProps = reactive(props);
+    return {
+      style: computed(() => ({
+        display: reactiveProps.visibility,
+      })),
+    };
+  },
   data() {
     return {
       map: [],
       paymentOptionPriority: [],
+      footerPaymentIcons: [],
     };
   },
   computed: {
-    ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods', 'getPaymentPriority', 'isPaymentMethodAvailable']),
     ApplePayIcon() {
-      return `${getStaticUrl(ApplePaySvg)}`;
+      return getStaticUrl(ApplePaySvg);
     },
     GooglePayIcon() {
-      return `${getStaticUrl(GooglePaySvg)}`;
-    },
-    ExpressPayIcon() {
-      return `${getStaticUrl(ExpressPaySvg)}`;
+      return getStaticUrl(GooglePaySvg);
     },
     PayPalIcon() {
-      return `${getStaticUrl(PayPalSvg)}`;
-    },
-    KlarnaIcon() {
-      return `${getStaticUrl(KlarnaSvg)}`;
-    },
-    MaestroPayIcon() {
-      return `${getStaticUrl(MaestroPaySvg)}`;
-    },
-    MastercardPayIcon() {
-      return `${getStaticUrl(MastercardPaySvg)}`;
-    },
-    VisaPayIcon() {
-      return `${getStaticUrl(VisaPaySvg)}`;
-    },
-    ClearpayIcon() {
-      return `${getStaticUrl(ClearpaySvg)}`;
+      return getStaticUrl(PayPalSvg);
     },
     VenmoPayIcon() {
-      return `${getStaticUrl(VenmoPayIcon)}`;
+      return getStaticUrl(VenmoPayIcon);
     },
+  },
+  created() {
+    this.footerPaymentIcons = Object.keys(footerPaymentIcons());
   },
   methods: {
     generateClass(paymentName) {
@@ -188,14 +164,6 @@ export default {
           return '';
       }
     },
-  },
-  setup(props) {
-    const reactiveProps = reactive(props);
-    return {
-      style: computed(() => ({
-        display: reactiveProps.visibility,
-      })),
-    };
   },
 };
 </script>

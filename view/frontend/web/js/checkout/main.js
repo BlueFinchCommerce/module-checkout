@@ -31,7 +31,9 @@ app.use(router);
 app.mount('#gene-better-checkout-root');
 
 window.geneCheckout.helpers = helpers;
+window.geneCheckout.router = router;
+window.geneCheckout.services = services;
 
 export default {
-  components, helpers, services, stores, pinia,
+  components, helpers, router, services, stores, pinia,
 };

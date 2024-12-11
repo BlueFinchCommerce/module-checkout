@@ -36,6 +36,11 @@ import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default {
   name: 'BraintreePayPal',
+  props: {
+    isCredit: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       googlePayNoShippingMethods: '',
@@ -44,6 +49,7 @@ export default {
       paypalInstance: null,
       paypalLoaded: false,
       key: 'braintreePayPal',
+      namespace: 'paypal',
     };
   },
   computed: {
@@ -99,11 +105,27 @@ export default {
       }
 
       this.paypalInstance = markRaw(paypalInstance);
-      paypalInstance.loadPayPalSDK({
+
+      this.namespace = `${this.namespace}${this.isCredit ? '_credit' : ''}`;
+
+      const sdkConfig = {
         currency: this.currencyCode,
         intent: 'capture',
         vault: 'false',
-      }, () => {
+        dataAttributes: {
+          namespace: this.namespace,
+        },
+      };
+
+      if (this.isCredit) {
+        sdkConfig['enable-funding'] = 'credit';
+      }
+
+      if (this.environment === 'sandbox') {
+        sdkConfig['buyer-country'] = this.countryCode;
+      }
+
+      paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,
           commit: true,
@@ -114,7 +136,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window.paypal.FUNDING.PAYPAL,
+          fundingSource: window[this.namespace].FUNDING.PAYPAL,
           offerCredit: false,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
@@ -150,10 +172,12 @@ export default {
               firstname: 'UNKNOWN',
               lastname: 'UNKNOWN',
             };
-            const shippingMethods = await getShippingMethods(address);
+
+            const result = await getShippingMethods(address);
+            const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
-            const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+            const fShippingMethods = methods.filter((sid) => sid.id !== 'nominated_delivery');
 
             const selectedShipping = !data.selected_shipping_option
               ? fShippingMethods[0]
@@ -205,7 +229,15 @@ export default {
 
         this.paypalLoaded = true;
 
-        return window.paypal.Buttons(renderData).render('#braintree-paypal');
+        // If is PayPalCredit and enabled.
+        if (this.paypal.creditActive && this.isCredit) {
+          renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+          renderData.style.color = this.paypal.creditColor !== 'gold' ? this.paypal.creditColor : 'black';
+          renderData.style.label = this.paypal.creditLabel;
+          renderData.style.shape = this.paypal.creditShape;
+        }
+
+        return window[this.namespace].Buttons(renderData).render('#braintree-paypal');
       });
     });
   },
@@ -271,7 +303,7 @@ export default {
         firstname: billingFirstname || firstname,
         lastname: billingLastname || (lastname.length ? lastname.join(' ') : 'UNKNOWN'),
         city: address.city,
-        telephone,
+        telephone: telephone !== undefined ? telephone : '000000000',
         region: {
           ...(address.state ? { region: address.state } : {}),
           ...(regionId ? { region_id: regionId } : {}),

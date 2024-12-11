@@ -53,6 +53,67 @@ body {
     opacity: var(--disabled-buttons-opacity, 0.5);
   }
 
+  svg {
+    fill: var(--icon__fill-color);
+  }
+
+  .search-icon,
+  .coupon-icon {
+    fill: none;
+    stroke: var(--icon__fill-color);
+  }
+
+  .steps-container {
+    .container {
+      padding-bottom: var(--indent__xl);
+    }
+  }
+
+  .modal {
+    height: fit-content;
+
+    .modal-body {
+      max-height: 400px;
+    }
+
+    .closer-container {
+      button {
+        height: auto !important; //override braintree styles
+      }
+    }
+  }
+
+  // move modal a bit higher as braintree drop in
+  // makes modal sit under summary container on mobile
+  .braintree-dropin {
+    .agreement-modal {
+      top: var(--indent__s);
+
+      .modal-body {
+        max-height: 350px;
+      }
+    }
+  }
+
+  .privacy-modal {
+    .modal-header {
+      justify-content: flex-end;
+    }
+
+    .modal-footer {
+      border-top: 0;
+      justify-content: center;
+
+      .button {
+        width: auto;
+
+        &--secondary {
+          margin-right: var(--indent__base);
+        }
+      }
+    }
+  }
+
   @media screen and (min-width: $screen__m) {
     .root {
       background: var(--page__background-color--desktop);

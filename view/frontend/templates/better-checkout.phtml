@@ -10,13 +10,17 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $customWordings = $assetViewModel->getCustomWording();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
     window.geneCheckout = window.geneCheckout || {};
+    window.geneCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
 
-    window.geneCheckout.staticPath = "<?= $block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
+    window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
     window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
     window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
     window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
@@ -31,11 +35,13 @@ $customWordings = $assetViewModel->getCustomWording();
 
 <link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
 
-<?php if ($fontUrl !== null) : ?>
+<?php if ($fontCdnUrl) : ?>
+    <?= $fontCdnUrl ?>
+<?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';
-            src: url(<?= $fontUrl ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
         }
     </style>
 <?php endif; ?>
@@ -50,6 +56,14 @@ $customWordings = $assetViewModel->getCustomWording();
     </script>
     <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
 <?php endforeach; ?>
+
+<script>
+    window.geneCheckout.staticPath =
+        window.geneCheckout.staticPath.replace(
+            /(.+)\/Gene_BetterCheckout\//,
+            window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+        );
+</script>
 
 <?php if (array_key_exists('imports', $jsAssets)): ?>
     <?php foreach ($jsAssets['imports'] as $jsAsset): ?>

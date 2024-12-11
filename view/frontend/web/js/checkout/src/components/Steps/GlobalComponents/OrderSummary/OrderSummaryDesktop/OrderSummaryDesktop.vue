@@ -2,7 +2,8 @@
   <div class="order-summary-desktop">
     <PromotionComponent :data-cy="deviceType" />
     <CouponDiscount :data-cy="deviceType" />
-    <GiftCardDiscount :data-cy="deviceType" />
+    <GiftCardDiscount v-if="giftCardAvailable"
+                      :data-cy="deviceType" />
     <div class="order-summary-desktop-items">
       <OrderSummaryItem :data-cy="deviceType"/>
     </div>
@@ -18,6 +19,9 @@ import PromotionComponent
 import GiftCardDiscount from '@/components/Steps/GlobalComponents/OrderSummary/GiftCardDiscount/GiftCardDiscount.vue';
 import CouponDiscount from '@/components/Steps/GlobalComponents/OrderSummary/CouponDiscount/CouponDiscount.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryDesktop',
   components: {
@@ -30,7 +34,11 @@ export default {
   data() {
     return {
       deviceType: 'desktop',
+      giftCardAvailable: true,
     };
+  },
+  created() {
+    this.giftCardAvailable = getMagentoSolutionType();
   },
 };
 </script>

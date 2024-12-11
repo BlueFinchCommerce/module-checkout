@@ -20,7 +20,6 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import expressPaymentOnClickDataLayer from '@/helpers/dataLayer/expressPaymentOnClickDataLayer';
@@ -34,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeGooglePay',
   data() {
@@ -43,7 +45,9 @@ export default {
       googleClient: null,
       googlePaymentInstance: null,
       googlePayLoaded: false,
+      threeDSecureInstance: null,
       key: 'braintreeGooglePay',
+      method: 'braintree_googlepay',
     };
   },
   computed: {
@@ -73,7 +77,7 @@ export default {
     await this.getCart();
 
     const googlePayConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_googlepay'
+      method.code === this.method
     ));
 
     if (!googlePayConfig) {
@@ -86,7 +90,7 @@ export default {
     await this.createClientToken();
 
     this.googleClient = markRaw(new window.google.payments.api.PaymentsClient({
-      environment: this.environment === 'sandbox' ? 'TEST' : 'LIVE',
+      environment: this.environment === 'sandbox' ? 'TEST' : 'PRODUCTION',
       paymentDataCallbacks: {
         ...(this.cart.is_virtual ? {} : { onPaymentDataChanged: this.onPaymentDataChanged }),
         onPaymentAuthorized: this.onPaymentAuthorized,
@@ -109,8 +113,9 @@ export default {
           apiVersionMinor: 0,
           allowedPaymentMethods: googlePaymentInstance.createPaymentDataRequest().allowedPaymentMethods,
           existingPaymentMethodRequired: true,
-        }).then((isReadyToPay) => {
+        }).then(async (isReadyToPay) => {
           if (isReadyToPay) {
+            await functionExtension('onBraintreeExpressInit');
             const button = this.googleClient.createButton({
               buttonColor: this.google.buttonColor,
               buttonType: 'buy',
@@ -132,7 +137,7 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
     ...mapActions(useLoadingStore, ['setLoadingState']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -140,18 +145,18 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'createNewAddress']),
 
     onClick(type) {
       this.setErrorMessage('');
-      // Check that the agreements (if any) and recpatcha is valid.
+      // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!agreementsValid) {
         return false;
       }
+
+      this.setNotClickAndCollect();
 
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 
@@ -159,7 +164,7 @@ export default {
         callbackIntents.push('SHIPPING_ADDRESS', 'SHIPPING_OPTION');
       }
 
-      const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest({
+      const paymentRequest = {
         transactionInfo: {
           countryCode: this.countryCode,
           currencyCode: this.currencyCode,
@@ -173,7 +178,15 @@ export default {
         },
         shippingOptionRequired: !this.cart.is_virtual,
         callbackIntents,
-      });
+      };
+
+      if (this.environment !== 'sandbox') {
+        paymentRequest.merchantInfo = {
+          merchantId: this.google.merchantId,
+        };
+      }
+
+      const paymentDataRequest = this.googlePaymentInstance.createPaymentDataRequest(paymentRequest);
 
       const cardPaymentMethod = paymentDataRequest.allowedPaymentMethods[0];
       cardPaymentMethod.parameters.billingAddressRequired = true;
@@ -197,6 +210,8 @@ export default {
           try {
             handleServiceError(err);
           } catch (formattedError) {
+            // clear shipping address form
+            this.createNewAddress('shipping');
             this.setErrorMessage(formattedError);
           }
         });
@@ -208,10 +223,12 @@ export default {
       ));
     },
 
-    onPaymentDataChanged(data) {
+    async onPaymentDataChanged(data) {
+      await functionExtension('onPaymentDataChanged');
       return new Promise((resolve) => {
         const address = {
           city: data.shippingAddress.locality,
+          company: '',
           country_code: data.shippingAddress.countryCode,
           postcode: data.shippingAddress.postalCode,
           region: data.shippingAddress.administrativeArea,
@@ -222,7 +239,7 @@ export default {
           lastname: 'UNKNOWN',
         };
 
-        getShippingMethods(address).then(async (response) => {
+        getShippingMethods(address, this.method, true).then(async (response) => {
           const methods = response.shipping_addresses[0].available_shipping_methods;
 
           const shippingMethods = methods.map((shippingMethod) => {
@@ -364,7 +381,7 @@ export default {
         });
       }
 
-      const threeDSecureInstance = await braintree.threeDSecure
+      this.threeDSecureInstance = await braintree.threeDSecure
         .create({
           version: 2,
           client: this.instance,
@@ -388,7 +405,7 @@ export default {
           },
         };
 
-        threeDSecureInstance.verifyCard(threeDSecureParameters, (err, threeDSResponse) => {
+        this.threeDSecureInstance.verifyCard(threeDSecureParameters, (err, threeDSResponse) => {
           if (err) {
             if (err.code === 'THREEDS_LOOKUP_VALIDATION_ERROR') {
               const errorMessage = err.details.originalError.details.originalError.error.message;
@@ -432,7 +449,7 @@ export default {
       const payment = {
         email: response.email,
         paymentMethod: {
-          method: 'braintree_googlepay',
+          method: this.method,
           additional_data: {
             payment_method_nonce: response.nonce,
           },
@@ -465,6 +482,19 @@ export default {
         },
       };
     },
+  },
+  unmounted() {
+    if (this.instance) {
+      this.instance.teardown();
+    }
+
+    if (this.googlePaymentInstance) {
+      this.googlePaymentInstance.teardown();
+    }
+
+    if (this.threeDSecureInstance) {
+      this.threeDSecureInstance.teardown();
+    }
   },
 };
 </script>

@@ -3,7 +3,6 @@ import SignInPage from '@/components/Steps/CustomerInfoPage/SignInPage/SignInPag
 import DetailsPage from '@/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue';
 import ShippingPage from '@/components/Steps/ShippingPage/ShippingPage.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
-import AmazonReview from '@/components/Steps/PaymentPage/Adyen/AmazonReview/AmazonReview.vue';
 
 const routes = [
   {
@@ -37,14 +36,6 @@ const routes = [
     path: '/payments',
     name: 'PaymentPage',
     component: PaymentPage,
-    meta: {
-      depth: 3,
-    },
-  },
-  {
-    path: '/adyen-amazon-review',
-    name: 'AmazonReview',
-    component: AmazonReview,
     meta: {
       depth: 3,
     },

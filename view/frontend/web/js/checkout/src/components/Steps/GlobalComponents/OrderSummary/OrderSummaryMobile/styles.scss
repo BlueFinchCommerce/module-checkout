@@ -36,7 +36,6 @@
   &-title {
     display: grid;
     grid-auto-flow: column;
-    grid-gap: 5px;
     align-items: center;
 
     p {
@@ -45,7 +44,7 @@
 
     &-text {
       font-size: var(--slide-up__font-size-title-closed);
-      font-weight: var(--font-weight__semibold);
+      font-weight: var(--font-weight__bold);
       color: var(--font__color);
     }
 
@@ -53,6 +52,7 @@
       font-size: var(--slide-up__font-size-price-closed);
       font-weight: var(--font-weight__bold);
       color: var(--font__color);
+      padding-left: var(--indent__xs);
     }
   }
 

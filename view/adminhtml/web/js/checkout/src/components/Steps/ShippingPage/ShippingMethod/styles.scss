@@ -68,6 +68,7 @@
         cursor: pointer;
 
         .shipping-method__price {
+          text-align: right;
           font-size: var(--shipping-cost-font-size, var(--font__s));
           font-weight: var(--shipping-cost-font-weight, var(--font-weight__semibold));
         }

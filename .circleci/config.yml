@@ -74,12 +74,6 @@ jobs:
           name: Composer Create Project
           command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
       - run:
-          name: Composer Install
-          environment:
-            COMPOSER_ALLOW_SUPERUSER: 1
-          command: |
-            composer install --prefer-source --no-interaction --dev
-      - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
             composer config repositories.gene-packages '{"type": "composer", "url": "https://repo.packagist.com/gene/", "canonical": false}'
@@ -120,17 +114,6 @@ jobs:
           name: Install composer modules within Better Checkout
           command: |
             composer install --working-dir=vendor/gene/module-better-checkout  --dev
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./*
-  static_tests:
-    docker:
-      - image: cimg/php:8.2.15-browsers
-    working_directory: ~/static-tests
-    steps:
-      - attach_workspace:
-            at: .
       - run:
           name: PHPCS
           command: |
@@ -145,19 +128,13 @@ jobs:
           command: |
             mkdir -p ~/phpunit
       - run:
-         name: PHPUnit
-         working_directory: ./vendor/gene/module-better-checkout
-         command: ./vendor/bin/phpunit -c phpunit.xml
+          name: PHPUnit
+          working_directory: ./vendor/gene/module-better-checkout
+          command: ./vendor/bin/phpunit -c phpunit.xml
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
           path: ~/phpunit
-  eslint:
-    docker:
-      - image: cimg/node:21.6.1
-    steps:
-      - attach_workspace:
-          at: .
       - run:
           name: NPM install to root module
           command: npm --prefix vendor/gene/module-better-checkout i
@@ -176,16 +153,9 @@ jobs:
       - run:
           name: ESLint run against admin app
           command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout run lint
+
 workflows:
   build-test:
     jobs:
       - build:
           context: magento2 module
-      - static_tests:
-          context: magento2 module
-          requires:
-            - build
-      - eslint:
-          context: magento2 module
-          requires:
-            - build

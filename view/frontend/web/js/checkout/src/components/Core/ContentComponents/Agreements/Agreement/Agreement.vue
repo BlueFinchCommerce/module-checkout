@@ -1,6 +1,6 @@
 <template>
   <div class="agreement-container">
-    <div v-if="agreement.mode === 'MANUAL'">
+    <div v-if="agreement.mode === 'MANUAL'" class="agreement-container__manual">
       <CheckboxComponent
         class="agreement-checkbox"
         :id="`${agreement.agreement_id}-${id}`"
@@ -8,7 +8,7 @@
         :change-handler="changeAgreement"
         :data-cy="`${id}-checkbox`"
       >
-        {{ $t('agreements.label') }}
+        {{ $t('agreements.label.manual') }}
         <a
           href="#"
           class="agreement-open-modal"
@@ -23,7 +23,7 @@
       v-else
       class="agreement-label"
     >
-      <span>{{ $t('agreements.label') }}</span>&nbsp;
+      <span>{{ $t('agreements.label.automatic') }}</span>
       <a
         href="#"
         class="agreement-open-modal"
@@ -40,6 +40,7 @@
     <modal
       :data-cy="`${id}-terms-modal`"
       :visible="isModalVisible"
+      classes="agreement-modal"
       @close="closeModal"
     >
       <template #header>
@@ -75,7 +76,7 @@
           :data-cy="`${id}-terms-modal-back-button`"
           @click="closeModal"
         />
-        <ButtonComponent
+        <ButtonComponent v-if="agreement.mode === 'MANUAL'"
           class="modal-footer-btn-close button--primary"
           :label="$t('agreements.acceptBtn')"
           :aria-label="$t('agreements.acceptBtn')"

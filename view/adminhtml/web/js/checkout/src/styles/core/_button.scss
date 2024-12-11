@@ -114,6 +114,47 @@
     }
   }
 
+  &--tab {
+    color: var(--button__tab-font-color);
+    background-color: var(--button__tab-background-color);
+    border-color: var(--button__tab-border-color);
+    border-width: var(--button__tab-border-weight);
+    box-shadow: var(--button__tab-border-box-shadow);
+
+    &:hover {
+      color: var(--button__tab-font-color-hover);
+      background-color: var(--button__tab-background-color-hover);
+      border-color: var(--button__tab-border-color-hover);
+      border-width: var(--button__tab-border-weight-hover);
+    }
+
+    &:focus {
+      color: var(--button__tab-font-color-focus);
+      background-color: var(--button__tab-background-color-focus);
+      border-color: var(--button__tab-border-color-focus);
+      border-width: var(--button__tab-border-weight-focus);
+    }
+
+    &:disabled {
+      background-color: var(--button__tab-background-color-disabled, var(--button__tab-background-color));
+      border-width: var(--button__tab-border-weight);
+    }
+
+    &__unselected {
+      // Unselected will be white with text and border to match the selected tab
+      color: var(--button__tab-background-color);
+      background-color: var(--color__primary-white);
+      border-color: var(--button__tab-border-color);
+
+      &:hover,
+      &:focus {
+        color: var(--button__tab-background-color);
+        background-color: var(--color__primary-white);
+        border-color: var(--button__tab-border-color);
+      }
+    }
+  }
+
   &--small {
     font-size: var(--button__font-small);
     padding: var(--button__padding-small);

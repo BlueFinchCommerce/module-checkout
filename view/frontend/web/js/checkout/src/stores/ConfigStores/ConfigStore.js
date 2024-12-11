@@ -16,6 +16,7 @@ import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
 import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
 import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -24,7 +25,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    rvvupPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -46,12 +46,19 @@ export default defineStore('configStore', {
       loqate: {},
       afd: {},
     },
+    clickCollectTabsEnabled: false,
+    paypalCreditThresholdEnabled: false,
+    googleMapEnabled: false,
+    googleMapApiKey: '',
+    paypalCreditThresholdValue: null,
     websiteName: '',
     taxCartDisplayPrice: false,
     taxCartDisplayShipping: false,
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
+    ageCheckRequired: undefined,
+    ageCheckerErrors: false,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -121,19 +128,27 @@ export default defineStore('configStore', {
         'gene_better_checkout_newsletter_allow_guest',
         'gene_better_checkout_country_state_required',
         'gene_better_checkout_country_display_state',
-        'magento_reward_general_is_enabled',
-        'magento_reward_general_is_enabled_on_front',
         'optional_zip_countries',
         'tax_cart_display_price',
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
         'gene_better_checkout_copyright_text',
-        'gene_better_checkout_afd_enable',
         'gene_better_checkout_progress_bar_visible',
         'gene_better_checkout_loqate_api_key',
         'gene_better_checkout_loqate_enabled',
+        'gene_better_checkout_click_collect_tabs_enabled',
         'gene_better_checkout_afd_enable',
+        'gene_better_checkout_paypal_credit_threshold_enabled',
+        'gene_better_checkout_paypal_credit_threshold_value',
+        'gene_better_checkout_google_map_enabled',
+        'gene_better_checkout_google_map_api_key',
       ];
+
+      // Conditionally add reward config based on Magento Edition
+      if (getMagentoSolutionType()) {
+        configs.push('magento_reward_general_is_enabled_on_front');
+        configs.push('magento_reward_general_is_enabled');
+      }
 
       if (this.$state.locale) {
         this.setLocale(this.$state.locale);
@@ -144,22 +159,22 @@ export default defineStore('configStore', {
       const allConfigs = configs.concat(getCustomConfigs);
 
       return `
-        storeConfig {
-          ${allConfigs.join(' ')}
-        }
+    storeConfig {
+      ${allConfigs.join(' ')}
+    }
 
-        countries {
-          id
-          two_letter_abbreviation
-          three_letter_abbreviation
-          full_name_locale
-          available_regions {
-            id
-            code
-            name
-          }
-        }
-      `;
+    countries {
+      id
+      two_letter_abbreviation
+      three_letter_abbreviation
+      full_name_locale
+      available_regions {
+        id
+        code
+        name
+      }
+    }
+  `;
     },
 
     async handleInitialConfig({ countries, storeConfig }) {
@@ -194,6 +209,11 @@ export default defineStore('configStore', {
             enabled: storeConfig.gene_better_checkout_afd_enable,
           },
         },
+        clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
+        paypalCreditThresholdEnabled: storeConfig.gene_better_checkout_paypal_credit_threshold_enabled,
+        paypalCreditThresholdValue: storeConfig.gene_better_checkout_paypal_credit_threshold_value,
+        googleMapEnabled: storeConfig.gene_better_checkout_google_map_enabled,
+        googleMapApiKey: storeConfig.gene_better_checkout_google_map_api_key,
       });
 
       if (storeConfig.locale) {
@@ -222,18 +242,6 @@ export default defineStore('configStore', {
       });
     },
 
-    async getRvvupConfig() {
-      const configs = [
-        'rvvup_payments_active',
-      ];
-      const data = await this.getConfig(configs);
-
-      if (data) {
-        this.setData({
-          rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
-        });
-      }
-    },
     createCacheKey(configs) {
       return configs.join('-');
     },

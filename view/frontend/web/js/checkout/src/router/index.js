@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import DetailsPage from '@/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue';
 import ShippingPage from '@/components/Steps/ShippingPage/ShippingPage.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
-import AmazonReview from '@/components/Steps/PaymentPage/Adyen/AmazonReview/AmazonReview.vue';
 
 const routes = [
   {
@@ -33,14 +32,6 @@ const routes = [
     },
   },
   {
-    path: '/adyen-amazon-review',
-    name: 'AmazonReview',
-    component: AmazonReview,
-    meta: {
-      depth: 2,
-    },
-  },
-  {
     path: '/*',
     redirect: '/',
     meta: {
@@ -52,11 +43,14 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior() {
-    return {
-      el: '#vue-checkout-root',
-      behavior: 'smooth',
-    };
+  scrollBehavior(to, from) {
+    if (from.name) {
+      return {
+        el: '.root',
+      };
+    }
+
+    return { top: 0 };
   },
 });
 

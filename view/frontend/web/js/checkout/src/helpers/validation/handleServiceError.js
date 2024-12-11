@@ -5,8 +5,6 @@ export default (error) => {
     message = error.response.data.message;
   } else if (error.message) {
     message = error.message;
-  } else {
-    message = this.$t('errorMessages.unexpectedPaymentError');
   }
   throw new Error(message);
 };

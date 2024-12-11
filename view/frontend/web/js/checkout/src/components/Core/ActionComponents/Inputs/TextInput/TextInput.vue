@@ -1,10 +1,16 @@
 <template>
-  <div class="text-input" :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }">
-    <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
+  <div
+    class="text-input"
+    :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }"
+  >
+    <label
+      :for="identifier"
+      :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }"
+    >
       <span
         v-if="label"
         :class="(modelValue.length > 0 || isInputActive) ? 'text-input-has-value'
-        : 'text-input-no-value'"
+          : 'text-input-no-value'"
       >
         {{ required ? label + ' *' : label }}
       </span>
@@ -21,6 +27,7 @@
         :aria-label="ariaLabel"
         :data-cy="dataCy ? dataCy : 'input'"
         :value="modelValue"
+        :maxlength="maxLength"
         @blur="onBlur"
         @focus="(event) => { moveIntoViewport(event); onFocus() }"
         @input="$emit('update:modelValue', $event.target.value)"
@@ -28,11 +35,13 @@
       >
       <slot name="icon" />
     </label>
-    <ErrorMessage v-if="errorMessage !== ''"
+    <ErrorMessage
+      v-if="errorMessage !== ''"
       :message="errorMessage"
       :data-cy="'field-error-message'"
     />
-    <ErrorMessage v-if="validationErrorMessage !== ''"
+    <ErrorMessage
+      v-if="validationErrorMessage !== '' && errorMessage === ''"
       :message="validationErrorMessage"
       :data-cy="'field-error-message'"
     />
@@ -41,10 +50,10 @@
 <script>
 import { computed, reactive } from 'vue';
 import { mapWritableState } from 'pinia';
+import debounce from 'lodash.debounce';
 import useCustomerStore from '@/stores/CustomerStore';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import sanitiseInputValue from '@/helpers/addresses/sanitiseInputValue';
-import debounce from 'lodash.debounce';
 import breakpoints from './style.module.scss';
 
 export default {
@@ -96,6 +105,9 @@ export default {
     identifier: {
       type: String,
     },
+    maxLength: {
+      type: Number,
+    },
     onBlur: {
       type: Function,
       default: () => {},
@@ -131,21 +143,27 @@ export default {
     ...mapWritableState(useCustomerStore, ['inputsSanitiseError']),
   },
   methods: {
-    customValidation() {
+    customValidation(event) {
       const inputValue = this.$refs.input.value;
       const inputType = this.type;
       const isValid = sanitiseInputValue(inputValue, inputType);
 
       if (this.identifier !== 'password') {
+        this.$emit('update:modelValue', inputValue);
+
         if (isValid) {
-          this.$emit('update:modelValue', inputValue);
           this.validationErrorMessage = '';
         } else {
-          this.$emit('update:modelValue', inputValue);
+          const sanitiseErrorMsg = this.$t('errorMessages.sanitiseError');
+          this.validationErrorMessage = sanitiseErrorMsg;
+
           if (inputType === 'tel') {
-            this.$emit('telephone-error');
-          } else {
-            this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+            if (event.key !== 'Tab') {
+              this.$emit('telephone-error');
+              this.validationErrorMessage = sanitiseErrorMsg;
+            } else {
+              this.validationErrorMessage = '';
+            }
           }
         }
 

@@ -17,8 +17,9 @@
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
-        (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
-        || (selectedMethod === 'paypal' && paypal.vaultActive)
+        (selectedMethod === 'braintree' && vaultActive)
+        || (selectedMethod === 'braintree_googlePay' && google.vaultActive)
+        || (selectedMethod === 'braintree_paypal' && paypal.vaultActive)
       )"
       id="braintree-store-method"
       class="braintree-store-method"
@@ -29,14 +30,14 @@
     />
     <Agreements id="braintreeNew" />
     <Recaptcha
-      v-if="isRecaptchaVisible('placeOrder')"
-      id="placeOrder"
+      v-if="getTypeByPlacement('braintree')"
+      id="braintree"
       location="braintreeNewMethods"
     />
     <PrivacyPolicy />
 
     <MyButton
-      v-if="selectedMethod === 'card'"
+      v-if="selectedMethod === 'braintree'"
       label="Pay"
       primary
       @click="startPayment()"
@@ -48,7 +49,7 @@
 <script>
 // Stores
 import { toRaw } from 'vue';
-import { mapActions, mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import useCartStore from '@/stores/CartStore';
@@ -56,6 +57,7 @@ import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -93,10 +95,10 @@ export default {
       additionalComponents: '',
       paymentOptionPriority: [],
       map: {},
-      selectedMethod: null,
     };
   },
   computed: {
+    ...mapWritableState(useBraintreeStore, ['showMagentoPayments']),
     ...mapState(useBraintreeStore, [
       'vaultActive',
       'clientToken',
@@ -108,7 +110,12 @@ export default {
       'vaultedMethods',
       'errorMessage',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, [
+      'currencyCode',
+      'websiteName',
+      'paypalCreditThresholdEnabled',
+      'paypalCreditThresholdValue',
+    ]),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'isLoggedIn']),
     ...mapState(usePaymentStore, [
@@ -118,13 +125,15 @@ export default {
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
       'getPaymentPriority',
+      'selectedMethod',
     ]),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
     await this.createClientToken();
     await this.getCart();
+    this.setLoadingState(true);
 
     const total = (this.cartGrandTotal / 100).toString();
 
@@ -139,6 +148,24 @@ export default {
     const braintreeMethods = this.availableMethods.filter(({ code }) => code.startsWith('braintree'));
 
     this.paymentOptionPriority = braintreeMethods.map(({ code }) => this.map[code]).filter(Boolean);
+
+    if (this.paymentOptionPriority.includes('paypal') && this.paypal.creditActive) {
+      if (this.paypalCreditThresholdEnabled) {
+        if (total >= Number(this.paypalCreditThresholdValue)) {
+          const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+
+          // Insert 'paypalCredit' after 'paypal'
+          this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+          this.map.braintree_paypal_credit = 'paypalCredit';
+        }
+      } else {
+        const paypalIndex = this.paymentOptionPriority.indexOf('paypal');
+
+        // Insert 'paypalCredit' after 'paypal'
+        this.paymentOptionPriority.splice(paypalIndex + 1, 0, 'paypalCredit');
+        this.map.braintree_paypal_credit = 'paypalCredit';
+      }
+    }
 
     const options = {
       authorization: this.clientToken,
@@ -213,6 +240,44 @@ export default {
           size: 'responsive',
         },
       };
+
+      if (this.paypal.creditActive) {
+        if (this.paypalCreditThresholdEnabled) {
+          if (total >= Number(this.paypalCreditThresholdValue)) {
+            options.paypalCredit = {
+              flow: 'checkout',
+              amount: total,
+              currency: this.currencyCode,
+              buttonStyle: {
+                color: this.paypal.creditColor !== 'gold'
+                && this.paypal.creditColor !== 'blue'
+                && this.paypal.creditColor !== 'silver'
+                  ? this.paypal.creditColor : 'darkblue',
+                label: this.paypal.creditLabel,
+                shape: this.paypal.creditShape,
+                size: 'responsive',
+              },
+              commit: true,
+            };
+          }
+        } else {
+          options.paypalCredit = {
+            flow: 'checkout',
+            amount: total,
+            currency: this.currencyCode,
+            buttonStyle: {
+              color: this.paypal.creditColor !== 'gold'
+              && this.paypal.creditColor !== 'blue'
+              && this.paypal.creditColor !== 'silver'
+                ? this.paypal.creditColor : 'darkblue',
+              label: this.paypal.creditLabel,
+              shape: this.paypal.creditShape,
+              size: 'responsive',
+            },
+            commit: true,
+          };
+        }
+      }
     }
 
     if (this.isPaymentMethodAvailable('braintree_venmo')) {
@@ -232,9 +297,24 @@ export default {
 
   unmounted() {
     this.removeEventListeners();
+    if (this.instance) {
+      this.instance.teardown();
+    }
   },
-
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && (!newVal.startsWith('braintree')
+          || newVal === 'braintree-lpm' || newVal === 'braintree-ach')) {
+          this.clearSelectedMethod(newVal);
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   methods: {
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, [
       'createClientToken',
@@ -248,10 +328,12 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(usePaymentStore, ['selectPaymentMethod', 'setPaymentErrorMessage']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
 
     startPayment() {
       this.paymentEmitter.emit('braintreePaymentStart');
+      this.setLoadingState(true);
       this.requestPaymentMethod()
         .then(this.getPaymentData)
         .then(createPayment)
@@ -259,7 +341,7 @@ export default {
         .then(this.redirectToSuccess)
         .catch((paymentError) => {
           this.clearSelectedPaymentMethod();
-          this.setToCurrentViewId();
+          this.setLoadingState(false);
 
           if (paymentError.name !== 'DropinError') {
             this.setErrorMessage(paymentError?.response?.data?.message || paymentError.message);
@@ -272,59 +354,61 @@ export default {
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
         this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        (async () => {
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
-        if (!agreementsValid || !recaptchaValid) {
-          const error = new Error();
-          error.name = 'DropinError';
-          reject(error);
-          return;
-        }
-
-        if (!this.instance) {
-          reject(new Error('Unable to initialise payment components.'));
-        }
-
-        const billingAddress = this.cart.billing_address;
-
-        const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
-        const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
-        const formattedBillingAddress = {
-          givenName: firstName,
-          surname: lastName,
-          phoneNumber: billingAddress.telephone,
-          streetAddress: billingAddress.street[0],
-          extendedAddress: billingAddress.street[1],
-          locality: billingAddress.city,
-          region: billingAddress.region_code,
-          postalCode: billingAddress.postcode,
-          countryCodeAlpha2: billingAddress.country_code,
-        };
-
-        const price = this.cartGrandTotal / 100;
-        const threshold = this.threeDSThresholdAmount;
-        const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
-
-        this.instance.requestPaymentMethod({
-          threeDSecure: {
-            amount: parseFloat(price).toFixed(2),
-            email: this.customer.email,
-            billingAddress: formattedBillingAddress,
-            challengeRequested,
-          },
-        }, (error, payload) => {
-          if (error) {
+          if (!agreementsValid || !recaptchaValid) {
+            const error = new Error();
+            error.name = 'DropinError';
             reject(error);
-          } else if (payload.liabilityShifted
-            || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
-            || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
-            this.showLoader();
-            resolve(payload);
-          } else {
-            reject(new Error('There was an error completing validation, please try again.'));
+            return;
           }
-        });
+
+          if (!this.instance) {
+            reject(new Error('Unable to initialise payment components.'));
+          }
+
+          const billingAddress = this.cart.billing_address;
+
+          const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
+          const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
+          const formattedBillingAddress = {
+            givenName: firstName,
+            surname: lastName,
+            phoneNumber: billingAddress.telephone,
+            streetAddress: billingAddress.street[0],
+            extendedAddress: billingAddress.street[1],
+            locality: billingAddress.city,
+            region: billingAddress.region_code,
+            postalCode: billingAddress.postcode,
+            countryCodeAlpha2: billingAddress.country_code,
+          };
+
+          const price = this.cartGrandTotal / 100;
+          const threshold = this.threeDSThresholdAmount;
+          const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+
+          this.instance.requestPaymentMethod({
+            threeDSecure: {
+              amount: parseFloat(price).toFixed(2),
+              email: this.customer.email,
+              billingAddress: formattedBillingAddress,
+              challengeRequested,
+            },
+          }, (error, payload) => {
+            if (error) {
+              this.setPaymentErrorMessage(error.message);
+              reject(error.message);
+            } else if (payload.liabilityShifted
+              || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
+              || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
+              resolve(payload);
+            } else {
+              reject(new Error('There was an error completing validation, please try again.'));
+            }
+          });
+        })().catch(reject);
       });
     },
 
@@ -345,12 +429,15 @@ export default {
     getBraintreeMethod(type) {
       switch (type) {
         case 'AndroidPayCard': return 'braintree_googlepay';
+        case 'ApplePayCard': return 'braintree_applepay';
         case 'PayPalAccount': return 'braintree_paypal';
         default: return 'braintree';
       }
     },
 
     afterBraintreeInit(event, instance) {
+      this.showMagentoPayments = true;
+      this.setLoadingState(false);
       this.setClientInstance(instance._client);
 
       if (instance._threeDSecure) {
@@ -360,11 +447,14 @@ export default {
       this.instance = instance;
 
       this.attachEventListeners(instance);
+
       this.movePaymentContainers();
 
       // If Braintree is controlling the first opened payment method then open that method.
-      if (this.firstOpenController === 'braintree') {
-        [this.selectedMethod] = this.paymentOptionPriority;
+      if (this.selectedMethod.startsWith('braintree')) {
+        const [firstMethod] = this.paymentOptionPriority;
+
+        this.selectPaymentMethod(firstMethod);
         this.setToCurrentViewId();
       }
 
@@ -385,7 +475,7 @@ export default {
         } else if (newViewId !== 'options') {
           this.addActiveClass(newViewId);
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
-          this.paymentEmitter.emit('paymentMethodSelected', { id });
+          this.selectPaymentMethod(id);
 
           this.selectedMethod = newViewId;
 
@@ -393,6 +483,8 @@ export default {
             this.additionalComponents = '.braintree-form__flexible-fields';
           } else if (newViewId === 'paypal') {
             this.additionalComponents = 'div[data-braintree-id="paypal-button"]';
+          } else if (newViewId === 'paypalCredit') {
+            this.additionalComponents = 'div[data-braintree-id="paypal-credit-button"]';
           } else if (newViewId === 'googlePay') {
             this.additionalComponents = 'div[data-braintree-id="google-pay-button"]';
           } else if (newViewId === 'applePay') {
@@ -411,7 +503,6 @@ export default {
         }
       });
 
-      this.paymentEmitter.on('paymentMethodSelected', this.clearSelectedMethod);
       this.paymentEmitter.on('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.on('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.on('braintreePaymentStart', this.showLoader);
@@ -419,17 +510,16 @@ export default {
     },
 
     removeEventListeners() {
-      this.paymentEmitter.off('paymentMethodSelected', this.clearSelectedMethod);
       this.paymentEmitter.off('changePaymentMethodDisplay', this.changePaymentMethodDisplay);
       this.paymentEmitter.off('braintreeStoredPaymentCardSelected', this.clearSelectedPaymentMethod);
       this.paymentEmitter.off('braintreePaymentStart', this.showLoader);
       this.paymentEmitter.off('braintreePaymentError', this.hideLoader);
     },
 
-    clearSelectedMethod({ id }) {
+    clearSelectedMethod(id) {
       this.unselectVaultedMethods();
-      if (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach') {
+      if (id !== null && (!id.startsWith('braintree')
+        || id === 'braintree-lpm' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 
@@ -452,8 +542,19 @@ export default {
         if (matchingContainer) {
           const index = Object.values(this.map).findIndex((method) => method === braintreeId);
           const priority = this.getPaymentPriority(Object.keys(this.map)[index]);
-          sheet.style.setProperty('--braintree-method-position', priority + 1);
-          sheet.prepend(matchingContainer);
+
+          const setBraintreeMethodPosition = (position) => {
+            sheet.style.setProperty('--braintree-method-position', position);
+            sheet.prepend(matchingContainer);
+          };
+
+          if (priority !== -1) {
+            setBraintreeMethodPosition(priority + 1);
+          } else if (braintreeId === 'paypalCredit') {
+            const paypalIndex = Object.values(this.map).findIndex((method) => method === 'paypal');
+            const paypalPriority = this.getPaymentPriority(Object.keys(this.map)[paypalIndex]);
+            setBraintreeMethodPosition(paypalPriority + 2);
+          }
 
           // Move the card payment icons
           if (braintreeId === 'card') {
@@ -465,50 +566,56 @@ export default {
     },
 
     modifyTokenize() {
-      const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
-        .bind(toRaw(this.instance._mainView._views.googlePay));
+      if (this.isPaymentMethodAvailable('braintree_googlepay')) {
+        const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
+          .bind(toRaw(this.instance._mainView._views.googlePay));
 
-      this.instance._mainView._views.googlePay.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.googlePay.tokenize = async () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-        return originalGooglePay();
-      };
+          return originalGooglePay();
+        };
+      }
 
-      const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
-        .bind(this.instance._mainView._views.venmo.venmoInstance);
+      if (this.isPaymentMethodAvailable('braintree_venmo')) {
+        const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
+          .bind(this.instance._mainView._views.venmo.venmoInstance);
 
-      this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.venmo.venmoInstance.tokenize = async () => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.resolve();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.resolve();
+          }
 
-        return originalVenmo();
-      };
+          return originalVenmo();
+        };
+      }
 
-      const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
-        .bind(this.instance._mainView._views.paypal.paypalInstance);
+      if (this.isPaymentMethodAvailable('braintree_paypal')) {
+        const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
+          .bind(this.instance._mainView._views.paypal.paypalInstance);
 
-      this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
-        this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        this.instance._mainView._views.paypal.paypalInstance.createPayment = async (configuration) => {
+          this.setErrorMessage('');
+          const agreementsValid = this.validateAgreements();
+          const recaptchaValid = await this.validateToken('braintree', 'braintreeNewMethods');
 
-        if (!agreementsValid || !recaptchaValid) {
-          return Promise.reject();
-        }
+          if (!agreementsValid || !recaptchaValid) {
+            return Promise.reject();
+          }
 
-        return originalPayPal(configuration);
-      };
+          return originalPayPal(configuration);
+        };
+      }
     },
 
     addActiveClass(type) {
@@ -526,9 +633,11 @@ export default {
     },
 
     clearSelectedPaymentMethod() {
-      this.instance.clearSelectedPaymentMethod();
+      if (this.instance !== null) {
+        this.instance.clearSelectedPaymentMethod();
 
-      this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+        this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: true });
+      }
     },
 
     setToCurrentViewId() {

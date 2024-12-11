@@ -1,7 +1,7 @@
 {
   "name": "gene-better-checkout",
-  "version": "1.0.0",
-  "description": "## What is this?",
+  "version": "1.0.6",
+  "description": "Better Checkout powered by GENE",
   "main": ".eslintrc",
   "scripts": {
     "lint": "eslint . --rulesdir ./vendor/magento/magento-coding-standard/eslint/rules",

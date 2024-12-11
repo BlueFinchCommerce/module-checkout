@@ -5,6 +5,7 @@ namespace Gene\BetterCheckout\ViewModel;
 
 use Gene\BetterCheckout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
@@ -30,18 +31,38 @@ class Assets implements ArgumentInterface
     /** @var array */
     private $assetFilesByType = [];
 
+    private ProductMetadataInterface $productMetadata;
+
     /**
      * @param AssetRepository $assetRepository
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param ConfigurationInterface $configuration
+     * @param UrlInterface $urlInterface
+     * @param ProductMetadataInterface $productMetadata
      */
     public function __construct(
         private readonly AssetRepository $assetRepository,
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly StoreManagerInterface $storeManager,
-        private readonly ConfigurationInterface $configuration
-    ) {}
+        private readonly ConfigurationInterface $configuration,
+        private readonly UrlInterface $urlInterface,
+        ProductMetadataInterface $productMetadata
+    ) {
+        $this->productMetadata = $productMetadata;
+    }
+
+
+    /**
+     * Get the Magento Edition (e.g., Community, Enterprise).
+     *
+     * @return string
+     */
+    public function getMagentoEdition(): string
+    {
+        return $this->productMetadata->getEdition();
+    }
+
 
     /**
      * @return string|null
@@ -56,6 +77,24 @@ class Assets implements ArgumentInterface
 
         $mediaUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         return $mediaUrl . ConfigurationInterface::VUE_CHECKOUT_FONT_MEDIA_DIR . '/' . $fontPath;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFontCdnUrl(): ?string
+    {
+        return $this->configuration->getFontCdnUrl();
+    }
+
+    /**
+     * Retrieves the font family name from the CDN URL
+     *
+     * @return string
+     */
+    public function getFontFamily(): string
+    {
+        return $this->configuration->getFontFamilyFromCdnUrl();
     }
 
     /**
@@ -77,36 +116,30 @@ class Assets implements ArgumentInterface
         if (count($this->assetFilesByType)) {
             return $this->assetFilesByType;
         }
-        $params = [
-            'area' => $area
-        ];
-        $assetDefinitionFile = $this->assetRepository->createAsset(
-            self::ASSETS_BASE_DIR . self::ASSETS_DEF_FILE,
-            $params
-        );
+        $assetDefinitionFile = $this->createAsset(self::ASSETS_BASE_DIR . self::ASSETS_DEF_FILE, $area);
         $assetDefinitionContent = $assetDefinitionFile->getContent();
         $assetDefinitionArray = json_decode($assetDefinitionContent, true);
         $this->assetFilesByType = [];
         $this->assetFilesByType['js'] = [];
         if (array_key_exists('assets', $assetDefinitionArray['main.js'])) {
             foreach($assetDefinitionArray['main.js']['assets'] as $fileName) {
-                $this->createAsset($fileName, $area);
+                $this->createAsset(self::ASSETS_BASE_DIR . $fileName, $area);
             }
         }
         if (array_key_exists('css', $assetDefinitionArray['main.js'])) {
             $this->assetFilesByType['css'] = [
-                $this->createAsset($assetDefinitionArray['main.js']['css'][0], $area)
+                $this->createAsset(self::ASSETS_BASE_DIR . $assetDefinitionArray['main.js']['css'][0], $area)
             ];
         }
         if (array_key_exists('file', $assetDefinitionArray['main.js'])) {
             $this->assetFilesByType['js']['main'] = [
-                $this->createAsset($assetDefinitionArray['main.js']['file'], $area)
+                $this->createAsset(self::ASSETS_BASE_DIR . $assetDefinitionArray['main.js']['file'], $area)
             ];
         }
         if (array_key_exists('imports', $assetDefinitionArray['main.js'])) {
             foreach($assetDefinitionArray['main.js']['imports'] as $fileName) {
                 $this->assetFilesByType['js']['imports'][] = $this->createAsset(
-                    $assetDefinitionArray[$fileName]['file'], $area
+                    self::ASSETS_BASE_DIR . $assetDefinitionArray[$fileName]['file'], $area
                 );
             }
         }
@@ -128,16 +161,65 @@ class Assets implements ArgumentInterface
     /**
      * @param string $fileName
      * @param string $area
+     * @param array $params
      * @return File
      * @throws LocalizedException
      */
-    public function createAsset(string $fileName, string $area = 'frontend'): File
+    public function createAsset(string $fileName, string $area = 'frontend', array $params = []): File
     {
-        $params = ['area' => $area];
-        return $this->assetRepository->createAsset(
-            self::ASSETS_BASE_DIR . $fileName,
-            $params
-        );
+        $params['area'] = $area;
+
+        $assetDefinitionFile = null;
+        if ($this->configuration->getIsDeveloperViteWatchModeEnabled()) {
+            try {
+                // Try and get the asset from the vite watch directory
+                $assetDefinitionFile = $this->assetRepository->createAsset(
+                    str_replace('js/checkout/dist/', 'js/checkout/dist-dev/', $fileName),
+                    $params
+                );
+                $assetDefinitionFile->getSourceFile(); // trigger file resolution
+            } catch (\Throwable) {
+                $assetDefinitionFile = null;
+            }
+        }
+        if (!$assetDefinitionFile) {
+            $assetDefinitionFile = $this->assetRepository->createAsset(
+                $fileName,
+                $params
+            );
+        }
+        return $assetDefinitionFile;
+    }
+
+    /**
+     * Retrieve url of a view file, with better checkout developer mode handling for the dist directory
+     *
+     * @see \Magento\Framework\View\Element\AbstractBlock::getViewFileUrl()
+     *
+     * This method is analogous to the above, however instead of falling back to the following
+     * public function getUrlWithParams($fileId, array $params)
+     * {
+     *    $asset = $this->createAsset($fileId, $params);
+     *    return $asset->getUrl();
+     * }
+     *
+     * We can use our own asset handling logic, which will allow us to fall back to dist-dev when appropriate
+     *
+     * @param string $fileId
+     * @param array $params
+     * @return string
+     */
+    public function getDistViewFileUrl($fileId, array $params = [])
+    {
+        try {
+            $params['_secure'] = true;
+            $area = $params['area'] ?? 'frontend';
+            $asset = $this->createAsset($fileId, $area, $params);
+            $url = $asset->getUrl();
+            return $url;
+        } catch (\Exception $e) {
+            return $this->urlInterface->getUrl('', ['_direct' => 'core/index/notFound']);
+        }
     }
 
     /**

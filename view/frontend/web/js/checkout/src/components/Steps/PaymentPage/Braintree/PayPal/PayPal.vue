@@ -1,6 +1,6 @@
 <template>
   <div
-    id="braintree-paypal"
+    :id="`braintree-paypal-${namespace}`"
     ref="braintreePayPal"
     :class="!paypalLoaded ? 'text-loading' : ''"
     :data-cy="'instant-checkout-braintreePayPal'"
@@ -19,7 +19,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
@@ -31,6 +30,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreePayPal',
   data() {
@@ -41,7 +43,14 @@ export default {
       paypalInstance: null,
       paypalLoaded: false,
       key: 'braintreePayPal',
+      namespace: 'paypal',
+      method: 'braintree_paypal',
     };
+  },
+  props: {
+    isCredit: {
+      type: Boolean,
+    },
   },
   computed: {
     ...mapState(useBraintreeStore, ['clientToken', 'environment', 'paypal']),
@@ -54,8 +63,10 @@ export default {
       'countries',
       'getRegionId',
       'storeCode',
+      'paypalCreditThresholdEnabled',
+      'paypalCreditThresholdValue',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
   async created() {
     this.addExpressMethod(this.key);
@@ -63,7 +74,7 @@ export default {
     await this.getCart();
 
     const paypalConfig = this.availableMethods.find((method) => (
-      method.code === 'braintree_paypal'
+      method.code === this.method
     ));
 
     if (!paypalConfig) {
@@ -90,11 +101,44 @@ export default {
       }
 
       this.paypalInstance = markRaw(paypalInstance);
-      paypalInstance.loadPayPalSDK({
+
+      const total = (this.cartGrandTotal / 100);
+
+      this.namespace = `${this.namespace}`;
+
+      if (this.isCredit) {
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          this.namespace = `${this.namespace}_credit`;
+        } else {
+          this.namespace = `${this.namespace}_credit`;
+        }
+      }
+
+      const sdkConfig = {
+        components: 'buttons,funding-eligibility',
         currency: this.currencyCode,
         intent: 'capture',
         vault: 'false',
-      }, () => {
+        dataAttributes: {
+          namespace: this.namespace,
+        },
+      };
+
+      if (this.isCredit) {
+        if (this.paypalCreditThresholdEnabled
+          && total >= Number(this.paypalCreditThresholdValue)) {
+          sdkConfig['enable-funding'] = 'credit';
+        } else {
+          sdkConfig['enable-funding'] = 'credit';
+        }
+      }
+
+      if (this.environment === 'sandbox') {
+        sdkConfig['buyer-country'] = this.paypal.merchantCountry;
+      }
+
+      paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,
           commit: true,
@@ -105,8 +149,7 @@ export default {
             color: this.paypal.buttonColor,
             tagline: false,
           },
-          fundingSource: window.paypal.FUNDING.PAYPAL,
-          offerCredit: false,
+          fundingSource: this.isCredit ? window[this.namespace].FUNDING.CREDIT : window[this.namespace].FUNDING.PAYPAL,
           createOrder: () => paypalInstance.createPayment({
             amount: this.cartGrandTotal / 100,
             flow: 'checkout',
@@ -117,21 +160,24 @@ export default {
             lineItems: this.getPayPalLineItems(),
             shippingOptions: [],
           }),
-          onClick: () => {
+          onClick: async () => {
             this.setErrorMessage('');
-            // Check that the agreements (if any) and recpatcha is valid.
+            // Check that the agreements (if any) is valid.
             const agreementsValid = this.validateAgreements();
-            const recaptchaValid = this.validateToken('placeOrder');
 
-            if (!agreementsValid || !recaptchaValid) {
+            if (!agreementsValid) {
               return false;
             }
+
+            await functionExtension('onBraintreeExpressInit');
+            this.setNotClickAndCollect();
 
             return true;
           },
           onShippingChange: async (data) => {
             const address = {
               city: data.shipping_address.city,
+              company: '',
               country_code: data.shipping_address.country_code,
               postcode: data.shipping_address.postal_code,
               region: data.shipping_address.state,
@@ -142,7 +188,7 @@ export default {
               lastname: 'UNKNOWN',
             };
 
-            const result = await getShippingMethods(address);
+            const result = await getShippingMethods(address, this.method, true);
             const methods = result.shipping_addresses[0].available_shipping_methods;
 
             // Filter out nominated day as this isn't available inside of PayPal.
@@ -188,24 +234,55 @@ export default {
               try {
                 handleServiceError(err);
               } catch (formattedError) {
+                // clear shipping address form
+                this.createNewAddress('shipping');
                 this.setErrorMessage(formattedError);
               }
             }),
+          onCancel: () => {
+            // clear shipping address form
+            this.createNewAddress('shipping');
+          },
           onError: (err) => {
             this.setErrorMessage(err);
           },
         };
 
-        this.paypalLoaded = true;
+        // If is PayPalCredit and enabled.
+        if (this.paypal.creditActive && this.isCredit) {
+          if (this.paypalCreditThresholdEnabled
+            && total >= Number(this.paypalCreditThresholdValue)) {
+            renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'darkblue';
+            renderData.style.label = this.paypal.creditLabel;
+            renderData.style.shape = this.paypal.creditShape;
+          } else {
+            renderData.fundingSource = window[this.namespace].FUNDING.CREDIT;
+            renderData.style.color = this.paypal.creditColor !== 'gold'
+            && this.paypal.creditColor !== 'blue'
+            && this.paypal.creditColor !== 'silver'
+              ? this.paypal.creditColor : 'darkblue';
+            renderData.style.label = this.paypal.creditLabel;
+            renderData.style.shape = this.paypal.creditShape;
+          }
+        }
 
-        return window.paypal.Buttons(renderData).render('#braintree-paypal');
+        return window[this.namespace].Buttons(renderData).render(`#braintree-paypal-${this.namespace}`)
+          .then((response) => {
+            this.paypalLoaded = true;
+
+            return response;
+          });
       });
     });
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useBraintreeStore, ['createClientToken', 'getPayPalLineItems']),
-    ...mapActions(useShippingMethodsStore, ['submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -213,8 +290,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail']),
-    ...mapActions(useRecaptchaStore, ['validateToken']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'createNewAddress']),
 
     setInformationToQuote(payload) {
       const shippingAddress = !this.cart.is_virtual ? this.mapAddress(
@@ -230,6 +306,20 @@ export default {
         payload.details.lastName,
       );
 
+      // If billingAddress is missing fields, use values from shippingAddress
+      // added in case if billing address not required on braintree account
+      if (billingAddress) {
+        if (!billingAddress.city && shippingAddress?.city) {
+          billingAddress.city = shippingAddress.city;
+        }
+        if (!billingAddress.postcode && shippingAddress?.postcode) {
+          billingAddress.postcode = shippingAddress.postcode;
+        }
+        if (!billingAddress.street[0] && shippingAddress?.street[0]) {
+          [billingAddress.street[0]] = shippingAddress.street;
+        }
+      }
+
       return setAddressesOnCart(shippingAddress, billingAddress, payload.details.email)
         .then(() => ({ payload, email: payload.details.email }));
     },
@@ -238,7 +328,7 @@ export default {
       const payment = {
         email,
         paymentMethod: {
-          method: 'braintree_paypal',
+          method: this.method,
           additional_data: {
             payment_method_nonce: payload.nonce,
           },
@@ -275,6 +365,16 @@ export default {
     redirectToSuccess() {
       window.location.href = getSuccessPageUrl();
     },
+  },
+  unmounted() {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')) {
+      this.instance.teardown();
+    }
+
+    if (this.paypalInstance) {
+      this.paypalInstance.teardown();
+    }
   },
 };
 </script>

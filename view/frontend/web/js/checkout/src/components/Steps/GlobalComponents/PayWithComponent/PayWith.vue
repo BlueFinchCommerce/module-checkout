@@ -3,36 +3,11 @@
     :style="style"
     class="pay-with__container"
   >
-    <template v-if="isAdyenAvailable">
-      <div>
-        <ul
-          v-if="Object.keys(paymentTypes).length > 0"
-          class="pay-with__column"
-        >
-          <li
-            v-for="(paymentType, index) in paymentTypes"
-            :key="index"
-            class="pay-with__content"
-          >
-            <img
-              v-if="!paymentType.icon.includes('klarna_account')"
-              :src="paymentType.icon.includes('klarna') ? KlarnaIcon
-                : paymentType.icon.includes('clearpay') ? ClearpayIcon
-                  : paymentType.icon.includes('paypal') ? PayPalIcon
-                    : paymentType.icon.includes('amex') ? ExpressPayIcon
-                      : paymentType.icon.includes('mc') ? MastercardPayIcon
-                        : paymentType.icon.includes('visa') ? VisaPayIcon
-                          : paymentType.icon.includes('google') ? GooglePayIcon
-                            : paymentType.icon.includes('apple') ? ApplePayIcon
-                              : paymentType.icon"
-              :alt="paymentType.name"
-              :class="generateClass(paymentType.name)"
-              :data-cy="generateDataCY(paymentType.icon, 'adyen')"
-            >
-          </li>
-        </ul>
-      </div>
-    </template>
+    <component
+      :is="paymentIcon"
+      v-for="paymentIcon in paymentIcons"
+      :key="paymentIcon"
+    />
     <div>
       <ul class="pay-with__column"
       v-if="availableMethods.length > 0">
@@ -84,7 +59,6 @@
 import { mapActions, mapState } from 'pinia';
 import { computed, reactive } from 'vue';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
-import useAdyenStore from '@/stores/PaymentStores/AdyenStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
@@ -104,8 +78,14 @@ import DiscoverSvg from '@/icons/payments/colour/icon-discover-colour.svg';
 import DinersSvg from '@/icons/payments/colour/icon-diners-colour.svg';
 import JCBSvg from '@/icons/payments/colour/icon-jcb-colour.svg';
 
+// Extensions
+import paymentIcons from '@/extensions/paymentIcons';
+
 export default {
   name: 'PayWith',
+  components: {
+    ...paymentIcons(),
+  },
   props: {
     width: {
       type: String,
@@ -127,8 +107,12 @@ export default {
       })),
     };
   },
+  data() {
+    return {
+      paymentIcons: [],
+    };
+  },
   computed: {
-    ...mapState(useAdyenStore, ['paymentTypes', 'isAdyenAvailable']),
     ...mapState(useBraintreeStore, ['cCTypes']),
     ...mapState(usePaymentStore, ['availableMethods']),
     ApplePayIcon() {
@@ -163,6 +147,7 @@ export default {
     },
   },
   async created() {
+    this.paymentIcons = Object.keys(paymentIcons());
     await this.getInitialConfig();
   },
   methods: {
