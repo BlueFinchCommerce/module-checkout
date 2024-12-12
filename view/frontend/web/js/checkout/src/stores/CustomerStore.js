@@ -96,6 +96,11 @@ export default defineStore('customerStore', {
       // Create new addess to be able to be changed.
       const clonedAddress = deepClone(address);
 
+      // We need to set company to null as we have no method for handling editing once set.
+      if (clonedAddress.company) {
+        clonedAddress.company = null;
+      }
+
       // If the address has an object for country map it to the right value.
       if (typeof address.country === 'object') {
         clonedAddress.country_code = address.country.code;

@@ -408,9 +408,11 @@ export default {
       billingAddress.region = billingAddress.region.region_code || billingAddress.region.region;
       const { email } = response;
       const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
+      const price = this.cartGrandTotal / 100;
+      const threshold = this.threeDSThresholdAmount;
 
-      // If 3DS is disabled then skip over this step.
-      if (!this.threeDSEnabled) {
+      // If 3DS is disabled or we are below the threshold then skip over this step.
+      if (!this.threeDSEnabled || price < threshold) {
         return Promise.resolve({
           nonce: androidPayCards[0].nonce,
           billingAddress,
@@ -427,9 +429,7 @@ export default {
       return new Promise((resolve, reject) => {
         billingAddress.countryCodeAlpha2 = billingAddress.country_code;
 
-        const price = this.cartGrandTotal / 100;
-        const threshold = this.threeDSThresholdAmount;
-        const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+        const challengeRequested = this.alwaysRequestThreeDS;
 
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
