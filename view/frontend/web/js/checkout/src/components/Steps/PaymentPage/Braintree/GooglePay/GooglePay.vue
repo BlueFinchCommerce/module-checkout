@@ -239,66 +239,96 @@ export default {
           lastname: 'UNKNOWN',
         };
 
-        getShippingMethods(address, this.method, true).then(async (response) => {
-          const methods = response.shipping_addresses[0].available_shipping_methods;
+        getShippingMethods(address, this.method, true)
+          .then(async (response) => {
+            const methods = response.shipping_addresses[0].available_shipping_methods;
 
-          const shippingMethods = methods.map((shippingMethod) => {
-            const description = shippingMethod.carrier_title
-              ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
-              : formatPrice(shippingMethod.price_incl_tax.value);
+            // Validate available shipping methods
+            if (!methods || methods.length === 0) {
+              resolve({
+                error: {
+                  reason: 'NO_AVAILABLE_METHODS',
+                  message: 'No shipping methods available.',
+                  intent: 'SHIPPING_METHOD',
+                },
+              });
+              return;
+            }
 
-            return {
-              id: shippingMethod.method_code,
-              label: shippingMethod.method_title,
-              description,
+            // Map methods to required structure
+            const shippingMethods = methods.map((shippingMethod) => {
+              const description = shippingMethod.carrier_title
+                ? `${formatPrice(shippingMethod.price_incl_tax.value)} ${shippingMethod.carrier_title}`
+                : formatPrice(shippingMethod.price_incl_tax.value);
+
+              return {
+                id: shippingMethod.method_code,
+                label: shippingMethod.method_title,
+                description,
+              };
+            });
+
+            // Filter out nominated delivery methods
+            const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
+
+            // Validate filtered shipping methods
+            if (!fShippingMethods.length) {
+              resolve({
+                error: {
+                  reason: 'SHIPPING_ADDRESS_UNSERVICEABLE',
+                  message: this.$t('errorMessages.googlePayNoShippingMethods'),
+                  intent: 'SHIPPING_ADDRESS',
+                },
+              });
+              return;
+            }
+
+            // Select shipping method based on provided data
+            const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
+              ? methods[0]
+              : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
+
+            // Submit shipping information
+            await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+            this.setLoadingState(true);
+
+            // Prepare payment data request update
+            const paymentDataRequestUpdate = {
+              newShippingOptionParameters: {
+                defaultSelectedOptionId: selectedShipping.method_code,
+                shippingOptions: fShippingMethods,
+              },
+              newTransactionInfo: {
+                displayItems: [
+                  {
+                    label: 'Shipping',
+                    type: 'LINE_ITEM',
+                    price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
+                    status: 'FINAL',
+                  },
+                ],
+                currencyCode: this.cart.prices.grand_total.currency,
+                totalPriceStatus: 'FINAL',
+                totalPrice: this.cart.prices.grand_total.value.toString(),
+                totalPriceLabel: 'Total',
+                countryCode: this.countryCode,
+              },
             };
-          });
 
-          // Filter out nominated day as this isn't available inside of Google Pay.
-          const fShippingMethods = shippingMethods.filter((sid) => sid.id !== 'nominated_delivery');
-
-          // Any error message means we need to exit by resolving with an error state.
-          if (!fShippingMethods.length) {
+            resolve(paymentDataRequestUpdate);
+          })
+          .catch((error) => {
+            // Handle promise rejection
+            console.error('Error fetching shipping methods:', error);
+            this.setErrorMessage(this.$t('errorMessages.googlePayNoShippingMethods'));
             resolve({
               error: {
-                reason: 'SHIPPING_ADDRESS_UNSERVICEABLE',
+                reason: 'NETWORK_ERROR',
                 message: this.$t('errorMessages.googlePayNoShippingMethods'),
-                intent: 'SHIPPING_ADDRESS',
+                intent: 'SHIPPING_METHOD',
               },
             });
-            return;
-          }
-
-          const selectedShipping = data.shippingOptionData.id === 'shipping_option_unselected'
-            ? methods[0]
-            : methods.find(({ method_code: id }) => id === data.shippingOptionData.id) || methods[0];
-
-          await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
-          this.setLoadingState(true);
-
-          const paymentDataRequestUpdate = {
-            newShippingOptionParameters: {
-              defaultSelectedOptionId: selectedShipping.method_code,
-              shippingOptions: fShippingMethods,
-            },
-            newTransactionInfo: {
-              displayItems: [
-                {
-                  label: 'Shipping',
-                  type: 'LINE_ITEM',
-                  price: this.cart.shipping_addresses[0].selected_shipping_method.amount.value.toString(),
-                  status: 'FINAL',
-                },
-              ],
-              currencyCode: this.cart.prices.grand_total.currency,
-              totalPriceStatus: 'FINAL',
-              totalPrice: this.cart.prices.grand_total.value.toString(),
-              totalPriceLabel: 'Total',
-              countryCode: this.countryCode,
-            },
-          };
-          resolve(paymentDataRequestUpdate);
-        });
+          });
       });
     },
 
@@ -371,9 +401,11 @@ export default {
       billingAddress.region = billingAddress.region.region_code || billingAddress.region.region;
       const { email } = response;
       const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
+      const price = this.cartGrandTotal / 100;
+      const threshold = this.threeDSThresholdAmount;
 
-      // If 3DS is disabled then skip over this step.
-      if (!this.threeDSEnabled) {
+      // If 3DS is disabled or we are below the threshold then skip over this step.
+      if (!this.threeDSEnabled || price < threshold) {
         return Promise.resolve({
           nonce: androidPayCards[0].nonce,
           billingAddress,
@@ -390,9 +422,7 @@ export default {
       return new Promise((resolve, reject) => {
         billingAddress.countryCodeAlpha2 = billingAddress.country_code;
 
-        const price = this.cartGrandTotal / 100;
-        const threshold = this.threeDSThresholdAmount;
-        const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
+        const challengeRequested = this.alwaysRequestThreeDS;
 
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
