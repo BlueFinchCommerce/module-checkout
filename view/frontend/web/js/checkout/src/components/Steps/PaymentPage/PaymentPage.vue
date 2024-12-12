@@ -7,7 +7,7 @@
       :margin="false"
     />
     <Recaptcha
-      v-if="!isRecaptchaVisible('placeOrder')"
+      v-if="!isRecaptchaVisible('braintree')"
       id="placeOrder"
       location="braintreeNewMethods"
     />
