@@ -2,12 +2,12 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/php:8.2.15-browsers
-      - image: cimg/mariadb:10.4
+      - image: cimg/php:8.3-browsers
+      - image: cimg/mariadb:10.6
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: m2build
-      - image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+      - image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
         environment:
           transport.host: 127.0.0.1
           network.host: 127.0.0.1
@@ -72,7 +72,7 @@ jobs:
             composer config -g allow-plugins true
       - run:
           name: Composer Create Project
-          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.6 .
+          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.7 .
       - run:
           name: Install Module @ CI Build Branch/Commit
           command: |
