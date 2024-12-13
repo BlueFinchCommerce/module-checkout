@@ -62,7 +62,7 @@ class DisableSession
                 return false;
             }
             return true;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Fail silently.
         }
         return false;
