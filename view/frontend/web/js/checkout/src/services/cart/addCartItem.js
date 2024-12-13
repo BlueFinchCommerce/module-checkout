@@ -40,7 +40,7 @@ export default async (product) => {
         }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartAdd')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

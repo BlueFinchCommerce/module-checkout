@@ -212,20 +212,43 @@
     <virtualType name="BetterCheckoutSessionPlugin" type="Gene\BetterCheckout\Plugin\DisableSession">
         <arguments>
             <argument name="operationNames" xsi:type="array">
+                <item name="initialConfig" xsi:type="string">BetterCheckoutInitialonfig</item>
                 <item name="storeConfig" xsi:type="string">BetterCheckoutStoreConfig</item>
+                <item name="hokodoUser" xsi:type="string">BetterCheckoutHokodoUser</item>
+                <item name="storeConfigHokodo" xsi:type="string">BetterCheckoutStoreConfigHokodo</item>
+                <item name="storeConfigAfd" xsi:type="string">BetterCheckoutStoreConfigAfd</item>
                 <item name="cart" xsi:type="string">BetterCheckoutCart</item>
-                <item name="customerCart" xsi:type="string">BetterCheckoutCustomerCart</item>
+                <item name="cartStoreCreditRemove" xsi:type="string">BetterCheckoutCartStoreCreditRemove</item>
+                <item name="cartStoreCreditUse" xsi:type="string">BetterCheckoutCartStoreCreditUse</item>
+                <item name="cartRewardPointsRemove" xsi:type="string">BetterCheckoutCartRewardPointsRemove</item>
+                <item name="cartRewardPointsUse" xsi:type="string">BetterCheckoutCartRewardPointsUse</item>
+                <item name="cartGiftCardAdd" xsi:type="string">BetterCheckoutCartGiftCardAdd</item>
+                <item name="cartGiftCardRemove" xsi:type="string">BetterCheckoutCartGiftCardRemove</item>
+                <item name="cartDiscountAdd" xsi:type="string">BetterCheckoutCartDiscountAdd</item>
+                <item name="cartDiscountRemove" xsi:type="string">BetterCheckoutCartDiscountRemove</item>
+                <item name="cartUpdate" xsi:type="string">BetterCheckoutUpdate</item>
+                <item name="cartRemove" xsi:type="string">BetterCheckoutCartRemove</item>
+                <item name="cartCrosssells" xsi:type="string">BetterCheckoutCartCrosssells</item>
+                <item name="cartAdd" xsi:type="string">BetterCheckoutCartAdd</item>
+                <item name="cartId" xsi:type="string">BetterCheckoutCartId</item>
                 <item name="customer" xsi:type="string">BetterCheckoutCustomer</item>
+                <item name="customerRewardPoints" xsi:type="string">BetterCheckoutCustomerRewardPoints</item>
+                <item name="newsletter" xsi:type="string">BetterCheckoutNewsletter</item>
                 <item name="products" xsi:type="string">BetterCheckoutProducts</item>
                 <item name="isEmailAvailable" xsi:type="string">BetterCheckoutEmailAvailable</item>
                 <item name="setGuestEmailOnCart" xsi:type="string">BetterCheckoutSetGuestEmailCart</item>
+                <item name="getShippingMethodsOnCart" xsi:type="string">BetterCheckoutGetShippingMethodCart</item>
                 <item name="setShippingMethodsOnCart" xsi:type="string">BetterCheckoutSetShippingMethodCart</item>
-                <item name="SetAddresses" xsi:type="string">BetterCheckoutSetAddress</item>
+                <item name="setAddresses" xsi:type="string">BetterCheckoutSetAddress</item>
                 <item name="createBraintreeClientToken" xsi:type="string">BetterCheckoutBraintreeToken</item>
                 <item name="customerPaymentTokens" xsi:type="string">BetterCheckoutCustomerPaymentTokens</item>
                 <item name="adyenPaymentMethods" xsi:type="string">BetterCheckoutAdyenPaymentMethods</item>
                 <item name="placeOrder" xsi:type="string">BetterCheckoutPlaceOrder</item>
+                <item name="storeCode" xsi:type="string">BetterCheckoutStoreCode</item>
                 <item name="adyenPaymentStatus" xsi:type="string">BetterCheckoutAdyenPaymentStatus</item>
+                <item name="pennies" xsi:type="string">BetterCheckoutPennies</item>
+                <item name="penniesCalculate" xsi:type="string">BetterCheckoutPenniesCalculate</item>
+                <item name="collectPlus" xsi:type="string">BetterCheckoutCollectPlus</item>
             </argument>
         </arguments>
     </virtualType>

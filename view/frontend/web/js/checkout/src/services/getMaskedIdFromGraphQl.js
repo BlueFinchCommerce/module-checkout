@@ -6,6 +6,6 @@ export default () => {
       id
     }
   }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartId')
     .then((response) => response.data?.customerCart?.id ?? null);
 };

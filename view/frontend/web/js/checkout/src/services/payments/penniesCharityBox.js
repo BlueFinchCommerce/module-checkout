@@ -27,7 +27,8 @@ export default {
                 message
            }
         }`;
-    return graphQlRequest(request, {}, {}, 'BetterCheckoutPennies').then((response) => response.data.PenniesCalculate);
+    return graphQlRequest(request, {}, {}, 'BetterCheckoutPenniesCalculate')
+      .then((response) => response.data.PenniesCalculate);
   },
 
   logResponseErrors(error) {

@@ -31,7 +31,7 @@ export default async (uid) => {
         }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartRemove')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
