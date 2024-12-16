@@ -23,7 +23,7 @@ class DisableSession
         private readonly RequestInterface $request,
         private readonly State $appState,
         private readonly SerializerInterface $serializer,
-        private readonly array $operationNames
+        private readonly string $requestPrefix
     ) {
     }
 
@@ -38,7 +38,7 @@ class DisableSession
      */
     public function afterCheck(SessionStartChecker $subject, bool $result): bool
     {
-        if (!$result || empty($this->operationNames) || !$this->request->getContent()) {
+        if (!$result || !$this->requestPrefix || !$this->request->getContent()) {
             return false;
         }
         try {
@@ -58,7 +58,7 @@ class DisableSession
         try {
             $requestBody = $this->serializer->unserialize($this->request->getContent());
             $operationName = $requestBody['operationName'] ?? null;
-            if ($operationName === null || !in_array($operationName, $this->operationNames)) {
+            if ($operationName === null || !str_starts_with($operationName, $this->requestPrefix)) {
                 return false;
             }
             return true;
