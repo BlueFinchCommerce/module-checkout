@@ -17,7 +17,7 @@ export default async () => {
       }) {
         cart {
           ${await getEmailField()}
-          
+
           ${await getAppliedCoupons()}
 
           ${await getItems()}
@@ -30,7 +30,7 @@ export default async () => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartDiscountRemove')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

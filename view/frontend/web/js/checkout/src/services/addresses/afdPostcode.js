@@ -19,7 +19,8 @@ export default {
         afd_response_max_quantity
       }
     }`;
-    return graphQlRequest(request).then((response) => response.data.storeConfig);
+    return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreConfigAfd')
+      .then((response) => response.data.storeConfig);
   },
 
   getSuggestions(query, addressType) {

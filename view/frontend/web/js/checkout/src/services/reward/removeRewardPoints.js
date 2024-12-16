@@ -15,7 +15,7 @@ export default async () => {
       removeRewardPointsFromCart(cartId: "${maskedId}") {
         cart {
           ${await getEmailField()}
-        
+
           ${await getItems()}
 
           ${await getPaymentMethods()}
@@ -28,7 +28,7 @@ export default async () => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartRewardPointsRemove')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
