@@ -9,11 +9,6 @@
         />
       </div>
       <Agreements id="detailsPage"/>
-      <Recaptcha
-        v-if="isRecaptchaVisible('placeOrder')"
-        id="placeOrder"
-        location="expressPayments"
-      />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
@@ -286,7 +281,6 @@ import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressFo
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
-import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
@@ -299,7 +293,6 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -336,7 +329,6 @@ export default {
     Newsletter,
     MyButton,
     ProgressBar,
-    Recaptcha,
     Agreements,
     DeliveryTabIcon,
     ClickCollectTabIcon,
@@ -411,9 +403,6 @@ export default {
       'emailEntered',
       'selected',
       'isUsingSavedShippingAddress',
-    ]),
-    ...mapState(useRecaptchaStore, [
-      'isRecaptchaVisible',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
