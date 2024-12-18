@@ -214,7 +214,7 @@
             <argument name="requestPrefix" xsi:type="string">BetterCheckout</argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\Session\SessionStartChecker">
+    <type name="Cm\RedisSession\Handler\ConfigInterface">
         <plugin name="better_checkout_graphql_session_disable" type="Gene\BetterCheckout\Plugin\DisableSession"/>
     </type>
 </config>

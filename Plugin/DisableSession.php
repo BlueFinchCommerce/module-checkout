@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Gene\BetterCheckout\Plugin;
 
+use Cm\RedisSession\Handler\ConfigInterface;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\State;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Framework\Session\SessionStartChecker;
 
 class DisableSession
 {
@@ -17,7 +17,7 @@ class DisableSession
      * @param RequestInterface $request
      * @param State $appState
      * @param SerializerInterface $serializer
-     * @param array $operationNames
+     * @param string $requestPrefix
      */
     public function __construct(
         private readonly RequestInterface $request,
@@ -30,20 +30,20 @@ class DisableSession
     /**
      * Prevents session starting while in graphql area and session is disabled in config.
      *
-     * @param SessionStartChecker $subject
+     * @param ConfigInterface $subject
      * @param bool $result
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      */
-    public function afterCheck(SessionStartChecker $subject, bool $result): bool
+    public function afterGetDisableLocking(ConfigInterface $subject, bool $result): bool
     {
-        if (!$result || !$this->requestPrefix || !$this->request->getContent()) {
+        if ($result === true || !$this->requestPrefix || !$this->request->getContent()) {
             return false;
         }
         try {
             if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
-                $result = false;
+                $result = true;
             }
         } catch (LocalizedException $e) {} finally { //@codingStandardsIgnoreLine
             return $result;
