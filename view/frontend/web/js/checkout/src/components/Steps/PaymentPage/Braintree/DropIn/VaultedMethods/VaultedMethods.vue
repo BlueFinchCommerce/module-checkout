@@ -260,7 +260,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || this.vaultVerifyCvv || price < threshold) {
+        if (!this.threeDSEnabled || price < threshold) {
           resolve({
             nonce,
           });
