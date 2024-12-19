@@ -28,26 +28,33 @@ class DisableSession
     }
 
     /**
-     * Prevents session starting while in graphql area and session is disabled in config.
+     * Conditionally set disable_locking=1 for better checkout graphql requests
      *
      * @param ConfigInterface $subject
-     * @param bool $result
+     * @param int|bool $result
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      */
-    public function afterGetDisableLocking(ConfigInterface $subject, bool $result): bool
+    public function afterGetDisableLocking(ConfigInterface $subject, $result): bool
     {
-        if ($result === true || !$this->requestPrefix || !$this->request->getContent()) {
-            return false;
+        if ($result) {
+            return $result; // exit early as disable_locking=1 is already set
         }
-        try {
-            if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
-                $result = true;
-            }
-        } catch (LocalizedException $e) {} finally { //@codingStandardsIgnoreLine
+
+        if (!$this->requestPrefix || !$this->request->getContent()) {
+            // exit early as we don't have defined content to make a decision
+            // return whatever the original disable_locking value was
             return $result;
         }
+
+        try {
+            if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
+                $result = true; // ensure disable_locking=1 is set for our BC graphql requests
+            }
+        } catch (LocalizedException $e) {}
+
+        return $result;
     }
 
     /**
