@@ -36,7 +36,7 @@ class DisableSession
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      */
-    public function afterGetDisableLocking(ConfigInterface $subject, $result): bool
+    public function afterGetDisableLocking(ConfigInterface $subject, $result)
     {
         if ($result) {
             return $result; // exit early as disable_locking=1 is already set
