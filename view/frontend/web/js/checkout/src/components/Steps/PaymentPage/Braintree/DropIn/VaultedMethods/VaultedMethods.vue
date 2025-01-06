@@ -331,7 +331,7 @@ export default {
       })).then(async (response) => {
         const paymentData = this.getPaymentData(response);
 
-        const recaptchaValid = await this.validateToken('placeOrder');
+        const recaptchaValid = await this.validateToken('braintree');
 
         if (!recaptchaValid) {
           throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
