@@ -194,7 +194,7 @@ export default {
       this.clearErrorMessage();
       this.paymentEmitter.emit('braintreePaymentStart');
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder', 'braintreeLpm')) {
+      if (!this.validateAgreements() || !await this.validateToken('braintree', 'braintreeLpm')) {
         this.paymentEmitter.emit('braintreePaymentError');
         return;
       }
