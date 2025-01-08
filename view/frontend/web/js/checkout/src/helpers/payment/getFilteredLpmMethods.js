@@ -1,7 +1,7 @@
 import useCustomerStore from '@/stores/CustomerStore';
 
 export default (lpmMethods) => {
-  const { selected: { billing: { country } } } = useCustomerStore();
+  const { selected: { billing: { country_code } } } = useCustomerStore();
 
   const methods = {
     bancontact: ['BE'],
@@ -15,6 +15,6 @@ export default (lpmMethods) => {
   };
 
   return lpmMethods.filter((method) => (
-    methods[method]?.includes(country?.code)
+    methods[method]?.includes(country_code)
   ));
 };
