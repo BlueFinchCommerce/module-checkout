@@ -7,18 +7,18 @@
         </tab>
         <section id="gene_better_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Better Checkout</label>
+            <label>BlueFinch Checkout</label>
             <tab>gene</tab>
             <resource>Gene_BetterCheckout::config</resource>
             <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <comment>
-                    <![CDATA[Version: 1.0.10<br>Better Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
+                    <![CDATA[Version: 1.0.10<br>BlueFinch Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
                 </comment>
                 <label>General</label>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Enable Module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
+                    <comment><![CDATA[Enable or disable the Gene BlueFinch Checkout.]]></comment>
                 </field>
                 <field id="progress_bar_visible" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Progress Bar Functionality</label>
