@@ -169,12 +169,10 @@ workflows:
   magento-build-test:
     jobs:
       - build:
-          context: magento2 module
           project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7'
   mageos-build-test:
     jobs:
       - build:
-          context: magento2 module
           project_create_command: '--repository-url=https://repo.mage-os.org/ mage-os/project-community-edition=1.0.5'
           filters:
             branches:
