@@ -208,7 +208,7 @@ export default {
       const shippingAddress = this.cart.shipping_addresses[0];
       const address = {};
 
-      address.countryCode = shippingAddress.country_code;
+      address.countryCode = shippingAddress.country.code;
 
       if (!isVirtual) {
         const [streetAddress, extendedAddress] = shippingAddress.street;
