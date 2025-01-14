@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Plugin;
+namespace Bluefinch\Checkout\Plugin;
 
 use Cm\RedisSession\Handler\ConfigInterface;
 use Magento\Framework\App\Area;

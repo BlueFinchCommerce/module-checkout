@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace Bluefinch\Checkout\Model;
 
 interface DataProviderInterface
 {

@@ -1,5 +1,5 @@
 {
-    "name": "gene/module-better-checkout",
+    "name": "bluefinchcommerce/module-checkout",
     "description": "",
     "type": "magento2-module",
     "autoload": {
@@ -7,7 +7,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Gene\\BetterCheckout\\": ""
+            "BlueFinch\\Checkout\\": ""
         }
     },
     "require": {
@@ -33,7 +33,7 @@
         },
         "1": {
             "type": "composer",
-            "url": "https://repo.packagist.com/gene/"
+            "url": "https://repo.packagist.com/bluefinchcommerce/"
         }
     },
     "config": {
