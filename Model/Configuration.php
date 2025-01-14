@@ -5,6 +5,7 @@ namespace BlueFinch\Checkout\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Gene\BetterCheckout\Factory\Paypal\Braintree\Helper\CcTypeFactory;
 
 class Configuration implements ConfigurationInterface
 {
@@ -14,7 +15,8 @@ class Configuration implements ConfigurationInterface
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        private readonly ScopeConfigInterface $scopeConfig
+        private readonly ScopeConfigInterface $scopeConfig,
+        private readonly CcTypeFactory $ccTypeFactory
     ) {
     }
 
@@ -123,4 +125,22 @@ class Configuration implements ConfigurationInterface
         );
     }
 
+    /**
+     * @return array
+     */
+    public function getPaypalCcTypes()
+    {
+        $ccTypes = [];
+
+        // Support MageOS which doesn't bundle with PayPal\Braintree
+        $ccTypeHelper = $this->ccTypeFactory->getCcType();
+        if ($ccTypeHelper !== null) {
+            $ccTypesTmp = $ccTypeHelper->getCcTypes();
+            if (is_array($ccTypesTmp)) {
+                $ccTypes = $ccTypesTmp;
+            }
+        }
+
+        return $ccTypes;
+    }
 }
