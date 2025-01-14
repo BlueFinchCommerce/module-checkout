@@ -40,12 +40,12 @@ export default {
   data() {
     return {
       headerText: '',
-      headerTextId: 'gene-bettercheckout-header-text',
+      headerTextId: 'bluefinch-checkout-header-text',
     };
   },
   async created() {
     await this.getInitialConfig();
-    this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
+    this.headerText = window.bluefinchCheckout?.[this.headerTextId] || this.$t('header.text');
 
     document.addEventListener(this.headerTextId, this.setHeaderText);
   },

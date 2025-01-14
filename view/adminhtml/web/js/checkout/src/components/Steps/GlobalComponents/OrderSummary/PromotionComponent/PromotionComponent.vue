@@ -135,8 +135,8 @@ export default {
       isDropDownVisible: false,
       crossSellsText: '',
       crossSellsCTAText: '',
-      crossSellsTextId: 'gene-bettercheckout-crosssells-text',
-      crossSellsCTATextId: 'gene-bettercheckout-crosssells-cta-text',
+      crossSellsTextId: 'bluefinch-checkout-crosssells-text',
+      crossSellsCTATextId: 'bluefinch-checkout-crosssells-cta-text',
     };
   },
   computed: {
@@ -146,10 +146,10 @@ export default {
     },
   },
   async created() {
-    this.crossSellsText = window.geneCheckout?.[this.crossSellsTextId]
+    this.crossSellsText = window.bluefinchCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
 
-    this.crossSellsCTAText = window.geneCheckout?.[this.crossSellsCTATextId]
+    this.crossSellsCTAText = window.bluefinchCheckout?.[this.crossSellsCTATextId]
       || this.$t('orderSummary.addToCart');
 
     document.addEventListener(this.crossSellsTextId, this.setCrossSellsText);

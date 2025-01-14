@@ -104,7 +104,7 @@ export default defineStore('customerStore', {
     dummyLogIn(step) {
       this.setData({
         customer: {
-          email: 'hello@gene.co.uk',
+          email: 'hello@bluefinch.co.uk',
           loggedIn: true,
         },
         emailEntered: true,
@@ -138,7 +138,7 @@ export default defineStore('customerStore', {
         this.setData({
           customer: {
             type: userType,
-            email: 'guest@gene.co.uk',
+            email: 'guest@bluefinch.co.uk',
             loggedIn: false,
             registered: false,
           },
@@ -148,7 +148,7 @@ export default defineStore('customerStore', {
         this.setData({
           customer: {
             type: userType,
-            email: 'hello@gene.co.uk',
+            email: 'hello@bluefinch.co.uk',
             loggedIn: false,
             registered: true,
           },
