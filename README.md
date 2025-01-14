@@ -1,4 +1,4 @@
-![CircleCI](https://dl.circleci.com/status-badge/img/gh/bluefinchcommerce/module-bluefinch-checkout/tree/main.svg?style=svg&circle-token=244e88ea8c8c2c317e9fbe475efabdce9b01281e)
+![CircleCI](https://dl.circleci.com/status-badge/img/gh/bluefinchcommerce/module-checkout/tree/main.svg?style=svg&circle-token=244e88ea8c8c2c317e9fbe475efabdce9b01281e)
 
 ![BlueFinch Checkout](./assets/logo.svg)
 
@@ -38,13 +38,13 @@ Remember to clear any appropriate caches.
 
 ### BlueFinch Checkout extension modules
 
-You can find our template for creating BlueFinch Checkout extension modules **[here](https://github.com/bluefinchcommerce/bluefinch-checkout-new-module-template)**.
+You can find our template for creating BlueFinch Checkout extension modules **[here](https://github.com/bluefinchcommerce/module-checkout-new-module-template)**.
 
 ## Default payment support
 
 By default, BlueFinch Checkout includes support for Braintree payments.
 
-If your site is using Adyen as the payment provider, you can install the [BlueFinch Checkout Adyen module](https://github.com/bluefinchcommerce/module-bluefinch-checkout-adyen)
+If your site is using Adyen as the payment provider, you can install the [BlueFinch Checkout Adyen module](https://github.com/bluefinchcommerce/module-checkout-adyen)
 which integrates with Magento_GraphQl and Adyen_Payment dependencies.
 
 ## CircleCi
