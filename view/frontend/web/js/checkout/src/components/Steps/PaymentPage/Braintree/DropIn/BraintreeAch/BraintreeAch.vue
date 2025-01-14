@@ -118,7 +118,7 @@
           <Agreements id="braintreeAch" />
           <Recaptcha
             v-if="getTypeByPlacement('braintree')"
-            id="placeOrder"
+            id="braintree"
             location="braintreeAch"
           />
           <PrivacyPolicy />

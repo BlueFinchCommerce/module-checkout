@@ -58,7 +58,7 @@
           <PrivacyPolicy />
           <Recaptcha
             v-if="getTypeByPlacement('braintree')"
-            id="placeOrder"
+            id="braintree"
             location="braintreeLpm"
           />
           <button
