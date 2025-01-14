@@ -57,8 +57,8 @@
           <Agreements id="braintreeLpm" />
           <PrivacyPolicy />
           <Recaptcha
-            v-if="isRecaptchaVisible('placeOrder')"
-            id="placeOrder"
+            v-if="getTypeByPlacement('braintree')"
+            id="braintree"
             location="braintreeLpm"
           />
           <button
@@ -148,7 +148,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority', 'selectedMethod']),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
