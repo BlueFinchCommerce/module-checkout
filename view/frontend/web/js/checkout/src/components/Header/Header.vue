@@ -43,11 +43,11 @@ export default {
   data() {
     return {
       headerText: '',
-      headerTextId: 'gene-bettercheckout-header-text',
+      headerTextId: 'bluefinch-checkout-header-text',
     };
   },
   async created() {
-    this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
+    this.headerText = window.bluefinchCheckout?.[this.headerTextId] || this.$t('header.text');
     await this.getInitialConfig();
   },
   computed: {

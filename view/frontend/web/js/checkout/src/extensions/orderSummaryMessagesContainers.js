@@ -2,13 +2,13 @@ import { defineAsyncComponent } from 'vue';
 
 export default () => {
   const orderSummaryMessagesContainer = {};
-  // Look at window.geneCheckout.orderSummaryMessagesContainer object to trigger the loading of all extra details.
-  if (window.geneCheckout?.orderSummaryMessagesContainer) {
-    Object.keys(window.geneCheckout.orderSummaryMessagesContainer).forEach((detailField) => {
+  // Look at window.bluefinchCheckout.orderSummaryMessagesContainer object to trigger the loading of all extra details.
+  if (window.bluefinchCheckout?.orderSummaryMessagesContainer) {
+    Object.keys(window.bluefinchCheckout.orderSummaryMessagesContainer).forEach((detailField) => {
       orderSummaryMessagesContainer[detailField] = defineAsyncComponent(() => (
         import(
           /* @vite-ignore */
-          window.geneCheckout.orderSummaryMessagesContainer[detailField]
+          window.bluefinchCheckout.orderSummaryMessagesContainer[detailField]
         )));
     });
   }

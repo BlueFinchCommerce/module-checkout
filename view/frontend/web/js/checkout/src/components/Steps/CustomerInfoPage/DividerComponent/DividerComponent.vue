@@ -28,14 +28,14 @@ export default {
   data() {
     return {
       dividerText: '',
-      dividerTextId: 'gene-bettercheckout-divider-text',
+      dividerTextId: 'bluefinch-checkout-divider-text',
     };
   },
   computed: {
     ...mapState(usePaymentStore, ['availableMethods', 'isExpressPaymentsVisible']),
   },
   mounted() {
-    this.dividerText = window.geneCheckout?.[this.dividerTextId] || this.$t('dividerText');
+    this.dividerText = window.bluefinchCheckout?.[this.dividerTextId] || this.$t('dividerText');
   },
 };
 </script>
