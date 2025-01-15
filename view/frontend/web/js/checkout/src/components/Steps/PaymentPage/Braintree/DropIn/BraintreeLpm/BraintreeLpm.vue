@@ -190,7 +190,7 @@ export default {
       this.isMethodSelected = true;
       this.selectPaymentMethod('braintree-lpm');
       if (this.getTypeByPlacement('braintree') === recapchaTypes.invisible) {
-        await this.validateToken('braintree', 'braintreeLpm')
+        await this.validateToken('braintree', 'braintreeLpm');
       }
     },
 
