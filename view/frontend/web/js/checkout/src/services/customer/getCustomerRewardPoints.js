@@ -14,5 +14,5 @@ export default () => {
       }
     }
   }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCustomerRewardPoints').then((response) => response.data);
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCustomerRewardPoints').then((response) => response.data);
 };

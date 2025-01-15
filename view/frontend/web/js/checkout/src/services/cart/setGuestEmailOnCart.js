@@ -18,6 +18,6 @@ export default async (email) => {
       }
     }`;
 
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutSetGuestEmailCart')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutSetGuestEmailCart')
     .then(((response) => response.data.setGuestEmailOnCart.cart));
 };
