@@ -27,8 +27,8 @@ We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-bas
 
 | Extension Point                 | Usage                                              |
 | ------------------------------- | -------------------------------------------------- |
-| orderSummaryMessagesContainer   | Insert a componant after order summary total       |
-| footerPaymentIcons              | Insert a componant before the footer payment icons |
+| orderSummaryMessagesContainer   | Insert a component after order summary total       |
+| footerPaymentIcons              | Insert a component before the footer payment icons |
 ----------------------------------------------------------------------------------------
 
 ![Global Extension Points](global-extension-points.png)
@@ -37,11 +37,11 @@ We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-bas
 
 | Extension Point                 | Usage                                                                                              |
 | ------------------------------- | -------------------------------------------------------------------------------------------------- |
-| expressPaymentMethods           | Insert a componant after the last express payment method e.g. An additional express payment method |
-| paymentIcons                    | Insert a componant before the payment method icons container e.g. Some welcome text                |
-| belowEmailFields                | Insert a componant after the email field                                                           |
-| clickAndCollectComponent        | Insert a componant after the click and collect section                                             |
-| ageCheckerContainer             | Insert a componant after the details section e.g. Age Checker                                      |
+| expressPaymentMethods           | Insert a component after the last express payment method e.g. An additional express payment method |
+| paymentIcons                    | Insert a component before the payment method icons container e.g. Some welcome text                |
+| belowEmailFields                | Insert a component after the email field                                                           |
+| clickAndCollectComponent        | Insert a component after the click and collect section                                             |
+| ageCheckerContainer             | Insert a component after the details section e.g. Age Checker                                      |
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 ![Details Page Extension Points](details-page-extension-points.png)
@@ -50,10 +50,10 @@ We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-bas
 
 | Extension Point                   | Usage                                                                                                                          |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| ageCheckerContainer               | Insert a componant before the shipping methods container e.g. age checker                                                      |
-| shippingMethodAdditionalContainer | Insert a componant before the first shipping method e.g. An additional shipping method that you want to be your primary method |
-| shippingMethods                   | Insert a componant after the last shipping method e.g. An additional shipping method                                           |
-| belowShippingMethods              | Insert a componant after the shipping methods container e.g. delivery instructions                                             |
+| ageCheckerContainer               | Insert a component before the shipping methods container e.g. age checker                                                      |
+| shippingMethodAdditionalContainer | Insert a component before the first shipping method e.g. An additional shipping method that you want to be your primary method |
+| shippingMethods                   | Insert a component after the last shipping method e.g. An additional shipping method                                           |
+| belowShippingMethods              | Insert a component after the shipping methods container e.g. delivery instructions                                             |
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ![Shipping Page Extension Points](shipping-page-extension-points.png)
@@ -62,10 +62,10 @@ We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-bas
 
 | Extension Point          | Usage                                                                                                                        |
 | -------------------------| ---------------------------------------------------------------------------------------------------------------------------- |
-| ageCheckerContainer      | Insert a componant before the payment methods container e.g. age checker                                                     |
-| additionalVaultedMethods | Insert a componant after the last vaulted method e.g. An additional vaulted method                                           |
-| paymentMethodsPrimary    | Insert a componant before the first payment method e.g. An additional payment method that you want to be your primary method |
-| paymentMethods           | Insert a componant after the last payment method e.g. An additional payment method                                           |
+| ageCheckerContainer      | Insert a component before the payment methods container e.g. age checker                                                     |
+| additionalVaultedMethods | Insert a component after the last vaulted method e.g. An additional vaulted method                                           |
+| paymentMethodsPrimary    | Insert a component before the first payment method e.g. An additional payment method that you want to be your primary method |
+| paymentMethods           | Insert a component after the last payment method e.g. An additional payment method                                           |
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ![Payment Page Extension Points](payment-page-extension-points.png)
