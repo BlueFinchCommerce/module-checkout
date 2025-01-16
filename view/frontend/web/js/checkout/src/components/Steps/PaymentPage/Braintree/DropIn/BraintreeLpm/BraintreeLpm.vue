@@ -109,6 +109,7 @@ import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
+import recapchaTypes from '@/helpers/types/getRecaptchaTypes';
 
 // Services
 import createPayment from '@/services/payments/createPaymentRest';
@@ -185,18 +186,28 @@ export default {
       return getStaticUrl(images[method]);
     },
 
-    selectMethod() {
+    async selectMethod() {
       this.isMethodSelected = true;
       this.selectPaymentMethod('braintree-lpm');
+      if (this.getTypeByPlacement('braintree') === recapchaTypes.invisible) {
+        await this.validateToken('braintree', 'braintreeLpm');
+      }
     },
 
     async initialiseLpm(allowedMethod) {
       this.clearErrorMessage();
       this.paymentEmitter.emit('braintreePaymentStart');
 
-      if (!this.validateAgreements() || !await this.validateToken('braintree', 'braintreeLpm')) {
+      if (!this.validateAgreements()) {
         this.paymentEmitter.emit('braintreePaymentError');
         return;
+      }
+
+      if (this.getTypeByPlacement('braintree') !== recapchaTypes.invisible) {
+        if (!await this.validateToken('braintree', 'braintreeLpm')) {
+          this.paymentEmitter.emit('braintreePaymentError');
+          return;
+        }
       }
 
       const lpmInstance = await braintree.localPayment.create({
