@@ -28,7 +28,7 @@ class DisableSession
     }
 
     /**
-     * Conditionally set disable_locking=1 for better checkout graphql requests
+     * Conditionally set disable_locking=1 for checkout graphql requests
      *
      * @param ConfigInterface $subject
      * @param int|bool $result

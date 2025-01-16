@@ -5,7 +5,7 @@ namespace BlueFinch\Checkout\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
-use Gene\BetterCheckout\Factory\Paypal\Braintree\Helper\CcTypeFactory;
+use BlueFinch\Checkout\Factory\Paypal\Braintree\Helper\CcTypeFactory;
 
 class Configuration implements ConfigurationInterface
 {

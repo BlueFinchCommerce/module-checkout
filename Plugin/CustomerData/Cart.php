@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Bluefinch\Checkout\Plugin\CustomerData;
 
-use Gene\BetterCheckout\Model\Configuration;
+use BlueFinch\Checkout\Model\Configuration;
 use Magento\Checkout\CustomerData\Cart as Subject;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Exception\LocalizedException;
