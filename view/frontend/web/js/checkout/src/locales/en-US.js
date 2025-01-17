@@ -257,9 +257,6 @@ export default {
     payByBankButton: 'Continue to Pay by Bank with Rvvup',
     rvvupPaymentLabel: 'Rvvup Pay By Bank',
   },
-  superPayments: {
-    superPaymentsTitle: 'Pay with Bank App via Super Payments',
-  },
   agreements: {
     acceptBtn: 'Accept',
     title: 'Terms & Conditions',
