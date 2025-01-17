@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isInstantCheckoutVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
+         v-show="isExpressPaymentsVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -9,11 +9,6 @@
         />
       </div>
       <Agreements id="detailsPage"/>
-      <Recaptcha
-        v-if="isRecaptchaVisible('placeOrder')"
-        id="placeOrder"
-        location="expressPayments"
-      />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
@@ -92,6 +87,10 @@
           v-for="clickAndCollectComponent in clickAndCollectComponents"
           :key="clickAndCollectComponent"
         />
+        <TextField
+          class="no-click-collect-text"
+          v-if="clickAndCollectComponents.length === 0"
+          :text="$t('yourDetailsSection.deliverySection.clickandCollectNotAvailable')"/>
       </div>
 
       <AddressList
@@ -282,7 +281,6 @@ import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressFo
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
-import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
@@ -295,7 +293,6 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -332,7 +329,6 @@ export default {
     Newsletter,
     MyButton,
     ProgressBar,
-    Recaptcha,
     Agreements,
     DeliveryTabIcon,
     ClickCollectTabIcon,
@@ -376,7 +372,6 @@ export default {
       ageCheckerExtensions: [],
       clickAndCollectComponents: [],
       isCreditComponentVisible: false,
-      isInstantCheckoutVisible: true,
     };
   },
   watch: {
@@ -408,9 +403,6 @@ export default {
       'emailEntered',
       'selected',
       'isUsingSavedShippingAddress',
-    ]),
-    ...mapState(useRecaptchaStore, [
-      'isRecaptchaVisible',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
@@ -452,10 +444,6 @@ export default {
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
-
-    // assign isExpressPaymentsVisible state
-    // to data isInstantCheckoutVisible after payments loaded
-    this.isInstantCheckoutVisible = this.isExpressPaymentsVisible;
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),

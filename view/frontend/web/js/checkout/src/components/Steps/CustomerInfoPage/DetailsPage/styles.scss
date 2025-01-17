@@ -119,6 +119,10 @@
   }
 }
 
+.no-click-collect-text {
+  padding-top: var(--indent__base);
+}
+
 .delivery-section {
   &-title {
     border-top: var(--delivery-section-title__border-top, unset);

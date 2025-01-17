@@ -79,9 +79,9 @@ export default defineStore('paymentStore', {
       });
     },
 
-    setHasVaultedMethods() {
+    setHasVaultedMethods(value) {
       this.setData({
-        hasVaultedMethods: true,
+        hasVaultedMethods: value,
       });
     },
 

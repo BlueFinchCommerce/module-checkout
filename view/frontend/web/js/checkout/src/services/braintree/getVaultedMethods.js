@@ -11,7 +11,8 @@ export default async () => {
       }
     }
   }`;
-  const methods = await graphQlRequest(request).then((response) => response.data.customerPaymentTokens?.items || []);
+  const methods = await graphQlRequest(request, {}, {}, 'BetterCheckoutCustomerPaymentTokens')
+    .then((response) => response.data.customerPaymentTokens?.items || []);
   return methods
     // Remove methods that aren't Braintree cards.
     .filter(({ payment_method_code: code }) => code === 'braintree')

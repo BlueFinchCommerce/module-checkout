@@ -6,6 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "build-dev": "vite build --dev",
+    "build-watch": "vite build --watch",
     "preview": "vite preview",
     "lint": "eslint --quiet --ext .js,.vue src",
     "lint-fix": "eslint --quiet --ext .js,.vue src --fix",

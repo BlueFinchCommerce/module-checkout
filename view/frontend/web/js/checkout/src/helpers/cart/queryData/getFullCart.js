@@ -12,35 +12,33 @@ import getPrices from '@/helpers/cart/queryData/getPrices';
 import getRewardPoints from '@/helpers/cart/queryData/getRewardPoints';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 import getEmailField from '@/helpers/cart/queryData/getEmailField';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default async () => {
-  const fullCart = `
+  // Initialize the fullCart with mandatory fields
+  let fullCart = `
     id
     ${await getEmailField()}
-
     ${await getAppliedCoupons()}
-
-    ${await getAppliedStoreCredit()}
-
     ${await getBillingAddress()}
-
-    ${await getGiftCards()}
-
-    ${await getGiftWrapping()}
-
     ${await getIsVirtual()}
-
     ${await getItems()}
-
     ${await getPaymentMethods()}
-
     ${await getPrices()}
-
-    ${await getRewardPoints()}
-
     ${await getShippingAddresses()}
   `;
 
+  // Conditionally add gift wrapping and gift cards for Enterprise edition only
+  if (getMagentoSolutionType()) {
+    fullCart += `
+      ${await getGiftCards()}
+      ${await getGiftWrapping()}
+      ${await getRewardPoints()}
+      ${await getAppliedStoreCredit()}
+    `;
+  }
+
+  // Call the function extension and return the modified cart
   const [modifiedCart] = await functionExtension('getFullCart', [fullCart]);
 
   return modifiedCart;

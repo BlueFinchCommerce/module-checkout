@@ -17,8 +17,9 @@
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
-        (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
-        || (selectedMethod === 'paypal' && paypal.vaultActive)
+        (selectedMethod === 'braintree' && vaultActive)
+        || (selectedMethod === 'braintree_googlePay' && google.vaultActive)
+        || (selectedMethod === 'braintree_paypal' && paypal.vaultActive)
       )"
       id="braintree-store-method"
       class="braintree-store-method"
@@ -301,13 +302,14 @@ export default {
     this.removeEventListeners();
     if (this.instance) {
       this.instance.teardown();
+      this.setThreeDSInstance(null);
     }
   },
   watch: {
     selectedMethod: {
       handler(newVal) {
         if (newVal !== null && (!newVal.startsWith('braintree')
-          || newVal === 'braintree-lpm' || newVal === 'braintree-vaulted' || newVal === 'braintree-ach')) {
+          || newVal === 'braintree-lpm' || newVal === 'braintree-ach')) {
           this.clearSelectedMethod(newVal);
         }
       },
@@ -530,7 +532,7 @@ export default {
     clearSelectedMethod(id) {
       this.unselectVaultedMethods();
       if (id !== null && (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach')) {
+        || id === 'braintree-lpm' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 

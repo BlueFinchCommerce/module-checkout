@@ -18,7 +18,7 @@ export default async (uid) => {
       }) {
         cart {
           ${await getEmailField()}
-        
+
           ${await getIsVirtual()}
 
           ${await getItems()}
@@ -31,7 +31,7 @@ export default async (uid) => {
         }
       }
     }`;
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartRemove')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

@@ -41,7 +41,8 @@
       "p24.svg",
       "sepa.svg",
       "sofort.svg",
-      "paymentIcon.svg"
+      "paymentIcon.svg",
+      "charityLogo.png"
     ],
     "css": [
       "main.css"
@@ -85,6 +86,10 @@
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg": {
     "file": "sofort.svg",
     "src": "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/sofort.svg"
+  },
+  "src/icons/charityLogo.png": {
+    "file": "charityLogo.png",
+    "src": "src/icons/charityLogo.png"
   },
   "src/icons/loader.gif": {
     "file": "loader.gif",

@@ -90,6 +90,11 @@
     top: calc(var(--input__height) / 2);
     text-align: right;
 
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
     button {
       text-align: right;
       width: 100%;
@@ -138,8 +143,7 @@
   &__footer {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: end;
     margin-bottom: var(--indent__s);
 
     #password_help_text {
@@ -185,11 +189,5 @@
 @media screen and (min-width: $screen__m) {
   .welcome-message-title {
     margin-top: 10px;
-  }
-
-  .checkout-email {
-    &__footer {
-      flex-wrap: nowrap;
-    }
   }
 }

@@ -1,8 +1,39 @@
 import useCustomerStore from '@/stores/CustomerStore';
 import tokenTypes from '@/helpers/tokens/getTokenTypes';
 import graphQlRequest from '@/services/graphQlRequest';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default async () => {
+  // Initialize the rewards and store credit query part based on Magento edition
+  let rewardPointsQuery = '';
+  let storeCreditPointsQuery = '';
+
+  if (getMagentoSolutionType()) {
+    rewardPointsQuery = `
+      reward_points {
+        balance {
+          points
+          money {
+            value
+          }
+        }
+        subscription_status {
+          balance_updates
+        }
+      }
+    `;
+
+    storeCreditPointsQuery = `
+     store_credit {
+        enabled
+        current_balance {
+          value
+          currency
+        }
+      }
+    `;
+  }
+
   const request = `{
     customer {
       default_billing
@@ -28,31 +59,15 @@ export default async () => {
         street
         telephone
       }
+      ${rewardPointsQuery}
+      ${storeCreditPointsQuery}
       created_at
-      reward_points {
-        balance {
-          points
-          money {
-            value
-          }
-        }
-        subscription_status {
-          balance_updates
-        }
-      }
-      store_credit {
-        enabled
-        current_balance {
-          value
-          currency
-        }
-      }
       is_subscribed
     }
   }`;
 
   try {
-    const response = await graphQlRequest(request);
+    const response = await graphQlRequest(request, {}, {}, 'BetterCheckoutCustomer');
     return response.data.customer;
   } catch (error) {
     // If there is an error, assume the user is a guest.

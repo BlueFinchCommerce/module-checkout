@@ -33,7 +33,6 @@
       class="free-payment-button"
       :label="$t('paymentStep.payNow')"
       primary
-      :disabled="buttonDisabled"
       :data-cy="'free-mo-pay-button'"
       @click="createPayment()"
     />
@@ -47,6 +46,8 @@ import useAgreementStore from '@/stores/ConfigStores/AgreementStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
+import useLoadingStore from '@/stores/LoadingStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -79,7 +80,6 @@ export default {
   },
   data() {
     return {
-      buttonDisabled: false,
       isMethodSelected: false,
       paymentVisible: true,
     };
@@ -90,6 +90,7 @@ export default {
       'customer',
     ]),
     ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
+    ...mapState(useBraintreeStore, ['isBraintreeEnabled']),
   },
   watch: {
     selectedMethod: {
@@ -111,24 +112,31 @@ export default {
     ...mapActions(useAgreementStore, ['validateAgreements']),
     ...mapActions(useRecaptchaStore, ['validateToken']),
     ...mapActions(usePaymentStore, ['selectPaymentMethod']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
 
     selectCheckMoPaymentMethod() {
       this.isMethodSelected = true;
       this.selectPaymentMethod(this.paymentType);
     },
-    createPayment() {
+    async createPayment() {
       const paymentMethod = {
         code: this.paymentType,
       };
-      this.buttonDisabled = true;
-
       // Check that the agreements (if any) and recpatcha is valid.
       const agreementsValid = this.validateAgreements();
-      const recaptchaValid = this.validateToken('placeOrder');
+      let recaptchaValid;
+
+      if (this.isBraintreeEnabled) {
+        recaptchaValid = await this.validateToken('braintree', 'freeMoCheckPayment');
+      } else {
+        recaptchaValid = await this.validateToken('placeOrder', 'freeMoCheckPayment');
+      }
 
       if (!agreementsValid || !recaptchaValid) {
         return;
       }
+
+      this.setLoadingState(true);
 
       createPayment(paymentMethod)
         .then(() => refreshCustomerData(['cart']))
@@ -137,7 +145,7 @@ export default {
           if (error.message) {
             this.errorMessage = error.message;
           }
-          this.buttonDisabled = false;
+          this.setLoadingState(false);
         });
     },
 

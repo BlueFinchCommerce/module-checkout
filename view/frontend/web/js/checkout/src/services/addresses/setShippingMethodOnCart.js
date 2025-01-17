@@ -34,7 +34,7 @@ export default async (carrierCode, methodCode) => {
       }
     }`;
 
-  return graphQlRequest(request)
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutSetShippingMethodCart')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

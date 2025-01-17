@@ -109,7 +109,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
       address: formatAddress(shippingAddress),
     }];
   }
-  return graphQlRequest(request, variables)
+  return graphQlRequest(request, variables, {}, 'BetterCheckoutSetAddress')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
