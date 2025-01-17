@@ -165,12 +165,4 @@
   .modal {
     margin: 0 auto;
   }
-
-  .amasty-modal {
-    max-height: var(--modal-desktop-max-height, none);
-
-    .modal-body {
-      overflow: var(--modal-desktop-overflow, auto);
-    }
-  }
 }

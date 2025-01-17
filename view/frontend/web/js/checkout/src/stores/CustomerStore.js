@@ -7,7 +7,6 @@ import getCustomerInformation from '@/services/customer/getCustomerInformation';
 import isEmailAvailable from '@/services/customer/isEmailAvailable';
 import login from '@/services/customer/login';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
-import amastyConsentLogic from '@/services/content/amastyConsentLogic';
 import setGuestEmailOnCart from '@/services/cart/setGuestEmailOnCart';
 
 import cleanAddress from '@/helpers/addresses/cleanAddress';
@@ -53,8 +52,6 @@ export default defineStore('customerStore', {
       subscribeToNewsletter: false,
       isSubscribed: false,
     },
-    amastySubs: {},
-    amastyConsentStatus: {},
     isEmailAvailableController: undefined,
     postCodeValid: false,
     cache: {},
@@ -437,20 +434,7 @@ export default defineStore('customerStore', {
         },
       });
     },
-
-    updateAmastySubscription(state) {
-      this.setData({
-        amastySubs: state,
-      });
-    },
-
-    async getAmastyConsentStatus(email) {
-      const status = await amastyConsentLogic(email);
-      this.setData({
-        amastyConsentStatus: status,
-      });
-    },
-
+    
     getCachedResponse(request, cacheKey, args = {}) {
       if (typeof this.$state.cache[cacheKey] !== 'undefined') {
         return this.$state.cache[cacheKey];
