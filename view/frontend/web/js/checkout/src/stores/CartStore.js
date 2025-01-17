@@ -243,7 +243,7 @@ export default defineStore('cartStore', {
       } catch (error) {
         console.warn('Unable to remove cart item', error.message);
       }
-      
+
       this.clearCaches(['getCrosssells']);
       await this.getCrosssells();
 
