@@ -127,26 +127,6 @@
   }
 }
 
-.rvvup-modal {
-  width: 100%;
-  bottom: 0;
-  top: auto;
-  height: fit-content;
-  max-height: 80%;
-  transition: all .5s;
-
-  .modal-body {
-    padding: 0;
-  }
-
-  @media screen and (min-width: $screen__m) {
-    transform: translateY(-50%);
-    top: 50%;
-    bottom: auto;
-    max-width: 550px;
-  }
-}
-
 #root {
   .order-total-modal {
 
