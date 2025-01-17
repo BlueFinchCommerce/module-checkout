@@ -44,7 +44,6 @@ import * as getLoqateUrls from '@/helpers/addresses/getLoqateUrls';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
-import * as getPenniesUrl from '@/helpers/payment/getPenniesUrl';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getRecaptchaTypes from '@/helpers/types/getRecaptchaTypes';
@@ -127,7 +126,6 @@ export default {
   getLocalMaskedId,
   getPaymentExtensionAttributes,
   getPaymentMethods,
-  getPenniesUrl,
   getPrices,
   getPrivacyPolicyId,
   getRecaptchaTypes,

@@ -67,7 +67,6 @@ import PayPal from '@/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
 import PaymentPage from '@/components/Steps/PaymentPage/PaymentPage.vue';
 import PayWithComponent from '@/components/Steps/GlobalComponents/PayWithComponent/PayWith.vue';
-import PenniesComponent from '@/components/Steps/PaymentPage/PenniesComponent/Pennies.vue';
 import Percent from '@/components/Core/Icons/Percent/Percent.vue';
 import PlusIcon from '@/components/Core/Icons/PlusIcon/PlusIcon.vue';
 import Price from '@/components/Core/ContentComponents/Price/Price.vue';
@@ -171,7 +170,6 @@ export default {
   Payment,
   PaymentPage,
   PayWithComponent,
-  PenniesComponent,
   Percent,
   PlusIcon,
   Price,
