@@ -32,7 +32,7 @@ export default async (item, change) => {
         }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartUpdate')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCartUpdate')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

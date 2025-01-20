@@ -6,7 +6,7 @@
         <plugin name="bluefinchcheckout_add_head_layout" type="Gene\BetterCheckout\Plugin\AddNewHeadLayout"/>
     </type>
 
-    <!-- Gene Checkout Router -->
+    <!-- BlueFinch Checkout Router -->
     <type name="Magento\Framework\App\RouterList">
         <arguments>
             <argument name="routerList" xsi:type="array">

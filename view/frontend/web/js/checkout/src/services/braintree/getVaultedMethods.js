@@ -11,7 +11,7 @@ export default async () => {
       }
     }
   }`;
-  const methods = await graphQlRequest(request, {}, {}, 'BetterCheckoutCustomerPaymentTokens')
+  const methods = await graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCustomerPaymentTokens')
     .then((response) => response.data.customerPaymentTokens?.items || []);
   return methods
     // Remove methods that aren't Braintree cards.

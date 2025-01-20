@@ -192,7 +192,7 @@ class Assets implements ArgumentInterface
     }
 
     /**
-     * Retrieve url of a view file, with better checkout developer mode handling for the dist directory
+     * Retrieve url of a view file, with checkout developer mode handling for the dist directory
      *
      * @see \Magento\Framework\View\Element\AbstractBlock::getViewFileUrl()
      *
