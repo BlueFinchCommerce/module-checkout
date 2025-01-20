@@ -18,7 +18,7 @@ interface ConfigurationInterface
     public const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'gene_better_checkout/general/enable_debug';
 
     /** @var string */
-    const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'gene_better_checkout/general/enable_local_developer_vite_watch_mode';
+    public const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'gene_better_checkout/general/enable_local_developer_vite_watch_mode';
 
     /** @var string */
     public const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
@@ -48,6 +48,8 @@ interface ConfigurationInterface
     public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
 
     /**
+     * Return font url from CDN
+     *
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return string

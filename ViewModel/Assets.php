@@ -32,6 +32,9 @@ class Assets implements ArgumentInterface
     /** @var array */
     private $assetFilesByType = [];
 
+    /**
+     * @var ProductMetadataInterface
+     */
     private ProductMetadataInterface $productMetadata;
 
     /**
@@ -54,7 +57,6 @@ class Assets implements ArgumentInterface
     ) {
         $this->productMetadata = $productMetadata;
     }
-
 
     /**
      * Get the Magento Edition (e.g., Community, Enterprise).
@@ -132,7 +134,7 @@ class Assets implements ArgumentInterface
         $this->assetFilesByType = [];
         $this->assetFilesByType['js'] = [];
         if (array_key_exists('assets', $assetDefinitionArray['main.js'])) {
-            foreach($assetDefinitionArray['main.js']['assets'] as $fileName) {
+            foreach ($assetDefinitionArray['main.js']['assets'] as $fileName) {
                 $this->createAsset(self::ASSETS_BASE_DIR . $fileName, $area);
             }
         }

@@ -17,9 +17,9 @@ $fontFamily = $assetViewModel->getFontFamily();
     window.geneCheckout = window.geneCheckout || {};
     window.geneCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/')) ?>";
 </script>
-<?php if ($fontCdnUrl) : ?>
-    <?= $fontCdnUrl ?>
-<?php elseif ($fontUrl) : ?>
+<?php if ($fontCdnUrl): ?>
+    <?= $escaper->escapeUrl($fontCdnUrl) ?>
+<?php elseif ($fontUrl): ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';

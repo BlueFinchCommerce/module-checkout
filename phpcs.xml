@@ -10,6 +10,8 @@
         <exclude name="Magento2.GraphQL.ValidArgumentName.NotCamelCase"/>
         <exclude name="Magento2.Html.HtmlSelfClosingTags.HtmlSelfClosingNonVoidTag"/>
         <exclude name="Magento2.Html.HtmlClosingVoidTags.HtmlClosingVoidElements"/>
+        <exclude name="Magento2.CodeAnalysis.EmptyBlock.DetectedCatch"/>
+        <exclude name="Magento2.Functions.DiscouragedFunction.Discouraged"/>
     </rule>
     <rule ref="Generic.Files.LineLength.TooLong">
         <exclude-pattern>*\.phtml</exclude-pattern>

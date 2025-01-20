@@ -52,12 +52,16 @@ class DisableSession
             if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
                 $result = true; // ensure disable_locking=1 is set for our BC graphql requests
             }
-        } catch (LocalizedException $e) {}
+        } catch (LocalizedException $e) {
+            // Fail silently.
+        }
 
         return $result;
     }
 
     /**
+     * Check if request from checkout
+     *
      * @return bool
      */
     private function isCheckoutRequest(): bool

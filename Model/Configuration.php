@@ -54,22 +54,22 @@ class Configuration implements ConfigurationInterface
     public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
     {
         return $this->scopeConfig->getValue(
-                self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
-                $scopeType,
-                $scopeCode
-            ) ?? '';
+            self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
+            $scopeType,
+            $scopeCode
+        ) ?? '';
     }
 
     /**
-    * Retrieve the font family name from the CDN URL
-    *
-    * @param string $scopeType
-    * @param string|null $scopeCode
-    * @return string
-    */
+     * Retrieve the font family name from the CDN URL
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string
+     */
     public function getFontFamilyFromCdnUrl(
-    string $scopeType = ScopeInterface::SCOPE_STORE,
-    string $scopeCode = null
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        string $scopeCode = null
     ): string {
         $fontCdnUrl = $this->getFontCdnUrl($scopeType, $scopeCode);
         $defaultFontFamily = 'Montserrat';
@@ -114,7 +114,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getIsDeveloperViteWatchModeEnabled(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-               $scopeCode = null
+        $scopeCode = null
     ): bool {
         return (bool) $this->scopeConfig->getValue(
             self::VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE,
@@ -122,5 +122,4 @@ class Configuration implements ConfigurationInterface
             $scopeCode
         );
     }
-
 }
