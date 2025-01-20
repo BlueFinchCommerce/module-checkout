@@ -117,8 +117,8 @@
           />
           <Agreements id="braintreeAch" />
           <Recaptcha
-            v-if="isRecaptchaVisible('placeOrder')"
-            id="placeOrder"
+            v-if="getTypeByPlacement('braintree')"
+            id="braintree"
             location="braintreeAch"
           />
           <PrivacyPolicy />
@@ -208,7 +208,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority', 'selectedMethod']),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
@@ -333,7 +333,7 @@ export default {
         return false;
       }
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements() || !await this.validateToken('braintree', 'braintreeAch')) {
         this.paymentEmitter.emit('braintreePaymentError');
         return false;
       }

@@ -169,11 +169,12 @@ export default {
       'threeDSThresholdAmount',
       'alwaysRequestThreeDS',
       'errorMessage',
+      'unselectVaultedMethods',
     ]),
     ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
-    ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods']),
+    ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
@@ -184,6 +185,17 @@ export default {
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });
+  },
+  watch: {
+    selectedMethod: {
+      handler(newVal) {
+        if (newVal !== null && newVal !== 'braintree-vaulted') {
+          this.unselectVaultedMethods();
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
@@ -205,15 +217,9 @@ export default {
         return;
       }
 
-      this.selectPaymentMethod('braintree-vaulted');
-
-      // Remove any existing hosted fields if they exist.
-      if (this.hostedFieldsInstance) {
-        this.hostedFieldsInstance.teardown();
-      }
-
       this.clearErrorMessage();
-      this.selectVaultedMethod(vaultedMethod);
+      await this.selectVaultedMethod(vaultedMethod);
+      this.selectPaymentMethod('braintree-vaulted');
       this.paymentEmitter.emit('braintreeStoredPaymentCardSelected', { publicHash: vaultedMethod.publicHash });
 
       if (this.vaultVerifyCvv) {
@@ -234,7 +240,7 @@ export default {
     startPayment() {
       this.clearErrorMessage();
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder')) {
+      if (!this.validateAgreements()) {
         return;
       }
 
@@ -254,7 +260,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || (!this.alwaysRequestThreeDS && this.vaultVerifyCvv && price < threshold)) {
+        if (!this.threeDSEnabled || price < threshold) {
           resolve({
             nonce,
           });
@@ -322,8 +328,14 @@ export default {
 
           return true;
         });
-      })).then((response) => {
+      })).then(async (response) => {
         const paymentData = this.getPaymentData(response);
+
+        const recaptchaValid = await this.validateToken('braintree');
+
+        if (!recaptchaValid) {
+          throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
+        }
 
         return createPayment(paymentData)
           .then(() => refreshCustomerData(['cart']))

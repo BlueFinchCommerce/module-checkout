@@ -11,7 +11,6 @@ import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDat
 
 import setShippingMethodOnCart from '@/services/addresses/setShippingMethodOnCart';
 import setClickAndCollectAgent from '@/services/shipping/setClickAndCollectAgent';
-import updateAmastyClickCollectStores from '@/services/shipping/updateAmastyClickCollectStores';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
 export default defineStore('shippingMethodsStore', {
@@ -22,9 +21,6 @@ export default defineStore('shippingMethodsStore', {
     cache: {},
     isClickAndCollect: false,
     clickAndCollectLocation: {},
-    amastyClickAndCollectData: {},
-    amastySelectedStore: null,
-    amastyClickCollectUpdatedStores: {},
   }),
   getters: {
     getError: (state) => state.shippingMethods.filter((rate) => rate.error_message !== '')[0],
@@ -215,19 +211,6 @@ export default defineStore('shippingMethodsStore', {
           ...location,
           lat: parseFloat(location.lat),
           long: parseFloat(location.long),
-        },
-      });
-    },
-
-    /**
-     * Search thought all stores in Amasty click and collect shipping modal
-     */
-    async searchAmastyClickCollectStores(radius, lat, lng) {
-      const response = await updateAmastyClickCollectStores(radius, lat, lng);
-      const stores = response.items;
-      this.setData({
-        amastyClickCollectUpdatedStores: {
-          stores,
         },
       });
     },

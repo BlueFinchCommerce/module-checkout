@@ -33,6 +33,9 @@ import getShippingMethods from '@/services/addresses/getShippingMethods';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import setAddressesOnCart from '@/services/addresses/setAddressesOnCart';
 
+// Extensions
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeApplePay',
 
@@ -64,7 +67,7 @@ export default {
       'getRegionId',
       'storeCode',
     ]),
-    ...mapState(usePaymentStore, ['availableMethods']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isPaymentMethodAvailable']),
   },
 
   async created() {
@@ -119,7 +122,7 @@ export default {
 
   methods: {
     ...mapActions(useAgreementStore, ['validateAgreements']),
-    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo']),
+    ...mapActions(useShippingMethodsStore, ['selectShippingMethod', 'submitShippingInfo', 'setNotClickAndCollect']),
     ...mapActions(usePaymentStore, [
       'addExpressMethod',
       'removeExpressMethod',
@@ -127,7 +130,7 @@ export default {
     ]),
     ...mapActions(useCartStore, ['getCart']),
     ...mapActions(useConfigStore, ['getInitialConfig']),
-    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore']),
+    ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'createNewAddress']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
 
     click(event) {
@@ -167,13 +170,21 @@ export default {
           session.onshippingmethodselected = (data) => this.onShippingMethodSelect(data, session);
         }
 
+        // Event handler for canceling the Apple Pay session
+        session.oncancel = () => {
+          this.createNewAddress('shipping');
+        };
+
         session.begin();
       } catch (err) {
         this.setApplePayError();
       }
     },
 
-    onValidateMerchant(event, session) {
+    async onValidateMerchant(event, session) {
+      await functionExtension('onBraintreeExpressInit');
+      this.setNotClickAndCollect();
+
       return this.applePayInstance.performValidation(
         {
           validationURL: event.validationURL,
@@ -251,37 +262,105 @@ export default {
             });
         } catch (error) {
           console.log(error);
+          // clear shipping address form
+          this.createNewAddress('shipping');
           session.completePayment(window.ApplePaySession.STATUS_FAILURE);
         }
       });
     },
 
     async onShippingContactSelect(data, session) {
-      const address = {
-        city: data.shippingContact.locality,
-        region: data.shippingContact.administrativeArea,
-        region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
-        country_code: data.shippingContact.countryCode.toUpperCase(),
-        postcode: data.shippingContact.postalCode,
-        street: ['0'],
-        telephone: '000000000',
-        firstname: 'UNKNOWN',
-        lastname: 'UNKNOWN',
-      };
+      try {
+        const address = {
+          city: data.shippingContact.locality,
+          company: '',
+          region: data.shippingContact.administrativeArea,
+          region_id: this.getRegionId(data.shippingContact.countryCode, data.shippingContact.administrativeArea),
+          country_code: data.shippingContact.countryCode.toUpperCase(),
+          postcode: data.shippingContact.postalCode,
+          street: ['0'],
+          telephone: '000000000',
+          firstname: 'UNKNOWN',
+          lastname: 'UNKNOWN',
+        };
 
-      this.address = address;
+        this.address = address;
+        const result = await getShippingMethods(address, this.method, true);
 
-      const result = await getShippingMethods(address, this.method, true);
-      const methods = result.shipping_addresses[0].available_shipping_methods;
+        // Validate response structure
+        if (!result || !result.shipping_addresses || !result.shipping_addresses[0]) {
+          this.setApplePayError();
+          session.completeShippingContactSelection();
+          return;
+        }
 
-      const filteredMethods = methods.filter(({ method_code: methodCode }) => (
-        methodCode !== 'nominated_delivery'
-      ));
+        const methods = result.shipping_addresses[0].available_shipping_methods;
 
-      this.shippingMethods = filteredMethods;
+        // Validate available shipping methods
+        if (!methods || methods.length === 0) {
+          this.setApplePayError();
+          session.completeShippingContactSelection();
+          return;
+        }
 
-      // If there are no shipping methods available show an error.
-      if (!filteredMethods.length) {
+        // If there are no shipping methods available show an error.
+        const filteredMethods = methods.filter(({ method_code: methodCode }) => methodCode !== 'nominated_delivery');
+        if (!filteredMethods.length) {
+          const errors = {
+            errors: [
+              new window.ApplePayError('addressUnserviceable', 'postalAddress', this.applePayNoShippingMethods),
+            ],
+            newTotal: {
+              label: this.websiteName,
+              amount: '0.00',
+              type: 'pending',
+            },
+          };
+          session.completeShippingContactSelection(errors);
+          return;
+        }
+
+        this.shippingMethods = filteredMethods;
+
+        // Set the shipping method back to the first available method.
+        const selectedShipping = filteredMethods[0];
+
+        await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
+        const newShippingMethods = this.mapShippingMethods(filteredMethods);
+
+        const applePayShippingContactUpdate = {
+          newShippingMethods,
+          newTotal: {
+            label: this.applePayTotal,
+            amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
+          },
+          newLineItems: [
+            {
+              type: 'final',
+              label: 'Subtotal',
+              amount: this.cart.prices.subtotal_including_tax.value.toString(),
+            },
+            {
+              type: 'final',
+              label: 'Shipping',
+              amount: selectedShipping.amount.value.toString(),
+            },
+          ],
+        };
+
+        // Add discount price if available.
+        if (this.cartDiscountTotal) {
+          applePayShippingContactUpdate.newLineItems.push({
+            type: 'final',
+            label: 'Discount',
+            amount: this.cartDiscountTotal.toString(),
+          });
+        }
+
+        session.completeShippingContactSelection(applePayShippingContactUpdate);
+      } catch (error) {
+        // Handle unexpected errors
+        console.error('Error in onShippingContactSelect:', error);
         const errors = {
           errors: [
             new window.ApplePayError('addressUnserviceable', 'postalAddress', this.applePayNoShippingMethods),
@@ -293,45 +372,7 @@ export default {
           },
         };
         session.completeShippingContactSelection(errors);
-        return;
       }
-
-      // Set the shipping method back to the first available method.
-      const selectedShipping = filteredMethods[0];
-
-      await this.submitShippingInfo(selectedShipping.carrier_code, selectedShipping.method_code);
-      const newShippingMethods = this.mapShippingMethods(filteredMethods);
-
-      const applePayShippingContactUpdate = {
-        newShippingMethods,
-        newTotal: {
-          label: this.applePayTotal,
-          amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
-        },
-        newLineItems: [
-          {
-            type: 'final',
-            label: 'Subtotal',
-            amount: this.cart.prices.subtotal_including_tax.value.toString(),
-          },
-          {
-            type: 'final',
-            label: 'Shipping',
-            amount: selectedShipping.amount.value.toString(),
-          },
-        ],
-      };
-
-      // Add discount price if available.
-      if (this.cartDiscountTotal) {
-        applePayShippingContactUpdate.newLineItems.push({
-          type: 'final',
-          label: 'Discount',
-          amount: this.cartDiscountTotal.toString(),
-        });
-      }
-
-      session.completeShippingContactSelection(applePayShippingContactUpdate);
     },
 
     async onShippingMethodSelect(data, session) {
@@ -411,7 +452,9 @@ export default {
   },
 
   unmounted() {
-    if (this.instance) {
+    if (this.instance
+      && !this.isPaymentMethodAvailable('braintree_googlepay')
+      && !this.isPaymentMethodAvailable('braintree_paypal')) {
       this.instance.teardown();
     }
 

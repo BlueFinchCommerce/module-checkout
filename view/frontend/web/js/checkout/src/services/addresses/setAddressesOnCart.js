@@ -27,10 +27,6 @@ const formatAddress = (address) => {
     delete clonedAddress.region;
   }
 
-  if (!clonedAddress.company) {
-    delete clonedAddress.company;
-  }
-
   // Preserving save_in_address_book before deletion
   const saveInAddressBook = clonedAddress.save_in_address_book;
 
@@ -113,7 +109,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
       address: formatAddress(shippingAddress),
     }];
   }
-  return graphQlRequest(request, variables)
+  return graphQlRequest(request, variables, {}, 'BetterCheckoutSetAddress')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

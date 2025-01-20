@@ -17,8 +17,9 @@
     />
     <CheckboxComponent
       v-if="isLoggedIn && (
-        (selectedMethod === 'card' && vaultActive) || (selectedMethod === 'googlepay' && googlepay.vaultActive)
-        || (selectedMethod === 'paypal' && paypal.vaultActive)
+        (selectedMethod === 'braintree' && vaultActive)
+        || (selectedMethod === 'braintree_googlePay' && google.vaultActive)
+        || (selectedMethod === 'braintree_paypal' && paypal.vaultActive)
       )"
       id="braintree-store-method"
       class="braintree-store-method"
@@ -285,9 +286,12 @@ export default {
       };
     }
 
-    if (this.threeDSEnabled) {
+    const price = this.cartGrandTotal / 100;
+    const threshold = this.threeDSThresholdAmount;
+
+    if (this.threeDSEnabled && price >= threshold) {
       options.threeDSecure = {
-        amount: this.cartGrandTotal / 100,
+        amount: price,
       };
     }
 
@@ -298,13 +302,14 @@ export default {
     this.removeEventListeners();
     if (this.instance) {
       this.instance.teardown();
+      this.setThreeDSInstance(null);
     }
   },
   watch: {
     selectedMethod: {
       handler(newVal) {
         if (newVal !== null && (!newVal.startsWith('braintree')
-          || newVal === 'braintree-lpm' || newVal === 'braintree-vaulted' || newVal === 'braintree-ach')) {
+          || newVal === 'braintree-lpm' || newVal === 'braintree-ach')) {
           this.clearSelectedMethod(newVal);
         }
       },
@@ -335,6 +340,7 @@ export default {
       this.setLoadingState(true);
       this.requestPaymentMethod()
         .then(this.getPaymentData)
+        .then(this.validateRecaptcha)
         .then(createPayment)
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
@@ -353,59 +359,59 @@ export default {
     requestPaymentMethod() {
       return new Promise((resolve, reject) => {
         this.setErrorMessage('');
-        const agreementsValid = this.validateAgreements();
-        const recaptchaValid = this.validateToken('placeOrder');
+        (async () => {
+          const agreementsValid = this.validateAgreements();
 
-        if (!agreementsValid || !recaptchaValid) {
-          const error = new Error();
-          error.name = 'DropinError';
-          reject(error);
-          return;
-        }
-
-        if (!this.instance) {
-          reject(new Error('Unable to initialise payment components.'));
-        }
-
-        const billingAddress = this.cart.billing_address;
-
-        const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
-        const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
-        const formattedBillingAddress = {
-          givenName: firstName,
-          surname: lastName,
-          phoneNumber: billingAddress.telephone,
-          streetAddress: billingAddress.street[0],
-          extendedAddress: billingAddress.street[1],
-          locality: billingAddress.city,
-          region: billingAddress.region_code,
-          postalCode: billingAddress.postcode,
-          countryCodeAlpha2: billingAddress.country_code,
-        };
-
-        const price = this.cartGrandTotal / 100;
-        const threshold = this.threeDSThresholdAmount;
-        const challengeRequested = this.alwaysRequestThreeDS || price >= threshold;
-
-        this.instance.requestPaymentMethod({
-          threeDSecure: {
-            amount: parseFloat(price).toFixed(2),
-            email: this.customer.email,
-            billingAddress: formattedBillingAddress,
-            challengeRequested,
-          },
-        }, (error, payload) => {
-          if (error) {
-            this.setPaymentErrorMessage(error.message);
-            reject(error.message);
-          } else if (payload.liabilityShifted
-            || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
-            || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
-            resolve(payload);
-          } else {
-            reject(new Error('There was an error completing validation, please try again.'));
+          if (!agreementsValid) {
+            const error = new Error();
+            error.name = 'DropinError';
+            reject(error);
+            return;
           }
-        });
+
+          if (!this.instance) {
+            reject(new Error('Unable to initialise payment components.'));
+          }
+
+          const billingAddress = this.cart.billing_address;
+
+          const firstName = this.escapeNonAsciiCharacters(billingAddress.firstname);
+          const lastName = this.escapeNonAsciiCharacters(billingAddress.lastname);
+          const formattedBillingAddress = {
+            givenName: firstName,
+            surname: lastName,
+            phoneNumber: billingAddress.telephone,
+            streetAddress: billingAddress.street[0],
+            extendedAddress: billingAddress.street[1],
+            locality: billingAddress.city,
+            region: billingAddress.region_code,
+            postalCode: billingAddress.postcode,
+            countryCodeAlpha2: billingAddress.country_code,
+          };
+
+          const price = this.cartGrandTotal / 100;
+          const challengeRequested = this.alwaysRequestThreeDS;
+
+          this.instance.requestPaymentMethod({
+            threeDSecure: {
+              amount: parseFloat(price).toFixed(2),
+              email: this.customer.email,
+              billingAddress: formattedBillingAddress,
+              challengeRequested,
+            },
+          }, (error, payload) => {
+            if (error) {
+              this.setPaymentErrorMessage(error.message);
+              reject(error.message);
+            } else if (payload.liabilityShifted
+              || (!payload.liabilityShifted && !payload.liabilityShiftPossible)
+              || (payload.type !== 'CreditCard' && payload.type !== 'AndroidPayCard')) {
+              resolve(payload);
+            } else {
+              reject(new Error('There was an error completing validation, please try again.'));
+            }
+          });
+        })().catch(reject);
       });
     },
 
@@ -421,6 +427,16 @@ export default {
           extension_attributes: getPaymentExtensionAttributes(),
         },
       };
+    },
+
+    async validateRecaptcha(payload) {
+      const recaptchaValid = await this.validateToken('braintree');
+
+      if (!recaptchaValid) {
+        throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
+      }
+
+      return payload;
     },
 
     getBraintreeMethod(type) {
@@ -516,7 +532,7 @@ export default {
     clearSelectedMethod(id) {
       this.unselectVaultedMethods();
       if (id !== null && (!id.startsWith('braintree')
-        || id === 'braintree-lpm' || id === 'braintree-vaulted' || id === 'braintree-ach')) {
+        || id === 'braintree-lpm' || id === 'braintree-ach')) {
         this.clearSelectedPaymentMethod();
       }
 
@@ -567,12 +583,11 @@ export default {
         const originalGooglePay = this.instance._mainView._views.googlePay.tokenize
           .bind(toRaw(this.instance._mainView._views.googlePay));
 
-        this.instance._mainView._views.googlePay.tokenize = () => {
+        this.instance._mainView._views.googlePay.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = this.validateToken('placeOrder');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.resolve();
           }
 
@@ -584,12 +599,11 @@ export default {
         const originalVenmo = this.instance._mainView._views.venmo.venmoInstance.tokenize
           .bind(this.instance._mainView._views.venmo.venmoInstance);
 
-        this.instance._mainView._views.venmo.venmoInstance.tokenize = () => {
+        this.instance._mainView._views.venmo.venmoInstance.tokenize = async () => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = this.validateToken('placeOrder');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.resolve();
           }
 
@@ -601,12 +615,11 @@ export default {
         const originalPayPal = this.instance._mainView._views.paypal.paypalInstance.createPayment
           .bind(this.instance._mainView._views.paypal.paypalInstance);
 
-        this.instance._mainView._views.paypal.paypalInstance.createPayment = (configuration) => {
+        this.instance._mainView._views.paypal.paypalInstance.createPayment = async (configuration) => {
           this.setErrorMessage('');
           const agreementsValid = this.validateAgreements();
-          const recaptchaValid = this.validateToken('placeOrder');
 
-          if (!agreementsValid || !recaptchaValid) {
+          if (!agreementsValid) {
             return Promise.reject();
           }
 

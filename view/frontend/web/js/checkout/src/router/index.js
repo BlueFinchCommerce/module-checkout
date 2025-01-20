@@ -47,7 +47,6 @@ const router = createRouter({
     if (from.name) {
       return {
         el: '.root',
-        behavior: 'smooth',
       };
     }
 

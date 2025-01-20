@@ -10,13 +10,16 @@ $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
 $logo = $assetViewModel->getLogo();
 $fontUrl = $assetViewModel->getFontUrl();
+$fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $customWordings = $assetViewModel->getCustomWording();
+$fontFamily = $assetViewModel->getFontFamily();
+
 ?>
 
 <script>
     window.geneCheckout = window.geneCheckout || {};
-
-    window.geneCheckout.staticPath = "<?= $escaper->escapeJs($block->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/')) ?>";
+    window.geneCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
+    window.geneCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getViewFileUrl('Gene_BetterCheckout::js/checkout/dist/')) ?>";
     window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
     window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
     window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
@@ -31,11 +34,13 @@ $customWordings = $assetViewModel->getCustomWording();
 
 <link href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Gene_BetterCheckout::css/checkout.css')) ?>" rel="stylesheet" media="all" />
 
-<?php if ($fontUrl !== null): ?>
+<?php if ($fontCdnUrl) : ?>
+    <?= $fontCdnUrl ?>
+<?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
             font-family: 'BetterCheckoutFont';
-            src: url(<?= $escaper->escapeCss($fontUrl) ?>) format(<?= $escaper->escapeCss($assetViewModel->getFontFormat($fontUrl)) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $escaper->escapeUrl($assetViewModel->getFontFormat($fontUrl)) ?>);
         }
     </style>
 <?php endif; ?>

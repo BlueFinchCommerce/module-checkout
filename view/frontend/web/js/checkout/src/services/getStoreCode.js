@@ -8,5 +8,6 @@ export default () => {
         store_code
     }
   }`;
-  return graphQlRequest(request).then((response) => response.data?.storecode?.store_code);
+  return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreCode')
+    .then((response) => response.data?.storecode?.store_code);
 };
