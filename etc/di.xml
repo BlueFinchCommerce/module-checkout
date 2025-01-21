@@ -29,4 +29,12 @@
     <type name="Magento\Quote\Model\Quote">
         <plugin name="geneCollectTotals" type="Gene\BetterCheckout\Plugin\Quote" />
     </type>
+
+    <type name="Magento\Translation\Model\Js\Config">
+        <arguments>
+            <argument name="patterns" xsi:type="array">
+                <item name="vue_compiled" xsi:type="string"><![CDATA[~(?s)\$t\(\s*(['"])(?<translate>.+?)\1\s*(*SKIP)[\)|,](?s)~]]></item>
+            </argument>
+        </arguments>
+    </type>
 </config>

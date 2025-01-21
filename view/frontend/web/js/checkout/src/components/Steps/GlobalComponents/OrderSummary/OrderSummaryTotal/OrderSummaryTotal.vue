@@ -16,7 +16,7 @@
       <div class="total__row">
         <TextField
           class="total__text title"
-          :text="$t('orderSummary.subtotalTitle')"
+          :text="$t('Order Summary')"
           :data-cy="dataCy ? `subtotal-title-${dataCy}` : 'subtotal-title'"
         />
         <Price

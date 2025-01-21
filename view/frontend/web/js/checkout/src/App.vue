@@ -7,7 +7,7 @@
 </template>
 <script>
 // Stores
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useStepsStore from '@/stores/StepsStore';
 
@@ -21,6 +21,8 @@ import Steps from '@/components/Steps/Steps.vue';
 
 // Helpers
 import beginCheckoutDataLayer from '@/helpers/dataLayer/beginCheckoutDataLayer';
+import lodashMerge from 'lodash.merge';
+import lodashSet from 'lodash.set';
 
 export default {
   name: 'App',
@@ -31,7 +33,21 @@ export default {
     OrderSummaryMobile,
     Steps,
   },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
+  },
   async created() {
+    if (window.geneCheckout.translations) {
+      const defaultMessages = this.$i18n.getLocaleMessage('en-GB');
+      const localeMessages = this.$i18n.getLocaleMessage(this.locale);
+      const mergedMessages = lodashMerge(defaultMessages, localeMessages);
+      const translations = JSON.parse(window.geneCheckout.translations);
+      Object.keys(translations).forEach((translation) => {
+        lodashSet(mergedMessages, translation, translations[translation]);
+      });
+      this.$i18n.setLocaleMessage(this.locale, mergedMessages);
+    }
+
     document.querySelector('html').classList.add('vue-checkout-active');
     document.getElementById('gene-better-checkout-root').setAttribute('role', 'main');
     await this.getInitialConfig();

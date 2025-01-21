@@ -3,8 +3,11 @@
  * @var \Magento\Catalog\Block\Product\View $block
  * @var \Magento\Framework\Escaper $escaper
  * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
+ * @var \Gene\BetterCheckout\ViewModel\Translations $translationsViewModel
  */
 $assetViewModel = $block->getAssetViewModel();
+$translationsViewModel = $block->getTranslationsViewModel();
+
 $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
 $designerStyles = $assetViewModel->getStyles();
@@ -13,6 +16,7 @@ $fontUrl = $assetViewModel->getFontUrl();
 $fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $customWordings = $assetViewModel->getCustomWording();
 $fontFamily = $assetViewModel->getFontFamily();
+$translations = $translationsViewModel->getTranslations();
 
 ?>
 
@@ -25,6 +29,8 @@ $fontFamily = $assetViewModel->getFontFamily();
     window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
     window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
     window.geneCheckout.shippingMethods = window.geneCheckout.shippingMethods || {};
+
+    window.geneCheckout.translations = "<?= $escaper->escapeJs($translations); ?>";
 
     <?php if ($customWordings): ?>
         <?php foreach (json_decode($customWordings) as $key => $value): ?>
