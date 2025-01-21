@@ -25,7 +25,8 @@ class Translations implements ArgumentInterface
     ) {
     }
 
-    public function getTranslations(): string {
+    public function getTranslations(): string
+    {
         return $this->driverFile->fileGetContents($this->getTranslationFileFullPath());
     }
 
