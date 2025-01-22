@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Model;
+namespace BlueFinch\Checkout\Model;
 
 class DataCollector
 {

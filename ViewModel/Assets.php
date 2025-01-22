@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\ViewModel;
+namespace BlueFinch\Checkout\ViewModel;
 
-use Bluefinch\Checkout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Exception\LocalizedException;

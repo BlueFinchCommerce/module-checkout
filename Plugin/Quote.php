@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Plugin;
+namespace BlueFinch\Checkout\Plugin;
 
-use Bluefinch\Checkout\Model\DataCollector;
-use Bluefinch\Checkout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\DataCollector;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
 use Magento\Quote\Model\Quote as Subject;
 use Psr\Log\LoggerInterface;
 
@@ -37,7 +37,7 @@ class Quote
             $this->dataCollector->getTotalsCollected() === false &&
             !$subject->getTotalsCollectedFlag()
         ) {
-            $this->logger->critical('Bluefinch Checkout: collectTotals called');
+            $this->logger->critical('BlueFinch Checkout: collectTotals called');
         }
         return [];
     }

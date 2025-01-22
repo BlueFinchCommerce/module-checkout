@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Exception;
-use Bluefinch\Checkout\Api\GetCustomerAddressesInterface;
+use BlueFinch\Checkout\Api\GetCustomerAddressesInterface;
 use Magento\Customer\Model\Session;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Serialize\SerializerInterface;

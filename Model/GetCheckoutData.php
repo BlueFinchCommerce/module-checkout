@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Model;
+namespace BlueFinch\Checkout\Model;
 
-use Bluefinch\Checkout\Api\GetCheckoutDataInterface;
+use BlueFinch\Checkout\Api\GetCheckoutDataInterface;
 use Magento\Framework\Event\ManagerInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Serialize\SerializerInterface;

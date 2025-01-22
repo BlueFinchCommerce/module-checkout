@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;

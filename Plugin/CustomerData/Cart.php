@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Plugin\CustomerData;
+namespace BlueFinch\Checkout\Plugin\CustomerData;
 
 use BlueFinch\Checkout\Model\Configuration;
 use Magento\Checkout\CustomerData\Cart as Subject;

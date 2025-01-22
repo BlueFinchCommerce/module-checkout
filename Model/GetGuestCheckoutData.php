@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Bluefinch\Checkout\Model;
+namespace BlueFinch\Checkout\Model;
 
-use Bluefinch\Checkout\Api\GetCheckoutDataInterface;
-use Bluefinch\Checkout\Api\GetGuestCheckoutDataInterface;
+use BlueFinch\Checkout\Api\GetCheckoutDataInterface;
+use BlueFinch\Checkout\Api\GetGuestCheckoutDataInterface;
 use Magento\Quote\Model\QuoteIdMask;
 
 class GetGuestCheckoutData implements GetGuestCheckoutDataInterface
