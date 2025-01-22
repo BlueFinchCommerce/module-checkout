@@ -3,15 +3,15 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- Add new head block -->
     <type name="Magento\Framework\View\Page\Config\Renderer">
-        <plugin name="genebettercheckout_add_head_layout" type="Gene\BetterCheckout\Plugin\AddNewHeadLayout"/>
+        <plugin name="bluefinchcheckout_add_head_layout" type="BlueFinch\Checkout\Plugin\AddNewHeadLayout"/>
     </type>
 
-    <!-- Gene Checkout Router -->
+    <!-- BlueFinch Checkout Router -->
     <type name="Magento\Framework\App\RouterList">
         <arguments>
             <argument name="routerList" xsi:type="array">
-                <item name="gene_better_checkout_route" xsi:type="array">
-                    <item name="class" xsi:type="string">Gene\BetterCheckout\Controller\Router</item>
+                <item name="bluefinchcheckout_route" xsi:type="array">
+                    <item name="class" xsi:type="string">BlueFinch\Checkout\Controller\Router</item>
                     <item name="disable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="string">1</item>
                 </item>

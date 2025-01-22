@@ -94,7 +94,7 @@ export default {
       isShippingNewCTA: true,
       uniqueAddressList: [],
       addNewAddressButtonText: '',
-      addNewAddressButtonTextId: 'gene-bettercheckout-addnewaddress-button-text',
+      addNewAddressButtonTextId: 'bluefinch-checkout-addnewaddress-button-text',
     };
   },
   computed: {
@@ -135,7 +135,8 @@ export default {
       }
     });
 
-    this.addNewAddressButtonText = window.geneCheckout?.[this.addNewAddressButtonTextId] || this.$t('addNewAddressBtn');
+    this.addNewAddressButtonText = window.bluefinchCheckout?.[this.addNewAddressButtonTextId]
+      || this.$t('addNewAddressBtn');
     document.addEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
   },
   unmounted() {

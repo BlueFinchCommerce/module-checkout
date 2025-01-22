@@ -133,9 +133,9 @@ export default {
       storedStepText: '',
       paymentStepText: '',
       paymentKey: 0,
-      paymentStepTextStoredId: 'gene-bettercheckout-paymentstep-text-stored',
-      paymentStepTextNewId: 'gene-bettercheckout-paymentstep-text-new',
-      paymentStepTextGuestId: 'gene-bettercheckout-paymentstep-text-guest',
+      paymentStepTextStoredId: 'bluefinch-checkout-paymentstep-text-stored',
+      paymentStepTextNewId: 'bluefinch-checkout-paymentstep-text-new',
+      paymentStepTextGuestId: 'bluefinch-checkout-paymentstep-text-guest',
     };
   },
   computed: {
@@ -159,14 +159,14 @@ export default {
   },
   async created() {
     // The titles need to be reflective of the state we're in.
-    this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.storedStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     if (this.hasVaultedMethods) {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
+      this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-new']
         || this.$t('paymentStep.titleNew');
     } else {
-      this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
+      this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-guest']
           || this.$t('paymentStep.titleGuest');
     }
 

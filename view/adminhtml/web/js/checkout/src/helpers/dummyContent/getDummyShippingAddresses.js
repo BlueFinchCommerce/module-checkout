@@ -1,7 +1,7 @@
 export default () => (
   [
     {
-      firstname: 'Gene',
+      firstname: 'BlueFinch',
       lastname: 'Commerce',
       street: [
         '20 Middle St',

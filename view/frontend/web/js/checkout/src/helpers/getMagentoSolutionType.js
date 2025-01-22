@@ -1,1 +1,1 @@
-export default () => window.geneCheckout?.magentoEdition !== 'Community';
+export default () => window.bluefinchCheckout?.magentoEdition !== 'Community';

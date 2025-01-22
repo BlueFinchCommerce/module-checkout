@@ -94,9 +94,9 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       grandTotalText: '',
-      grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
+      grandTotalTextId: 'bluefinch-checkout-grandtotal-text',
     };
   },
   computed: {
@@ -105,8 +105,8 @@ export default {
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.grandTotalTextId, this.setGrandTotalText);

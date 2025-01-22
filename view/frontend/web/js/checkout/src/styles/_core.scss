@@ -1,4 +1,4 @@
-/*Gene Vue Checkout App*/
+/*BlueFinch Checkout App*/
 /*---------------------------------------------*/
 
 /*Core Checkout Styles*/
@@ -18,8 +18,8 @@
 
 html,
 body,
-#gene-better-checkout-container,
-#gene-better-checkout-root {
+#bluefinch-checkout-container,
+#bluefinch-checkout-root {
   height: 100%;
 }
 
@@ -27,7 +27,7 @@ body {
   margin: 0;
 }
 
-#gene-better-checkout-root {
+#bluefinch-checkout-root {
   color: var(--font__color);
   display: flex;
   flex-direction: column;

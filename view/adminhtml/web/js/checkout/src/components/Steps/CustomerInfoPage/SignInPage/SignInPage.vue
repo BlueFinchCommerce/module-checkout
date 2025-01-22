@@ -92,9 +92,9 @@ export default {
       addressFormErrorMessage: false,
       storedKey: 0,
       instantCheckoutText: '',
-      instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      instantCheckoutTextId: 'bluefinch-checkout-instantcheckout-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      proceedToPayTextId: 'bluefinch-checkout-proceedtopay-text',
       buttonEnabled: false,
       addressInfoWrong: false,
     };
@@ -137,8 +137,8 @@ export default {
       billing: 'billingInfoValidation',
     };
 
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     Object.keys(types).forEach((type) => {
       const first = this.validateNameField(type, 'First name', this.selected[type].firstname);

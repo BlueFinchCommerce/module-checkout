@@ -4,7 +4,7 @@ import shoulder from '@/icons/products/shoulder.jpg';
 
 export default () => [
   {
-    email: 'hello@gene.co.uk',
+    email: 'hello@blueFinch.co.uk',
     applied_gift_cards: [
       {
         code: '035K7XUJDOWJ',
@@ -25,7 +25,7 @@ export default () => [
         code: 'GB',
         label: 'GB',
       },
-      firstname: 'Gene',
+      firstname: 'BlueFinch',
       lastname: 'Commerce',
       postcode: 'BN1 1AL',
       region: {
@@ -39,7 +39,7 @@ export default () => [
     },
     shipping_addresses: [
       {
-        firstname: 'Gene',
+        firstname: 'BlueFinch',
         lastname: 'Commerce',
         street: [
           '20 Middle St',
@@ -148,11 +148,11 @@ export default () => [
         __typename: 'GiftCardCartItem',
         id: '170',
         uid: 'MTcw',
-        recipient_name: 'Better Checkout',
-        recipient_email: 'better@gene.co.uk',
-        sender_name: 'Gene Commerce',
-        sender_email: 'hello@gene.co.uk',
-        message: 'Thanks for using Better Checkout',
+        recipient_name: 'BlueFinch Checkout',
+        recipient_email: 'better@blueFinch.co.uk',
+        sender_name: 'BlueFinch Commerce',
+        sender_email: 'hello@blueFinch.co.uk',
+        message: 'Thanks for using BlueFinch Checkout',
         amount: {
           value: 25,
         },

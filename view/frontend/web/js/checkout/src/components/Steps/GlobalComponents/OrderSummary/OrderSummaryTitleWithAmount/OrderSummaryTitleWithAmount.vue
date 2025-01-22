@@ -36,11 +36,11 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
     };
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     await this.getInitialConfig();
   },
   methods: {

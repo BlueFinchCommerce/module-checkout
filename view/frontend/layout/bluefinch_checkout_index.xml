@@ -13,21 +13,21 @@
         <referenceContainer name="root" remove="true" />
 
         <!-- Add Better Checkout -->
-        <container name="gene.better.checkout.container" htmlTag="div" htmlId="gene-better-checkout-container">
-            <block name="gene.better.checkout" template="Gene_BetterCheckout::better-checkout.phtml" before="-">
+        <container name="bluefinch.checkout.container" htmlTag="div" htmlId="bluefinch-checkout-container">
+            <block name="bluefinch.checkout" template="BlueFinch_Checkout::better-checkout.phtml" before="-">
                 <arguments>
-                    <argument name="asset_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\Assets</argument>
+                    <argument name="asset_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\Assets</argument>
                 </arguments>
             </block>
         </container>
 
-        <container name="gene.better.checkout.analytics">
+        <container name="bluefinch.checkout.analytics">
             <referenceBlock name="google_gtag_analyticsgtm">
                 <action method="setTemplate">
-                    <argument name="template" xsi:type="string">Gene_BetterCheckout::gtag_ga.phtml</argument>
+                    <argument name="template" xsi:type="string">BlueFinch_Checkout::gtag_ga.phtml</argument>
                 </action>
             </referenceBlock>
         </container>
-        <move element="google_gtag_analyticsgtm" destination="gene.better.checkout.analytics" />
+        <move element="google_gtag_analyticsgtm" destination="bluefinch.checkout.analytics" />
     </body>
 </page>
