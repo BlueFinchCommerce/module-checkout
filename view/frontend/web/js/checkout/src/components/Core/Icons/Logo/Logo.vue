@@ -58,7 +58,7 @@ export default {
     };
   },
   async created() {
-    this.logo = window.geneCheckout?.logo || getStaticUrl(logoSvg);
+    this.logo = window.bluefinchCheckout?.logo || getStaticUrl(logoSvg);
     await this.getInitialConfig();
   },
   methods: {

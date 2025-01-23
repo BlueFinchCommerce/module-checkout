@@ -84,7 +84,7 @@ jobs:
             composer config "repositories.1" "{\"type\": \"path\", \"canonical\":true, \"url\": \"$REPODIR\", \"options\": {\"symlink\":false}}"
             composer config minimum-stability dev
             composer config prefer-stable true
-            composer require gene/module-better-checkout:dev-${CIRCLE_BRANCH} --no-interaction
+            composer require bluefinchcommerce/module-checkout:dev-${CIRCLE_BRANCH} --no-interaction
       - run:
           name: Install Magento
           working_directory: ~/magento2
@@ -97,7 +97,7 @@ jobs:
             --db-password=root \
             --admin-firstname=Admin \
             --admin-lastname=User \
-            --admin-email=admin@gene.co.uk \
+            --admin-email=admin@bluefinch.co.uk \
             --admin-user=admin \
             --admin-password=password1 \
             --language=en_GB \
@@ -118,52 +118,52 @@ jobs:
           name: DI Compile
           command: php -d memory_limit=-1 bin/magento setup:di:compile
       - run:
-          working_directory: ~/magento2/vendor/gene/module-better-checkout
-          name: Install composer modules within Better Checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
+          name: Install composer modules within BlueFinch Checkout
           command: |
             composer install --no-interaction
       - run:
           name: PHPCS
-          working_directory: ~/magento2/vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: |
             ./vendor/bin/phpcs . --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
       - run:
           name: PHPStan
-          working_directory: ~/magento2/vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: ./vendor/bin/phpstan analyse . --configuration=./phpstan.neon
       - run:
           name: Configure PHPunit
-          working_directory: ~/magento2/vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: |
             mkdir -p ~/phpunit
       - run:
           name: PHPUnit
-          working_directory: ~/magento2/vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: ./vendor/bin/phpunit -c phpunit.xml
       - run:
           name: NPM install to root module
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout i
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout i
       - run:
           name: NPM install to checkout app
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout i
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/frontend/web/js/checkout i
       - run:
           name: NPM install to admin app
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout i
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/adminhtml/web/js/checkout i
       - run:
           name: ESLint run against root module
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout run lint
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout run lint
       - run:
           name: ESLint run against checkout app
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout run lint
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/frontend/web/js/checkout run lint
       - run:
           name: ESLint run against admin app
           working_directory: ~/magento2
-          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout run lint
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/adminhtml/web/js/checkout run lint
 
 workflows:
   magento-build-test:

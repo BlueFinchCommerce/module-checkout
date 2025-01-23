@@ -228,13 +228,13 @@ export default {
       baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
-      continueButtonTextId: 'gene-bettercheckout-continuebutton-text',
+      continueButtonTextId: 'bluefinch-checkout-continuebutton-text',
       noAccountGuestButtonText: '',
-      noAccountGuestButtonTextId: 'gene-bettercheckout-noaccountguestbutton-text',
+      noAccountGuestButtonTextId: 'bluefinch-checkout-noaccountguestbutton-text',
       signInButtonText: '',
-      signInButtonTextId: 'gene-bettercheckout-signinbutton-text',
+      signInButtonTextId: 'bluefinch-checkout-signinbutton-text',
       accountGuestButtonText: '',
-      accountGuestButtonTextId: 'gene-bettercheckout-accountguestbutton-text',
+      accountGuestButtonTextId: 'bluefinch-checkout-accountguestbutton-text',
       tabKeyPressed: false,
     };
   },
@@ -264,11 +264,11 @@ export default {
 
     document.addEventListener('keydown', this.handleKeyDown);
 
-    this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
-    this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextId]
+    this.continueButtonText = window.bluefinchCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    this.noAccountGuestButtonText = window.bluefinchCheckout?.[this.noAccountGuestButtonTextId]
     || this.$t('noAccountGuestButton');
-    this.signInButtonText = window.geneCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
-    this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
+    this.signInButtonText = window.bluefinchCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
+    this.accountGuestButtonText = window.bluefinchCheckout?.[this.accountGuestButtonTextId]
     || this.$t('accountGuestButton');
 
     document.addEventListener(this.continueButtonTextId, this.setContinueButtonText);

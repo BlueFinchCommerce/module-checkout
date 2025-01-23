@@ -50,11 +50,11 @@ export default {
   data() {
     return {
       removeItemText: '',
-      removeItemTextId: 'gene-bettercheckout-removeitem-text',
+      removeItemTextId: 'bluefinch-checkout-removeitem-text',
     };
   },
   async created() {
-    this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
+    this.removeItemText = window.bluefinchCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
     await this.getInitialConfig();
   },
   methods: {

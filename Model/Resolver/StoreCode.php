@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model\Resolver;
+namespace BlueFinch\Checkout\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;

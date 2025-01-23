@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Factory\Paypal\Braintree\Helper;
+namespace BlueFinch\Checkout\Factory\Paypal\Braintree\Helper;
 
 use Magento\Framework\ObjectManagerInterface;
 use PayPal\Braintree\Helper\CcType;

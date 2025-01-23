@@ -24,4 +24,4 @@ app.use(i18n);
 app.use(pinia);
 app.use(router);
 
-app.mount('#gene-better-checkout-container');
+app.mount('#bluefinch-checkout-container');

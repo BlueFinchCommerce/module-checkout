@@ -4,7 +4,7 @@ export default () => [
     country_code: 'GB',
     default_billing: true,
     default_shipping: true,
-    firstname: 'Gene',
+    firstname: 'BlueFinch',
     id: 1,
     lastname: 'Commerce',
     postcode: 'BN1 1AL',

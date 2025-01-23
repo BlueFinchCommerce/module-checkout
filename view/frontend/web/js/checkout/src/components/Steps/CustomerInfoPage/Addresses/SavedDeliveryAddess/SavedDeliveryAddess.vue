@@ -69,14 +69,14 @@ export default {
   data() {
     return {
       detailStepText: '',
-      detailStepTextId: 'gene-bettercheckout-detailstep-text',
+      detailStepTextId: 'bluefinch-checkout-detailstep-text',
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
   },
   async created() {
-    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+    this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
     await this.getInitialConfig();
   },
   methods: {
@@ -84,8 +84,8 @@ export default {
     ...mapActions(useStepsStore, ['goToYouDetails']),
 
     setDetailsStepActive() {
-      if (window.geneCheckout?.overrides?.setDetailsStepActive) {
-        window.geneCheckout.overrides.setDetailsStepActive();
+      if (window.bluefinchCheckout?.overrides?.setDetailsStepActive) {
+        window.bluefinchCheckout.overrides.setDetailsStepActive();
       } else {
         const element = document.getElementById('progress-bar');
 

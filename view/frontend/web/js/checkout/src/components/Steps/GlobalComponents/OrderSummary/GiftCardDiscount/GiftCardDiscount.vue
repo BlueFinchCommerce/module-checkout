@@ -116,20 +116,20 @@ export default {
     return {
       isDropDownVisible: false,
       applyButtonText: '',
-      applyButtonTextId: 'gene-bettercheckout-applybutton-text',
+      applyButtonTextId: 'bluefinch-checkout-applybutton-text',
       removeButtonText: '',
-      removeButtonTextId: 'gene-bettercheckout-removebutton-text',
+      removeButtonTextId: 'bluefinch-checkout-removebutton-text',
       giftCardText: '',
-      giftCardTextId: 'gene-bettercheckout-giftcard-text',
+      giftCardTextId: 'bluefinch-checkout-giftcard-text',
       giftCardPlaceholderText: '',
-      giftCardPlaceholderTextId: 'gene-bettercheckout-giftcardplaceholder-text',
+      giftCardPlaceholderTextId: 'bluefinch-checkout-giftcardplaceholder-text',
     };
   },
   async created() {
-    this.applyButtonText = window.geneCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
-    this.removeButtonText = window.geneCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
-    this.giftCardText = window.geneCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
-    this.giftCardPlaceholderText = window.geneCheckout?.[this.giftCardPlaceholderTextId]
+    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
+    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
+    this.giftCardPlaceholderText = window.bluefinchCheckout?.[this.giftCardPlaceholderTextId]
       || this.$t('orderSummary.giftCardDiscount.placeholder');
 
     await this.getInitialConfig();

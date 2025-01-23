@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Controller\Checkout;
+namespace BlueFinch\Checkout\Controller\Checkout;
 
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
@@ -54,7 +54,7 @@ class Index extends Action
         }
 
         $page = $this->pageFactory->create(false, [
-            'template' => 'Gene_BetterCheckout::root.phtml',
+            'template' => 'BlueFinch_Checkout::root.phtml',
         ]);
 
         // Set the page meta data

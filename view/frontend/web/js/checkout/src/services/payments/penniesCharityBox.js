@@ -13,7 +13,7 @@ export default {
                 enabled
            }
         }`;
-    return graphQlRequest(request, {}, {}, 'BetterCheckoutPennies').then((response) => response.data);
+    return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutPennies').then((response) => response.data);
   },
   getCharityAmount() {
     const storeId = parseInt(getStoreId(), 10);
@@ -27,7 +27,7 @@ export default {
                 message
            }
         }`;
-    return graphQlRequest(request, {}, {}, 'BetterCheckoutPenniesCalculate')
+    return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutPenniesCalculate')
       .then((response) => response.data.PenniesCalculate);
   },
 

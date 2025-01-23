@@ -59,9 +59,9 @@ export default {
   },
   async created() {
     await this.getInitialConfig();
-    this.logo = window.geneCheckout?.logo || getStaticUrl(logoSvg);
+    this.logo = window.bluefinchCheckout?.logo || getStaticUrl(logoSvg);
 
-    document.addEventListener('gene:checkout-image-update', (event) => {
+    document.addEventListener('bluefinch:checkout-image-update', (event) => {
       this.logo = event?.detail || getStaticUrl(logoSvg);
     });
   },

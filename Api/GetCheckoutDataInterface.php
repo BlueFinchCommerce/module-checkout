@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Api;
+namespace BlueFinch\Checkout\Api;
 
 interface GetCheckoutDataInterface
 {
