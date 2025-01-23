@@ -4,7 +4,7 @@
 
 # BlueFinch Checkout
 
-The BlueFinch Checkout has been designed and developed to provide a performant, best in class, and easily customisable checkout for your Adobe store. Built in Vue and adhering to UX best practices, this checkout allows customers to seamlessly transact whilst also allowing merchants to get up and running quickly with easy installation and the ability to style and amend the checkout from right within the magento platform.
+The BlueFinch Checkout has been designed and developed to provide a performant, best in class, and easily customisable checkout for your Adobe store. Built in Vue and adhering to UX best practices, this checkout allows customers to seamlessly transact whilst also allowing merchants to get up and running quickly with easy installation and the ability to style and amend the checkout from right within the magento platform. 
 
 ## Features
 
