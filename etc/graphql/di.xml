@@ -211,7 +211,7 @@
     </type>
     <type name="BlueFinch\Checkout\Plugin\DisableSession">
         <arguments>
-            <argument name="requestPrefix" xsi:type="string">BetterCheckout</argument>
+            <argument name="requestPrefix" xsi:type="string">BlueFinch</argument>
         </arguments>
     </type>
     <type name="Cm\RedisSession\Handler\ConfigInterface">

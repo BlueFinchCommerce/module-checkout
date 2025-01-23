@@ -12,9 +12,9 @@
         <!-- Remove core layout -->
         <referenceContainer name="root" remove="true" />
 
-        <!-- Add Better Checkout -->
+        <!-- Add Checkout -->
         <container name="bluefinch.checkout.container" htmlTag="div" htmlId="bluefinch-checkout-container">
-            <block name="bluefinch.checkout" template="BlueFinch_Checkout::better-checkout.phtml" before="-">
+            <block name="bluefinch.checkout" template="BlueFinch_Checkout::bluefinch-checkout.phtml" before="-">
                 <arguments>
                     <argument name="asset_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\Assets</argument>
                 </arguments>
