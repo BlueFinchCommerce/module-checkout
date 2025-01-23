@@ -32,10 +32,6 @@
         "0": {
             "type": "composer",
             "url": "https://mirror.mage-os.org/"
-        },
-        "1": {
-            "type": "composer",
-            "url": "https://repo.packagist.com/bluefinchcommerce/"
         }
     },
     "config": {
