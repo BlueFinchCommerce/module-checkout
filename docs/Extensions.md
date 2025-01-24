@@ -14,6 +14,10 @@ To use this functionality, the high level steps to follow are:
 
 ## How to add a new component
 
+### Examples
+
+We have an [example module](https://github.com/genecommerce/better-checkout-new-module-template) that has an example of adding a new shipping method and also a new payment method.
+
 ### Set up a component file:
 1. Navigate to the `view/frontend/js/checkout/src` directory within your module.
 1. Here, create your component file in the `components` directory.
@@ -21,7 +25,7 @@ To use this functionality, the high level steps to follow are:
 
 ### Render the component:
 
-We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-basics#dynamic-components] and the `<component>` element, to provide component extension points to render your component(s):
+We use [Vue dynamic components](https://vuejs.org/guide/essentials/component-basics#dynamic-components) and the `<component>` element, to provide component extension points to render your component(s):
 
 ### Global
 
@@ -83,8 +87,8 @@ Example of an extension point in BlueFinch Checkout:
 After you have selected the component extension point for your custom component, you need to register it in the modules .phtml file, via the global `window.bluefinchCheckout` namespace:
 
 1. Add the global `window.bluefinchCheckout` namespace.
-1. Add the component extension point namespace, to the global `window.bluefinchCheckout` namespace.
-1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
+2. Add the component extension point namespace, to the global `window.bluefinchCheckout` namespace.
+3. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
 
 Example:
 
@@ -105,33 +109,33 @@ You can choose from the available callback extension points listed below, to int
 
 ### Event-based Extension Points
 1. onBraintreeExpressInit
-1. onCreate
-1. onDeliveryTabEvent
-1. onEditAddress
-1. onHandleCartData
-1. onLogin
-1. onPaymentDataChanged
-1. onSetShippingStep
-1. onShippingMethodMounted
-1. onStepsCreated
-1. onSubmitShippingOptionAgeCheck
-1. onUserProceed
+2. onCreate
+3. onDeliveryTabEvent
+4. onEditAddress
+5. onHandleCartData
+6. onLogin
+7. onPaymentDataChanged
+8. onSetShippingStep
+9. onShippingMethodMounted
+10. onStepsCreated
+11. onSubmitShippingOptionAgeCheck
+12. onUserProceed
 
 ### Function Extension Points
 1. getAppliedCoupons
-1. getBillingAddress
-1. getCrossSellsHeader
-1. getFullCart
-1. getGiftCards
-1. getGiftWrapping
-1. getIsVirtual
-1. getItems
-1. getPaymentMethods
-1. getPrices
-1. getRewardPoints
-1. getShippingAddresses
-1. getShippingMethods
-1. getStoreCredit
+2. getBillingAddress
+3. getCrossSellsHeader
+4. getFullCart
+5. getGiftCards
+6. getGiftWrapping
+7. getIsVirtual
+8. getItems
+9. getPaymentMethods
+10. getPrices
+11. getRewardPoints
+12. getShippingAddresses
+13. getShippingMethods
+14. getStoreCredit
 
 ### Add your code:
 
@@ -146,9 +150,9 @@ Please refer to the `index.js` in each of their respective directories under `sr
 You then you can register your callback in the modules .phtml file, via the global `window.bluefinchCheckout` namespace:
 
 1. Add the global `window.bluefinchCheckout` namespace.
-1. Add the `callbacks` namespace to the `window.bluefinchCheckout` namespace.
-1. Add the function extension point namespace, to the global `window.bluefinchCheckout` namespace.
-1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
+2. Add the `callbacks` namespace to the `window.bluefinchCheckout` namespace.
+3. Add the function extension point namespace, to the global `window.bluefinchCheckout` namespace.
+4. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
 
 Example:
 
@@ -168,14 +172,14 @@ To test your function extension on the front end, see [local workflow](../.githu
 
 For adding styles to your **component**, you can:
 1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles. **We recommend that the name of your scss file(s) should be unique within your module.** This helps to avoid any build time compilation issues, when you have the need for multiple components, each with it's own scss file.
-1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
-1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+2. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
+3. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
 
 You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.
-    1. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > BlueFinch > Checkout > General > Checkout Designer
-    1. Click on the `Open Designer` button and you can change these values in our interactive preview.
-1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and and overriding the variables and/or styles from the BlueFinch Checkout theme and admin designer settings. Example:
+2. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > BlueFinch > Checkout > General > Checkout Designer
+3. Click on the `Open Designer` button and you can change these values in our interactive preview.
+4. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and and overriding the variables and/or styles from the BlueFinch Checkout theme and admin designer settings. Example:
 
 ```
 :root.vue-checkout-active #bluefinch-checkout-root {
