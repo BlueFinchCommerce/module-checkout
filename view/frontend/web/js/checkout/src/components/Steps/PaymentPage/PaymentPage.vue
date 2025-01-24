@@ -7,7 +7,7 @@
       :margin="false"
     />
     <Recaptcha
-      v-if="!isRecaptchaVisible('braintree')"
+      v-if="!isRecaptchaVisible('braintree') && !isRecaptchaVisible('placeOrder')"
       id="placeOrder"
       location="braintreeNewMethods"
     />
@@ -194,10 +194,10 @@ export default {
 
     getPaymentStepTitle() {
       if (this.hasVaultedMethods) {
-        return window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
+        return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-new']
         || this.$t('paymentStep.titleNew');
       }
-      return window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
+      return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-guest']
         || this.$t('paymentStep.titleGuest');
     },
   },
@@ -212,7 +212,7 @@ export default {
     this.setPaymentErrorMessage('');
 
     // The titles need to be reflective of the state we're in.
-    this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.storedStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());

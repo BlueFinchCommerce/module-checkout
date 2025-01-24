@@ -180,7 +180,7 @@ export default {
   async created() {
     await this.getInitialConfig();
 
-    this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
@@ -260,7 +260,7 @@ export default {
         const price = this.cartGrandTotal / 100;
         const threshold = this.threeDSThresholdAmount;
 
-        if (!this.threeDSEnabled || this.vaultVerifyCvv || price < threshold) {
+        if (!this.threeDSEnabled || price < threshold) {
           resolve({
             nonce,
           });
@@ -331,7 +331,7 @@ export default {
       })).then(async (response) => {
         const paymentData = this.getPaymentData(response);
 
-        const recaptchaValid = await this.validateToken('placeOrder');
+        const recaptchaValid = await this.validateToken('braintree');
 
         if (!recaptchaValid) {
           throw new Error(this.$t('ReCaptcha validation failed, please try again.'));

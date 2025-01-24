@@ -9,11 +9,6 @@
         />
       </div>
       <Agreements id="detailsPage"/>
-      <Recaptcha
-        v-if="isRecaptchaVisible('placeOrder')"
-        id="placeOrder"
-        location="expressPayments"
-      />
       <div class="instant-payment-buttons">
         <ErrorMessage
           v-if="errorMessage !== ''"
@@ -286,7 +281,6 @@ import BillingForm from '@/components/Steps/CustomerInfoPage/Addresses/AddressFo
 import Newsletter from '@/components/Core/ContentComponents/Newsletter/Newsletter.vue';
 import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import ProgressBar from '@/components/Steps/GlobalComponents/ProgressBar/ProgressBar.vue';
-import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
 
 // Stores
@@ -299,7 +293,6 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
-import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -336,7 +329,6 @@ export default {
     Newsletter,
     MyButton,
     ProgressBar,
-    Recaptcha,
     Agreements,
     DeliveryTabIcon,
     ClickCollectTabIcon,
@@ -359,21 +351,21 @@ export default {
       addressFormErrorMessage: false,
       storedKey: 0,
       instantCheckoutText: '',
-      instantCheckoutTextId: 'gene-bettercheckout-instantcheckout-text',
+      instantCheckoutTextId: 'bluefinch-checkout-instantcheckout-text',
       yourDetailsText: '',
-      yourDetailsTextId: 'gene-bettercheckout-your-details-text',
+      yourDetailsTextId: 'bluefinch-checkout-your-details-text',
       deliverWhereText: '',
-      deliverWhereTextId: 'gene-bettercheckout-deliver-where-text',
+      deliverWhereTextId: 'bluefinch-checkout-deliver-where-text',
       newAddressText: '',
-      newAddressTextId: 'gene-bettercheckout-new-address-text',
+      newAddressTextId: 'bluefinch-checkout-new-address-text',
       proceedToShippingText: '',
-      proceedToShippingTextId: 'gene-bettercheckout-proceedtoshipping-text',
+      proceedToShippingTextId: 'bluefinch-checkout-proceedtoshipping-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      proceedToPayTextId: 'bluefinch-checkout-proceedtopay-text',
       homeDeliveryText: '',
-      homeDeliveryTextId: 'gene-bettercheckout-homedelivery-text',
+      homeDeliveryTextId: 'bluefinch-checkout-homedelivery-text',
       clickAndCollectText: '',
-      clickAndCollectTextId: 'gene-bettercheckout-clickandcollect-text',
+      clickAndCollectTextId: 'bluefinch-checkout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
       expressPaymentMethods: [],
@@ -412,9 +404,6 @@ export default {
       'selected',
       'isUsingSavedShippingAddress',
     ]),
-    ...mapState(useRecaptchaStore, [
-      'isRecaptchaVisible',
-    ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
@@ -429,18 +418,18 @@ export default {
     this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
-    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
+    this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.yourDetailsText = window.bluefinchCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.deliverWhereText = window.bluefinchCheckout?.[this.deliverWhereTextId]
     || this.$t('yourDetailsSection.deliverySection.title');
-    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
     || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
-    this.proceedToShippingText = window.geneCheckout?.[this.proceedToShippingTextId]
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.proceedToShippingText = window.bluefinchCheckout?.[this.proceedToShippingTextId]
     || this.$t('yourDetailsSection.deliverySection.toShippingButton');
-    this.homeDeliveryText = window.geneCheckout?.[this.homeDeliveryTextId]
+    this.homeDeliveryText = window.bluefinchCheckout?.[this.homeDeliveryTextId]
     || this.$t('yourDetailsSection.deliverySection.shippingButton');
-    this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
+    this.clickAndCollectText = window.bluefinchCheckout?.[this.clickAndCollectTextId]
     || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     await this.getInitialConfig();

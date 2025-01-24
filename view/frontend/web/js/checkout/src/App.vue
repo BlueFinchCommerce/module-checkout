@@ -33,13 +33,13 @@ export default {
   },
   async created() {
     document.querySelector('html').classList.add('vue-checkout-active');
-    document.getElementById('gene-better-checkout-root').setAttribute('role', 'main');
+    document.getElementById('bluefinch-checkout-root').setAttribute('role', 'main');
     await this.getInitialConfig();
 
     this.setInitialStepState();
 
-    if (window?.geneCheckout?.callbacks?.onCreate) {
-      Object.values(window.geneCheckout.callbacks.onCreate).forEach(async (callback) => {
+    if (window?.bluefinchCheckout?.callbacks?.onCreate) {
+      Object.values(window.bluefinchCheckout.callbacks.onCreate).forEach(async (callback) => {
         const { default: callbackFunction } = await import(callback);
         callbackFunction();
       });

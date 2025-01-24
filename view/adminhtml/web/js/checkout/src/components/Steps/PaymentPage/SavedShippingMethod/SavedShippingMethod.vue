@@ -67,11 +67,11 @@ export default {
   data() {
     return {
       shippingStepCompletedText: '',
-      shippingStepCompletedTextId: 'gene-bettercheckout-shippingstepcompleted-text',
+      shippingStepCompletedTextId: 'bluefinch-checkout-shippingstepcompleted-text',
     };
   },
   async created() {
-    this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
+    this.shippingStepCompletedText = window.bluefinchCheckout?.[this.shippingStepCompletedTextId]
       || this.$t('shippingStep.stepCompleteTitle');
 
     document.addEventListener(this.shippingStepCompletedTextId, this.setShippingStepText);

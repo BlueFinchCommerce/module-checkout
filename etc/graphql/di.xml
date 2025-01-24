@@ -4,20 +4,20 @@
     <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
         <arguments>
             <argument name="extendedConfigData" xsi:type="array">
-                <item name="gene_better_checkout_afd_enable" xsi:type="string">gene_better_checkout/general/afd/enable_afd_checkout</item>
-                <item name="gene_better_checkout_enabled" xsi:type="string">gene_better_checkout/general/enabled</item>
-                <item name="gene_better_checkout_loqate_enabled" xsi:type="string">gene_better_checkout/general/loqate/loqate_enabled</item>
-                <item name="gene_better_checkout_click_collect_tabs_enabled" xsi:type="string">gene_better_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
-                <item name="gene_better_checkout_loqate_api_key" xsi:type="string">gene_better_checkout/general/loqate/loqate_api_key</item>
-                <item name="gene_better_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
-                <item name="gene_better_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
-                <item name="gene_better_checkout_country_state_required" xsi:type="string">general/region/state_required</item>
-                <item name="gene_better_checkout_country_display_state" xsi:type="string">general/region/display_all</item>
-                <item name="gene_better_checkout_google_map_key" xsi:type="string">carriers/collect/google_map_key</item>
-                <item name="gene_better_checkout_paypal_credit_threshold_enabled" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_enabled</item>
-                <item name="gene_better_checkout_paypal_credit_threshold_value" xsi:type="string">gene_better_checkout/general/paypal_credit_threshold/paypal_credit_threshold_value</item>
-                <item name="gene_better_checkout_google_map_enabled" xsi:type="string">gene_better_checkout/general/google_map_configs/google_map_enabled</item>
-                <item name="gene_better_checkout_google_map_api_key" xsi:type="string">gene_better_checkout/general/google_map_configs/google_map_api_key</item>
+                <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/afd/enable_afd_checkout</item>
+                <item name="bluefinch_checkout_enabled" xsi:type="string">bluefinch_checkout/general/enabled</item>
+                <item name="bluefinch_checkout_loqate_enabled" xsi:type="string">bluefinch_checkout/general/loqate/loqate_enabled</item>
+                <item name="bluefinch_checkout_click_collect_tabs_enabled" xsi:type="string">bluefinch_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
+                <item name="bluefinch_checkout_loqate_api_key" xsi:type="string">bluefinch_checkout/general/loqate/loqate_api_key</item>
+                <item name="bluefinch_checkout_newsletter_enabled" xsi:type="string">newsletter/general/active</item>
+                <item name="bluefinch_checkout_newsletter_allow_guest" xsi:type="string">newsletter/subscription/allow_guest_subscribe</item>
+                <item name="bluefinch_checkout_country_state_required" xsi:type="string">general/region/state_required</item>
+                <item name="bluefinch_checkout_country_display_state" xsi:type="string">general/region/display_all</item>
+                <item name="bluefinch_checkout_google_map_key" xsi:type="string">carriers/collect/google_map_key</item>
+                <item name="bluefinch_checkout_paypal_credit_threshold_enabled" xsi:type="string">bluefinch_checkout/general/paypal_credit_threshold/paypal_credit_threshold_enabled</item>
+                <item name="bluefinch_checkout_paypal_credit_threshold_value" xsi:type="string">bluefinch_checkout/general/paypal_credit_threshold/paypal_credit_threshold_value</item>
+                <item name="bluefinch_checkout_google_map_enabled" xsi:type="string">bluefinch_checkout/general/google_map_configs/google_map_enabled</item>
+                <item name="bluefinch_checkout_google_map_api_key" xsi:type="string">bluefinch_checkout/general/google_map_configs/google_map_api_key</item>
                 <item name="optional_zip_countries" xsi:type="string">general/country/optional_zip_countries</item>
                 <item name="tax_cart_display_price" xsi:type="string">tax/cart_display/price</item>
                 <item name="tax_cart_display_subtotal" xsi:type="string">tax/cart_display/subtotal</item>
@@ -25,8 +25,8 @@
                 <item name="tax_cart_display_grandtotal" xsi:type="string">tax/cart_display/grandtotal</item>
                 <item name="tax_cart_display_full_summary" xsi:type="string">tax/cart_display/full_summary</item>
                 <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
-                <item name="gene_better_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
-                <item name="gene_better_checkout_progress_bar_visible" xsi:type="string">gene_better_checkout/general/progress_bar_visible</item>
+                <item name="bluefinch_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
+                <item name="bluefinch_checkout_progress_bar_visible" xsi:type="string">bluefinch_checkout/general/progress_bar_visible</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
 
@@ -209,12 +209,12 @@
             </argument>
         </arguments>
     </type>
-    <type name="Gene\BetterCheckout\Plugin\DisableSession">
+    <type name="BlueFinch\Checkout\Plugin\DisableSession">
         <arguments>
-            <argument name="requestPrefix" xsi:type="string">BetterCheckout</argument>
+            <argument name="requestPrefix" xsi:type="string">BlueFinch</argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\Session\SessionStartChecker">
-        <plugin name="better_checkout_graphql_session_disable" type="Gene\BetterCheckout\Plugin\DisableSession"/>
+    <type name="Cm\RedisSession\Handler\ConfigInterface">
+        <plugin name="better_checkout_graphql_session_disable" type="BlueFinch\Checkout\Plugin\DisableSession"/>
     </type>
 </config>

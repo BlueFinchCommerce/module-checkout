@@ -3,7 +3,7 @@ export default async (components) => {
     ? [components]
     : components;
 
-  const { default: checkout } = await import(window.geneCheckout.main);
+  const { default: checkout } = await import(window.bluefinchCheckout.main);
 
   const importedComponents = mappings.map((mapping) => {
     const [type, component] = mapping.split('.');

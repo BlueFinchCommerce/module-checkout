@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Magento\Store\Model\ScopeInterface;
 
@@ -11,17 +11,17 @@ interface ConfigurationInterface
     const VUE_CHECKOUT_FONT_MEDIA_DIR = 'checkout_font';
 
     /** @var string */
-    const VUE_CHECKOUT_ENABLED_XML_PATH = 'gene_better_checkout/general/enabled';
+    const VUE_CHECKOUT_ENABLED_XML_PATH = 'bluefinch_checkout/general/enabled';
     /** @var string */
-    const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'gene_better_checkout/general/enable_debug';
+    const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'bluefinch_checkout/general/enable_debug';
     /** @var string */
-    const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'gene_better_checkout/general/enable_local_developer_vite_watch_mode';
+    const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'bluefinch_checkout/general/enable_local_developer_vite_watch_mode';
     /** @var string */
     const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
     /** @var string */
-    const VUE_CHECKOUT_FONT_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_upload';
+    const VUE_CHECKOUT_FONT_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_upload';
     /** @var string */
-    const VUE_CHECKOUT_FONT_CDN_XML_PATH = 'gene_better_checkout/general/checkout_designer/font_cdn';
+    const VUE_CHECKOUT_FONT_CDN_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_cdn';
 
     /**
      * @param string $scopeType

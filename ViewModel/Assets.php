@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\ViewModel;
+namespace BlueFinch\Checkout\ViewModel;
 
-use Gene\BetterCheckout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -20,13 +20,13 @@ class Assets implements ArgumentInterface
     /** @var string */
     const ASSETS_DEF_FILE = 'manifest.json';
     /** @var string */
-    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
+    const ASSETS_BASE_DIR = 'BlueFinch_Checkout::js/checkout/dist/';
     /** @var string */
-    const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
+    const DESIGNER_VALUES_PATH = 'bluefinch_checkout/general/checkout_designer/designer_values';
     /** @var string */
-    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/custom_wording';
+    const CUSTOM_WORDING_VALUES_PATH = 'bluefinch_checkout/general/checkout_designer/custom_wording';
     /** @var string */
-    const LOGO_PATH = 'gene_better_checkout/general/checkout_designer/gene_better_checkout_logo';
+    const LOGO_PATH = 'bluefinch_checkout/general/checkout_designer/bluefinch_checkout_logo';
 
     /** @var array */
     private $assetFilesByType = [];
@@ -192,7 +192,7 @@ class Assets implements ArgumentInterface
     }
 
     /**
-     * Retrieve url of a view file, with better checkout developer mode handling for the dist directory
+     * Retrieve url of a view file, with checkout developer mode handling for the dist directory
      *
      * @see \Magento\Framework\View\Element\AbstractBlock::getViewFileUrl()
      *
@@ -285,7 +285,7 @@ class Assets implements ArgumentInterface
 
         if ($logoValue) {
             $imageBaseUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
-            return $imageBaseUrl . 'gene_better_checkout/' . $logoValue;
+            return $imageBaseUrl . 'bluefinch_checkout/' . $logoValue;
         }
 
         return '';

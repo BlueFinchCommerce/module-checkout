@@ -48,7 +48,11 @@
     .agreement-open-modal {
       margin-left: 0;
     }
+  }
+}
 
+.instantCheckout-block + .agreements-container {
+  &__manual {
     .agreement-checkbox {
       label {
         align-items: unset !important; //override checkout label styles

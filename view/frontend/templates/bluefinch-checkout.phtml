@@ -2,7 +2,7 @@
 /**
  * @var \Magento\Catalog\Block\Product\View $block
  * @var \Magento\Framework\Escaper $escaper
- * @var \Gene\BetterCheckout\ViewModel\Assets $assetViewModel
+ * @var \BlueFinch\Checkout\ViewModel\Assets $assetViewModel
  */
 $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js');
@@ -17,30 +17,30 @@ $fontFamily = $assetViewModel->getFontFamily();
 ?>
 
 <script>
-    window.geneCheckout = window.geneCheckout || {};
-    window.geneCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
+    window.bluefinchCheckout = window.bluefinchCheckout || {};
+    window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
 
-    window.geneCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('Gene_BetterCheckout::js/checkout/dist/') ?>";
-    window.geneCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
-    window.geneCheckout.belowEmailFields = window.geneCheckout.belowEmailFields || {};
-    window.geneCheckout.paymentMethods = window.geneCheckout.paymentMethods || {};
-    window.geneCheckout.shippingMethods = window.geneCheckout.shippingMethods || {};
+    window.bluefinchCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/') ?>";
+    window.bluefinchCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
+    window.bluefinchCheckout.belowEmailFields = window.bluefinchCheckout.belowEmailFields || {};
+    window.bluefinchCheckout.paymentMethods = window.bluefinchCheckout.paymentMethods || {};
+    window.bluefinchCheckout.shippingMethods = window.bluefinchCheckout.shippingMethods || {};
 
     <?php if ($customWordings): ?>
         <?php foreach (json_decode($customWordings) as $key => $value): ?>
-            window.geneCheckout["<?= $key ?>"] = "<?= $value ?>";
+            window.bluefinchCheckout["<?= $key ?>"] = "<?= $value ?>";
         <?php endforeach; ?>
     <?php endif; ?>
 </script>
 
-<link href="<?= $this->getViewFileUrl('Gene_BetterCheckout::css/checkout.css') ?>" rel="stylesheet" media="all" />
+<link href="<?= $this->getViewFileUrl('BlueFinch_Checkout::css/checkout.css') ?>" rel="stylesheet" media="all" />
 
 <?php if ($fontCdnUrl) : ?>
     <?= $fontCdnUrl ?>
 <?php elseif ($fontUrl) : ?>
     <style>
         @font-face {
-            font-family: 'BetterCheckoutFont';
+            font-family: 'BlueFinchCheckoutFont';
             src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
         }
     </style>
@@ -52,16 +52,16 @@ $fontFamily = $assetViewModel->getFontFamily();
 
 <?php foreach ($jsAssets['main'] as $jsAsset): ?>
     <script>
-        window.geneCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
+        window.bluefinchCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
     </script>
     <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
 <?php endforeach; ?>
 
 <script>
-    window.geneCheckout.staticPath =
-        window.geneCheckout.staticPath.replace(
-            /(.+)\/Gene_BetterCheckout\//,
-            window.geneCheckout.main.replace(/(\/Gene_BetterCheckout.+)/, '') + '/Gene_BetterCheckout/'
+    window.bluefinchCheckout.staticPath =
+        window.bluefinchCheckout.staticPath.replace(
+            /(.+)\/BlueFinch_Checkout\//,
+            window.bluefinchCheckout.main.replace(/(\/BlueFinch_Checkout.+)/, '') + '/BlueFinch_Checkout/'
         );
 </script>
 
@@ -71,7 +71,7 @@ $fontFamily = $assetViewModel->getFontFamily();
     <?php endforeach; ?>
 <?php endif; ?>
 
-<div id="gene-better-checkout-root"
+<div id="bluefinch-checkout-root"
      class="full-width container"
      data-static-path="<?= $escaper->escapeUrl($block->getViewFileUrl('')) ?>"
      style="min-height: 100%; <?= $designerStyles ?>">

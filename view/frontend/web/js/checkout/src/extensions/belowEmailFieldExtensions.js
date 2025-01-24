@@ -2,13 +2,13 @@ import { defineAsyncComponent } from 'vue';
 
 export default () => {
   const belowEmailFields = {};
-  // Look at window.geneCheckout.belowEmailFields object to trigger the loading of all extra details.
-  if (window.geneCheckout?.belowEmailFields) {
-    Object.keys(window.geneCheckout.belowEmailFields).forEach((detailField) => {
+  // Look at window.bluefinchCheckout.belowEmailFields object to trigger the loading of all extra details.
+  if (window.bluefinchCheckout?.belowEmailFields) {
+    Object.keys(window.bluefinchCheckout.belowEmailFields).forEach((detailField) => {
       belowEmailFields[detailField] = defineAsyncComponent(() => (
         import(
           /* @vite-ignore */
-          window.geneCheckout.belowEmailFields[detailField]
+          window.bluefinchCheckout.belowEmailFields[detailField]
         )));
     });
   }

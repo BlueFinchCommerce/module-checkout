@@ -57,8 +57,8 @@
           <Agreements id="braintreeLpm" />
           <PrivacyPolicy />
           <Recaptcha
-            v-if="isRecaptchaVisible('placeOrder')"
-            id="placeOrder"
+            v-if="getTypeByPlacement('braintree')"
+            id="braintree"
             location="braintreeLpm"
           />
           <button
@@ -109,6 +109,7 @@ import getAdditionalPaymentData from '@/helpers/payment/getAdditionalPaymentData
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
 import getSuccessPageUrl from '@/helpers/cart/getSuccessPageUrl';
 import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
+import recapchaTypes from '@/helpers/types/getRecaptchaTypes';
 
 // Services
 import createPayment from '@/services/payments/createPaymentRest';
@@ -148,7 +149,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'selected', 'getSelectedBillingAddress']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'getPaymentPriority', 'selectedMethod']),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     await this.getInitialConfig();
@@ -185,18 +186,28 @@ export default {
       return getStaticUrl(images[method]);
     },
 
-    selectMethod() {
+    async selectMethod() {
       this.isMethodSelected = true;
       this.selectPaymentMethod('braintree-lpm');
+      if (this.getTypeByPlacement('braintree') === recapchaTypes.invisible) {
+        await this.validateToken('braintree', 'braintreeLpm');
+      }
     },
 
     async initialiseLpm(allowedMethod) {
       this.clearErrorMessage();
       this.paymentEmitter.emit('braintreePaymentStart');
 
-      if (!this.validateAgreements() || !this.validateToken('placeOrder', 'braintreeLpm')) {
+      if (!this.validateAgreements()) {
         this.paymentEmitter.emit('braintreePaymentError');
         return;
+      }
+
+      if (this.getTypeByPlacement('braintree') !== recapchaTypes.invisible) {
+        if (!await this.validateToken('braintree', 'braintreeLpm')) {
+          this.paymentEmitter.emit('braintreePaymentError');
+          return;
+        }
       }
 
       const lpmInstance = await braintree.localPayment.create({
@@ -208,7 +219,7 @@ export default {
       const shippingAddress = this.cart.shipping_addresses[0];
       const address = {};
 
-      address.countryCode = shippingAddress.country_code;
+      address.countryCode = shippingAddress.country.code;
 
       if (!isVirtual) {
         const [streetAddress, extendedAddress] = shippingAddress.street;

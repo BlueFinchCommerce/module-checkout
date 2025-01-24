@@ -58,14 +58,14 @@ export default {
   data() {
     return {
       detailStepText: '',
-      detailStepTextId: 'gene-bettercheckout-detailstep-text',
+      detailStepTextId: 'bluefinch-checkout-detailstep-text',
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
   },
   async created() {
-    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+    this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
 
     document.addEventListener(this.detailStepTextId, this.setDetailStepText);
   },

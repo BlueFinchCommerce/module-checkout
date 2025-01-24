@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Plugin;
+namespace BlueFinch\Checkout\Plugin;
 
+use Cm\RedisSession\Handler\ConfigInterface;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\State;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Serialize\SerializerInterface;
-use Magento\Framework\Session\SessionStartChecker;
 
 class DisableSession
 {
@@ -17,7 +17,7 @@ class DisableSession
      * @param RequestInterface $request
      * @param State $appState
      * @param SerializerInterface $serializer
-     * @param array $operationNames
+     * @param string $requestPrefix
      */
     public function __construct(
         private readonly RequestInterface $request,
@@ -28,26 +28,33 @@ class DisableSession
     }
 
     /**
-     * Prevents session starting while in graphql area and session is disabled in config.
+     * Conditionally set disable_locking=1 for checkout graphql requests
      *
-     * @param SessionStartChecker $subject
-     * @param bool $result
+     * @param ConfigInterface $subject
+     * @param int|bool $result
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.EmptyCatchBlock)
      */
-    public function afterCheck(SessionStartChecker $subject, bool $result): bool
+    public function afterGetDisableLocking(ConfigInterface $subject, $result)
     {
-        if (!$result || !$this->requestPrefix || !$this->request->getContent()) {
-            return false;
+        if ($result) {
+            return $result; // exit early as disable_locking=1 is already set
         }
-        try {
-            if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
-                $result = false;
-            }
-        } catch (LocalizedException $e) {} finally { //@codingStandardsIgnoreLine
+
+        if (!$this->requestPrefix || !$this->request->getContent()) {
+            // exit early as we don't have defined content to make a decision
+            // return whatever the original disable_locking value was
             return $result;
         }
+
+        try {
+            if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
+                $result = true; // ensure disable_locking=1 is set for our BC graphql requests
+            }
+        } catch (LocalizedException $e) {}
+
+        return $result;
     }
 
     /**
