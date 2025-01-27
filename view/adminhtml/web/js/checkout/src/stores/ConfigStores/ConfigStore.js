@@ -24,7 +24,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    rvvupPaymentsActive: false,
     superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
@@ -226,18 +225,6 @@ export default defineStore('configStore', {
       });
     },
 
-    async getRvvupConfig() {
-      const configs = [
-        'rvvup_payments_active',
-      ];
-      const data = await this.getConfig(configs);
-
-      if (data) {
-        this.setData({
-          rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
-        });
-      }
-    },
     createCacheKey(configs) {
       return configs.join('-');
     },

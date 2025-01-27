@@ -30,7 +30,6 @@ import getLocale from '@/helpers/addresses/getLocale';
 import * as getLoqateUrls from '@/helpers/addresses/getLoqateUrls';
 import getLocalMaskedId from '@/helpers/cart/getLocalMaskedId';
 import getPaymentExtensionAttributes from '@/helpers/payment/getPaymentExtensionAttributes';
-import * as getPenniesUrl from '@/helpers/payment/getPenniesUrl';
 import getPhoneValidation from '@/helpers/addresses/getPhoneValidation';
 import getPrivacyPolicyId from '@/helpers/content/getPrivacyPolicyId';
 import getShippingExtensionAttributes from '@/helpers/shipping/getShippingExtensionAttributes';
@@ -50,7 +49,6 @@ import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import paymentCompleteDataLayer from '@/helpers/dataLayer/paymentCompleteDataLayer';
 import paymentMethodSelectedDataLayer from '@/helpers/dataLayer/paymentMethodSelectedDataLayer';
 import redirectToBasketPage from '@/helpers/cart/redirectToBasketPage';
-import requestHokodoOffer from '@/helpers/payment/requestHokodoOffer';
 import scrollToTarget from '@/helpers/scrollToTarget';
 import selectAddressDataLayer from '@/helpers/dataLayer/selectAddressDataLayer';
 import setShippingMethodDataLayer from '@/helpers/dataLayer/setShippingMethodDataLayer';
@@ -88,7 +86,6 @@ export default {
   getLoqateUrls,
   getLocalMaskedId,
   getPaymentExtensionAttributes,
-  getPenniesUrl,
   getPhoneValidation,
   getPrivacyPolicyId,
   getShippingExtensionAttributes,
@@ -108,7 +105,6 @@ export default {
   paymentCompleteDataLayer,
   paymentMethodSelectedDataLayer,
   redirectToBasketPage,
-  requestHokodoOffer,
   scrollToTarget,
   selectAddressDataLayer,
   setShippingMethodDataLayer,

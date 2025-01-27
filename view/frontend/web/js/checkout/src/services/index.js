@@ -26,7 +26,6 @@ import isEmailAvailable from '@/services/customer/isEmailAvailable';
 import login from '@/services/customer/login';
 import loqate from '@/services/addresses/loqate';
 import mergeGuestCart from '@/services/cart/mergeGuestCart';
-import penniesCharityBox from '@/services/payments/penniesCharityBox';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import removeCartItem from '@/services/cart/removeCartItem';
 import removeDiscountCode from '@/services/discount/removeDiscountCode';
@@ -69,7 +68,6 @@ export default {
   login,
   loqate,
   mergeGuestCart,
-  penniesCharityBox,
   refreshCustomerData,
   removeCartItem,
   removeDiscountCode,

@@ -13,10 +13,6 @@
       <div class="payment-form">
         <ProgressBar />
         <template v-if="cartGrandTotal">
-          <ErrorMessage
-            v-if="rvvupErrorMessage !== ''"
-            :message="rvvupErrorMessage"
-          />
           <template v-if="isLoggedIn && hasVaultedMethods">
             <div
               class="braintree-payment__title"
@@ -51,10 +47,6 @@
             <div class="divider-line" />
           </div>
           <BraintreeDropIn :key="`braintreeNewMethods-${paymentKey}`" />
-          <RvvupPayByBank
-            v-if="rvvupPaymentsActive"
-            :key="`rvvupNewMethods-${paymentKey}`"
-          />
           <div v-if="isPaymentMethodAvailable('checkmo')">
             <FreeMOCheckPayment
               :v-if="showMagentoPayments || isBraintreeEnabled !== '0'"
@@ -98,7 +90,6 @@ import SavedShippingMethod
 import Rewards from '@/components/Core/ContentComponents/Rewards/Rewards.vue';
 import StoreCredit from '@/components/Steps/PaymentPage/StoreCredit/StoreCredit.vue';
 import FreeMOCheckPayment from '@/components/Steps/PaymentPage/FreeMOCheckPayment/FreeMOCheckPayment.vue';
-import RvvupPayByBank from '@/components/Steps/PaymentPage/Rvvup/PayByBank/PayByBank.vue';
 import ErrorMessage from '@/components/Core/ContentComponents/Messages/ErrorMessage/ErrorMessage.vue';
 import Recaptcha from '@/components/Steps/PaymentPage/Recaptcha/Recaptcha.vue';
 import Payment from '@/components/Core/Icons/Payment/Payment.vue';
@@ -116,7 +107,6 @@ export default {
     SavedShippingMethod,
     Rewards,
     FreeMOCheckPayment,
-    RvvupPayByBank,
     ErrorMessage,
     BraintreeDropIn,
     StoreCredit,
@@ -143,7 +133,6 @@ export default {
       'currencyCode',
       'storeCode',
       'rewardsEnabled',
-      'rvvupPaymentsActive',
     ]),
     ...mapState(useCustomerStore, ['isLoggedIn']),
     ...mapState(useBraintreeStore, ['isBraintreeEnabled', 'showMagentoPayments']),
@@ -152,7 +141,6 @@ export default {
       'hasVaultedMethods',
       'isPaymentMethodAvailable',
       'getPaymentMethodTitle',
-      'rvvupErrorMessage',
     ]),
     ...mapState(useCartStore, ['cart', 'cartEmitter', 'cartGrandTotal']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
@@ -179,7 +167,7 @@ export default {
   methods: {
     ...mapActions(useBraintreeStore, ['getVaultedMethods']),
     ...mapActions(useCartStore, ['getCart']),
-    ...mapActions(useConfigStore, ['getInitialConfig', 'getRvvupConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useGtmStore, ['trackStep']),
 
     setPaymentStepText(event) {
