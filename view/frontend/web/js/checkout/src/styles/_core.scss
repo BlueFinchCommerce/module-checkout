@@ -38,6 +38,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: none;
+  padding: 0;
 
   .root {
     background: var(--page__background-color--mobile);
