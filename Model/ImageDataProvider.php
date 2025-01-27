@@ -32,6 +32,8 @@ class ImageDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of image data
+     *
      * @param int $quoteId
      * @return array
      */

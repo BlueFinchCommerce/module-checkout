@@ -27,7 +27,9 @@ class GetCheckoutData implements GetCheckoutDataInterface
     }
 
     /**
-     * @param $cartId
+     * Return checkout data
+     *
+     * @param string $cartId
      * @return string
      * @throws NoSuchEntityException
      */

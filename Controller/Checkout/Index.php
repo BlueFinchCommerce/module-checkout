@@ -7,30 +7,30 @@ namespace BlueFinch\Checkout\Controller\Checkout;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Quote\Api\Data\CartInterface;
 
-/**
- * Class Index
- */
 class Index extends Action
 {
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $pageFactory;
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
     protected $checkoutSession;
 
     /**
      * Index constructor.
      *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param Context $context
+     * @param PageFactory $pageFactory
+     * @param Session $checkoutSession
      * @return void
      */
     public function __construct(
@@ -44,7 +44,9 @@ class Index extends Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\View\Result\Page
+     * Controller action function
+     *
+     * @return ResponseInterface|ResultInterface|Page
      */
     public function execute()
     {
@@ -57,7 +59,7 @@ class Index extends Action
             'template' => 'BlueFinch_Checkout::root.phtml',
         ]);
 
-        // Set the page meta data
+        // Set the page metadata
         $title = __('Secure Checkout');
         $description = __('Checkout Securely');
 
@@ -68,6 +70,8 @@ class Index extends Action
     }
 
     /**
+     * Check if quote os valid
+     *
      * @param CartInterface $quote
      * @return bool
      */

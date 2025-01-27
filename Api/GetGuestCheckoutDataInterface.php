@@ -7,7 +7,7 @@ namespace BlueFinch\Checkout\Api;
 interface GetGuestCheckoutDataInterface
 {
     /**
-     * Checkout Data endpoint for Guests
+     * Return checkout data for Guest users
      *
      * @param string $cartId
      * @return string

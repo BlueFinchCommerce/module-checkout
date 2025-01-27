@@ -39,6 +39,8 @@ class ValidateRules implements ResolverInterface
     }
 
     /**
+     * Return an entity type of the value
+     *
      * @param array $value
      * @return string
      * @throws LocalizedException
@@ -69,6 +71,8 @@ class ValidateRules implements ResolverInterface
     }
 
     /**
+     * Return an array of validation rules
+     *
      * @param AttributeInterface $attribute
      * @return array
      */

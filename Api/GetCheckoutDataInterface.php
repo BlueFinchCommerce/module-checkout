@@ -7,6 +7,8 @@ namespace BlueFinch\Checkout\Api;
 interface GetCheckoutDataInterface
 {
     /**
+     * Return checkout data
+     *
      * @param mixed $cartId
      * @return string
      */

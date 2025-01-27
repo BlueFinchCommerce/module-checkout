@@ -47,9 +47,12 @@ class CheckoutSuccess implements ArgumentInterface
         private readonly AssetRepository $assetRepository,
         private readonly DesignInterface $themeDesign,
         private readonly ImageFactory $productImageFactory,
-    ) {}
+    ) {
+    }
 
     /**
+     * Get last order from checkout session
+     *
      * @return Order
      */
     public function getLastOrder(): Order
@@ -143,10 +146,10 @@ class CheckoutSuccess implements ArgumentInterface
     public function displayCartPricesInclTax(mixed $store = null): bool
     {
         return $this->scopeConfig->getValue(
-                Config::XML_PATH_DISPLAY_CART_PRICE,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-                $store
-            ) == Config::DISPLAY_TYPE_INCLUDING_TAX;
+            Config::XML_PATH_DISPLAY_CART_PRICE,
+            ScopeInterface::SCOPE_STORE,
+            $store
+        ) == Config::DISPLAY_TYPE_INCLUDING_TAX;
     }
 
     /**
@@ -158,10 +161,10 @@ class CheckoutSuccess implements ArgumentInterface
     public function displayCartPricesExclTax(mixed $store = null): bool
     {
         return $this->scopeConfig->getValue(
-                Config::XML_PATH_DISPLAY_CART_PRICE,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-                $store
-            ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
+            Config::XML_PATH_DISPLAY_CART_PRICE,
+            ScopeInterface::SCOPE_STORE,
+            $store
+        ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
     }
 
     /**
@@ -173,10 +176,10 @@ class CheckoutSuccess implements ArgumentInterface
     public function displayShippingPricesInclTax(mixed $store = null)
     {
         return $this->scopeConfig->getValue(
-                Config::XML_PATH_DISPLAY_CART_SHIPPING,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-                $store
-            ) == Config::DISPLAY_TYPE_INCLUDING_TAX;
+            Config::XML_PATH_DISPLAY_CART_SHIPPING,
+            ScopeInterface::SCOPE_STORE,
+            $store
+        ) == Config::DISPLAY_TYPE_INCLUDING_TAX;
     }
 
     /**
@@ -188,13 +191,15 @@ class CheckoutSuccess implements ArgumentInterface
     public function displayShippingPricesExclTax(mixed $store = null)
     {
         return $this->scopeConfig->getValue(
-                Config::XML_PATH_DISPLAY_CART_SHIPPING,
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
-                $store
-            ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
+            Config::XML_PATH_DISPLAY_CART_SHIPPING,
+            ScopeInterface::SCOPE_STORE,
+            $store
+        ) == Config::DISPLAY_TYPE_EXCLUDING_TAX;
     }
 
     /**
+     * Check if recaptcha config is enabled
+     *
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return string
@@ -202,8 +207,7 @@ class CheckoutSuccess implements ArgumentInterface
     public function getRecaptchaSuccessEnabled(
         string $scopeType = ScopeInterface::SCOPE_STORE,
         string $scopeCode = null
-    ): string
-    {
+    ): string {
         return $this->scopeConfig->getValue(
             ConfigurationInterface::RECAPTCHA_FRONTEND_SUCCESS_XML_PATH,
             $scopeType,
@@ -212,6 +216,8 @@ class CheckoutSuccess implements ArgumentInterface
     }
 
     /**
+     * Get placeholder image path
+     *
      * @param string $imageType
      * @return string
      */
