@@ -5307,17 +5307,6 @@ body.no-scrollable {
 .customer-form .modal-footer[data-v-55bffe12] {
   display: none;
 }
-.rvvup-modal[data-v-55bffe12] {
-  width: 100%;
-  bottom: 0;
-  top: auto;
-  height: fit-content;
-  max-height: 80%;
-  transition: all 0.5s;
-}
-.rvvup-modal .modal-body[data-v-55bffe12] {
-  padding: 0;
-}
 #root .order-total-modal .modal[data-v-55bffe12] {
   width: 100%;
 }
@@ -5345,23 +5334,9 @@ body.no-scrollable {
 .mock-desktop .modal[data-v-55bffe12] {
   margin: 0 auto;
 }
-.mock-laptop .amasty-modal[data-v-55bffe12],
-.mock-desktop .amasty-modal[data-v-55bffe12] {
-  max-height: var(--modal-desktop-max-height, none);
-}
-.mock-laptop .amasty-modal .modal-body[data-v-55bffe12],
-.mock-desktop .amasty-modal .modal-body[data-v-55bffe12] {
-  overflow: var(--modal-desktop-overflow, auto);
-}
 @media screen and (min-width: 768px) {
 .mock-full .modal[data-v-55bffe12] {
     margin: 0 auto;
-}
-.mock-full .amasty-modal[data-v-55bffe12] {
-    max-height: var(--modal-desktop-max-height, none);
-}
-.mock-full .amasty-modal .modal-body[data-v-55bffe12] {
-    overflow: var(--modal-desktop-overflow, auto);
 }
 }.agreements-container {
   display: grid;
@@ -9229,42 +9204,6 @@ a {
 #bluefinch-checkout-root .free-payment.active {
   background-color: var(--radio-input-wrapper__background-color-active);
   border: var(--selected-border, var(--radio-input-wrapper__border-weight-active) var(--base__border-style) var(--radio-input-wrapper__border-color-active));
-}iframe[data-v-c67ecf8e] {
-  border: 0;
-  width: 100%;
-  max-width: 100%;
-}
-.rvvup-method[data-v-c67ecf8e] {
-  max-height: 0;
-  overflow: hidden;
-  position: relative;
-  transition-duration: 0.5s;
-  transition-property: max-height;
-  transition-timing-function: ease;
-}
-.rvvup-method-visible[data-v-c67ecf8e] {
-  max-height: 600px;
-  transition-delay: 0.5s;
-}
-.rvvup-method .payment-method-name[data-v-c67ecf8e] {
-  color: var(--color__primary-white);
-}
-.rvvup-loader[data-v-c67ecf8e] {
-  background-color: white;
-  position: absolute;
-  height: 100%;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-.rvvup-button[data-v-c67ecf8e] {
-  cursor: pointer;
-}
-.rvvup-button .payment-method-name[data-v-c67ecf8e] {
-  margin-left: var(--indent__s);
-}
-.rvvup-button img[data-v-c67ecf8e] {
-  max-width: 180px;
 }.braintree-vault {
   display: grid;
   gap: var(--indent__base);
