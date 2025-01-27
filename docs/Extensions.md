@@ -10,13 +10,13 @@ To use this functionality, the high level steps to follow are:
 1. Create a `view/frontend/layouts` directory containing a `bluefinch_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores BlueFinch Checkout page.
 1. Create a `view/frontend/web/js/checkout/src/` directory containing your BlueFinch Checkout extension code.
 
-**Please refer to our template for creating BlueFinch Checkout modules [here](https://github.com/genecommerce/bluefinch-checkout-new-module-template)**, which has all the necssary files required, including those for building the front end assets.
+**Please refer to our template for creating BlueFinch Checkout modules [here](https://github.com/BlueFinchCommerce/module-checkout-template)**, which has all the necssary files required, including those for building the front end assets.
 
 ## How to add a new component
 
 ### Examples
 
-We have an [example module](https://github.com/genecommerce/better-checkout-new-module-template) that has an example of adding a new shipping method and also a new payment method.
+We have an [example module](https://github.com/BlueFinchCommerce/module-checkout-template) that has an example of adding a new shipping method and also a new payment method.
 
 ### Set up a component file:
 1. Navigate to the `view/frontend/js/checkout/src` directory within your module.
