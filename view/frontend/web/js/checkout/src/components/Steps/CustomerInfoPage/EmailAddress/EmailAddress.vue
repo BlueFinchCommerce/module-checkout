@@ -259,7 +259,7 @@ export default {
     ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
-    ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode']),
     proceedAsGuestInvalid() {
       return this.emailError || this.customer.email.length === 0;
     },
@@ -268,6 +268,9 @@ export default {
     },
   },
   async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.continueButtonText = window.geneCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
     this.noAccountGuestButtonText = window.geneCheckout?.[this.noAccountGuestButtonTextId]
       || this.$t('noAccountGuestButton');
@@ -275,7 +278,6 @@ export default {
     this.accountGuestButtonText = window.geneCheckout?.[this.accountGuestButtonTextId]
       || this.$t('accountGuestButton');
 
-    await this.getInitialConfig();
     await this.getCart();
 
     this.trackStep({

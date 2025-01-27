@@ -185,12 +185,16 @@ export default {
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.originalCrossSellsText = window.geneCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
     this.displayCrossSellsText = this.originalCrossSellsText;
@@ -199,7 +203,6 @@ export default {
       || this.$t('orderSummary.addToCart');
     this.displayCrossSellsCTAText = this.originalCrossSellsCTAText;
 
-    await this.getInitialConfig();
     await this.getCart();
     await this.getCrosssells();
     this.externalCrosssellHeader();

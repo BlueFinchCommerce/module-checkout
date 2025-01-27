@@ -171,14 +171,16 @@ export default {
       'errorMessage',
       'unselectVaultedMethods',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['locale', 'currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods', 'selectedMethod']),
     ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
   },
   async created() {
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
 
     this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
