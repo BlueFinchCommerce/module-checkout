@@ -176,6 +176,7 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, [
+      'locale',
       'currencyCode',
       'storeCode',
       'rewardsEnabled',
@@ -202,7 +203,9 @@ export default {
     },
   },
   async created() {
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     await this.getCart();
 
     if (this.isPaymentMethodAvailable('braintree_cc_vault') && this.isLoggedIn) {

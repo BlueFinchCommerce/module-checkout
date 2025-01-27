@@ -150,16 +150,18 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
-    ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode']),
   },
   async created() {
     this.checkForGuestUser();
 
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
       || this.$t('orderSummary.mobileDiscountText');
 
-    await this.getInitialConfig();
     await this.getCart();
 
     await this.getCustomerInformation();

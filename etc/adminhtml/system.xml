@@ -77,7 +77,7 @@
                         <validate>validate-cdn-field</validate>
                         <comment><![CDATA[
         Use this field to include custom CSS for your checkout page.<br/>
-        You can add a <code>&lt;style&gt;</code> element with an @import link to a font CDN and define global font family variables for the checkout root element (<code>#gene-better-checkout-root</code>).<br/>
+        You can add a <code>&lt;style&gt;</code> element with an @import link to a font CDN and define global font family variables for the checkout root element (<code>#bluefinch-checkout-root</code>).<br/>
         Ensure the HTML is valid.<br/><br/>
         Example:<br/>
         <code>

@@ -139,13 +139,15 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
-    ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
-    await this.getInitialConfig();
     this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
   },
   methods: {
