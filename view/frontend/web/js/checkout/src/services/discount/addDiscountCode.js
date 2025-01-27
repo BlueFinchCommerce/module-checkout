@@ -31,7 +31,7 @@ export default async (coupon) => {
         }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartDiscountAdd')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCartDiscountAdd')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

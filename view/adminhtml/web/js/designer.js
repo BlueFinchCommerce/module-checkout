@@ -9,22 +9,22 @@ define([
     'use strict';
 
     const SELECTORS = {
-        DESIGNER_MODAL: '#gene-bettercheckout-designer',
-        DESIGNER_ROOT: '#gene-better-checkout-root',
-        DESIGNER_VALUES: '#gene_better_checkout_general_checkout_designer_designer_values',
+        DESIGNER_MODAL: '#bluefinch-checkout-designer',
+        DESIGNER_ROOT: '#bluefinch-checkout-root',
+        DESIGNER_VALUES: '#bluefinch_checkout_general_checkout_designer_designer_values',
         DESIGNER_VALUES_SYSTEM: `
-            #gene_better_checkout_general_checkout_designer_designer_values_inherit,
-            #gene_better_checkout_general_checkout_designer_custom_wording_inherit,
-            #gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_inherit
+            #bluefinch_checkout_general_checkout_designer_designer_values_inherit,
+            #bluefinch_checkout_general_checkout_designer_custom_wording_inherit,
+            #bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo_inherit
         `,
-        CUSTOM_WORDING: '#gene_better_checkout_general_checkout_designer_custom_wording',
-        DESIGNER_LOGO: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo',
+        CUSTOM_WORDING: '#bluefinch_checkout_general_checkout_designer_custom_wording',
+        DESIGNER_LOGO: '#bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo',
         DESIGNER_LOGO_LABEL: `
-            #gene-bettercheckout-designer
-            label[for="gene_better_checkout_general_checkout_designer_gene_better_checkout_logo"]
+            #bluefinch-checkout-designer
+            label[for="bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo"]
         `,
-        DESIGNER_LOGO_IMG_PREVIEW: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_image',
-        DESIGNER_LOGO_DELETE: '#gene_better_checkout_general_checkout_designer_gene_better_checkout_logo_delete'
+        DESIGNER_LOGO_IMG_PREVIEW: '#bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo_image',
+        DESIGNER_LOGO_DELETE: '#bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo_delete'
     };
 
     return Component.extend({
@@ -58,7 +58,7 @@ define([
                     { text: $t('Cancel'), click: this.closeModal.bind(this) },
                     { text: $t('Save'), click: this.saveDesigner.bind(this) }
                 ],
-                modalClass: 'gene-bettercheckout-designer-modal'
+                modalClass: 'bluefinch-checkout-designer-modal'
             });
 
             this.designerModal.find('input').on('input change keyup', this.triggerChange.bind(this));
@@ -66,7 +66,7 @@ define([
             this.designerValues.on('change', this.setSystemValue.bind(this));
             this.customWording.on('change', this.setSystemValue.bind(this));
 
-            document.addEventListener('gene-better-checkout-loaded', () => {
+            document.addEventListener('bluefinch-checkout-loaded', () => {
                 this.loadInitialLogo();
                 this.initializePixelInputs();
                 this.loadInitialCSSValues();
@@ -107,11 +107,11 @@ define([
         },
 
         dispatchLogoChangeEvent: function (src) {
-            const event = new CustomEvent('gene:checkout-image-update', { detail: src });
+            const event = new CustomEvent('bluefinch:checkout-image-update', { detail: src });
 
             document.dispatchEvent(event);
-            window.geneCheckout = window.geneCheckout || {};
-            window.geneCheckout.logo = src;
+            window.bluefinchCheckout = window.bluefinchCheckout || {};
+            window.bluefinchCheckout.logo = src;
         },
 
         dispatchTextChangeEvent: function (value, customEventId) {
@@ -123,8 +123,8 @@ define([
             });
 
             document.dispatchEvent(event);
-            window.geneCheckout = window.geneCheckout || {};
-            window.geneCheckout[customEventId] = value;
+            window.bluefinchCheckout = window.bluefinchCheckout || {};
+            window.bluefinchCheckout[customEventId] = value;
         },
 
         setCSSVariable: function (name, value) {
@@ -214,8 +214,8 @@ define([
 
         loadInitialLogo: function () {
             if (this.designerLogoImgPreview.attr('src')) {
-                window.geneCheckout = window.geneCheckout || {};
-                window.geneCheckout.logo = this.designerLogoImgPreview.attr('src');
+                window.bluefinchCheckout = window.bluefinchCheckout || {};
+                window.bluefinchCheckout.logo = this.designerLogoImgPreview.attr('src');
             }
         },
 
@@ -358,7 +358,7 @@ define([
 
         saveImages: function () {
             this.designerLogo.prependTo(`
-            #row_gene_better_checkout_general_checkout_designer_gene_better_checkout_logo .value
+            #row_bluefinch_checkout_general_checkout_designer_bluefinch_checkout_logo .value
             `);
         },
 

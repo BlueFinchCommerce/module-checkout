@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Plugin\CustomerData;
+namespace BlueFinch\Checkout\Plugin\CustomerData;
 
+use BlueFinch\Checkout\Model\Configuration;
 use Magento\Checkout\CustomerData\Cart as Subject;
 use Magento\Checkout\Model\Session;
 use Magento\Framework\Exception\LocalizedException;
@@ -13,7 +14,6 @@ use Magento\Payment\Model\MethodList;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use PayPal\Braintree\Helper\CcType;
 
 class Cart
 {
@@ -25,7 +25,7 @@ class Cart
      * @param Resolver $localeResolver
      * @param StoreManagerInterface $storeManager
      * @param MethodList $methodList
-     * @param CcType $ccTypeHelper
+     * @param Configuration $configuration
      */
     public function __construct(
         private readonly Session $checkoutSession,
@@ -33,7 +33,7 @@ class Cart
         private readonly Resolver $localeResolver,
         private readonly StoreManagerInterface $storeManager,
         private readonly MethodList $methodList,
-        private readonly CcType $ccTypeHelper
+        private readonly Configuration $configuration
     ) {
     }
 
@@ -70,7 +70,7 @@ class Cart
         $result['currencyCode'] = $quote->getQuoteCurrencyCode();
         $result['locale'] = $this->localeResolver->getLocale();
         $result['storeCode'] = $this->storeManager->getStore()->getCode();
-        $result['braintreeCcTypes'] = $this->ccTypeHelper->getCcTypes();
+        $result['braintreeCcTypes'] = $this->configuration->getPaypalCcTypes();
 
         return $result;
     }

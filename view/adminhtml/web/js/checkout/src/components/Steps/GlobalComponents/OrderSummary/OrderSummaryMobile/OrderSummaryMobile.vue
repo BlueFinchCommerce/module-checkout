@@ -129,9 +129,9 @@ export default {
     return {
       isModalVisible: false,
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       orderSummaryDescriptionText: '',
-      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
+      orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
     };
   },
   computed: {
@@ -139,8 +139,8 @@ export default {
     ...mapState(useConfigStore, ['storeCode']),
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
       || this.$t('orderSummary.mobileDiscountText');
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);

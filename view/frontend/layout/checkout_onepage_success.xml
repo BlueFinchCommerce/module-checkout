@@ -5,10 +5,10 @@
             <container name="onepagesuccess.header.container" label="Onepage Success Header" before="-">
                 <referenceBlock name="checkout.success">
                     <arguments>
-                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                        <argument name="order_view_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\CheckoutSuccess</argument>
                     </arguments>
                     <action method="setTemplate">
-                        <argument name="template" xsi:type="string">Gene_BetterCheckout::onepage/success.phtml</argument>
+                        <argument name="template" xsi:type="string">BlueFinch_Checkout::onepage/success.phtml</argument>
                     </action>
                 </referenceBlock>
             </container>
@@ -16,18 +16,18 @@
             <container name="onepagesuccess.registration.container" label="Onepage Success Registration">
                 <container name="onepagesuccess.signup.features" label="Onepage Success Features" htmlTag="div" htmlClass="checkout-success-sign-up checkout-success-features-hidden" />
                 <!-- add create account section-->
-                <block class="Magento\Checkout\Block\Registration" name="checkout.success.create.account" as="create-account-basket" template="Gene_BetterCheckout::onepage/success-create-account.phtml">
+                <block class="Magento\Checkout\Block\Registration" name="checkout.success.create.account" as="create-account-basket" template="BlueFinch_Checkout::onepage/success-create-account.phtml">
                     <arguments>
-                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                        <argument name="order_view_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\CheckoutSuccess</argument>
                     </arguments>
                     <container name="form.additional.info" as="form_additional_info"/>
                 </block>
             </container>
 
             <container name="onepagesuccess.footer.container" label="Onepage Success Footer" after="-">
-                <block class="Magento\Checkout\Block\Onepage\Success" name="onepagesuccess.footer" template="Gene_BetterCheckout::onepage/footer.phtml">
+                <block class="Magento\Checkout\Block\Onepage\Success" name="onepagesuccess.footer" template="BlueFinch_Checkout::onepage/footer.phtml">
                     <arguments>
-                        <argument name="order_view_view_model" xsi:type="object">Gene\BetterCheckout\ViewModel\CheckoutSuccess</argument>
+                        <argument name="order_view_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\CheckoutSuccess</argument>
                     </arguments>
                 </block>
             </container>

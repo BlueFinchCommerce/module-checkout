@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Plugin;
+namespace BlueFinch\Checkout\Plugin;
 
 use Cm\RedisSession\Handler\ConfigInterface;
 use Magento\Framework\App\Area;
@@ -28,7 +28,7 @@ class DisableSession
     }
 
     /**
-     * Conditionally set disable_locking=1 for better checkout graphql requests
+     * Conditionally set disable_locking=1 for checkout graphql requests
      *
      * @param ConfigInterface $subject
      * @param int|bool $result

@@ -11,7 +11,7 @@ export default (sameAsShipping = false) => {
     postcode: 'BN1 1AL',
     company: '',
     telephone: '01273 030390',
-    firstname: 'Gene',
+    firstname: 'BlueFinch',
     lastname: 'Commerce',
     editing: false,
   };

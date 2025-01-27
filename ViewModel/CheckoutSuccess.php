@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\ViewModel;
+namespace BlueFinch\Checkout\ViewModel;
 
 use Magento\Catalog\Model\Product\ImageFactory;
 use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
@@ -21,7 +21,7 @@ use Magento\Sales\Api\OrderCustomerDelegateInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\Store;
 use Magento\Tax\Model\Config;
-use Gene\BetterCheckout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
 
 class CheckoutSuccess implements ArgumentInterface
 {

@@ -17,22 +17,22 @@ switch ($accountType) {
         if (!empty($gtmAccountId)) {
             ?>
             <!-- GOOGLE TAG MANAGER -->
-            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Gene_BetterCheckout::js/google-tag-manager.js')) ?>"></script>
+            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
             <script defer>
                 /**
                  * @param {Object} config
                  */
                 (function (config) {
                     // If the init is available call it otherwise wait until it's available.
-                    window.geneInitGtm
-                        ? window.geneInitGtm(config)
-                        : document.addEventListener('geneGa:inited', function () {
-                            window.geneInitGtm(config);
+                    window.bluefinchInitGtm
+                        ? window.bluefinchInitGtm(config)
+                        : document.addEventListener('bluefinchGa:inited', function () {
+                            window.bluefinchInitGtm(config);
                         });
 
                     // If the User changes their cookie preference.
                     document.addEventListener('user:allowed:save:cookie', function () {
-                        window.geneInitGtm(config);
+                        window.bluefinchInitGtm(config);
                     });
                 })(<?= $escaper->escapeJs($block->getTagManagerData()) ?>)
             </script>
@@ -44,22 +44,22 @@ switch ($accountType) {
         if (!empty($gapAccountId)) {
             ?>
             <!-- BEGIN GOOGLE ANALYTICS 4 CODE -->
-            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Gene_BetterCheckout::js/google-analytics.js')) ?>"></script>
+            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')) ?>"></script>
             <script defer>
                 /**
                  * @param {Object} config
                  */
                 (function (config) {
                     // If the init is available call it otherwise wait until it's available.
-                    window.geneInitGtm
-                        ? window.geneInitGtm(config)
-                        : document.addEventListener('geneGa:inited', function () {
-                            window.geneInitGtm(config);
+                    window.bluefinchInitGtm
+                        ? window.bluefinchInitGtm(config)
+                        : document.addEventListener('bluefinchGa:inited', function () {
+                            window.bluefinchInitGtm(config);
                         });
 
                     // If the User changes their cookie preference.
                     document.addEventListener('user:allowed:save:cookie', function () {
-                        window.geneInitGtm(config);
+                        window.bluefinchInitGtm(config);
                     });
                 })(<?= $escaper->escapeJs($block->getAnalyticsData()) ?>)
             </script>
