@@ -135,7 +135,6 @@ export default {
       || this.$t('orderSummary.couponDiscountTitle');
     this.couponDiscountPlaceholderText = window.geneCheckout?.[this.couponDiscountPlaceholderTextId]
       || this.$t('orderSummary.couponDiscount.placeholder');
-
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
