@@ -179,7 +179,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'getShippingMethods']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
@@ -188,11 +188,13 @@ export default {
     ]),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.additionalShippingMethods = Object.keys(shippingMethods());
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     this.shippingMethodAdditionalContainers = Object.keys(shippingMethodAdditionalContainers());
-    await this.getInitialConfig();
     this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
     this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
   },

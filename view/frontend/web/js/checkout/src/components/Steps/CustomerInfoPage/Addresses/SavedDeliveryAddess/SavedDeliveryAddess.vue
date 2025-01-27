@@ -74,10 +74,13 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
+    ...mapState(useConfigStore, ['locale']),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
-    await this.getInitialConfig();
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

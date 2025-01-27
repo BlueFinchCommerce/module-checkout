@@ -47,11 +47,13 @@ export default {
     };
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.headerText = window.geneCheckout?.[this.headerTextId] || this.$t('header.text');
-    await this.getInitialConfig();
   },
   computed: {
-    ...mapState(useConfigStore, ['secureBaseLinkUrl']),
+    ...mapState(useConfigStore, ['locale', 'secureBaseLinkUrl']),
   },
   methods: {
     ...mapActions(useConfigStore, ['custom', 'getInitialConfig']),

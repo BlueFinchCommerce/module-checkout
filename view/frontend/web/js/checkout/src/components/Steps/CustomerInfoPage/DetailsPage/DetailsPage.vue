@@ -387,6 +387,7 @@ export default {
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'cartEmitter', 'subtotalInclTax']),
     ...mapState(useConfigStore, [
+      'locale',
       'addressFinder',
       'custom',
       'storeCode',
@@ -418,6 +419,9 @@ export default {
     this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
     this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
     this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
@@ -432,7 +436,6 @@ export default {
     this.clickAndCollectText = window.geneCheckout?.[this.clickAndCollectTextId]
     || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
-    await this.getInitialConfig();
     await this.getCart();
     this.paypalCreditCheck();
 

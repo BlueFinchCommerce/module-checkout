@@ -14,7 +14,7 @@
 </template>
 <script>
 // stores
-import { mapActions } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // components
@@ -40,8 +40,13 @@ export default {
     };
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    await this.getInitialConfig();
+  },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
