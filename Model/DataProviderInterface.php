@@ -7,6 +7,8 @@ namespace BlueFinch\Checkout\Model;
 interface DataProviderInterface
 {
     /**
+     * Return an array of data
+     *
      * @param int $quoteId
      * @return array
      */

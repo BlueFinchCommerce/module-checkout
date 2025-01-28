@@ -13,6 +13,7 @@ class Configuration implements ConfigurationInterface
      * Configuration Constructor
      *
      * @param ScopeConfigInterface $scopeConfig
+     * @param CcTypeFactory $ccTypeFactory
      */
     public function __construct(
         private readonly ScopeConfigInterface $scopeConfig,
@@ -24,7 +25,7 @@ class Configuration implements ConfigurationInterface
      * Return whether checkout is enabled from config
      *
      * @param string $scopeType
-     * @param null $scopeCode
+     * @param string|null $scopeCode
      * @return bool
      */
     public function getIsEnabled(
@@ -56,22 +57,22 @@ class Configuration implements ConfigurationInterface
     public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
     {
         return $this->scopeConfig->getValue(
-                self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
-                $scopeType,
-                $scopeCode
-            ) ?? '';
+            self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
+            $scopeType,
+            $scopeCode
+        ) ?? '';
     }
 
     /**
-    * Retrieve the font family name from the CDN URL
-    *
-    * @param string $scopeType
-    * @param string|null $scopeCode
-    * @return string
-    */
+     * Retrieve the font family name from the CDN URL
+     *
+     * @param string $scopeType
+     * @param string|null $scopeCode
+     * @return string
+     */
     public function getFontFamilyFromCdnUrl(
-    string $scopeType = ScopeInterface::SCOPE_STORE,
-    string $scopeCode = null
+        string $scopeType = ScopeInterface::SCOPE_STORE,
+        string $scopeCode = null
     ): string {
         $fontCdnUrl = $this->getFontCdnUrl($scopeType, $scopeCode);
         $defaultFontFamily = 'Montserrat';
@@ -116,7 +117,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getIsDeveloperViteWatchModeEnabled(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-               $scopeCode = null
+        $scopeCode = null
     ): bool {
         return (bool) $this->scopeConfig->getValue(
             self::VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE,
@@ -126,6 +127,8 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
+     * Return available CC types
+     *
      * @return array
      */
     public function getPaypalCcTypes()

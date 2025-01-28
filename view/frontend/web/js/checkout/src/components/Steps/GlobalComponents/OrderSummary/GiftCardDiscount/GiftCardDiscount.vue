@@ -126,17 +126,19 @@ export default {
     };
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
     this.giftCardPlaceholderText = window.bluefinchCheckout?.[this.giftCardPlaceholderTextId]
       || this.$t('orderSummary.giftCardDiscount.placeholder');
-
-    await this.getInitialConfig();
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),
     ...mapWritableState(useCartStore, ['giftCardCode']),
+    ...mapState(useConfigStore, ['locale']),
   },
   methods: {
     ...mapActions(useCartStore, ['addGiftCardCode', 'removeGiftCardCode']),

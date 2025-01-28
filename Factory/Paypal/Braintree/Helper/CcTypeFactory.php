@@ -16,6 +16,8 @@ class CcTypeFactory
     }
 
     /**
+     * Return CC type object
+     *
      * @return null|CcType
      */
     public function getCcType()

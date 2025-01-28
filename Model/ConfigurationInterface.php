@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace BlueFinch\Checkout\Model;
@@ -8,22 +9,23 @@ use Magento\Store\Model\ScopeInterface;
 interface ConfigurationInterface
 {
     /** @var string */
-    const VUE_CHECKOUT_FONT_MEDIA_DIR = 'checkout_font';
-
+    public const VUE_CHECKOUT_FONT_MEDIA_DIR = 'checkout_font';
     /** @var string */
-    const VUE_CHECKOUT_ENABLED_XML_PATH = 'bluefinch_checkout/general/enabled';
+    public const VUE_CHECKOUT_ENABLED_XML_PATH = 'bluefinch_checkout/general/enabled';
     /** @var string */
-    const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'bluefinch_checkout/general/enable_debug';
+    public const VUE_CHECKOUT_ENABLE_DEBUG_XML_PATH = 'bluefinch_checkout/general/enable_debug';
     /** @var string */
-    const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'bluefinch_checkout/general/enable_local_developer_vite_watch_mode';
+    public const VUE_CHECKOUT_ENABLE_VITE_WATCH_MODE = 'bluefinch_checkout/general/enable_local_developer_vite_watch_mode';
     /** @var string */
-    const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
+    public const RECAPTCHA_FRONTEND_SUCCESS_XML_PATH = 'recaptcha_frontend/type_for/customer_create_success';
     /** @var string */
-    const VUE_CHECKOUT_FONT_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_upload';
+    public const VUE_CHECKOUT_FONT_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_upload';
     /** @var string */
-    const VUE_CHECKOUT_FONT_CDN_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_cdn';
+    public const VUE_CHECKOUT_FONT_CDN_XML_PATH = 'bluefinch_checkout/general/checkout_designer/font_cdn';
 
     /**
+     * Check if extension is enabled
+     *
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return bool
@@ -31,6 +33,8 @@ interface ConfigurationInterface
     public function getIsEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): bool;
 
     /**
+     * Return a path for font file
+     *
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return string
@@ -38,6 +42,8 @@ interface ConfigurationInterface
     public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
 
     /**
+     * Return font url from CDN
+     *
      * @param string $scopeType
      * @param string|null $scopeCode
      * @return string
