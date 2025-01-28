@@ -64,7 +64,7 @@ export default defineStore('shippingMethodsStore', {
 
     selectShippingMethod(item) {
       if (item.carrier_code
-        && this.$state.selectedMethod.carrier_code
+        && this.$state.selectedMethod?.carrier_code
         && item.carrier_code !== this.$state.selectedMethod.carrier_code) {
         const gtmStore = useGtmStore();
         gtmStore.trackGtmEvent({
