@@ -22,6 +22,8 @@ class GiftMessageDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of gift message data
+     *
      * @param int $quoteId
      * @return \array[][]
      * @throws NoSuchEntityException

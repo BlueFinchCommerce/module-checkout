@@ -26,7 +26,7 @@ class Cart
      * @param StoreManagerInterface $storeManager
      * @param MethodList $methodList
      * @param Configuration $configuration
-    */
+     */
     public function __construct(
         private readonly Session $checkoutSession,
         private readonly QuoteIdToMaskedQuoteIdInterface $maskedQuote,

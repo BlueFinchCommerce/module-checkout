@@ -3,5 +3,5 @@ export default () => {
 
   return mageCache && mageCache.cart && mageCache.cart.locale
     ? mageCache.cart.locale
-    : null;
+    : undefined;
 };

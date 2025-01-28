@@ -2,6 +2,7 @@
 /**
  * Override core template file to remove requirements on jQuery and Magento.
  * @var \Magento\GoogleTagManager\Block\GtagGa $block
+ * @var \Magento\Framework\Escaper $escaper
  * @var \Magento\GoogleTagManager\ViewModel\TagManagerConfig $gtmConfig
  */
 
@@ -16,7 +17,7 @@ switch ($accountType) {
         if (!empty($gtmAccountId)) {
             ?>
             <!-- GOOGLE TAG MANAGER -->
-            <script defer src="<?php echo $block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')?>"></script>
+            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
             <script defer>
                 /**
                  * @param {Object} config
@@ -33,7 +34,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= $block->getTagManagerData() ?>)
+                })(<?= $escaper->escapeJs($block->getTagManagerData()) ?>)
             </script>
             <!-- END GOOGLE TAG MANAGER -->
             <?php
@@ -43,7 +44,7 @@ switch ($accountType) {
         if (!empty($gapAccountId)) {
             ?>
             <!-- BEGIN GOOGLE ANALYTICS 4 CODE -->
-            <script defer src="<?php echo $block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')?>"></script>
+            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')) ?>"></script>
             <script defer>
                 /**
                  * @param {Object} config
@@ -60,7 +61,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= $block->getAnalyticsData() ?>)
+                })(<?= $escaper->escapeJs($block->getAnalyticsData()) ?>)
             </script>
             <!-- END GOOGLE ANALYTICS 4 CODE -->
             <?php

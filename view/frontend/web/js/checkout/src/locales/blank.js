@@ -3,6 +3,9 @@ export default {
   header: {
     text: ' ',
   },
+  dividerText: ' ',
+  signInDividerText: ' ',
+  payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: ' ',
   orderSummary: {
     applyBtn: ' ',

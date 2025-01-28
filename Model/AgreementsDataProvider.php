@@ -17,6 +17,8 @@ class AgreementsDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of agreements data
+     *
      * @param int $quoteId
      * @return array
      */

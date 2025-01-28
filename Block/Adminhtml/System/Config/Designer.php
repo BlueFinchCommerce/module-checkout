@@ -10,13 +10,18 @@ use BlueFinch\Checkout\ViewModel\Assets;
 
 class Designer extends Field
 {
+    /**
+     * Template file variable
+     *
+     * @var string
+     */
     protected $_template = 'BlueFinch_Checkout::system/config/designer.phtml';
 
     /**
+     * @param Assets $assets
      * @param Context $context
      * @param array $data
      * @param SecureHtmlRenderer|null $secureRenderer
-     * @param Assets $assets
      */
     public function __construct(
         private readonly Assets $assets,
@@ -40,6 +45,8 @@ class Designer extends Field
     }
 
     /**
+     * Add view_model to assets
+     *
      * @param AbstractElement $element
      * @return string
      */

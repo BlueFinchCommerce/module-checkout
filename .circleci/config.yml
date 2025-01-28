@@ -126,7 +126,7 @@ jobs:
           name: PHPCS
           working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: |
-            ./vendor/bin/phpcs . --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
+            ./vendor/bin/phpcs . --standard=phpcs.xml,Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
       - run:
           name: PHPStan
           working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout

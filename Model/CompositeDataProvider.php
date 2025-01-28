@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 class CompositeDataProvider implements CompositeDataProviderInterface
 {
     /**
+     * @param LoggerInterface $logger
      * @param DataProviderInterface[] $dataProviders
      */
     public function __construct(
@@ -20,6 +21,8 @@ class CompositeDataProvider implements CompositeDataProviderInterface
     }
 
     /**
+     * Return an array of data
+     *
      * @param int $quoteId
      * @return array
      */

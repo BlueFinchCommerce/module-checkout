@@ -20,7 +20,7 @@ $fontFamily = $assetViewModel->getFontFamily();
     window.bluefinchCheckout = window.bluefinchCheckout || {};
     window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
 
-    window.bluefinchCheckout.staticPath = "<?= $assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/') ?>";
+    window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
     window.bluefinchCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
     window.bluefinchCheckout.belowEmailFields = window.bluefinchCheckout.belowEmailFields || {};
     window.bluefinchCheckout.paymentMethods = window.bluefinchCheckout.paymentMethods || {};
@@ -28,33 +28,33 @@ $fontFamily = $assetViewModel->getFontFamily();
 
     <?php if ($customWordings): ?>
         <?php foreach (json_decode($customWordings) as $key => $value): ?>
-            window.bluefinchCheckout["<?= $key ?>"] = "<?= $value ?>";
+            window.bluefinchCheckout["<?= $escaper->escapeJs($key) ?>"] = "<?= $escaper->escapeJs($value) ?>";
         <?php endforeach; ?>
     <?php endif; ?>
 </script>
 
-<link href="<?= $this->getViewFileUrl('BlueFinch_Checkout::css/checkout.css') ?>" rel="stylesheet" media="all" />
+<link href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::css/checkout.css')) ?>" rel="stylesheet" media="all" />
 
-<?php if ($fontCdnUrl) : ?>
-    <?= $fontCdnUrl ?>
-<?php elseif ($fontUrl) : ?>
+<?php if ($fontCdnUrl): ?>
+    <?= $escaper->escapeUrl($fontCdnUrl) ?>
+<?php elseif ($fontUrl): ?>
     <style>
         @font-face {
             font-family: 'BlueFinchCheckoutFont';
-            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $escaper->escapeUrl($assetViewModel->getFontFormat($fontUrl)) ?>);
         }
     </style>
 <?php endif; ?>
 
 <?php foreach ($cssAssets as $cssAsset): ?>
-    <link rel="stylesheet" media="all" href="<?= $escaper->escapeUrl($cssAsset->getUrl()); ?>">
+    <link rel="stylesheet" media="all" href="<?= $escaper->escapeHtmlAttr($cssAsset->getUrl()); ?>">
 <?php endforeach; ?>
 
 <?php foreach ($jsAssets['main'] as $jsAsset): ?>
     <script>
         window.bluefinchCheckout.main = "<?= $escaper->escapeUrl($jsAsset->getUrl()) ?>";
     </script>
-    <script defer type="module" src="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>"></script>
+    <script defer type="module" src="<?= $escaper->escapeHtmlAttr($jsAsset->getUrl()); ?>"></script>
 <?php endforeach; ?>
 
 <script>
@@ -67,17 +67,17 @@ $fontFamily = $assetViewModel->getFontFamily();
 
 <?php if (array_key_exists('imports', $jsAssets)): ?>
     <?php foreach ($jsAssets['imports'] as $jsAsset): ?>
-        <link rel="modulepreload" href="<?= $escaper->escapeUrl($jsAsset->getUrl()); ?>">
+        <link rel="modulepreload" href="<?= $escaper->escapeHtmlAttr($jsAsset->getUrl()); ?>">
     <?php endforeach; ?>
 <?php endif; ?>
 
 <div id="bluefinch-checkout-root"
      class="full-width container"
-     data-static-path="<?= $escaper->escapeUrl($block->getViewFileUrl('')) ?>"
-     style="min-height: 100%; <?= $designerStyles ?>">
+     data-static-path="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('')) ?>"
+     style="min-height: 100%; <?= $escaper->escapeHtmlAttr($designerStyles) ?>">
     <div class="loading-mask">
         <div class="loader">
-            <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/loader-1.gif')) ?>"
+            <img src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('images/loader-1.gif')) ?>"
                  alt="<?= $escaper->escapeHtmlAttr(__('Loading...')) ?>"
                  style="width: 50px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
         </div>
