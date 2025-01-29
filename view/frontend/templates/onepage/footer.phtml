@@ -22,37 +22,37 @@ if ($orderViewViewModel) {
             <span><?= $escaper->escapeHtml(__('Subtotal')) ?></span>
 
             <?php if ($orderViewViewModel->displayCartPricesInclTax()): ?>
-                <span><?= $escaper->escapeHtml($order->formatPrice($order->getSubtotalInclTax())) ?></span>
+                <span><?= $order->formatPrice($order->getSubtotalInclTax()) ?></span>
             <?php endif; ?>
 
             <?php if ($orderViewViewModel->displayCartPricesExclTax()): ?>
-                <span><?= $escaper->escapeHtml($order->formatPrice($order->getSubtotal())) ?></span>
+                <span><?= $order->formatPrice($order->getSubtotal())?></span>
             <?php endif; ?>
         </div>
         <div class="checkout-success-summary-columns">
             <span><?= $escaper->escapeHtml($order->getShippingDescription()) ?></span>
             <?php if ($orderViewViewModel->displayShippingPricesInclTax()): ?>
-                <span><?= $escaper->escapeHtml($order->formatPrice($order->getShippingInclTax())) ?></span>
+                <span><?= $order->formatPrice($order->getShippingInclTax()) ?></span>
             <?php endif; ?>
             <?php if ($orderViewViewModel->displayShippingPricesExclTax()): ?>
-                <span><?= $escaper->escapeHtml($order->formatPrice($order->getShippingAmount())) ?></span>
+                <span><?= $order->formatPrice($order->getShippingAmount()) ?></span>
             <?php endif; ?>
         </div>
         <?php if ((float)$order->getDiscountAmount()): ?>
             <div class="checkout-success-summary-columns">
                 <span><?= $escaper->escapeHtml(__('Discount')) ?></span>
-                <span><?= $escaper->escapeHtml($order->formatPrice($order->getDiscountAmount())) ?></span>
+                <span><?= $order->formatPrice($order->getDiscountAmount()) ?></span>
             </div>
         <?php endif; ?>
         <?php if ((float)$order->getGiftCardsAmount()): ?>
             <div class="checkout-success-summary-columns">
                 <span><?= $escaper->escapeHtml(__('Gift Card')) ?></span>
-                <span><?= '-' . $escaper->escapeHtml($order->formatPrice($order->getGiftCardsAmount())) ?></span>
+                <span><?= '-' . $order->formatPrice($order->getGiftCardsAmount()) ?></span>
             </div>
         <?php endif; ?>
         <div class="checkout-success-summary-columns total-container">
             <span><strong><?= $escaper->escapeHtml(__('Total to Pay')) ?></strong></span>
-            <span><strong><?= $escaper->escapeHtml($order->formatPrice($order->getGrandTotal())) ?></strong></span>
+            <span><strong><?= $order->formatPrice($order->getGrandTotal()) ?></strong></span>
         </div>
         <hr>
     </div>
@@ -70,7 +70,7 @@ if ($orderViewViewModel) {
                      alt="<?= $escaper->escapeHtmlAttr($item->getName()) ?>">
                 <div>
                     <p><?= $escaper->escapeHtml($item->getName()) ?></p>
-                    <?= $escaper->escapeHtml($order->formatPrice($item->getPriceInclTax())) ?>
+                    <?= $order->formatPrice($item->getPriceInclTax()) ?>
                     <p class="qty">
                         <?= $escaper->escapeHtml(__('Quantity: ')) ?>
                         <?= $escaper->escapeHtml((int) $item->getQtyOrdered()) ?>
@@ -85,7 +85,7 @@ if ($orderViewViewModel) {
         <div class="checkout-success-summary-columns checkout-success-delivery-container">
             <div>
                 <p class="shipping-title"><?= $escaper->escapeHtml(__('Shipping Address')) ?></p>
-                <?= $escaper->escapeHtml($orderViewViewModel->getFormattedAddress($order->getShippingAddress())) ?>
+                <?= $orderViewViewModel->getFormattedAddress($order->getShippingAddress()) ?>
             </div>
         </div>
     <?php endif; ?>
