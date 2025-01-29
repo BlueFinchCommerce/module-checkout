@@ -9,8 +9,10 @@ export default async (payment) => {
   const { tokens } = useRecaptchaStore();
   const paymentStore = usePaymentStore();
 
+  const recaptchaToken = tokens.placeOrder || tokens.braintree || ''; // Ensures fallback to an empty string
+
   const headers = {
-    'X-ReCaptcha': tokens.placeOrder ? tokens.placeOrder : tokens.braintree,
+    'X-ReCaptcha': recaptchaToken,
     'X-Requested-With': 'XMLHttpRequest',
   };
 
@@ -29,14 +31,14 @@ export default async (payment) => {
       buildCartUrl('payment-information'),
       {
         ...payment,
-        'g-recaptcha-response': tokens.placeOrder ? tokens.placeOrder : tokens.braintree,
+        'g-recaptcha-response': recaptchaToken,
       },
       { headers },
     );
 
     return response.data;
   } catch (error) {
-    paymentStore.setPaymentErrorMessage(error.response.data.message);
+    paymentStore.setPaymentErrorMessage(error.response?.data?.message || 'Unknown payment error');
     throw error.response?.data || new Error('Payment request failed');
   }
 };
