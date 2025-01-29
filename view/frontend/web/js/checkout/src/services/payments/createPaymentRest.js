@@ -23,7 +23,7 @@ export default async (payment) => {
         ${newsletterMutation}
       }
     `;
-    await graphQlRequest(request, {}, {}, 'BlueFinchCheckoutNewsletter');
+    await graphQlRequest(request, {}, {}, 'BetterCheckoutNewsletter');
   }
 
   try {
