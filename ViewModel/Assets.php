@@ -113,7 +113,7 @@ class Assets implements ArgumentInterface
      */
     public function getFontFormat(string $fontUrl): string
     {
-        return $this->file->getPathInfo($fontUrl)[PATHINFO_EXTENSION];
+        return $this->file->getPathInfo($fontUrl)[PATHINFO_EXTENSION] ?? '';
     }
 
     /**
