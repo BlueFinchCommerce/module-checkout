@@ -36,13 +36,13 @@ $fontFamily = $assetViewModel->getFontFamily();
 <link href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::css/checkout.css')) ?>" rel="stylesheet" media="all" />
 
 <?php if ($fontCdnUrl): ?>
-    <?= $escaper->escapeUrl($fontCdnUrl) ?>
+    <?= $fontCdnUrl ?>
 <?php elseif ($fontUrl): ?>
     <style>
-        @font-face {
-            font-family: 'BlueFinchCheckoutFont';
-            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $escaper->escapeUrl($assetViewModel->getFontFormat($fontUrl)) ?>);
-        }
+      @font-face {
+        font-family: 'BlueFinchCheckoutFont';
+        src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
+      }
     </style>
 <?php endif; ?>
 
