@@ -18,12 +18,12 @@ $fontFamily = $assetViewModel->getFontFamily();
   window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
 </script>
 <?php if ($fontCdnUrl): ?>
-    <?= $escaper->escapeUrl($fontCdnUrl) ?>
+    <?= $fontCdnUrl ?>
 <?php elseif ($fontUrl): ?>
     <style>
         @font-face {
             font-family: 'BlueFinchCheckoutFont';
-            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $escaper->escapeUrl($assetViewModel->getFontFormat($fontUrl)) ?>);
+            src: url(<?=  $escaper->escapeUrl($fontUrl) ?>) format(<?= $assetViewModel->getFontFormat($fontUrl) ?>);
         }
     </style>
 <?php endif; ?>
