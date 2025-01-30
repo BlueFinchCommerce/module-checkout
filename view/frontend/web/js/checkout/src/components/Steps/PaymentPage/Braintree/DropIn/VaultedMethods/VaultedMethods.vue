@@ -88,8 +88,8 @@
       <Agreements id="braintreeVault" />
       <PrivacyPolicy />
       <Recaptcha
-        v-if="isRecaptchaVisible('placeOrder')"
-        id="placeOrder"
+        v-if="getTypeByPlacement('braintree')"
+        id="braintree"
         location="braintreeVaultedMethods"
       />
       <MyButton
@@ -175,7 +175,7 @@ export default {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods', 'selectedMethod']),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
     if (!this.locale) {
