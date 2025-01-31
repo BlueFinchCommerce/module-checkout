@@ -47,7 +47,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useLoadingStore from '@/stores/LoadingStore';
-import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
