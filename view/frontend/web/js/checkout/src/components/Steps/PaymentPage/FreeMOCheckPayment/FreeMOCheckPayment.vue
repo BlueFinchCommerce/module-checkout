@@ -90,7 +90,6 @@ export default {
       'customer',
     ]),
     ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
-    ...mapState(useBraintreeStore, ['isBraintreeEnabled']),
   },
   watch: {
     selectedMethod: {
@@ -126,9 +125,9 @@ export default {
       const agreementsValid = this.validateAgreements();
       let recaptchaValid;
 
-      if (this.isBraintreeEnabled) {
+      if (this.getTypeByPlacement('braintree')) {
         recaptchaValid = await this.validateToken('braintree', 'freeMoCheckPayment');
-      } else {
+      } else if (this.getTypeByPlacement('placeOrder')) {
         recaptchaValid = await this.validateToken('placeOrder', 'freeMoCheckPayment');
       }
 
