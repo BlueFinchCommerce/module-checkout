@@ -7,7 +7,7 @@ export default async (email) => {
   }
 } `;
 
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutEmailAvailable')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutEmailAvailable')
     .then((response) => (
       typeof response.data?.isEmailAvailable?.is_email_available !== 'undefined'
         ? response.data.isEmailAvailable.is_email_available

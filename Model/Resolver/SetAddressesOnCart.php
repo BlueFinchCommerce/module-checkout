@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model\Resolver;
+namespace BlueFinch\Checkout\Model\Resolver;
 
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -15,7 +15,7 @@ use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\CheckCartCheckoutAllowance;
 use Magento\QuoteGraphQl\Model\Cart\SetBillingAddressOnCart;
 use Magento\QuoteGraphQl\Model\Cart\SetShippingAddressesOnCartInterface;
-use Gene\BetterCheckout\Model\DataCollector;
+use BlueFinch\Checkout\Model\DataCollector;
 
 class SetAddressesOnCart implements ResolverInterface
 {
@@ -81,7 +81,7 @@ class SetAddressesOnCart implements ResolverInterface
         // prevent calling of collectTotals and requestShippingRates
         $this->dataCollector->setRatesCollected(true)
             ->setTotalsCollected(true);
-	$this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
+        $this->setBillingAddressOnCart->execute($context, $cart, $billingAddress);
         // cart reloaded as $cart above does not retain billingAddress when logged in
         $cart = $this->cartRepository->getActive($cartId);
 

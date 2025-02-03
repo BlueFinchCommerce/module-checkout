@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Api;
+namespace BlueFinch\Checkout\Api;
 
 interface GetCustomerAddressesInterface
 {
     /**
+     * Return a json with customer addresses
+     *
      * @return string
      */
     public function execute(): string;

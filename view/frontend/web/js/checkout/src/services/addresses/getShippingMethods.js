@@ -75,7 +75,7 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
   const formattedAddressGraphQL = mapToGraphQLString(formattedAddress);
   const request = await buildShippingAddressMutation(cartId, formattedAddressGraphQL);
 
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutGetShippingMethodCart')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutGetShippingMethodCart')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

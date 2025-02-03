@@ -9,7 +9,6 @@ export default defineStore('paymentStore', {
     clientKey: '',
     cache: {},
     errorMessage: '',
-    rvvupErrorMessage: '',
     paymentEmitter: mitt(),
     availableMethods: getDummyPaymentMethods(),
     expressMethods: [],
@@ -41,12 +40,6 @@ export default defineStore('paymentStore', {
     setErrorMessage(message) {
       this.setData({
         errorMessage: message,
-      });
-    },
-
-    setRvvupErrorMessage(message) {
-      this.setData({
-        rvvupErrorMessage: message,
       });
     },
 

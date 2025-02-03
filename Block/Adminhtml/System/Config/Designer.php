@@ -1,22 +1,27 @@
 <?php
 
-namespace Gene\BetterCheckout\Block\Adminhtml\System\Config;
+namespace BlueFinch\Checkout\Block\Adminhtml\System\Config;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
-use Gene\BetterCheckout\ViewModel\Assets;
+use BlueFinch\Checkout\ViewModel\Assets;
 
 class Designer extends Field
 {
-    protected $_template = 'Gene_BetterCheckout::system/config/designer.phtml';
+    /**
+     * Template file variable
+     *
+     * @var string
+     */
+    protected $_template = 'BlueFinch_Checkout::system/config/designer.phtml';
 
     /**
+     * @param Assets $assets
      * @param Context $context
      * @param array $data
      * @param SecureHtmlRenderer|null $secureRenderer
-     * @param Assets $assets
      */
     public function __construct(
         private readonly Assets $assets,
@@ -40,6 +45,8 @@ class Designer extends Field
     }
 
     /**
+     * Add view_model to assets
+     *
      * @param AbstractElement $element
      * @return string
      */

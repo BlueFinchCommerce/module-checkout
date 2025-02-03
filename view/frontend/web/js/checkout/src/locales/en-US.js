@@ -165,15 +165,6 @@ export default {
     googlePayNoShippingMethods: 'No shipping methods found for the selected address.',
     unexpectedPaymentError: 'An unexpected error occurred',
     applePayNoShippingMethods: 'No shipping methods found for the selected address.',
-    rvvupPayment: {
-      cancelled: 'Payment Cancelled.',
-      unexpected: 'An error occurred while processing your payment. Please contact us.',
-      declined: 'Payment Declined.',
-      other: 'An error occurred while processing your payment. Please contact us.',
-      expired: 'Payment Expired.',
-      failed: 'Payment Failed.',
-      qtyNotAvailable: 'The requested qty is not available.',
-    },
   },
   welcomeMessages: {
     accountBody: 'Sign in or continue as a guest.',
@@ -251,14 +242,6 @@ export default {
       noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
     },
     storePayment: 'Save for later use.',
-  },
-  rvvup: {
-    payByBankLabel: 'Pay by Bank',
-    payByBankButton: 'Continue to Pay by Bank with Rvvup',
-    rvvupPaymentLabel: 'Rvvup Pay By Bank',
-  },
-  superPayments: {
-    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',

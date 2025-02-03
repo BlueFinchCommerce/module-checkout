@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Exception;
 use Magento\Framework\Exception\LocalizedException;
@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 class CompositeDataProvider implements CompositeDataProviderInterface
 {
     /**
+     * @param LoggerInterface $logger
      * @param DataProviderInterface[] $dataProviders
      */
     public function __construct(
@@ -20,6 +21,8 @@ class CompositeDataProvider implements CompositeDataProviderInterface
     }
 
     /**
+     * Return an array of data
+     *
      * @param int $quoteId
      * @return array
      */

@@ -1,7 +1,7 @@
 {
-  "name": "gene-better-checkout",
+  "name": "bluefinch-checkout",
   "version": "1.0.6",
-  "description": "Better Checkout powered by GENE",
+  "description": "Checkout powered by BlueFinch",
   "main": ".eslintrc",
   "scripts": {
     "lint": "eslint . --rulesdir ./vendor/magento/magento-coding-standard/eslint/rules",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/genecommerce/module-better-checkout.git"
+    "url": "git+https://github.com/bluefinchcommerce/module-checkout.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/genecommerce/module-better-checkout/issues"
+    "url": "https://github.com/bluefinchcommerce/module-checkout/issues"
   },
-  "homepage": "https://github.com/genecommerce/module-better-checkout#readme",
+  "homepage": "https://github.com/bluefinchcommerce/module-checkout#readme",
   "devDependencies": {
     "eslint": "^8.50.0"
   }

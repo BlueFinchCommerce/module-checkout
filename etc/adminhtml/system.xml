@@ -2,23 +2,23 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="gene" translate="label" sortOrder="130">
-            <label>Gene</label>
+        <tab id="bluefinch" translate="label" sortOrder="130">
+            <label>BlueFinch</label>
         </tab>
-        <section id="gene_better_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1"
+        <section id="bluefinch_checkout" translate="label comment" type="text" sortOrder="160" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Better Checkout</label>
-            <tab>gene</tab>
-            <resource>Gene_BetterCheckout::config</resource>
+            <label>Checkout</label>
+            <tab>bluefinch</tab>
+            <resource>BlueFinch_Checkout::config</resource>
             <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <comment>
-                    <![CDATA[Version: 1.1.0<br>Better Checkout Provided By <a href="https://www.gene.co.uk/" target="_blank">Gene Commerce</a>]]>
+                    <![CDATA[Version: 1.2.0<br>BlueFinch Checkout Provided By <a href="http://bluefinchcommerce.com/" target="_blank">BlueFinch Commerce</a>]]>
                 </comment>
                 <label>General</label>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label>Enable Module</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Enable or disable the Gene Better Checkout.]]></comment>
+                    <comment><![CDATA[Enable or disable the BlueFinch Checkout.]]></comment>
                 </field>
                 <field id="progress_bar_visible" translate="label comment" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Progress Bar Functionality</label>
@@ -51,7 +51,7 @@
                         <depends>
                             <field id="enabled">1</field>
                         </depends>
-                        <frontend_model>Gene\BetterCheckout\Block\Adminhtml\System\Config\Designer</frontend_model>
+                        <frontend_model>BlueFinch\Checkout\Block\Adminhtml\System\Config\Designer</frontend_model>
                     </field>
                     <field id="designer_values" translate="label comment" type="textarea" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Designer Values</label>
@@ -59,17 +59,17 @@
                     <field id="custom_wording" translate="label comment" type="textarea" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Custom Wording</label>
                     </field>
-                    <field id="gene_better_checkout_logo" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <field id="bluefinch_checkout_logo" translate="label comment" type="image" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                         <label>Checkout Logo</label>
                         <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
-                        <upload_dir config="system" scope_info="1">gene_better_checkout</upload_dir>
-                        <base_url type="media" scope_info="1">gene_better_checkout</base_url>
+                        <upload_dir config="system" scope_info="1">bluefinch_checkout</upload_dir>
+                        <base_url type="media" scope_info="1">bluefinch_checkout</base_url>
                         <comment><![CDATA[Logo displayed in the heading of the checkout.]]></comment>
                     </field>
                     <field id="font_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                         <label>Checkout Font File</label>
                         <comment><![CDATA[Uploaded file extension must be either .woff or .woff2. Font upload must be saved before being available in admin designer.]]></comment>
-                        <backend_model>Gene\BetterCheckout\Model\Config\Backend\File</backend_model>
+                        <backend_model>BlueFinch\Checkout\Model\Config\Backend\File</backend_model>
                         <upload_dir config="system" scope_info="1">checkout_font</upload_dir>
                     </field>
                     <field id="font_cdn" translate="label comment" sortOrder="40" type="textarea" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -77,13 +77,13 @@
                         <validate>validate-cdn-field</validate>
                         <comment><![CDATA[
         Use this field to include custom CSS for your checkout page.<br/>
-        You can add a <code>&lt;style&gt;</code> element with an @import link to a font CDN and define global font family variables for the checkout root element (<code>#gene-better-checkout-root</code>).<br/>
+        You can add a <code>&lt;style&gt;</code> element with an @import link to a font CDN and define global font family variables for the checkout root element (<code>#bluefinch-checkout-root</code>).<br/>
         Ensure the HTML is valid.<br/><br/>
         Example:<br/>
         <code>
         &lt;style&gt;<br/>
         @import url('your-link');<br/>
-        :root.vue-checkout-active #gene-better-checkout-root {<br/>
+        :root.vue-checkout-active #bluefinch-checkout-root {<br/>
             --font-family__base: 'YourFontName', sans-serif;<br/>
         }<br/>
         &lt;/style&gt;

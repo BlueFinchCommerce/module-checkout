@@ -142,7 +142,7 @@ export default {
       customerInfoValidation: false,
       savedAddressActive: false,
       newAddressText: '',
-      newAddressTextId: 'gene-bettercheckout-new-address-text',
+      newAddressTextId: 'bluefinch-checkout-new-address-text',
     };
   },
   computed: {
@@ -152,7 +152,7 @@ export default {
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
   },
   mounted() {
-    this.newAddressText = window.geneCheckout?.[this.newAddressTextId]
+    this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
     || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
 
     document.addEventListener(this.newAddressTextId, this.setNewAddressText);

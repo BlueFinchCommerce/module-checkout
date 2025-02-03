@@ -25,7 +25,7 @@ function getCookie(name) {
     return null;
 }
 
-function geneInitGtm(config) {
+function bluefinchInitGtm(config) {
     'use strict';
 
     var allowServices = false,
@@ -83,8 +83,8 @@ function geneInitGtm(config) {
     }
 }
 
-window.geneInitGtm = geneInitGtm;
+window.bluefinchInitGtm = bluefinchInitGtm;
 
-let initEvent = new Event('geneGa:inited');
+let initEvent = new Event('bluefinchGa:inited');
 
 document.dispatchEvent(initEvent);

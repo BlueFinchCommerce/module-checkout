@@ -131,21 +131,23 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       grandTotalText: '',
-      grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
+      grandTotalTextId: 'bluefinch-checkout-grandtotal-text',
       orderSummaryMessagesContainers: [],
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
-    ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
     this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
   },
   methods: {

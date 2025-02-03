@@ -61,13 +61,13 @@ export default defineStore('RecaptchaStore', {
     async addRecaptchaJs(type) {
       // Wrap in a cache so that the JS is injected only once but can be used to ensure it has definitely loaded.
       await this.getCachedResponse(() => new Promise((resolve) => {
-        window.geneCheckoutRecaptchaLoaded = resolve;
+        window.bluefinchCheckoutRecaptchaLoaded = resolve;
 
         const render = type === recapchaTypes.recaptchaV3
           ? this.v3Invisible
           : 'explicit';
         const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?onload=geneCheckoutRecaptchaLoaded&render=${render}`;
+        script.src = `https://www.google.com/recaptcha/api.js?onload=bluefinchCheckoutRecaptchaLoaded&render=${render}`;
         script.async = true;
         script.defer = true;
 

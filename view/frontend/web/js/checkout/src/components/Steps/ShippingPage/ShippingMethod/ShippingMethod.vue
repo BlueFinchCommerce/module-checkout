@@ -172,14 +172,14 @@ export default {
       shippingMethodAdditionalContainers: [],
       hasSubmitted: false,
       shippingStepText: '',
-      shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
+      shippingStepTextId: 'bluefinch-checkout-shippingstep-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      proceedToPayTextId: 'bluefinch-checkout-proceedtopay-text',
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'getShippingMethods']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayShipping', 'ageCheckRequired', 'ageCheckerErrors']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
@@ -188,13 +188,15 @@ export default {
     ]),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.additionalShippingMethods = Object.keys(shippingMethods());
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     this.shippingMethodAdditionalContainers = Object.keys(shippingMethodAdditionalContainers());
-    await this.getInitialConfig();
-    this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.shippingStepText = window.bluefinchCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [
