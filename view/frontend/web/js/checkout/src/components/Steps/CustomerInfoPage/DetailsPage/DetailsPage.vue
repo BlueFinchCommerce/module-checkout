@@ -419,9 +419,9 @@ export default {
     this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
-    this.instantCheckoutText = window.geneCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.yourDetailsText = window.geneCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
-    this.deliverWhereText = window.geneCheckout?.[this.deliverWhereTextId]
+    this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
+    this.yourDetailsText = window.bluefinchCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.deliverWhereText = window.bluefinchCheckout?.[this.deliverWhereTextId]
     || this.$t('yourDetailsSection.deliverySection.title');
     this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
     || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
