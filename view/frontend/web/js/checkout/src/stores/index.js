@@ -4,7 +4,6 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
-import useHokodoStore from '@/stores/PaymentStores/HokodoStore';
 import useLoadingStore from '@/stores/LoadingStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
@@ -19,7 +18,6 @@ export default {
   useConfigStore,
   useCustomerStore,
   useGtmStore,
-  useHokodoStore,
   useLoadingStore,
   usePaymentStore,
   useRecaptchaStore,

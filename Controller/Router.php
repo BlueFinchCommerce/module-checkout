@@ -2,32 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Controller;
+namespace BlueFinch\Checkout\Controller;
 
-use Gene\BetterCheckout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\RouterInterface;
 
-/**
- * Class Router
- */
 class Router implements RouterInterface
 {
     /**
      * Router constructor.
      *
      * @param ConfigurationInterface $configuration
-     * @return void
      */
-    public function __construct (
+    public function __construct(
         private readonly ConfigurationInterface $configuration
     ) {
     }
 
     /**
-     * @param RequestInterface $request
+     * Match the router to request
      *
+     * @param RequestInterface $request
      * @return ActionInterface|void
      */
     public function match(RequestInterface $request)
@@ -49,7 +46,7 @@ class Router implements RouterInterface
 
         // If the path is checkout then we set the new controller
         if ($identifier === 'checkout' || $identifier === 'checkout/index') {
-            $request->setModuleName('genebettercheckout')->setControllerName('checkout')->setActionName('index');
+            $request->setModuleName('bluefinchcheckout')->setControllerName('checkout')->setActionName('index');
         }
     }
 }

@@ -176,6 +176,7 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, [
+      'locale',
       'currencyCode',
       'storeCode',
       'rewardsEnabled',
@@ -194,15 +195,17 @@ export default {
 
     getPaymentStepTitle() {
       if (this.hasVaultedMethods) {
-        return window.geneCheckout?.['gene-bettercheckout-paymentstep-text-new']
+        return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-new']
         || this.$t('paymentStep.titleNew');
       }
-      return window.geneCheckout?.['gene-bettercheckout-paymentstep-text-guest']
+      return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-guest']
         || this.$t('paymentStep.titleGuest');
     },
   },
   async created() {
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     await this.getCart();
 
     if (this.isPaymentMethodAvailable('braintree_cc_vault') && this.isLoggedIn) {
@@ -212,7 +215,7 @@ export default {
     this.setPaymentErrorMessage('');
 
     // The titles need to be reflective of the state we're in.
-    this.storedStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.storedStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());

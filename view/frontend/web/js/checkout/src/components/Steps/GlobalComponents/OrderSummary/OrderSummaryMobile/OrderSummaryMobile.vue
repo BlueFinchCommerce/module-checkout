@@ -142,24 +142,26 @@ export default {
       deviceType: 'mobile',
       isModalVisible: false,
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       orderSummaryDescriptionText: '',
-      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
+      orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
       giftCardAvailable: true,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
-    ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode']),
   },
   async created() {
     this.checkForGuestUser();
 
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
       || this.$t('orderSummary.mobileDiscountText');
 
-    await this.getInitialConfig();
     await this.getCart();
 
     await this.getCustomerInformation();

@@ -28,7 +28,7 @@ export default async () => {
         }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCartRewardPointsRemove')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCartRewardPointsRemove')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);

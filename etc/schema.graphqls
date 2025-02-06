@@ -1,19 +1,19 @@
 type StoreConfig {
-    gene_better_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
-    gene_better_checkout_enabled: String @doc(description: "Gene Checkout Enabled")
-    gene_better_checkout_loqate_enabled: String @doc(description: "Gene Checkout Loqate Enabled")
-    gene_better_checkout_click_collect_tabs_enabled: Boolean @doc(description: "Gene Checkout Click&Collect tabs Enabled")
-    gene_better_checkout_loqate_api_key: String @doc(description: "Gene Checkout Loqate API Key")
-    gene_better_checkout_newsletter_enabled: String @doc(description: "Gene Checkout Newsletter Enabled")
-    gene_better_checkout_newsletter_allow_guest: String @doc(description: "Gene Checkout Newsletter Allow Guests")
-    gene_better_checkout_country_state_required: String @doc(description: "Gene Checkout country needs state required")
-    gene_better_checkout_country_display_state: String @doc(description: "Gene Checkout country display state")
-    gene_better_checkout_google_map_key: String @doc(description: "Gene Checkout Google Maps API  Key")
-    gene_better_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
-    gene_better_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
-    gene_better_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
-    gene_better_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
-    gene_better_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
+    bluefinch_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
+    bluefinch_checkout_enabled: String @doc(description: "BlueFinch Checkout Enabled")
+    bluefinch_checkout_loqate_enabled: String @doc(description: "BlueFinch Checkout Loqate Enabled")
+    bluefinch_checkout_click_collect_tabs_enabled: Boolean @doc(description: "BlueFinch Checkout Click&Collect tabs Enabled")
+    bluefinch_checkout_loqate_api_key: String @doc(description: "BlueFinch Checkout Loqate API Key")
+    bluefinch_checkout_newsletter_enabled: String @doc(description: "BlueFinch Checkout Newsletter Enabled")
+    bluefinch_checkout_newsletter_allow_guest: String @doc(description: "BlueFinch Checkout Newsletter Allow Guests")
+    bluefinch_checkout_country_state_required: String @doc(description: "BlueFinch Checkout country needs state required")
+    bluefinch_checkout_country_display_state: String @doc(description: "BlueFinch Checkout country display state")
+    bluefinch_checkout_google_map_key: String @doc(description: "BlueFinch Checkout Google Maps API  Key")
+    bluefinch_checkout_paypal_credit_threshold_enabled: Boolean @doc(description: "Enable PayPal Credit Threshold")
+    bluefinch_checkout_paypal_credit_threshold_value: String @doc(description: "PayPal Credit Threshold Value")
+    bluefinch_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
+    bluefinch_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
+    bluefinch_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")
@@ -21,7 +21,7 @@ type StoreConfig {
     tax_cart_display_grandtotal: String @doc(description: "Tax Display Grandtotal")
     tax_cart_display_full_summary: String @doc(description: "Tax Display Full summary")
     tax_cart_display_zero_tax: String @doc(description: "Tax Display Zero tax")
-    gene_better_checkout_copyright_text: String @doc(description: "Checkout copyright text")
+    bluefinch_checkout_copyright_text: String @doc(description: "Checkout copyright text")
     gtm_container_id: String @doc(description: "GTM Container ID")
     gtm_active: String @doc(description: "GTM Active")
 
@@ -121,7 +121,7 @@ type StoreConfig {
 type Query {
     storecode(
         store_id: String! @doc(description: "Store ID")
-    ): StoreCode @resolver(class:"Gene\\BetterCheckout\\Model\\Resolver\\StoreCode")
+    ): StoreCode @resolver(class:"BlueFinch\\Checkout\\Model\\Resolver\\StoreCode")
 }
 
 type StoreCode @doc(description: "Returns current store code") {
@@ -129,8 +129,8 @@ type StoreCode @doc(description: "Returns current store code") {
 }
 
 type Attribute {
-    multiline_count: Int! @doc(description: "The number of lines of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\MultilineCount")
-    validate_rules: [ValidationRule] @doc(description: "The validation rules of the attribute value.") @resolver(class: "Gene\\BetterCheckout\\Model\\Resolver\\ValidateRules")
+    multiline_count: Int! @doc(description: "The number of lines of the attribute value.") @resolver(class: "BlueFinch\\Checkout\\Model\\Resolver\\MultilineCount")
+    validate_rules: [ValidationRule] @doc(description: "The validation rules of the attribute value.") @resolver(class: "BlueFinch\\Checkout\\Model\\Resolver\\ValidateRules")
 }
 
 type ValidationRule @doc(description: "Defines a customer attribute validation rule.") {
@@ -152,7 +152,7 @@ enum ValidationRuleEnum @doc(description: "List of validation rule names applied
 }
 
 type Mutation {
-    setAddressesOnCart(input: SetAddressesOnCartInput @doc(description: "An input object defining shipping and billing addresses to be assigned to the cart")): SetShippingAddressesOnCartOutput @resolver(class: "\\Gene\\BetterCheckout\\Model\\Resolver\\SetAddressesOnCart") @doc(description: "Set one or more addresses on a specific cart.")
+    setAddressesOnCart(input: SetAddressesOnCartInput @doc(description: "An input object defining shipping and billing addresses to be assigned to the cart")): SetShippingAddressesOnCartOutput @resolver(class: "\\BlueFinch\\Checkout\\Model\\Resolver\\SetAddressesOnCart") @doc(description: "Set one or more addresses on a specific cart.")
 }
 
 input SetAddressesOnCartInput @doc(description: "Specifies an array of addresses to use for cart.") {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Plugin;
+namespace BlueFinch\Checkout\Plugin;
 
 use Cm\RedisSession\Handler\ConfigInterface;
 use Magento\Framework\App\Area;
@@ -28,7 +28,7 @@ class DisableSession
     }
 
     /**
-     * Conditionally set disable_locking=1 for better checkout graphql requests
+     * Conditionally set disable_locking=1 for checkout graphql requests
      *
      * @param ConfigInterface $subject
      * @param int|bool $result
@@ -52,12 +52,16 @@ class DisableSession
             if ($this->appState->getAreaCode() === Area::AREA_GRAPHQL && $this->isCheckoutRequest()) {
                 $result = true; // ensure disable_locking=1 is set for our BC graphql requests
             }
-        } catch (LocalizedException $e) {}
+        } catch (LocalizedException $e) {
+            // Fail silently.
+        }
 
         return $result;
     }
 
     /**
+     * Check if request from checkout
+     *
      * @return bool
      */
     private function isCheckoutRequest(): bool

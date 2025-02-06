@@ -175,8 +175,8 @@ export default {
   data() {
     return {
       isDropDownVisible: false,
-      crossSellsTextId: 'gene-bettercheckout-crosssells-text',
-      crossSellsCTATextId: 'gene-bettercheckout-crosssells-cta-text',
+      crossSellsTextId: 'bluefinch-checkout-crosssells-text',
+      crossSellsCTATextId: 'bluefinch-checkout-crosssells-cta-text',
       displayCrossSellsText: '',
       displayCrossSellsCTAText: '',
       originalCrossSellsText: '',
@@ -185,21 +185,24 @@ export default {
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
   async created() {
-    this.originalCrossSellsText = window.geneCheckout?.[this.crossSellsTextId]
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.originalCrossSellsText = window.bluefinchCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
     this.displayCrossSellsText = this.originalCrossSellsText;
 
-    this.originalCrossSellsCTAText = window.geneCheckout?.[this.crossSellsCTATextId]
+    this.originalCrossSellsCTAText = window.bluefinchCheckout?.[this.crossSellsCTATextId]
       || this.$t('orderSummary.addToCart');
     this.displayCrossSellsCTAText = this.originalCrossSellsCTAText;
 
-    await this.getInitialConfig();
     await this.getCart();
     await this.getCrosssells();
     this.externalCrosssellHeader();

@@ -129,19 +129,6 @@
   }
 }
 
-.rvvup-modal {
-  width: 100%;
-  bottom: 0;
-  top: auto;
-  height: fit-content;
-  max-height: 80%;
-  transition: all .5s;
-
-  .modal-body {
-    padding: 0;
-  }
-}
-
 #root {
   .order-total-modal {
 
@@ -179,14 +166,6 @@
 @mixin largeWidth() {
   .modal {
     margin: 0 auto;
-  }
-
-  .amasty-modal {
-    max-height: var(--modal-desktop-max-height, none);
-
-    .modal-body {
-      overflow: var(--modal-desktop-overflow, auto);
-    }
   }
 }
 

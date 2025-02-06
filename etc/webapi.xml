@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
     <route url="/V1/checkout/:cartId/data" method="GET">
-        <service class="Gene\BetterCheckout\Api\GetGuestCheckoutDataInterface" method="execute"/>
+        <service class="BlueFinch_Checkout\Api\GetGuestCheckoutDataInterface" method="execute"/>
         <resources>
             <resource ref="anonymous"/>
         </resources>
     </route>
     <route url="/V1/checkout/mine/data" method="GET">
-        <service class="Gene\BetterCheckout\Api\GetCheckoutDataInterface" method="execute"/>
+        <service class="BlueFinch_Checkout\Api\GetCheckoutDataInterface" method="execute"/>
         <resources>
             <resource ref="self"/>
         </resources>
@@ -16,7 +16,7 @@
         </data>
     </route>
     <route url="/V1/customer/addresses" method="GET">
-        <service class="Gene\BetterCheckout\Api\GetCustomerAddressesInterface" method="execute"/>
+        <service class="BlueFinch_Checkout\Api\GetCustomerAddressesInterface" method="execute"/>
         <resources>
             <resource ref="self"/>
         </resources>

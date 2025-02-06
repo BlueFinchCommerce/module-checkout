@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model\Config\Backend;
+namespace BlueFinch\Checkout\Model\Config\Backend;
 
 use Magento\Config\Model\Config\Backend\File as CoreFile;
 
 class File extends CoreFile
 {
     /**
+     * Return allowed file extensions
+     *
      * @return string[]
      */
     protected function _getAllowedExtensions()

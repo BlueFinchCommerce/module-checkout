@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Exception;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -22,6 +22,8 @@ class GiftMessageDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of gift message data
+     *
      * @param int $quoteId
      * @return \array[][]
      * @throws NoSuchEntityException
