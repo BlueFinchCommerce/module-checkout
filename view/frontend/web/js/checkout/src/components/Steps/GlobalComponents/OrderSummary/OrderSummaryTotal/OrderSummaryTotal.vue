@@ -27,7 +27,8 @@
         />
       </div>
       <div
-        v-for="(discount, index) in cart?.prices?.discounts"
+        v-for="(discount, index) in cart?.prices?.discounts.filter(d => !(d.label === 'Gift Cards'
+        && cart?.applied_gift_cards?.length))"
         :key="index"
         class="order-total"
       >
@@ -41,6 +42,27 @@
             class="total__text discount"
             :value="'-' + discount.amount.value"
             :data-cy="dataCy ? `discount-price-${dataCy}` : 'discount-price'"
+          />
+        </div>
+      </div>
+      <div
+        v-if="cart?.applied_gift_cards?.length"
+        class="order-total"
+      >
+        <div
+          v-for="(giftCard, index) in cart.applied_gift_cards"
+          :key="'gift-card-' + index"
+          class="total__row"
+        >
+          <TextField
+            class="total__text title"
+            :text="$t('orderSummary.giftCard')"
+            :data-cy="dataCy ? `applied-gift-card-${dataCy}` : 'applied-gift-card'"
+          />
+          <Price
+            class="total__text discount"
+            :value="'-' + giftCard.current_balance.value"
+            :data-cy="dataCy ? `applied-gift-card-price-${dataCy}` : 'applied-gift-card-price'"
           />
         </div>
       </div>
