@@ -120,9 +120,13 @@ export default {
       const paymentMethod = {
         code: this.paymentType,
       };
-      // Check that the agreements (if any) and recpatcha is valid.
+
       const agreementsValid = this.validateAgreements();
-      let recaptchaValid;
+      if (!agreementsValid) {
+        return;
+      }
+
+      let recaptchaValid = true;
 
       if (this.getTypeByPlacement('braintree')) {
         recaptchaValid = await this.validateToken('braintree', 'freeMoCheckPayment');
@@ -130,7 +134,7 @@ export default {
         recaptchaValid = await this.validateToken('placeOrder', 'freeMoCheckPayment');
       }
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!recaptchaValid) {
         return;
       }
 
@@ -146,7 +150,6 @@ export default {
           this.setLoadingState(false);
         });
     },
-
     redirectToSuccess() {
       window.location.href = getSuccessPageUrl();
     },
