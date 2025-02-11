@@ -157,7 +157,7 @@ Callback function extensions for GraphQL requests, provide the GraphQL query as 
 | getItems                | [items] | Partial GraphQL query string for cart items. |
 | getPaymentMethods       | [paymentMethods] | Partial GraphQL query string for available payment methods. |
 | getPrices               | [getPrices] | Partial GraphQL query string for prices. |
-| getRewardPoints         | [rewardPoints] | Partial GraphQL quer string for applied reqards points. |
+| getRewardPoints         | [rewardPoints] | Partial GraphQL quer string for applied reward points. |
 | getShippingAddresses    | [shippingAddresses] | Partial GraphQL query string for customers shipping addresses. |
 | getStoreCredit          | [storeCredit] | Partial GraphQL query string for applied store credit. |
 ||
