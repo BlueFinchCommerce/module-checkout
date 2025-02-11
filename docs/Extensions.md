@@ -167,7 +167,7 @@ Callback function extensions for GraphQL requests, provide the GraphQL query as 
 | Extension Point     | Parameters | Usage |
 | --------------------| ---------- | ----- |
 | getCrossSellsHeader | [titleText, showIcon] | Cross sells title text, boolean to show the cross sells promo icon in the cross sells header section. |
-| getShippingMethods  | [cart, paymentMethod, express] | Occurs after the graphql request to get the shipping method on the cart and allows the cart data to be modified and returned. |
+| getShippingMethods  | [cart, paymentMethod, express] | Occurs after the GraphQL request to get the shipping method on the cart and allows the cart data to be modified and returned. |
 ||
 
 ### Add your code:
