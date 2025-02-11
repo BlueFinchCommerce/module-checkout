@@ -56,7 +56,7 @@
         >
           <TextField
             class="total__text title"
-            :text="$t('orderSummary.giftCard')"
+            :text="$t('orderSummary.giftCardDiscount.title')"
             :data-cy="dataCy ? `applied-gift-card-${dataCy}` : 'applied-gift-card'"
           />
           <Price
