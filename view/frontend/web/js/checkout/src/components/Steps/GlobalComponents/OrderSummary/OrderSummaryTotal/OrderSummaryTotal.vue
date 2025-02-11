@@ -27,7 +27,7 @@
         />
       </div>
       <div
-        v-for="(discount, index) in cart?.prices?.discounts.filter(d => !(d.label === 'Gift Cards'
+        v-for="(discount, index) in (cart?.prices?.discounts || []).filter(d => !(d.label === 'Gift Cards'
         && cart?.applied_gift_cards?.length))"
         :key="index"
         class="order-total"
