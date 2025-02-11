@@ -24,7 +24,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
