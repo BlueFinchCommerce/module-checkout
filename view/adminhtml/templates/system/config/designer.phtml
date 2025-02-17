@@ -10,13 +10,14 @@ $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
 $fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $fontFamily = $assetViewModel->getFontFamily();
-
+$logo = $assetViewModel->getLogo();
 ?>
 
 <script>
   window.bluefinchCheckout = window.bluefinchCheckout || {};
   window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
   window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
+  window.bluefinchCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
 </script>
 <?php if ($fontCdnUrl): ?>
     <?= $fontCdnUrl ?>
