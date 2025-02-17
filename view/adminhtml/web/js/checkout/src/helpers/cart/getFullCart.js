@@ -1,22 +1,26 @@
 import useCustomerStore from '@/stores/CustomerStore';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default () => {
   const customerStore = useCustomerStore();
+  const isEnterprise = getMagentoSolutionType();
 
   return `
     email
-    applied_gift_cards {
-      code
-      expiration_date
-      current_balance {
-        currency
-        value
+    ${isEnterprise ? `
+      applied_gift_cards {
+        code
+        expiration_date
+        current_balance {
+          currency
+          value
+        }
+        applied_balance {
+          currency
+          value
+        }
       }
-      applied_balance {
-        currency
-        value
-      }
-    }
+    ` : ''}
     billing_address {
       city
       country {
@@ -88,30 +92,19 @@ export default () => {
       id
       uid
       ... on SimpleCartItem {
-        gift_wrapping {
-          price {
-            value
-          }
-        }
+        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
       }
       ... on BundleCartItem {
-        gift_wrapping {
-          price {
-            value
-          }
-        }
+        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
       }
       ... on ConfigurableCartItem {
         configurable_options {
           option_label
           value_label
         }
-        gift_wrapping {
-          price {
-            value
-          }
-        }
+        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
       }
+      ${isEnterprise ? `
       ... on GiftCardCartItem {
         recipient_name
         sender_name
@@ -119,7 +112,13 @@ export default () => {
         amount {
           value
         }
+        gift_wrapping {
+          price {
+            value
+          }
+        }
       }
+      ` : ''}
       product {
         name
         sku
@@ -153,14 +152,16 @@ export default () => {
     applied_coupons {
       code
     }
-    gift_wrapping {
-      price {
-        value
+    ${isEnterprise ? `
+      gift_wrapping {
+        price {
+          value
+        }
       }
-    }
-    applied_reward_points {
-      points
-    }
+      applied_reward_points {
+        points
+      }
+    ` : ''}
     prices {
       grand_total {
         value
@@ -182,13 +183,13 @@ export default () => {
         label
       }
     }
-    ${customerStore.isLoggedIn
-    ? `applied_store_credit {
-          applied_balance {
-            value
-            currency
-          }
-        }`
-    : ''}
+    ${customerStore.isLoggedIn && isEnterprise ? `
+      applied_store_credit {
+        applied_balance {
+          value
+          currency
+        }
+      }
+    ` : ''}
   `;
 };
