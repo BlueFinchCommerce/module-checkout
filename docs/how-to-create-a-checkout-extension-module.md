@@ -4,7 +4,9 @@ Extension modules for the BlueFinch Checkout should be created according to [Mag
 
 We provide a BlueFinch Checkout [extension module template](https://github.com/BlueFinchCommerce/module-checkout-template) which includes all the necessary files you'll need to get started, that you can either clone as a starting point or use as a reference.
 
-1. Clone the template into your `app/code` folder, using the standard Magento module folder naming `VendorName/ModuleName`, e.g.:
+1. Clone the template into your `app/code` folder, using the standard Magento module folder naming `VendorName/ModuleName`.
+
+    For example:
 
     ```
     cd app/code
@@ -38,8 +40,18 @@ We provide a BlueFinch Checkout [extension module template](https://github.com/B
     2. Callback extension point: Open your browser inspector to see the text "New Component - onStepsCreated" logged in the console from the onStepsCreated event firing.
     
 9. Make any necessary amendments in the following files in your new module to reflect your modules path and name:
-* `composer.json`
-* `package.json`
-* `README.md`
-* `.circleci/config.yml`
-* `view/frontend/web/js/checkout/package.json`
+    - `composer.json`
+    - `package.json`
+    - `README.md`
+    - `.circleci/config.yml`
+    - `view/frontend/web/js/checkout/package.json`
+
+You're now ready to start extending the BlueFinch Checkout as you need to:
+
+- [Component Extension Points](Extensions.md#component-extension-points) to choose where to place your new components.
+- [Event Extension Points](Extensions.md#event-extension-points) to choose when you call your new callback functions.
+- [GraphQL Query Mutations](Extensions.md#graphql-query-mutations) for when you need to amend the queries for checkout data.
+- [How to change styling](Extensions.md#how-to-change-styling).
+- Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+
+Refer to our [Custom extension guide](Extensions.md) for further information.
