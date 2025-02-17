@@ -22,7 +22,7 @@ export default async () => {
         }
       }
     `;
-    
+
     storeCreditPointsQuery = `
      store_credit {
         enabled

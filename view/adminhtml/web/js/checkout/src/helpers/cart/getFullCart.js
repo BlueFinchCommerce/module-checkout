@@ -92,17 +92,17 @@ export default () => {
       id
       uid
       ... on SimpleCartItem {
-        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
+        ${isEnterprise ? 'gift_wrapping { price { value } }' : ''}
       }
       ... on BundleCartItem {
-        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
+        ${isEnterprise ? 'gift_wrapping { price { value } }' : ''}
       }
       ... on ConfigurableCartItem {
         configurable_options {
           option_label
           value_label
         }
-        ${isEnterprise ? `gift_wrapping { price { value } }` : ''}
+        ${isEnterprise ? 'gift_wrapping { price { value } }' : ''}
       }
       ${isEnterprise ? `
       ... on GiftCardCartItem {
