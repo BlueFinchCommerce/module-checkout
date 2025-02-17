@@ -16,6 +16,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 <script>
   window.bluefinchCheckout = window.bluefinchCheckout || {};
   window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
+  window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
 </script>
 <?php if ($fontCdnUrl): ?>
     <?= $fontCdnUrl ?>
