@@ -3200,7 +3200,7 @@ div.dropdown.coupon-dropdown .field .success[data-v-0d977cc3] {
     font-family: var(--font-family__copy);
     font-size: var(--font__heading--desktop);
 }
-}.order-summary-container[data-v-137fa8b0] {
+}.order-summary-container[data-v-53b873e7] {
   align-items: center;
   background: var(--slide-up__background-color-closed);
   border-top: var(--base__border-weight) var(--base__border-style) var(--color__primary-grey3);
@@ -3214,98 +3214,98 @@ div.dropdown.coupon-dropdown .field .success[data-v-0d977cc3] {
   width: 100%;
   z-index: 200;
 }
-.bluefinch-checkout-threeds-opened .order-summary-container[data-v-137fa8b0] {
+.bluefinch-checkout-threeds-opened .order-summary-container[data-v-53b873e7] {
   pointer-events: none;
 }
-.order-summary-container p[data-v-137fa8b0] {
+.order-summary-container p[data-v-53b873e7] {
   margin: 0;
   text-decoration: underline;
 }
-.order-summary-header[data-v-137fa8b0] {
+.order-summary-header[data-v-53b873e7] {
   display: grid;
   grid-template-columns: max-content 1fr;
   width: 100%;
   cursor: pointer;
 }
-.order-summary-title[data-v-137fa8b0] {
+.order-summary-title[data-v-53b873e7] {
   display: grid;
   grid-auto-flow: column;
   grid-gap: 5px;
   align-items: center;
 }
-.order-summary-title p[data-v-137fa8b0] {
+.order-summary-title p[data-v-53b873e7] {
   text-decoration: none;
 }
-.order-summary-title-text[data-v-137fa8b0] {
+.order-summary-title-text[data-v-53b873e7] {
   font-size: var(--slide-up__font-size-title-closed);
   font-weight: var(--font-weight__semibold);
   color: var(--font__color);
 }
-.order-summary-title .price[data-v-137fa8b0] {
+.order-summary-title .price[data-v-53b873e7] {
   font-size: var(--slide-up__font-size-price-closed);
   font-weight: var(--font-weight__bold);
   color: var(--font__color);
 }
-.order-summary-description[data-v-137fa8b0] {
+.order-summary-description[data-v-53b873e7] {
   font-size: var(--button__link-font-size);
   font-weight: var(--button__link-font-weight);
   color: var(--button__link-font-color);
   text-decoration: var(--button__link-text-decoration);
 }
-.order-summary-icon[data-v-137fa8b0] {
+.order-summary-icon[data-v-53b873e7] {
   align-items: center;
   display: flex;
   grid-row: span 2;
   justify-content: flex-end;
 }
-.order-summary-close-button[data-v-137fa8b0] {
+.order-summary-close-button[data-v-53b873e7] {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
 }
-.back-button[data-v-137fa8b0] {
+.back-button[data-v-53b873e7] {
   display: flex;
   align-items: center;
 }
-.back-button p[data-v-137fa8b0] {
+.back-button p[data-v-53b873e7] {
   margin-left: var(--indent__s) !important;
 }
-.back-button + p[data-v-137fa8b0] {
+.back-button + p[data-v-53b873e7] {
   margin-left: 30px !important;
 }
-.product-items[data-v-137fa8b0] {
+.product-items[data-v-53b873e7] {
   margin-top: var(--indent__m);
   order: var(--order-summary-order, 4);
 }
-.storyBookEmptyPrice[data-v-137fa8b0] {
+.storyBookEmptyPrice[data-v-53b873e7] {
   display: none;
 }
-#root p[data-v-137fa8b0] {
+#root p[data-v-53b873e7] {
   margin: 0;
 }
-#root .storyBookEmptyPrice[data-v-137fa8b0] {
+#root .storyBookEmptyPrice[data-v-53b873e7] {
   margin-left: var(--indent__s);
   display: block;
 }
-#root .order-summary-amount[data-v-137fa8b0] {
+#root .order-summary-amount[data-v-53b873e7] {
   margin-bottom: var(--indent__s);
 }
-#root .order-summary-amount .price[data-v-137fa8b0] {
+#root .order-summary-amount .price[data-v-53b873e7] {
   display: none;
-}.order-summary-desktop[data-v-4086cf69] {
+}.order-summary-desktop[data-v-51fc951e] {
   background: var(--summary__background-color--desktop);
   padding: var(--indent__base) var(--indent__base--desktop);
   border-radius: var(--summary__border-radius--desktop);
   display: grid;
   min-height: 500px;
 }
-.order-summary-desktop .order-total-container[data-v-4086cf69] {
+.order-summary-desktop .order-total-container[data-v-51fc951e] {
   background: var(--order-total-container__background-colour, var(--summary__background-color--desktop));
   padding: var(--container-padding, var(--indent__xl) var(--indent__l));
   font-family: var(--order-total-container__font-family, unset);
 }
-.order-summary-desktop-items[data-v-4086cf69] {
+.order-summary-desktop-items[data-v-51fc951e] {
   max-height: var(--summary-desktop-items-max-height, 455px);
   margin-top: var(--indent__base);
   min-height: 180px;
