@@ -17,7 +17,7 @@
     <template #body>
       <PromotionComponent />
       <CouponDiscount />
-      <GiftCardDiscount />
+      <GiftCardDiscount v-if="giftCardAvailable" />
       <div class="product-items">
         <OrderSummaryItem />
       </div>
@@ -132,6 +132,7 @@ export default {
       orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
+      giftCardAvailable: true,
     };
   },
   computed: {
@@ -145,6 +146,7 @@ export default {
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
+    this.giftCardAvailable = getMagentoSolutionType();
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
