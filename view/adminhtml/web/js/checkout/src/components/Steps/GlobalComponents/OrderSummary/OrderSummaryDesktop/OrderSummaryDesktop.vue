@@ -2,7 +2,7 @@
   <div class="order-summary-desktop">
     <PromotionComponent />
     <CouponDiscount />
-    <GiftCardDiscount />
+    <GiftCardDiscount v-if="giftCardAvailable" />
     <div class="order-summary-desktop-items">
       <OrderSummaryItem/>
     </div>
@@ -18,6 +18,9 @@ import PromotionComponent
 import GiftCardDiscount from '@/components/Steps/GlobalComponents/OrderSummary/GiftCardDiscount/GiftCardDiscount.vue';
 import CouponDiscount from '@/components/Steps/GlobalComponents/OrderSummary/CouponDiscount/CouponDiscount.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryDesktop',
   components: {
@@ -26,6 +29,14 @@ export default {
     PromotionComponent,
     GiftCardDiscount,
     CouponDiscount,
+  },
+  data() {
+    return {
+      giftCardAvailable: true,
+    };
+  },
+  created() {
+    this.giftCardAvailable = getMagentoSolutionType();
   },
 };
 </script>

@@ -17,7 +17,7 @@
     <template #body>
       <PromotionComponent />
       <CouponDiscount />
-      <GiftCardDiscount />
+      <GiftCardDiscount v-if="giftCardAvailable" />
       <div class="product-items">
         <OrderSummaryItem />
       </div>
@@ -96,6 +96,9 @@ import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryMobile',
   components: {
@@ -132,6 +135,7 @@ export default {
       orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
+      giftCardAvailable: true,
     };
   },
   computed: {
@@ -145,6 +149,7 @@ export default {
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
+    this.giftCardAvailable = getMagentoSolutionType();
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
