@@ -10,7 +10,7 @@ As a contributor, you are able to:
 - Submit pull requests with code changes, bug fixes, or new features
 - Create issues to report bugs or suggest enhancements
 - Comment on issues and pull requests
-- Fork the repository to your own Github account
+- Fork the repository to your own GitHub account
 - Submit documentation updates
 - Review pull requests
 
@@ -34,7 +34,7 @@ Maintainers, amongst other things, are able to:
 
 Within the frontend checkout Vue app we use [Vite](https://vite.dev/) to compile the frontend assets (JavaScript, styles, svg's etc) for production distribution into a `dist` directory (`view/frontend/web/js/checkout/dist` or `view/adminhtml/web/js/checkout/dist` for the admin designer) that are then referenced in the modules phtml file and loaded in by the page in the site.
 
-If any of these assets are amended, the automated generation of these is triggered on merge into `develop*`, `hotfix/*` or `main` branches by a [ Github action](.github/workflows/generate-dist.yml)
+If any of these assets are amended, the automated generation of these is triggered on merge into `develop*`, `hotfix/*` or `main` branches by a [ GitHub action](.github/workflows/generate-dist.yml)
 
 **When working locally to develop the checkout app, it is best to use the `watch` functionality.**
 
@@ -52,7 +52,7 @@ To do this you will need to:
 
 This will populate `view/frontend/web/js/checkout/dist-dev` for use, allowing you to make changes and have them quickly visible on the frontend.
 
-Please note, the `dist-dev` directory is git ignored, so your locally generated files will not be committed, but as previously stated above the github action will automatically generate them on merge.
+Please note, the `dist-dev` directory is git ignored, so your locally generated files will not be committed, but as previously stated above the GitHub action will automatically generate them on merge.
 
 ## Branching strategy
 
@@ -66,9 +66,9 @@ For feature work:
     - Complete and commit your changes to your feature branch.
     - Raise a PR for your feature branch against `develop` for approval.
 - Once approved, merge your feature branch in to `develop`.
-    - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
+    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
 - When the release candidate is ready it can be merged to `main`.
-    - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory before the final step:
+    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before the final step:
 - [Create a new release and tag](#creating-a-release-and-tag) from `main` as the new version.
 
 For hotfixes to the current main tag:
@@ -76,15 +76,15 @@ For hotfixes to the current main tag:
     - Complete and commit your changes to your hotfix branch.
     - Raise a PR for your hotfix branch against `develop` for approval, if you have conflicts on the dist files accept either version, they will be re-generated.
 - Once approved, merge your hotfix branch in to `develop`.
-    - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
+    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
 - When the release candidate is ready it can be merged to `main`.
-    - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory before the final step:
+    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before the final step:
 - [Create a new release and tag](#creating-a-release-and-tag) from `main` as the new version.
 
 For hotfixes from an older tag:
 - Find the tag you need to hotfix and branch off that tag, naming your branch `hotfix/my-hotfix-branch-name`.
     - Complete and commit your changes to your hotfix branch.
-    - Wait for the github action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
+    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
 - At this point you will be able to have the flexibility to do what you need, either tagging a `-p1` off that tag or merging it into `main` etc
 
 ## Manual module version update for display in Admin
