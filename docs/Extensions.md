@@ -1,18 +1,20 @@
-# BlueFinch Checkout - Custom Extension Guide
+# BlueFinch Checkout - Custom extension guide
 
 This guide covers how to extend the BlueFinch Checkout from within your own custom Magento modules, so that you can add new components, integrate additional functionality via event, functional or GraphQL query mutation callback functions or change the styling.
+
+## Getting started
+
+The easiest way to start creating your own BlueFinch Checkout custom extension Magento modules is to use the module template we provide and by following our guide below:
+* [How to create a checkout extension module](how-to-create-a-checkout-extension-module.md).
+* [BlueFinch Checkout Module Template](https://github.com/BlueFinchCommerce/module-checkout-template)
 
 ## How to extend BlueFinch Checkout functionality with a custom module
 To use this functionality, the high level steps to follow are:
 
 1. Create a new Magento 2 module as per [Magento standards](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module).
-1. Create a `view/frontend/templates` directory to add a .phtml template file for your module, in which you can declare custom callbacks, components, styles etc.
+1. Create a `view/frontend/templates` directory to add a .phtml template file for your module, in which you can declare extension points for your custom components, callbacks and styles.
 1. Create a `view/frontend/layouts` directory containing a `bluefinch_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores BlueFinch Checkout page.
 1. Create a `view/frontend/web/js/checkout/src/` directory containing your BlueFinch Checkout extension code.
-
-## BlueFinch Checkout module template
-
-**Please refer to our template for creating BlueFinch Checkout modules [here](https://github.com/BlueFinchCommerce/module-checkout-template)**, which has all the necssary files required, including those for building the front end assets.
 
 ## How to add a new component
 
@@ -102,7 +104,7 @@ To render your component locally, see [local workflow](../.github/CONTRIBUTING.m
 ## How to create callback functions
 Callback functions enable you to define custom responses to various checkout events.
 
-You can choose from the available callback extension points listed below, to integrate your functionionality effectively:
+You can choose from the available callback extension points listed below, to integrate your functionality effectively:
 
 ### Event Extension Points
 
@@ -110,7 +112,7 @@ You can choose from the available callback extension points listed below, to int
 
 | Event Extension Point | Parameters          | Usage |
 | --------------------- | ------------------- | ----- |
-| onCreate              | -                   | Occurs in the [root app's](../view/frontend/web/js/checkout/src/App.vue) `created` lifecycle hook on initial render of the app once the initial config is retreived and the initial step is set. |
+| onCreate              | -                   | Occurs in the [root app's](../view/frontend/web/js/checkout/src/App.vue) `created` lifecycle hook on initial render of the app once the initial config is retrieved and the initial step is set. |
 | onStepsCreated        | -                   | Occurs in the [steps component](../view/frontend/web/js/checkout/src/components/Steps/Steps.vue) `created` lifecycle hook. |
 | onLogin               | -                   | Occurs when a customer logs in using the [email address component](view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
 | onHandleCartData      | [cart, configStore] | Occurs in `handleCartData` action in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js), which updates the correct stores with cart data. |
@@ -131,7 +133,7 @@ You can choose from the available callback extension points listed below, to int
 | Event Extension Point          | Parameters | Usage |
 | -------------------------------| ---------- | ----- |
 | onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../goToShipping). |
-| onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the intitial configuration and cart data are fetched, before the default shipping method is set. |
+| onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the initial configuration and cart data are fetched, before the default shipping method is set. |
 | onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
 
@@ -157,7 +159,7 @@ Callback function extensions for GraphQL requests, provide the GraphQL query as 
 | getItems                | [items] | Partial GraphQL query string for cart items. |
 | getPaymentMethods       | [paymentMethods] | Partial GraphQL query string for available payment methods. |
 | getPrices               | [getPrices] | Partial GraphQL query string for prices. |
-| getRewardPoints         | [rewardPoints] | Partial GraphQL quer string for applied reward points. |
+| getRewardPoints         | [rewardPoints] | Partial GraphQL query string for applied reward points. |
 | getShippingAddresses    | [shippingAddresses] | Partial GraphQL query string for customers shipping addresses. |
 | getStoreCredit          | [storeCredit] | Partial GraphQL query string for applied store credit. |
 ||
@@ -169,6 +171,7 @@ Callback function extensions for GraphQL requests, provide the GraphQL query as 
 | getCrossSellsHeader | [titleText, showIcon] | Cross sells title text, boolean to show the cross sells promo icon in the cross sells header section. |
 | getShippingMethods  | [cart, paymentMethod, express] | Occurs after the GraphQL request to get the shipping method on the cart and allows the cart data to be modified and returned. |
 ||
+
 
 ### Add your code:
 
@@ -225,3 +228,6 @@ You also have two other options for changing styles:
 ## Remove checkout styles from your theme
 
 We recommend that you remove any unused Magento Checkout styles within your custom theme, that are not BlueFinch Checkout related, so they are not generated in the CSS for the rest of your site.
+
+
+
