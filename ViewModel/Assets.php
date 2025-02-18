@@ -318,7 +318,7 @@ class Assets implements ArgumentInterface
     public function getAdminScope(): array
     {
         $scope = [
-            'store_id' => null,
+            'store_id' => 0,
             'website_id' => null
         ];
         if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
@@ -327,6 +327,7 @@ class Assets implements ArgumentInterface
                 $scope['store_id'] = (int)$this->request->getParam('store', 0);
             } elseif ($this->request->getParam('website') !== null) {
                 $scope['website_id'] = (int)$this->request->getParam('website', 0);
+                $scope['store_id'] = null;
             }
         }
         return $scope;
