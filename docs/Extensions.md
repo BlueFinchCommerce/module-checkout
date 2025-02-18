@@ -114,7 +114,7 @@ You can choose from the available callback extension points listed below, to int
 | --------------------- | ------------------- | ----- |
 | onCreate              | -                   | Occurs in the [root app's](../view/frontend/web/js/checkout/src/App.vue) `created` lifecycle hook on initial render of the app once the initial config is retrieved and the initial step is set. |
 | onStepsCreated        | -                   | Occurs in the [steps component](../view/frontend/web/js/checkout/src/components/Steps/Steps.vue) `created` lifecycle hook. |
-| onLogin               | -                   | Occurs when a customer logs in using the [email address component](view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
+| onLogin               | -                   | Occurs when a customer logs in using the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
 | onHandleCartData      | [cart, configStore] | Occurs in `handleCartData` action in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js), which updates the correct stores with cart data. |
 ||
 
@@ -122,8 +122,8 @@ You can choose from the available callback extension points listed below, to int
 
 | Event Extension Point  | Parameters | Usage |
 | ---------------------- | ---------- | ----- |
-| onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../module-checkout/view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../module-checkout/view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
-| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component](view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
+| onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../module-checkout/view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
+| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
 | onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 | onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
@@ -132,7 +132,7 @@ You can choose from the available callback extension points listed below, to int
 
 | Event Extension Point          | Parameters | Usage |
 | -------------------------------| ---------- | ----- |
-| onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../goToShipping). |
+| onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../view/frontend/web/js/checkout/src/stores/StepsStore.js). |
 | onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the initial configuration and cart data are fetched, before the default shipping method is set. |
 | onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
@@ -141,7 +141,7 @@ You can choose from the available callback extension points listed below, to int
 
 | Event Extension Point | Parameters | Usage |
 | ----------------------| ---------- | ----- |
-| onPaymentDataChanged  | -          | Occurs in the `onPaymentDataChanged` method of the Braintree [Google pay component](view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue). |
+| onPaymentDataChanged  | -          | Occurs in the `onPaymentDataChanged` method of the Braintree [Google pay component](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue). |
 ||
 
 ### GraphQL Query Mutations

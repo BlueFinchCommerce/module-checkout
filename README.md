@@ -54,7 +54,7 @@ Remember to clear any appropriate caches.
     - [Branching strategy](.github/CONTRIBUTING.md#branching-strategy)
     - [Making a release](.github/CONTRIBUTING.md#making-a-release)
 - [Custom extension guide](docs/Extensions.md)
-- [How to create a checkout extension module](how-to-create-a-checkout-extension-module.md)
+- [How to create a checkout extension module](docs/how-to-create-a-checkout-extension-module.md)
 ### BlueFinch Checkout extension modules
 
 You can find our template for creating BlueFinch Checkout extension modules **[here](https://github.com/bluefinchcommerce/module-checkout-new-module-template)**.
