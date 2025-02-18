@@ -125,9 +125,9 @@ You can choose from the available callback extension points listed below, to int
 | Event Extension Point  | Parameters | Usage |
 | ---------------------- | ---------- | ----- |
 | onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
-| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
-| onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
-| onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
+| onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
 
 #### Shipping Page
@@ -136,7 +136,7 @@ You can choose from the available callback extension points listed below, to int
 | -------------------------------| ---------- | ----- |
 | onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../view/frontend/web/js/checkout/src/stores/StepsStore.js). |
 | onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the initial configuration and cart data are fetched, before the default shipping method is set. |
-| onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
 
 #### Payment Page
