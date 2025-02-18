@@ -50,7 +50,7 @@ Remember to clear any appropriate caches.
 ## Documentation
 
 - [Contributing](.github/CONTRIBUTING.md)
-    - [Local workflow](.github/CONTRIBUTING.md#local-workflow)
+    - [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow)
     - [Branching strategy](.github/CONTRIBUTING.md#branching-strategy)
     - [Making a release](.github/CONTRIBUTING.md#making-a-release)
 - [Custom extension guide](docs/Extensions.md)

@@ -1,3 +1,5 @@
+![BlueFinch Checkout](../assets/logo.svg)
+
 # BlueFinch Checkout - Custom extension guide
 
 This guide covers how to extend the BlueFinch Checkout from within your own custom Magento modules, so that you can add new components, integrate additional functionality via event, functional or GraphQL query mutation callback functions or change the styling.
@@ -202,14 +204,14 @@ Example:
 </script>
 ```
 
-To test your function extension on the front end, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
+To test your function extension on the front end, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow).
 
 ## How to change styling
 
 For adding styles to your **component**, you can:
 1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles. **We recommend that the name of your scss file(s) should be unique within your module.** This helps to avoid any build time compilation issues, when you have the need for multiple components, each with it's own scss file.
 1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
-1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+1. Build your code, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow)
 
 You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.

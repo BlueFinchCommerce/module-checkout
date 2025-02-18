@@ -1,4 +1,6 @@
-# How to create a BlueFinch Checkout extension Magento module
+![BlueFinch Checkout](../assets/logo.svg)
+
+# BlueFinch Checkout - How to create a BlueFinch Checkout extension Magento module
 
 Extension modules for the BlueFinch Checkout should be created according to [Magento standards](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module).
 
@@ -52,6 +54,6 @@ You're now ready to start extending the BlueFinch Checkout as you need to:
 - [Event Extension Points](Extensions.md#event-extension-points) to choose when you call your new callback functions.
 - [GraphQL Query Mutations](Extensions.md#graphql-query-mutations) for when you need to amend the queries for checkout data.
 - [How to change styling](Extensions.md#how-to-change-styling).
-- Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+- Build your code, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow)
 
 Refer to our [Custom extension guide](Extensions.md) for further information.
