@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace BlueFinch\Checkout\ViewModel;
 
 use BlueFinch\Checkout\Model\ConfigurationInterface;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Filesystem\Io\File as IoFile;
@@ -15,6 +17,7 @@ use Magento\Framework\View\Asset\File;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\State;
 
 class Assets implements ArgumentInterface
 {
@@ -44,6 +47,8 @@ class Assets implements ArgumentInterface
      * @param ConfigurationInterface $configuration
      * @param IoFile $file
      * @param UrlInterface $urlInterface
+     * @param RequestInterface $request
+     * @param State $state
      * @param ProductMetadataInterface $productMetadata
      */
     public function __construct(
@@ -53,6 +58,8 @@ class Assets implements ArgumentInterface
         private readonly ConfigurationInterface $configuration,
         private readonly IoFile $file,
         private readonly UrlInterface $urlInterface,
+        private readonly RequestInterface $request,
+        private readonly State $state,
         ProductMetadataInterface $productMetadata
     ) {
         $this->productMetadata = $productMetadata;
@@ -302,5 +309,26 @@ class Assets implements ArgumentInterface
         }
 
         return '';
+    }
+
+    /**
+     * @return array
+     * @throws LocalizedException
+     */
+    public function getAdminScope(): array
+    {
+        $scope = [
+            'store_id' => null,
+            'website_id' => null
+        ];
+        if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
+            /** @var RequestInterface $request */
+            if ($this->request->getParam('store') !== null) {
+                $scope['store_id'] = (int)$this->request->getParam('store', 0);
+            } elseif ($this->request->getParam('website') !== null) {
+                $scope['website_id'] = (int)$this->request->getParam('website', 0);
+            }
+        }
+        return $scope;
     }
 }
