@@ -4,7 +4,7 @@
 
 ## Contributors
 
-We want to make contributing to the BlueFinch Checkout as easy and transparent as possible. We actively welcome your pull requests or any reported issues (We use GitHub issues to track public bugs. Please ensure your description is clear and has sufficient instructions to be able to reproduce the issue.).
+We want to make contributing to the BlueFinch Checkout module and our checkout extension modules, as easy and transparent as possible. We actively welcome your pull requests or any reported issues (We use GitHub issues to track public bugs. Please ensure your description is clear and has sufficient instructions to be able to reproduce the issue.).
 
 As a contributor, you are able to:
 - Submit pull requests with code changes, bug fixes, or new features
@@ -19,7 +19,7 @@ As a contributor, you are able to:
 Maintainers, amongst other things, are able to:
 - Merge or reject pull requests
 - Push directly to protected branches
-- Delete or edit any issues
+- Comment on and/or close any issues
 - Manage repository settings
 - Configure branch protection rules
 - Manage access permissions for other users
@@ -32,25 +32,25 @@ Maintainers, amongst other things, are able to:
 
 ## Local frontend development workflow
 
-Within the frontend checkout Vue app we use [Vite](https://vite.dev/) to compile the frontend assets (JavaScript, styles, svg's etc) for production distribution into a `dist` directory (`view/frontend/web/js/checkout/dist` or `view/adminhtml/web/js/checkout/dist` for the admin designer) that are then referenced in the modules phtml file and loaded in by the page in the site.
+Within the frontend checkout Vue app and extension modules, we compile the frontend assets (JavaScript, styles, svg's etc) for production distribution into a `dist` directory within each module (`view/frontend/web/js/checkout/dist` or `view/adminhtml/web/js/checkout/dist` for the admin designer) that are then referenced in that modules phtml file and loaded in by the page in the site.
 
-If any of these assets are amended, the automated generation of these is triggered on merge into `develop*`, `hotfix/*` or `main` branches by a [ GitHub action](.github/workflows/generate-dist.yml)
+If any of these assets are amended, the automated generation of these is triggered for that module on merge into `develop*`, `hotfix/*` or `main` branches by a [ GitHub action](.github/workflows/generate-dist.yml)
 
-**When working locally to develop the checkout app, it is best to use the `watch` functionality.**
+**When working locally to develop the checkout app or any checkout extension module, it is best to use the `watch` functionality.**
 
 To do this you will need to:
 1. Turn on support for vite watch in the admin panel or by using magerun:
     - `Stores - Configuration -> BlueFinch -> Checkout -> General -> Enable local developer vite watch mode = yes`
     - `n98-magerun config:store:set bluefinchcommerce_checkout/general/enable_local_developer_vite_watch_mode=1`
 
-2. Install the node modules in the checkout app and run build-watch:
+1. Install the node modules in the module(s) you're developing and run `npm run build-watch`:
     ```bash
     cd view/frontend/web/js/checkout/ # or view/adminhtml/web/js/checkout/
     npm ci
     npm run build-watch
     ```
-
-This will populate `view/frontend/web/js/checkout/dist-dev` for use, allowing you to make changes and have them quickly visible on the frontend.
+`
+This will populate `view/frontend/web/js/checkout/dist-dev` for use, allowing you to make changes and have them quickly visible on the frontend. If your changes are not showing, then please make sure you've enabled vite watch mode in the admin panel in step 1 above, as this toggles which directory the front end loads the assets from (Enabled is the `dist-dev` directory, where as disabled is the `dist` directory).
 
 Please note, the `dist-dev` directory is git ignored, so your locally generated files will not be committed, but as previously stated above the GitHub action will automatically generate them on merge.
 
@@ -74,12 +74,11 @@ For feature work:
 For hotfixes to the current main tag:
 - Branch off `main`, naming your branch `hotfix/my-hotfix-branch-name`.
     - Complete and commit your changes to your hotfix branch.
-    - Raise a PR for your hotfix branch against `develop` for approval, if you have conflicts on the dist files accept either version, they will be re-generated.
-- Once approved, merge your hotfix branch in to `develop`.
+    - Raise a PR for your hotfix branch against `main` for approval, if you have conflicts on the dist files accept either version, they will be re-generated.
+- Once approved, merge your hotfix branch in to `main`.
     - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before updating any environment for testing.
-- When the release candidate is ready it can be merged to `main`.
-    - Wait for the GitHub action to generate the `view/frontend/web/js/checkout/dist` directory before the final step:
 - [Create a new release and tag](#creating-a-release-and-tag) from `main` as the new version.
+- Raise a PR for `main` in to `develop` to update develop with the hotfix and once approved merge the PR.
 
 For hotfixes from an older tag:
 - Find the tag you need to hotfix and branch off that tag, naming your branch `hotfix/my-hotfix-branch-name`.
