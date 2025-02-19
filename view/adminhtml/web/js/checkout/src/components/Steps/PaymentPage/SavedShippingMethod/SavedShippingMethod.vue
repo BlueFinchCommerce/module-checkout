@@ -70,7 +70,14 @@ export default {
       shippingStepCompletedTextId: 'bluefinch-checkout-shippingstepcompleted-text',
     };
   },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
+  },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.shippingStepCompletedText = window.bluefinchCheckout?.[this.shippingStepCompletedTextId]
       || this.$t('shippingStep.stepCompleteTitle');
 

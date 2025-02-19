@@ -118,6 +118,10 @@ export default {
     };
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
     this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
     this.couponDiscountText = window.bluefinchCheckout?.[this.couponDiscountTextId]
@@ -138,6 +142,7 @@ export default {
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
     ...mapWritableState(useCartStore, ['discountCode']),
+    ...mapState(useConfigStore, ['locale']),
     CouponCodeIcon() {
       return `${getStaticUrl(CouponCode)}`;
     },

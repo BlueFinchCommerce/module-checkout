@@ -56,6 +56,7 @@
 
 // stores
 import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
 // icons
@@ -98,6 +99,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
   },
   watch: {
@@ -111,7 +113,11 @@ export default {
       },
     },
   },
-  mounted() {
+  async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.$emit('showAddressBlock', false);
 
     let selectedId = null;
@@ -143,6 +149,7 @@ export default {
     document.removeEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
   },
   methods: {
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'createNewAddress',

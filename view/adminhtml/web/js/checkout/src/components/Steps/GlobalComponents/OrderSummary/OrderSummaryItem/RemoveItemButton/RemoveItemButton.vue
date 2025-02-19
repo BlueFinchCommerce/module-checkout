@@ -22,7 +22,7 @@
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // stores
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
@@ -46,7 +46,14 @@ export default {
       removeItemTextId: 'bluefinch-checkout-removeitem-text',
     };
   },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
+  },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.removeItemText = window.bluefinchCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
 
     document.addEventListener(this.removeItemTextId, this.setRemoveItemText);
