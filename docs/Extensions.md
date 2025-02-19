@@ -1,3 +1,5 @@
+![BlueFinch Checkout](../assets/logo.svg)
+
 # BlueFinch Checkout - Custom extension guide
 
 This guide covers how to extend the BlueFinch Checkout from within your own custom Magento modules, so that you can add new components, integrate additional functionality via event, functional or GraphQL query mutation callback functions or change the styling.
@@ -114,7 +116,7 @@ You can choose from the available callback extension points listed below, to int
 | --------------------- | ------------------- | ----- |
 | onCreate              | -                   | Occurs in the [root app's](../view/frontend/web/js/checkout/src/App.vue) `created` lifecycle hook on initial render of the app once the initial config is retrieved and the initial step is set. |
 | onStepsCreated        | -                   | Occurs in the [steps component](../view/frontend/web/js/checkout/src/components/Steps/Steps.vue) `created` lifecycle hook. |
-| onLogin               | -                   | Occurs when a customer logs in using the [email address component](view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
+| onLogin               | -                   | Occurs when a customer logs in using the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
 | onHandleCartData      | [cart, configStore] | Occurs in `handleCartData` action in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js), which updates the correct stores with cart data. |
 ||
 
@@ -122,26 +124,26 @@ You can choose from the available callback extension points listed below, to int
 
 | Event Extension Point  | Parameters | Usage |
 | ---------------------- | ---------- | ----- |
-| onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../module-checkout/view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../module-checkout/view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
-| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component](view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
-| onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
-| onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
+| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
+| onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
 
 #### Shipping Page
 
 | Event Extension Point          | Parameters | Usage |
 | -------------------------------| ---------- | ----- |
-| onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../goToShipping). |
+| onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../view/frontend/web/js/checkout/src/stores/StepsStore.js). |
 | onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the initial configuration and cart data are fetched, before the default shipping method is set. |
-| onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](..view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
 ||
 
 #### Payment Page
 
 | Event Extension Point | Parameters | Usage |
 | ----------------------| ---------- | ----- |
-| onPaymentDataChanged  | -          | Occurs in the `onPaymentDataChanged` method of the Braintree [Google pay component](view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue). |
+| onPaymentDataChanged  | -          | Occurs in the `onPaymentDataChanged` method of the Braintree [Google pay component](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue). |
 ||
 
 ### GraphQL Query Mutations
@@ -202,14 +204,14 @@ Example:
 </script>
 ```
 
-To test your function extension on the front end, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
+To test your function extension on the front end, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow).
 
 ## How to change styling
 
 For adding styles to your **component**, you can:
 1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles. **We recommend that the name of your scss file(s) should be unique within your module.** This helps to avoid any build time compilation issues, when you have the need for multiple components, each with it's own scss file.
 1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
-1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+1. Build your code, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow)
 
 You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.
