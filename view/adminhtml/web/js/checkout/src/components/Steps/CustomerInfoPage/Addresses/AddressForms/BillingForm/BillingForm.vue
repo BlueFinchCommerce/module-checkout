@@ -147,11 +147,14 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'isLoggedIn']),
-    ...mapState(useConfigStore, ['addressFinder']),
+    ...mapState(useConfigStore, ['addressFinder', 'locale']),
     ...mapState(useCustomerStore, ['customer', 'emailEntered', 'selected', 'isUsingSavedBillingAddress']),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
   },
-  mounted() {
+  async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
     || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
 
@@ -161,6 +164,7 @@ export default {
     document.removeEventListener(this.newAddressTextId, this.setNewAddressText);
   },
   methods: {
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressAsEditing',
       'createNewAddress',

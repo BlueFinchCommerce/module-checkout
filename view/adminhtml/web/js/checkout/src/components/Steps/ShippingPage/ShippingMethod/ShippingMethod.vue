@@ -160,7 +160,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayShipping']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
@@ -170,6 +170,10 @@ export default {
     ]),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.additionalShippingMethods = Object.keys(shippingMethods());
 
     this.shippingStepText = window.bluefinchCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');

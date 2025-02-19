@@ -63,8 +63,13 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
+    ...mapState(useConfigStore, ['locale']),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
 
     document.addEventListener(this.detailStepTextId, this.setDetailStepText);
