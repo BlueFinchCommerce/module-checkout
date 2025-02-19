@@ -11,6 +11,8 @@ $fontUrl = $assetViewModel->getFontUrl();
 $fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $fontFamily = $assetViewModel->getFontFamily();
 $logo = $assetViewModel->getLogo();
+$scope = $assetViewModel->getAdminScope();
+$id = ($scope['store_id'] !== null) ? $scope['store_id'] : $scope['website_id'];
 ?>
 
 <script>
@@ -18,6 +20,7 @@ $logo = $assetViewModel->getLogo();
   window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
   window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
   window.bluefinchCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
+  window.bluefinchCheckout.storeId = "<?= $escaper->escapeJs($id); ?>";
 </script>
 <?php if ($fontCdnUrl): ?>
     <?= $fontCdnUrl ?>
