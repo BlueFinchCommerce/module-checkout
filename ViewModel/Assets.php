@@ -328,6 +328,8 @@ class Assets implements ArgumentInterface
             } elseif ($this->request->getParam('website') !== null) {
                 $scope['website_id'] = (int)$this->request->getParam('website', 0);
                 $scope['store_id'] = null;
+            } else {
+                $scope['store_id'] = $this->storeManager->getStore()->getId();
             }
         }
         return $scope;
