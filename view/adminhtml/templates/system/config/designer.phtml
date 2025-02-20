@@ -2061,14 +2061,16 @@ $isEnterprise = $assetViewModel->getMagentoEdition() !== 'Community';
                                     <?= $escaper->escapeHtml(__('Input Text')) ?>
                                 </a>
                                 <div class="config" data-role="content">
-                                    <div class="fieldset">
-                                        <label for="bluefinch-checkout-giftcardplaceholder-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Gift Card Placeholder Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="bluefinch-checkout-giftcardplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter gift card code" />
-                                    </div>
+                                    <?php if ($isEnterprise): ?>
+                                        <div class="fieldset">
+                                            <label for="bluefinch-checkout-giftcardplaceholder-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('Gift Card Placeholder Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="bluefinch-checkout-giftcardplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter gift card code" />
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="fieldset">
                                         <label for="bluefinch-checkout-coupondiscountplaceholder-text">
                                             <span>
@@ -2198,7 +2200,7 @@ $isEnterprise = $assetViewModel->getMagentoEdition() !== 'Community';
                                                 <?= $escaper->escapeHtml(__('Slide Up Sub Text')) ?>
                                             </span>
                                         </label>
-                                        <input id="bluefinch-checkout-ordersummarydescription-text" data-type="checkout-wording" type="text" placeholder="Add gift card or promo code" />
+                                        <input id="bluefinch-checkout-ordersummarydescription-text" data-type="checkout-wording" type="text" placeholder="Add <?php if ($isEnterprise): ?>gift card or <?php endif; ?>promo code" />
                                     </div>
                                 </div>
                             </div>
