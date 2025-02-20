@@ -13,7 +13,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 $logo = $assetViewModel->getLogo();
 $scope = $assetViewModel->getAdminScope();
 $id = ($scope['store_id'] !== null) ? $scope['store_id'] : $scope['website_id'];
-$isEnterprise = $assetViewModel->getMagentoEdition() === 'Community';
+$isEnterprise = $assetViewModel->getMagentoEdition() !== 'Community';
 ?>
 
 <script>
