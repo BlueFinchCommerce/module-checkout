@@ -12,6 +12,7 @@ export default {
     removeBtn: 'Remove',
     modalHeader: 'Order Summary',
     mobileDiscountText: 'Add gift card or promo code',
+    mobileDiscountTextOs: 'Add promo code',
     backBtn: 'Back',
     grandTotalTitle: 'Total to Pay',
     inclTaxTitle: 'Tax',

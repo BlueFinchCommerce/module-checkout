@@ -13,6 +13,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 $logo = $assetViewModel->getLogo();
 $scope = $assetViewModel->getAdminScope();
 $id = ($scope['store_id'] !== null) ? $scope['store_id'] : $scope['website_id'];
+$isEnterprise = $assetViewModel->getMagentoEdition() === 'Community';
 ?>
 
 <script>
@@ -1969,14 +1970,16 @@ $id = ($scope['store_id'] !== null) ? $scope['store_id'] : $scope['website_id'];
                                         </label>
                                         <input id="bluefinch-checkout-coupondiscount-text" data-type="checkout-wording" type="text" placeholder="Add promo code" />
                                     </div>
-                                    <div class="fieldset">
-                                        <label for="bluefinch-checkout-giftcard-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('"Gift Card" Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="bluefinch-checkout-giftcard-text" data-type="checkout-wording" type="text" placeholder="Add gift card code" />
-                                    </div>
+                                    <?php if ($isEnterprise): ?>
+                                        <div class="fieldset">
+                                            <label for="bluefinch-checkout-giftcard-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('"Gift Card" Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="bluefinch-checkout-giftcard-text" data-type="checkout-wording" type="text" placeholder="Add gift card code" />
+                                        </div>
+                                    <?php endif; ?>
                                     <h2 data-role="title" class="heading">
                                         <?= $escaper->escapeHtml(__('Dropdowns Styling')) ?>
                                     </h2>
