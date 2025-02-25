@@ -12,7 +12,7 @@
             <resource>BlueFinch_Checkout::config</resource>
             <group id="general" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <comment>
-                    <![CDATA[Version: 1.2.0<br>BlueFinch Checkout Provided By <a href="http://bluefinchcommerce.com/" target="_blank">BlueFinch Commerce</a>]]>
+                    <![CDATA[Version: 1.2.2<br>BlueFinch Checkout Provided By <a href="http://bluefinchcommerce.com/" target="_blank">BlueFinch Commerce</a>]]>
                 </comment>
                 <label>General</label>
                 <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">

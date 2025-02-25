@@ -140,12 +140,16 @@ export default {
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useCartStore, ['crosssells', 'freeShipping', 'amastyEnabled']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
     },
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
     this.crossSellsText = window.bluefinchCheckout?.[this.crossSellsTextId]
      || this.$t('orderSummary.crossSellsTitle');
 

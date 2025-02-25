@@ -10,12 +10,18 @@ $cssAssets = $assetViewModel->getAssetsByType('css', 'adminhtml');
 $fontUrl = $assetViewModel->getFontUrl();
 $fontCdnUrl = $assetViewModel->getFontCdnUrl();
 $fontFamily = $assetViewModel->getFontFamily();
-
+$logo = $assetViewModel->getLogo();
+$scope = $assetViewModel->getAdminScope();
+$id = ($scope['store_id'] !== null) ? $scope['store_id'] : $scope['website_id'];
+$isEnterprise = $assetViewModel->getMagentoEdition() !== 'Community';
 ?>
 
 <script>
   window.bluefinchCheckout = window.bluefinchCheckout || {};
   window.bluefinchCheckout.staticPath = "<?= $escaper->escapeJs($assetViewModel->getDistViewFileUrl('BlueFinch_Checkout::js/checkout/dist/')) ?>";
+  window.bluefinchCheckout.magentoEdition = "<?= $escaper->escapeJs($assetViewModel->getMagentoEdition()); ?>";
+  window.bluefinchCheckout.logo = "<?= $escaper->escapeJs($logo); ?>";
+  window.bluefinchCheckout.storeId = "<?= $escaper->escapeJs($id); ?>";
 </script>
 <?php if ($fontCdnUrl): ?>
     <?= $fontCdnUrl ?>
@@ -1964,14 +1970,16 @@ $fontFamily = $assetViewModel->getFontFamily();
                                         </label>
                                         <input id="bluefinch-checkout-coupondiscount-text" data-type="checkout-wording" type="text" placeholder="Add promo code" />
                                     </div>
-                                    <div class="fieldset">
-                                        <label for="bluefinch-checkout-giftcard-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('"Gift Card" Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="bluefinch-checkout-giftcard-text" data-type="checkout-wording" type="text" placeholder="Add gift card code" />
-                                    </div>
+                                    <?php if ($isEnterprise): ?>
+                                        <div class="fieldset">
+                                            <label for="bluefinch-checkout-giftcard-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('"Gift Card" Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="bluefinch-checkout-giftcard-text" data-type="checkout-wording" type="text" placeholder="Add gift card code" />
+                                        </div>
+                                    <?php endif; ?>
                                     <h2 data-role="title" class="heading">
                                         <?= $escaper->escapeHtml(__('Dropdowns Styling')) ?>
                                     </h2>
@@ -2053,14 +2061,16 @@ $fontFamily = $assetViewModel->getFontFamily();
                                     <?= $escaper->escapeHtml(__('Input Text')) ?>
                                 </a>
                                 <div class="config" data-role="content">
-                                    <div class="fieldset">
-                                        <label for="bluefinch-checkout-giftcardplaceholder-text">
-                                            <span>
-                                                <?= $escaper->escapeHtml(__('Gift Card Placeholder Text')) ?>
-                                            </span>
-                                        </label>
-                                        <input id="bluefinch-checkout-giftcardplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter gift card code" />
-                                    </div>
+                                    <?php if ($isEnterprise): ?>
+                                        <div class="fieldset">
+                                            <label for="bluefinch-checkout-giftcardplaceholder-text">
+                                                <span>
+                                                    <?= $escaper->escapeHtml(__('Gift Card Placeholder Text')) ?>
+                                                </span>
+                                            </label>
+                                            <input id="bluefinch-checkout-giftcardplaceholder-text" data-type="checkout-wording" type="text" placeholder="Enter gift card code" />
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="fieldset">
                                         <label for="bluefinch-checkout-coupondiscountplaceholder-text">
                                             <span>
@@ -2190,7 +2200,7 @@ $fontFamily = $assetViewModel->getFontFamily();
                                                 <?= $escaper->escapeHtml(__('Slide Up Sub Text')) ?>
                                             </span>
                                         </label>
-                                        <input id="bluefinch-checkout-ordersummarydescription-text" data-type="checkout-wording" type="text" placeholder="Add gift card or promo code" />
+                                        <input id="bluefinch-checkout-ordersummarydescription-text" data-type="checkout-wording" type="text" placeholder="Add <?php if ($isEnterprise): ?>gift card or <?php endif; ?>promo code" />
                                     </div>
                                 </div>
                             </div>

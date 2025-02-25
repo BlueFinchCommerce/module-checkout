@@ -12,6 +12,7 @@ export default {
     removeBtn: ' ',
     modalHeader: ' ',
     mobileDiscountText: ' ',
+    mobileDiscountTextOs: ' ',
     backBtn: ' ',
     grandTotalTitle: ' ',
     inclTaxTitle: ' ',

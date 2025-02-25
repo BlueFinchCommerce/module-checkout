@@ -71,6 +71,10 @@ export default {
     };
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.shippingStepCompletedText = window.bluefinchCheckout?.[this.shippingStepCompletedTextId]
       || this.$t('shippingStep.stepCompleteTitle');
 
@@ -81,6 +85,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {

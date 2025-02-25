@@ -16,6 +16,7 @@ import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
 import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
 import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -24,7 +25,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -105,7 +105,6 @@ export default defineStore('configStore', {
       const request = () => getInitialConfig().then(handleInitialConfig);
       await this.getCachedResponse(request, 'getInitialConfig');
     },
-
     /**
      * Get the values for the initial configuration.
      */
@@ -122,8 +121,6 @@ export default defineStore('configStore', {
         'bluefinch_checkout_newsletter_allow_guest',
         'bluefinch_checkout_country_state_required',
         'bluefinch_checkout_country_display_state',
-        'magento_reward_general_is_enabled',
-        'magento_reward_general_is_enabled_on_front',
         'optional_zip_countries',
         'tax_cart_display_price',
         'tax_cart_display_shipping',
@@ -136,15 +133,17 @@ export default defineStore('configStore', {
         'bluefinch_checkout_click_collect_tabs_enabled',
         'bluefinch_checkout_afd_enable',
       ];
-
+      // Conditionally add reward config based on Magento Edition
+      if (getMagentoSolutionType()) {
+        configs.push('magento_reward_general_is_enabled_on_front');
+        configs.push('magento_reward_general_is_enabled');
+      }
       if (this.locale) {
         this.setLocale(this.locale);
       } else {
         configs.push('locale');
       }
-
       const allConfigs = configs.concat(getCustomConfigs);
-
       return `
         storeConfig {
           ${allConfigs.join(' ')}
@@ -163,7 +162,6 @@ export default defineStore('configStore', {
         }
       `;
     },
-
     async handleInitialConfig({ countries, storeConfig }) {
       this.setData({
         staticUrl: storeConfig.base_static_url.replace(/\/+$/, ''),
@@ -198,18 +196,13 @@ export default defineStore('configStore', {
         },
         clickCollectTabsEnabled: storeConfig.bluefinch_checkout_click_collect_tabs_enabled,
       });
-
       if (storeConfig.locale) {
         this.setLocale(storeConfig.locale);
       }
-
       countries.sort((a, b) => a.full_name_locale.toUpperCase()
         .localeCompare(b.full_name_locale.toUpperCase()));
-
       this.setData({ countries });
-
       const customConfigs = await mapCustomConfigs(storeConfig);
-
       this.setData({
         custom: customConfigs,
       });
