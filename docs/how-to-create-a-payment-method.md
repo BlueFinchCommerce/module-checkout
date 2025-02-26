@@ -44,3 +44,38 @@ npm run build
 ```
 
 4. Clear your Adobe Commerce caches and reload the checkout. You will see the text `New Component - Express Payment` visible underneath any existing express payment methods.
+
+#### Extension point - additionalVaultedMethods / paymentMethodsPrimary / paymentMethods
+
+These extensions points allow for creation of payment methods that will appear on the final payment step of the BlueFinch Checkout.
+
+The different between the names is to do with the location at which the extension will appear. Refer to the [Payment Page Extension Points](payment-page-extension-points.png) image for more information.
+
+1. Copy the example [payment component](https://github.com/BlueFinchCommerce/module-checkout-template/tree/develop/view/frontend/web/js/checkout/src/components) into your module with the same path structure.
+
+2. Create a new template file that is displayed on the `bluefinchcheckout_checkout_index.xml` layout file.
+
+3. Using the [example module](https://github.com/BlueFinchCommerce/module-checkout-template/blob/develop/view/frontend/templates/new-module.phtml) take the markup that adds the component definition to the window object:
+
+```html
+<script>
+    window.bluefinchCheckout = window.bluefinchCheckout || {};
+    // bluefinch express payment method extension
+    window.bluefinchCheckout.paymentMethods = window.bluefinchCheckout.paymentMethods || {};
+    window.bluefinchCheckout.paymentMethods.myModuleExpressPaymentMethod = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/components/paymentMethods/paymentMethods.min.js')) ?>";
+</script>
+```
+
+    Replacing `ModuleNamespace_ModuleName` with the appropriate name of your module.
+
+3. Run the build script from within the `ModuleNamespace_ModuleName::js/checkout/src` folder.
+
+    If you haven't already copied the boilerplate npm package setup from the root of [`"src"` template module](https://github.com/BlueFinchCommerce/module-checkout-template/tree/develop/view/frontend/web/js/checkout) you will need to do this.
+
+```bash
+// With the package.json and rollup.config.js files copied across
+npm i
+npm run build
+```
+
+4. Clear your Adobe Commerce caches and reload the checkout. You will see the text `New Component - Payment Method` visible underneath any existing express payment methods.
