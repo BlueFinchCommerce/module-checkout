@@ -7,7 +7,8 @@ This guide covers how to extend the BlueFinch Checkout from within your own cust
 ## Getting started
 
 The easiest way to start creating your own BlueFinch Checkout custom extension Magento modules is to use the module template we provide and by following our guide below:
-* [How to create a checkout extension module](how-to-create-a-checkout-extension-module.md).
+* [How to create a checkout extension module](how-to-create-a-checkout-extension-module.md)
+* [How to create a custom payment method](how-to-create-a-payment-method.md)
 * [BlueFinch Checkout Module Template](https://github.com/BlueFinchCommerce/module-checkout-template)
 
 ## How to extend BlueFinch Checkout functionality with a custom module
