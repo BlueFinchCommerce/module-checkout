@@ -14,7 +14,7 @@ We have provided a [template module](https://github.com/BlueFinchCommerce/module
 
 ## How to add a new express payment method
 
-#### Extension point - expressPaymentMethods
+### Extension point - expressPaymentMethods
 
 1. Copy the example [express payment component](https://github.com/BlueFinchCommerce/module-checkout-template/tree/develop/view/frontend/web/js/checkout/src/components) into your module with the same path structure.
 
@@ -45,7 +45,7 @@ npm run build
 
 4. Clear your Adobe Commerce caches and reload the checkout. You will see the text `New Component - Express Payment` visible underneath any existing express payment methods.
 
-#### Extension point - additionalVaultedMethods / paymentMethodsPrimary / paymentMethods
+### Extension point - additionalVaultedMethods / paymentMethodsPrimary / paymentMethods
 
 These extensions points allow for creation of payment methods that will appear on the final payment step of the BlueFinch Checkout.
 
