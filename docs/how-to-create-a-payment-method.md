@@ -45,7 +45,7 @@ npm run build
 
 4. Clear your Adobe Commerce caches and reload the checkout. You will see the text `New Component - Express Payment` visible underneath any existing express payment methods.
 
-#### Extension point - additionalVaultedMethods / paymentMethodsPrimary / paymentMethods
+### Extension point - additionalVaultedMethods / paymentMethodsPrimary / paymentMethods
 
 These extensions points allow for creation of payment methods that will appear on the final payment step of the BlueFinch Checkout.
 
