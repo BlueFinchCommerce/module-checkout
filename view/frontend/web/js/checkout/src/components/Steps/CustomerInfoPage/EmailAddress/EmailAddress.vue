@@ -201,7 +201,7 @@ import ValidIcon from '@/components/Core/Icons/ValidIcon/ValidIcon.vue';
 import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 
 // Extensions
-import belowEmailFieldExtensions from '@/extensions/belowEmailFieldExtensions';
+import componentExtension from '@/extensions/componentExtension';
 
 // helpers
 import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
@@ -212,6 +212,9 @@ import continueAsGuestDataLayer from '@/helpers/dataLayer/continueAsGuestDataLay
 
 // extensions
 import functionExtension from '@/extensions/functionExtension';
+
+// define extension points
+const belowEmailFieldExtensions = componentExtension('belowEmailFields');
 
 export default {
   name: 'EmailAddress',
@@ -226,7 +229,7 @@ export default {
     ErrorMessage,
     Edit,
     Recaptcha,
-    ...belowEmailFieldExtensions(),
+    ...belowEmailFieldExtensions,
   },
   data() {
     return {
@@ -287,7 +290,7 @@ export default {
     document.addEventListener('keydown', this.handleKeyDown);
   },
   created() {
-    this.belowEmailFieldExtensions = Object.keys(belowEmailFieldExtensions());
+    this.belowEmailFieldExtensions = Object.keys(belowEmailFieldExtensions);
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
