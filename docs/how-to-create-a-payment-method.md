@@ -78,6 +78,6 @@ npm i
 npm run build
 ```
 
-We have [documentation about running locally](https://github.com/BlueFinchCommerce/module-checkout/blob/develop/.github/CONTRIBUTING.md#local-frontend-development-workflow) as well to aid with development.
+We have [documentation about running locally](../.github/CONTRIBUTING.md#local-frontend-development-workflow) as well to aid with development.
 
 4. Clear your Adobe Commerce caches and reload the checkout. You will see the text `New Component - Payment Method` visible underneath any existing express payment methods.
