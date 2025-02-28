@@ -35,13 +35,37 @@ We provide a BlueFinch Checkout [extension module template](https://github.com/B
 
     For example, amend `$styles = $assetViewModel->getDistViewFileUrl('BlueFinch_CheckoutNewModule::js/checkout/dist/styles.css');` to `$styles = $assetViewModel->getDistViewFileUrl('MyCompany_MyModule::js/checkout/dist/styles.css');`
 
-7. Install and enable your new module within your environment `php bin/magento setup:upgrade` and clear any caches.
+7. Run the build script from within the `ModuleNamespace_ModuleName::js/checkout/src` folder.
 
-8. Navigate to the checkout on your site to see the two examples of extension points that our module template provides:
-    1. Component extension point: A new component with the text "New Component - belowEmailFields" will be displayed below the email field on the first step of the checkout.
+    ```bash
+    // With the package.json and rollup.config.js files copied across
+    npm i
+    npm run build
+    ```
+
+    We have [documentation about running locally](../.github/CONTRIBUTING.md#local-frontend-development-workflow) as well to aid with development.
+
+8. Install and enable your new module within your environment `php bin/magento setup:upgrade` and clear any caches.
+
+9. Navigate to the checkout on your site to see the examples of extension points that our module template provides:
+    1. Component extension points:
+        1. A new component with the text "New Component - belowEmailFields" will be rendered in the `belowEmailFields` component extension point (below the email field on the first step of the checkout).
+        
+            Refer to the [Details Page Extension Points](deatials-page-extension-points.png) image for more information.
+        
+            Open your browser inspector to see the `text "New Component - onStepsCreated" `logged in the console from the onStepsCreated event firing.
+        2. A new component with the text "New Component - Express Payment" will be rendered in the `expressPaymentMethods` component extension point (on the first step of the checkout).
+
+            Refer to the [Details Page Extension Points](deatials-page-extension-points.png) image for more information.
+            
+            Open your browser inspector to see the `cartStore.cart``logged in the console from the component.
+        3. A new component with the text "New Component - Payment Method" will be rendered in the `paymentMethods` component extension point (on the final payment step of the checkout).
+        
+            Refer to the [Payment Page Extension Points](payment-page-extension-points.png) image for more information. Open your browser inspector to see the `cartStore.cart``logged in the console from the component.
+   
     2. Callback extension point: Open your browser inspector to see the text "New Component - onStepsCreated" logged in the console from the onStepsCreated event firing.
     
-9. Make any necessary amendments in the following files in your new module to reflect your modules path and name:
+10. Make any necessary amendments in the following files in your new module to reflect your modules path and name:
     - `composer.json`
     - `package.json`
     - `README.md`
