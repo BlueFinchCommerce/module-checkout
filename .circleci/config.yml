@@ -82,6 +82,7 @@ jobs:
           command: |
             REPODIR=$(realpath ~/project)
             composer config "repositories.1" "{\"type\": \"path\", \"canonical\":true, \"url\": \"$REPODIR\", \"options\": {\"symlink\":false}}"
+            composer config "repositories.packagist" "{\"type\": \"composer\", \"url\": \"https://repo.packagist.org\", \"exclude\": [\"bluefinchcommerce/module-checkout\"]}"
             composer config minimum-stability dev
             composer config prefer-stable true
             composer require bluefinchcommerce/module-checkout:dev-${CIRCLE_BRANCH} --no-interaction
