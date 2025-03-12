@@ -206,7 +206,7 @@ class CheckoutSuccess implements ArgumentInterface
      */
     public function getRecaptchaSuccessEnabled(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-        string $scopeCode = null
+        ?string $scopeCode = null
     ): string {
         return $this->scopeConfig->getValue(
             ConfigurationInterface::RECAPTCHA_FRONTEND_SUCCESS_XML_PATH,

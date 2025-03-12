@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
+    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): string
     {
         return $this->scopeConfig->getValue(
             self::VUE_CHECKOUT_FONT_XML_PATH,
@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string
+    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): string
     {
         return $this->scopeConfig->getValue(
             self::VUE_CHECKOUT_FONT_CDN_XML_PATH,
@@ -72,7 +72,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getFontFamilyFromCdnUrl(
         string $scopeType = ScopeInterface::SCOPE_STORE,
-        string $scopeCode = null
+        ?string $scopeCode = null
     ): string {
         $fontCdnUrl = $this->getFontCdnUrl($scopeType, $scopeCode);
         $defaultFontFamily = 'Montserrat';
