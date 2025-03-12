@@ -56,6 +56,7 @@ Remember to clear any appropriate caches.
 - [Custom extension guide](docs/Extensions.md)
 - [How to create a checkout extension module](docs/how-to-create-a-checkout-extension-module.md)
 - [How to create payment methods](docs/how-to-create-a-payment-method.md)
+- [GA4 Custom Event Tracking](docs/ga4-custom-event-tracking.md)
 
 ### BlueFinch Checkout extension modules
 

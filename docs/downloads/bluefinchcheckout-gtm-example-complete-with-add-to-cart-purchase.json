@@ -1,0 +1,1763 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2024-09-06 17:08:12",
+    "containerVersion": {
+        "path": "accounts/12345678/containers/987654321/versions/0",
+        "accountId": "12345678",
+        "containerId": "987654321",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/12345678/containers/987654321",
+            "accountId": "12345678",
+            "containerId": "987654321",
+            "name": "bluefinch-checkout",
+            "publicId": "GTM-ABCD1234",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1725640382800",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/12345678/containers/987654321/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-NTR5M3CL"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "14",
+                "name": "BlueFinch Checkout - GA4 - discount_applied",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "Discount Code"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - discountCode}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "Discount Code Title"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - discountTitle}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "Discount Amount"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - discountAmount}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "discount_applied"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-00000"
+                    }
+                ],
+                "fingerprint": "1725640462983",
+                "firingTriggerId": [
+                    "10"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "16",
+                "name": "BlueFinch Checkout - GA4 - continue_as_guest",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "continue_as_guest"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-00000"
+                    }
+                ],
+                "fingerprint": "1725640462984",
+                "firingTriggerId": [
+                    "15"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "18",
+                "name": "BlueFinch Checkout - GA4 - select_payment_method",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "methodType"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - methodType}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "select_payment_method"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725640462985",
+                "firingTriggerId": [
+                    "4"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "22",
+                "name": "BlueFinch Checkout - GA4 - select_shipping_method",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "carrierCode"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - carrierCode}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "methodCode"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - methodCode}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "select_shipping_method"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725640462988",
+                "firingTriggerId": [
+                    "20"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "24",
+                "name": "BlueFinch Checkout - GA4 - logged_in_at_checkout",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "logged_in_at_checkout"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-00000"
+                    }
+                ],
+                "fingerprint": "1725640462989",
+                "firingTriggerId": [
+                    "23"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "26",
+                "name": "BlueFinch Checkout - GA4 - continue_to_delivery",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "continue_to_delivery"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725640462990",
+                "firingTriggerId": [
+                    "9"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "30",
+                "name": "BlueFinch Checkout - GA4 - begin_checkout",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "origin"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - origin}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "begin_checkout"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725640462993",
+                "firingTriggerId": [
+                    "27"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "31",
+                "name": "BlueFinch Checkout - GA4 - express_checkout_started",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "Method"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - methodType}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "express_checkout_started"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725640462993",
+                "firingTriggerId": [
+                    "5"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "34",
+                "name": "BlueFinch Checkout - GA4 - address_filled",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "addressType"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - addressType}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "address_filled"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-00000"
+                    }
+                ],
+                "fingerprint": "1725640463052",
+                "firingTriggerId": [
+                    "33"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "38",
+                "name": "BlueFinch Checkout - GA4 - add_to_cart",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.add.products}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.currencyCode}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "add_to_cart"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-0000000"
+                    }
+                ],
+                "fingerprint": "1725641640219",
+                "firingTriggerId": [
+                    "37"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "tagId": "45",
+                "name": "BlueFinch Checkout - GA4 - purchase",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "enhancedUserId",
+                        "value": "false"
+                    },
+                    {
+                        "type": "LIST",
+                        "key": "eventSettingsTable",
+                        "list": [
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "items"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.purchase.products}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "transaction_id"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.purchase.actionField.id}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "value"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.purchase.actionField.revenue}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "tax"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.purchase.actionField.tax}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "shipping"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.purchase.actionField.shipping}}"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "MAP",
+                                "map": [
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameter",
+                                        "value": "currency"
+                                    },
+                                    {
+                                        "type": "TEMPLATE",
+                                        "key": "parameterValue",
+                                        "value": "{{BlueFinch Checkout - DLV - ecommerce.currencyCode}}"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "purchase"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "G-000000"
+                    }
+                ],
+                "fingerprint": "1725642470981",
+                "firingTriggerId": [
+                    "44"
+                ],
+                "parentFolderId": "3",
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "4",
+                "name": "BlueFinch Checkout - Select Payment Method",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "selectPaymentMethod"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462976",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "5",
+                "name": "BlueFinch Checkout - Express Payment Methods",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "expressPaymentInitiated"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725641640220",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "8",
+                "name": "BlueFinch Checkout - Checkout Steps 2",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkoutSteps"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.step}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "2"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.description}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "shipping"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462979",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "9",
+                "name": "BlueFinch Checkout - Continue to Delivery",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "continueToDelivery"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462980",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "10",
+                "name": "BlueFinch Checkout - Discount Code",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "discountCodeApplied"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725641640221",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "15",
+                "name": "BlueFinch Checkout - Continue as Guest",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "continueAsGuestUser"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462984",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "20",
+                "name": "BlueFinch Checkout - Select Shipping Method",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "selectShippingMethod"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462987",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "23",
+                "name": "BlueFinch Checkout - Login at Checkout",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "customerLoggedInAtCheckout"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462988",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "27",
+                "name": "BlueFinch Checkout - Begin Checkout",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "beginCheckout"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462991",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "29",
+                "name": "BlueFinch Checkout - Checkout Steps 3",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkoutSteps"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.step}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "3"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.description}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "payment"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462992",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "32",
+                "name": "BlueFinch Checkout - Checkout Steps 1",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "checkoutSteps"
+                            }
+                        ]
+                    }
+                ],
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.step}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{BlueFinch Checkout - DLV - ecommerce.checkout.actionField.description}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "login"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640462994",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "33",
+                "name": "BlueFinch Checkout - Adding an Address",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "selectAddress"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725640463052",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "37",
+                "name": "BlueFinch Checkout - Add to Cart",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "addToCart"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725641640221",
+                "parentFolderId": "3"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "triggerId": "44",
+                "name": "BlueFinch Checkout - Purchase",
+                "type": "CUSTOM_EVENT",
+                "customEventFilter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{_event}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "purchase"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1725642470982",
+                "parentFolderId": "3"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "6",
+                "name": "BlueFinch Checkout - DLV - ecommerce.checkout.actionField.description",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.checkout.actionField.description"
+                    }
+                ],
+                "fingerprint": "1725640462978",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "7",
+                "name": "BlueFinch Checkout - DLV - ecommerce.checkout.actionField.step",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.checkout.actionField.step"
+                    }
+                ],
+                "fingerprint": "1725640462978",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "11",
+                "name": "BlueFinch Checkout - DLV - discountCode",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "discountCode"
+                    }
+                ],
+                "fingerprint": "1725640462981",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "12",
+                "name": "BlueFinch Checkout - DLV - discountAmount",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "discountAmount"
+                    }
+                ],
+                "fingerprint": "1725640462982",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "13",
+                "name": "BlueFinch Checkout - DLV - discountTitle",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "discountTitle"
+                    }
+                ],
+                "fingerprint": "1725640462983",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "17",
+                "name": "BlueFinch Checkout - DLV - methodType",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "methodType"
+                    }
+                ],
+                "fingerprint": "1725640462985",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "19",
+                "name": "BlueFinch Checkout - DLV - methodCode",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "methodCode"
+                    }
+                ],
+                "fingerprint": "1725640462986",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "21",
+                "name": "BlueFinch Checkout - DLV - carrierCode",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "carrierCode"
+                    }
+                ],
+                "fingerprint": "1725640462987",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "25",
+                "name": "BlueFinch Checkout - DLV - addressType",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "addressType"
+                    }
+                ],
+                "fingerprint": "1725640462989",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "28",
+                "name": "BlueFinch Checkout - DLV - origin",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "origin"
+                    }
+                ],
+                "fingerprint": "1725640462991",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "35",
+                "name": "BlueFinch Checkout - DLV - ecommerce.add.products",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.add.products"
+                    }
+                ],
+                "fingerprint": "1725641640222",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "36",
+                "name": "BlueFinch Checkout - DLV - ecommerce.currencyCode",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.currencyCode"
+                    }
+                ],
+                "fingerprint": "1725641640223",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "39",
+                "name": "BlueFinch Checkout - DLV - ecommerce.purchase.actionField.id",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.id"
+                    }
+                ],
+                "fingerprint": "1725642470982",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "40",
+                "name": "BlueFinch Checkout - DLV - ecommerce.purchase.actionField.revenue",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.revenue"
+                    }
+                ],
+                "fingerprint": "1725642470983",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "41",
+                "name": "BlueFinch Checkout - DLV - ecommerce.purchase.actionField.shipping",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.shipping"
+                    }
+                ],
+                "fingerprint": "1725642471005",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "42",
+                "name": "BlueFinch Checkout - DLV - ecommerce.purchase.actionField.tax",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.actionField.tax"
+                    }
+                ],
+                "fingerprint": "1725642471006",
+                "parentFolderId": "3",
+                "formatValue": {}
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "variableId": "43",
+                "name": "BlueFinch Checkout - DLV - ecommerce.purchase.products",
+                "type": "v",
+                "parameter": [
+                    {
+                        "type": "INTEGER",
+                        "key": "dataLayerVersion",
+                        "value": "2"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "setDefaultValue",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "name",
+                        "value": "ecommerce.purchase.products"
+                    }
+                ],
+                "fingerprint": "1725642471007",
+                "parentFolderId": "3",
+                "formatValue": {}
+            }
+        ],
+        "folder": [
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "folderId": "3",
+                "name": "BlueFinch Checkout",
+                "fingerprint": "1725640462975"
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "type": "PAGE_HOSTNAME",
+                "name": "Page Hostname"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "type": "PAGE_PATH",
+                "name": "Page Path"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "type": "REFERRER",
+                "name": "Referrer"
+            },
+            {
+                "accountId": "12345678",
+                "containerId": "987654321",
+                "type": "EVENT",
+                "name": "Event"
+            }
+        ],
+        "fingerprint": "1725642492887",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/12345678/containers/987654321/versions/0?apiLink=version"
+    }
+}
