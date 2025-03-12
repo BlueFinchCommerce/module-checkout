@@ -105,6 +105,10 @@ export default defineStore('cartStore', {
 
     async getCart() {
       if (!this.maskedId) {
+        // Before getting the masked ID we must ensure that we have all of the config.
+        const configStore = useConfigStore();
+        await configStore.getInitialConfig();
+
         const maskedId = await this.getMaskedId();
         this.setData({ maskedId });
       }
