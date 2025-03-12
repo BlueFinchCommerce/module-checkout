@@ -106,7 +106,7 @@
 
         <div class="checkout-email__footer">
           <a
-            :href="baseURL + '/customer/account/forgotpassword/'"
+            :href="secureBaseLinkUrl + 'customer/account/forgotpassword/'"
             class="forgot-pass"
             data-cy="forgot-password-link"
           >
@@ -204,7 +204,6 @@ import ErrorIcon from '@/components/Core/Icons/ErrorIcon/ErrorIcon.vue';
 import belowEmailFieldExtensions from '@/extensions/belowEmailFieldExtensions';
 
 // helpers
-import getBaseUrl from '@/helpers/storeConfigs/getBaseUrl';
 import isEmailValid from '@/helpers/validation/isEmailValid';
 import scrollToTarget from '@/helpers/scrollToTarget';
 import customerLoginDataLayer from '@/helpers/dataLayer/customerLoginDataLayer';
@@ -241,7 +240,6 @@ export default {
       showPassword: false,
       passwordValid: false,
       password: '',
-      baseURL: getBaseUrl(),
       isEmailAvailableRequest: undefined,
       continueButtonText: '',
       continueButtonTextId: 'bluefinch-checkout-continuebutton-text',
@@ -259,7 +257,7 @@ export default {
     ...mapState(useCustomerStore, ['isLoggedIn', 'emailEntered', 'inputsSanitiseError']),
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
-    ...mapState(useConfigStore, ['locale', 'storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode', 'secureBaseLinkUrl']),
     proceedAsGuestInvalid() {
       return this.emailError || this.customer.email.length === 0;
     },
