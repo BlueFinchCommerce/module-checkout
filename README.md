@@ -1,6 +1,6 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/BlueFinchCommerce/module-checkout/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/BlueFinchCommerce/module-checkout/tree/main)
 
-[![GNU General Public License Version 3](./assets/license-GPLv3.svg)](?tab=GPL-3.0-1-ov-file#readme)
+[![GNU General Public License Version 3](./assets/license-GPLv3.svg)](/?tab=GPL-3.0-1-ov-file#readme)
 
 ![BlueFinch Checkout](./assets/logo.svg)
 
