@@ -28,8 +28,8 @@ class StoreCode implements ResolverInterface
         Field $field,
         $context,
         ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         if (!isset($args['store_id'])) {
             throw new GraphQlInputException(__('Store ID not set'));

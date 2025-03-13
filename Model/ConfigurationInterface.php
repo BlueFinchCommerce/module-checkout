@@ -30,7 +30,7 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return bool
      */
-    public function getIsEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): bool;
+    public function getIsEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): bool;
 
     /**
      * Return a path for font file
@@ -39,7 +39,7 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return string
      */
-    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
+    public function getFontPath(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): string;
 
     /**
      * Return font url from CDN
@@ -48,7 +48,7 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return string
      */
-    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
+    public function getFontCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): string;
 
     /**
      * Retrieve the font family name from the CDN URL
@@ -57,7 +57,7 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return string
      */
-    public function getFontFamilyFromCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): string;
+    public function getFontFamilyFromCdnUrl(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): string;
 
     /**
      * Is debugging enabled
@@ -66,7 +66,7 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return bool
      */
-    public function getIsDebugEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): bool;
+    public function getIsDebugEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): bool;
 
     /**
      * Is developer vite watch mode enabled
@@ -75,5 +75,5 @@ interface ConfigurationInterface
      * @param string|null $scopeCode
      * @return bool
      */
-    public function getIsDeveloperViteWatchModeEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, string $scopeCode = null): bool;
+    public function getIsDeveloperViteWatchModeEnabled(string $scopeType = ScopeInterface::SCOPE_STORE, ?string $scopeCode = null): bool;
 }
