@@ -58,14 +58,19 @@ export default {
   data() {
     return {
       detailStepText: '',
-      detailStepTextId: 'gene-bettercheckout-detailstep-text',
+      detailStepTextId: 'bluefinch-checkout-detailstep-text',
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
+    ...mapState(useConfigStore, ['locale']),
   },
   async created() {
-    this.detailStepText = window.geneCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
+    this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
 
     document.addEventListener(this.detailStepTextId, this.setDetailStepText);
   },

@@ -19,7 +19,7 @@ export default {
         afd_response_max_quantity
       }
     }`;
-    return graphQlRequest(request, {}, {}, 'BetterCheckoutStoreConfigAfd')
+    return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutStoreConfigAfd')
       .then((response) => response.data.storeConfig);
   },
 

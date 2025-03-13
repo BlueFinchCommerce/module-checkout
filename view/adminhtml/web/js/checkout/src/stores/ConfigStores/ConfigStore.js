@@ -16,6 +16,7 @@ import getInitialConfig from '@/helpers/storeConfigs/getInitialConfig';
 import getCustomConfigs from '@/helpers/storeConfigs/getCustomConfigs';
 import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 export default defineStore('configStore', {
   state: () => ({
@@ -24,8 +25,6 @@ export default defineStore('configStore', {
     storeCode: getStoreCodeFromLocalStorage(),
     locale: getLocale(),
     countryCode: undefined,
-    rvvupPaymentsActive: false,
-    superPaymentsActive: false,
     cache: {},
     privacyPolicy: {},
     generalTermsServices: {},
@@ -106,7 +105,6 @@ export default defineStore('configStore', {
       const request = () => getInitialConfig().then(handleInitialConfig);
       await this.getCachedResponse(request, 'getInitialConfig');
     },
-
     /**
      * Get the values for the initial configuration.
      */
@@ -119,33 +117,33 @@ export default defineStore('configStore', {
         'secure_base_link_url',
         'use_store_in_url',
         'website_name',
-        'gene_better_checkout_newsletter_enabled',
-        'gene_better_checkout_newsletter_allow_guest',
-        'gene_better_checkout_country_state_required',
-        'gene_better_checkout_country_display_state',
-        'magento_reward_general_is_enabled',
-        'magento_reward_general_is_enabled_on_front',
+        'bluefinch_checkout_newsletter_enabled',
+        'bluefinch_checkout_newsletter_allow_guest',
+        'bluefinch_checkout_country_state_required',
+        'bluefinch_checkout_country_display_state',
         'optional_zip_countries',
         'tax_cart_display_price',
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
-        'gene_better_checkout_copyright_text',
-        'gene_better_checkout_afd_enable',
-        'gene_better_checkout_progress_bar_visible',
-        'gene_better_checkout_loqate_api_key',
-        'gene_better_checkout_loqate_enabled',
-        'gene_better_checkout_click_collect_tabs_enabled',
-        'gene_better_checkout_afd_enable',
+        'bluefinch_checkout_copyright_text',
+        'bluefinch_checkout_afd_enable',
+        'bluefinch_checkout_progress_bar_visible',
+        'bluefinch_checkout_loqate_api_key',
+        'bluefinch_checkout_loqate_enabled',
+        'bluefinch_checkout_click_collect_tabs_enabled',
+        'bluefinch_checkout_afd_enable',
       ];
-
+      // Conditionally add reward config based on Magento Edition
+      if (getMagentoSolutionType()) {
+        configs.push('magento_reward_general_is_enabled_on_front');
+        configs.push('magento_reward_general_is_enabled');
+      }
       if (this.locale) {
         this.setLocale(this.locale);
       } else {
         configs.push('locale');
       }
-
       const allConfigs = configs.concat(getCustomConfigs);
-
       return `
         storeConfig {
           ${allConfigs.join(' ')}
@@ -164,7 +162,6 @@ export default defineStore('configStore', {
         }
       `;
     },
-
     async handleInitialConfig({ countries, storeConfig }) {
       this.setData({
         staticUrl: storeConfig.base_static_url.replace(/\/+$/, ''),
@@ -174,43 +171,38 @@ export default defineStore('configStore', {
         websiteName: storeConfig.website_name || '',
         secureBaseUrl: storeConfig.secure_base_url,
         secureBaseLinkUrl: storeConfig.secure_base_link_url,
-        newsletterEnabled: storeConfig.gene_better_checkout_newsletter_enabled === '1',
-        newsletterAllowGuests: storeConfig.gene_better_checkout_newsletter_allow_guest === '1',
-        stateRequired: storeConfig.gene_better_checkout_country_state_required
-          ? storeConfig.gene_better_checkout_country_state_required.split(',') : [],
-        displayState: storeConfig.gene_better_checkout_country_display_state === '1',
+        newsletterEnabled: storeConfig.bluefinch_checkout_newsletter_enabled === '1',
+        newsletterAllowGuests: storeConfig.bluefinch_checkout_newsletter_allow_guest === '1',
+        stateRequired: storeConfig.bluefinch_checkout_country_state_required
+          ? storeConfig.bluefinch_checkout_country_state_required.split(',') : [],
+        displayState: storeConfig.bluefinch_checkout_country_display_state === '1',
         rewardsEnabled: storeConfig.magento_reward_general_is_enabled === '1'
           && storeConfig.magento_reward_general_is_enabled_on_front === '1',
         optionalZipCountries: storeConfig.optional_zip_countries || '',
         taxCartDisplayPrice: storeConfig.tax_cart_display_price === '2',
         taxCartDisplayShipping: storeConfig.tax_cart_display_shipping === '2',
         taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
-        copyrightText: storeConfig.gene_better_checkout_copyright_text,
-        progressBarVisible: storeConfig.gene_better_checkout_progress_bar_visible === true,
+        copyrightText: storeConfig.bluefinch_checkout_copyright_text,
+        progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
         addressFinder: {
-          enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
+          enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
           loqate: {
-            enabled: !!+storeConfig.gene_better_checkout_loqate_enabled,
-            apiKey: storeConfig.gene_better_checkout_loqate_api_key,
+            enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
+            apiKey: storeConfig.bluefinch_checkout_loqate_api_key,
           },
           afd: {
-            enabled: storeConfig.gene_better_checkout_afd_enable,
+            enabled: storeConfig.bluefinch_checkout_afd_enable,
           },
         },
-        clickCollectTabsEnabled: storeConfig.gene_better_checkout_click_collect_tabs_enabled,
+        clickCollectTabsEnabled: storeConfig.bluefinch_checkout_click_collect_tabs_enabled,
       });
-
       if (storeConfig.locale) {
         this.setLocale(storeConfig.locale);
       }
-
       countries.sort((a, b) => a.full_name_locale.toUpperCase()
         .localeCompare(b.full_name_locale.toUpperCase()));
-
       this.setData({ countries });
-
       const customConfigs = await mapCustomConfigs(storeConfig);
-
       this.setData({
         custom: customConfigs,
       });
@@ -226,18 +218,6 @@ export default defineStore('configStore', {
       });
     },
 
-    async getRvvupConfig() {
-      const configs = [
-        'rvvup_payments_active',
-      ];
-      const data = await this.getConfig(configs);
-
-      if (data) {
-        this.setData({
-          rvvupPaymentsActive: !!Number(data.rvvup_payments_active),
-        });
-      }
-    },
     createCacheKey(configs) {
       return configs.join('-');
     },

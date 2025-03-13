@@ -47,7 +47,6 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 import useLoadingStore from '@/stores/LoadingStore';
-import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Components
 import Agreements from '@/components/Core/ContentComponents/Agreements/Agreements.vue';
@@ -90,7 +89,6 @@ export default {
       'customer',
     ]),
     ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
-    ...mapState(useBraintreeStore, ['isBraintreeEnabled']),
   },
   watch: {
     selectedMethod: {
@@ -122,17 +120,21 @@ export default {
       const paymentMethod = {
         code: this.paymentType,
       };
-      // Check that the agreements (if any) and recpatcha is valid.
-      const agreementsValid = this.validateAgreements();
-      let recaptchaValid;
 
-      if (this.isBraintreeEnabled) {
+      const agreementsValid = this.validateAgreements();
+      if (!agreementsValid) {
+        return;
+      }
+
+      let recaptchaValid = true;
+
+      if (this.getTypeByPlacement('braintree')) {
         recaptchaValid = await this.validateToken('braintree', 'freeMoCheckPayment');
-      } else {
+      } else if (this.getTypeByPlacement('placeOrder')) {
         recaptchaValid = await this.validateToken('placeOrder', 'freeMoCheckPayment');
       }
 
-      if (!agreementsValid || !recaptchaValid) {
+      if (!recaptchaValid) {
         return;
       }
 
@@ -148,7 +150,6 @@ export default {
           this.setLoadingState(false);
         });
     },
-
     redirectToSuccess() {
       window.location.href = getSuccessPageUrl();
     },

@@ -5,7 +5,7 @@
  * @var Magento\Framework\Escaper $escaper
  */
 
-/** @var \Gene\BetterCheckout\ViewModel\CheckoutSuccess $orderViewViewModel */
+/** @var \BlueFinch\Checkout\ViewModel\CheckoutSuccess $orderViewViewModel */
 $orderViewViewModel = $block->getData('order_view_view_model');
 
 if ($orderViewViewModel) {
@@ -28,7 +28,7 @@ if ($orderViewViewModel) {
         <p class="checkout-success-order-message"><?= $escaper->escapeHtml(__('We’ll email you an order confirmation shortly with details and tracking info.')) ?></p>
         <?php if (!$order->getCustomerIsGuest()): ?>
             <button type="button" class="actions primary">
-                <a href="<?php echo $block->getBaseUrl(); ?>"><?= $escaper->escapeHtml(__('Continue Shopping')) ?></a>
+                <a href="<?= $escaper->escapeHtmlAttr($block->getBaseUrl()) ?>"><?= $escaper->escapeHtml(__('Continue Shopping')) ?></a>
             </button>
         <?php endif; ?>
     </div>

@@ -28,11 +28,11 @@ app.use(i18n);
 app.use(pinia);
 app.use(router);
 
-app.mount('#gene-better-checkout-root');
+app.mount('#bluefinch-checkout-root');
 
-window.geneCheckout.helpers = helpers;
-window.geneCheckout.router = router;
-window.geneCheckout.services = services;
+window.bluefinchCheckout.helpers = helpers;
+window.bluefinchCheckout.router = router;
+window.bluefinchCheckout.services = services;
 
 export default {
   components, helpers, router, services, stores, pinia,

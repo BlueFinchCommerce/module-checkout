@@ -5,5 +5,5 @@ export default (agentId) => {
     mutation {
       CollectPlusUpdateAgent(agent_id: "${agentId}")
     }`;
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCollectPlus');
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCollectPlus');
 };

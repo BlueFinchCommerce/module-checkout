@@ -1,36 +1,43 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\ViewModel;
+namespace BlueFinch\Checkout\ViewModel;
 
-use Gene\BetterCheckout\Model\ConfigurationInterface;
+use BlueFinch\Checkout\Model\ConfigurationInterface;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ProductMetadataInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Filesystem\Io\File as IoFile;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Asset\File;
 use Magento\Framework\View\Asset\Repository as AssetRepository;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\State;
 
 class Assets implements ArgumentInterface
 {
     /** @var string */
-    const ASSETS_DEF_FILE = 'manifest.json';
+    private const ASSETS_DEF_FILE = 'manifest.json';
     /** @var string */
-    const ASSETS_BASE_DIR = 'Gene_BetterCheckout::js/checkout/dist/';
+    private const ASSETS_BASE_DIR = 'BlueFinch_Checkout::js/checkout/dist/';
     /** @var string */
-    const DESIGNER_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/designer_values';
+    private const DESIGNER_VALUES_PATH = 'bluefinch_checkout/general/checkout_designer/designer_values';
     /** @var string */
-    const CUSTOM_WORDING_VALUES_PATH = 'gene_better_checkout/general/checkout_designer/custom_wording';
+    private const CUSTOM_WORDING_VALUES_PATH = 'bluefinch_checkout/general/checkout_designer/custom_wording';
     /** @var string */
-    const LOGO_PATH = 'gene_better_checkout/general/checkout_designer/gene_better_checkout_logo';
+    private const LOGO_PATH = 'bluefinch_checkout/general/checkout_designer/bluefinch_checkout_logo';
 
     /** @var array */
     private $assetFilesByType = [];
 
+    /**
+     * @var ProductMetadataInterface
+     */
     private ProductMetadataInterface $productMetadata;
 
     /**
@@ -38,7 +45,10 @@ class Assets implements ArgumentInterface
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param ConfigurationInterface $configuration
+     * @param IoFile $file
      * @param UrlInterface $urlInterface
+     * @param RequestInterface $request
+     * @param State $state
      * @param ProductMetadataInterface $productMetadata
      */
     public function __construct(
@@ -46,12 +56,14 @@ class Assets implements ArgumentInterface
         private readonly ScopeConfigInterface $scopeConfig,
         private readonly StoreManagerInterface $storeManager,
         private readonly ConfigurationInterface $configuration,
+        private readonly IoFile $file,
         private readonly UrlInterface $urlInterface,
+        private readonly RequestInterface $request,
+        private readonly State $state,
         ProductMetadataInterface $productMetadata
     ) {
         $this->productMetadata = $productMetadata;
     }
-
 
     /**
      * Get the Magento Edition (e.g., Community, Enterprise).
@@ -63,8 +75,9 @@ class Assets implements ArgumentInterface
         return $this->productMetadata->getEdition();
     }
 
-
     /**
+     * Get font url path
+     *
      * @return string|null
      * @throws NoSuchEntityException
      */
@@ -80,6 +93,8 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * Return font CDN URL
+     *
      * @return string|null
      */
     public function getFontCdnUrl(): ?string
@@ -98,15 +113,19 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * Get font formant from font url
+     *
      * @param string $fontUrl
      * @return string
      */
     public function getFontFormat(string $fontUrl): string
     {
-        return pathinfo($fontUrl, PATHINFO_EXTENSION);
+        return $this->file->getPathInfo($fontUrl)['extension'] ?? '';
     }
 
     /**
+     * Get an array of the assets
+     *
      * @param string $area
      * @return array
      * @throws LocalizedException
@@ -122,7 +141,7 @@ class Assets implements ArgumentInterface
         $this->assetFilesByType = [];
         $this->assetFilesByType['js'] = [];
         if (array_key_exists('assets', $assetDefinitionArray['main.js'])) {
-            foreach($assetDefinitionArray['main.js']['assets'] as $fileName) {
+            foreach ($assetDefinitionArray['main.js']['assets'] as $fileName) {
                 $this->createAsset(self::ASSETS_BASE_DIR . $fileName, $area);
             }
         }
@@ -137,7 +156,7 @@ class Assets implements ArgumentInterface
             ];
         }
         if (array_key_exists('imports', $assetDefinitionArray['main.js'])) {
-            foreach($assetDefinitionArray['main.js']['imports'] as $fileName) {
+            foreach ($assetDefinitionArray['main.js']['imports'] as $fileName) {
                 $this->assetFilesByType['js']['imports'][] = $this->createAsset(
                     self::ASSETS_BASE_DIR . $assetDefinitionArray[$fileName]['file'], $area
                 );
@@ -147,6 +166,8 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * Get an array of the assets by type
+     *
      * @param string $type
      * @param string $area
      * @return File[]
@@ -159,6 +180,8 @@ class Assets implements ArgumentInterface
     }
 
     /**
+     * Create new asset
+     *
      * @param string $fileName
      * @param string $area
      * @param array $params
@@ -192,7 +215,7 @@ class Assets implements ArgumentInterface
     }
 
     /**
-     * Retrieve url of a view file, with better checkout developer mode handling for the dist directory
+     * Retrieve url of a view file, with checkout developer mode handling for the dist directory
      *
      * @see \Magento\Framework\View\Element\AbstractBlock::getViewFileUrl()
      *
@@ -232,8 +255,7 @@ class Assets implements ArgumentInterface
     public function getStyles(
         string $scopeType = ScopeInterface::SCOPE_STORE,
         mixed $scopeCode = null
-    ): string
-    {
+    ): string {
         $designerValues = $this->scopeConfig->getValue(
             self::DESIGNER_VALUES_PATH,
             $scopeType,
@@ -253,8 +275,7 @@ class Assets implements ArgumentInterface
     public function getCustomWording(
         string $scopeType = ScopeInterface::SCOPE_STORE,
         mixed $scopeCode = null
-    ): string
-    {
+    ): string {
         $customWording = $this->scopeConfig->getValue(
             self::CUSTOM_WORDING_VALUES_PATH,
             $scopeType,
@@ -275,8 +296,7 @@ class Assets implements ArgumentInterface
     public function getLogo(
         string $scopeType = ScopeInterface::SCOPE_STORE,
         mixed $scopeCode = null
-    ): string
-    {
+    ): string {
         $logoValue = $this->scopeConfig->getValue(
             self::LOGO_PATH,
             $scopeType,
@@ -285,9 +305,33 @@ class Assets implements ArgumentInterface
 
         if ($logoValue) {
             $imageBaseUrl = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
-            return $imageBaseUrl . 'gene_better_checkout/' . $logoValue;
+            return $imageBaseUrl . 'bluefinch_checkout/' . $logoValue;
         }
 
         return '';
+    }
+
+    /**
+     * @return array
+     * @throws LocalizedException
+     */
+    public function getAdminScope(): array
+    {
+        $scope = [
+            'store_id' => 0,
+            'website_id' => null
+        ];
+        if ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
+            /** @var RequestInterface $request */
+            if ($this->request->getParam('store') !== null) {
+                $scope['store_id'] = (int)$this->request->getParam('store', 0);
+            } elseif ($this->request->getParam('website') !== null) {
+                $scope['website_id'] = (int)$this->request->getParam('website', 0);
+                $scope['store_id'] = null;
+            } else {
+                $scope['store_id'] = $this->storeManager->getStore()->getId();
+            }
+        }
+        return $scope;
     }
 }

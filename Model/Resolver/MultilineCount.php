@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model\Resolver;
+namespace BlueFinch\Checkout\Model\Resolver;
 
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
@@ -38,6 +38,8 @@ class MultilineCount implements ResolverInterface
     }
 
     /**
+     * Return an entity type of the value
+     *
      * @param array $value
      * @return string
      * @throws LocalizedException

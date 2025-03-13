@@ -26,9 +26,9 @@ export default {
     return {
       paymentStepText: '',
       storedStepText: '',
-      paymentStepTextStoredId: 'gene-bettercheckout-paymentstep-text-stored',
-      paymentStepTextNewId: 'gene-bettercheckout-paymentstep-text-new',
-      paymentStepTextGuestId: 'gene-bettercheckout-paymentstep-text-guest',
+      paymentStepTextStoredId: 'bluefinch-checkout-paymentstep-text-stored',
+      paymentStepTextNewId: 'bluefinch-checkout-paymentstep-text-new',
+      paymentStepTextGuestId: 'bluefinch-checkout-paymentstep-text-guest',
     };
   },
   computed: {

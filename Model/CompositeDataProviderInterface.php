@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 interface CompositeDataProviderInterface
 {
     /**
+     * Return an array of data
+     *
      * @param int $quoteId
      * @return array
      */

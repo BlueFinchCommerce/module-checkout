@@ -64,7 +64,7 @@ export default defineStore('shippingMethodsStore', {
 
     selectShippingMethod(item) {
       if (item.carrier_code
-        && this.$state.selectedMethod.carrier_code
+        && this.$state.selectedMethod?.carrier_code
         && item.carrier_code !== this.$state.selectedMethod.carrier_code) {
         const gtmStore = useGtmStore();
         gtmStore.trackGtmEvent({
@@ -102,6 +102,8 @@ export default defineStore('shippingMethodsStore', {
         const stepsStore = useStepsStore();
         if (stepsStore.paymentActive) {
           stepsStore.goToShipping();
+        } else if (stepsStore.shippingActive) {
+          this.setDefaultShippingMethod();
         }
       }
     },

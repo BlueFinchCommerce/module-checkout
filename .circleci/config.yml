@@ -1,6 +1,9 @@
 version: 2.1
 jobs:
   build:
+    parameters:
+      project_create_command:
+        type: string
     docker:
       - image: cimg/php:8.3-browsers
       - image: cimg/mariadb:10.6
@@ -16,8 +19,12 @@ jobs:
           discovery.type: single-node
           xpack.security.enabled: "false"
           ES_JAVA_OPTS: "-Xms256m -Xmx256m"
-    working_directory: ~/magento2
     steps:
+      - checkout
+      - run:
+          name: Create magento2 working directory
+          command: |
+            mkdir -p ~/magento2
       - run:
           name: Waiting for MySQL startup
           command: |
@@ -64,24 +71,24 @@ jobs:
             sysvshm \
             xsl
             sudo composer self-update
-      - run:
-          name: Composer Configure
-          command: |
-            composer config -g http-basic.repo.magento.com $MAGENTO_REPO_KEY $MAGENTO_REPO_SECRET
-            composer config -g http-basic.repo.packagist.com "token" $GENE_PACKAGIST_TOKEN
             composer config -g allow-plugins true
       - run:
+          working_directory: ~/magento2
           name: Composer Create Project
-          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction --repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.7 .
+          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
       - run:
+          working_directory: ~/magento2
           name: Install Module @ CI Build Branch/Commit
           command: |
-            composer config repositories.gene-packages '{"type": "composer", "url": "https://repo.packagist.com/gene/", "canonical": false}'
+            REPODIR=$(realpath ~/project)
+            composer config "repositories.1" "{\"type\": \"path\", \"canonical\":true, \"url\": \"$REPODIR\", \"options\": {\"symlink\":false}}"
+            composer config "repositories.packagist" "{\"type\": \"composer\", \"url\": \"https://repo.packagist.org\", \"exclude\": [\"bluefinchcommerce/module-checkout\"]}"
             composer config minimum-stability dev
             composer config prefer-stable true
-            composer require gene/module-better-checkout:dev-${CIRCLE_BRANCH}#${CIRCLE_SHA1} --no-interaction
+            composer require bluefinchcommerce/module-checkout:dev-${CIRCLE_BRANCH} --no-interaction
       - run:
           name: Install Magento
+          working_directory: ~/magento2
           command: |
             php -d memory_limit=-1 bin/magento setup:install \
             --base-url=http://m2build.test/ \
@@ -91,7 +98,7 @@ jobs:
             --db-password=root \
             --admin-firstname=Admin \
             --admin-lastname=User \
-            --admin-email=admin@gene.co.uk \
+            --admin-email=admin@bluefinch.co.uk \
             --admin-user=admin \
             --admin-password=password1 \
             --language=en_GB \
@@ -108,54 +115,69 @@ jobs:
             --elasticsearch-index-prefix="local" \
             --elasticsearch-timeout=15
       - run:
+          working_directory: ~/magento2
           name: DI Compile
           command: php -d memory_limit=-1 bin/magento setup:di:compile
       - run:
-          name: Install composer modules within Better Checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
+          name: Install composer modules within BlueFinch Checkout
           command: |
-            composer install --working-dir=vendor/gene/module-better-checkout  --dev
+            composer install --no-interaction
       - run:
           name: PHPCS
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: |
-            ./vendor/bin/phpcs vendor/gene/module-better-checkout --standard=Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
+            ./vendor/bin/phpcs . --standard=phpcs.xml,Magento2 --ignore=vendor,*.css,Test --extensions=php --colors -s -p -v --runtime-set installed_paths vendor/magento/magento-coding-standard,vendor/magento/php-compatibility-fork
       - run:
           name: PHPStan
-          working_directory: ./vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: ./vendor/bin/phpstan analyse . --configuration=./phpstan.neon
       - run:
           name: Configure PHPunit
-          working_directory: ./vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: |
             mkdir -p ~/phpunit
       - run:
           name: PHPUnit
-          working_directory: ./vendor/gene/module-better-checkout
+          working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           command: ./vendor/bin/phpunit -c phpunit.xml
-      - store_test_results:
-          path: ~/phpunit
-      - store_artifacts:
-          path: ~/phpunit
       - run:
           name: NPM install to root module
-          command: npm --prefix vendor/gene/module-better-checkout i
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout i
       - run:
           name: NPM install to checkout app
-          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout i
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/frontend/web/js/checkout i
       - run:
           name: NPM install to admin app
-          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout i
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/adminhtml/web/js/checkout i
       - run:
           name: ESLint run against root module
-          command: npm --prefix vendor/gene/module-better-checkout run lint
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout run lint
       - run:
           name: ESLint run against checkout app
-          command: npm --prefix vendor/gene/module-better-checkout/view/frontend/web/js/checkout run lint
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/frontend/web/js/checkout run lint
       - run:
           name: ESLint run against admin app
-          command: npm --prefix vendor/gene/module-better-checkout/view/adminhtml/web/js/checkout run lint
+          working_directory: ~/magento2
+          command: npm --prefix vendor/bluefinchcommerce/module-checkout/view/adminhtml/web/js/checkout run lint
 
 workflows:
-  build-test:
+  magento-build-test:
     jobs:
       - build:
-          context: magento2 module
+          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7'
+  mageos-build-test:
+    jobs:
+      - build:
+          project_create_command: '--repository-url=https://repo.mage-os.org/ mage-os/project-community-edition=1.0.5'
+          filters:
+            branches:
+              only:
+                - main
+                - develop
+                - hotfix/*

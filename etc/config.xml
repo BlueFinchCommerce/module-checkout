@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <gene_better_checkout>
+        <bluefinch_checkout>
             <general>
                 <enable>0</enable>
                 <enable_debug>0</enable_debug>
@@ -14,7 +14,7 @@
                     <loqate_api_key></loqate_api_key>
                 </loqate>
             </general>
-        </gene_better_checkout>
+        </bluefinch_checkout>
         <recaptcha_frontend>
             <type_for>
                 <customer_create_success/>

@@ -67,11 +67,15 @@ export default {
   data() {
     return {
       shippingStepCompletedText: '',
-      shippingStepCompletedTextId: 'gene-bettercheckout-shippingstepcompleted-text',
+      shippingStepCompletedTextId: 'bluefinch-checkout-shippingstepcompleted-text',
     };
   },
   async created() {
-    this.shippingStepCompletedText = window.geneCheckout?.[this.shippingStepCompletedTextId]
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
+    this.shippingStepCompletedText = window.bluefinchCheckout?.[this.shippingStepCompletedTextId]
       || this.$t('shippingStep.stepCompleteTitle');
 
     document.addEventListener(this.shippingStepCompletedTextId, this.setShippingStepText);
@@ -81,6 +85,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   methods: {

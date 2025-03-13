@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model\Resolver;
+namespace BlueFinch\Checkout\Model\Resolver;
 
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Eav\Api\Data\AttributeInterface;
@@ -39,6 +39,8 @@ class ValidateRules implements ResolverInterface
     }
 
     /**
+     * Return an entity type of the value
+     *
      * @param array $value
      * @return string
      * @throws LocalizedException
@@ -69,6 +71,8 @@ class ValidateRules implements ResolverInterface
     }
 
     /**
+     * Return an array of validation rules
+     *
      * @param AttributeInterface $attribute
      * @return array
      */

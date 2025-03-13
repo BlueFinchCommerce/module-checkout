@@ -26,7 +26,7 @@
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
 // stores
-import { mapActions } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
@@ -50,12 +50,17 @@ export default {
   data() {
     return {
       removeItemText: '',
-      removeItemTextId: 'gene-bettercheckout-removeitem-text',
+      removeItemTextId: 'bluefinch-checkout-removeitem-text',
     };
   },
   async created() {
-    this.removeItemText = window.geneCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.removeItemText = window.bluefinchCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
+  },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
   },
   methods: {
     ...mapActions(useCartStore, ['removeItem']),

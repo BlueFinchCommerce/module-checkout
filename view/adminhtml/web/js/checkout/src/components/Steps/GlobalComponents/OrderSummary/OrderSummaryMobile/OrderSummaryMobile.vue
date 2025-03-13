@@ -17,7 +17,7 @@
     <template #body>
       <PromotionComponent />
       <CouponDiscount />
-      <GiftCardDiscount />
+      <GiftCardDiscount v-if="giftCardAvailable" />
       <div class="product-items">
         <OrderSummaryItem />
       </div>
@@ -96,6 +96,9 @@ import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
 import Close from '@/components/Core/Icons/Close/Close.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
+// Helpers
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+
 export default {
   name: 'OrderSummaryMobile',
   components: {
@@ -129,22 +132,29 @@ export default {
     return {
       isModalVisible: false,
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       orderSummaryDescriptionText: '',
-      orderSummaryDescriptionTextId: 'gene-bettercheckout-ordersummarydescription-text',
+      orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
+      giftCardAvailable: true,
     };
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
-    ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode']),
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.orderSummaryDescriptionText = window.geneCheckout?.[this.orderSummaryDescriptionTextId]
-      || this.$t('orderSummary.mobileDiscountText');
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
+      || getMagentoSolutionType()
+      ? this.$t('orderSummary.mobileDiscountText') : this.$t('orderSummary.mobileDiscountTextOs');
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);
+    this.giftCardAvailable = getMagentoSolutionType();
   },
   unmounted() {
     document.removeEventListener(this.orderSummaryTextId, this.setOrderSummaryText);

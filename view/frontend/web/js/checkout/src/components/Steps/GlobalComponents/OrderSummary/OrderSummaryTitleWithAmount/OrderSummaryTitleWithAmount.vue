@@ -14,7 +14,7 @@
 </template>
 <script>
 // stores
-import { mapActions } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // components
@@ -36,12 +36,17 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
     };
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+  },
+  computed: {
+    ...mapState(useConfigStore, ['locale']),
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Magento\CheckoutAgreements\Model\AgreementsConfigProvider;
 
@@ -17,6 +17,8 @@ class AgreementsDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of agreements data
+     *
      * @param int $quoteId
      * @return array
      */

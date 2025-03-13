@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\ViewModel;
+namespace BlueFinch\Checkout\ViewModel;
 
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;

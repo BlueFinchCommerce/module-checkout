@@ -13,7 +13,8 @@
   </div>
 </template>
 <script>
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -26,14 +27,19 @@ export default {
   data() {
     return {
       dividerText: '',
-      dividerTextId: 'gene-bettercheckout-divider-text',
+      dividerTextId: 'bluefinch-checkout-divider-text',
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(usePaymentStore, ['availableMethods', 'isExpressPaymentsVisible']),
   },
-  mounted() {
-    this.dividerText = window.geneCheckout?.[this.dividerTextId] || this.$t('dividerText');
+  async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
+    this.dividerText = window.bluefinchCheckout?.[this.dividerTextId] || this.$t('dividerText');
 
     document.addEventListener(this.dividerTextId, this.setDividerText);
   },
@@ -41,6 +47,7 @@ export default {
     document.removeEventListener(this.dividerTextId, this.setDividerText);
   },
   methods: {
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     setDividerText(event) {
       this.dividerText = event?.detail?.value || this.$t('dividerText');
     },

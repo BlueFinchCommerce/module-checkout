@@ -56,6 +56,7 @@
 
 // stores
 import { mapActions, mapState } from 'pinia';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useCustomerStore from '@/stores/CustomerStore';
 
 // icons
@@ -94,10 +95,11 @@ export default {
       isShippingNewCTA: true,
       uniqueAddressList: [],
       addNewAddressButtonText: '',
-      addNewAddressButtonTextId: 'gene-bettercheckout-addnewaddress-button-text',
+      addNewAddressButtonTextId: 'bluefinch-checkout-addnewaddress-button-text',
     };
   },
   computed: {
+    ...mapState(useConfigStore, ['locale']),
     ...mapState(useCustomerStore, ['customer', 'selected']),
   },
   watch: {
@@ -111,7 +113,11 @@ export default {
       },
     },
   },
-  mounted() {
+  async mounted() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.$emit('showAddressBlock', false);
 
     let selectedId = null;
@@ -135,13 +141,15 @@ export default {
       }
     });
 
-    this.addNewAddressButtonText = window.geneCheckout?.[this.addNewAddressButtonTextId] || this.$t('addNewAddressBtn');
+    this.addNewAddressButtonText = window.bluefinchCheckout?.[this.addNewAddressButtonTextId]
+      || this.$t('addNewAddressBtn');
     document.addEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
   },
   unmounted() {
     document.removeEventListener(this.addNewAddressButtonTextId, this.setAddNewAddressButtonText);
   },
   methods: {
+    ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'createNewAddress',

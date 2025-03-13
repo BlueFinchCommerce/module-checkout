@@ -1,33 +1,33 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Gene\BetterCheckout\Api\GetCustomerAddressesInterface"
-                type="Gene\BetterCheckout\Model\GetCustomerAddresses"/>
-    <preference for="Gene\BetterCheckout\Api\GetCheckoutDataInterface"
-                type="Gene\BetterCheckout\Model\GetCheckoutData"/>
-    <preference for="Gene\BetterCheckout\Api\GetGuestCheckoutDataInterface"
-                type="Gene\BetterCheckout\Model\GetGuestCheckoutData"/>
-    <preference for="Gene\BetterCheckout\Model\CompositeDataProviderInterface"
-                type="Gene\BetterCheckout\Model\CompositeDataProvider"/>
-    <preference for="Gene\BetterCheckout\Model\ConfigurationInterface"
-                type="Gene\BetterCheckout\Model\Configuration"/>
-    <type name="Gene\BetterCheckout\Model\CompositeDataProvider">
+    <preference for="BlueFinch\Checkout\Api\GetCustomerAddressesInterface"
+                type="BlueFinch\Checkout\Model\GetCustomerAddresses"/>
+    <preference for="BlueFinch\Checkout\Api\GetCheckoutDataInterface"
+                type="BlueFinch\Checkout\Model\GetCheckoutData"/>
+    <preference for="BlueFinch\Checkout\Api\GetGuestCheckoutDataInterface"
+                type="BlueFinch\Checkout\Model\GetGuestCheckoutData"/>
+    <preference for="BlueFinch\Checkout\Model\CompositeDataProviderInterface"
+                type="BlueFinch\Checkout\Model\CompositeDataProvider"/>
+    <preference for="BlueFinch\Checkout\Model\ConfigurationInterface"
+                type="BlueFinch\Checkout\Model\Configuration"/>
+    <type name="BlueFinch\Checkout\Model\CompositeDataProvider">
         <arguments>
             <argument name="dataProviders" xsi:type="array">
-                <item name="10" xsi:type="object">Gene\BetterCheckout\Model\AgreementsDataProvider</item>
-                <item name="20" xsi:type="object">Gene\BetterCheckout\Model\ImageDataProvider</item>
-                <item name="30" xsi:type="object">Gene\BetterCheckout\Model\GiftMessageDataProvider</item>
+                <item name="10" xsi:type="object">BlueFinch\Checkout\Model\AgreementsDataProvider</item>
+                <item name="20" xsi:type="object">BlueFinch\Checkout\Model\ImageDataProvider</item>
+                <item name="30" xsi:type="object">BlueFinch\Checkout\Model\GiftMessageDataProvider</item>
             </argument>
         </arguments>
     </type>
     <type name="Magento\Checkout\CustomerData\Cart">
-        <plugin name="geneAddAdditionalDataCart" type="Gene\BetterCheckout\Plugin\CustomerData\Cart" />
+        <plugin name="checkoutAddAdditionalDataCart" type="BlueFinch\Checkout\Plugin\CustomerData\Cart" />
     </type>
     <type name="Magento\Quote\Model\Quote\Address">
-        <plugin name="geneCollectShippingRates" type="Gene\BetterCheckout\Plugin\Quote\Address" />
+        <plugin name="checkoutCollectShippingRates" type="BlueFinch\Checkout\Plugin\Quote\Address" />
     </type>
     <type name="Magento\Quote\Model\Quote">
-        <plugin name="geneCollectTotals" type="Gene\BetterCheckout\Plugin\Quote" />
+        <plugin name="checkoutCollectTotals" type="BlueFinch\Checkout\Plugin\Quote" />
     </type>
 
     <type name="Magento\Translation\Model\Js\Config">

@@ -88,8 +88,8 @@
       <Agreements id="braintreeVault" />
       <PrivacyPolicy />
       <Recaptcha
-        v-if="isRecaptchaVisible('placeOrder')"
-        id="placeOrder"
+        v-if="getTypeByPlacement('braintree')"
+        id="braintree"
         location="braintreeVaultedMethods"
       />
       <MyButton
@@ -171,16 +171,18 @@ export default {
       'errorMessage',
       'unselectVaultedMethods',
     ]),
-    ...mapState(useConfigStore, ['currencyCode', 'websiteName']),
+    ...mapState(useConfigStore, ['locale', 'currencyCode', 'websiteName']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal']),
     ...mapState(useCustomerStore, ['customer', 'getSelectedBillingAddress', 'isLoggedIn']),
     ...mapState(usePaymentStore, ['paymentEmitter', 'availableMethods', 'selectedMethod']),
-    ...mapState(useRecaptchaStore, ['isRecaptchaVisible']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
   },
   async created() {
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
 
-    this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });

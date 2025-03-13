@@ -2,13 +2,13 @@ import { defineAsyncComponent } from 'vue';
 
 export default () => {
   const additionalVaultedMethods = {};
-  // Look at window.geneCheckout.additionalVaultedMethods object to trigger the loading of all payment methods.
-  if (window.geneCheckout?.additionalVaultedMethods) {
-    Object.keys(window.geneCheckout.additionalVaultedMethods).forEach((paymentMethod) => {
+  // Look at window.bluefinchCheckout.additionalVaultedMethods object to trigger the loading of all payment methods.
+  if (window.bluefinchCheckout?.additionalVaultedMethods) {
+    Object.keys(window.bluefinchCheckout.additionalVaultedMethods).forEach((paymentMethod) => {
       additionalVaultedMethods[paymentMethod] = defineAsyncComponent(() => (
         import(
           /* @vite-ignore */
-          window.geneCheckout.additionalVaultedMethods[paymentMethod]
+          window.bluefinchCheckout.additionalVaultedMethods[paymentMethod]
         )));
     });
   }

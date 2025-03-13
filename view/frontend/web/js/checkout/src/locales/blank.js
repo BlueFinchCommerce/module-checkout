@@ -3,12 +3,16 @@ export default {
   header: {
     text: ' ',
   },
+  dividerText: ' ',
+  signInDividerText: ' ',
+  payNoExpressWithBlockTitle: ' ',
   payWithBlockTitle: ' ',
   orderSummary: {
     applyBtn: ' ',
     removeBtn: ' ',
     modalHeader: ' ',
     mobileDiscountText: ' ',
+    mobileDiscountTextOs: ' ',
     backBtn: ' ',
     grandTotalTitle: ' ',
     inclTaxTitle: ' ',

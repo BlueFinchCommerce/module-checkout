@@ -11,6 +11,6 @@ export default async () => {
     }
   }`;
 
-  return graphQlRequest(request, {}, {}, 'BetterCheckoutCart')
+  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCart')
     .then((response) => response.data.cart);
 };

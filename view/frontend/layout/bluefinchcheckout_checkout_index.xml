@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="css/styles.css"/>
+        <remove src="css/styles-m.css"/>
+        <remove src="css/styles-l.css"/>
+        <remove src="requirejs/require.js"/>
+        <remove src="mage/requirejs/mixins.js"/>
+        <remove src="requirejs-config.js"/>
+    </head>
+
+    <body>
+        <!-- Remove core layout -->
+        <referenceContainer name="root" remove="true" />
+
+        <!-- Add Checkout -->
+        <container name="bluefinch.checkout.container" htmlTag="div" htmlId="bluefinch-checkout-container">
+            <block name="bluefinch.checkout" template="BlueFinch_Checkout::bluefinch-checkout.phtml" before="-">
+                <arguments>
+                    <argument name="asset_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\Assets</argument>
+                    <argument name="translations_view_model" xsi:type="object">BlueFinch\Checkout\ViewModel\Translations</argument>
+                </arguments>
+            </block>
+        </container>
+
+        <container name="bluefinch.checkout.analytics">
+            <referenceBlock name="google_gtag_analyticsgtm">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">BlueFinch_Checkout::gtag_ga.phtml</argument>
+                </action>
+            </referenceBlock>
+        </container>
+        <move element="google_gtag_analyticsgtm" destination="bluefinch.checkout.analytics" />
+    </body>
+</page>

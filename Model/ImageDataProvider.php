@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Model;
+namespace BlueFinch\Checkout\Model;
 
 use Exception;
 use Magento\Checkout\CustomerData\DefaultItem;
@@ -32,6 +32,8 @@ class ImageDataProvider implements DataProviderInterface
     }
 
     /**
+     * Return an array of image data
+     *
      * @param int $quoteId
      * @return array
      */

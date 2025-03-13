@@ -23,7 +23,6 @@ import useRewardPoints from '@/services/reward/useRewardPoints';
 import useStoreCredit from '@/services/storeCredit/useStoreCredit';
 import refreshCustomerData from '@/services/customer/refreshCustomerData';
 import removeStoreCredit from '@/services/storeCredit/removeStoreCredit';
-import pennies from '@/services/payments/penniesCharityBox';
 
 import getDummyCartItems from '@/helpers/dummyContent/getDummyCartItems';
 import getDummyGiftCards from '@/helpers/dummyContent/getDummyGiftCards';
@@ -62,17 +61,8 @@ export default defineStore('cartStore', {
     cache: {},
     cartEmitter: mitt(),
     maskedId: getLocalMaskedId(),
-    penniesDonation: {
-      logo: null,
-      amount: null,
-      enabled: false,
-      isAvailable: true,
-    },
   }),
   getters: {
-    hasPenniesDonation: (state) => (
-      state.totalSegments.some((segment) => segment.code === 'penniesdonation' && segment.value > 0)
-    ),
     isItemRequiringDelivery: (state) => (
       Object.values(state.cartItems).some(({ product_type: productType }) => (
         productType !== 'giftcard' && productType !== 'virtual'
@@ -203,10 +193,6 @@ export default defineStore('cartStore', {
         this.setData({ cart: { items: updatedItems } });
       }
 
-      if (this.penniesDonation.enabled) {
-        await this.calculateDonation();
-      }
-
       // Also trigger refresh of User's cart data.
       refreshCustomerData(getCartSectionNames());
 
@@ -232,10 +218,6 @@ export default defineStore('cartStore', {
         this.emitUpdate();
       } catch (error) {
         console.warn('Unable to remove cart item', error.message);
-      }
-
-      if (this.penniesDonation.enabled) {
-        await this.calculateDonation();
       }
 
       this.clearCaches(['getCrosssells']);
@@ -264,12 +246,6 @@ export default defineStore('cartStore', {
           discountErrorMessage: error.message,
         });
       }
-
-      if (this.penniesDonation.enabled) {
-        this.setData({
-          penniesDonation: { isAvailable: true },
-        });
-      }
     },
 
     async removeDiscountCode() {
@@ -284,12 +260,6 @@ export default defineStore('cartStore', {
       } catch (error) {
         this.setData({
           discountErrorMessage: error.message,
-        });
-      }
-
-      if (this.penniesDonation.enabled) {
-        this.setData({
-          penniesDonation: { isAvailable: true },
         });
       }
     },
@@ -308,12 +278,6 @@ export default defineStore('cartStore', {
           giftCardErrorMessage: error.message,
         });
       }
-
-      if (this.penniesDonation.enabled) {
-        this.setData({
-          penniesDonation: { isAvailable: true },
-        });
-      }
     },
 
     async removeGiftCardCode(code) {
@@ -328,12 +292,6 @@ export default defineStore('cartStore', {
       } catch (error) {
         this.setData({
           giftCardErrorMessage: error.message,
-        });
-      }
-
-      if (this.penniesDonation.enabled) {
-        this.setData({
-          penniesDonation: { isAvailable: true },
         });
       }
     },
@@ -381,9 +339,6 @@ export default defineStore('cartStore', {
         this.setData({ cart });
       } catch (error) {
         console.warn('Unable to add cart item', error.message);
-      }
-      if (this.penniesDonation.enabled) {
-        await this.calculateDonation();
       }
       this.clearCaches(['getCrosssells']);
       await this.getCrosssells();
@@ -443,44 +398,6 @@ export default defineStore('cartStore', {
 
       // Also trigger refresh of User's cart data.
       refreshCustomerData(getCartSectionNames());
-    },
-
-    async addDonation() {
-      await pennies.addCharityAmount();
-      this.setData({
-        penniesDonation: { isAvailable: false },
-      });
-      await this.calculateDonation();
-      this.emitUpdate();
-    },
-
-    async removeDonation() {
-      await pennies.removeCharityAmount();
-      this.setData({
-        penniesDonation: { isAvailable: true },
-      });
-      await this.calculateDonation();
-      this.emitUpdate();
-    },
-
-    async calculateDonation() {
-      const charityData = await pennies.getCharityAmount();
-      this.setData({
-        penniesDonation: {
-          charityData,
-          amount: (parseFloat(charityData.amount) / 100).toString(),
-        },
-      });
-    },
-
-    async penniesConfigs() {
-      const data = await this.getCachedResponse(pennies.getPenniesConfigs, 'penniesConfigs');
-      this.setData({
-        penniesDonation: {
-          logo: data.PenniesData.charity_logo_url,
-          enabled: data.PenniesData.enabled === 'true',
-        },
-      });
     },
 
     async useRewardPoints() {

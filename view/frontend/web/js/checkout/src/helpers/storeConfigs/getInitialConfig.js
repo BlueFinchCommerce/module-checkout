@@ -21,7 +21,7 @@ export default async () => {
     ${validationStore.getInitialConfigValues()}
   }`;
 
-  const { data } = await graphQlRequest(request, {}, {}, 'BetterCheckoutInitialConfig');
+  const { data } = await graphQlRequest(request, {}, {}, 'BlueFinchCheckoutInitialConfig');
 
   return data;
 };

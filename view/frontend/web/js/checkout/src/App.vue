@@ -37,11 +37,11 @@ export default {
     ...mapState(useConfigStore, ['locale']),
   },
   async created() {
-    if (window.geneCheckout.translations) {
+    if (window.bluefinchCheckout.translations) {
       const defaultMessages = this.$i18n.getLocaleMessage('en-GB');
       const localeMessages = this.$i18n.getLocaleMessage(this.locale);
       const mergedMessages = lodashMerge(defaultMessages, localeMessages);
-      const translations = JSON.parse(window.geneCheckout.translations);
+      const translations = JSON.parse(window.bluefinchCheckout.translations);
       Object.keys(translations).forEach((translation) => {
         lodashSet(mergedMessages, translation, translations[translation]);
       });
@@ -49,13 +49,13 @@ export default {
     }
 
     document.querySelector('html').classList.add('vue-checkout-active');
-    document.getElementById('gene-better-checkout-root').setAttribute('role', 'main');
+    document.getElementById('bluefinch-checkout-root').setAttribute('role', 'main');
     await this.getInitialConfig();
 
     this.setInitialStepState();
 
-    if (window?.geneCheckout?.callbacks?.onCreate) {
-      Object.values(window.geneCheckout.callbacks.onCreate).forEach(async (callback) => {
+    if (window?.bluefinchCheckout?.callbacks?.onCreate) {
+      Object.values(window.bluefinchCheckout.callbacks.onCreate).forEach(async (callback) => {
         const { default: callbackFunction } = await import(callback);
         callbackFunction();
       });

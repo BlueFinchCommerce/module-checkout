@@ -153,14 +153,14 @@ export default {
       nominatedId: 'nominated_delivery',
       hasSubmitted: false,
       shippingStepText: '',
-      shippingStepTextId: 'gene-bettercheckout-shippingstep-text',
+      shippingStepTextId: 'bluefinch-checkout-shippingstep-text',
       proceedToPayText: '',
-      proceedToPayTextId: 'gene-bettercheckout-proceedtopay-text',
+      proceedToPayTextId: 'bluefinch-checkout-proceedtopay-text',
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart']),
-    ...mapState(useConfigStore, ['taxCartDisplayShipping']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayShipping']),
     ...mapState(useCustomerStore, ['selected']),
     ...mapState(useShippingMethodsStore, [
       'getError',
@@ -170,10 +170,14 @@ export default {
     ]),
   },
   async created() {
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+
     this.additionalShippingMethods = Object.keys(shippingMethods());
 
-    this.shippingStepText = window.geneCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
-    this.proceedToPayText = window.geneCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.shippingStepText = window.bluefinchCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
 
     document.addEventListener(this.shippingStepTextId, this.setShippingStepText);
     document.addEventListener(this.proceedToPayTextId, this.setProceedToPayText);

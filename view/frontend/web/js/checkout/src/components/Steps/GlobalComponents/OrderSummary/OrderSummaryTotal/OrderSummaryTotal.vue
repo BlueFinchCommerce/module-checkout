@@ -27,7 +27,8 @@
         />
       </div>
       <div
-        v-for="(discount, index) in cart?.prices?.discounts"
+        v-for="(discount, index) in (cart?.prices?.discounts || []).filter(d => !(d.label === 'Gift Cards'
+        && cart?.applied_gift_cards?.length))"
         :key="index"
         class="order-total"
       >
@@ -41,6 +42,27 @@
             class="total__text discount"
             :value="'-' + discount.amount.value"
             :data-cy="dataCy ? `discount-price-${dataCy}` : 'discount-price'"
+          />
+        </div>
+      </div>
+      <div
+        v-if="cart?.applied_gift_cards?.length"
+        class="order-total"
+      >
+        <div
+          v-for="(giftCard, index) in cart.applied_gift_cards"
+          :key="'gift-card-' + index"
+          class="total__row"
+        >
+          <TextField
+            class="total__text title"
+            :text="$t('orderSummary.giftCardDiscount.title')"
+            :data-cy="dataCy ? `applied-gift-card-${dataCy}` : 'applied-gift-card'"
+          />
+          <Price
+            class="total__text discount"
+            :value="'-' + giftCard.current_balance.value"
+            :data-cy="dataCy ? `applied-gift-card-price-${dataCy}` : 'applied-gift-card-price'"
           />
         </div>
       </div>
@@ -131,21 +153,23 @@ export default {
   data() {
     return {
       orderSummaryText: '',
-      orderSummaryTextId: 'gene-bettercheckout-ordersummary-text',
+      orderSummaryTextId: 'bluefinch-checkout-ordersummary-text',
       grandTotalText: '',
-      grandTotalTextId: 'gene-bettercheckout-grandtotal-text',
+      grandTotalTextId: 'bluefinch-checkout-grandtotal-text',
       orderSummaryMessagesContainers: [],
     };
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
-    ...mapState(useConfigStore, ['taxCartDisplayFullSummary']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplayFullSummary']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
-    this.orderSummaryText = window.geneCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.grandTotalText = window.geneCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
-    await this.getInitialConfig();
+    if (!this.locale) {
+      await this.getInitialConfig();
+    }
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
     this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
   },
   methods: {

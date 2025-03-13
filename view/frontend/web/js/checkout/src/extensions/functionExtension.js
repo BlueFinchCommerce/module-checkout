@@ -1,8 +1,8 @@
 export default (type, parameters) => {
-  if (window?.geneCheckout?.callbacks?.[type]) {
+  if (window?.bluefinchCheckout?.callbacks?.[type]) {
     let callbackReturn = Promise.resolve(parameters);
 
-    Object.values(window.geneCheckout.callbacks[type]).forEach((callback) => {
+    Object.values(window.bluefinchCheckout.callbacks[type]).forEach((callback) => {
       if (typeof callback === 'function') {
         callbackReturn = callbackReturn.then((response) => callback(response));
         return;

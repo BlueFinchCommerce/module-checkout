@@ -1,43 +1,82 @@
-# Better Checkout - Custom Extension Guide
+![BlueFinch Checkout](../assets/logo.svg)
 
-This guide covers how to extend Better Checkout with custom modules by adding new components, integrating additional functionality, creating callback functions and running your code effectively.
+# BlueFinch Checkout - Custom extension guide
 
-## How to extend Better Checkout functionality with a custom module
+This guide covers how to extend the BlueFinch Checkout from within your own custom Magento modules, so that you can add new components, integrate additional functionality via event, functional or GraphQL query mutation callback functions or change the styling.
+
+## Getting started
+
+The easiest way to start creating your own BlueFinch Checkout custom extension Magento modules is to use the module template we provide and by following our guide below:
+* [How to create a checkout extension module](how-to-create-a-checkout-extension-module.md)
+* [How to create a custom payment method](how-to-create-a-payment-method.md)
+* [BlueFinch Checkout Module Template](https://github.com/BlueFinchCommerce/module-checkout-template)
+
+## How to extend BlueFinch Checkout functionality with a custom module
 To use this functionality, the high level steps to follow are:
 
 1. Create a new Magento 2 module as per [Magento standards](https://experienceleague.adobe.com/en/docs/commerce-learn/tutorials/backend-development/create-module).
-1. Create a `view/frontend/templates` directory to add a .phtml template file for your module, in which you can declare custom callbacks, components, styles etc.
-1. Create a `view/frontend/layouts` directory containing a `genebettercheckout_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores Better Checkout page.
-1. Create a `view/frontend/web/js/checkout/src/` directory containing your Better Checkout extension code.
-
-**Please refer to our template for creating Better Checkout modules [here](https://github.com/genecommerce/better-checkout-new-module-template)**, which has all the necssary files required, including those for building the front end assets.
+1. Create a `view/frontend/templates` directory to add a .phtml template file for your module, in which you can declare extension points for your custom components, callbacks and styles.
+1. Create a `view/frontend/layouts` directory containing a `bluefinch_checkout_index.xml` XML layout file to include your modules .phtml template file in your stores BlueFinch Checkout page.
+1. Create a `view/frontend/web/js/checkout/src/` directory containing your BlueFinch Checkout extension code.
 
 ## How to add a new component
 
-### Set up a component file:
+### Set up a component file
 1. Navigate to the `view/frontend/js/checkout/src` directory within your module.
-1. Here, create your component file in the `components` directory. 
+1. Here, create your component file in the `components` directory.
 1. Each new component file should have a unique name and relevant logic for your checkout modification.
 
-### Render the component:
+### Component Extension Points
 
-We use (Vue dynamic components)[https://vuejs.org/guide/essentials/component-basics#dynamic-components] and the `<component>` element, to provide component extension points to render your component(s):
+We use [Vue dynamic components](https://vuejs.org/guide/essentials/component-basics#dynamic-components) and the `<component>` element, to provide component extension points to render any component(s) you create in your custom module:
 
-1. additionalShippingMethod
-1. additionalVaultedMethod
-1. ageCheckerExtension
-1. belowEmailFieldExtension
-1. belowShippingMethods
-1. clickAndCollectComponent
-1. expressPaymentMethod
-1. footerPaymentIcon
-1. orderSummaryMessagesContainer
-1. paymentIcon
-1. paymentMethod
-1. paymentMethodsPrimary
-1. shippingMethodAdditionalContainer
+### Global
 
-Example of an extension point in Better Checkout:
+| Extension Point                 | Usage                                              |
+| ------------------------------- | -------------------------------------------------- |
+| orderSummaryMessagesContainer   | Insert a component after order summary total       |
+| footerPaymentIcons              | Insert a component before the footer payment icons |
+||
+
+![Global Extension Points](global-extension-points.png)
+
+### Details Page
+
+| Extension Point                 | Usage                                                                                              |
+| ------------------------------- | -------------------------------------------------------------------------------------------------- |
+| expressPaymentMethods           | Insert a component after the last express payment method e.g. An additional express payment method |
+| paymentIcons                    | Insert a component before the payment method icons container e.g. Some welcome text                |
+| belowEmailFields                | Insert a component after the email field                                                           |
+| clickAndCollectComponent        | Insert a component after the click and collect section                                             |
+| ageCheckerContainer             | Insert a component after the details section e.g. Age Checker                                      |
+||
+
+![Details Page Extension Points](details-page-extension-points.png)
+
+### Shipping Page
+
+| Extension Point                   | Usage                                                                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| ageCheckerContainer               | Insert a component before the shipping methods container e.g. age checker                                                      |
+| shippingMethodAdditionalContainer | Insert a component before the first shipping method e.g. An additional shipping method that you want to be your primary method |
+| shippingMethods                   | Insert a component after the last shipping method e.g. An additional shipping method                                           |
+| belowShippingMethods              | Insert a component after the shipping methods container e.g. delivery instructions                                             |
+||
+
+![Shipping Page Extension Points](shipping-page-extension-points.png)
+
+### Payment Page
+
+| Extension Point          | Usage                                                                                                                        |
+| -------------------------| ---------------------------------------------------------------------------------------------------------------------------- |
+| ageCheckerContainer      | Insert a component before the payment methods container e.g. age checker                                                     |
+| additionalVaultedMethods | Insert a component after the last vaulted method e.g. An additional vaulted method                                           |
+| paymentMethodsPrimary    | Insert a component before the first payment method e.g. An additional payment method that you want to be your primary method |
+| paymentMethods           | Insert a component after the last payment method e.g. An additional payment method                                           |
+||
+![Payment Page Extension Points](payment-page-extension-points.png)
+
+Example of an extension point in BlueFinch Checkout:
 
 ```html
 <component
@@ -47,20 +86,20 @@ Example of an extension point in Better Checkout:
 />
 ```
 
-After you have selected the component extension point for your custom component, you need to register it in the modules .phtml file, via the global `window.geneCheckout` namespace:
+After you have selected the component extension point for your custom component, you need to register it in the modules .phtml file, via the global `window.bluefinchCheckout` namespace:
 
-1. Add the global `window.geneCheckout` namespace.
-1. Add the component extension point namespace, to the global `window.geneCheckout` namespace.
-1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
+1. Add the global `window.bluefinchCheckout` namespace.
+2. Add the component extension point namespace, to the global `window.bluefinchCheckout` namespace.
+3. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
 
 Example:
 
 ```html
 <script>
-    window.geneCheckout = window.geneCheckout || {};
-    window.geneCheckout.belowShippingMethods = window.geneCheckout.belowShippingMethods || {};
+    window.bluefinchCheckout = window.bluefinchCheckout || {};
+    window.bluefinchCheckout.belowShippingMethods = window.bluefinchCheckout.belowShippingMethods || {};
 
-    window.geneCheckout.belowShippingMethods.newComponent = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/components/NewComponent/NewComponent.min.js')) ?>";
+    window.bluefinchCheckout.belowShippingMethods.newComponent = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/components/NewComponent/NewComponent.min.js')) ?>";
 </script>
 ```
 To render your component locally, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
@@ -68,84 +107,121 @@ To render your component locally, see [local workflow](../.github/CONTRIBUTING.m
 ## How to create callback functions
 Callback functions enable you to define custom responses to various checkout events.
 
-You can choose from the available callback extension points listed below, to integrate your functionionality effectively:
+You can choose from the available callback extension points listed below, to integrate your functionality effectively:
 
-### Event-based Extension Points
-1. onBraintreeExpressInit 
-1. onCreate 
-1. onDeliveryTabEvent 
-1. onEditAddress 
-1. onHandleCartData 
-1. onLogin 
-1. onPaymentDataChanged 
-1. onSetShippingStep 
-1. onShippingMethodMounted 
-1. onStepsCreated 
-1. onSubmitShippingOptionAgeCheck 
-1. onUserProceed
+### Event Extension Points
 
-### Function Extension Points
-1. getAppliedCoupons 
-1. getBillingAddress 
-1. getCrossSellsHeader 
-1. getFullCart 
-1. getGiftCards 
-1. getGiftWrapping 
-1. getIsVirtual 
-1. getItems 
-1. getPaymentMethods 
-1. getPrices 
-1. getRewardPoints 
-1. getShippingAddresses 
-1. getShippingMethods 
-1. getStoreCredit
+#### Global
+
+| Event Extension Point | Parameters          | Usage |
+| --------------------- | ------------------- | ----- |
+| onCreate              | -                   | Occurs in the [root app's](../view/frontend/web/js/checkout/src/App.vue) `created` lifecycle hook on initial render of the app once the initial config is retrieved and the initial step is set. |
+| onStepsCreated        | -                   | Occurs in the [steps component](../view/frontend/web/js/checkout/src/components/Steps/Steps.vue) `created` lifecycle hook. |
+| onLogin               | -                   | Occurs when a customer logs in using the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue) triggering the login function in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js). |
+| onHandleCartData      | [cart, configStore] | Occurs in `handleCartData` action in the [customer store](../view/frontend/web/js/checkout/src/stores/CustomerStore.js), which updates the correct stores with cart data. |
+||
+
+#### Details Page
+
+| Event Extension Point  | Parameters | Usage |
+| ---------------------- | ---------- | ----- |
+| onBraintreeExpressInit | -          | Occurs in each of the Braintree express payment components ([Apple Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/ApplePay/ApplePay.vue), [Google Pay](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue) and [PayPal](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/PayPal/PayPal.vue)), once the options button has been clicked and the express payment method is initiated.  |
+| onUserProceed          |[email]     | Occurs when a customer clicks the button to proceed from the email address section to the delivery address section, in the [email address component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/EmailAddress/EmailAddress.vue). |
+| onDeliveryTabEvent     | -          | Occurs every time a customer clicks the home delivery tab element in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+| onEditAddress          | -          | Occurs every time a customer clicks the edit icon for the delivery address in the delivery section of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+||
+
+#### Shipping Page
+
+| Event Extension Point          | Parameters | Usage |
+| -------------------------------| ---------- | ----- |
+| onSetShippingStep              | -          | Occurs whenever a customer navigates to the shipping step and is triggered in the `goToShipping` function the [steps store](../view/frontend/web/js/checkout/src/stores/StepsStore.js). |
+| onShippingMethodMounted        | -          | Occurs in the `created` lifecycle hook of the [shipping step component](../view/frontend/web/js/checkout/src/components/Steps/ShippingPage/ShippingPage.vue), after the initial configuration and cart data are fetched, before the default shipping method is set. |
+| onSubmitShippingOptionAgeCheck | -          | Occurs when a customer proceeds from the details step to the shipping step, triggered in the `submitShippingOption` method of the [details step component](../view/frontend/web/js/checkout/src/components/Steps/CustomerInfoPage/DetailsPage/DetailsPage.vue). |
+||
+
+#### Payment Page
+
+| Event Extension Point | Parameters | Usage |
+| ----------------------| ---------- | ----- |
+| onPaymentDataChanged  | -          | Occurs in the `onPaymentDataChanged` method of the Braintree [Google pay component](../view/frontend/web/js/checkout/src/components/Steps/PaymentPage/Braintree/GooglePay/GooglePay.vue). |
+||
+
+### GraphQL Query Mutations
+
+Callback function extensions for GraphQL requests, provide the GraphQL query as a string before the data is fetched, so that you can amend and return this query in your custom modules callback function(s), to change the request.
+
+| GraphQL Extension Point | Parameters | Usage |
+| ------------------------| ---------- | ----- |
+| getAppliedCoupons       | [appliedCoupons] | Partial GraphQL query string for applied coupons. |
+| getBillingAddress       | [billingAddress] | Partial GraphQL query string for customers billing address. |
+| getFullCart             | [fullCart] | Partial GraphQL query string for customers full cart. |
+| getGiftCards            | [giftCards] | Partial GraphQL query string for applied gift cards. |
+| getGiftWrapping         | [giftWrapping] | Partial GraphQL query string for gift wrapping. |
+| geIsVirtual             | [isVirtual] | Partial GraphQL query string for is item virtual. |
+| getItems                | [items] | Partial GraphQL query string for cart items. |
+| getPaymentMethods       | [paymentMethods] | Partial GraphQL query string for available payment methods. |
+| getPrices               | [getPrices] | Partial GraphQL query string for prices. |
+| getRewardPoints         | [rewardPoints] | Partial GraphQL query string for applied reward points. |
+| getShippingAddresses    | [shippingAddresses] | Partial GraphQL query string for customers shipping addresses. |
+| getStoreCredit          | [storeCredit] | Partial GraphQL query string for applied store credit. |
+||
+
+### Miscellaneous Function Extension Points
+
+| Extension Point     | Parameters | Usage |
+| --------------------| ---------- | ----- |
+| getCrossSellsHeader | [titleText, showIcon] | Cross sells title text, boolean to show the cross sells promo icon in the cross sells header section. |
+| getShippingMethods  | [cart, paymentMethod, express] | Occurs after the GraphQL request to get the shipping method on the cart and allows the cart data to be modified and returned. |
+||
+
 
 ### Add your code:
 
 After you have selected the function extension point for your custom component, you need to create a callback file in your modules `view/frontend/js/checkout/src/callbacks` directory.
 
-Better Checkout exports it's components, helpers, router, services and stores, so you can load any of these in for use in your custom module using:
+BlueFinch Checkout exports it's components, helpers, router, services and stores, so you can load any of these in for use in your custom module using:
 
-`view/frontend/web/js/checkout/src/helpers/extensionData/loadFromCheckout.js` 
+`view/frontend/web/js/checkout/src/helpers/extensionData/loadFromCheckout.js`
 
 Please refer to the `index.js` in each of their respective directories under `src` to see what is available.
 
-You then you can register your callback in the modules .phtml file, via the global `window.geneCheckout` namespace:
+You then you can register your callback in the modules .phtml file, via the global `window.bluefinchCheckout` namespace:
 
-1. Add the global `window.geneCheckout` namespace.
-1. Add the `callbacks` namespace to the `window.geneCheckout` namespace.
-1. Add the function extension point namespace, to the global `window.geneCheckout` namespace.
+1. Add the global `window.bluefinchCheckout` namespace.
+1. Add the `callbacks` namespace to the `window.bluefinchCheckout` namespace.
+1. Add the function extension point namespace, to the global `window.bluefinchCheckout` namespace.
 1. Add your components namespace to the extension points namespace, then set the value to the path of the compiled and minified component js file name in the `checkout/dist` directory.
 
 Example:
 
 ```html
 <script>
-    window.geneCheckout = window.geneCheckout || {};
-    window.geneCheckout.callbacks = window.geneCheckout.callbacks || {};
-    window.geneCheckout.callbacks.onLogin = window.geneCheckout.callbacks.onLogin || {};
+    window.bluefinchCheckout = window.bluefinchCheckout || {};
+    window.bluefinchCheckout.callbacks = window.bluefinchCheckout.callbacks || {};
+    window.bluefinchCheckout.callbacks.onLogin = window.bluefinchCheckout.callbacks.onLogin || {};
 
-    window.geneCheckout.callbacks.onLogin.newModuleOnLogin = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/callbacks/onLogin.min.js')) ?>";
+    window.bluefinchCheckout.callbacks.onLogin.newModuleOnLogin = "<?= $escaper->escapeJs($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/callbacks/onLogin.min.js')) ?>";
 </script>
 ```
 
-To test your function extension on the front end, see [local workflow](../.github/CONTRIBUTING.md#local-workflow).
+To test your function extension on the front end, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow).
 
 ## How to change styling
 
-For adding styles for your **component**, you can:
+For adding styles to your **component**, you can:
 1. Create a new component scss file in `view/frontend/web/js/checkout/src/components/newComponent/newComponent.scss` with your required styles. **We recommend that the name of your scss file(s) should be unique within your module.** This helps to avoid any build time compilation issues, when you have the need for multiple components, each with it's own scss file.
 1. Register it in the modules .phtml using a html link element, for example `<link rel="stylesheet" href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('ModuleNamespace_ModuleName::js/checkout/dist/newComponent.css')) ?>" />`
-1. Build your code, see [local workflow](../.github/CONTRIBUTING.md#local-workflow)
+1. Build your code, see [Local frontend development workflow](.github/CONTRIBUTING.md#local-frontend-development-workflow)
 
 You also have two other options for changing styles:
 1. We provide an Admin designer where you change variables for colours/font/text via configuration.
-    1. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > Gene > Better Checkout > General > Checkout Designer
-    1. Click on the `Open Designer` button and you can change these values in our interactive preview.
-1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and and overriding the variables and/or styles from the Better Checkout theme and admin designer settings. Example:
+1. Log into the Magento admin area, then: Stores > Configuration (Select your store if multi store) > BlueFinch > Checkout > General > Checkout Designer
+1. Click on the `Open Designer` button and you can change these values in our interactive preview.
+1. Amend the styles following the standard Magento process in your custom theme by creating a `web/css/checkout.less` and and overriding the variables and/or styles from the BlueFinch Checkout theme and admin designer settings. Example:
 
-``` 
-:root.vue-checkout-active #gene-better-checkout-root {
+```
+:root.vue-checkout-active #bluefinch-checkout-root {
     // Fonts
     --font-weight__semibold: 600;
     --font-weight__bold: 700;
@@ -154,4 +230,7 @@ You also have two other options for changing styles:
 
 ## Remove checkout styles from your theme
 
-We recommend that you remove any unused Magento Checkout styles within your custom theme, that are not Better Checkout related, so they are not generated in the CSS for the rest of your site.
+We recommend that you remove any unused Magento Checkout styles within your custom theme, that are not BlueFinch Checkout related, so they are not generated in the CSS for the rest of your site.
+
+
+

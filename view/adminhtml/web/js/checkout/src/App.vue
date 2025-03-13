@@ -11,7 +11,7 @@
       {{ device.displayName }}
     </button>
   </div>
-  <div id="gene-better-checkout-root">
+  <div id="bluefinch-checkout-root">
     <component :is="currentDevice">
       <Loader />
       <AppHeader />
@@ -112,7 +112,7 @@ export default {
     this.dispatchDeviceType(this.currentDevice);
     this.dispatchStep(this.currentStep);
 
-    document.dispatchEvent(new Event('gene-better-checkout-loaded'));
+    document.dispatchEvent(new Event('bluefinch-checkout-loaded'));
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -185,7 +185,7 @@ export default {
     margin-bottom: 20px;
   }
 
-  #gene-better-checkout-root {
+  #bluefinch-checkout-root {
     margin: 20px 0;
   }
 </style>

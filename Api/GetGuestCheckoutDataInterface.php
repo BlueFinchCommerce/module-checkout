@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gene\BetterCheckout\Api;
+namespace BlueFinch\Checkout\Api;
 
 interface GetGuestCheckoutDataInterface
 {
     /**
-     * Checkout Data endpoint for Guests
+     * Return checkout data for Guest users
      *
      * @param string $cartId
      * @return string

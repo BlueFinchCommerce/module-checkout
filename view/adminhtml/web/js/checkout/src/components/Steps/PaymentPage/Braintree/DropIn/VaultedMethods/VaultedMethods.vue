@@ -158,7 +158,7 @@ export default {
   async created() {
     await this.getInitialConfig();
 
-    this.paymentStepText = window.geneCheckout?.['gene-bettercheckout-paymentstep-text-stored']
+    this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
         || this.$t('paymentStep.titleStored');
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });

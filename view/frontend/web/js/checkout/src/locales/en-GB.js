@@ -12,6 +12,7 @@ export default {
     removeBtn: 'Remove',
     modalHeader: 'Order Summary',
     mobileDiscountText: 'Add gift card or promo code',
+    mobileDiscountTextOs: 'Add promo code',
     backBtn: 'Back',
     grandTotalTitle: 'Total to Pay',
     inclTaxTitle: 'Tax',
@@ -31,7 +32,7 @@ export default {
     },
     giftDiscountTitle: 'Add gift card code',
     giftCardDiscount: {
-      title: 'Gift card "{code}"',
+      title: 'Gift card',
       errorMessage: 'Please enter a valid code.',
       placeholder: 'Enter gift card code',
       successMessage: 'Successfully applied code "{code}".',
@@ -179,15 +180,6 @@ export default {
     unexpectedPaymentError: 'An unexpected error occurred',
     applePayNoShippingMethods: 'No shipping methods found for the selected address.',
     postcodeLookup: 'Unable to get your location.',
-    rvvupPayment: {
-      cancelled: 'Payment Cancelled.',
-      unexpected: 'An error occurred while processing your payment. Please contact us.',
-      declined: 'Payment Declined.',
-      other: 'An error occurred while processing your payment. Please contact us.',
-      expired: 'Payment Expired.',
-      failed: 'Payment Failed.',
-      qtyNotAvailable: 'The requested qty is not available.',
-    },
   },
   welcomeMessages: {
     accountBody: 'Sign in or continue as a guest.',
@@ -267,14 +259,6 @@ export default {
       noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
     },
     storePayment: 'Save for later use.',
-  },
-  rvvup: {
-    payByBankLabel: 'Pay by Bank',
-    payByBankButton: 'Continue to Pay by Bank with Rvvup',
-    rvvupPaymentLabel: 'Rvvup Pay By Bank',
-  },
-  superPayments: {
-    superPaymentsTitle: 'Pay with Bank App via Super Payments',
   },
   agreements: {
     acceptBtn: 'Accept',
