@@ -10,7 +10,7 @@
       />
       <button
         class="order-summary-close-button"
-        :aria-label="$t('orderSummary.closeButton')"
+        :aria-label="$t('Close')"
         @click="toggleSummary"
         @keydown="toggleSummary"
         :data-cy="'order-summary-close-button-mobile'"
@@ -158,10 +158,10 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('Order Summary');
     this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
       || getMagentoSolutionType()
-      ? this.$t('orderSummary.mobileDiscountText') : this.$t('orderSummary.mobileDiscountTextOs');
+      ? this.$t('Add gift card or promo code') : this.$t('Add promo code');
 
     await this.getCart();
 

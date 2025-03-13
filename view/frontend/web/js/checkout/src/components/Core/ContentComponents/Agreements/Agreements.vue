@@ -11,7 +11,7 @@
     />
     <ErrorMessage
       v-if="showError"
-      :message="$t('agreements.paymentErrorMessage')"
+      :message="$t('Agreements have not been accepted. Please check the agreements and try again.')"
       :attached="false"
       :margin="false"
     />

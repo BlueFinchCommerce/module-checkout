@@ -9,7 +9,7 @@
         <CheckboxComponent
           v-if="showCheckbox && !cart.is_virtual"
           :checked="selected[address_type].same_as_shipping"
-          :text="$t('billingForm.notSameAddress')"
+          :text="$t('My billing and shipping address are the same')"
           :data-cy="'billing-address-checkbox'"
           @change="toggleBillingAddress"
         />
@@ -32,7 +32,7 @@
       >
         <TextField
           class="address-block__title selected"
-          :text="$t('yourDetailsSection.deliverySection.selectedBillingAddressTitle')"
+          :text="$t('Billing address')"
           :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
@@ -47,7 +47,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
-          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          :aria-label="$t('Edit')"
           tabindex="0"
           @click.prevent="editBillingAddress"
           @keydown.enter.prevent="editBillingAddress"
@@ -91,7 +91,7 @@
               && !selected[address_type].editing && address_type === 'billing'
               && addressFinder.enabled"
             class="manually-button"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :label="$t('Enter your address manually')"
             :data-cy="'enter-address-manually-link'"
             @click.prevent="editBillingAddress"
           />
@@ -171,9 +171,9 @@ export default {
   },
   mounted() {
     this.newAddressText = this.isClickAndCollect
-      ? this.$t('yourDetailsSection.deliverySection.yourBillingAddress')
+      ? this.$t('Your billing address')
       : (window.bluefinchCheckout?.[this.newAddressTextId]
-        || this.$t('yourDetailsSection.deliverySection.newAddressTitle'));
+        || this.$t('Add new address'));
   },
   methods: {
     ...mapActions(useCustomerStore, [

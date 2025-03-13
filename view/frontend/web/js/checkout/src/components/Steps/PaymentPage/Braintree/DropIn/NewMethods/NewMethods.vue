@@ -25,7 +25,7 @@
       class="braintree-store-method"
       :checked="storeMethod"
       :change-handler="({ currentTarget }) => storeMethod = currentTarget.checked"
-      :text="$t('braintree.storePayment')"
+      :text="$t('Save for later use.')"
       :data-cy="'braintree-save-payment-card-checkbox'"
     />
     <Agreements id="braintreeNew" />

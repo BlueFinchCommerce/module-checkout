@@ -43,7 +43,7 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('Order Summary');
   },
   computed: {
     ...mapState(useConfigStore, ['locale']),

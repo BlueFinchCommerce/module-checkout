@@ -1,13 +1,13 @@
 <template>
   <template v-if="privacyPolicy.content">
     <div class="privacy-policy-container">
-      <span class="privacy-policy-content">{{ $t('privacyPolicy.content') }}</span>
+      <span class="privacy-policy-content">{{ $t('Your data will be handled as set out in our ') }}</span>
       <button
         type="button"
         class="privacy-policy-content_button button--blank"
         @click="showModal"
         @keydown="showModal"
-      >{{ $t('privacyPolicy.link' ) }}
+      >{{ $t('Privacy Policy' ) }}
       </button>
     </div>
     <modal

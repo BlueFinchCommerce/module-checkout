@@ -7,7 +7,7 @@
     <Checkbox
       id="newsletter-signup"
       :checked="newsletter.subscribeToNewsletter"
-      :text="$t('newsletter.label')"
+      :text="$t('Subscribe to the newsletter')"
       :change-handler="changeNewsletterSubscription"
       :data-cy="'newsletter-signup-checkbox'"
     />

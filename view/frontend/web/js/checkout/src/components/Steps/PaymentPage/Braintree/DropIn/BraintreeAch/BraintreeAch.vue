@@ -36,10 +36,10 @@
           </div>
           <div
             class="braintree-option__label"
-            :aria-label="$t('braintree.ach.payment')"
+            :aria-label="$t('ACH Payment')"
             data-cy="braintree-ach-title"
           >
-            {{ $t('braintree.ach.payment') }}
+            {{ $t('ACH Payment') }}
             <div class="braintree-option__disabled-message" />
           </div>
         </div>
@@ -51,34 +51,34 @@
         <TextInput
           v-model="routingNumber"
           name="routing-number"
-          :placeholder="$t('braintree.ach.routingNumber')"
+          :placeholder="$t('Routing Number')"
           autocomplete="off"
           :data-cy="'braintree-ach-routing-number-input'"
         />
         <TextInput
           v-model="accountNumber"
           name="account-number"
-          :placeholder="$t('braintree.ach.accountNumber')"
+          :placeholder="$t('Account Number')"
           autocomplete="off"
           :data-cy="'braintree-ach-account-number-input'"
         />
         <SelectInput
           v-model="accountType"
           :options="getAccountTypeOptions()"
-          :label="$t('braintree.ach.accountType')"
+          :label="$t('Account Type')"
           :data-cy="'braintree-ach-account-type-select'"
         />
         <SelectInput
           v-model="ownershipType"
           :options="getOwnershipTypeOptions()"
-          :label="$t('braintree.ach.ownershipType')"
+          :label="$t('Ownership Type')"
           :data-cy="'braintree-ach-ownership-type-select'"
         />
         <TextInput
           v-if="ownershipType === 'personal'"
           v-model="firstname"
           name="firstname"
-          :placeholder="$t('braintree.ach.firstname')"
+          :placeholder="$t('First Name')"
           autocomplete="off"
           :data-cy="'braintree-ach-firstname-input'"
         />
@@ -86,7 +86,7 @@
           v-if="ownershipType === 'personal'"
           v-model="lastname"
           name="lastname"
-          :placeholder="$t('braintree.ach.lastname')"
+          :placeholder="$t('Last Name')"
           autocomplete="off"
           :data-cy="'braintree-ach-lastname-input'"
         />
@@ -95,7 +95,7 @@
           v-model="businessName"
           class="braintree-ach-business-name"
           name="business-name"
-          :placeholder="$t('braintree.ach.businessName')"
+          :placeholder="$t('Business Name')"
           autocomplete="off"
           :data-cy="'braintree-ach-business-name-input'"
         />
@@ -108,11 +108,11 @@
           <CheckboxComponent
             :checked="achMandate"
             :change-handler="({ currentTarget }) => achMandate = currentTarget.checked"
-            :text="$t('braintree.ach.proof')"
+            :text="$t('Proof of Authorization')"
             :data-cy="'braintree-ach-proof-checkbox'"
           />
           <TextField
-            :text="$t('braintree.ach.terms', { websiteName })"
+            :text="$t(`By clicking 'Pay with ACH', I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.`, { websiteName })"
             :data-cy="'braintree-ach-terms-text'"
           />
           <Agreements id="braintreeAch" />
@@ -338,7 +338,7 @@ export default {
         return false;
       }
 
-      const mandateText = this.$t('braintree.achTerms', { websiteName: this.websiteName });
+      const mandateText = this.$t(`By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.`, { websiteName: this.websiteName });
 
       const billingAddress = this.cart.billing_address;
 

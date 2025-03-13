@@ -5,7 +5,7 @@
   >
     <MyButton
       :primary="false"
-      :aria-label="$t('orderSummary.minusOneItem')"
+      :aria-label="$t('minus one item')"
       label=" - "
       @click="item.quantity === 1 ? false : updateQuantity(item, -1)"
       :data-cy="dataCy ? `${dataCy}-decrease` : 'qty-component-decrease'"
@@ -22,7 +22,7 @@
     </span>
     <MyButton
       :primary="false"
-      :aria-label="$t('orderSummary.plusOneItem')"
+      :aria-label="$t('plus one item')"
       label=" + "
       @click="updateQuantity(item, 1)"
       :data-cy="dataCy ? `${dataCy}-increase` : 'qty-component-increase'"

@@ -6,11 +6,11 @@
       :class="{'field-valid': selectedAddressType.firstname && isFieldValid(address_type, 'firstname'),
                'field-error': !isFieldValid(address_type, 'firstname')}"
       :identifier="`${address_type}-first-name`"
-      :label="$t('yourDetailsSection.firstName.label')"
-      :placeholder="$t('yourDetailsSection.firstName.placeholder')"
+      :label="$t('First name')"
+      :placeholder="$t('First name')"
       :error="showFieldError(address_type, 'firstname')"
       :error-message="showFieldError(address_type, 'firstname')
-        ? $t('errorMessages.firstNameErrorMessage') : ''"
+        ? $t('Please enter a valid first name') : ''"
       :data-cy="`${address_type}-first-name-input`"
       type="text"
       :required="isRequired('firstname')"
@@ -30,11 +30,11 @@
       :class="{'field-valid': selectedAddressType.lastname && isFieldValid(address_type, 'lastname'),
                'field-error': !isFieldValid(address_type, 'lastname')}"
       :identifier="`${address_type}-last-name`"
-      :label="$t('yourDetailsSection.lastName.label')"
-      :placeholder="$t('yourDetailsSection.lastName.placeholder')"
+      :label="$t('Last name')"
+      :placeholder="$t('Last name')"
       :error="showFieldError(address_type, 'lastname')"
       :error-message="showFieldError(address_type, 'lastname')
-        ? $t('errorMessages.lastNameErrorMessage') : ''"
+        ? $t('Please enter a valid last name') : ''"
       :data-cy="`${address_type}-last-name-input`"
       type="text"
       :required="isRequired('lastname')"
@@ -56,11 +56,11 @@
                  'field-error': !isFieldValid(address_type, 'telephone')}"
         :error="showFieldError(address_type, 'telephone')"
         :error-message="showFieldError(address_type, 'telephone')
-          ? $t('errorMessages.phoneErrorMessage') : ''"
+          ? $t('Not a valid Phone Number') : ''"
         :identifier="`${address_type}-phone`"
         type="tel"
-        :label="$t('yourDetailsSection.phoneField.label')"
-        :placeholder="$t('yourDetailsSection.phoneField.placeholder')"
+        :label="$t('Phone number')"
+        :placeholder="$t('Enter your phone number')"
         :data-cy="`${address_type}-phone-number-input`"
         :required="isRequired('telephone')"
         autocomplete="tel"
@@ -76,7 +76,7 @@
       <TextField
         class="phone-field-info"
         :data-cy="'phone-field-info'"
-        :text="$t('yourDetailsSection.phoneField.info')"
+        :text="$t('We will use this for delivery questions')"
       />
     </div>
   </div>

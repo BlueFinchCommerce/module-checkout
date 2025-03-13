@@ -12,7 +12,7 @@
       </div>
       <TextField
         class="details-text"
-        :text="$t('progressBar.detailStepTitle')"
+        :text="$t('progressBar.Details')"
         :data-cy="'progress-bar-details-text'"
       />
     </router-link>
@@ -31,7 +31,7 @@
         <p data-cy="progerss-bar-two">2</p>
       </div>
       <TextField
-        :text="$t('progressBar.shippingStepTitle')"
+        :text="$t('Shipping')"
         :data-cy="'progress-bar-shipping-text'"
       />
     </router-link>
@@ -49,7 +49,7 @@
         <p data-cy="progerss-bar-three">3</p>
       </div>
       <TextField
-        :text="$t('progressBar.paymentStepTitle')"
+        :text="$t('Payment')"
         :data-cy="'progress-bar-payment-text'"
       />
     </router-link>

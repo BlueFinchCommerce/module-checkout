@@ -6,13 +6,14 @@
           class="welcome-message-title"
           :data-cy="'welcome-message-title'"
           :text="emailRegistered ?
-            $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
+            $t('Welcome back!') : $t('Hello')"
         />
         <TextField
           class="welcome-message"
           :data-cy="'welcome-message'"
-          :text="emailRegistered ?
-            $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
+          :text="emailRegistered
+            ? $t('Sign in or continue as a guest.')
+            : $t(`Looks like you're new here! Continue to checkout as a guest with the option to create an account once you've placed your order.`)"
         />
       </template>
 
@@ -25,8 +26,8 @@
           :data-cy="isLoggedIn ? 'logged-in-email' : 'email-input'"
           :error-message="emailErrorMessage"
           identifier="email"
-          :label="$t('yourDetailsSection.emailAddress.label')"
-          :placeholder="$t('yourDetailsSection.emailAddress.placeholder')"
+          :label="$t('Email address')"
+          :placeholder="$t('Enter your email address')"
           :required="!isLoggedIn"
           autocomplete="email"
           type="email"
@@ -46,9 +47,9 @@
         >
           <button class="edit-button"
                   data-cy="edit-email-button"
-                  :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')">
+                  :aria-label="$t('Edit Your Details')">
             <TextField
-              :text="$t('yourDetailsSection.editButton')"
+              :text="$t('Edit')"
               :data-cy="'edit-email-button-text'"
             />
             <Edit :data-cy="'edit-email-button-icon'"/>
@@ -81,15 +82,15 @@
             :type="passwordInputType"
             :data-cy="'password-input'"
             identifier="password"
-            :label="$t('yourDetailsSection.passwordField.label')"
-            :placeholder="$t('yourDetailsSection.passwordField.placeholder')"
+            :label="$t('Your Password')"
+            :placeholder="$t('Enter your password')"
             ref="passwordInput"
             required
           >
             <template #icon>
               <button
                 class="button_show_password"
-                :aria-label="$t('yourDetailsSection.showPassLabel')"
+                :aria-label="$t('Show or hide password')"
                 @click="toggleShowPassword"
                 :data-cy="'show-password-button'"
               >
@@ -112,7 +113,7 @@
           >
             <span style="display: none">forgotPass link</span>
             <TextField
-              :text="$t('forgotPass')"
+              :text="$t('Forgot your Password')"
               :data-cy="'forgot-password-link-text'"
             />
           </a>
@@ -144,7 +145,7 @@
           <div class="divider">
             <div class="divider-line"></div>
             <TextField
-              :text="$t('signInDividerText')"
+              :text="$t('or')"
               :data-cy="'sign-in-divider-text'"
             />
             <div class="divider-line"></div>
@@ -271,12 +272,12 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.continueButtonText = window.bluefinchCheckout?.[this.continueButtonTextId] || this.$t('continueButton');
+    this.continueButtonText = window.bluefinchCheckout?.[this.continueButtonTextId] || this.$t('Continue');
     this.noAccountGuestButtonText = window.bluefinchCheckout?.[this.noAccountGuestButtonTextId]
-      || this.$t('noAccountGuestButton');
-    this.signInButtonText = window.bluefinchCheckout?.[this.signInButtonTextId] || this.$t('signInButton');
+      || this.$t('Continue as a Guest');
+    this.signInButtonText = window.bluefinchCheckout?.[this.signInButtonTextId] || this.$t('Sign In');
     this.accountGuestButtonText = window.bluefinchCheckout?.[this.accountGuestButtonTextId]
-      || this.$t('accountGuestButton');
+      || this.$t('Continue as a Guest');
 
     await this.getCart();
 
@@ -354,7 +355,7 @@ export default {
 
       if (this.passwordValid === false) {
         this.passwordError = true;
-        this.passwordErrorMessage = this.$t('errorMessages.passwordErrorMessage');
+        this.passwordErrorMessage = this.$t('Please enter a valid password');
       } else {
         this.passwordError = false;
         this.passwordErrorMessage = '';
@@ -381,7 +382,7 @@ export default {
      */
     setEmailErrorState(hasError) {
       this.emailError = hasError;
-      this.emailErrorMessage = hasError ? this.$t('errorMessages.emailErrorMessage') : '';
+      this.emailErrorMessage = hasError ? this.$t('Please enter a valid email address') : '';
     },
 
     handleKeyDown(event) {

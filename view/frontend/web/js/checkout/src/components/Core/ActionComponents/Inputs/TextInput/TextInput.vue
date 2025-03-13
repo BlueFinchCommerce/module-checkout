@@ -154,7 +154,7 @@ export default {
         if (isValid) {
           this.validationErrorMessage = '';
         } else {
-          const sanitiseErrorMsg = this.$t('errorMessages.sanitiseError');
+          const sanitiseErrorMsg = this.$t('Invalid character entered');
           this.validationErrorMessage = sanitiseErrorMsg;
 
           if (inputType === 'tel') {

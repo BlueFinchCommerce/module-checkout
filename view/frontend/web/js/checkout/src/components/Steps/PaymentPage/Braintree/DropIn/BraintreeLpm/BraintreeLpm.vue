@@ -36,7 +36,8 @@
           </div>
           <div
             class="braintree-option__label"
-            :aria-label="$t('braintree.payingWith', { paymentTitle: getPaymentMethodTitle('braintree_local_payment') })"
+            :aria-label="$t('Paying with {paymentTitle}',
+                            { paymentTitle: getPaymentMethodTitle('braintree_local_payment') })"
             data-cy="braintree-lpm-title"
           >
             {{ getPaymentMethodTitle('braintree_local_payment') }}
@@ -78,7 +79,7 @@
         </template>
         <TextField
           v-else
-          :text="$t('braintree.lpm.noMethods')"
+          :text="$t('There are currently no available payment methods. Please update your Billing Address.')"
           data-cy="braintree-lpm-no-method-text"
         />
       </div>

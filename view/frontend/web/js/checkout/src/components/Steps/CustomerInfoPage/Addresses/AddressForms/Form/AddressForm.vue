@@ -18,12 +18,12 @@
                       'field-error': !isFieldValid(address_type, `street.${index}`)}"
               :error="showFieldError(address_type, `street.${index}`)"
               :error-message="showFieldError(address_type, `street.${index}`)
-                ? $t('errorMessages.streetErrorMessage') : ''"
+                ? $t('Please enter a valid address') : ''"
               :placeholder="$t(
-                'yourDetailsSection.deliverySection.addressForm.addressField.placeholder',
+                'Address (line {line})',
                 { line: index + 1 }
               )"
-              :label="$t('yourDetailsSection.deliverySection.addressForm.addressField.label', { line: index + 1 })"
+              :label="$t('Address (line {line})', { line: index + 1 })"
               autocomplete="address-line1"
               :required="isRequired(`street.${index}`)"
               :data-cy="`${address_type}-address-one-input`"
@@ -45,11 +45,9 @@
                      'field-error': !isFieldValid(address_type, 'city')}"
             :error="showFieldError(address_type, 'city')"
             :error-message="showFieldError(address_type, 'city')
-              ? $t('errorMessages.cityErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'cityField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'cityField.label')"
+              ? $t('Please enter a valid city') : ''"
+            :placeholder="$t('City')"
+            :label="$t('City')"
             :required="isRequired('city')"
             autocomplete="address-level2"
             :data-cy="`${address_type}-city-input`"
@@ -69,11 +67,9 @@
             type="text"
             :error="showFieldError(address_type, 'region')"
             :error-message="showFieldError(address_type, 'region')
-              ? $t('errorMessages.regionErrorMessage') : ''"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'regionField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'regionField.label')"
+              ? $t('Please enter a valid state/province') : ''"
+            :placeholder="$t('County')"
+            :label="$t('County')"
             autocomplete="address-level1"
             :data-cy="`${address_type}-region-input`"
             :required="getRegionRequired(address_type)"
@@ -93,8 +89,7 @@
           v-model="selectedAddressType.region.region_id"
           :options="getRegionOptions(address_type)"
           :error="showFieldError(address_type, 'region')"
-          :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-            'regionField.label')"
+          :label="$t('County')"
           :required="getRegionRequired(address_type)"
           :data-cy="`${address_type}-state-select`"
           @change="setRegion($event)"
@@ -105,14 +100,12 @@
             v-model="selectedAddressType.postcode"
             :error="showFieldError(address_type, 'postcode')"
             :error-message="showFieldError(address_type, 'postcode')
-              ? `${$t('errorMessages.postCodeErrorMessage')} ${selectedAddressType.country_code}` : ''"
+              ? `${$t('Please enter a valid postcode for')} ${selectedAddressType.country_code}` : ''"
             :class="{'field-valid': selectedAddressType.postcode && isFieldValid(address_type, 'postcode'),
                      'field-error': !isFieldValid(address_type, 'postcode')}"
             type="text"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'postCodeField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'postCodeField.label')"
+            :placeholder="$t('Postcode')"
+            :label="$t('Postcode')"
             autocomplete="postal-code"
             :data-cy="`${address_type}-postcode-input`"
             :required="postcodeRequired(selectedAddressType.country_code)"
@@ -129,9 +122,9 @@
           v-model="selectedAddressType.country_code"
           :options="selectOptions"
           :error="showFieldError(address_type, 'country_code')"
-          :error-message="showFieldError(address_type, 'country_code') && $t('errorMessages.countryErrorMessage')"
-          :label="$t('yourDetailsSection.deliverySection.addressForm.countryField.label')"
-          :selected-option="$t('yourDetailsSection.selectPlaceholder')"
+          :error-message="showFieldError(address_type, 'country_code') && $t('Please choose your country')"
+          :label="$t('Country')"
+          :selected-option="$t('Please select your country')"
           required
           :data-cy="`${address_type}-country-select`"
           @change="countryUpdated($event)"
@@ -146,7 +139,7 @@
         >
           <CheckboxComponent
             :id="`${address_type}-save-in-address-book`"
-            :text="$t('saveNewAddress')"
+            :text="$t('Save in address book')"
             :checked="selectedAddressType.save_in_address_book === 1"
             :data-cy="`${address_type}-address-save-checkbox`"
             @change="handleSaveInAddressBookChange"
@@ -159,8 +152,7 @@
             type="submit"
             primary
             :disabled="!isAddressValid(address_type) || inputsSanitiseError"
-            :label="$t('yourDetailsSection.deliverySection' +
-              '.addressForm.saveAddressButton')"
+            :label="$t('Use this address')"
             :data-cy="`${address_type}-address-use-button`"
           />
         </div>

@@ -15,7 +15,7 @@
         <button
           class="braintree-payment__payment-method__header__title button"
           :class="{ 'braintree-payment__payment-method-disabled': !vaultedMethod.selected }"
-          :aria-label="$t('paymentCard.storedPaymentLabel', { lastFour: vaultedMethod.details.maskedCC })"
+          :aria-label="$t('{name} Stored card ends in {lastFour}', { lastFour: vaultedMethod.details.maskedCC })"
           type="button"
           data-cy="braintree-saved-payment-card-button"
           @click="selectPaymentCard(vaultedMethod)"
@@ -28,7 +28,7 @@
           <TextField
             v-else
             class="braintree-payment__payment-method-select"
-            :text="$t('paymentCard.select')"
+            :text="$t('Card Number')"
             :data-cy="'braintree-saved-payment-card-select-text'"
           />
           <span
@@ -51,7 +51,7 @@
             class="braintree-payment__payment-method__card-number"
             data-cy="braintree-saved-payment-card-text"
           >
-            {{ $t('paymentCard.cardNumber') }}
+            {{ $t('Card Number') }}
           </span>
           <span
             class="braintree-payment__payment-method__name"
@@ -63,7 +63,7 @@
             class="braintree-payment__payment-method__expiry-label"
             data-cy="braintree-saved-payment-card-expiry-text"
           >
-            {{ $t('paymentCard.expiry') }}
+            {{ $t('Expiry') }}
           </span>
           <span
             class="braintree-payment__payment-method__expiry"
@@ -183,7 +183,7 @@ export default {
     }
 
     this.paymentStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
-        || this.$t('paymentStep.titleStored');
+        || this.$t('Your saved payment methods');
 
     this.paymentEmitter.on('braintreePaymentStart', () => { this.loading = true; });
     this.paymentEmitter.on('braintreePaymentError', () => { this.loading = false; });

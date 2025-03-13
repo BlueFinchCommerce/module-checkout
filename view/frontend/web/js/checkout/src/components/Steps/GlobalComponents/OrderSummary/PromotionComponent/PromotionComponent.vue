@@ -18,7 +18,7 @@
     <div class="promo-title no-shipping">
       <div>
         <TextField
-          :text="$t('orderSummary.couponCodeTitle')"
+          :text="$t('For another')"
           :data-cy="dataCy ? `cross-sells-shipping-pre-text-${dataCy}` : 'cross-sells-shipping-pre-text'"
         />
         <Price
@@ -27,12 +27,12 @@
           :data-cy="dataCy ? `cross-sells-shipping-price-${dataCy}` : 'cross-sells-shipping-price'"
         />
         <TextField
-          :text="$t('orderSummary.couponCodeTitleBottom')"
+          :text="$t('you can get a')"
           :data-cy="dataCy ? `cross-sells-shipping-post-text-${dataCy}` : 'cross-sells-shipping-post-text'"
         />
         <TextField
           class="bold"
-          :text="$t('orderSummary.couponCodeTitleFreeShipping')"
+          :text="$t('free standard delivery')"
           :data-cy="dataCy ?
             `cross-sells-shipping-post-additional-text-${dataCy}` :
             'cross-sells-shipping-post-additional-text'"
@@ -196,11 +196,11 @@ export default {
       await this.getInitialConfig();
     }
     this.originalCrossSellsText = window.bluefinchCheckout?.[this.crossSellsTextId]
-     || this.$t('orderSummary.crossSellsTitle');
+     || this.$t('You may also like these items...');
     this.displayCrossSellsText = this.originalCrossSellsText;
 
     this.originalCrossSellsCTAText = window.bluefinchCheckout?.[this.crossSellsCTATextId]
-      || this.$t('orderSummary.addToCart');
+      || this.$t('Add to Basket');
     this.displayCrossSellsCTAText = this.originalCrossSellsCTAText;
 
     await this.getCart();

@@ -51,15 +51,15 @@
               :item="{
                 configurable_options: [
                   {
-                    option_label: $t('giftMessage.to'),
+                    option_label: $t('To'),
                     value_label: item.recipient_name
                   },
                   {
-                    option_label: $t('giftMessage.from'),
+                    option_label: $t('From'),
                     value_label: item.sender_name
                   },
                   {
-                    option_label: $t('giftMessage.message'),
+                    option_label: $t('Message'),
                     value_label: item.message
                   },
                 ]

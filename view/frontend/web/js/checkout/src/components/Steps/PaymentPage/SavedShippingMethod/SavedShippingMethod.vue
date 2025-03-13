@@ -39,12 +39,12 @@
       <div class="proceed-to-shipping">
         <button
           class="button--blank edit-shipping-button"
-          :aria-label="$t('yourDetailsSection.editShippingButtonLabel')"
+          :aria-label="$t('Edit Your Shipping Details')"
           :data-cy="'completed-step-shipping-edit-button'"
         >
           <TextField
             class="edit-button-title"
-            :text="$t('yourDetailsSection.editButton')"
+            :text="$t('Edit')"
             :data-cy="'completed-step-shipping-edit-button-text'"
           />
           <Edit :data-cy="'completed-step-shipping-edit-icon'" />
@@ -88,7 +88,7 @@ export default {
       await this.getInitialConfig();
     }
     this.shippingStepCompletedText = window.bluefinchCheckout?.[this.shippingStepCompletedTextId]
-    || this.$t('shippingStep.stepCompleteTitle');
+    || this.$t('Shipping');
   },
   computed: {
     ...mapState(useCartStore, ['cart']),

@@ -8,7 +8,7 @@
     />
     <TextField
       v-else
-      :text="$t('payNoExpressWithBlockTitle')"
+      :text="$t('Enter your email address to pay by credit or debit card')"
       :data-cy="'checkout-divider-text'"
     />
     <div class="divider-line" />
@@ -40,7 +40,7 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.dividerText = window.bluefinchCheckout?.[this.dividerTextId] || this.$t('dividerText');
+    this.dividerText = window.bluefinchCheckout?.[this.dividerTextId] || this.$t('Or checkout below with credit/debit card');
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

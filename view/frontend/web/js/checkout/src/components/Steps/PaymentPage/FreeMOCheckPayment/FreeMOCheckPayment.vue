@@ -31,7 +31,7 @@
     <MyButton
       v-if="isMethodSelected"
       class="free-payment-button"
-      :label="$t('paymentStep.payNow')"
+      :label="$t('Pay Now')"
       primary
       :data-cy="'free-mo-pay-button'"
       @click="createPayment()"

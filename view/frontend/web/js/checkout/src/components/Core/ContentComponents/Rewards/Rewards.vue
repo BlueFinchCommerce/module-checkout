@@ -4,20 +4,20 @@
     class="reward-points"
   >
     <div>
-      <span data-cy="rewards-you-have-text">{{ $t('rewards.youHave') }}</span>
+      <span data-cy="rewards-you-have-text">{{ $t('You have ') }}</span>
       <span class="reward-points-available" data-cy="rewards-points-text">
         {{
-          $t('rewards.rewardPoints',
+          $t('{points} Reward Points',
              {
                points: customer.reward_points.balance.points,
              })
         }}
       </span>
-      <span data-cy="rewards-available-text">{{ $t('rewards.available') }}</span>
+      <span data-cy="rewards-available-text">{{ $t(' available ') }}</span>
       <span>({{ getFormattedPrice() }})</span>
     </div>
     <MyButton
-      :label="$t('rewards.applyButton')"
+      :label="$t('Apply Points')"
       :data-cy="'rewards-apply-button'"
       secondary
       @click="useRewardPoints()"
@@ -27,9 +27,9 @@
     v-else-if="customer.reward_points?.balance?.points && cart.applied_reward_points?.points"
     class="reward-points"
   >
-    <span data-cy="rewards-applied-text">{{ $t('rewards.applied') }}</span>
+    <span data-cy="rewards-applied-text">{{ $t('Reward points have been applied.') }}</span>
     <MyButton
-      :label="$t('rewards.removeButton')"
+      :label="$t('Remove Points')"
       :data-cy="'rewards-remove-button'"
       secondary
       @click="removeRewardPoints()"

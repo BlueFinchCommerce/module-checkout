@@ -29,12 +29,12 @@
       <div class="address-block__edit proceed-to-details">
         <button
           class="button--blank edit-details-button"
-          :aria-label="$t('yourDetailsSection.editDetailsButtonLabel')"
+          :aria-label="$t('Edit Your Details')"
           :data-cy="'completed-step-details-edit-button'"
         >
           <TextField
             class="edit-button-title"
-            :text="$t('yourDetailsSection.editButton')"
+            :text="$t('Edit')"
             :data-cy="'completed-step-details-edit-button-text'"
           />
           <Edit :data-cy="'completed-step-details-edit-icon'"/>
@@ -80,7 +80,7 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('yourDetailsSection.title');
+    this.detailStepText = window.bluefinchCheckout?.[this.detailStepTextId] || this.$t('Your details');
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

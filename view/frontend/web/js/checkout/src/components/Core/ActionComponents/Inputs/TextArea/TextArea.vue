@@ -148,7 +148,7 @@ export default {
         this.$emit('update:modelValue', inputValue);
         this.validationErrorMessage = '';
       } else {
-        this.validationErrorMessage = this.$t('errorMessages.sanitiseError');
+        this.validationErrorMessage = this.$t('Invalid character entered');
       }
 
       // Use $nextTick to check for errors after the DOM is updated

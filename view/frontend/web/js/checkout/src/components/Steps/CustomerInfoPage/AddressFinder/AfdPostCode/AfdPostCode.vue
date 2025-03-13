@@ -5,8 +5,8 @@
         <TextInput type="text"
                    id="afd-postcode"
                    v-model="query"
-                   :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-                   :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+                   :placeholder="$t('Search by street name or postcode')"
+                   :label="$t('Street name/postcode')"
                    :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'"
                    class="afd-postcode__input"
                    autocomplete="postal-code"
@@ -60,14 +60,14 @@
         <div
           class="address-block__edit"
           tabindex="0"
-          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          :aria-label="$t('Edit')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
         >
           <Edit />
           <MyButton
             secondary
-            :label="$t('yourDetailsSection.editButton')"
+            :label="$t('Edit')"
           />
         </div>
       </div>

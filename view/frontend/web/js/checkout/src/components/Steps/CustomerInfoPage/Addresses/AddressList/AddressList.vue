@@ -12,7 +12,7 @@
       />
       <div class="delivery-section-title-text">
         <TextField
-          :text="$t('yourDetailsSection.deliverySection.savedAddressesTitle', { addressType })"
+          :text="$t('Select a saved {addressType} address', { addressType })"
           :data-cy="`saved-${addressType}-address-title`"
         />
       </div>
@@ -36,7 +36,7 @@
           v-else-if="addressType ==='shipping'"
           class="ship-here"
           :data-cy="`${addressType}-saved-address-ship-here`"
-          :text="$t('yourDetailsSection.deliverySection.shipHere')"
+          :text="$t('Ship here')"
         />
         {{ item.firstname }} {{ item.lastname }}<br><br>
         {{ item.street[0] }}<br v-if="item.street[0]">
@@ -140,7 +140,7 @@ export default {
     });
 
     this.addNewAddressButtonText = window.bluefinchCheckout?.[this.addNewAddressButtonTextId]
-      || this.$t('addNewAddressBtn');
+      || this.$t('+ Add new address');
   },
   methods: {
     ...mapActions(useCustomerStore, [

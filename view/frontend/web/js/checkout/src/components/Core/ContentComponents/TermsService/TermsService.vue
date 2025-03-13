@@ -1,27 +1,29 @@
 <template>
   <template v-if="privacyPolicy.content && withdrawTermsServices.content && generalTermsServices.content">
     <div class="terms-services-container">
-      <span class="privacy-policy-content">{{ $t('termsServices.content') }}</span>
+      <span class="privacy-policy-content">{{
+        $t('By clicking on the "order now" button, you hereby agree to our ')
+      }}</span>
       <button
         type="button"
         class="privacy-policy-content_button button--blank general"
         @click="showGeneralModal"
         @keydown="showGeneralModal"
-      >{{ $t('termsServices.generalLink' ) }}
+      >{{ $t('General Terms & Conditions, ' ) }}
       </button>
       <button
         type="button"
         class="privacy-policy-content_button button--blank privacy"
         @click="showPrivacyModal"
         @keydown="showPrivacyModal"
-      >{{ $t('termsServices.privacyLink' ) }}
+      >{{ $t(' our Privacy Policy' ) }}
       </button>
       <button
         type="button"
         class="privacy-policy-content_button button--blank withdraw"
         @click="showWithdrawModal"
         @keydown="showWithdrawModal"
-      >{{ $t('termsServices.withdrawLink' ) }}
+      >{{ $t('and our Withdrawal Policy.' ) }}
       </button>
     </div>
     <modal

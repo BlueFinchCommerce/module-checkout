@@ -5,8 +5,8 @@
         id="loqate"
         v-model="query"
         type="text"
-        :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-        :label="$t('yourDetailsSection.deliverySection.addressFinder.title')"
+        :placeholder="$t('Search by street name or postcode')"
+        :label="$t('Address Finder')"
         :data-cy="dataCy ? `${dataCy}-input` : 'loqate-input'"
         class="loqate__input"
         autocomplete="postal-code"
@@ -61,13 +61,13 @@
       <div
         class="address-block__edit"
         tabindex="0"
-        :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+        :aria-label="$t('Edit')"
         @click.prevent="editAddress"
         @keydown.prevent="editAddress"
       >
         <Edit />
         <MyButton
-          :label="$t('yourDetailsSection.editButton')"
+          :label="$t('Edit')"
           secondary
         />
       </div>

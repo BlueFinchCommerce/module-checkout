@@ -89,7 +89,7 @@
         <TextField
           v-else-if="!getShippingMethods || getShippingMethods.length === 0"
           class="checkout-shipping-methods__error"
-          :text="$t('errorMessages.noShippingMethods')"
+          :text="$t('No shipping methods found for the selected address.')"
           :data-cy="'no-shipping-methods-text'"
         />
         <span
@@ -195,8 +195,8 @@ export default {
     this.belowShippingMethodsExtensions = Object.keys(belowShippingMethodsExtensions());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     this.shippingMethodAdditionalContainers = Object.keys(shippingMethodAdditionalContainers());
-    this.shippingStepText = window.bluefinchCheckout?.[this.shippingStepTextId] || this.$t('shippingStep.stepTitle');
-    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    this.shippingStepText = window.bluefinchCheckout?.[this.shippingStepTextId] || this.$t('Select a shipping method');
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('Proceed to payment');
   },
   methods: {
     ...mapActions(useShippingMethodsStore, [

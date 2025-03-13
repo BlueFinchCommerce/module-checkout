@@ -11,7 +11,7 @@
       :data-cy="dataCy ? `${dataCy}-trigger` : 'product-options-trigger'"
     >
       <TextField
-        :text="$t('productOptionsTrigger')"
+        :text="$t('Product options')"
         :data-cy="dataCy ? `${dataCy}-title` : 'product-options-title'"
       />
       <ArrowUp v-if="productOptionsVisible"

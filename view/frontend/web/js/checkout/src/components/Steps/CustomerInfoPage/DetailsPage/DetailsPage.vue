@@ -90,7 +90,7 @@
         <TextField
           class="no-click-collect-text"
           v-if="clickAndCollectComponents.length === 0"
-          :text="$t('yourDetailsSection.deliverySection.clickandCollectNotAvailable')"/>
+          :text="$t('Click & Collect is currently unavailable. Please try another delivery method.')"/>
       </div>
 
       <AddressList
@@ -102,7 +102,7 @@
 
       <div class="address-form-error-message">
         <ErrorMessage v-if="addressInfoWrong"
-                      :message="$t('errorMessages.addressWrongError')"/>
+                      :message="$t('Please check your address format.')"/>
       </div>
 
       <div
@@ -168,7 +168,7 @@
               && !selected[address_type].editing && address_type === 'shipping'
               && addressFinder.enabled"
             class="manually-button"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.linkText')"
+            :label="$t('Enter your address manually')"
             :data-cy="'enter-address-manually-link'"
             @click.prevent="editAddress"
           />
@@ -186,7 +186,7 @@
       >
         <TextField
           class="address-block__title selected"
-          :text="$t('yourDetailsSection.deliverySection.deliveryAddressTitle')"
+          :text="$t('Delivery Address')"
           :data-cy="`${address_type}-address-selected-title`"
         />
         <div class="address-block__item">
@@ -201,7 +201,7 @@
         <div
           v-if="selected[address_type].id"
           class="address-block__edit"
-          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          :aria-label="$t('Edit')"
           @click.prevent="editAddress"
           @keydown.enter.prevent="editAddress"
           tabindex="0"
@@ -213,7 +213,7 @@
       <div class="address-form-error-message">
         <ErrorMessage
           v-if="addressFormErrorMessage"
-          :message="$t('errorMessages.addressFormErrorMessage')"
+          :message="$t('Please make sure that all required fields are filled')"
         />
       </div>
 
@@ -419,19 +419,19 @@ export default {
     this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
-    this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
-    this.yourDetailsText = window.bluefinchCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
+    this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('Instant Checkout');
+    this.yourDetailsText = window.bluefinchCheckout?.[this.yourDetailsTextId] || this.$t('Your details');
     this.deliverWhereText = window.bluefinchCheckout?.[this.deliverWhereTextId]
-    || this.$t('yourDetailsSection.deliverySection.title');
+    || this.$t('Where should we deliver it to?');
     this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
-    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
-    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
+    || this.$t('Add new address');
+    this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('Proceed to payment');
     this.proceedToShippingText = window.bluefinchCheckout?.[this.proceedToShippingTextId]
-    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+    || this.$t('Choose your shipping method');
     this.homeDeliveryText = window.bluefinchCheckout?.[this.homeDeliveryTextId]
-    || this.$t('yourDetailsSection.deliverySection.shippingButton');
+    || this.$t('Home Delivery');
     this.clickAndCollectText = window.bluefinchCheckout?.[this.clickAndCollectTextId]
-    || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
+    || this.$t('Click & Collect');
 
     await this.getCart();
     this.paypalCreditCheck();

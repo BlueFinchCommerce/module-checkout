@@ -102,7 +102,7 @@
           v-else
           :payment-type="'free'"
           :title="getPaymentMethodTitle('free')
-            ? getPaymentMethodTitle('free') : $t('paymentStep.freePaymentLabel')"
+            ? getPaymentMethodTitle('free') : $t('No Payment Information Required')"
         />
       </div>
     </div>
@@ -196,10 +196,10 @@ export default {
     getPaymentStepTitle() {
       if (this.hasVaultedMethods) {
         return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-new']
-        || this.$t('paymentStep.titleNew');
+        || this.$t('Select new payment method');
       }
       return window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-guest']
-        || this.$t('paymentStep.titleGuest');
+        || this.$t('Select a payment method');
     },
   },
   async created() {
@@ -216,7 +216,7 @@ export default {
 
     // The titles need to be reflective of the state we're in.
     this.storedStepText = window.bluefinchCheckout?.['bluefinch-checkout-paymentstep-text-stored']
-        || this.$t('paymentStep.titleStored');
+        || this.$t('Your saved payment methods');
 
     this.additionalPaymentMethods = Object.keys(paymentMethods());
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());

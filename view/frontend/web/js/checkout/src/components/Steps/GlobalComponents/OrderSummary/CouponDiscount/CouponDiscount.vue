@@ -61,14 +61,14 @@
           <SuccessMessage
             :data-cy="dataCy ? `coupon-discount-success-${dataCy}` : 'coupon-discount-success'"
             v-if="cart.applied_coupons?.length"
-            :message="$t('orderSummary.couponDiscount.successMessage', { code: cart.applied_coupons[0].code })"
+            :message="$t(`Successfully applied code '{code}'.`, { code: cart.applied_coupons[0].code })"
           />
         </div>
         <div class="error">
           <ErrorMessage
             :data-cy="dataCy ? `coupon-discount-error-${dataCy}` : 'coupon-discount-error'"
             v-if="discountErrorMessage"
-            :message="$t('orderSummary.couponDiscount.errorMessage')"
+            :message="$t('Please enter a valid code.')"
           />
         </div>
       </div>
@@ -129,12 +129,12 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
-    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('Apply');
+    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('Remove');
     this.couponDiscountText = window.bluefinchCheckout?.[this.couponDiscountTextId]
-      || this.$t('orderSummary.couponDiscountTitle');
+      || this.$t('Add promo code');
     this.couponDiscountPlaceholderText = window.bluefinchCheckout?.[this.couponDiscountPlaceholderTextId]
-      || this.$t('orderSummary.couponDiscount.placeholder');
+      || this.$t('Enter promo code');
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),

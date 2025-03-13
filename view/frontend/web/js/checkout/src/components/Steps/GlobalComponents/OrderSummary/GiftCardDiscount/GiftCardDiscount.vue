@@ -62,14 +62,14 @@
           <SuccessMessage
             :data-cy="dataCy ? `gift-card-success-${dataCy}` : 'gift-card-success'"
             v-if="cart.applied_gift_cards?.[0]"
-            :message="$t('orderSummary.giftCardDiscount.successMessage', { code: giftCardCode })"
+            :message="$t(`Successfully applied code '{code}'.`, { code: giftCardCode })"
           />
         </div>
         <div class="error">
           <ErrorMessage
             :data-cy="dataCy ? `gift-card-error-${dataCy}` : 'gift-card-error'"
             v-if="giftCardErrorMessage"
-            :message="$t('orderSummary.giftCardDiscount.errorMessage')"
+            :message="$t('Please enter a valid code.')"
           />
         </div>
       </div>
@@ -129,11 +129,11 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
-    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
-    this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
+    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('Apply');
+    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('Remove');
+    this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || this.$t('Add gift card code');
     this.giftCardPlaceholderText = window.bluefinchCheckout?.[this.giftCardPlaceholderTextId]
-      || this.$t('orderSummary.giftCardDiscount.placeholder');
+      || this.$t('Enter gift card code');
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),

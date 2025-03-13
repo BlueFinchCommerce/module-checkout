@@ -50,7 +50,7 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.headerText = window.bluefinchCheckout?.[this.headerTextId] || this.$t('header.text');
+    this.headerText = window.bluefinchCheckout?.[this.headerTextId] || this.$t('Secure Checkout');
   },
   computed: {
     ...mapState(useConfigStore, ['locale', 'secureBaseLinkUrl']),

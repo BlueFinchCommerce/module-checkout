@@ -8,7 +8,7 @@
         :change-handler="changeAgreement"
         :data-cy="`${id}-checkbox`"
       >
-        {{ $t('agreements.label.manual') }}
+        {{ $t('I confirm that I have read and accept the') }}
         <a
           href="#"
           class="agreement-open-modal"
@@ -23,7 +23,7 @@
       v-else
       class="agreement-label"
     >
-      <span>{{ $t('agreements.label.automatic') }}</span>
+      <span>{{ $t('By placing an order you accept our') }}</span>
       <a
         href="#"
         class="agreement-open-modal"
@@ -34,7 +34,7 @@
       />
       <ErrorMessage
         v-if="typeof agreement.valid !== 'undefined' && !agreement.valid"
-        :message="$t('agreements.errorMessage')"
+        :message="$t('This is a required field.')"
       />
     </span>
     <modal
@@ -46,7 +46,7 @@
       <template #header>
         <div class="closer-container">
           <TextField class="modal-header-title"
-            :text="$t('agreements.title')"
+            :text="$t('Terms & Conditions')"
             :data-cy="`${id}-terms-modal-title`"
           />
           <button
@@ -71,15 +71,15 @@
       <template #footer>
         <ButtonComponent
           class="modal-footer-btn-close button--secondary"
-          :label="$t('orderSummary.backBtn')"
-          :aria-label="$t('orderSummary.backBtn')"
+          :label="$t('Back')"
+          :aria-label="$t('Back')"
           :data-cy="`${id}-terms-modal-back-button`"
           @click="closeModal"
         />
         <ButtonComponent v-if="agreement.mode === 'MANUAL'"
           class="modal-footer-btn-close button--primary"
-          :label="$t('agreements.acceptBtn')"
-          :aria-label="$t('agreements.acceptBtn')"
+          :label="$t('Accept')"
+          :aria-label="$t('Accept')"
           :data-cy="`${id}-terms-modal-accept-button`"
           @click="changeAgreementFromModal"
         />

@@ -276,7 +276,7 @@ export default {
               resolve({
                 error: {
                   reason: 'SHIPPING_ADDRESS_UNSERVICEABLE',
-                  message: this.$t('errorMessages.googlePayNoShippingMethods'),
+                  message: this.$t('No shipping methods found for the selected address.'),
                   intent: 'SHIPPING_ADDRESS',
                 },
               });
@@ -320,11 +320,11 @@ export default {
           .catch((error) => {
             // Handle promise rejection
             console.error('Error fetching shipping methods:', error);
-            this.setErrorMessage(this.$t('errorMessages.googlePayNoShippingMethods'));
+            this.setErrorMessage(this.$t('No shipping methods found for the selected address.'));
             resolve({
               error: {
                 reason: 'NETWORK_ERROR',
-                message: this.$t('errorMessages.googlePayNoShippingMethods'),
+                message: this.$t('No shipping methods found for the selected address.'),
                 intent: 'SHIPPING_METHOD',
               },
             });

@@ -56,7 +56,7 @@
         >
           <TextField
             class="total__text title"
-            :text="$t('orderSummary.giftCardDiscount.title')"
+            :text="$t('Gift card')"
             :data-cy="dataCy ? `applied-gift-card-${dataCy}` : 'applied-gift-card'"
           />
           <Price
@@ -72,7 +72,7 @@
       >
         <TextField
           class="total__text title"
-          :text="$t('orderSummary.giftWrappingTitle')"
+          :text="$t('Gift Wrapping')"
           :data-cy="dataCy ? `giftwrap-title-${dataCy}` : 'giftwrap-title'"
         />
         <Price
@@ -87,7 +87,7 @@
       >
         <TextField
           class="total__text title"
-          :text="$t('progressBar.shippingStepTitle')"
+          :text="$t('Shipping')"
           :data-cy="dataCy ? `shipping-title-${dataCy}` : 'shipping-title'"
         />
         <Price
@@ -101,7 +101,7 @@
         <TextField
           v-else
           class="total__text"
-          :text="$t('shippingStep.tbc')"
+          :text="$t('Calculated at next step')"
           :data-cy="dataCy ? `shipping-price-tbc-${dataCy}` : 'shipping-price-tbc'"
         />
       </div>
@@ -168,8 +168,8 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
-    this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
+    this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('Order Summary');
+    this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('Total to Pay');
     this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
   },
   methods: {

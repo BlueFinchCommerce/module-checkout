@@ -10,7 +10,7 @@
     </div>
     <button
       class="remove-item-action button--blank"
-      :aria-label="$t('orderSummary.removeItemButtonLabel')"
+      :aria-label="$t('remove item')"
       :data-cy="dataCy ? `${dataCy}-button` : 'remove-item-component-button'"
     >
       <TextField
@@ -57,7 +57,7 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.removeItemText = window.bluefinchCheckout?.[this.removeItemTextId] || this.$t('orderSummary.removeItemButton');
+    this.removeItemText = window.bluefinchCheckout?.[this.removeItemTextId] || this.$t('remove item');
   },
   computed: {
     ...mapState(useConfigStore, ['locale']),
