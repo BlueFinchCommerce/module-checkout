@@ -34,7 +34,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= $escaper->escapeJs($block->getTagManagerData()) ?>)
+                })(<?= /* @noEscape */ $block->getTagManagerData() ?>)
             </script>
             <!-- END GOOGLE TAG MANAGER -->
             <?php
@@ -61,7 +61,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= $escaper->escapeJs($block->getAnalyticsData()) ?>)
+                })(<?= /* @noEscape */ $block->getAnalyticsData() ?>)
             </script>
             <!-- END GOOGLE ANALYTICS 4 CODE -->
             <?php
