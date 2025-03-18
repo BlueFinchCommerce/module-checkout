@@ -11,7 +11,7 @@ import functionExtension from '@/extensions/functionExtension';
 const convertBoolean = (value) => (value === 1);
 
 const mapToGraphQLString = (obj) => Object.entries(obj)
-  .map(([key, value]) => (value ? `${key}: ${JSON.stringify(value)}` : ''))
+  .map(([key, value]) => (value || value === '' ? `${key}: ${JSON.stringify(value)}` : ''))
   .join(', ');
 
 const buildShippingAddressMutation = async (cartId, formattedAddressGraphQL) => `
@@ -50,7 +50,7 @@ export default async (shippingAddress, paymentMethod = null, express = false) =>
     company: formattedShippingAddress.company,
     street: formattedShippingAddress.street,
     city: formattedShippingAddress.city,
-    region: formattedShippingAddress.region,
+    region: formattedShippingAddress.region || '',
     region_id: formattedShippingAddress.region_id || null,
     postcode: formattedShippingAddress.postcode,
     country_code: formattedShippingAddress.country_code
