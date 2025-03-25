@@ -17,7 +17,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 
 ?>
 
-<?php $scriptStringJsNamesSpace = <<<script
+<?php $scriptString = <<<script
 
     window.bluefinchCheckout = window.bluefinchCheckout || {};
     window.bluefinchCheckout.magentoEdition = "{$escaper->escapeJs($assetViewModel->getMagentoEdition())}";
@@ -31,14 +31,14 @@ $fontFamily = $assetViewModel->getFontFamily();
 script;
     if ($customWordings):
         foreach (json_decode($customWordings) as $key => $value):
-            $scriptStringJsNamesSpace .= <<<script
+            $scriptString .= <<<script
     window.bluefinchCheckout["{$escaper->escapeJs($key)}"] = "{$escaper->escapeJs($value)}";
 
 script;
         endforeach;
     endif;
 ?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStringJsNamesSpace, false) ?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 
 <link href="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::css/checkout.css')) ?>" rel="stylesheet" media="all" />
 
@@ -59,18 +59,18 @@ script;
 
 <?php
 $mainJsAsset = $jsAssets['main'][0];
-$scriptStringJsNamesSpaceMain = <<<script
+$scriptString = <<<script
 
     window.bluefinchCheckout.main = "{$escaper->escapeJs($mainJsAsset->getUrl())}";
 
 script;
 ?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStringJsNamesSpaceMain, false) ?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 
 <script defer type="module" src="<?= $escaper->escapeHtmlAttr($mainJsAsset->getUrl()); ?>"></script>
 
 <?php
-$scriptStringJsNamesSpaceStaticPath = <<<script
+$scriptString = <<<script
 
     window.bluefinchCheckout.staticPath =
         window.bluefinchCheckout.staticPath.replace(
@@ -80,7 +80,7 @@ $scriptStringJsNamesSpaceStaticPath = <<<script
 
 script;
 ?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStringJsNamesSpaceStaticPath, false) ?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 
 <?php if (array_key_exists('imports', $jsAssets)): ?>
     <?php foreach ($jsAssets['imports'] as $jsAsset): ?>
