@@ -7,10 +7,7 @@
       <span data-cy="rewards-you-have-text">{{ $t('You have ') }}</span>
       <span class="reward-points-available" data-cy="rewards-points-text">
         {{
-          $t('{points} Reward Points',
-             {
-               points: customer.reward_points.balance.points,
-             })
+          $t('{points} Reward Points').replace('{points}', customer.reward_points.balance.points)
         }}
       </span>
       <span data-cy="rewards-available-text">{{ $t(' available ') }}</span>

@@ -36,8 +36,9 @@
           </div>
           <div
             class="braintree-option__label"
-            :aria-label="$t('Paying with {paymentTitle}',
-                            { paymentTitle: getPaymentMethodTitle('braintree_local_payment') })"
+            :aria-label="$t(
+              'Paying with {paymentTitle}'
+            ).replace('{paymentTitle}', getPaymentMethodTitle('braintree_local_payment'))"
             data-cy="braintree-lpm-title"
           >
             {{ getPaymentMethodTitle('braintree_local_payment') }}

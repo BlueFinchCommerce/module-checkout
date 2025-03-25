@@ -12,7 +12,7 @@
       />
       <div class="delivery-section-title-text">
         <TextField
-          :text="$t('Select a saved {addressType} address', { addressType })"
+          :text="$t('Select a saved {addressType} address').replace('{addressType}', addressType)"
           :data-cy="`saved-${addressType}-address-title`"
         />
       </div>

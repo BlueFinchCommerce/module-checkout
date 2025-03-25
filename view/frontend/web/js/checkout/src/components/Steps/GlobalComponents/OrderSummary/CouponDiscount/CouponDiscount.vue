@@ -61,7 +61,7 @@
           <SuccessMessage
             :data-cy="dataCy ? `coupon-discount-success-${dataCy}` : 'coupon-discount-success'"
             v-if="cart.applied_coupons?.length"
-            :message="$t(`Successfully applied code '{code}'.`, { code: cart.applied_coupons[0].code })"
+            :message="$t(`Successfully applied code '{code}'.`).replace('{code}', cart.applied_coupons[0].code)"
           />
         </div>
         <div class="error">

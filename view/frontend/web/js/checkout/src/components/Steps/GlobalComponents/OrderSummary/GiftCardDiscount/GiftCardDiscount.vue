@@ -62,7 +62,7 @@
           <SuccessMessage
             :data-cy="dataCy ? `gift-card-success-${dataCy}` : 'gift-card-success'"
             v-if="cart.applied_gift_cards?.[0]"
-            :message="$t(`Successfully applied code '{code}'.`, { code: giftCardCode })"
+            :message="$t(`Successfully applied code '{code}'.`).replace('{code}', giftCardCode)"
           />
         </div>
         <div class="error">

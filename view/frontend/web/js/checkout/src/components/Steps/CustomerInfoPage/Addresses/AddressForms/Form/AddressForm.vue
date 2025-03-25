@@ -20,10 +20,9 @@
               :error-message="showFieldError(address_type, `street.${index}`)
                 ? $t('Please enter a valid address') : ''"
               :placeholder="$t(
-                'Address (line {line})',
-                { line: index + 1 }
-              )"
-              :label="$t('Address (line {line})', { line: index + 1 })"
+                'Address (line {line})'
+              ).replace('{line}', index + 1)"
+              :label="$t('Address (line {line})').replace('{line}', index + 1)"
               autocomplete="address-line1"
               :required="isRequired(`street.${index}`)"
               :data-cy="`${address_type}-address-one-input`"

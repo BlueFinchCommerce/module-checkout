@@ -15,7 +15,9 @@
         <button
           class="braintree-payment__payment-method__header__title button"
           :class="{ 'braintree-payment__payment-method-disabled': !vaultedMethod.selected }"
-          :aria-label="$t('{name} Stored card ends in {lastFour}', { lastFour: vaultedMethod.details.maskedCC })"
+          :aria-label="$t(
+            '{name} Stored card ends in {lastFour}'
+          ).replace('{lastFour}', vaultedMethod.details.maskedCC)"
           type="button"
           data-cy="braintree-saved-payment-card-button"
           @click="selectPaymentCard(vaultedMethod)"

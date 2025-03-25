@@ -6,10 +6,7 @@
     <div>
       <span class="store-credit-available" data-cy="store-credit-text">
         {{
-          $t('You have {value} in store credit available.',
-             {
-               value: getFormattedPrice(),
-             })
+          $t('You have {value} in store credit available.').replace('{value}', getFormattedPrice())
         }}
       </span>
     </div>
