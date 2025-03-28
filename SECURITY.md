@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-Please do not publicly disclose potential security vulnerabilities. Instead, report them to checkout@bluefinchcommerce.com (Please include "Security Vulnerability" and the name of this repo, in the email subject if possible). Informing us this way will allow us to quickly determine the severity of the problem and provide a fix without putting existing projects at risk.
+Please do not publicly disclose potential security vulnerabilities. Instead, report them to checkout@bluefinchcommerce.com, including "Security Vulnerability" and the name of this repo in the email subject. Informing us this way will allow us to quickly determine the severity of the problem and provide a fix without putting existing projects at risk.
 
 If you would like to provide a patch, please do not open a pull request. Instead, create a commit on your fork of this repo and run this command:
 
