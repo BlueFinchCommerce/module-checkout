@@ -179,17 +179,19 @@ export default {
   },
   computed: {
     /**
-    * Disable prev arrow if month is this month
+     * Disable prev arrow if no available date is within the previous month.
     */
     disablePrevArrow() {
-      return this.month <= this.today.getMonth();
+      const prevMonth = this.month === 0 ? 11 : this.month - 1;
+      return !this.availableDates.some((availableDate) => availableDate.getMonth() === prevMonth);
     },
 
     /**
-     * Disable next arrow if month is this month + 1
+     * Disable next arrow if no available date is within the next month.
      */
     disableNextArrow() {
-      return this.month >= (this.today.getMonth() + 1);
+      const nextMonth = this.month === 11 ? 0 : this.month + 1;
+      return !this.availableDates.some((availableDate) => availableDate.getMonth() === nextMonth);
     },
 
   },
@@ -211,7 +213,7 @@ export default {
         : (date.getDate() % 10 === 2 && date.getDate() !== 12 ? 'nd'
           : (date.getDate() % 10 === 3 && date.getDate() !== 13 ? 'rd' : 'th')));
       const weekday = this.weekdays[date.getDay()];
-      return `${weekday} ${day} ${this.getMonth()} ${this.year}`;
+      return `${weekday} ${day} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
     },
 
     /**
