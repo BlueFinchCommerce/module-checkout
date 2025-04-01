@@ -20,5 +20,20 @@
                 <customer_create_success/>
             </type_for>
         </recaptcha_frontend>
+        <csp>
+            <mode>
+                <storefront_bluefinchcheckout_checkout_index>
+                    <report_only>0</report_only>
+                </storefront_bluefinchcheckout_checkout_index>
+            </mode>
+            <policies>
+                <storefront_bluefinchcheckout_checkout_index>
+                    <scripts>
+                        <inline>0</inline>
+                        <event_handlers>1</event_handlers>
+                    </scripts>
+                </storefront_bluefinchcheckout_checkout_index>
+            </policies>
+        </csp>
     </default>
 </config>
