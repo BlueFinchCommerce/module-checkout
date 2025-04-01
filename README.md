@@ -1,5 +1,7 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/BlueFinchCommerce/module-checkout/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/BlueFinchCommerce/module-checkout/tree/main)
 
+[![GNU General Public License Version 3](./assets/license-GPLv3.svg)](https://github.com/BlueFinchCommerce/module-checkout/?tab=GPL-3.0-1-ov-file#readme)
+
 ![BlueFinch Checkout](./assets/logo.svg)
 
 # BlueFinch Checkout
@@ -56,6 +58,7 @@ Remember to clear any appropriate caches.
 - [Custom extension guide](docs/Extensions.md)
 - [How to create a checkout extension module](docs/how-to-create-a-checkout-extension-module.md)
 - [How to create payment methods](docs/how-to-create-a-payment-method.md)
+- [GA4 Custom Event Tracking](docs/ga4-custom-event-tracking.md)
 
 ### BlueFinch Checkout extension modules
 
