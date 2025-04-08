@@ -18,7 +18,8 @@ switch ($accountType) {
             ?>
             <!-- GOOGLE TAG MANAGER -->
             <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
-            <script defer>
+
+            <?php $scriptString = <<<SCRIPT
                 /**
                  * @param {Object} config
                  */
@@ -34,8 +35,12 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= /* @noEscape */ $block->getTagManagerData() ?>)
-            </script>
+                })('{$block->getTagManagerData()}')
+                    
+                SCRIPT;
+
+            ?>
+            <?= /* @noEscape */ $secureRenderer->renderTag('script', ['defer' => 'defer'], $scriptString, false) ?>
             <!-- END GOOGLE TAG MANAGER -->
             <?php
         }
@@ -45,7 +50,8 @@ switch ($accountType) {
             ?>
             <!-- BEGIN GOOGLE ANALYTICS 4 CODE -->
             <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')) ?>"></script>
-            <script defer>
+
+            <?php $scriptString = <<<SCRIPT
                 /**
                  * @param {Object} config
                  */
@@ -61,8 +67,12 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= /* @noEscape */ $block->getAnalyticsData() ?>)
-            </script>
+                })('{$block->getAnalyticsData()}')
+                    
+                SCRIPT;
+
+            ?>
+            <?= /* @noEscape */ $secureRenderer->renderTag('script', ['defer' => 'defer'], $scriptString, false) ?>
             <!-- END GOOGLE ANALYTICS 4 CODE -->
             <?php
         }
