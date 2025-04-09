@@ -1,3 +1,7 @@
+//
+//  Global Variables
+//  ---------------------------------------------
+
 #bluefinch-checkout-root {
 
     //
@@ -5,13 +9,13 @@
     //  ---------------------------------------------
     --color__primary-navy: #0D00FF;
     --color__primary-dark-blue: #0A104A;
-    --color__primary-blue: #0A104A;
-    --color__primary-grey1: #0A104A;
+    --color__primary-blue: var(--color__primary-dark-blue);
+    --color__primary-grey1: var(--color__primary-dark-blue);
     --color__primary-grey2: #666A92;
-    --color__primary-grey3: #666A92;
+    --color__primary-grey3: var(--color__primary-grey2);
     --color__primary-grey4: #AFB0C3;
     --color__primary-grey5: #EFF5FF;
-    --color__primary-grey6: #EFF5FF;
+    --color__primary-grey6: var(--color__primary-grey5);
     --color__primary-grey7: #d9dadb;
     --color__primary-grey8: #f5f5f5;
     --color__primary-grey9: #989EA3;
@@ -87,13 +91,13 @@
     --font__heading--desktop: var(--font__l);
     --font__heading--mobile: var(--font__m);
 
-    --font__color-light: #0A104A;
-    --font__color: #0A104A;
+    --font__color-light: var(--color__primary-dark-blue);
+    --font__color: var(--color__primary-dark-blue);
 
     //
     // Header
     //  ---------------------------------------------
-    --header__background-color: #0A104A;
+    --header__background-color: var(--color__primary-dark-blue);
     --header__border-bottom: none;
     --header-logo__width--mobile: 130px;
     --header-logo__width--desktop: 150px;
@@ -101,7 +105,7 @@
     //
     // Footer
     //  ---------------------------------------------
-    --footer__background-color: #0A104A;
+    --footer__background-color: var(--color__primary-dark-blue);
     --footer__display: block;
     --footer__border-top: none;
 
@@ -261,15 +265,15 @@
     //
     // Secondary Buttons
     //  ---------------------------------------------
-    --button-secondary__font-color: #ffffff;
-    --button-secondary__background-color: #0A104A;
-    --button-secondary__border-color: #0A104A;
-    --button-secondary__font-color-hover: #ffffff;
-    --button-secondary__background-color-hover: #0A104A;
-    --button-secondary__border-color-hover: #0A104A;
-    --button-secondary__font-color-focus: #ffffff;
-    --button-secondary__background-color-focus: #0A104A;
-    --button-secondary__border-color-focus: #0A104A;
+    --button-secondary__font-color: var(--color__primary-white);
+    --button-secondary__background-color: var(--color__primary-dark-blue);
+    --button-secondary__border-color: var(--color__primary-dark-blue);
+    --button-secondary__font-color-hover: var(--color__primary-white);
+    --button-secondary__background-color-hover: var(--color__primary-dark-blue);
+    --button-secondary__border-color-hover: var(--color__primary-dark-blue);
+    --button-secondary__font-color-focus: var(--color__primary-white);
+    --button-secondary__background-color-focus: var(--color__primary-dark-blue);
+    --button-secondary__border-color-focus: var(--color__primary-dark-blue);
 
     //
     // Tertiary Buttons
@@ -446,12 +450,12 @@
     //
     // Notifications
     //  ---------------------------------------------
-    --notification__success-font-color: #0A104A;
-    --notification__success-background-color: #F0FDF4;
-    --notification__succss-border-color: #149F47;
-    --notification__error-font-color: #0A104A;
-    --notification__error-background-color: #FFDEDE;
-    --notification__error-border-color: #FF3232;
+    --notification__success-font-color: var(--color__primary-dark-blue);
+    --notification__success-background-color: var(--color__semantic-success-light);
+    --notification__succss-border-color: var(--color__semantic-success);
+    --notification__error-font-color: var(--color__primary-dark-blue);
+    --notification__error-background-color: var(--color__semantic-error-light);
+    --notification__error-border-color: var(--color__semantic-error);
     --notification__border-weight: 1px;
     --notification__border-radius: var(--base__border-radius);
     --notification__margin: var(--indent__m) 0;
