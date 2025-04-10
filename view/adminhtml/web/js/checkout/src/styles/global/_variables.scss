@@ -17,7 +17,7 @@
     --color__primary-grey5: #EFF5FF;
     --color__primary-grey6: var(--color__primary-grey5);
     --color__primary-grey7: #d9dadb;
-    --color__primary-grey8: #f5f5f5;
+    --color__primary-grey8: #F7F7F7;
     --color__primary-grey9: #989EA3;
     --color__primary-white: #ffffff;
 
@@ -42,7 +42,7 @@
     //  Page
     //  ---------------------------------------------
     --page__background-color--mobile: var(--color__primary-white);
-    --page__background-color--desktop: #F7F7F7;
+    --page__background-color--desktop: var(--color__primary-grey8);
 
     //
     //  Skeleton Placeholder
