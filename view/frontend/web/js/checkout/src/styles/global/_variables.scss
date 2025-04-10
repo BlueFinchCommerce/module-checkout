@@ -496,7 +496,7 @@
     // Divider
     //  ---------------------------------------------
     --divider__display: flex;
-    --divider__color: #E2E8F0;
+    --divider__color: var(--base__border-color);
     --divider__weight: var(--base__border-weight);
     --divider__border: var(--divider__weight) var(--base__border-style) var(--divider__color);
 
