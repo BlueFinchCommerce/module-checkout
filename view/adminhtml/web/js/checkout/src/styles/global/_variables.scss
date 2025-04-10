@@ -268,12 +268,22 @@
     --button-secondary__font-color: var(--color__primary-white);
     --button-secondary__background-color: var(--color__primary-dark-blue);
     --button-secondary__border-color: var(--color__primary-dark-blue);
+
     --button-secondary__font-color-hover: var(--color__primary-white);
     --button-secondary__background-color-hover: var(--color__primary-dark-blue);
     --button-secondary__border-color-hover: var(--color__primary-dark-blue);
+
     --button-secondary__font-color-focus: var(--color__primary-white);
     --button-secondary__background-color-focus: var(--color__primary-dark-blue);
     --button-secondary__border-color-focus: var(--color__primary-dark-blue);
+
+    --button-secondary__border-weight: var(--button__border);
+    --button-secondary__border-box-shadow: 0;
+    --button-secondary__border-weight-hover: var(--button__border);
+    --button-secondary__border-weight-focus: var(--button__border);
+
+    --button-secondary__text-placeholder-bg: var(--button-secondary__background-color);
+    --button-secondary__text-placeholder-bg-gradient: var(--button-secondary__border-color-hover);
 
     //
     // Tertiary Buttons
