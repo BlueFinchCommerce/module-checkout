@@ -6,12 +6,15 @@
  * @var \Magento\GoogleTagManager\ViewModel\TagManagerConfig $gtmConfig
  */
 
- use Magento\GoogleTagManager\Model\Config\TagManagerConfig;
+use Magento\GoogleTagManager\Model\Config\TagManagerConfig;
 
 $gtmConfig = $block->getData('view_model');
 $accountType = $gtmConfig->getAccountType();
 $gtmAccountId = $gtmConfig->getContainerId();
 $gapAccountId = $gtmConfig->getMeasurementId();
+$jsonConfig = $block->getTagManagerData();
+$analyticsData = $block->getAnalyticsData();
+
 switch ($accountType) {
     case TagManagerConfig::TYPE_TAG_MANAGER:
         if (!empty($gtmAccountId)) {
@@ -35,7 +38,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })('{$block->getTagManagerData()}')
+                })($jsonConfig)
                     
                 SCRIPT;
 
@@ -67,7 +70,7 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })('{$block->getAnalyticsData()}')
+                })($analyticsData)
                     
                 SCRIPT;
 
