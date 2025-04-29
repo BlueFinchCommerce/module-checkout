@@ -2,6 +2,7 @@
     "name": "bluefinchcommerce/module-checkout",
     "description": "",
     "type": "magento2-module",
+    "license": "GPL-3.0-only",
     "autoload": {
         "files": [
             "registration.php"
