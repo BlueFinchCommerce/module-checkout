@@ -63,7 +63,7 @@ function bluefinchInitGtm(config) {
             j.async = true;
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             var n=d.querySelector('[nonce]');
-            n&&j.setAttribute('nonce',n.nonces||n.getAttribute('nonce'));
+            n&&j.setAttribute('nonce',n.nonce||n.getAttribute('nonce'));
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', config.gtmAccountId);
 
