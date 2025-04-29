@@ -70,6 +70,10 @@ function bluefinchInitGtm(config) {
                 gtagScript.type = 'text/javascript';
                 gtagScript.async = true;
                 gtagScript.src = u;
+                var n = d.querySelector('[nonce]');
+                if (n) {
+                  gtagScript.setAttribute('nonce', n.nonce || n.getAttribute('nonce'));
+                }
                 d.head.insertBefore(gtagScript, d.head.children[0]);
             })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id=' + measurementId);
             window.dataLayer = window.dataLayer || [];
