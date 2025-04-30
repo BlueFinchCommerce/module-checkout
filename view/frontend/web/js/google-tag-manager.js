@@ -53,7 +53,7 @@ function bluefinchInitGtm(config) {
 
         (function (w, d, s, l, i) {
             var n = d.querySelector('[nonce]');
-            
+
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),

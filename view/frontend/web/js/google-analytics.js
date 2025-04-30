@@ -67,7 +67,7 @@ function bluefinchInitGtm(config) {
             (function (d, s, u) {
                 let gtagScript = d.createElement(s);
                 var n = d.querySelector('[nonce]');
-                
+
                 gtagScript.type = 'text/javascript';
                 gtagScript.async = true;
                 gtagScript.src = u;
