@@ -105,6 +105,11 @@
           :data-cy="dataCy ? `shipping-price-tbc-${dataCy}` : 'shipping-price-tbc'"
         />
       </div>
+      <component
+        :is="orderSummaryAdditionalTotalRow"
+        v-for="orderSummaryAdditionalTotalRow in orderSummaryAdditionalTotalRows"
+        :key="orderSummaryAdditionalTotalRow"
+      />
     </div>
     <div class="order-total-grand">
       <TextField
@@ -137,6 +142,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 
 // Extensions
 import orderSummaryMessagesContainers from '@/extensions/orderSummaryMessagesContainers';
+import orderSummaryAdditionalTotalRows from '@/extensions/orderSummaryAdditionalTotalRows';
 
 export default {
   name: 'OrderSummaryTotal',
@@ -144,6 +150,7 @@ export default {
     Price,
     TextField,
     ...orderSummaryMessagesContainers(),
+    ...orderSummaryAdditionalTotalRows(),
   },
   props: {
     dataCy: {
@@ -157,6 +164,7 @@ export default {
       grandTotalText: '',
       grandTotalTextId: 'bluefinch-checkout-grandtotal-text',
       orderSummaryMessagesContainers: [],
+      orderSummaryAdditionalTotalRows: [],
     };
   },
   computed: {
@@ -171,6 +179,7 @@ export default {
     this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
     this.grandTotalText = window.bluefinchCheckout?.[this.grandTotalTextId] || this.$t('orderSummary.grandTotalTitle');
     this.orderSummaryMessagesContainers = Object.keys(orderSummaryMessagesContainers());
+    this.orderSummaryAdditionalTotalRows = Object.keys(orderSummaryAdditionalTotalRows());
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
