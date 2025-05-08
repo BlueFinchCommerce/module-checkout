@@ -24,13 +24,12 @@ switch ($accountType) {
             ?>
             <!-- GOOGLE TAG MANAGER -->
             <script defer nonce="<?= $cspNonce ?>" src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
-          
+
             <?php $scriptString = <<<SCRIPT
                 /**
                  * @param {Object} config
                  */
-                 window.cspNonce = '$cspNonce';
-                 
+
                 (function (config) {
                     // If the init is available call it otherwise wait until it's available.
                     window.bluefinchInitGtm
@@ -44,7 +43,7 @@ switch ($accountType) {
                         window.bluefinchInitGtm(config);
                     });
                 })($jsonConfig)
-                    
+
                 SCRIPT;
 
             ?>
@@ -76,7 +75,7 @@ switch ($accountType) {
                         window.bluefinchInitGtm(config);
                     });
                 })($analyticsData)
-                    
+
                 SCRIPT;
 
             ?>
