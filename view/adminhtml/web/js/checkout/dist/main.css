@@ -4286,19 +4286,6 @@ div.dropdown.coupon-dropdown .field .success[data-v-71c72d78] {
   color: var(--adyen-font-color, #00112C);
   font-family: var(--font-family__base);
 }
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-}
-body {
-  margin: 0;
-}
-p {
-  margin: 0;
-}
 #bluefinch-checkout-root {
   color: var(--font__color);
   display: flex;
@@ -4310,6 +4297,17 @@ p {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+#bluefinch-checkout-root *,
+#bluefinch-checkout-root *::before,
+#bluefinch-checkout-root *::after {
+  position: relative;
+}
+#bluefinch-checkout-root body {
+  margin: 0;
+}
+#bluefinch-checkout-root p {
+  margin: 0;
 }
 #bluefinch-checkout-root .root {
   min-height: -webkit-fill-available;
