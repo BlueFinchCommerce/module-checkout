@@ -19,6 +19,10 @@ export default {
     exclTaxTitle: ' ',
     discountTitle: ' ',
     subtotalTitle: ' ',
+    subtotalTitleExcl: ' ',
+    subtotalTitleIncl: ' ',
+    shippingStepTitleExcl: ' ',
+    shippingStepTitleIncl: ' ',
     removeItemButton: ' ',
     couponDiscountTitle: ' ',
     couponDiscount: {

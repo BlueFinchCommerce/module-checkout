@@ -52,13 +52,15 @@ export default defineStore('configStore', {
     googleMapApiKey: '',
     paypalCreditThresholdValue: null,
     websiteName: '',
-    taxCartDisplayPrice: false,
+    taxCartDisplayPrice: null,
+    taxCartDisplaySubtotal: null,
     taxCartDisplayShipping: false,
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
+    comapanyFieldStatus: false,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -130,6 +132,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_country_display_state',
         'optional_zip_countries',
         'tax_cart_display_price',
+        'tax_cart_display_subtotal',
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
         'bluefinch_checkout_copyright_text',
@@ -142,6 +145,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_paypal_credit_threshold_value',
         'bluefinch_checkout_google_map_enabled',
         'bluefinch_checkout_google_map_api_key',
+        'magento_btob_company_field_status',
       ];
 
       // Conditionally add reward config based on Magento Edition
@@ -194,9 +198,10 @@ export default defineStore('configStore', {
         rewardsEnabled: storeConfig.magento_reward_general_is_enabled === '1'
           && storeConfig.magento_reward_general_is_enabled_on_front === '1',
         optionalZipCountries: storeConfig.optional_zip_countries || '',
-        taxCartDisplayPrice: storeConfig.tax_cart_display_price === '2',
-        taxCartDisplayShipping: storeConfig.tax_cart_display_shipping === '2',
-        taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary === '1',
+        taxCartDisplayPrice: storeConfig.tax_cart_display_price,
+        taxCartDisplaySubtotal: storeConfig.tax_cart_display_subtotal,
+        taxCartDisplayShipping: storeConfig.tax_cart_display_shipping,
+        taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary,
         copyrightText: storeConfig.bluefinch_checkout_copyright_text,
         progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
         addressFinder: {
@@ -214,6 +219,7 @@ export default defineStore('configStore', {
         paypalCreditThresholdValue: storeConfig.bluefinch_checkout_paypal_credit_threshold_value,
         googleMapEnabled: storeConfig.bluefinch_checkout_google_map_enabled,
         googleMapApiKey: storeConfig.bluefinch_checkout_google_map_api_key,
+        comapanyFieldStatus: storeConfig.magento_btob_company_field_status === '1',
       });
 
       if (storeConfig.locale) {

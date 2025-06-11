@@ -1,4 +1,5 @@
 type StoreConfig {
+    magento_btob_company_field_status: Boolean @doc(description: "Magento B2B ‘Enable Company’ store config")
     bluefinch_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
     bluefinch_checkout_enabled: String @doc(description: "BlueFinch Checkout Enabled")
     bluefinch_checkout_loqate_enabled: String @doc(description: "BlueFinch Checkout Loqate Enabled")
