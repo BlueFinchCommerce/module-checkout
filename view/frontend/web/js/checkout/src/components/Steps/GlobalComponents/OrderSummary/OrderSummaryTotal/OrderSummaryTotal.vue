@@ -26,6 +26,25 @@
           :data-cy="dataCy ? `subtotal-price-${dataCy}` : 'subtotal-price'"
         />
       </div>
+      <div  v-if="cart?.prices?.applied_taxes?.length">
+        <div
+          class="total__row"
+          v-for="(tax, idx) in cart.prices.applied_taxes"
+          :key="idx"
+        >
+          <TextField
+            class="total__text title"
+            :text="tax.label"
+            :data-cy="dataCy ? `tax-title-${dataCy}-${idx}` : `tax-title-${idx}`"
+          />
+          <Price
+            class="total__text"
+            :value="tax.amount.value"
+            :currency="tax.amount.currency"
+            :data-cy="dataCy ? `tax-price-${dataCy}-${idx}` : `tax-price-${idx}`"
+          />
+        </div>
+      </div>
       <div
         v-for="(discount, index) in (cart?.prices?.discounts || []).filter(d => !(d.label === 'Gift Cards'
         && cart?.applied_gift_cards?.length))"
