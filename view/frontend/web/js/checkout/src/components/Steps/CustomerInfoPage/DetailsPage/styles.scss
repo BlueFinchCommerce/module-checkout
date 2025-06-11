@@ -99,6 +99,10 @@
     align-items: center;
     padding: var(--indent__m);
 
+    svg {
+      flex-shrink: 0;
+    }
+
     p {
       margin-left: var(--indent__s);
     }
