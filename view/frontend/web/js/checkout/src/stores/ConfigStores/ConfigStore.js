@@ -219,7 +219,7 @@ export default defineStore('configStore', {
         paypalCreditThresholdValue: storeConfig.bluefinch_checkout_paypal_credit_threshold_value,
         googleMapEnabled: storeConfig.bluefinch_checkout_google_map_enabled,
         googleMapApiKey: storeConfig.bluefinch_checkout_google_map_api_key,
-        comapanyFieldStatus: storeConfig.magento_btob_company_field_status === '1',
+        comapanyFieldStatus: storeConfig.magento_btob_company_field_status,
       });
 
       if (storeConfig.locale) {

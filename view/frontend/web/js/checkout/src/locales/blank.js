@@ -79,6 +79,10 @@ export default {
       placeholder: ' ',
       label: ' ',
     },
+    company: {
+      placeholder: ' ',
+      label: ' ',
+    },
     clickAndCollectSection: {
       clickAndCollectTitle: ' ',
       clickAndCollectInputPlaceholder: ' ',
@@ -135,6 +139,7 @@ export default {
     sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
+    companyErrorMessage: ' ',
     emailErrorMessage: ' ',
     phoneErrorMessage: ' ',
     passwordHelpText: ' ',

@@ -87,6 +87,10 @@ export default {
       placeholder: 'Last name',
       label: 'Last name',
     },
+    company: {
+      placeholder: 'Company name',
+      label: 'Company name',
+    },
     clickAndCollectSection: {
       clickAndCollectTitle: 'Choose a Click & Collect Location',
       clickAndCollectInputPlaceholder: 'Search by postcode',
@@ -165,6 +169,7 @@ export default {
     sanitiseError: 'Invalid character entered',
     firstNameErrorMessage: 'Please enter a valid first name',
     lastNameErrorMessage: 'Please enter a valid last name',
+    companyErrorMessage: 'Please enter a valid company name',
     emailErrorMessage: 'Please enter a valid email address',
     phoneErrorMessage: 'Not a valid Phone Number',
     passwordHelpText: 'Minimum 8 characters and must include at least three character classes '

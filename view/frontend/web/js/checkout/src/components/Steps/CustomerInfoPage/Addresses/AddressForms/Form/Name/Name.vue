@@ -47,6 +47,30 @@
       <ErrorIcon v-if="!isFieldValid(address_type, 'lastname')" />
     </div>
   </div>
+  <div v-if="comapanyFieldStatus">
+    <!-- Company Name -->
+    <TextInput
+      v-model="selectedAddressType.company"
+      :class="{'field-valid': selectedAddressType.company && isFieldValid(address_type, 'company'),
+               'field-error': !isFieldValid(address_type, 'company')}"
+      :identifier="`${address_type}-company`"
+      :label="$t('yourDetailsSection.company.label')"
+      :placeholder="$t('yourDetailsSection.company.placeholder')"
+      :error="showFieldError(address_type, 'company')"
+      :error-message="showFieldError(address_type, 'company')
+        ? $t('errorMessages.companyErrorMessage') : ''"
+      :data-cy="`${address_type}-company-input`"
+      type="text"
+      :required="isRequired('company')"
+      autocomplete="company"
+      @keyup="handleInputChange($event, 'company');"
+      @focusout="validateField(address_type, 'company', true)"
+    />
+    <ValidIcon v-if="selectedAddressType.company && isFieldValid(address_type, 'company')" />
+    <div class="error-icon-block">
+      <ErrorIcon v-if="!isFieldValid(address_type, 'company')" />
+    </div>
+  </div>
   <div>
     <!-- Phone Number Input -->
     <div class="phone-field">
@@ -116,6 +140,7 @@ export default {
   computed: {
     ...mapWritableState(useCustomerStore, ['selected']),
     ...mapState(useValidationStore, ['isFieldValid']),
+    ...mapState(useConfigStore, ['comapanyFieldStatus']),
 
     selectedAddressType() {
       return this.selected[this.address_type];

@@ -64,11 +64,14 @@ export default async () => {
       created_at
       is_subscribed
     }
+    company {
+      name
+    }
   }`;
 
   try {
     const response = await graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCustomer');
-    return response.data.customer;
+    return { customer: response.data.customer, company: response.data.company };
   } catch (error) {
     // If there is an error, assume the user is a guest.
     const customerStore = useCustomerStore();

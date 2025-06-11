@@ -38,7 +38,10 @@
           :data-cy="`${addressType}-saved-address-ship-here`"
           :text="$t('yourDetailsSection.deliverySection.shipHere')"
         />
+
         {{ item.firstname }} {{ item.lastname }}<br><br>
+        <span v-if="company.name">{{ company.name }}</span>
+        <br v-if="company.name" />
         {{ item.street[0] }}<br v-if="item.street[0]">
         {{ item.street[1] }}<br v-if="item.street[1]">
         {{ item.city }}<br v-if="item.city">
@@ -108,7 +111,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useCustomerStore, ['customer', 'selected']),
+    ...mapState(useCustomerStore, ['customer', 'selected', 'company']),
     ...mapState(useCartStore, ['cart']),
   },
   watch: {
