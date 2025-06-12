@@ -47,7 +47,7 @@
       <ErrorIcon v-if="!isFieldValid(address_type, 'lastname')" />
     </div>
   </div>
-  <div v-if="comapanyFieldStatus">
+  <div v-if="companyFieldStatus">
     <!-- Company Name -->
     <TextInput
       v-model="selectedAddressType.company"
@@ -140,7 +140,7 @@ export default {
   computed: {
     ...mapWritableState(useCustomerStore, ['selected']),
     ...mapState(useValidationStore, ['isFieldValid']),
-    ...mapState(useConfigStore, ['comapanyFieldStatus']),
+    ...mapState(useConfigStore, ['companyFieldStatus']),
 
     selectedAddressType() {
       return this.selected[this.address_type];
