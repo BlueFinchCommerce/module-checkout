@@ -58,6 +58,7 @@ export default defineStore('configStore', {
     taxCartDisplayFullSummary: false,
     copyrightText: '',
     progressBarVisible: false,
+    giftCardBlockVisible: true,
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
     companyFieldStatus: false,
@@ -137,6 +138,7 @@ export default defineStore('configStore', {
         'tax_cart_display_full_summary',
         'bluefinch_checkout_copyright_text',
         'bluefinch_checkout_progress_bar_visible',
+        'bluefinch_checkout_gift_card_field_visible',
         'bluefinch_checkout_loqate_api_key',
         'bluefinch_checkout_loqate_enabled',
         'bluefinch_checkout_click_collect_tabs_enabled',
@@ -204,6 +206,7 @@ export default defineStore('configStore', {
         taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary,
         copyrightText: storeConfig.bluefinch_checkout_copyright_text,
         progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
+        giftCardBlockVisible: storeConfig.bluefinch_checkout_gift_card_field_visible === true,
         addressFinder: {
           enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
           loqate: {

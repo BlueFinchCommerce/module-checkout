@@ -27,6 +27,7 @@
                 <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
                 <item name="bluefinch_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
                 <item name="bluefinch_checkout_progress_bar_visible" xsi:type="string">bluefinch_checkout/general/progress_bar_visible</item>
+                <item name="bluefinch_checkout_gift_card_field_visible" xsi:type="string">bluefinch_checkout/general/gift_card_field_visible</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
 
