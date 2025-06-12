@@ -9,7 +9,10 @@
     >
       <span
         v-if="label"
-        :class="(modelValue.length > 0 || isInputActive) ? 'text-input-has-value'
+        :class="labelVisible
+          ? 'text-input-has-value'
+          : (modelValue.length > 0 || isInputActive)
+          ? 'text-input-has-value'
           : 'text-input-no-value'"
       >
         {{ required ? label + ' *' : label }}
@@ -77,6 +80,10 @@ export default {
     },
     label: {
       type: String,
+    },
+    labelVisible: {
+      type: Boolean,
+      default: false,
     },
     ariaLabel: {
       type: String,

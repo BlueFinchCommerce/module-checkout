@@ -504,6 +504,7 @@ export default {
         }
 
         await this.setAddressesOnCart();
+        await functionExtension('onProceedToShippingOption');
         if (this.ageCheckRequired) {
           await functionExtension('onSubmitShippingOptionAgeCheck');
         } else {
