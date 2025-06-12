@@ -24,7 +24,6 @@ import functionExtension from '@/extensions/functionExtension';
 export default defineStore('customerStore', {
   state: () => ({
     customer: { addresses: [], email: '', ...getUrlTokens },
-    company: {},
     hasPreviouslyOrderedFpf: false,
     emailEntered: false,
     selected: {
@@ -280,36 +279,35 @@ export default defineStore('customerStore', {
         if (data) {
           this.setData({
             customer: {
-              ...data.customer,
+              ...data,
               id: this.customer.firstname,
             },
-            company: data.company || {},
           });
 
           this.setEmailEntered();
           // If we have a matched shipping address then set it so it doesn't show as custom.
-          const matchedShipping = data.customer.addresses.findIndex((address) => (
+          const matchedShipping = data.addresses.findIndex((address) => (
             doAddressesMatch(address, this.selected.shipping)
           ));
           if (matchedShipping !== -1) {
-            this.setAddressToStore(data.customer.addresses[matchedShipping], 'shipping');
+            this.setAddressToStore(data.addresses[matchedShipping], 'shipping');
           }
 
           // If we have a matched billing address then set it so it doesn't show as custom.
-          const matchedBilling = data.customer.addresses.findIndex((address) => (
+          const matchedBilling = data.addresses.findIndex((address) => (
             doAddressesMatch(address, this.selected.billing)
           ));
           if (matchedBilling !== -1) {
-            this.setAddressToStore(data.customer.addresses[matchedBilling], 'billing');
+            this.setAddressToStore(data.addresses[matchedBilling], 'billing');
           }
 
           // Default to the customers default addresses if nothing exists.
           if (!this.selected.shipping.id && !this.selected.shipping.firstname) {
-            const defaultShipping = this.getDefaultAddress(data.customer, 'default_shipping');
+            const defaultShipping = this.getDefaultAddress(data, 'default_shipping');
             defaultShipping && this.setAddressToStore(defaultShipping, 'shipping');
           }
           if (!this.selected.billing.id && !this.selected.billing.firstname) {
-            const defaultBilling = this.getDefaultAddress(data.customer, 'default_billing');
+            const defaultBilling = this.getDefaultAddress(data, 'default_billing');
             defaultBilling && this.setAddressToStore(defaultBilling, 'billing');
           }
 
@@ -326,12 +324,12 @@ export default defineStore('customerStore', {
           // Update the newsletter subscription status.
           this.setData({
             newsletter: {
-              isSubscribed: data.customer.is_subscribed || false,
+              isSubscribed: data.is_subscribed || false,
             },
           });
         }
         if (this.customer.tokenType !== tokenTypes.authKey) {
-          const tokenType = data.customer ? tokenTypes.phpSessionId : tokenTypes.guestUser;
+          const tokenType = data ? tokenTypes.phpSessionId : tokenTypes.guestUser;
           this.setData({
             customer: {
               tokenType,
@@ -339,7 +337,7 @@ export default defineStore('customerStore', {
           });
         }
 
-        return data.customer;
+        return data;
       }
 
       // Set if the billing address is custom based on whether it matches the shipping address.

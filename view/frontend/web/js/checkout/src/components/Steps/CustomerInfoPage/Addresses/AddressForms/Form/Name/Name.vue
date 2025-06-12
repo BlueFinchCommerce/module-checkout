@@ -175,6 +175,9 @@ export default {
       if (this.selectedAddressType.lastname === 'UNKNOWN') {
         this.selectedAddressType.lastname = '';
       }
+      if (this.selectedAddressType.company === null) {
+        this.selectedAddressType.company = '';
+      }
     },
 
     handleInputChange(event, type) {
