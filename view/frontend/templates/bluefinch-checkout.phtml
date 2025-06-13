@@ -5,6 +5,10 @@
  * @var \BlueFinch\Checkout\ViewModel\Assets $assetViewModel
  *  @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
+use BlueFinch\Checkout\Helper\CspHelper;
+
+$cspHelper = $this->helper(CspHelper::class);
+$cspNonce = $cspHelper->getCspNonce();
 $assetViewModel = $block->getAssetViewModel();
 $jsAssets = $assetViewModel->getAssetsByType('js');
 $cssAssets = $assetViewModel->getAssetsByType('css');
@@ -18,7 +22,7 @@ $fontFamily = $assetViewModel->getFontFamily();
 ?>
 
 <?php $scriptString = <<<script
-
+    window.cspNonce = '$cspNonce';
     window.bluefinchCheckout = window.bluefinchCheckout || {};
     window.bluefinchCheckout.magentoEdition = "{$escaper->escapeJs($assetViewModel->getMagentoEdition())}";
 

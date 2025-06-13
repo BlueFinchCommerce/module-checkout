@@ -52,6 +52,8 @@ function bluefinchInitGtm(config) {
         window.dlCurrencyCode = config.storeCurrencyCode;
 
         (function (w, d, s, l, i) {
+            var n = d.querySelector('[nonce]');
+
             w[l] = w[l] || [];
             w[l].push({
                 'gtm.start': new Date().getTime(),
@@ -62,6 +64,7 @@ function bluefinchInitGtm(config) {
             dl = l !== 'dataLayer' ? '&l=' + l : '';
             j.async = true;
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            n && j.setAttribute('nonce',n.nonce || n.getAttribute('nonce'));
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', config.gtmAccountId);
 

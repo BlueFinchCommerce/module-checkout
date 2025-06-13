@@ -138,6 +138,10 @@ export default {
         sdkConfig['buyer-country'] = this.paypal.merchantCountry;
       }
 
+      if (window.cspNonce) {
+        sdkConfig.dataAttributes['csp-nonce'] = window.cspNonce;
+      }
+
       paypalInstance.loadPayPalSDK(sdkConfig, () => {
         const renderData = {
           env: this.environment,

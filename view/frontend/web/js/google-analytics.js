@@ -66,10 +66,14 @@ function bluefinchInitGtm(config) {
         } else {
             (function (d, s, u) {
                 let gtagScript = d.createElement(s);
+                var n = d.querySelector('[nonce]');
 
                 gtagScript.type = 'text/javascript';
                 gtagScript.async = true;
                 gtagScript.src = u;
+                if (n) {
+                    gtagScript.setAttribute('nonce', n.nonce || n.getAttribute('nonce'));
+                }
                 d.head.insertBefore(gtagScript, d.head.children[0]);
             })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id=' + measurementId);
             window.dataLayer = window.dataLayer || [];
