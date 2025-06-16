@@ -9,6 +9,7 @@ export default async () => {
       }
       firstname
       lastname
+      company
       postcode
       region {
         code

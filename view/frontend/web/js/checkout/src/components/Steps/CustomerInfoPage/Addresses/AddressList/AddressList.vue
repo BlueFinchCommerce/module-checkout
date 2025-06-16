@@ -38,7 +38,10 @@
           :data-cy="`${addressType}-saved-address-ship-here`"
           :text="$t('yourDetailsSection.deliverySection.shipHere')"
         />
+
         {{ item.firstname }} {{ item.lastname }}<br><br>
+        <span v-if="item.company">{{ item.company }}</span>
+        <br v-if="item.company" />
         {{ item.street[0] }}<br v-if="item.street[0]">
         {{ item.street[1] }}<br v-if="item.street[1]">
         {{ item.city }}<br v-if="item.city">

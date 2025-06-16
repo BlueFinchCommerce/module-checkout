@@ -13,6 +13,7 @@ export default (sameAsShipping = false) => {
     telephone: '',
     firstname: '',
     lastname: '',
+    company: '',
     editing: false,
   };
 

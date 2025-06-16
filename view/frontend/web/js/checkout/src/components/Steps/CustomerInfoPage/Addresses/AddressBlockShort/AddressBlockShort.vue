@@ -10,6 +10,9 @@
         <template v-if="showRegion">
           {{ address.region }}
         </template>
+        <template v-if="address.company">
+          {{ address.company }}
+        </template>
         {{ address.postcode }}
         {{ address.telephone }}
       </p>
