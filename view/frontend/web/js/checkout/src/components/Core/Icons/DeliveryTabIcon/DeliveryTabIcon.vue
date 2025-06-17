@@ -1,5 +1,5 @@
 <template>
-  <svg
+  <svg :class="className"
     :style="style"
     :role="role"
     :aria-label="ariaLabel"
@@ -18,6 +18,10 @@ import { computed, reactive } from 'vue';
 export default {
   name: 'DeliveryTabIcon',
   props: {
+    className: {
+      type: String,
+      default: '',
+    },
     width: {
       type: String,
     },
