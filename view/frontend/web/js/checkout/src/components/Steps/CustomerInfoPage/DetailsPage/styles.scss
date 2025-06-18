@@ -101,6 +101,14 @@
 
     svg {
       flex-shrink: 0;
+
+      &.white {
+        fill: var(--shipping-toggle-icon-color-active, var(--color__primary-white)) !important;
+      }
+
+      &.regular {
+        fill: var(--shipping-toggle-icon-color, #0F273C) !important;
+      }
     }
 
     p {

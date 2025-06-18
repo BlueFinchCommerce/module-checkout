@@ -13,6 +13,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // components
 import SavedDeliveryAddress
@@ -34,10 +35,11 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.getCart();
+    this.setLoadingState(true);
     await functionExtension('onShippingMethodMounted');
 
     this.setDefaultShippingMethod();
-
+    this.setLoadingState(false);
     this.trackStep({
       step: 2,
       description: 'shipping',
@@ -48,6 +50,7 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useShippingMethodsStore, ['setDefaultShippingMethod']),
     ...mapActions(useGtmStore, ['trackStep']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
   },
 };
 </script>

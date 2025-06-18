@@ -60,7 +60,7 @@
           :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
           @click="deliveryTabEvent">
           <DeliveryTabIcon
-            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+            :className="!isClickAndCollect ? 'white' : 'regular'"
           />
           <TextField
             :text="homeDeliveryText"
@@ -72,7 +72,7 @@
           :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
           @click="setClickAndCollect()">
           <ClickCollectTabIcon
-            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+            :className="isClickAndCollect ? 'white' : 'regular'"
           />
           <TextField
             :text="clickAndCollectText"

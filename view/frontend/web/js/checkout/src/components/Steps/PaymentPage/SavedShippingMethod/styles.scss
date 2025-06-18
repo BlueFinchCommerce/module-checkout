@@ -50,7 +50,7 @@
   .shipping-method-title {
     color: var(--font__color-light);
     font-size: var(--short-info-size, var(--steps-complete__font-size-sub--mobile));
-    font-weight: var(--font-weight__medium);
+    font-weight: var(--short-info-font-weight, var(--font-weight__medium));
     margin-left: var(--section-left-space, var(--indent__xl));
     margin-right: var(--indent__xl);
     font-family: var(--shipping-method-address-title__font-family, unset);
