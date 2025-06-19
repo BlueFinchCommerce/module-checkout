@@ -165,6 +165,8 @@
                       xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_logo_position</item>
                 <item name="braintree_paypal_button_location_productpage_type_messaging_text_color"
                       xsi:type="string">payment/braintree_paypal/button_location_productpage_type_messaging_text_color</item>
+                <item name="braintree_paypal_paylater_active"
+                      xsi:type="string">payment/braintree_paypal_paylater/active</item>
                 <item name="braintree_paypal_vault_active"
                       xsi:type="string">payment/braintree_paypal_vault/active</item>
                 <item name="braintree_paypal_credit_active"
