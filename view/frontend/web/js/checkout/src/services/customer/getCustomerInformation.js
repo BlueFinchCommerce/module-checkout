@@ -49,6 +49,7 @@ export default async () => {
         firstname
         id
         lastname
+        company
         postcode
         region {
           region

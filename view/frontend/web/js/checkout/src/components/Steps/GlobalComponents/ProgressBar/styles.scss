@@ -45,25 +45,27 @@
 
       svg {
         margin-right: var(--indent__s);
+        fill: var(--progress-bar-icon-color, #00B2AD) !important;
       }
     }
 
     .number {
       margin-right: var(--indent__s);
-      border: 1px solid var(--color__primary-blue);
-      background: transparent;
+      border: 1px solid var(--progress-bar-numbder-border, var(--color__primary-blue));
+      background: var(--progress-bar-number-background, transparent);
       width: 24px;
       height: 24px;
       border-radius: 50%;
       text-align: center;
 
       p {
-        color: var(--color__primary-blue);
+        color: var(--progress-bar-number-color, var(--color__primary-blue));
         font-weight: var(--font-weight__semibold);
       }
 
       &.active {
-        background: var(--color__primary-blue);
+        border: 1px solid var(--progress-bar-numbder-active-border, var(--color__primary-blue));
+        background: var(--progress-bar-number-active-background, var(--color__primary-dark-blue));
 
         p {
           color: var(--color__primary-white);

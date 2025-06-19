@@ -19,6 +19,10 @@ export default {
     exclTaxTitle: ' ',
     discountTitle: ' ',
     subtotalTitle: ' ',
+    subtotalTitleExcl: ' ',
+    subtotalTitleIncl: ' ',
+    shippingStepTitleExcl: ' ',
+    shippingStepTitleIncl: ' ',
     removeItemButton: ' ',
     couponDiscountTitle: ' ',
     couponDiscount: {
@@ -72,6 +76,10 @@ export default {
       label: ' ',
     },
     lastName: {
+      placeholder: ' ',
+      label: ' ',
+    },
+    company: {
       placeholder: ' ',
       label: ' ',
     },
@@ -131,6 +139,7 @@ export default {
     sanitiseError: ' ',
     firstNameErrorMessage: ' ',
     lastNameErrorMessage: ' ',
+    companyErrorMessage: ' ',
     emailErrorMessage: ' ',
     phoneErrorMessage: ' ',
     passwordHelpText: ' ',

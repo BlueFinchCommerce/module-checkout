@@ -69,7 +69,7 @@
           :class="{'button--tab': !isClickAndCollect, 'button--tab__unselected' : isClickAndCollect}"
           @click="deliveryTabEvent">
           <DeliveryTabIcon
-            :fill="!isClickAndCollect ? 'white' : '#0F273C'"
+            :className="!isClickAndCollect ? 'white' : 'regular'"
           />
           <TextField
             :text="homeDeliveryText"
@@ -81,7 +81,7 @@
           :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
           @click="setClickAndCollect()">
           <ClickCollectTabIcon
-            :fill="isClickAndCollect ? 'white' : '#0F273C'"
+            :className="isClickAndCollect ? 'white' : 'regular'"
           />
           <TextField
             :text="clickAndCollectText"
@@ -237,6 +237,14 @@
         :key="ageCheckerExtension"
       />
 
+      <div v-if="emailEntered && !isClickAndCollect">
+        <component
+          :is="additionalDetailComponent"
+          v-for="additionalDetailComponent in additionalDetailComponents"
+          :key="additionalDetailComponent"
+        />
+      </div>
+
       <MyButton
         v-if="emailEntered && !selected.billing.editing && !isClickAndCollect && !cart.is_virtual"
         type="submit"
@@ -311,6 +319,7 @@ import continueToDeliveryDataLayer from '@/helpers/dataLayer/continueToDeliveryD
 // Extensions
 import expressPaymentMethods from '@/extensions/expressPaymentMethods';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import additionalDetailComponents from '@/extensions/additionalDetailComponents';
 import clickAndCollectComponents from '@/extensions/clickAndCollectComponents';
 import functionExtension from '@/extensions/functionExtension';
 
@@ -343,6 +352,7 @@ export default {
     ClickCollectTabIcon,
     ...expressPaymentMethods(),
     ...ageCheckerExtensions(),
+    ...additionalDetailComponents(),
     ...clickAndCollectComponents(),
   },
   props: {
@@ -379,6 +389,7 @@ export default {
       addressInfoWrong: false,
       expressPaymentMethods: [],
       ageCheckerExtensions: [],
+      additionalDetailComponents: [],
       clickAndCollectComponents: [],
       isCreditComponentVisible: false,
       placeholderExpress: window.bluefinchCheckout?.placeholderExpress,
@@ -431,6 +442,7 @@ export default {
   created() {
     this.expressPaymentMethods = Object.keys(expressPaymentMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
+    this.additionalDetailComponents = Object.keys(additionalDetailComponents());
     this.clickAndCollectComponents = Object.keys(clickAndCollectComponents());
   },
   async mounted() {
@@ -506,6 +518,7 @@ export default {
           this.setAddressToStore(clonedAddress, 'billing');
         }
 
+        await functionExtension('onProceedToShippingOption');
         await this.setAddressesOnCart();
         if (this.ageCheckRequired) {
           await functionExtension('onSubmitShippingOptionAgeCheck');

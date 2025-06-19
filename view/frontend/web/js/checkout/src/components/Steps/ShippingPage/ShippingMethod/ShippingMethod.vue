@@ -73,7 +73,7 @@
               </span>
               <TextField
                 class="shipping-method__price"
-                :text="taxCartDisplayShipping
+                :text="Number(taxCartDisplayShipping) === 2 || Number(taxCartDisplayShipping) === 3
                   ? formatPrice(item.price_incl_tax.value)
                   : formatPrice(item.price_excl_tax.value)"
                 :data-cy="`${item.method_code}-price`"

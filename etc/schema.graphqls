@@ -1,4 +1,5 @@
 type StoreConfig {
+    magento_btob_company_field_status: Boolean @doc(description: "Magento B2B ‘Enable Company’ store config")
     bluefinch_checkout_afd_enable: Boolean @doc(description: "Enable AFD Postcode Lookup on checkout")
     bluefinch_checkout_enabled: String @doc(description: "BlueFinch Checkout Enabled")
     bluefinch_checkout_loqate_enabled: String @doc(description: "BlueFinch Checkout Loqate Enabled")
@@ -14,6 +15,7 @@ type StoreConfig {
     bluefinch_checkout_google_map_enabled: Boolean @doc(description: "Enable Google Map")
     bluefinch_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
     bluefinch_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
+    bluefinch_checkout_gift_card_field_visible: Boolean @doc(description: "Make Gift Card Field Visible On Checkout")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")

@@ -4,6 +4,7 @@
     <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
         <arguments>
             <argument name="extendedConfigData" xsi:type="array">
+                <item name="magento_btob_company_field_status" xsi:type="string">btob/website_configuration/company_active</item>
                 <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/afd/enable_afd_checkout</item>
                 <item name="bluefinch_checkout_enabled" xsi:type="string">bluefinch_checkout/general/enabled</item>
                 <item name="bluefinch_checkout_loqate_enabled" xsi:type="string">bluefinch_checkout/general/loqate/loqate_enabled</item>
@@ -22,11 +23,11 @@
                 <item name="tax_cart_display_price" xsi:type="string">tax/cart_display/price</item>
                 <item name="tax_cart_display_subtotal" xsi:type="string">tax/cart_display/subtotal</item>
                 <item name="tax_cart_display_shipping" xsi:type="string">tax/cart_display/shipping</item>
-                <item name="tax_cart_display_grandtotal" xsi:type="string">tax/cart_display/grandtotal</item>
                 <item name="tax_cart_display_full_summary" xsi:type="string">tax/cart_display/full_summary</item>
                 <item name="tax_cart_display_zero_tax" xsi:type="string">tax/cart_display/zero_tax</item>
                 <item name="bluefinch_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
                 <item name="bluefinch_checkout_progress_bar_visible" xsi:type="string">bluefinch_checkout/general/progress_bar_visible</item>
+                <item name="bluefinch_checkout_gift_card_field_visible" xsi:type="string">bluefinch_checkout/general/gift_card_field_visible</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
 

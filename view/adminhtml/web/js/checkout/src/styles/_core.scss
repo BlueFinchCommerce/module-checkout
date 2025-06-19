@@ -8,22 +8,6 @@
 @import "core/_button.scss";
 @import "core/_payment-method.scss";
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-}
-
-body {
-  margin: 0;
-}
-
-p {
-  margin: 0;
-}
-
 #bluefinch-checkout-root {
   color: var(--font__color);
   display: flex;
@@ -35,6 +19,20 @@ p {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  *,
+  *::before,
+  *::after {
+    position: relative;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
 
   .root {
     min-height: -webkit-fill-available;

@@ -5,6 +5,7 @@ export default async () => {
     shipping_addresses {
       firstname
       lastname
+      company
       street
       city
       postcode

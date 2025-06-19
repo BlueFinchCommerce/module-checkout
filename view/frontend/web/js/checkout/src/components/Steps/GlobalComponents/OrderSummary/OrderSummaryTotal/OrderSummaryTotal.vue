@@ -13,7 +13,7 @@
   </div>
   <div class="order-total-container">
     <div class="order-total-wrapper">
-      <div class="total__row">
+      <div class="total__row" v-if="!taxCartDisplaySubtotal">
         <TextField
           class="total__text title"
           :text="$t('orderSummary.subtotalTitle')"
@@ -25,6 +25,77 @@
           :value="cart.prices.subtotal_including_tax.value"
           :data-cy="dataCy ? `subtotal-price-${dataCy}` : 'subtotal-price'"
         />
+      </div>
+      <div v-if="taxCartDisplaySubtotal">
+        <div
+          class="total__row"
+          v-if="Number(taxCartDisplaySubtotal) === 1 || Number(taxCartDisplaySubtotal) === 2"
+        >
+          <TextField
+            class="total__text title"
+            :text="$t('orderSummary.subtotalTitle')"
+            :data-cy="dataCy ? `subtotal-title-${dataCy}` : 'subtotal-title'"
+          />
+          <Price
+            v-if="Number(taxCartDisplaySubtotal) === 1"
+            class="total__text"
+            :value="cart.prices.subtotal_excluding_tax.value"
+            :data-cy="dataCy ? `subtotal-ex-tax-${dataCy}` : 'subtotal-ex-tax'"
+          />
+          <Price
+            v-else
+            class="total__text"
+            :value="cart.prices.subtotal_including_tax.value"
+            :data-cy="dataCy ? `subtotal-inc-tax-${dataCy}` : 'subtotal-inc-tax'"
+          />
+        </div>
+        <div v-else-if="Number(taxCartDisplaySubtotal) === 3" class="total__both">
+          <!-- Excl line -->
+          <div class="total__row">
+            <TextField
+              class="total__text title"
+              :text="$t('orderSummary.subtotalTitleExcl')"
+              :data-cy="dataCy ? `subtotal-excl-title-${dataCy}` : 'subtotal-excl-title'"
+            />
+            <Price
+              class="total__text"
+              :value="cart.prices.subtotal_excluding_tax.value"
+              :data-cy="dataCy ? `subtotal-excl-price-${dataCy}` : 'subtotal-excl-price'"
+            />
+          </div>
+          <!-- Incl line -->
+          <div class="total__row">
+            <TextField
+              class="total__text title"
+              :text="$t('orderSummary.subtotalTitleIncl')"
+              :data-cy="dataCy ? `subtotal-incl-title-${dataCy}` : 'subtotal-incl-title'"
+            />
+            <Price
+              class="total__text"
+              :value="cart.prices.subtotal_including_tax.value"
+              :data-cy="dataCy ? `subtotal-incl-price-${dataCy}` : 'subtotal-incl-price'"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-if="cart?.prices?.applied_taxes?.length">
+        <div
+          class="total__row"
+          v-for="(tax, idx) in cart.prices.applied_taxes"
+          :key="idx"
+        >
+          <TextField
+            class="total__text title"
+            :text="tax.label"
+            :data-cy="dataCy ? `tax-title-${dataCy}-${idx}` : `tax-title-${idx}`"
+          />
+          <Price
+            class="total__text"
+            :value="tax.amount.value"
+            :currency="tax.amount.currency"
+            :data-cy="dataCy ? `tax-price-${dataCy}-${idx}` : `tax-price-${idx}`"
+          />
+        </div>
       </div>
       <div
         v-for="(discount, index) in (cart?.prices?.discounts || []).filter(d => !(d.label === 'Gift Cards'
@@ -81,29 +152,69 @@
           :data-cy="dataCy ? `giftwrap-price-${dataCy}` : 'giftwrap-price'"
         />
       </div>
-      <div
-        v-if="!cart.is_virtual"
-        class="total__row"
-      >
-        <TextField
-          class="total__text title"
-          :text="$t('progressBar.shippingStepTitle')"
-          :data-cy="dataCy ? `shipping-title-${dataCy}` : 'shipping-title'"
-        />
-        <Price
-          v-if="cart.shipping_addresses?.[0]?.selected_shipping_method"
-          class="total__text"
-          :value="cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
-            ? cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
-            : cart.shipping_addresses[0].selected_shipping_method.amount.value"
-          :data-cy="dataCy ? `shipping-price-${dataCy}` : 'shipping-price'"
-        />
-        <TextField
-          v-else
-          class="total__text"
-          :text="$t('shippingStep.tbc')"
-          :data-cy="dataCy ? `shipping-price-tbc-${dataCy}` : 'shipping-price-tbc'"
-        />
+      <div v-if="!cart.is_virtual">
+        <div
+          v-if="!cart.shipping_addresses?.[0]?.selected_shipping_method"
+          class="total__row"
+        >
+          <TextField
+            class="total__text title"
+            :text="$t('progressBar.shippingStepTitle')"
+            :data-cy="dataCy ? `shipping-title-${dataCy}` : 'shipping-title'"
+          />
+          <TextField
+            class="total__text"
+            :text="$t('shippingStep.tbc')"
+            :data-cy="dataCy ? `shipping-price-tbc-${dataCy}` : 'shipping-price-tbc'"
+          />
+        </div>
+        <template v-else>
+          <div
+            v-if="Number(taxCartDisplayShipping) === 1 || Number(taxCartDisplayShipping) === 2"
+            class="total__row"
+          >
+            <TextField
+              class="total__text title"
+              :text="$t('progressBar.shippingStepTitle')"
+              :data-cy="dataCy ? `shipping-title-${dataCy}` : 'shipping-title'"
+            />
+            <Price
+              class="total__text"
+              :value="Number(taxCartDisplayShipping) === 1
+            ? (cart.shipping_addresses[0].selected_shipping_method.amount.value)
+            : (cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+                ?? cart.shipping_addresses[0].selected_shipping_method.amount.value)"
+              :data-cy="dataCy ? `shipping-price-${dataCy}` : 'shipping-price'"
+            />
+          </div>
+          <div v-else-if="Number(taxCartDisplayShipping) === 3">
+            <div class="total__row">
+              <TextField
+                class="total__text title"
+                :text="$t('orderSummary.shippingStepTitleExcl')"
+                :data-cy="dataCy ? `shipping-excl-title-${dataCy}` : 'shipping-excl-title'"
+              />
+              <Price
+                class="total__text"
+                :value="cart.shipping_addresses[0].selected_shipping_method.amount.value"
+                :data-cy="dataCy ? `shipping-excl-price-${dataCy}` : 'shipping-excl-price'"
+              />
+            </div>
+            <div class="total__row">
+              <TextField
+                class="total__text title"
+                :text="$t('orderSummary.shippingStepTitleIncl')"
+                :data-cy="dataCy ? `shipping-incl-title-${dataCy}` : 'shipping-incl-title'"
+              />
+              <Price
+                class="total__text"
+                :value="cart.shipping_addresses[0].selected_shipping_method.price_incl_tax.value
+              ?? cart.shipping_addresses[0].selected_shipping_method.amount.value"
+                :data-cy="dataCy ? `shipping-incl-price-${dataCy}` : 'shipping-incl-price'"
+              />
+            </div>
+          </div>
+        </template>
       </div>
       <component
         :is="orderSummaryAdditionalTotalRow"
@@ -169,7 +280,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
-    ...mapState(useConfigStore, ['locale', 'taxCartDisplayFullSummary']),
+    ...mapState(useConfigStore, ['locale', 'taxCartDisplaySubtotal', 'taxCartDisplayShipping']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
   },
   async created() {
