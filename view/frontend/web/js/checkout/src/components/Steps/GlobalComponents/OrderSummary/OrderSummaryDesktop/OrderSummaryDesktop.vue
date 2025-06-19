@@ -2,7 +2,7 @@
   <div class="order-summary-desktop">
     <PromotionComponent :data-cy="deviceType" />
     <CouponDiscount :data-cy="deviceType" />
-    <GiftCardDiscount v-if="giftCardAvailable"
+    <GiftCardDiscount v-if="giftCardAvailable && giftCardBlockVisible"
                       :data-cy="deviceType" />
     <div class="order-summary-desktop-items">
       <OrderSummaryItem :data-cy="deviceType"/>
@@ -11,6 +11,11 @@
   </div>
 </template>
 <script>
+import { mapState } from 'pinia';
+
+// Stores
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
+
 import OrderSummaryTotal
   from '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryTotal/OrderSummaryTotal.vue';
 import OrderSummaryItem from '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryItem/OrderSummaryItem.vue';
@@ -39,6 +44,9 @@ export default {
   },
   created() {
     this.giftCardAvailable = getMagentoSolutionType();
+  },
+  computed: {
+    ...mapState(useConfigStore, ['giftCardBlockVisible']),
   },
 };
 </script>

@@ -6,6 +6,10 @@
       >
         {{ sanitizedAddress.firstname }} {{ sanitizedAddress.lastname }}
       </p>
+      <p v-if="sanitizedAddress.company"
+         :data-cy="dataCy ? `${address_type}-${dataCy}-company-field` : `${address_type}-company-field`">
+        {{ sanitizedAddress.company }}
+      </p>
       <p :data-cy="dataCy ? `${address_type}-${dataCy}-address-one-field` : `${address_type}-address-one-field`">
         {{ sanitizedAddress.street[0] }}
       </p>

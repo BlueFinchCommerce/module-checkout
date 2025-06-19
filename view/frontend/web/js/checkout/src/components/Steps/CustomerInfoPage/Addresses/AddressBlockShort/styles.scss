@@ -7,7 +7,7 @@
   p {
     font-size: var(--short-info-size, var(--steps-complete__font-size-sub--mobile));
     color: var(--font__color-light);
-    font-weight: var(--font-weight__medium);
+    font-weight: var(--short-info-font-weight, var(--font-weight__medium));
   }
 }
 

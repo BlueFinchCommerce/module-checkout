@@ -25,12 +25,17 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable progress bar functionality on checkout.]]></comment>
                 </field>
-                <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="gift_card_field_visible" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Make Gift Card Field Visible On Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Make Gift Card Field Visible On Checkout]]></comment>
+                </field>
+                <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable AFD Postcode Lookup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable AFD Postcode Lookup on checkout.]]></comment>
                 </field>
-                <field id="agecheck_required" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="agecheck_required" translate="label comment" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable Age Checker functionality on checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable Age Checker functionality on checkout.]]></comment>
@@ -39,7 +44,7 @@
                     <label>Enable debugging on checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable local developer vite watch mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[For local developer use only, do not enable on production]]></comment>
