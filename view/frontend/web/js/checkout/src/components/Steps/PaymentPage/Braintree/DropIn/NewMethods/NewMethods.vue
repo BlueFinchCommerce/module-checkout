@@ -230,7 +230,6 @@ export default {
       options.paypal = {
         flow: 'checkout',
         amount: total,
-        currency: this.currencyCode,
         commit: true,
         lineItems: this.getPayPalLineItems(),
         buttonStyle: {
@@ -239,7 +238,17 @@ export default {
           shape: this.paypal.buttonShape,
           size: 'responsive',
         },
+        sdkConfig: {
+          currency: this.currencyCode,
+          dataAttributes: {
+            'csp-nonce': window.cspNonce,
+          }
+        },
       };
+
+      if (this.paypal.paylaterActive) {
+        options.paypal.sdkConfig['enable-funding'] = 'paylater';
+      }
 
       if (this.paypal.creditActive) {
         if (this.paypalCreditThresholdEnabled) {
@@ -258,6 +267,12 @@ export default {
                 size: 'responsive',
               },
               commit: true,
+              sdkConfig: {
+                currency: this.currencyCode,
+                dataAttributes: {
+                  'csp-nonce': window.cspNonce,
+                },
+              },
             };
           }
         } else {
@@ -275,6 +290,12 @@ export default {
               size: 'responsive',
             },
             commit: true,
+            sdkConfig: {
+              currency: this.currencyCode,
+              dataAttributes: {
+                'csp-nonce': window.cspNonce,
+              },
+            },
           };
         }
       }
