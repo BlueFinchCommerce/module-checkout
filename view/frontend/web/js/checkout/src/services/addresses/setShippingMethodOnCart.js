@@ -5,6 +5,7 @@ import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 import getEmailField from '@/helpers/cart/queryData/getEmailField';
+import functionExtension from '@/extensions/functionExtension';
 
 export default async (carrierCode, methodCode) => {
   const { maskedId } = useCartStore();
@@ -40,6 +41,6 @@ export default async (carrierCode, methodCode) => {
         throw new Error(response.errors[0].message);
       }
 
-      return response.data.setShippingMethodsOnCart.cart;
-    });
+      return functionExtension('setShippingMethods', response.data.setShippingMethodsOnCart.cart);
+    }).then(([cart]) => cart);
 };
