@@ -503,8 +503,8 @@ export default {
           this.setAddressToStore(clonedAddress, 'billing');
         }
 
-        await this.setAddressesOnCart();
         await functionExtension('onProceedToShippingOption');
+        await this.setAddressesOnCart();
         if (this.ageCheckRequired) {
           await functionExtension('onSubmitShippingOptionAgeCheck');
         } else {
