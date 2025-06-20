@@ -21,7 +21,7 @@
     <template #body>
       <PromotionComponent :data-cy="deviceType" />
       <CouponDiscount :data-cy="deviceType" />
-      <GiftCardDiscount v-if="giftCardAvailable"
+      <GiftCardDiscount v-if="giftCardAvailable && giftCardBlockVisible"
                         :data-cy="deviceType" />
       <div class="product-items">
         <OrderSummaryItem :data-cy="deviceType" />
@@ -150,7 +150,7 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartGrandTotal', 'getCartItemsQty']),
-    ...mapState(useConfigStore, ['locale', 'storeCode']),
+    ...mapState(useConfigStore, ['locale', 'storeCode', 'giftCardBlockVisible']),
   },
   async created() {
     this.checkForGuestUser();

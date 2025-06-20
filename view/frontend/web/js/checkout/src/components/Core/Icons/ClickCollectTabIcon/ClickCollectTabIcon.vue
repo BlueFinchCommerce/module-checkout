@@ -1,5 +1,6 @@
 <template>
-  <svg :style="style"
+  <svg :class="className"
+       :style="style"
        :role="role"
        :aria-label="ariaLabel"
        width="24"
@@ -19,6 +20,10 @@ import { computed, reactive } from 'vue';
 export default {
   name: 'ClickCollectTabIcon',
   props: {
+    className: {
+      type: String,
+      default: '',
+    },
     width: {
       type: String,
     },
