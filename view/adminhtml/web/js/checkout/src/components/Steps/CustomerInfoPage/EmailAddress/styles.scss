@@ -1,6 +1,7 @@
 @import '@/styles/global/_breakpoints';
 
 .customer-form {
+  margin-top: var(--indent__base);
   .divider {
     display: flex;
     align-items: center;
@@ -51,7 +52,7 @@
         bottom: var(--indent__l);
         height: 30px;
         padding: 0;
-        position: absolute;
+        position: absolute !important;
         right: calc(2 * var(--indent__l));
         transform: translateY(50%);
         width: auto;

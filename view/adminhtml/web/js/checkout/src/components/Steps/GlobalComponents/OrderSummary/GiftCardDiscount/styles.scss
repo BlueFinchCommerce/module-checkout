@@ -33,7 +33,7 @@
     }
 
     svg {
-      position: var(--drop-down-trigger-svg-position, absolute);
+      position: var(--drop-down-trigger-svg-position, absolute) !important;
       top: var(--drop-down-trigger-svg-top, var(--indent__base));
       right: var(--drop-down-trigger-svg-right, var(--indent__base));
     }

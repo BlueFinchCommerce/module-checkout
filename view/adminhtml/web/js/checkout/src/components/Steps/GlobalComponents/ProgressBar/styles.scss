@@ -44,6 +44,7 @@
       }
 
       svg {
+        fill: var(--button-primary__background-color);
         margin-right: var(--indent__s);
       }
     }
@@ -63,7 +64,8 @@
       }
 
       &.active {
-        background: var(--color__primary-blue);
+        background: var(--button-primary__background-color);
+        border: 1px solid var(--button-primary__background-color);
 
         p {
           color: var(--color__primary-white);
