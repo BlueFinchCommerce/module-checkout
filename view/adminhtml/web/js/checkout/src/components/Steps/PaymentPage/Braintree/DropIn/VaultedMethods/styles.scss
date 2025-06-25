@@ -35,7 +35,7 @@
     color: var(--font__color);
     font-weight: var(--payment-page-header-font-weight, var(--font-weight__semibold));
     font-family: var(--payment-page-header-font-family, var(--font-family__copy));
-    margin-left: var(--payment-page-title-left-margin, var(--indent__s));
+    margin-left: var(--payment-page-title-left-margin, var(--indent__s)) !important;
     white-space: nowrap;
   }
 

@@ -62,7 +62,7 @@
   }
 
   .proceed-to-shipping {
-    position: absolute;
+    position: absolute !important;
     top: var(--details-edit-button-top, 50%);
     bottom: var(--shipping-edit-button-bottom, auto);
     right: var(--shipping-edit-button-right, var(--indent__base));

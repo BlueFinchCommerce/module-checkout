@@ -18,7 +18,7 @@
     .address-block {
       &__edit {
         cursor: pointer;
-        position: absolute;
+        position: absolute !important;
         bottom: var(--indent__base);
         right: var(--indent__base);
       }
