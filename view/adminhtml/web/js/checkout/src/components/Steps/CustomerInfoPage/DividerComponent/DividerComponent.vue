@@ -2,7 +2,7 @@
   <div class="divider">
     <div class="divider-line" />
     <TextField
-      v-if="isExpressPaymentsVisible"
+      v-if="isExpressPaymentsVisible && isBraintreeEnabled !== '0'"
       :text="dividerText"
     />
     <TextField
@@ -16,6 +16,7 @@
 import { mapActions, mapState } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
 
@@ -33,6 +34,7 @@ export default {
   computed: {
     ...mapState(useConfigStore, ['locale']),
     ...mapState(usePaymentStore, ['availableMethods', 'isExpressPaymentsVisible']),
+    ...mapState(useBraintreeStore, ['isBraintreeEnabled']),
   },
   async mounted() {
     if (!this.locale) {

@@ -64,7 +64,7 @@
   }
 
   &__edit {
-    position: absolute;
+    position: absolute !important;
     right: var(--indent__base);
     top: 0;
     cursor: pointer;

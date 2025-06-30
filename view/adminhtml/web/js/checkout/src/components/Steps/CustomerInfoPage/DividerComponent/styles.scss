@@ -15,8 +15,8 @@
   p {
     font-weight: var(--font-weight__semibold);
     font-family: var(--font-family__copy);
-    font-size: var(--font__heading--mobile);
-    margin: 0 var(--indent__s);
+    font-size: var(--font__heading--mobile) !important;
+    margin: 0 var(--indent__s) !important;
     text-align: center;
   }
 }

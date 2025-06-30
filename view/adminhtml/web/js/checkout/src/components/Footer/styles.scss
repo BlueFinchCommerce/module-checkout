@@ -62,8 +62,9 @@
     }
 
     .footer-block {
-      justify-content: var(--footer-block-justify-content-desktop, initial);
+      justify-content: var(--footer-block-justify-content-desktop, space-between);
       padding: var(--footer-paddings, 0);
+      align-items: center;
 
       p {
         margin: var(--footer-desktop-container-margin, 0 0 0 auto);

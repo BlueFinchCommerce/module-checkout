@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div
-      v-show="isExpressPaymentsVisible"
+      v-show="isExpressPaymentsVisible && isBraintreeEnabled !== '0'"
       class="details-form-header"
     >
       <div class="instantCheckout-block">
@@ -51,7 +51,9 @@
             :data-cy="'home-delivery-title'"
           />
         </button>
-        <button
+        <!-- button is disabled because click&collect module
+         is comming from extension point and we cant render content -->
+        <button disabled
           class="button click-collect-button button--medium"
           :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
           @click="setClickAndCollect()">
@@ -360,7 +362,7 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
-    ...mapState(useBraintreeStore, ['paypal']),
+    ...mapState(useBraintreeStore, ['paypal', 'isBraintreeEnabled']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
