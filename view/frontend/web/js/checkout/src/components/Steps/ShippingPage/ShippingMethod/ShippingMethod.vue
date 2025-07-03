@@ -36,7 +36,7 @@
           :key="shippingMethodAdditionalContainer"
         />
         <div
-          v-if="getShippingMethods && getShippingMethods.length > 0"
+          v-if="hasAnyShippingMethod"
           class="shipping-method__container"
         >
           <template
@@ -87,7 +87,7 @@
           />
         </div>
         <TextField
-          v-else-if="!getShippingMethods || getShippingMethods.length === 0"
+          v-else-if="!hasAnyShippingMethod"
           class="checkout-shipping-methods__error"
           :text="$t('errorMessages.noShippingMethods')"
           :data-cy="'no-shipping-methods-text'"
@@ -107,7 +107,7 @@
         primary
         :data-cy="'proceed-to-payment-button'"
         :label="proceedToPayText"
-        :disabled="(!getShippingMethods || !getShippingMethods.length
+        :disabled="(!hasAnyShippingMethod
           || !cart.shipping_addresses?.[0]?.selected_shipping_method?.method_code)
           || (typeof ageCheckRequired !== 'undefined' && ageCheckRequired && ageCheckerErrors)"
         @click="goToPayment"
@@ -186,6 +186,11 @@ export default {
       'selectedMethod',
       'shippingErrorMessage',
     ]),
+    hasAnyShippingMethod() {
+      const hasCore = Array.isArray(this.getShippingMethods) && this.getShippingMethods.length > 0;
+      const hasAdditional = Array.isArray(this.additionalShippingMethods) && this.additionalShippingMethods.length > 0;
+      return hasCore || hasAdditional;
+    },
   },
   async created() {
     if (!this.locale) {
