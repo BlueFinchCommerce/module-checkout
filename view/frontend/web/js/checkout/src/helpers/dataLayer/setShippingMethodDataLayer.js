@@ -8,7 +8,7 @@ export default (carrierCode, methodCode) => {
 
   gtmStore.trackGtmEvent({
     event: 'selectShippingMethod',
-    carrierCode: selctedMethod? selctedMethod.carrier_code : carrierCode,
+    carrierCode: selctedMethod ? selctedMethod.carrier_code : carrierCode,
     methodCode: selctedMethod ? selctedMethod.method_code : methodCode,
   });
 };
