@@ -138,7 +138,7 @@ export default defineStore('shippingMethodsStore', {
         await afterSubmittingShippingInformation();
 
         // Track this event.
-        setShippingMethodDataLayer();
+        setShippingMethodDataLayer(carrierCode, methodCode);
       } catch (error) {
         this.setData({
           shippingErrorMessage: error.message,
