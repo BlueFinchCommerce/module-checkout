@@ -301,6 +301,7 @@ import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
 import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -445,9 +446,12 @@ export default {
     this.clickAndCollectText = window.bluefinchCheckout?.[this.clickAndCollectTextId]
     || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
+    this.setLoadingState(true);
+
     await this.getCart();
     this.paypalCreditCheck();
 
+    this.setLoadingState(false);
     this.cartEmitter.on('cartUpdated', async () => {
       this.paypalCreditCheck();
       this.storedKey += 1;
@@ -475,6 +479,7 @@ export default {
     ]),
     ...mapActions(useStepsStore, ['goToShipping', 'goToPayment']),
     ...mapActions(useValidationStore, ['validateAddress']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
     paypalCreditCheck() {
       const total = (this.cartGrandTotal / 100);
 
