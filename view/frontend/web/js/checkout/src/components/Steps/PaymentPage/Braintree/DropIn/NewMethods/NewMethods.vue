@@ -242,7 +242,7 @@ export default {
           currency: this.currencyCode,
           dataAttributes: {
             'csp-nonce': window.cspNonce,
-          }
+          },
         },
       };
 
