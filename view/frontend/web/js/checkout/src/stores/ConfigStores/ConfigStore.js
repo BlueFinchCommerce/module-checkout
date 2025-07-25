@@ -59,6 +59,7 @@ export default defineStore('configStore', {
     copyrightText: '',
     progressBarVisible: false,
     giftCardBlockVisible: true,
+    crosSellsOpened: false,
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
     companyFieldStatus: false,
@@ -139,6 +140,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_copyright_text',
         'bluefinch_checkout_progress_bar_visible',
         'bluefinch_checkout_gift_card_field_visible',
+        'bluefinch_checkout_cros_sells_opened',
         'bluefinch_checkout_loqate_api_key',
         'bluefinch_checkout_loqate_enabled',
         'bluefinch_checkout_click_collect_tabs_enabled',
@@ -207,6 +209,7 @@ export default defineStore('configStore', {
         copyrightText: storeConfig.bluefinch_checkout_copyright_text,
         progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
         giftCardBlockVisible: storeConfig.bluefinch_checkout_gift_card_field_visible === true,
+        crosSellsOpened: storeConfig.bluefinch_checkout_cros_sells_opened === true,
         addressFinder: {
           enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
           loqate: {
@@ -248,6 +251,12 @@ export default defineStore('configStore', {
       this.setData({
         countryCode,
         locale: replaced,
+      });
+    },
+
+    setCrosSellsVisibility(opened) {
+      this.setData({
+        crosSellsOpened: opened,
       });
     },
 
