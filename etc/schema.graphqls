@@ -16,7 +16,7 @@ type StoreConfig {
     bluefinch_checkout_google_map_api_key: String @doc(description: "Google Map API Key")
     bluefinch_checkout_progress_bar_visible: Boolean @doc(description: "Enable progress bar functionality")
     bluefinch_checkout_gift_card_field_visible: Boolean @doc(description: "Make Gift Card Field Visible On Checkout")
-     bluefinch_checkout_cros_sells_opened: Boolean @doc(description: "Make Crossells block opened by deafult")
+    bluefinch_checkout_cros_sells_opened: Boolean @doc(description: "Make Crossells block opened by deafult")
     optional_zip_countries: String @doc(description: "Countries that have optional zip codes")
     tax_cart_display_price: String @doc(description: "Tax Display Prices")
     tax_cart_display_subtotal: String @doc(description: "Tax Display Subtotal")
