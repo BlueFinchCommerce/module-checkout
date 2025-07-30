@@ -63,6 +63,7 @@ export default defineStore('configStore', {
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
     companyFieldStatus: false,
+    gtmUsageStatus: true,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -150,6 +151,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_google_map_enabled',
         'bluefinch_checkout_google_map_api_key',
         'magento_btob_company_field_status',
+        'bluefinch_checkout_use_custom_gtm_func',
       ];
 
       // Conditionally add reward config based on Magento Edition
@@ -226,6 +228,7 @@ export default defineStore('configStore', {
         googleMapEnabled: storeConfig.bluefinch_checkout_google_map_enabled,
         googleMapApiKey: storeConfig.bluefinch_checkout_google_map_api_key,
         companyFieldStatus: storeConfig.magento_btob_company_field_status,
+        gtmUsageStatus: storeConfig.bluefinch_checkout_use_custom_gtm_func,
       });
 
       if (storeConfig.locale) {

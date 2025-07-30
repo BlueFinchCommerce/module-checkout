@@ -5,7 +5,8 @@
         <arguments>
             <argument name="extendedConfigData" xsi:type="array">
                 <item name="magento_btob_company_field_status" xsi:type="string">btob/website_configuration/company_active</item>
-                <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/afd/enable_afd_checkout</item>
+                <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/enable_afd_checkout</item>
+                <item name="bluefinch_checkout_use_custom_gtm_func" xsi:type="string">bluefinch_checkout/general/use_custom_gtm_func</item>
                 <item name="bluefinch_checkout_enabled" xsi:type="string">bluefinch_checkout/general/enabled</item>
                 <item name="bluefinch_checkout_loqate_enabled" xsi:type="string">bluefinch_checkout/general/loqate/loqate_enabled</item>
                 <item name="bluefinch_checkout_click_collect_tabs_enabled" xsi:type="string">bluefinch_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
