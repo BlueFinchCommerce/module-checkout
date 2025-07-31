@@ -251,52 +251,10 @@ export default {
       }
 
       if (this.paypal.creditActive) {
-        if (this.paypalCreditThresholdEnabled) {
-          if (total >= Number(this.paypalCreditThresholdValue)) {
-            options.paypalCredit = {
-              flow: 'checkout',
-              amount: total,
-              currency: this.currencyCode,
-              buttonStyle: {
-                color: this.paypal.creditColor !== 'gold'
-                && this.paypal.creditColor !== 'blue'
-                && this.paypal.creditColor !== 'silver'
-                  ? this.paypal.creditColor : 'darkblue',
-                label: this.paypal.creditLabel,
-                shape: this.paypal.creditShape,
-                size: 'responsive',
-              },
-              commit: true,
-              sdkConfig: {
-                currency: this.currencyCode,
-                dataAttributes: {
-                  'csp-nonce': window.cspNonce,
-                },
-              },
-            };
-          }
+        if (this.paypalCreditThresholdEnabled && total >= Number(this.paypalCreditThresholdValue)) {
+          options.paypal.sdkConfig['enable-funding'] = 'credit';
         } else {
-          options.paypalCredit = {
-            flow: 'checkout',
-            amount: total,
-            currency: this.currencyCode,
-            buttonStyle: {
-              color: this.paypal.creditColor !== 'gold'
-              && this.paypal.creditColor !== 'blue'
-              && this.paypal.creditColor !== 'silver'
-                ? this.paypal.creditColor : 'darkblue',
-              label: this.paypal.creditLabel,
-              shape: this.paypal.creditShape,
-              size: 'responsive',
-            },
-            commit: true,
-            sdkConfig: {
-              currency: this.currencyCode,
-              dataAttributes: {
-                'csp-nonce': window.cspNonce,
-              },
-            },
-          };
+          options.paypal.sdkConfig['enable-funding'] = 'credit';
         }
       }
     }
