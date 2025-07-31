@@ -1,5 +1,5 @@
 diff --git a/node_modules/braintree-web-drop-in/dist/browser/dropin.js b/node_modules/braintree-web-drop-in/dist/browser/dropin.js
-index 3620025..e46fc54 100644
+index 3620025..fc59ad7 100644
 --- a/node_modules/braintree-web-drop-in/dist/browser/dropin.js
 +++ b/node_modules/braintree-web-drop-in/dist/browser/dropin.js
 @@ -23853,6 +23853,12 @@ BasePayPalView.prototype.initialize = function () {
@@ -15,7 +15,38 @@ index 3620025..e46fc54 100644
      var checkoutJSConfiguration;
      var buttonSelector = '[data-braintree-id="paypal-button"]';
      var environment = self.client.getConfiguration().gatewayConfiguration.environment === 'production' ? 'production' : 'sandbox';
-@@ -23898,7 +23904,7 @@ BasePayPalView.prototype.initialize = function () {
+@@ -23868,6 +23874,30 @@ BasePayPalView.prototype.initialize = function () {
+       payment: function () {
+         return paypalInstance.createPayment(self.paypalConfiguration).catch(reportError);
+       },
++      createOrder: function (data, actions) {
++        return actions.order.create({
++          purchase_units: [{
++            "amount": {
++              "currency_code": self.paypalConfiguration.sdkConfig.currency,
++              "value": self.paypalConfiguration.amount
++            }
++          }]
++        });
++      },
++      onApprove: (data) => {
++        return paypalInstance.tokenizePayment(data).then(function (tokenizePayload) {
++          var shouldNotVault = self.paypalConfiguration.vault && self.paypalConfiguration.vault.vaultPayPal === false;
++
++          if (shouldNotVault) {
++            data.vault = false;
++          }
++
++          if (!shouldNotVault && self.paypalConfiguration.flow === 'vault' && !self.model.isGuestCheckout) {
++            tokenizePayload.vaulted = true;
++          }
++          self.model.addPaymentMethod(tokenizePayload);
++        }).catch(reportError);
++      },
+       onAuthorize: function (data) {
+         // NEXT_MAJOR_VERSION change out this vaultPayPal property
+         // to something more generic, such as vaultOnTokenization so
+@@ -23898,7 +23928,7 @@ BasePayPalView.prototype.initialize = function () {
      };
  
      Object.keys(global.paypal.FUNDING).forEach(function (key) {
@@ -24,7 +55,7 @@ index 3620025..e46fc54 100644
          return;
        }
        checkoutJSConfiguration.funding.disallowed.push(global.paypal.FUNDING[key]);
-@@ -23913,11 +23919,15 @@ BasePayPalView.prototype.initialize = function () {
+@@ -23913,11 +23943,15 @@ BasePayPalView.prototype.initialize = function () {
  
      buttonSelector = dropinWrapperId + ' ' + buttonSelector;
  
@@ -45,7 +76,7 @@ index 3620025..e46fc54 100644
    }).catch(reportError);
  
    function reportError(err) {
-@@ -23959,31 +23969,7 @@ BasePayPalView.isEnabled = function (options) {
+@@ -23959,31 +23993,7 @@ BasePayPalView.isEnabled = function (options) {
      return Promise.resolve(false);
    }
  
