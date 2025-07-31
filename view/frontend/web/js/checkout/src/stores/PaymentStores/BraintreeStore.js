@@ -97,6 +97,7 @@ export default defineStore('brainteeStore', {
           braintree_local_payment_fallback_button_text
           braintree_local_payment_redirect_on_fail
           braintree_local_payment_allowed_methods
+          braintree_paypal_paylater_active
         }
       `;
     },
@@ -137,6 +138,7 @@ export default defineStore('brainteeStore', {
             buttonLabel: storeConfig.braintree_paypal_button_location_checkout_type_paypal_label,
             buttonColor: storeConfig.braintree_paypal_button_location_checkout_type_paypal_color,
             buttonShape: storeConfig.braintree_paypal_button_location_checkout_type_paypal_shape,
+            paylaterActive: storeConfig.braintree_paypal_paylater_active,
             vaultActive: storeConfig.braintree_paypal_vault_active,
             creditActive: storeConfig.braintree_paypal_credit_active,
             creditColor: storeConfig.braintree_paypal_credit_color,
