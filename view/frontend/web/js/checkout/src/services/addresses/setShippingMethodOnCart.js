@@ -9,8 +9,8 @@ import getEmailField from '@/helpers/cart/queryData/getEmailField';
 import functionExtension from '@/extensions/functionExtension';
 
 export default async (carrierCode, methodCode) => {
-  const {maskedId} = useCartStore();
-  
+  const { maskedId } = useCartStore();
+
   const request = `
     mutation {
       setShippingMethodsOnCart(
