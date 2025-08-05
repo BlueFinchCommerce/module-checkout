@@ -45,11 +45,16 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Enable Age Checker functionality on checkout.]]></comment>
                 </field>
-                <field id="enable_debug" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="use_custom_gtm_func" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Use Custom dataLayer/GTM logic</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Use custom dataLayer/GTM logic. Set to 'YES' if custom functionality needed.]]></comment>
+                </field>
+                <field id="enable_debug" translate="label comment" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable debugging on checkout</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="enable_local_developer_vite_watch_mode" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable local developer vite watch mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[For local developer use only, do not enable on production]]></comment>
