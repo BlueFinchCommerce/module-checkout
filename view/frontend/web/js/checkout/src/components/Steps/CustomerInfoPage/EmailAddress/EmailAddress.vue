@@ -123,6 +123,7 @@
           class="actions"
         >
           <Recaptcha
+            v-if="getTypeByPlacement('customerLogin')"
             id="customerLogin"
             location="emailAddress"
           />
@@ -185,6 +186,7 @@ import useCartStore from '@/stores/CartStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useGtmStore from '@/stores/ConfigStores/GtmStore';
 import useLoadingStore from '@/stores/LoadingStore';
+import useRecaptchaStore from '@/stores/ConfigStores/RecaptchaStore';
 
 // components
 import TextInput from '@/components/Core/ActionComponents/Inputs/TextInput/TextInput.vue';
@@ -258,6 +260,7 @@ export default {
     ...mapWritableState(useCustomerStore, ['customer']),
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     ...mapState(useConfigStore, ['locale', 'storeCode', 'secureBaseLinkUrl']),
+    ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
     proceedAsGuestInvalid() {
       return this.emailError || this.customer.email.length === 0;
     },
@@ -299,6 +302,17 @@ export default {
     ...mapActions(useCartStore, ['getCart', 'emitUpdate']),
     ...mapActions(useGtmStore, ['trackStep']),
     ...mapActions(useLoadingStore, ['setLoadingState']),
+    ...mapActions(useRecaptchaStore, ['validateToken']),
+
+    async validateRecaptcha(payload) {
+      const recaptchaValid = await this.validateToken('customerLogin', 'customerLogin');
+
+      if (!recaptchaValid) {
+        throw new Error(this.$t('ReCaptcha validation failed, please try again.'));
+      }
+
+      return payload;
+    },
 
     toggleShowPassword() {
       this.showPassword = !this.showPassword;
@@ -313,6 +327,7 @@ export default {
 
     async loginAndProceed() {
       try {
+        await this.validateRecaptcha();
         await this.login(this.customer.email, this.password);
         this.loginErrorMessage = '';
         await this.proceed();
