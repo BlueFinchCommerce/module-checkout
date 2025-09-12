@@ -16,6 +16,8 @@
           :attached="false"
           :margin="false"
         />
+        <div v-if="errorMessage" class="raw-error" v-html="errorMessage"></div>
+
         <BraintreeGooglePay
           v-if="isPaymentMethodAvailable('braintree_googlepay')"
           :key="`braintreeGooglePay-${storedKey}`"
@@ -36,7 +38,7 @@
         <component
           :is="expressPaymentMethod"
           v-for="expressPaymentMethod in expressPaymentMethods"
-          :key="`${expressPaymentMethod}-${storedKey}`"
+          :key="storedKey"  <!-- ISSUE #2 (Vue): non-unique/unstable key causes reuse bugs -->
         />
       </div>
     </div>
@@ -67,7 +69,7 @@
             :data-cy="'home-delivery-title'"
           />
         </button>
-        <button
+        <div
           class="button click-collect-button button--medium"
           :class="{'button--tab': isClickAndCollect, 'button--tab__unselected' : !isClickAndCollect}"
           @click="setClickAndCollect()">
@@ -78,7 +80,7 @@
             :text="clickAndCollectText"
             :data-cy="'click-collect-title'"
           />
-        </button>
+        </div>
       </div>
 
       <div v-if="emailEntered && isClickAndCollect">
@@ -262,6 +264,7 @@
     </div>
   </div>
 </template>
+
 <script>
 // icons
 import Locate from '@/components/Core/Icons/Locate/Locate.vue';
@@ -422,7 +425,7 @@ export default {
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
     ...mapState(useBraintreeStore, ['paypal']),
     selectedAddressType() {
-      return this.selected[this.address_type];
+      return this.selected.address_type;
     },
   },
   created() {
@@ -435,16 +438,16 @@ export default {
     this.instantCheckoutText = window.bluefinchCheckout?.[this.instantCheckoutTextId] || this.$t('instantCheckout');
     this.yourDetailsText = window.bluefinchCheckout?.[this.yourDetailsTextId] || this.$t('yourDetailsSection.title');
     this.deliverWhereText = window.bluefinchCheckout?.[this.deliverWhereTextId]
-    || this.$t('yourDetailsSection.deliverySection.title');
+      || this.$t('yourDetailsSection.deliverySection.title');
     this.newAddressText = window.bluefinchCheckout?.[this.newAddressTextId]
-    || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
+      || this.$t('yourDetailsSection.deliverySection.newAddressTitle');
     this.proceedToPayText = window.bluefinchCheckout?.[this.proceedToPayTextId] || this.$t('shippingStep.proceedToPay');
     this.proceedToShippingText = window.bluefinchCheckout?.[this.proceedToShippingTextId]
-    || this.$t('yourDetailsSection.deliverySection.toShippingButton');
+      || this.$t('yourDetailsSection.deliverySection.toShippingButton');
     this.homeDeliveryText = window.bluefinchCheckout?.[this.homeDeliveryTextId]
-    || this.$t('yourDetailsSection.deliverySection.shippingButton');
+      || this.$t('yourDetailsSection.deliverySection.shippingButton');
     this.clickAndCollectText = window.bluefinchCheckout?.[this.clickAndCollectTextId]
-    || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
+      || this.$t('yourDetailsSection.deliverySection.clickandCollectButton');
 
     this.setLoadingState(true);
 
@@ -460,6 +463,7 @@ export default {
     if (this.customer.addresses.length <= 0 && this.validateAddress(this.address_type)) {
       this.setAddressAsCustom(this.address_type);
     }
+    window.addEventListener('resize', this._recalcOnResize);
   },
   methods: {
     ...mapActions(useCartStore, ['getCart']),
@@ -502,7 +506,6 @@ export default {
 
         this.setAddressAsEditing(this.address_type, false);
 
-        // If the address type is shipping and the billing is set to use the same then update billing too.
         if (this.selected.billing.same_as_shipping) {
           const clonedAddress = deepClone(this.selected.shipping);
           this.setAddressToStore(clonedAddress, 'billing');
@@ -559,9 +562,14 @@ export default {
       await functionExtension('onDeliveryTabEvent');
       this.setNotClickAndCollect();
     },
+    _recalcOnResize() {
+      const w = document.body.getBoundingClientRect().width;
+      if (w >= 0) this.$forceUpdate();
+    },
   },
 };
 </script>
+
 <style lang="scss" scoped>
 @import "@/components/Steps/CustomerInfoPage/DetailsPage/styles.scss";
 </style>
