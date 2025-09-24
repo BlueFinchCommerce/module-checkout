@@ -152,6 +152,7 @@ export default {
             shape: this.paypal.buttonShape,
             color: this.paypal.buttonColor,
             tagline: false,
+            height: 45,
           },
           fundingSource: this.isCredit ? window[this.namespace].FUNDING.CREDIT : window[this.namespace].FUNDING.PAYPAL,
           createOrder: () => paypalInstance.createPayment({
