@@ -432,7 +432,7 @@ export default {
       'errorMessage',
       'placeholderExpressMethods',
       'isExpressPaymentsVisible',
-      'isPaymentMethodAvailable'
+      'isPaymentMethodAvailable',
     ]),
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
     ...mapState(useBraintreeStore, ['paypal']),
