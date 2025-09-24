@@ -11,7 +11,12 @@ export default defineStore('gtmStore', {
       this.$patch(data);
     },
     trackGtmEvent(event) {
-      if (window.dataLayer) {
+      const { gtmUsageStatus } = useConfigStore();
+
+      if (gtmUsageStatus) {
+        const customEvent = new CustomEvent('bluefinchGtm', { detail: { event } });
+        document.dispatchEvent(customEvent);
+      } else if (window.dataLayer) {
         window.dataLayer.push({ ecommerce: null });
         window.dataLayer.push(event);
       } else {

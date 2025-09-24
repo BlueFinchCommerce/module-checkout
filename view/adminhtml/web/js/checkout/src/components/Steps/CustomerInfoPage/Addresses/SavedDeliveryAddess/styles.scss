@@ -54,7 +54,7 @@
 .address-block {
   &__edit {
     cursor: pointer;
-    position: absolute;
+    position: absolute !important;
     top: var(--details-edit-button-top, 50%);
     bottom: var(--details-edit-button-bottom, auto);
     right: var(--details-edit-button-right, var(--indent__base));

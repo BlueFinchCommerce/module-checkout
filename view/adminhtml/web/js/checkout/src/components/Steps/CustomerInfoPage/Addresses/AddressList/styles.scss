@@ -21,8 +21,8 @@
       p {
         font-weight: var(--saved-address-text-weight, var(--font-weight__semibold));
         font-family: var(--font-family__header);
-        font-size: var(--saved-address-text-size, var(--font__heading--mobile));
-        margin-left: var(--saved-address-text-margin, var(--indent__s));
+        font-size: var(--saved-address-text-size, var(--font__heading--mobile)) !important;
+        margin-left: var(--saved-address-text-margin, var(--indent__s)) !important;
         text-transform: var(--saved-address-text-transform, none);
       }
 
@@ -58,7 +58,7 @@
 
       svg {
         fill: var(--selected-address-svg-colour, var(--color__semantic-success));
-        position: absolute;
+        position: absolute !important;
         right: var(--indent__base);
         top: var(--indent__m);
       }
@@ -69,7 +69,7 @@
       color: var(--ship-here-color, var(--button__link-font-color));
       font-size: var(--button__link-font-size);
       font-weight: var(--button__link-font-weight);
-      position: absolute;
+      position: absolute !important;
       right: var(--indent__base);
       top: var(--indent__base);
       text-decoration: var(--button__link-text-decoration);

@@ -59,9 +59,11 @@ export default defineStore('configStore', {
     copyrightText: '',
     progressBarVisible: false,
     giftCardBlockVisible: true,
+    crosSellsOpened: false,
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
     companyFieldStatus: false,
+    gtmUsageStatus: true,
   }),
   getters: {
     postcodeRequired: (state) => (
@@ -139,6 +141,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_copyright_text',
         'bluefinch_checkout_progress_bar_visible',
         'bluefinch_checkout_gift_card_field_visible',
+        'bluefinch_checkout_cros_sells_opened',
         'bluefinch_checkout_loqate_api_key',
         'bluefinch_checkout_loqate_enabled',
         'bluefinch_checkout_click_collect_tabs_enabled',
@@ -148,6 +151,7 @@ export default defineStore('configStore', {
         'bluefinch_checkout_google_map_enabled',
         'bluefinch_checkout_google_map_api_key',
         'magento_btob_company_field_status',
+        'bluefinch_checkout_use_custom_gtm_func',
       ];
 
       // Conditionally add reward config based on Magento Edition
@@ -207,6 +211,7 @@ export default defineStore('configStore', {
         copyrightText: storeConfig.bluefinch_checkout_copyright_text,
         progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
         giftCardBlockVisible: storeConfig.bluefinch_checkout_gift_card_field_visible === true,
+        crosSellsOpened: storeConfig.bluefinch_checkout_cros_sells_opened === true,
         addressFinder: {
           enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
           loqate: {
@@ -223,6 +228,7 @@ export default defineStore('configStore', {
         googleMapEnabled: storeConfig.bluefinch_checkout_google_map_enabled,
         googleMapApiKey: storeConfig.bluefinch_checkout_google_map_api_key,
         companyFieldStatus: storeConfig.magento_btob_company_field_status,
+        gtmUsageStatus: storeConfig.bluefinch_checkout_use_custom_gtm_func,
       });
 
       if (storeConfig.locale) {
@@ -248,6 +254,12 @@ export default defineStore('configStore', {
       this.setData({
         countryCode,
         locale: replaced,
+      });
+    },
+
+    setCrosSellsVisibility(opened) {
+      this.setData({
+        crosSellsOpened: opened,
       });
     },
 

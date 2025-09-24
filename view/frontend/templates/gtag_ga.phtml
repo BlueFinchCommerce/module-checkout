@@ -6,22 +6,30 @@
  * @var \Magento\GoogleTagManager\ViewModel\TagManagerConfig $gtmConfig
  */
 
- use Magento\GoogleTagManager\Model\Config\TagManagerConfig;
+use Magento\GoogleTagManager\Model\Config\TagManagerConfig;
+use BlueFinch\Checkout\Helper\CspHelper;
 
+$cspHelper = $this->helper(CspHelper::class);
+$cspNonce = $cspHelper->getCspNonce();
 $gtmConfig = $block->getData('view_model');
 $accountType = $gtmConfig->getAccountType();
 $gtmAccountId = $gtmConfig->getContainerId();
 $gapAccountId = $gtmConfig->getMeasurementId();
+$jsonConfig = $block->getTagManagerData();
+$analyticsData = $block->getAnalyticsData();
+
 switch ($accountType) {
     case TagManagerConfig::TYPE_TAG_MANAGER:
         if (!empty($gtmAccountId)) {
             ?>
             <!-- GOOGLE TAG MANAGER -->
-            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
-            <script defer>
+            <script defer nonce="<?= $cspNonce ?>" src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-tag-manager.js')) ?>"></script>
+
+            <?php $scriptString = <<<SCRIPT
                 /**
                  * @param {Object} config
                  */
+
                 (function (config) {
                     // If the init is available call it otherwise wait until it's available.
                     window.bluefinchInitGtm
@@ -34,8 +42,12 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= /* @noEscape */ $block->getTagManagerData() ?>)
-            </script>
+                })($jsonConfig)
+
+                SCRIPT;
+
+            ?>
+            <?= /* @noEscape */ $secureRenderer->renderTag('script', ['defer' => 'defer'], $scriptString, false) ?>
             <!-- END GOOGLE TAG MANAGER -->
             <?php
         }
@@ -44,8 +56,9 @@ switch ($accountType) {
         if (!empty($gapAccountId)) {
             ?>
             <!-- BEGIN GOOGLE ANALYTICS 4 CODE -->
-            <script defer src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')) ?>"></script>
-            <script defer>
+            <script defer nonce="<?= $cspNonce ?>" src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('BlueFinch_Checkout::js/google-analytics.js')) ?>"></script>
+
+            <?php $scriptString = <<<SCRIPT
                 /**
                  * @param {Object} config
                  */
@@ -61,8 +74,12 @@ switch ($accountType) {
                     document.addEventListener('user:allowed:save:cookie', function () {
                         window.bluefinchInitGtm(config);
                     });
-                })(<?= /* @noEscape */ $block->getAnalyticsData() ?>)
-            </script>
+                })($analyticsData)
+
+                SCRIPT;
+
+            ?>
+            <?= /* @noEscape */ $secureRenderer->renderTag('script', ['defer' => 'defer'], $scriptString, false) ?>
             <!-- END GOOGLE ANALYTICS 4 CODE -->
             <?php
         }

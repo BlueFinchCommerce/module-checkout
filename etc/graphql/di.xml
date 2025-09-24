@@ -5,7 +5,8 @@
         <arguments>
             <argument name="extendedConfigData" xsi:type="array">
                 <item name="magento_btob_company_field_status" xsi:type="string">btob/website_configuration/company_active</item>
-                <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/afd/enable_afd_checkout</item>
+                <item name="bluefinch_checkout_afd_enable" xsi:type="string">bluefinch_checkout/general/enable_afd_checkout</item>
+                <item name="bluefinch_checkout_use_custom_gtm_func" xsi:type="string">bluefinch_checkout/general/use_custom_gtm_func</item>
                 <item name="bluefinch_checkout_enabled" xsi:type="string">bluefinch_checkout/general/enabled</item>
                 <item name="bluefinch_checkout_loqate_enabled" xsi:type="string">bluefinch_checkout/general/loqate/loqate_enabled</item>
                 <item name="bluefinch_checkout_click_collect_tabs_enabled" xsi:type="string">bluefinch_checkout/general/click_collect_tabs/click_collect_tabs_enabled</item>
@@ -28,6 +29,7 @@
                 <item name="bluefinch_checkout_copyright_text" xsi:type="string">design/footer/copyright</item>
                 <item name="bluefinch_checkout_progress_bar_visible" xsi:type="string">bluefinch_checkout/general/progress_bar_visible</item>
                 <item name="bluefinch_checkout_gift_card_field_visible" xsi:type="string">bluefinch_checkout/general/gift_card_field_visible</item>
+                <item name="bluefinch_checkout_cros_sells_opened" xsi:type="string">bluefinch_checkout/general/cros_sells_opened</item>
                 <item name="gtm_container_id" xsi:type="string">google/analytics/container_id</item>
                 <item name="gtm_active" xsi:type="string">google/analytics/active</item>
 

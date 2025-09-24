@@ -3,7 +3,7 @@
     class="promotion-trigger dropdown-button"
     tabindex="0"
     v-if="freeShipping > 0 && crosssells.length === 0"
-    :class="{opened: isDropDownVisible}"
+    :class="{opened: crosSellsOpened}"
     :data-cy="dataCy ? `cross-sells-shipping-trigger-${dataCy}` : 'cross-sells-shipping-trigger'"
     @click="openDropDown"
     @keydown="openDropDownKeyDown($event)"
@@ -40,12 +40,12 @@
       </div>
     </div>
     <ArrowDown
-      v-if="!isDropDownVisible && crosssells.length"
+      v-if="!crosSellsOpened && crosssells.length"
       class="dropdown-arrow__down"
       :data-cy="dataCy ? `cross-sells-shipping-arrow-down-${dataCy}` : 'cross-sells-shipping-arrow-down'"
     />
     <ArrowUp
-      v-if="isDropDownVisible && crosssells.length"
+      v-if="crosSellsOpened && crosssells.length"
       class="dropdown-arrow__up"
       :data-cy="dataCy ? `cross-sells--shipping-arrow-up-${dataCy}` : 'cross-sells-shipping-arrow-up'"
     />
@@ -55,7 +55,7 @@
     v-if="!freeShipping && crosssells.length > 0"
     class="promotion-trigger dropdown-button"
     tabindex="0"
-    :class="{opened: isDropDownVisible}"
+    :class="{opened: crosSellsOpened}"
     :data-cy="dataCy ? `cross-sells-trigger-${dataCy}` : 'cross-sells-trigger'"
     @click="openDropDown"
     @keydown="openDropDownKeyDown($event)"
@@ -77,21 +77,21 @@
         />
       </div>
       <ArrowDown
-        v-if="!isDropDownVisible && crosssells.length"
+        v-if="!crosSellsOpened && crosssells.length"
         class="dropdown-arrow__down"
         :data-cy="dataCy ? `cross-sells-arrow-down-${dataCy}` : 'cross-sells-arrow-down'"
       />
       <ArrowUp
-        v-if="isDropDownVisible && crosssells.length"
+        v-if="crosSellsOpened && crosssells.length"
         class="dropdown-arrow__up"
         :data-cy="dataCy ? `cross-sells-arrow-up-${dataCy}` : 'cross-sells-arrow-up'"
       />
     </div>
   </div>
   <DropDown
-    v-if="isDropDownVisible && crosssells.length"
+    v-if="crosSellsOpened && crosssells.length"
     class="promo-dropdown"
-    :class="{active: isDropDownVisible}"
+    :class="{active: crosSellsOpened}"
     :data-cy="dataCy ? `cross-sells-dropdown-${dataCy}` : 'cross-sells-dropdown'"
   >
     <template #content>
@@ -174,7 +174,6 @@ export default {
   },
   data() {
     return {
-      isDropDownVisible: false,
       crossSellsTextId: 'bluefinch-checkout-crosssells-text',
       crossSellsCTATextId: 'bluefinch-checkout-crosssells-cta-text',
       displayCrossSellsText: '',
@@ -185,7 +184,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useConfigStore, ['locale']),
+    ...mapState(useConfigStore, ['locale', 'crosSellsOpened']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
     promoIconUrl() {
       return `${getStaticUrl(promoSvg)}`;
@@ -215,17 +214,17 @@ export default {
     });
   },
   methods: {
-    ...mapActions(useConfigStore, ['getInitialConfig']),
+    ...mapActions(useConfigStore, ['getInitialConfig', 'setCrosSellsVisibility']),
     ...mapActions(useCartStore, [
       'getCart', 'getCrosssells', 'addCartItem',
     ]),
     openDropDown() {
-      this.isDropDownVisible = !this.isDropDownVisible;
+      this.setCrosSellsVisibility(!this.crosSellsOpened);
     },
     openDropDownKeyDown(event) {
       // Check if the event is a click or if the key pressed is "Enter" (key code 13)
       if (event.type === 'keydown' && event.key === 'Enter') {
-        this.isDropDownVisible = !this.isDropDownVisible;
+        this.setCrosSellsVisibility(!this.crosSellsOpened);
       }
     },
     async addItem(product) {

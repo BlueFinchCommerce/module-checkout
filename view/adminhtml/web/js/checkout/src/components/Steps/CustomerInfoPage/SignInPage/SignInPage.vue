@@ -1,8 +1,8 @@
 <template>
   <Loader v-if="loadingShippingMethods" />
-  <div class="details-form">
+  <div class="details-form dssdf">
     <div
-      v-show="isExpressPaymentsVisible"
+      v-show="isExpressPaymentsVisible && isBraintreeEnabled !== '0'"
       class="details-form-header"
     >
       <div class="instantCheckout-block">
@@ -55,6 +55,7 @@ import useCustomerStore from '@/stores/CustomerStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
 import useShippingMethodsStore from '@/stores/ShippingMethodsStore';
 import useStepsStore from '@/stores/StepsStore';
+import useBraintreeStore from '@/stores/PaymentStores/BraintreeStore';
 
 // Helpers
 import deepClone from '@/helpers/addresses/deepClone';
@@ -112,6 +113,7 @@ export default {
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect', 'loadingShippingMethods']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
+    ...mapState(useBraintreeStore, ['isBraintreeEnabled']),
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {
