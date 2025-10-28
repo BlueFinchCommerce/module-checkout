@@ -64,30 +64,39 @@ export default defineStore('ValidationStore', {
     },
 
     getInitialConfigValues() {
-      return this.attributes.map((attribute) => (
-        `${attribute}: customAttributeMetadata(
-            attributes: [{ attribute_code: "${attribute}", entity_type: "customer_address" }]
+      // Build a single customAttributeMetadata request for ALL address attributes.
+      const attrsList = this.attributes
+        .map((attribute) => `{ attribute_code: "${attribute}", entity_type: "customer_address" }`)
+        .join(', ');
+
+      return `
+          customAttributeMetadata(
+            attributes: [${attrsList}]
           ) {
             items {
-                attribute_code
-                multiline_count
-                validate_rules {
-                  name
-                  value
-                }
+              attribute_code
+              multiline_count
+              validate_rules { name value }
             }
-          }`
-      ));
+          }`;
     },
 
     handleInitialConfig(data) {
-      this.attributes.forEach((attribute) => {
-        this.setData({
-          validationItems: {
-            [attribute]: data[attribute === 'country_code' ? 'country_id' : attribute],
-          },
-        });
+      // Map it back to our existing internal shape:
+      // validationItems = { [code]: { items: [item] } }
+      const items = data?.customAttributeMetadata?.items || [];
+
+      const map = {};
+      items.forEach((item) => {
+        const code = item.attribute_code;
+        map[code] = { items: [item] };
       });
+
+      if (map.country_id && !map.country_code) {
+        map.country_code = map.country_id;
+      }
+
+      this.setData({ validationItems: map });
     },
 
     getValidationRules(field) {
