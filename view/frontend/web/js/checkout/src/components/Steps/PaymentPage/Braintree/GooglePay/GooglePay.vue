@@ -158,7 +158,7 @@ export default {
       }
 
       this.setNotClickAndCollect();
-      await functionExtension('onPaymentMethodSelected', 'instant checkout - googlepay');
+      await functionExtension('onExpressPaymentMethodSelected', 'instant checkout - googlepay');
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 
       if (!this.cart.is_virtual) {

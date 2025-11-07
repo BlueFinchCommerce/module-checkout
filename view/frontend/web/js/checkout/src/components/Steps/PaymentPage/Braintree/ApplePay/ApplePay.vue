@@ -142,7 +142,7 @@ export default {
       if (!agreementsValid) {
         return;
       }
-      await functionExtension('onPaymentMethodSelected', 'instant checkout - applepay');
+      await functionExtension('onExpressPaymentMethodSelected', 'instant checkout - applepay');
       expressPaymentOnClickDataLayer(this.applePayConfig.code);
 
       try {

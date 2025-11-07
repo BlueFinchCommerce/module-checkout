@@ -177,7 +177,7 @@ export default {
               ? 'instant checkout - paypal credit'
               : 'instant checkout - paypal';
 
-            await functionExtension('onPaymentMethodSelected', paymentTypeGta4);
+            await functionExtension('onExpressPaymentMethodSelected', paymentTypeGta4);
             await functionExtension('onBraintreeExpressInit');
             this.setNotClickAndCollect();
 
