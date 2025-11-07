@@ -147,8 +147,9 @@ export default {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useCustomerStore, ['submitEmail', 'createNewAddress']),
 
-    onClick(type) {
+    async onClick(type) {
       this.setErrorMessage('');
+
       // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
 
@@ -157,7 +158,7 @@ export default {
       }
 
       this.setNotClickAndCollect();
-
+      await functionExtension('onPaymentMethodSelected', 'instant checkout - googlepay');
       const callbackIntents = ['PAYMENT_AUTHORIZATION'];
 
       if (!this.cart.is_virtual) {

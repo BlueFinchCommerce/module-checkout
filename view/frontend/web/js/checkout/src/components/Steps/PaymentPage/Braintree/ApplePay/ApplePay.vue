@@ -133,7 +133,7 @@ export default {
     ...mapActions(useCustomerStore, ['submitEmail', 'setAddressToStore', 'createNewAddress']),
     ...mapActions(useBraintreeStore, ['createClientToken']),
 
-    click(event) {
+    async click(event) {
       event.preventDefault();
       this.setErrorMessage('');
       // Check that the agreements (if any) is valid.
@@ -142,7 +142,7 @@ export default {
       if (!agreementsValid) {
         return;
       }
-
+      await functionExtension('onPaymentMethodSelected', 'instant checkout - applepay');
       expressPaymentOnClickDataLayer(this.applePayConfig.code);
 
       try {

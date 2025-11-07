@@ -173,6 +173,11 @@ export default {
               return false;
             }
 
+            const paymentTypeGta4 = this.paypal.creditActive && this.isCredit
+              ? 'instant checkout - paypal credit'
+              : 'instant checkout - paypal';
+
+            await functionExtension('onPaymentMethodSelected', paymentTypeGta4);
             await functionExtension('onBraintreeExpressInit');
             this.setNotClickAndCollect();
 
