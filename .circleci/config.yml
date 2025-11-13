@@ -77,7 +77,6 @@ jobs:
           name: Composer Create Project
           command: |
             composer config --global --json audit '{"block-insecure": false}'
-            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
       - run:
           working_directory: ~/magento2
           name: Install Module @ CI Build Branch/Commit
