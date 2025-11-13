@@ -75,7 +75,9 @@ jobs:
       - run:
           working_directory: ~/magento2
           name: Composer Create Project
-          command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
+          command: |
+            composer config --global --json audit '{"block-insecure": false}'
+            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
       - run:
           working_directory: ~/magento2
           name: Install Module @ CI Build Branch/Commit
@@ -170,7 +172,7 @@ workflows:
   magento-build-test:
     jobs:
       - build:
-          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7-p8'
+          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7-p5'
   mageos-build-test:
     jobs:
       - build:
