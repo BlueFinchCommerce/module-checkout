@@ -1,8 +1,8 @@
 <template>
-  <div class="shipping-step">
-    <SavedDeliveryAddress />
-    <div class="shipping-form">
-      <ShippingMethod />
+  <div className="shipping-step">
+    <SavedDeliveryAddress/>
+    <div className="shipping-form">
+      <ShippingMethod/>
     </div>
   </div>
 </template>
@@ -31,12 +31,13 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useCartStore, ['cart']),
   },
   async created() {
     await this.getInitialConfig();
     await this.getCart();
     this.setLoadingState(true);
-    await functionExtension('onShippingMethodMounted');
+    await functionExtension('onShippingMethodMounted', [this.cart]);
 
     this.setDefaultShippingMethod();
     this.setLoadingState(false);
