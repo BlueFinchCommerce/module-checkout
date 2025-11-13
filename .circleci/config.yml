@@ -73,6 +73,12 @@ jobs:
             sudo composer self-update
             composer config -g allow-plugins true
       - run:
+          name: Composer Configure
+          command: |
+            composer config -g http-basic.repo.magento.com $MAGENTO_REPO_KEY $MAGENTO_REPO_SECRET
+            composer config -g http-basic.repo.packagist.com "token" $GENE_PACKAGIST_TOKEN
+            composer config -g allow-plugins true
+      - run:
           working_directory: ~/magento2
           name: Composer Create Project
           command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
