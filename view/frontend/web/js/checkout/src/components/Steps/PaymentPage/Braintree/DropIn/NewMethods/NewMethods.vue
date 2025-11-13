@@ -78,6 +78,9 @@ import refreshCustomerData from '@/services/customer/refreshCustomerData';
 // External
 import braintreeWebDropIn from 'braintree-web-drop-in';
 
+// Extension
+import functionExtension from '@/extensions/functionExtension';
+
 export default {
   name: 'BraintreeNewMethods',
   components: {
@@ -307,9 +310,10 @@ export default {
   },
   watch: {
     selectedMethod: {
-      handler(newVal) {
+      async handler(newVal) {
         if (newVal !== null && (!newVal.startsWith('braintree')
           || newVal === 'braintree-lpm' || newVal === 'braintree-ach')) {
+          await functionExtension('onPaymentMethodSelected', newVal);
           this.clearSelectedMethod(newVal);
         }
       },
@@ -477,7 +481,7 @@ export default {
     },
 
     attachEventListeners(instance) {
-      instance.on('changeActiveView', ({ newViewId, previousViewId }) => {
+      instance.on('changeActiveView', async ({ newViewId, previousViewId }) => {
         this.removeActiveClass();
 
         this.clearErrorMessage();
@@ -485,7 +489,10 @@ export default {
         if (newViewId === 'methods') {
           this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: false });
           previousViewId !== 'card' && this.startPayment();
+
+          await functionExtension('onPaymentMethodSelected', newViewId);
         } else if (newViewId !== 'options') {
+          await functionExtension('onPaymentMethodSelected', newViewId);
           this.addActiveClass(newViewId);
           const id = newViewId === 'card' ? 'braintree' : `braintree_${newViewId}`;
           this.selectPaymentMethod(id);
