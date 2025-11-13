@@ -73,12 +73,6 @@ jobs:
             sudo composer self-update
             composer config -g allow-plugins true
       - run:
-          name: Composer Configure
-          command: |
-            composer config -g http-basic.repo.magento.com $MAGENTO_REPO_KEY $MAGENTO_REPO_SECRET
-            composer config -g http-basic.repo.packagist.com "token" $GENE_PACKAGIST_TOKEN
-            composer config -g allow-plugins true
-      - run:
           working_directory: ~/magento2
           name: Composer Create Project
           command: php -d memory_limit=-1 /usr/local/bin/composer create-project --no-interaction << parameters.project_create_command >> .
@@ -176,7 +170,7 @@ workflows:
   magento-build-test:
     jobs:
       - build:
-          project_create_command: '--repository-url=https://repo.magento.com/ magento/project-community-edition=2.4.7-p8'
+          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7-p8'
   mageos-build-test:
     jobs:
       - build:
