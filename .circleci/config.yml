@@ -170,7 +170,7 @@ workflows:
   magento-build-test:
     jobs:
       - build:
-          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=2.4.7'
+          project_create_command: '--repository-url=https://mirror.mage-os.org/ magento/project-community-edition=v2.4.7-p8'
   mageos-build-test:
     jobs:
       - build:
