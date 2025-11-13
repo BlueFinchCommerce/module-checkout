@@ -76,7 +76,7 @@ jobs:
           working_directory: ~/magento2
           name: Composer Create Project
           command: |
-            composer config --global --json audit '{"block-insecure": false}'
+            php -d memory_limit=-1 /usr/local/bin/composer create-project --no-audit --no-interaction << parameters.project_create_command >> .
       - run:
           working_directory: ~/magento2
           name: Install Module @ CI Build Branch/Commit
@@ -123,7 +123,7 @@ jobs:
           working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
           name: Install composer modules within BlueFinch Checkout
           command: |
-            composer install --no-audit --no-interaction
+            composer install --no-interaction
       - run:
           name: PHPCS
           working_directory: ~/magento2/vendor/bluefinchcommerce/module-checkout
