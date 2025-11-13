@@ -31,12 +31,13 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, ['storeCode']),
+    ...mapState(useCartStore, ['cart']),
   },
   async created() {
     await this.getInitialConfig();
     await this.getCart();
     this.setLoadingState(true);
-    await functionExtension('onShippingMethodMounted');
+    await functionExtension('onShippingMethodMounted', [this.cart]);
 
     this.setDefaultShippingMethod();
     this.setLoadingState(false);
