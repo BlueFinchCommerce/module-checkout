@@ -70,7 +70,7 @@ jobs:
             sudo docker-php-ext-install \
             sysvshm \
             xsl
-            sudo composer self-update
+            sudo composer self-update 2.8.12
             composer config -g allow-plugins true
       - run:
           working_directory: ~/magento2
