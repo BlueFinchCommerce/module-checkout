@@ -1,8 +1,8 @@
 <template>
   <div class="shipping-step">
-    <SavedDeliveryAddress/>
+    <SavedDeliveryAddress />
     <div class="shipping-form">
-      <ShippingMethod/>
+      <ShippingMethod />
     </div>
   </div>
 </template>
