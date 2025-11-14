@@ -489,8 +489,6 @@ export default {
         if (newViewId === 'methods') {
           this.paymentEmitter.emit('changePaymentMethodDisplay', { visible: false });
           previousViewId !== 'card' && this.startPayment();
-
-          await functionExtension('onPaymentMethodSelected', newViewId);
         } else if (newViewId !== 'options') {
           await functionExtension('onPaymentMethodSelected', newViewId);
           this.addActiveClass(newViewId);
