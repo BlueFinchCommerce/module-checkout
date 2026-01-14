@@ -24,6 +24,8 @@ export default defineConfig({
     alias: {
       '@local': fileURLToPath(new URL('./', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'js-cookie': fileURLToPath(new URL('./node_modules/js-cookie/dist/js.cookie.js', import.meta.url)),
+      mitt: fileURLToPath(new URL('./node_modules/mitt/dist/mitt.js', import.meta.url)),
     },
     dedupe: ['vue'],
   },
