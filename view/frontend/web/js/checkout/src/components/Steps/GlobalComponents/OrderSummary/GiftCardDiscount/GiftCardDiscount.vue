@@ -129,11 +129,12 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
-    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
-    this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || this.$t('orderSummary.giftDiscountTitle');
+    const translate = typeof this.$t === 'function' ? this.$t.bind(this) : (key) => key;
+    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || translate('orderSummary.applyBtn');
+    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || translate('orderSummary.removeBtn');
+    this.giftCardText = window.bluefinchCheckout?.[this.giftCardTextId] || translate('orderSummary.giftDiscountTitle');
     this.giftCardPlaceholderText = window.bluefinchCheckout?.[this.giftCardPlaceholderTextId]
-      || this.$t('orderSummary.giftCardDiscount.placeholder');
+      || translate('orderSummary.giftCardDiscount.placeholder');
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'giftCardErrorMessage']),
