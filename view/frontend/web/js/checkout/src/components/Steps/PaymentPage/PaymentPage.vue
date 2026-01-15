@@ -15,6 +15,13 @@
     <SavedShippingMethod v-if="!cart.is_virtual" />
     <Rewards v-if="rewardsEnabled" />
     <StoreCredit />
+
+    <component
+      :is="abovePaymentMethod"
+      v-for="abovePaymentMethod in abovePaymentMethods"
+      :key="abovePaymentMethod"
+    />
+
     <div class="payment-page">
       <div class="payment-form">
         <ProgressBar />
@@ -143,6 +150,7 @@ import additionalVaultedMethods from '@/extensions/additionalVaultedMethods';
 import paymentMethods from '@/extensions/paymentMethods';
 import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
+import abovePaymentMethods from '@/extensions/abovePaymentMethods';
 
 export default {
   name: 'PaymentPage',
@@ -163,6 +171,7 @@ export default {
     ...paymentMethods(),
     ...paymentMethodsPrimary(),
     ...ageCheckerExtensions(),
+    ...abovePaymentMethods(),
   },
   data() {
     return {
@@ -170,6 +179,7 @@ export default {
       additionalVaultedMethods: [],
       additionalPaymentMethodsPrimary: [],
       ageCheckerExtensions: [],
+      abovePaymentMethods: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -222,6 +232,7 @@ export default {
     this.additionalPaymentMethodsPrimary = Object.keys(paymentMethodsPrimary());
     this.additionalVaultedMethods = Object.keys(additionalVaultedMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
+    this.abovePaymentMethods = Object.keys(abovePaymentMethods());
 
     this.trackStep({
       step: 3,
