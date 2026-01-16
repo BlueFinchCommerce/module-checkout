@@ -129,12 +129,13 @@ export default {
     if (!this.locale) {
       await this.getInitialConfig();
     }
-    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || this.$t('orderSummary.applyBtn');
-    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || this.$t('orderSummary.removeBtn');
+    const translate = typeof this.$t === 'function' ? this.$t.bind(this) : (key) => key;
+    this.applyButtonText = window.bluefinchCheckout?.[this.applyButtonTextId] || translate('orderSummary.applyBtn');
+    this.removeButtonText = window.bluefinchCheckout?.[this.removeButtonTextId] || translate('orderSummary.removeBtn');
     this.couponDiscountText = window.bluefinchCheckout?.[this.couponDiscountTextId]
-      || this.$t('orderSummary.couponDiscountTitle');
+      || translate('orderSummary.couponDiscountTitle');
     this.couponDiscountPlaceholderText = window.bluefinchCheckout?.[this.couponDiscountPlaceholderTextId]
-      || this.$t('orderSummary.couponDiscount.placeholder');
+      || translate('orderSummary.couponDiscount.placeholder');
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'discountErrorMessage']),
