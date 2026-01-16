@@ -104,6 +104,12 @@
         <ErrorMessage v-if="addressInfoWrong"
                       :message="$t('errorMessages.addressWrongError')"/>
       </div>
+      <div class="address-form-error-message">
+        <ErrorMessage
+          v-if="setAddressesErrorMessage"
+          :message="setAddressesErrorMessageDisplay"
+        />
+      </div>
 
       <div
         v-if="emailEntered && (!selected[address_type].id
@@ -379,6 +385,7 @@ export default {
       clickAndCollectTextId: 'bluefinch-checkout-clickandcollect-text',
       buttonEnabled: false,
       addressInfoWrong: false,
+      setAddressesErrorMessage: '',
       expressPaymentMethods: [],
       ageCheckerExtensions: [],
       additionalDetailComponents: [],
@@ -403,6 +410,8 @@ export default {
       'addressFinder',
       'custom',
       'storeCode',
+      'countries',
+      'getCountryByCode',
       'clickCollectTabsEnabled',
       'ageCheckRequired',
       'ageCheckerErrors',
@@ -423,6 +432,13 @@ export default {
     ...mapState(useBraintreeStore, ['paypal']),
     selectedAddressType() {
       return this.selected[this.address_type];
+    },
+    setAddressesErrorMessageDisplay() {
+      if (!this.setAddressesErrorMessage) {
+        return '';
+      }
+
+      return this.formatSetAddressesErrorMessage(this.setAddressesErrorMessage);
     },
   },
   created() {
@@ -489,8 +505,32 @@ export default {
         this.isCreditComponentVisible = true;
       }
     },
+    getCountryNameByCode(countryCode) {
+      const byId = this.getCountryByCode ? this.getCountryByCode(countryCode) : null;
+      if (byId?.full_name_locale) {
+        return byId.full_name_locale;
+      }
+
+      const byAlpha2 = this.countries?.find((country) => country.two_letter_abbreviation === countryCode);
+      return byAlpha2?.full_name_locale || null;
+    },
+    formatSetAddressesErrorMessage(message) {
+      const match = message.match(/country '([^']+)'/);
+      if (!match) {
+        return message;
+      }
+
+      const countryCode = match[1];
+      const countryName = this.getCountryNameByCode(countryCode);
+      if (!countryName) {
+        return message;
+      }
+
+      return message.replace(`country '${countryCode}'`, `country '${countryName}'`);
+    },
     async submitShippingOption() {
       this.requiredErrorMessage = '';
+      this.setAddressesErrorMessage = '';
 
       const isValid = this.validateAddress(this.address_type, true);
 
@@ -509,7 +549,12 @@ export default {
         }
 
         await functionExtension('onProceedToShippingOption');
-        await this.setAddressesOnCart();
+        try {
+          await this.setAddressesOnCart();
+        } catch (error) {
+          this.setAddressesErrorMessage = error?.message || this.$t('errorMessages.addressFormErrorMessage');
+          return;
+        }
         if (this.ageCheckRequired) {
           await functionExtension('onSubmitShippingOptionAgeCheck');
         } else {
@@ -527,12 +572,19 @@ export default {
     },
 
     async submitBillingInfo() {
-      await this.setAddressesOnCart();
+      this.setAddressesErrorMessage = '';
+      try {
+        await this.setAddressesOnCart();
+      } catch (error) {
+        this.setAddressesErrorMessage = error?.message || this.$t('errorMessages.addressFormErrorMessage');
+        return;
+      }
 
       this.goToPayment();
     },
 
     async editAddress() {
+      this.setAddressesErrorMessage = '';
       this.setAddressAsEditing(this.address_type, true);
       this.setAddressAsCustom(this.address_type);
       await functionExtension('onEditAddress');

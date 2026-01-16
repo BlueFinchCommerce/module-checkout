@@ -113,11 +113,13 @@ export default defineStore('shippingMethodsStore', {
       const { setLoadingState } = useLoadingStore();
 
       setLoadingState(true);
-      const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
-
-      cartStore.handleCartData(response.cart);
-
-      setLoadingState(false);
+      try {
+        const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
+        cartStore.handleCartData(response.cart);
+        return response;
+      } finally {
+        setLoadingState(false);
+      }
     },
 
     async submitShippingInfo(carrierCode, methodCode) {
