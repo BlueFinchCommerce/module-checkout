@@ -16,6 +16,9 @@
             </general>
         </bluefinch_checkout>
         <recaptcha_frontend>
+            <enterprise>
+                <enabled>0</enabled>
+            </enterprise>
             <type_for>
                 <customer_create_success/>
             </type_for>

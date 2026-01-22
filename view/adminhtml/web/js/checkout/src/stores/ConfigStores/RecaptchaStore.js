@@ -7,6 +7,7 @@ export default defineStore('RecaptchaStore', {
     v2CheckboxKey: null,
     v2InvisibleKey: null,
     v3Invisible: null,
+    enterpriseEnabled: false,
     failureMessage: '',
     enabled: {
       customerLogin: false,
@@ -38,6 +39,7 @@ export default defineStore('RecaptchaStore', {
           recaptcha_v2_checkbox_key
           recaptcha_v2_invisible_key
           recaptcha_v3_invisible_key
+          recaptcha_enterprise_enabled
           recaptcha_customer_login
           recaptcha_place_order
           validation_failure_message
@@ -50,6 +52,7 @@ export default defineStore('RecaptchaStore', {
         v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
         v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
         v3Invisible: storeConfig.recaptcha_v3_invisible_key,
+        enterpriseEnabled: !!storeConfig.recaptcha_enterprise_enabled,
         failureMessage: storeConfig.validation_failure_message,
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
@@ -67,7 +70,10 @@ export default defineStore('RecaptchaStore', {
           ? this.v3Invisible
           : 'explicit';
         const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?onload=bluefinchCheckoutRecaptchaLoaded&render=${render}`;
+        const scriptBaseUrl = this.$state.enterpriseEnabled
+          ? 'https://www.google.com/recaptcha/enterprise.js'
+          : 'https://www.google.com/recaptcha/api.js';
+        script.src = `${scriptBaseUrl}?onload=bluefinchCheckoutRecaptchaLoaded&render=${render}`;
         script.async = true;
         script.defer = true;
 

@@ -32,6 +32,7 @@ type StoreConfig {
     recaptcha_v2_checkbox_key: String @doc(description: "Recaptcha v2 checkbox key")
     recaptcha_v2_invisible_key: String @doc(description: "Recaptcha v2 invisible key")
     recaptcha_v3_invisible_key: String @doc(description: "Recaptcha v3 invisible key")
+    recaptcha_enterprise_enabled: Boolean @doc(description: "Recaptcha Enterprise enabled")
     recaptcha_customer_login: String @doc(description: "Recaptcha Customer Login Type")
     recaptcha_place_order: String @doc(description: "Recaptcha Place Order Type")
     recaptcha_braintree: String @doc(description: "Recaptcha Braintree Type")
@@ -164,4 +165,3 @@ input SetAddressesOnCartInput @doc(description: "Specifies an array of addresses
     shipping_addresses: [ShippingAddressInput] @doc(description: "An array of shipping addresses.")
     billing_address: BillingAddressInput! @doc(description: "The billing address.")
 }
-
