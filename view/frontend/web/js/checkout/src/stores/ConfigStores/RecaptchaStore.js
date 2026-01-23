@@ -7,6 +7,7 @@ export default defineStore('RecaptchaStore', {
     v2CheckboxKey: null,
     v2InvisibleKey: null,
     v3Invisible: null,
+    enterpriseEnabled: false,
     recaptchaId: null,
     failureMessage: '',
     enabled: {
@@ -40,6 +41,7 @@ export default defineStore('RecaptchaStore', {
           recaptcha_v2_checkbox_key
           recaptcha_v2_invisible_key
           recaptcha_v3_invisible_key
+          recaptcha_enterprise_enabled
           recaptcha_customer_login
           recaptcha_place_order
           recaptcha_braintree
@@ -53,6 +55,7 @@ export default defineStore('RecaptchaStore', {
         v2CheckboxKey: storeConfig.recaptcha_v2_checkbox_key,
         v2InvisibleKey: storeConfig.recaptcha_v2_invisible_key,
         v3Invisible: storeConfig.recaptcha_v3_invisible_key,
+        enterpriseEnabled: !!storeConfig.recaptcha_enterprise_enabled,
         failureMessage: storeConfig.validation_failure_message,
         enabled: {
           customerLogin: storeConfig.recaptcha_customer_login,
@@ -71,7 +74,10 @@ export default defineStore('RecaptchaStore', {
           ? this.v3Invisible
           : 'explicit';
         const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?onload=bluefinchCheckoutRecaptchaLoaded&render=${render}`;
+        const scriptBaseUrl = this.$state.enterpriseEnabled
+          ? 'https://www.google.com/recaptcha/enterprise.js'
+          : 'https://www.google.com/recaptcha/api.js';
+        script.src = `${scriptBaseUrl}?onload=bluefinchCheckoutRecaptchaLoaded&render=${render}`;
         script.async = true;
         script.defer = true;
 
@@ -102,11 +108,14 @@ export default defineStore('RecaptchaStore', {
       const placementIds = Array.isArray(ids) ? ids : [ids];
       const id = placementIds.find(this.getTypeByPlacement);
       const recapchaType = this.getTypeByPlacement(id);
+      const recaptchaApi = this.$state.enterpriseEnabled && window.grecaptcha?.enterprise
+        ? window.grecaptcha.enterprise
+        : window.grecaptcha;
 
       if (recapchaType === recapchaTypes.invisible) {
         await new Promise((resolve) => {
           if (this.$state.recaptchaId === null) {
-            const recaptchaId = window.grecaptcha.render(location, {
+            const recaptchaId = recaptchaApi.render(location, {
               sitekey: this.$state.v2InvisibleKey,
               size: 'invisible',
               callback: (token) => {
@@ -115,23 +124,23 @@ export default defineStore('RecaptchaStore', {
               },
               'error-callback': () => {
                 this.setToken(id, null);
-                window.grecaptcha.reset(recaptchaId);
+                recaptchaApi.reset(recaptchaId);
               },
               'expired-callback': () => {
                 this.setToken(id, null);
-                window.grecaptcha.reset(recaptchaId);
+                recaptchaApi.reset(recaptchaId);
               },
             });
-            window.grecaptcha.execute(recaptchaId);
+            recaptchaApi.execute(recaptchaId);
             this.setData({ recaptchaId });
           } else {
             const { recaptchaId } = this.$state;
-            window.grecaptcha.reset(recaptchaId);
-            window.grecaptcha.execute(recaptchaId).then(resolve);
+            recaptchaApi.reset(recaptchaId);
+            recaptchaApi.execute(recaptchaId).then(resolve);
           }
         });
       } else if (recapchaType === recapchaTypes.recaptchaV3) {
-        const token = await window.grecaptcha.execute(this.$state.v3Invisible, { action: 'submit' });
+        const token = await recaptchaApi.execute(this.$state.v3Invisible, { action: 'submit' });
         this.setToken(id, token);
       }
 

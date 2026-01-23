@@ -156,6 +156,16 @@
             </group>
         </section>
         <section id="recaptcha_frontend">
+            <group id="enterprise" translate="label comment" type="text" sortOrder="120" showInDefault="1"
+                   showInWebsite="1" showInStore="0">
+                <label>reCAPTCHA Enterprise</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enable reCAPTCHA Enterprise Script</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Use the reCAPTCHA Enterprise JavaScript API on the frontend.]]></comment>
+                </field>
+            </group>
             <group id="type_for">
                 <field id="customer_create_success" translate="label" type="select" sortOrder="132" showInDefault="1"
                        showInWebsite="1" showInStore="0" canRestore="1">
