@@ -30,7 +30,7 @@
       display: var(--input__inline-label-display, flex);
     }
 
-    span {
+    > span {
       font-weight: var(--font-weight__semibold);
       font-size: var(--font__m);
     }
@@ -49,7 +49,7 @@
         }
       }
 
-      span {
+      > span {
         color: var(--notification__error-font-color);
       }
     }
@@ -203,7 +203,7 @@
   .text-input,
   .select-input {
     margin-bottom: var(--text-input-margin-bottom, var(--indent__s));
-    span {
+    .input-label {
       background: var(--input-span__background-colour, var(--input__background-color));
       font-size: var(--input-span-font-size, var(--font__xs));
       padding-right: var(--input__label-padding);
@@ -218,6 +218,11 @@
       z-index: 1;
       border-radius: var(--base__border-radius);
       color: var(--input__label-font-color);
+    }
+
+    .input-label .required-indicator {
+      color: var(--input-required-indicator-color, var(--required-indicator-color, currentColor));
+      margin-left: var(--input-required-indicator-margin-left, 0.2em);
     }
 
     button {
@@ -287,7 +292,7 @@
         height: auto;
       }
     }
-    span {
+    .input-label {
       position: relative;
       margin: 0;
       padding: 0;
@@ -315,7 +320,7 @@
 
   .logged-in-email {
     .text-input {
-      span {
+      .input-label {
         display: var(--logged-in-email-label-visibility, none);
         font-family: var(--input-label-logged-in-font-family, var(--font-family__copy));
         font-size: var(--input-label-logged-in-font-size, var(--font__xs));
@@ -405,7 +410,7 @@
       margin-top: 0;
     }
 
-    span {
+    .input-label {
       top: -8px;
     }
   }
@@ -639,7 +644,7 @@
     }
 
     .text-input {
-      span {
+      .input-label {
         display: block !important; //styles for storybook
       }
     }
@@ -649,7 +654,7 @@
 
   @media screen and (min-width: $screen__m) {
     .text-input {
-      span {
+      .input-label {
         background-color: var(--input-span__background-colour, var(--input__background-color));
       }
 

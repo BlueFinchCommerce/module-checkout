@@ -9,13 +9,19 @@
     >
       <span
         v-if="label"
+        class="input-label"
         :class="labelVisible
           ? 'text-input-has-value'
           : (modelValue.length > 0 || isInputActive)
           ? 'text-input-has-value'
           : 'text-input-no-value'"
       >
-        {{ required ? label + ' *' : label }}
+        {{ label }}
+        <span
+          v-if="required"
+          class="required-indicator"
+          aria-hidden="true"
+        >*</span>
       </span>
       <input
         :id="identifier"
@@ -24,7 +30,7 @@
         :autocomplete="autocomplete"
         :style="style"
         :type="type"
-        :placeholder="required ? placeholder + ' *' : placeholder"
+        :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
         :aria-label="ariaLabel"

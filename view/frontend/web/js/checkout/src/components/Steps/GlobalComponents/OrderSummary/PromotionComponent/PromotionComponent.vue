@@ -1,22 +1,18 @@
 <template>
   <div
-    class="promotion-trigger dropdown-button"
-    tabindex="0"
-    v-if="freeShipping > 0 && crosssells.length === 0"
-    :class="{opened: crosSellsOpened}"
-    :data-cy="dataCy ? `cross-sells-shipping-trigger-${dataCy}` : 'cross-sells-shipping-trigger'"
-    @click="openDropDown"
-    @keydown="openDropDownKeyDown($event)"
+    v-if="showFreeShippingMessage && (freeShipping > 0 || qualifiesForFreeDelivery)"
+    class="promotion-trigger promotion-message"
+    :data-cy="dataCy ? `cross-sells-shipping-message-${dataCy}` : 'cross-sells-shipping-message'"
   >
     <div class="promotion-icon-container">
-      <img
-        :src="promoIconUrl"
-        alt="promo-dropdown-icon"
+      <PromoIcon
+        class="promotion-icon"
+        aria-label="promo-dropdown-icon"
         :data-cy="dataCy ? `cross-sells-shipping-icon-${dataCy}` : 'cross-sells-shipping-icon'"
-      >
+      />
     </div>
     <div class="promo-title no-shipping">
-      <div>
+      <div v-if="freeShipping > 0">
         <TextField
           :text="$t('orderSummary.couponCodeTitle')"
           :data-cy="dataCy ? `cross-sells-shipping-pre-text-${dataCy}` : 'cross-sells-shipping-pre-text'"
@@ -38,22 +34,19 @@
             'cross-sells-shipping-post-additional-text'"
         />
       </div>
+      <div v-else-if="qualifiesForFreeDelivery">
+        <TextField
+          class="bold"
+          :text="$t('orderSummary.freeShippingAvailable')"
+          :data-cy="dataCy ? `cross-sells-shipping-qualified-text-${dataCy}` : 'cross-sells-shipping-qualified-text'"
+        />
+      </div>
     </div>
-    <ArrowDown
-      v-if="!crosSellsOpened && crosssells.length"
-      class="dropdown-arrow__down"
-      :data-cy="dataCy ? `cross-sells-shipping-arrow-down-${dataCy}` : 'cross-sells-shipping-arrow-down'"
-    />
-    <ArrowUp
-      v-if="crosSellsOpened && crosssells.length"
-      class="dropdown-arrow__up"
-      :data-cy="dataCy ? `cross-sells--shipping-arrow-up-${dataCy}` : 'cross-sells-shipping-arrow-up'"
-    />
   </div>
 
   <div
-    v-if="!freeShipping && crosssells.length > 0"
-    class="promotion-trigger dropdown-button"
+    v-if="crosssells.length > 0"
+    class="promotion-trigger dropdown-button crosssells-trigger"
     tabindex="0"
     :class="{opened: crosSellsOpened}"
     :data-cy="dataCy ? `cross-sells-trigger-${dataCy}` : 'cross-sells-trigger'"
@@ -63,11 +56,11 @@
     <div
       v-if="displayCrossSellsIcon"
       class="promotion-icon-container">
-      <img
-        :src="promoIconUrl"
-        alt="promo-dropdown-icon"
+      <PromoIcon
+        class="promotion-icon"
+        aria-label="promo-dropdown-icon"
         :data-cy="dataCy ? `cross-sells-shipping-icon-${dataCy}` : 'cross-sells-shipping-icon'"
-      >
+      />
     </div>
     <div class="promo-title crosssells">
       <div>
@@ -90,7 +83,7 @@
   </div>
   <DropDown
     v-if="crosSellsOpened && crosssells.length"
-    class="promo-dropdown"
+    class="promo-dropdown crosssells-dropdown"
     :class="{active: crosSellsOpened}"
     :data-cy="dataCy ? `cross-sells-dropdown-${dataCy}` : 'cross-sells-dropdown'"
   >
@@ -149,10 +142,7 @@ import MyButton from '@/components/Core/ActionComponents/Button/Button.vue';
 import DropDown from '@/components/Core/ActionComponents/DropDown/DropDown.vue';
 import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 import ArrowUp from '@/components/Core/Icons/ArrowUp/ArrowUp.vue';
-
-// icons
-import promoSvg from '@/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg';
-import getStaticUrl from '@/helpers/storeConfigs/getStaticPath';
+import PromoIcon from '@/components/Core/Icons/PromoIcon/PromoIcon.vue';
 
 // Extensions
 import functionExtension from '@/extensions/functionExtension';
@@ -166,6 +156,7 @@ export default {
     DropDown,
     ArrowUp,
     ArrowDown,
+    PromoIcon,
   },
   props: {
     dataCy: {
@@ -184,10 +175,18 @@ export default {
     };
   },
   computed: {
-    ...mapState(useConfigStore, ['locale', 'crosSellsOpened']),
+    ...mapState(useConfigStore, ['locale', 'crosSellsOpened', 'showFreeShippingMessage']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
-    promoIconUrl() {
-      return `${getStaticUrl(promoSvg)}`;
+    qualifiesForFreeDelivery() {
+      if (this.freeShipping !== 0) {
+        return false;
+      }
+
+      const availableShippingMethods = this.cart?.shipping_addresses?.[0]?.available_shipping_methods || [];
+
+      return availableShippingMethods.some((method) => (
+        method.carrier_code === 'freeshipping' && method.available !== false
+      ));
     },
   },
   async created() {

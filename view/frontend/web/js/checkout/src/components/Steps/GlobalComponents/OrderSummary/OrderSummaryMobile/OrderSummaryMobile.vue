@@ -159,9 +159,11 @@ export default {
       await this.getInitialConfig();
     }
     this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    const defaultOrderSummaryDescriptionText = getMagentoSolutionType()
+      ? this.$t('orderSummary.mobileDiscountText')
+      : this.$t('orderSummary.mobileDiscountTextOs');
     this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
-      || getMagentoSolutionType()
-      ? this.$t('orderSummary.mobileDiscountText') : this.$t('orderSummary.mobileDiscountTextOs');
+      || defaultOrderSummaryDescriptionText;
 
     await this.getCart();
 

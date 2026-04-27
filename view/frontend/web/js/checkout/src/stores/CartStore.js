@@ -173,6 +173,7 @@ export default defineStore('cartStore', {
       this.setData({
         cart,
       });
+      this.calculateFreeShipping(cart, configStore);
 
       const customerStore = useCustomerStore();
       const paymentStore = usePaymentStore();
@@ -437,6 +438,24 @@ export default defineStore('cartStore', {
       this.handleCartData(cart);
 
       this.emitUpdate();
+    },
+
+    calculateFreeShipping(cart, configStore) {
+      if (!configStore?.freeShippingEnabled || configStore.freeShippingMinimumAmount <= 0) {
+        this.setData({
+          freeShipping: null,
+        });
+        return;
+      }
+
+      const subtotal = configStore.freeShippingIncludeTax
+        ? Number(cart?.prices?.subtotal_including_tax?.value ?? 0)
+        : Number(cart?.prices?.subtotal_excluding_tax?.value ?? 0);
+      const remaining = configStore.freeShippingMinimumAmount - subtotal;
+
+      this.setData({
+        freeShipping: remaining > 0 ? remaining : 0,
+      });
     },
 
     clearCartItems(cartItemIds) {
