@@ -1,8 +1,11 @@
 // --border-color, #7A8086;
 // --odd-child-background, #fbfbfb;
 // --results-box-shadow, 0px 12px 15px 2px #E6E6E6;
-
 .afd-postcode {
+  &__container {
+    margin-bottom: var(--indent__m);
+  }
+
   &__title {
     margin-bottom: var(--indent__m);
   }
