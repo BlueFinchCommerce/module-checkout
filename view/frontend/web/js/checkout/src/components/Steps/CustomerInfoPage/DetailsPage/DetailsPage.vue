@@ -1,7 +1,8 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
+         v-show="(isExpressPaymentsVisible || placeholderExpressMethods.length)
+          && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -38,6 +39,14 @@
           v-for="expressPaymentMethod in expressPaymentMethods"
           :key="`${expressPaymentMethod}-${storedKey}`"
         />
+        <template
+          v-for="index in placeholderExpressMethods"
+          :key="index"
+        >
+          <div class="button button--blank">
+            <div class="text-loading" />
+          </div>
+        </template>
       </div>
     </div>
     <div class="details-form-body">
@@ -391,6 +400,7 @@ export default {
       additionalDetailComponents: [],
       clickAndCollectComponents: [],
       isCreditComponentVisible: false,
+      placeholderExpress: window.bluefinchCheckout?.placeholderExpress,
     };
   },
   watch: {
@@ -427,7 +437,12 @@ export default {
       'isUsingSavedShippingAddress',
     ]),
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
-    ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
+    ...mapState(usePaymentStore, [
+      'errorMessage',
+      'placeholderExpressMethods',
+      'isExpressPaymentsVisible',
+      'isPaymentMethodAvailable',
+    ]),
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
     ...mapState(useBraintreeStore, ['paypal']),
     selectedAddressType() {
