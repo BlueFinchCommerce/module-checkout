@@ -178,15 +178,7 @@ export default {
     ...mapState(useConfigStore, ['locale', 'crosSellsOpened', 'showFreeShippingMessage']),
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'crosssells', 'freeShipping']),
     qualifiesForFreeDelivery() {
-      if (this.freeShipping !== 0) {
-        return false;
-      }
-
-      const availableShippingMethods = this.cart?.shipping_addresses?.[0]?.available_shipping_methods || [];
-
-      return availableShippingMethods.some((method) => (
-        method.carrier_code === 'freeshipping' && method.available !== false
-      ));
+      return this.freeShipping === 0;
     },
   },
   async created() {
