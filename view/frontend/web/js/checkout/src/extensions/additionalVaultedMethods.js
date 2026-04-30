@@ -1,5 +1,5 @@
 import { defineAsyncComponent } from 'vue';
-import VaultedMethodLoader from '@/components/Steps/PaymentPage/VaultedMethodLoader/VaultedMethodLoader.vue';
+import VaultedMethodLoader from '@/components/Core/Icons/VaultedMethodLoader/VaultedMethodLoader.vue';
 
 export default () => {
   const additionalVaultedMethods = {};
