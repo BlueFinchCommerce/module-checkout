@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div class="details-form-header"
-         v-show="isExpressPaymentsVisible && (typeof ageCheckRequired === 'undefined' || !ageCheckRequired)">
+         v-show="isInstantPaymentsBlockVisible">
       <div class="instantCheckout-block">
         <TextField
           :text="instantCheckoutText"
@@ -40,7 +40,10 @@
         />
       </div>
     </div>
-    <div class="details-form-body">
+    <div
+      class="details-form-body"
+      :class="{'no-instant-payments': !isInstantPaymentsBlockVisible}"
+    >
       <DividerComponent v-if="(typeof ageCheckRequired === 'undefined' || !ageCheckRequired)" />
       <PayWith/>
 
@@ -430,6 +433,9 @@ export default {
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible', 'isPaymentMethodAvailable']),
     ...mapState(useValidationStore, ['errors', 'isAddressValid']),
     ...mapState(useBraintreeStore, ['paypal']),
+    isInstantPaymentsBlockVisible() {
+      return this.isExpressPaymentsVisible && (typeof this.ageCheckRequired === 'undefined' || !this.ageCheckRequired);
+    },
     selectedAddressType() {
       return this.selected[this.address_type];
     },
