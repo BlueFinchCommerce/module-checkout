@@ -402,15 +402,18 @@ export default {
       billingAddress.region = billingAddress.region.region_code || billingAddress.region.region;
       const { email } = response;
       const { androidPayCards } = JSON.parse(response.paymentMethodData.tokenizationData.token);
+      const androidPayCard = androidPayCards[0];
+      const isNetworkTokenized = androidPayCard.details?.isNetworkTokenized === true;
       const price = this.cartGrandTotal / 100;
       const threshold = this.threeDSThresholdAmount;
 
-      // If 3DS is disabled or we are below the threshold then skip over this step.
-      if (!this.threeDSEnabled || price < threshold) {
+      // Network-tokenized Google Pay cards already carry cryptogram data and should not be passed to verifyCard.
+      if (!this.threeDSEnabled || price < threshold || isNetworkTokenized) {
         return Promise.resolve({
-          nonce: androidPayCards[0].nonce,
+          nonce: androidPayCard.nonce,
           billingAddress,
           email,
+          isNetworkTokenized,
         });
       }
 
@@ -427,8 +430,8 @@ export default {
 
         const threeDSecureParameters = {
           amount: parseFloat(this.cartGrandTotal / 100).toFixed(2),
-          nonce: androidPayCards[0].nonce,
-          bin: androidPayCards[0].details.bin,
+          nonce: androidPayCard.nonce,
+          bin: androidPayCard.details.bin,
           challengeRequested,
           billingAddress,
           onLookupComplete: (lookupData, next) => {
@@ -466,6 +469,7 @@ export default {
               nonce: threeDSResponse.nonce,
               billingAddress,
               email,
+              isNetworkTokenized,
             });
           } else {
             reject(new Error('Please try again with another form of payment.'));
@@ -483,6 +487,7 @@ export default {
           method: this.method,
           additional_data: {
             payment_method_nonce: response.nonce,
+            is_network_tokenized: response.isNetworkTokenized,
           },
           extension_attributes: getPaymentExtensionAttributes(),
         },
