@@ -2,8 +2,13 @@
   <div class="select-input">
     <label :for="identifier"
            :class="classes">
-      <span>
-        {{ required ? label + ' *' : label }}
+      <span class="input-label">
+        {{ label }}
+        <span
+          v-if="required"
+          class="required-indicator"
+          aria-hidden="true"
+        >*</span>
       </span>
       <select ref="selectElement"
               :id="identifier"

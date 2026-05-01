@@ -1,21 +1,45 @@
 <template>
-  <div v-if="(addressFinder.afd.type === 'id' && addressFinder.afd.id)
-    || (addressFinder.afd.type !== 'id' && addressFinder.afd.serial)">
+  <div v-if="addressFinder.afd.serial && addressFinder.afd.id">
     <div class="afd-postcode__container">
       <div class="afd-postcode__field">
-        <TextInput type="text" id="afd-postcode" v-model="query"
-          :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-          :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
-          :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'" class="afd-postcode__input"
-          autocomplete="postal-code" @blur="onBlur" @focus="onFocus" @input="getSuggestions" @keydown.down="onArrowDown"
-          @keydown.up="onArrowUp" @keydown.enter="onEnter" />
-        <Search stroke="black" :data-cy="dataCy ? dataCy : 'afd-postcode'" />
+        <TextInput type="text"
+                   id="afd-postcode"
+                   v-model="query"
+                   :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
+                   :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
+                   :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'"
+                   class="afd-postcode__input"
+                   autocomplete="postal-code"
+                   @blur="onBlur"
+                   @focus="onFocus"
+                   @input="getSuggestions"
+                   @keydown.down="onArrowDown"
+                   @keydown.up="onArrowUp"
+                   @keydown.enter="onEnter"/>
+        <Search
+          stroke="black"
+          :data-cy="dataCy ? dataCy : 'afd-postcode'" />
+        />
       </div>
 
-      <ul v-if="getResultsCount() > 0 && displayResults" class="afd-postcode__results">
-        <li v-for="(item, i) in addressList" :key="i" :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
-          tabindex="-1" class="afd-postcode__result" :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'">
-          <button tabindex="-1" type="button" class="afd-postcode__action" @click="selectSuggestion(item);">
+      <ul
+        v-if="getResultsCount() > 0 && displayResults"
+        class="afd-postcode__results"
+      >
+        <li
+          v-for="(item, i) in addressList"
+          :key="i"
+          :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
+          tabindex="-1"
+          class="afd-postcode__result"
+          :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'"
+        >
+          <button
+            tabindex="-1"
+            type="button"
+            class="afd-postcode__action"
+            @click="selectSuggestion(item);"
+          >
             {{ item.List }}
           </button>
         </li>
@@ -23,16 +47,28 @@
     </div>
 
     <template v-if="address">
-      <div class="address-block" :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
+      <div class="address-block"
+           :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
         <div class="address-block__item">
           <article>
-            <AddressBlock :address_type="address_type" :address="address" />
+            <AddressBlock
+              :address_type="address_type"
+              :address="address"
+            />
           </article>
         </div>
-        <div class="address-block__edit" tabindex="0" :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
-          @click.prevent="editAddress" @keydown.enter.prevent="editAddress">
+        <div
+          class="address-block__edit"
+          tabindex="0"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          @click.prevent="editAddress"
+          @keydown.enter.prevent="editAddress"
+        >
           <Edit />
-          <MyButton secondary :label="$t('yourDetailsSection.editButton')" />
+          <MyButton
+            secondary
+            :label="$t('yourDetailsSection.editButton')"
+          />
         </div>
       </div>
     </template>
@@ -104,9 +140,9 @@ export default {
       'setAddressAsEditing',
       'getRegionOptions',
       'updateRegionRequired',
+      'getAfdConfiguration',
       'setSelectedSavedAddress',
     ]),
-    ...mapActions(useConfigStore, ['getAfdConfiguration']),
     ...mapActions(useValidationStore, ['validateAddress']),
 
     editAddress() {
@@ -167,8 +203,8 @@ export default {
     updateAddress(address) {
       const {
         two_letter_abbreviation:
-        /* eslint-disable  camelcase */
-        countryCode = '',
+          /* eslint-disable  camelcase */
+          countryCode = '',
       } = this.countries.find(({ three_letter_abbreviation }) => (
         /* eslint-disable  camelcase */
         address.CountryISO === three_letter_abbreviation

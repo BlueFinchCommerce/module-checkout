@@ -282,6 +282,10 @@
     &-body {
       background: var(--details-form_background__color-mobile, var(--steps__background-color--desktop));
       border-radius: 0 0 var(--steps__border-radius--desktop) var(--steps__border-radius--desktop);
+
+      &.no-instant-payments {
+        border-radius: var(--details-form-no-instant__border-radius-desktop, var(--steps__border-radius--desktop));
+      }
     }
 
     .proceed-to-shipping-btn {

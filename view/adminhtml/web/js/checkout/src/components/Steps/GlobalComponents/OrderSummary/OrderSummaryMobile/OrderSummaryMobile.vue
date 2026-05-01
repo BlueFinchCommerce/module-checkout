@@ -148,9 +148,11 @@ export default {
     }
 
     this.orderSummaryText = window.bluefinchCheckout?.[this.orderSummaryTextId] || this.$t('orderSummary.modalHeader');
+    const defaultOrderSummaryDescriptionText = getMagentoSolutionType()
+      ? this.$t('orderSummary.mobileDiscountText')
+      : this.$t('orderSummary.mobileDiscountTextOs');
     this.orderSummaryDescriptionText = window.bluefinchCheckout?.[this.orderSummaryDescriptionTextId]
-      || getMagentoSolutionType()
-      ? this.$t('orderSummary.mobileDiscountText') : this.$t('orderSummary.mobileDiscountTextOs');
+      || defaultOrderSummaryDescriptionText;
 
     document.addEventListener(this.orderSummaryTextId, this.setOrderSummaryText);
     document.addEventListener(this.orderSummaryDescriptionTextId, this.setOrderSummaryDescriptionText);

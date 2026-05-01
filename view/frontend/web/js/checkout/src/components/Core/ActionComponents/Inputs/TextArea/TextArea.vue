@@ -1,15 +1,20 @@
 <template>
   <div class="text-input text-area" :class="{ 'custom-validation-error': validationErrorMessage !== '', ...classes }">
     <label :for="identifier" :class="{ 'sanitise-error': validationErrorMessage !== '', ...classes }">
-      <span>
-        {{ required ? label + ' *' : label }}
+      <span class="input-label">
+        {{ label }}
+        <span
+          v-if="required"
+          class="required-indicator"
+          aria-hidden="true"
+        >*</span>
       </span>
       <textarea
         :id="identifier"
         ref="textarea"
         :name="name"
         :style="style"
-        :placeholder="required ? placeholder + ' *' : placeholder"
+        :placeholder="placeholder"
         :disabled="disabled"
         :required="required"
         :aria-label="ariaLabel"

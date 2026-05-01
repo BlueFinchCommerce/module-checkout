@@ -25,6 +25,10 @@
   grid-gap: var(--indent__m);
 }
 
+.no-instant-payments {
+  border-radius: var(--details-form-no-instant__border-radius, var(--steps__border-radius--desktop));
+}
+
 .details-form {
   &-header {
     background-color: var(--instant-checkout__background-color);

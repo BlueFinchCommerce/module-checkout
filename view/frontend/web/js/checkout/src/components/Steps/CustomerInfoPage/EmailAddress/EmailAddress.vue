@@ -2,18 +2,20 @@
   <section class="customer-form">
     <div class="checkout-section checkout-email">
       <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
-        <TextField
-          class="welcome-message-title"
-          :data-cy="'welcome-message-title'"
-          :text="emailRegistered ?
-            $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
-        />
-        <TextField
-          class="welcome-message"
-          :data-cy="'welcome-message'"
-          :text="emailRegistered ?
-            $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
-        />
+        <div class="welcome-message-group">
+          <TextField
+            class="welcome-message-title"
+            :data-cy="'welcome-message-title'"
+            :text="emailRegistered ?
+              $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
+          />
+          <TextField
+            class="welcome-message"
+            :data-cy="'welcome-message'"
+            :text="emailRegistered ?
+              $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
+          />
+        </div>
       </template>
 
       <div :class="{ 'logged-in-email': isLoggedIn }">
