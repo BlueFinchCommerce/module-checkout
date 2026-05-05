@@ -30,7 +30,7 @@
         :autocomplete="autocomplete"
         :style="style"
         :type="type"
-        :placeholder="placeholder"
+        :placeholder="required ? `${placeholder || ''} *` : placeholder"
         :disabled="disabled"
         :required="required"
         :aria-label="ariaLabel"
