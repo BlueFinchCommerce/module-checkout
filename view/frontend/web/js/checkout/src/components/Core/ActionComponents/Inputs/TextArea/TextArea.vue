@@ -178,7 +178,6 @@ export default {
 
       const debouncedResize = debounce(() => {
         const boundingRect = container.getBoundingClientRect();
-
         const isHidden = (window.innerHeight - footerHeight) < boundingRect.bottom;
 
         if (isHidden) {
