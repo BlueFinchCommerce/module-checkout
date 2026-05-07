@@ -121,7 +121,7 @@ export default {
       clickandCollectThresholdLowWeight: 'Unfortunately, your basket weight is too low for Click and Collect.',
 
       addressFinder: {
-        title: 'Address Finder',
+        title: 'Address finder',
         placeholder: 'Search by street name or postcode',
         label: 'Street name/postcode',
       },
