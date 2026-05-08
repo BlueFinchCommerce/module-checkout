@@ -98,6 +98,7 @@ export default {
       title: ' ',
       savedAddressesTitle: ' ',
       shipHere: ' ',
+      billHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
