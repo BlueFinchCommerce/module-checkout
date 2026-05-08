@@ -388,6 +388,10 @@
     display: none;
   }
 
+  .error-icon-block svg {
+    fill: var(--notification__error-border-color, var(--color__semantic-error));
+  }
+
   .custom-validation-error.field-valid ~ .error-icon-block,
   .error + .error-icon-block,
   .custom-validation-error + svg,
@@ -537,7 +541,7 @@
       display: var(--message-icon-visibility, block);
     }
   }
-
+  
   .adyen-checkout__dropin .adyen-checkout__field--error .adyen-checkout__error-text {
     margin: var(--notification__margin);
   }
