@@ -105,6 +105,7 @@ export default {
       title: 'Where should we deliver it to?',
       savedAddressesTitle: 'Select a saved {addressType} address',
       shipHere: 'Ship here',
+      billHere: 'Bill here',
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
