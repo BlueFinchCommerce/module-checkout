@@ -168,6 +168,7 @@ export default {
   guestButton: ' ',
   continueButton: ' ',
   forgotPass: ' ',
+  passwordRequirementsText: ' ',
   updateButton: ' ',
   billingForm: {
     notSameAddress: ' ',

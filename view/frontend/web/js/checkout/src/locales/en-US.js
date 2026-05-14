@@ -200,7 +200,9 @@ export default {
   noAccountGuestButton: 'Continue as a Guest',
   accountGuestButton: 'Or Continue as a Guest',
   continueButton: 'Continue',
-  forgotPass: 'Forgot your Password',
+  forgotPass: 'Forgot your password?',
+  passwordRequirementsText:
+    'Minimum 8 characters and must include: one lowercase letter, one uppercase letter and one number or special character.',
   updateButton: 'Update',
   billingForm: {
     notSameAddress: 'My billing and shipping address are the same',
