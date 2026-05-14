@@ -107,6 +107,12 @@
         </div>
 
         <div class="checkout-email__footer">
+          <div class="checkout-email__password-requirements">
+            <TextField
+              :text="$t('passwordRequirementsText')"
+              :data-cy="'password-requirements-text'"
+            />
+          </div>
           <a
             :href="secureBaseLinkUrl + 'customer/account/forgotpassword/'"
             class="forgot-pass"

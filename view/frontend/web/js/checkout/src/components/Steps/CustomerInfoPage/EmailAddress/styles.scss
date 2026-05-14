@@ -94,6 +94,7 @@
   }
 
   .forgot-pass {
+    display: inline-flex;
     color: var(--button__link-font-color);
     p {
       text-align: left;
@@ -162,7 +163,7 @@
   &__footer {
     display: flex;
     align-items: baseline;
-    justify-content: end;
+    justify-content: space-between;
     margin-bottom: var(--indent__s);
 
     #password_help_text {
@@ -180,6 +181,20 @@
       &:focus-visible {
         font-weight: var(--button__link-font-weight-hover);
       }
+    }
+  }
+
+  &__password-requirements {
+    display: var(--password-requirements-text-display, none);
+    max-width: 470px;
+
+    p {
+      margin: var(--indent__s) 0 var(--indent__xs);
+      color: var(--font__color-light);
+      font-family: var(--font-family__copy);
+      font-size: var(--font__xs);
+      line-height: 1.5;
+      text-align: left;
     }
   }
 
