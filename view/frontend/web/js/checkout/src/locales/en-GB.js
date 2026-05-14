@@ -134,7 +134,7 @@ export default {
       },
       addressForm: {
         saveAddressButton: 'Use this address',
-        linkText: 'Enter your address manually',
+        linkText: 'Enter address manually',
         useMyLocation: 'Use My Location',
         collectLocations: 'Where would you like to collect it?',
         closestLocations: 'Nearest Collection Locations',

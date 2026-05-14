@@ -129,7 +129,7 @@ export default {
       },
       addressForm: {
         saveAddressButton: 'Use this address',
-        linkText: 'Enter your address manually',
+        linkText: 'Enter address manually',
         addressField: {
           placeholder: 'Address (line {line})',
           label: 'Address (line {line})',
