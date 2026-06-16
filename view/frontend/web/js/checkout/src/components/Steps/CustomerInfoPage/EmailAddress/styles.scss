@@ -19,7 +19,7 @@
     }
   }
 
-  .welcome-message {
+  .welcome-message-group {
     padding-top: var(--welcome-message-padding, 0);
     font-size: var(--welcome-message-font-size, var(--font__s));
     font-weight: var(--welcome-message-font-weight, var(--font-weight__medium));
@@ -28,7 +28,26 @@
     text-align: var(--welcome-message-text-align, center);
     color: var(--font__color-light);
 
-    &:empty {
+    .welcome-message-title,
+    .welcome-message {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      font-size: inherit;
+      font-weight: inherit;
+      font-family: inherit;
+      color: inherit;
+    }
+
+    .welcome-message-title {
+      display: var(--welcome-message-title-display, inline);
+      font-size: var(--welcome-message-title__font-size, inherit);
+      font-weight: var(--welcome-message-title__font-weight, var(--font-weight__regular));
+      font-family: var(--welcome-message-title__font-family, inherit);
+      margin-right: var(--welcome-message-title-margin-right, 0.25em);
+    }
+
+    .welcome-message:empty {
       padding-top: 0;
     }
   }
@@ -75,6 +94,7 @@
   }
 
   .forgot-pass {
+    display: inline-flex;
     color: var(--button__link-font-color);
     p {
       text-align: left;
@@ -134,16 +154,16 @@
   }
 
   .welcome-message-title {
-    display: var(--logged-in-email-title-visibility, none);
-    font-size: var(--welcome-message-title__font-size, var(--font__l));
-    font-weight: var(--welcome-message-title__font-weight, var(--font-weight__semibold));
-    font-family: var(--welcome-message-title__font-family, var(--font-family__copy));
+    display: var(--welcome-message-title-display, var(--logged-in-email-title-visibility, inline));
+    font-size: var(--welcome-message-title__font-size, inherit);
+    font-weight: var(--welcome-message-title__font-weight, var(--font-weight__regular));
+    font-family: var(--welcome-message-title__font-family, inherit);
   }
 
   &__footer {
     display: flex;
     align-items: baseline;
-    justify-content: end;
+    justify-content: space-between;
     margin-bottom: var(--indent__s);
 
     #password_help_text {
@@ -161,6 +181,20 @@
       &:focus-visible {
         font-weight: var(--button__link-font-weight-hover);
       }
+    }
+  }
+
+  &__password-requirements {
+    display: var(--password-requirements-text-display, none);
+    max-width: 470px;
+
+    p {
+      margin: var(--indent__s) 0 var(--indent__xs);
+      color: var(--font__color-light);
+      font-family: var(--font-family__copy);
+      font-size: var(--font__xs);
+      line-height: 1.5;
+      text-align: left;
     }
   }
 

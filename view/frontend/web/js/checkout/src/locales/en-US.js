@@ -42,10 +42,10 @@ export default {
       successMessage: 'Successfully applied code "{code}".',
     },
     crossSellsTitle: 'You may also like these items...',
-    freeShippingAvailable: 'Good news: your order will be delivered for Free.',
-    couponCodeTitle: 'For another',
-    couponCodeTitleBottom: 'you can get a',
-    couponCodeTitleFreeShipping: 'free standard delivery',
+    freeShippingAvailable: 'Your order qualifies for FREE Delivery!',
+    couponCodeTitle: 'Spend another',
+    couponCodeTitleBottom: 'and get',
+    couponCodeTitleFreeShipping: 'Free Delivery!',
     couponCode: {
       placeholder: 'Enter promotional code',
     },
@@ -94,7 +94,8 @@ export default {
     clickAndCollectSection: {
       clickAndCollectTitle: 'Choose a Click & Collect Location',
       clickAndCollectInputPlaceholder: 'Search by postcode',
-      clickAndCollectErrorMessage: 'Something went wrong while searching for locations. Please try again later.',
+      clickAndCollectErrorMessage:
+        'Something went wrong while searching for locations. Please try again later.',
       clickAndCollectMoreLocations: 'Show more locations',
       clickAndCollectAddresses: 'Chosen Click & Collect Address:',
       clickAndCollectContinueButton: 'Continue To Payment',
@@ -105,6 +106,7 @@ export default {
       title: 'Where should we deliver it to?',
       savedAddressesTitle: 'Select a saved {addressType} address',
       shipHere: 'Ship here',
+      billHere: 'Bill here',
       deliveryAddressTitle: 'Delivery Address',
       billingAddressTitle: 'Select a billing address',
       selectedBillingAddressTitle: 'Billing address',
@@ -121,7 +123,7 @@ export default {
       clickandCollectThresholdLowWeight: 'Unfortunately, your basket weight is too low for Click and Collect.',
 
       addressFinder: {
-        title: 'Address Finder',
+        title: 'Address finder',
         placeholder: 'Search by street name or postcode',
         label: 'Street name/postcode',
       },
@@ -172,20 +174,26 @@ export default {
     companyErrorMessage: 'Please enter a valid company name',
     emailErrorMessage: 'Please enter a valid email address',
     phoneErrorMessage: 'Not a valid Phone Number',
-    passwordHelpText: 'Minimum 8 characters and must include at least three character classes '
+    passwordHelpText:
+      'Minimum 8 characters and must include at least three character classes '
       + '(lowercase letter, uppercase letter, number or special characters).',
     passwordErrorMessage: 'Please enter a valid password',
-    addressFormErrorMessage: 'Please make sure that all required fields are filled',
+    addressFormErrorMessage:
+      'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postcode for',
     countryErrorMessage: 'Please choose your country',
     streetErrorMessage: 'Please enter a valid address',
-    streetCharacterLimit: 'Please use a maximum of 75 characters for your street address',
+    streetCharacterLimit:
+      'Please use a maximum of 75 characters for your street address',
     cityErrorMessage: 'Please enter a valid city',
     regionErrorMessage: 'Please enter a valid state/province',
-    googlePayShippingError: 'The shipping method is missing. Please select the shipping method and try again.',
-    googlePayNominatedDayError: 'Unfortunately we cannot offer Express Payment on orders with Nominated Day Delivery.',
+    googlePayShippingError:
+      'The shipping method is missing. Please select the shipping method and try again.',
+    googlePayNominatedDayError:
+      'Unfortunately we cannot offer Express Payment on orders with Nominated Day Delivery.',
     noShippingMethods: 'No shipping methods found for the selected address.',
-    googlePayNoShippingMethods: 'No shipping methods found for the selected address.',
+    googlePayNoShippingMethods:
+      'No shipping methods found for the selected address.',
     unexpectedPaymentError: 'An unexpected error occurred',
     applePayNoShippingMethods: 'No shipping methods found for the selected address.',
     postcodeLookup: 'Unable to get your location.',
@@ -194,14 +202,17 @@ export default {
     accountBody: 'Sign in or continue as a guest.',
     accountTitle: 'Welcome back!',
     getStarted: 'Enter your email to get started.',
-    guestBody: "Looks like you're new here! Continue to checkout as a guest with the option to create an account once you've placed your order.",
-    guestTitle: 'Hello',
+    guestBody:
+      "Continue as a guest with the option to create an account once you've placed your order.",
+    guestTitle: "Looks like you're new here!",
   },
   signInButton: 'Sign In',
   noAccountGuestButton: 'Continue as a Guest',
   accountGuestButton: 'Continue as a Guest',
   continueButton: 'Continue',
-  forgotPass: 'Forgot your Password',
+  forgotPass: 'Forgot your password?',
+  passwordRequirementsText:
+    'Minimum 8 characters and must include: one lowercase letter, one uppercase letter and one number or special character.',
   updateButton: 'Update',
   billingForm: {
     notSameAddress: 'My billing and shipping address are the same',
@@ -241,7 +252,8 @@ export default {
   instantCheckout: 'Instant Checkout',
   adyen: {
     applePayTotal: 'Grand Total',
-    applePayNoShippingMethods: 'There are no shipping methods available for you right now. Please try again or use an alternative payment method.',
+    applePayNoShippingMethods:
+      'There are no shipping methods available for you right now. Please try again or use an alternative payment method.',
     paymentSuccessful: 'Payment Successful',
   },
   paymentCard: {
@@ -262,10 +274,12 @@ export default {
       payment: 'ACH Payment',
       proof: 'Proof of Authorization',
       routingNumber: 'Routing Number',
-      terms: 'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
+      terms:
+        'By clicking "Pay with ACH", I authorize Braintree, a service of PayPal on behalf of {websiteName} (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.',
     },
     lpm: {
-      noMethods: 'There are currently no available payment methods. Please update your Billing Address.',
+      noMethods:
+        'There are currently no available payment methods. Please update your Billing Address.',
     },
     storePayment: 'Save for later use.',
   },
@@ -277,7 +291,8 @@ export default {
       automatic: 'By placing an order you accept our',
     },
     errorMessage: 'This is a required field.',
-    paymentErrorMessage: 'Agreements have not been accepted. Please check the agreements and try again.',
+    paymentErrorMessage:
+      'Agreements have not been accepted. Please check the agreements and try again.',
   },
   privacyPolicy: {
     content: 'Your data will be handled as set out in our ',

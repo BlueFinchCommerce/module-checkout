@@ -1,38 +1,92 @@
 <template>
-  <div v-if="(addressFinder.afd.type === 'id' && addressFinder.afd.id)
-    || (addressFinder.afd.type !== 'id' && addressFinder.afd.serial)">
+  <div v-if="addressFinder.afd.serial && addressFinder.afd.id">
     <div class="afd-postcode__container">
       <div class="afd-postcode__field">
-        <TextInput type="text" id="afd-postcode" v-model="query"
-          :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
-          :label="$t('yourDetailsSection.deliverySection.addressFinder.label')"
-          :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'" class="afd-postcode__input"
-          autocomplete="postal-code" @blur="onBlur" @focus="onFocus" @input="getSuggestions" @keydown.down="onArrowDown"
-          @keydown.up="onArrowUp" @keydown.enter="onEnter" />
-        <Search stroke="black" :data-cy="dataCy ? dataCy : 'afd-postcode'" />
+        <TextInput type="text"
+                   id="afd-postcode"
+                   v-model="query"
+                   :placeholder="$t('yourDetailsSection.deliverySection.addressFinder.placeholder')"
+                   :label="$t('yourDetailsSection.deliverySection.addressFinder.title')"
+                   :data-cy="dataCy ? `${dataCy}-input` : 'afd-postcode-input'"
+                   class="afd-postcode__input"
+                   autocomplete="postal-code"
+                   @blur="onBlur"
+                   @focus="onFocus"
+                   @input="getSuggestions"
+                   @keydown.down="onArrowDown"
+                   @keydown.up="onArrowUp"
+                   @keydown.enter="onEnter"/>
+        <Search
+          stroke="black"
+          :data-cy="dataCy ? dataCy : 'afd-postcode'" />
       </div>
 
-      <ul v-if="getResultsCount() > 0 && displayResults" class="afd-postcode__results">
-        <li v-for="(item, i) in addressList" :key="i" :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
-          tabindex="-1" class="afd-postcode__result" :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'">
-          <button tabindex="-1" type="button" class="afd-postcode__action" @click="selectSuggestion(item);">
-            {{ item.List }}
-          </button>
-        </li>
-      </ul>
+      <div
+        v-if="getResultsCount() > 0 && displayResults"
+        class="afd-postcode__results"
+      >
+        <ul class="afd-postcode__results-scroller">
+          <li
+            v-for="(item, i) in addressList"
+            :key="i"
+            :class="{ 'afdPostcode__suggestion--active': i === arrowCounter }"
+            tabindex="-1"
+            class="afd-postcode__result"
+            :data-cy="dataCy ? `${dataCy}-result` : 'afd-postcode-result'"
+          >
+            <button
+              tabindex="-1"
+              type="button"
+              class="afd-postcode__action"
+              @click="selectSuggestion(item);"
+            >
+              {{ item.List }}
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        v-else-if="showNoResults()"
+        class="afd-postcode__results"
+      >
+        <ul class="afd-postcode__results-scroller">
+          <li
+            tabindex="-1"
+            class="afd-postcode__result"
+            :data-cy="dataCy ? `${dataCy}-result-empty` : 'afd-postcode-result-empty'"
+          >
+            <span class="afd-postcode__action">
+              No addresses found
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <template v-if="address">
-      <div class="address-block" :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
+      <div class="address-block"
+           :class="customer.addresses.length > 0 ? 'saved-address-active' : ''">
         <div class="address-block__item">
           <article>
-            <AddressBlock :address_type="address_type" :address="address" />
+            <AddressBlock
+              :address_type="address_type"
+              :address="address"
+            />
           </article>
         </div>
-        <div class="address-block__edit" tabindex="0" :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
-          @click.prevent="editAddress" @keydown.enter.prevent="editAddress">
+        <div
+          class="address-block__edit"
+          tabindex="0"
+          :aria-label="$t('yourDetailsSection.deliverySection.editButton')"
+          @click.prevent="editAddress"
+          @keydown.enter.prevent="editAddress"
+        >
           <Edit />
-          <MyButton secondary :label="$t('yourDetailsSection.editButton')" />
+          <MyButton
+            secondary
+            :label="$t('yourDetailsSection.editButton')"
+          />
         </div>
       </div>
     </template>
@@ -45,6 +99,7 @@ import { mapState, mapWritableState, mapActions } from 'pinia';
 import useCustomerStore from '@/stores/CustomerStore';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import useValidationStore from '@/stores/ConfigStores/ValidationStore';
+import useLoadingStore from '@/stores/LoadingStore';
 
 // services
 import afdPostcode from '@/services/addresses/afdPostcode';
@@ -60,6 +115,8 @@ import Edit from '@/components/Core/Icons/Edit/Edit.vue';
 
 export default {
   name: 'AfdPostCode',
+  suggestionsDebounceMs: 250,
+  minSearchLength: 2,
   components: {
     AddressBlock,
     TextInput,
@@ -81,6 +138,10 @@ export default {
       address: false,
       request: null,
       displayResults: true,
+      isSearching: false,
+      hasSearched: false,
+      suggestionsDebounceTimer: null,
+      lookupErrorMessage: '',
     };
   },
   computed: {
@@ -98,16 +159,23 @@ export default {
   async mounted() {
     await this.getAfdConfiguration();
   },
+  beforeUnmount() {
+    if (this.suggestionsDebounceTimer) {
+      clearTimeout(this.suggestionsDebounceTimer);
+      this.suggestionsDebounceTimer = null;
+    }
+  },
   methods: {
     ...mapActions(useCustomerStore, [
       'setAddressToStore',
       'setAddressAsEditing',
       'getRegionOptions',
       'updateRegionRequired',
+      'getAfdConfiguration',
       'setSelectedSavedAddress',
     ]),
-    ...mapActions(useConfigStore, ['getAfdConfiguration']),
     ...mapActions(useValidationStore, ['validateAddress']),
+    ...mapActions(useLoadingStore, ['setLoadingState']),
 
     editAddress() {
       this.address = false;
@@ -147,28 +215,92 @@ export default {
       return this.addressList && this.addressList.length;
     },
     getSuggestions() {
+      const searchQuery = (this.query || '').trim();
+      if (this.suggestionsDebounceTimer) {
+        clearTimeout(this.suggestionsDebounceTimer);
+        this.suggestionsDebounceTimer = null;
+      }
+
       this.resetAddressData();
-      afdPostcode.getSuggestions(this.query, this.address_type).then((addresses) => {
-        this.addressList = addresses;
-      });
+      this.hasSearched = false;
+      this.lookupErrorMessage = '';
+
+      if (!searchQuery || searchQuery.length < this.$options.minSearchLength) {
+        this.isSearching = false;
+        return;
+      }
+
+      this.suggestionsDebounceTimer = setTimeout(() => {
+        this.isSearching = true;
+
+        afdPostcode.getSuggestions(searchQuery, this.address_type)
+          .then((addresses) => {
+            if (Array.isArray(addresses)) {
+              this.addressList = addresses;
+            }
+          })
+          .finally(() => {
+            this.isSearching = false;
+            this.hasSearched = true;
+            this.suggestionsDebounceTimer = null;
+          });
+      }, this.$options.suggestionsDebounceMs);
+    },
+    showNoResults() {
+      return this.displayResults
+        && !this.isSearching
+        && !this.lookupErrorMessage
+        && this.hasSearched
+        && (this.query || '').trim().length > 0
+        && this.getResultsCount() === 0;
+    },
+    showLookupError() {
+      return this.displayResults
+        && !this.isSearching
+        && !!this.lookupErrorMessage;
+    },
+    formatCity(value) {
+      const city = (value || '').trim();
+      if (!city) {
+        return '';
+      }
+
+      return city
+        .toLowerCase()
+        .replace(/(^|[\s-'])([a-z])/g, (match, prefix, letter) => `${prefix}${letter.toUpperCase()}`);
     },
     selectSuggestion(item) {
+      if (!item) {
+        return;
+      }
+
       this.arrowCounter = -1;
       this.addressList = [];
+      this.hasSearched = false;
+      this.lookupErrorMessage = '';
+      this.displayResults = false;
+      this.setLoadingState(true);
 
       // Single Address
-      afdPostcode.getAndUseAddress(item.Key, this.address_type).then(this.updateAddress);
-
-      // Hide the list after selecting an item.
-      this.displayResults = false;
+      afdPostcode.getAndUseAddress(item.Key, this.address_type)
+        .then(this.updateAddress)
+        .catch(() => {
+          this.lookupErrorMessage = 'Address lookup failed. Please try again.';
+          this.displayResults = true;
+          this.hasSearched = false;
+          this.addressList = [];
+        })
+        .finally(() => {
+          this.setLoadingState(false);
+        });
 
       this.setSelectedSavedAddress(this.address_type, false);
     },
     updateAddress(address) {
       const {
         two_letter_abbreviation:
-        /* eslint-disable  camelcase */
-        countryCode = '',
+          /* eslint-disable  camelcase */
+          countryCode = '',
       } = this.countries.find(({ three_letter_abbreviation }) => (
         /* eslint-disable  camelcase */
         address.CountryISO === three_letter_abbreviation
@@ -188,7 +320,7 @@ export default {
         id: 'custom',
         company: address.Organisation,
         street: [line1, line2],
-        city: address.Town,
+        city: this.formatCity(address.Town || address.Locality || line2 || ''),
         country_code: countryCode,
         region: {
           region: region ? region.option.code : address.PostalCounty,

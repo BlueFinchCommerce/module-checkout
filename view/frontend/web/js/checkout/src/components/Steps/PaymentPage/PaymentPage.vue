@@ -30,6 +30,11 @@
           v-for="ageCheckerExtension in ageCheckerExtensions"
           :key="ageCheckerExtension"
         />
+        <component
+          :is="aboveVaultedMethod"
+          v-for="aboveVaultedMethod in aboveVaultedMethods"
+          :key="aboveVaultedMethod"
+        />
         <template v-if="cartGrandTotal">
           <template v-if="isLoggedIn && hasVaultedMethods">
             <div
@@ -151,6 +156,7 @@ import paymentMethods from '@/extensions/paymentMethods';
 import paymentMethodsPrimary from '@/extensions/paymentMethodsPrimary';
 import ageCheckerExtensions from '@/extensions/ageCheckerExtensions';
 import abovePaymentMethods from '@/extensions/abovePaymentMethods';
+import aboveVaultedMethods from '@/extensions/aboveVaultedMethods';
 
 export default {
   name: 'PaymentPage',
@@ -172,6 +178,7 @@ export default {
     ...paymentMethodsPrimary(),
     ...ageCheckerExtensions(),
     ...abovePaymentMethods(),
+    ...aboveVaultedMethods(),
   },
   data() {
     return {
@@ -180,6 +187,7 @@ export default {
       additionalPaymentMethodsPrimary: [],
       ageCheckerExtensions: [],
       abovePaymentMethods: [],
+      aboveVaultedMethods: [],
       storedStepText: '',
       paymentKey: 0,
     };
@@ -233,6 +241,7 @@ export default {
     this.additionalVaultedMethods = Object.keys(additionalVaultedMethods());
     this.ageCheckerExtensions = Object.keys(ageCheckerExtensions());
     this.abovePaymentMethods = Object.keys(abovePaymentMethods());
+    this.aboveVaultedMethods = Object.keys(aboveVaultedMethods());
 
     this.trackStep({
       step: 3,

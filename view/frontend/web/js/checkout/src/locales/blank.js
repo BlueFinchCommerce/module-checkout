@@ -98,6 +98,7 @@ export default {
       title: ' ',
       savedAddressesTitle: ' ',
       shipHere: ' ',
+      billHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
@@ -167,6 +168,7 @@ export default {
   guestButton: ' ',
   continueButton: ' ',
   forgotPass: ' ',
+  passwordRequirementsText: ' ',
   updateButton: ' ',
   billingForm: {
     notSameAddress: ' ',
