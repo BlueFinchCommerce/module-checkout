@@ -173,7 +173,7 @@ export default {
     emailErrorMessage: 'Please enter a valid email address',
     phoneErrorMessage: 'Not a valid Phone Number',
     passwordHelpText: 'Minimum 8 characters and must include at least three character classes '
-        + '(lowercase letter, uppercase letter, number or special characters).',
+      + '(lowercase letter, uppercase letter, number or special characters).',
     passwordErrorMessage: 'Please enter a valid password',
     addressFormErrorMessage: 'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postcode for',
