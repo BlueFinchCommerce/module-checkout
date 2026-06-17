@@ -125,11 +125,19 @@ export default {
           placeholder: ' ',
         },
         postCodeField: {
+          label: ' ',
+          placeholder: ' ',
+        },
+        zipCodeField: {
+          label: ' ',
           placeholder: ' ',
         },
         regionField: {
           label: ' ',
           placeholder: ' ',
+        },
+        stateField: {
+          label: ' ',
         },
       },
     },
@@ -147,6 +155,7 @@ export default {
     passwordErrorMessage: ' ',
     addressFormErrorMessage: ' ',
     postCodeErrorMessage: ' ',
+    zipCodeErrorMessage: ' ',
     countryErrorMessage: ' ',
     streetErrorMessage: ' ',
     cityErrorMessage: ' ',
