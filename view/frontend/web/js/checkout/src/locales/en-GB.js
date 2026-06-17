@@ -161,9 +161,16 @@ export default {
           label: 'Postcode',
           placeholder: 'Postcode',
         },
+        zipCodeField: {
+          label: 'Zip Code',
+          placeholder: 'Zip Code',
+        },
         regionField: {
           label: 'County',
           placeholder: 'County',
+        },
+        stateField: {
+          label: 'State/Province',
         },
       },
     },
@@ -186,6 +193,7 @@ export default {
     addressFormErrorMessage:
       'Please make sure that all required fields are filled',
     postCodeErrorMessage: 'Please enter a valid postcode for',
+    zipCodeErrorMessage: 'Please enter a valid zip code for',
     countryErrorMessage: 'Please choose your country',
     streetErrorMessage: 'Please enter a valid address',
     streetCharacterLimit:
