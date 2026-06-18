@@ -130,6 +130,16 @@ export default {
       addressForm: {
         saveAddressButton: 'Use this address',
         linkText: 'Enter address manually',
+        useMyLocation: 'Use My Location',
+        collectLocations: 'Where would you like to collect it?',
+        closestLocations: 'Nearest Collection Locations',
+        noLocations: 'No locations found for current search.',
+        collectionName: 'Who is collecting the order?',
+        collectionBillingTitle: 'Billing Details',
+        submitCollectionDetails: 'Submit collection details',
+        collectionDistance: '{distance} miles',
+        viewMapAndHours: 'View map and opening hours',
+        selectLocation: 'SELECT LOCATION',
         addressField: {
           placeholder: 'Address (line {line})',
           label: 'Address (line {line})',
@@ -195,6 +205,7 @@ export default {
     unexpectedPaymentError: 'An unexpected error occurred',
     applePayNoShippingMethods:
       'No shipping methods found for the selected address.',
+    postcodeLookup: 'Unable to get your location.',
   },
   welcomeMessages: {
     accountBody: 'Sign in or continue as a guest.',
@@ -206,7 +217,7 @@ export default {
   },
   signInButton: 'Sign In',
   noAccountGuestButton: 'Continue as a Guest',
-  accountGuestButton: 'Or Continue as a Guest',
+  accountGuestButton: 'Continue as a Guest',
   continueButton: 'Continue',
   forgotPass: 'Forgot your password?',
   passwordRequirementsText:
@@ -240,6 +251,8 @@ export default {
     titleGuest: 'Select a payment method',
     titleStored: 'Your saved payment methods',
     titleNew: 'Select new payment method',
+    freePaymentLabel: 'No Payment Information Required',
+    checkMOLabel: 'Check / Money Order',
     payNow: 'Pay Now',
     storedPayments: 'Your Saved Payments',
     creditDebitCard: 'Credit or debit card',
@@ -328,5 +341,14 @@ export default {
     to: 'To',
     from: 'From',
     message: 'Message',
+  },
+  days: {
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    saturday: 'Saturday',
+    sunday: 'Sunday',
   },
 };
