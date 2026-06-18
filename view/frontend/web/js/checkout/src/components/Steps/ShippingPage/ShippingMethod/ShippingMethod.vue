@@ -63,10 +63,12 @@
               </span>
               <span class="shipping-method__content">
                 <TextField
+                  v-if="item.method_title"
                   :text="item.method_title"
                   :data-cy="`${item.method_code}-method-title`"
                 />
                 <TextField
+                  v-if="item.carrier_title"
                   :text="item.carrier_title"
                   :data-cy="`${item.method_code}-carrier-title`"
                 />
