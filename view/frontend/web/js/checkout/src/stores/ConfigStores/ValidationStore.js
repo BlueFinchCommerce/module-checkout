@@ -7,7 +7,9 @@ import requiredValid from '@/helpers/validation/requiredValid';
 import minLength from '@/helpers/validation/minLength';
 import maxLength from '@/helpers/validation/maxLength';
 import inputTypeValid from '@/helpers/validation/inputTypeValid';
+import telephoneValid from '@/helpers/validation/telephoneValid';
 import deepClone from '@/helpers/addresses/deepClone';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 /**
  * Validation store
@@ -20,6 +22,7 @@ export default defineStore('ValidationStore', {
       MIN_TEXT_LENGTH: minLength,
       MAX_TEXT_LENGTH: maxLength,
       INPUT_VALIDATION: inputTypeValid,
+      TELEPHONE: telephoneValid,
     },
     attributes: [
       'prefix',
@@ -96,7 +99,44 @@ export default defineStore('ValidationStore', {
         map.country_code = map.country_id;
       }
 
-      this.setData({ validationItems: map });
+      const validationMap = !getMagentoSolutionType()
+        ? this.addOpenSourceTelephoneValidation(map)
+        : map;
+
+      this.setData({ validationItems: validationMap });
+    },
+
+    addOpenSourceTelephoneValidation(map) {
+      const telephoneItem = map.telephone?.items?.[0] || {
+        attribute_code: 'telephone',
+        validate_rules: [],
+      };
+      const existingValidateRules = telephoneItem.validate_rules || [];
+      const validateRules = existingValidateRules.map((rule) => (
+        rule.name === 'MAX_TEXT_LENGTH'
+          ? { ...rule, value: '11' }
+          : rule
+      ));
+
+      if (!validateRules.some(({ name }) => name === 'MAX_TEXT_LENGTH')) {
+        validateRules.push({ name: 'MAX_TEXT_LENGTH', value: '11' });
+      }
+
+      if (!validateRules.some(({ name }) => name === 'TELEPHONE')) {
+        validateRules.push({ name: 'TELEPHONE', value: '3' });
+      }
+
+      return {
+        ...map,
+        telephone: {
+          items: [
+            {
+              ...telephoneItem,
+              validate_rules: validateRules,
+            },
+          ],
+        },
+      };
     },
 
     getValidationRules(field) {

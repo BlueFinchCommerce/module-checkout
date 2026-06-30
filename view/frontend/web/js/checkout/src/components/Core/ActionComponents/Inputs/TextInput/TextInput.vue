@@ -10,11 +10,9 @@
       <span
         v-if="label"
         class="input-label"
-        :class="labelVisible
-          ? 'text-input-has-value'
-          : (modelValue.length > 0 || isInputActive)
-          ? 'text-input-has-value'
-          : 'text-input-no-value'"
+        :class="labelVisible || modelValue.length > 0
+            ? 'text-input-has-value'
+            : 'text-input-no-value'"
       >
         {{ label }}
         <span
