@@ -99,11 +99,11 @@ export default defineStore('ValidationStore', {
         map.country_code = map.country_id;
       }
 
-      if (!getMagentoSolutionType()) {
-        this.addOpenSourceTelephoneValidation(map);
-      }
+      const validationMap = !getMagentoSolutionType()
+        ? this.addOpenSourceTelephoneValidation(map)
+        : map;
 
-      this.setData({ validationItems: map });
+      this.setData({ validationItems: validationMap });
     },
 
     addOpenSourceTelephoneValidation(map) {
@@ -111,20 +111,32 @@ export default defineStore('ValidationStore', {
         attribute_code: 'telephone',
         validate_rules: [],
       };
-      const validateRules = telephoneItem.validate_rules || [];
-      const maxTextLengthRule = validateRules.find(({ name }) => name === 'MAX_TEXT_LENGTH');
+      const existingValidateRules = telephoneItem.validate_rules || [];
+      const validateRules = existingValidateRules.map((rule) => (
+        rule.name === 'MAX_TEXT_LENGTH'
+          ? { ...rule, value: '11' }
+          : rule
+      ));
 
-      if (maxTextLengthRule) {
-        maxTextLengthRule.value = '11';
-      } else {
+      if (!validateRules.some(({ name }) => name === 'MAX_TEXT_LENGTH')) {
         validateRules.push({ name: 'MAX_TEXT_LENGTH', value: '11' });
       }
+
       if (!validateRules.some(({ name }) => name === 'TELEPHONE')) {
         validateRules.push({ name: 'TELEPHONE', value: '3' });
       }
 
-      telephoneItem.validate_rules = validateRules;
-      map.telephone = { items: [telephoneItem] };
+      return {
+        ...map,
+        telephone: {
+          items: [
+            {
+              ...telephoneItem,
+              validate_rules: validateRules,
+            },
+          ],
+        },
+      };
     },
 
     getValidationRules(field) {
