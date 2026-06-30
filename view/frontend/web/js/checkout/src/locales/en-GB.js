@@ -150,8 +150,8 @@ export default {
           label: 'Address (line {line})',
         },
         cityField: {
-          label: 'City',
-          placeholder: 'City',
+          label: 'Town',
+          placeholder: 'Town',
         },
         countryField: {
           label: 'Country',
@@ -198,7 +198,7 @@ export default {
     streetErrorMessage: 'Please enter a valid address',
     streetCharacterLimit:
       'Please use a maximum of 75 characters for your street address',
-    cityErrorMessage: 'Please enter a valid city',
+    cityErrorMessage: 'Please enter a valid town',
     regionErrorMessage: 'Please enter a valid state/province',
     googlePayShippingError:
       'The shipping method is missing. Please select the shipping method and try again.',
