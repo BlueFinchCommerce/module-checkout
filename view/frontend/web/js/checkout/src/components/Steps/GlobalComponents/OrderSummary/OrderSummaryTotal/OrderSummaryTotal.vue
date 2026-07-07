@@ -80,7 +80,7 @@
       </div>
       <div v-if="cart?.prices?.applied_taxes?.length">
         <div
-          class="total__row"
+          class="total__row tax-row"
           v-for="(tax, idx) in cart.prices.applied_taxes"
           :key="idx"
         >
