@@ -1,13 +1,8 @@
 <template>
   <div
-    v-if="isRecaptchaVisible(id)"
+    ref="recaptchaContainer"
     :id="location"
-    class="recaptcha-container"
-  />
-  <div
-    v-else
-    :id="location"
-    class="recaptcha-container-invisible"
+    :class="recaptchaContainerClass"
   />
   <ErrorMessage
     v-if="getRecaptchaError(id)"
@@ -17,6 +12,7 @@
   />
 </template>
 <script>
+import { nextTick } from 'vue';
 import { mapState, mapActions } from 'pinia';
 import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 import usePaymentStore from '@/stores/PaymentStores/PaymentStore';
@@ -45,6 +41,11 @@ export default {
       default: '',
     },
   },
+  data() {
+    return {
+      recaptchaWidgetId: null,
+    };
+  },
   computed: {
     ...mapState(usePaymentStore, ['paymentEmitter']),
     ...mapState(useRecaptchaStore, [
@@ -54,6 +55,11 @@ export default {
       'v2InvisibleKey',
       'v3Invisible',
     ]),
+    recaptchaContainerClass() {
+      return this.isRecaptchaVisible(this.id)
+        ? 'recaptcha-container'
+        : 'recaptcha-container-invisible';
+    },
   },
   async mounted() {
     await this.getInitialConfig();
@@ -68,16 +74,36 @@ export default {
     await this.addRecaptchaJs(recapchaType);
 
     if (recapchaType === recapchaTypes.recaptchaV2) {
-      this.renderV2();
+      await this.renderV2();
     }
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
     ...mapActions(useRecaptchaStore, ['addRecaptchaJs', 'getTypeByPlacement', 'setToken', 'resetToken']),
 
-    renderV2() {
+    getRecaptchaContainer() {
+      const { recaptchaContainer } = this.$refs;
+
+      return recaptchaContainer instanceof HTMLElement
+        ? recaptchaContainer
+        : null;
+    },
+
+    async renderV2() {
+      if (this.recaptchaWidgetId !== null) {
+        return;
+      }
+
       this.resetToken(this.id);
-      window.grecaptcha.render(this.location, {
+      await nextTick();
+
+      const recaptchaContainer = this.getRecaptchaContainer();
+
+      if (!recaptchaContainer || !document.body.contains(recaptchaContainer)) {
+        return;
+      }
+
+      this.recaptchaWidgetId = window.grecaptcha.render(recaptchaContainer, {
         sitekey: this.v2CheckboxKey,
         callback: (token) => {
           this.setToken(this.id, token);
