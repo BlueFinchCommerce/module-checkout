@@ -18,6 +18,19 @@ import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
 import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
+async function getOptionalBlock(blockId) {
+  try {
+    return await getBlock(blockId);
+  } catch (error) {
+    if (error?.response?.status === 404) {
+      console.warn(`CMS block "${blockId}" could not be loaded.`, error.message);
+      return {};
+    }
+
+    throw error;
+  }
+}
+
 export default defineStore('configStore', {
   state: () => ({
     staticUrl: getFallBackStaticPath(),
@@ -309,7 +322,7 @@ export default defineStore('configStore', {
 
       if (privacyPolicyId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getPrivacyPolicyBlock',
           privacyPolicyId,
         );
@@ -323,7 +336,7 @@ export default defineStore('configStore', {
 
       if (generalTermsServicesId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getGeneralTermsServicesBlock',
           generalTermsServicesId,
         );
@@ -337,7 +350,7 @@ export default defineStore('configStore', {
 
       if (withdrawTermsServicesId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getWithdrawTermsServicesBlock',
           withdrawTermsServicesId,
         );
