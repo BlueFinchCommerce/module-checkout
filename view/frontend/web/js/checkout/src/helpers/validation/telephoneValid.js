@@ -3,7 +3,14 @@ export default (value, minLength = 3) => {
     return true;
   }
 
-  const phoneNumber = String(value).trim().replace(' ', '');
+  const phoneNumber = String(value).trim();
+  const allowedCharacters = /^[+]?[\d() -]+$/;
 
-  return !phoneNumber || phoneNumber.length >= Number(minLength || 3);
+  if (!allowedCharacters.test(phoneNumber)) {
+    return false;
+  }
+
+  const digits = phoneNumber.replace(/\D/g, '');
+
+  return digits.length >= Number(minLength || 3) && digits.length <= 15;
 };

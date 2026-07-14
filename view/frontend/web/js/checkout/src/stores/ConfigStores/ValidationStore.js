@@ -112,15 +112,7 @@ export default defineStore('ValidationStore', {
         validate_rules: [],
       };
       const existingValidateRules = telephoneItem.validate_rules || [];
-      const validateRules = existingValidateRules.map((rule) => (
-        rule.name === 'MAX_TEXT_LENGTH'
-          ? { ...rule, value: '11' }
-          : rule
-      ));
-
-      if (!validateRules.some(({ name }) => name === 'MAX_TEXT_LENGTH')) {
-        validateRules.push({ name: 'MAX_TEXT_LENGTH', value: '11' });
-      }
+      const validateRules = [...existingValidateRules];
 
       if (!validateRules.some(({ name }) => name === 'TELEPHONE')) {
         validateRules.push({ name: 'TELEPHONE', value: '3' });
