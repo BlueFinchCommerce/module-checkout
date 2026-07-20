@@ -84,7 +84,8 @@ export default defineStore('configStore', {
   }),
   getters: {
     postcodeRequired: (state) => (
-      (countryId) => !state.optionalZipCountries.includes(countryId)
+      (countryId) => !getMagentoSolutionType()
+        || !state.optionalZipCountries.includes(countryId)
     ),
     getCountryByCode: (state) => (
       (countryCode) => state.countries.find(({ id }) => id === countryCode)
