@@ -43,8 +43,8 @@ export default {
     },
     crossSellsTitle: 'You may also like these items...',
     freeShippingAvailable: 'Your order qualifies for FREE Delivery!',
-    couponCodeTitle: 'Spend another',
-    couponCodeTitleBottom: 'and get',
+    couponCodeTitle: 'Spend',
+    couponCodeTitleBottom: 'for',
     couponCodeTitleFreeShipping: 'Free Delivery!',
     couponCode: {
       placeholder: 'Enter promotional code',

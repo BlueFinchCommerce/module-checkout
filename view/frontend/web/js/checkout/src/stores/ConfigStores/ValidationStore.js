@@ -100,13 +100,13 @@ export default defineStore('ValidationStore', {
       }
 
       const validationMap = !getMagentoSolutionType()
-        ? this.addOpenSourceTelephoneValidation(map)
+        ? this.addOpenSourceValidation(map)
         : map;
 
       this.setData({ validationItems: validationMap });
     },
 
-    addOpenSourceTelephoneValidation(map) {
+    addOpenSourceValidation(map) {
       const telephoneItem = map.telephone?.items?.[0] || {
         attribute_code: 'telephone',
         validate_rules: [],
@@ -118,8 +118,16 @@ export default defineStore('ValidationStore', {
         validateRules.push({ name: 'TELEPHONE', value: '3' });
       }
 
+      const postcodeItem = map.postcode?.items?.[0] || {
+        attribute_code: 'postcode',
+        validate_rules: [],
+      };
+
       return {
         ...map,
+        postcode: {
+          items: [postcodeItem],
+        },
         telephone: {
           items: [
             {
