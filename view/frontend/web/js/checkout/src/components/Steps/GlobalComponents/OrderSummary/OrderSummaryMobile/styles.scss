@@ -96,6 +96,11 @@
   order: var(--order-summary-order, 4);
 }
 
+.below-order-summary-extension {
+  min-width: 0;
+  order: var(--below-order-summary-order, 10);
+}
+
 //Styles for empty StoryBook data
 
 .storyBookEmptyPrice {

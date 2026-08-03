@@ -27,6 +27,14 @@
         <OrderSummaryItem :data-cy="deviceType" />
       </div>
       <OrderSummaryTotal :data-cy="deviceType" />
+      <template v-if="hasOpenedSummary && isMobileViewport">
+        <component
+          :is="belowOrderSummaryComponent"
+          v-for="belowOrderSummaryComponent in belowOrderSummaryComponents"
+          :key="belowOrderSummaryComponent"
+          class="below-order-summary-extension"
+        />
+      </template>
     </template>
   </SlideUp>
   <div
@@ -107,6 +115,7 @@ import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
 // Helpers
 import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+import belowOrderSummaryExtensions from '@/extensions/belowOrderSummaryExtensions';
 
 export default {
   name: 'OrderSummaryMobile',
@@ -123,6 +132,7 @@ export default {
     SlideUp,
     Close,
     OrderSummaryTitleWithAmount,
+    ...belowOrderSummaryExtensions(),
   },
   props: {
     backgroundColor: {
@@ -146,6 +156,9 @@ export default {
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
       giftCardAvailable: true,
+      belowOrderSummaryComponents: [],
+      hasOpenedSummary: false,
+      isMobileViewport: false,
     };
   },
   computed: {
@@ -170,6 +183,10 @@ export default {
     await this.getCustomerInformation();
 
     this.giftCardAvailable = getMagentoSolutionType();
+    this.belowOrderSummaryComponents = Object.keys(belowOrderSummaryExtensions());
+    if (this.belowOrderSummaryComponents.length > 0) {
+      this.isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+    }
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),
@@ -178,6 +195,7 @@ export default {
     toggleSummary() {
       this.isModalVisible = !this.isModalVisible;
       if (this.isModalVisible) {
+        this.hasOpenedSummary = true;
         document.body.classList.add('no-scrollable');
       } else {
         document.body.classList.remove('no-scrollable');
