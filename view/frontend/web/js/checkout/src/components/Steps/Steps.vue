@@ -4,11 +4,13 @@
       <div class="container">
         <div class="is-hidden-mobile summary">
           <OrderSummaryDesktop />
-          <component
-            :is="belowOrderSummaryComponent"
-            v-for="belowOrderSummaryComponent in belowOrderSummaryComponents"
-            :key="belowOrderSummaryComponent"
-          />
+          <template v-if="isDesktopViewport">
+            <component
+              :is="belowOrderSummaryComponent"
+              v-for="belowOrderSummaryComponent in belowOrderSummaryComponents"
+              :key="belowOrderSummaryComponent"
+            />
+          </template>
         </div>
         <div class="content">
           <router-view v-slot="{ Component }">
@@ -37,10 +39,14 @@ export default {
   data() {
     return {
       belowOrderSummaryComponents: [],
+      isDesktopViewport: false,
     };
   },
   async created() {
     this.belowOrderSummaryComponents = Object.keys(belowOrderSummaryExtensions());
+    if (this.belowOrderSummaryComponents.length > 0) {
+      this.isDesktopViewport = window.matchMedia('(min-width: 769px)').matches;
+    }
     await functionExtension('onStepsCreated');
   },
 };
