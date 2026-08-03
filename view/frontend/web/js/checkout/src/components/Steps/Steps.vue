@@ -4,6 +4,11 @@
       <div class="container">
         <div class="is-hidden-mobile summary">
           <OrderSummaryDesktop />
+          <component
+            :is="belowOrderSummaryComponent"
+            v-for="belowOrderSummaryComponent in belowOrderSummaryComponents"
+            :key="belowOrderSummaryComponent"
+          />
         </div>
         <div class="content">
           <router-view v-slot="{ Component }">
@@ -21,13 +26,21 @@
 import OrderSummaryDesktop from
   '@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryDesktop/OrderSummaryDesktop.vue';
 import functionExtension from '@/extensions/functionExtension';
+import belowOrderSummaryExtensions from '@/extensions/belowOrderSummaryExtensions';
 
 export default {
   name: 'AppSteps',
   components: {
     OrderSummaryDesktop,
+    ...belowOrderSummaryExtensions(),
+  },
+  data() {
+    return {
+      belowOrderSummaryComponents: [],
+    };
   },
   async created() {
+    this.belowOrderSummaryComponents = Object.keys(belowOrderSummaryExtensions());
     await functionExtension('onStepsCreated');
   },
 };

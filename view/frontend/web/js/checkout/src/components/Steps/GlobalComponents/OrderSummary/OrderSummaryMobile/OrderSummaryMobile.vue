@@ -27,6 +27,12 @@
         <OrderSummaryItem :data-cy="deviceType" />
       </div>
       <OrderSummaryTotal :data-cy="deviceType" />
+      <component
+        :is="belowOrderSummaryComponent"
+        v-for="belowOrderSummaryComponent in belowOrderSummaryComponents"
+        :key="belowOrderSummaryComponent"
+        class="below-order-summary-extension"
+      />
     </template>
   </SlideUp>
   <div
@@ -107,6 +113,7 @@ import ArrowDown from '@/components/Core/Icons/ArrowDown/ArrowDown.vue';
 
 // Helpers
 import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
+import belowOrderSummaryExtensions from '@/extensions/belowOrderSummaryExtensions';
 
 export default {
   name: 'OrderSummaryMobile',
@@ -123,6 +130,7 @@ export default {
     SlideUp,
     Close,
     OrderSummaryTitleWithAmount,
+    ...belowOrderSummaryExtensions(),
   },
   props: {
     backgroundColor: {
@@ -146,6 +154,7 @@ export default {
       orderSummaryDescriptionText: '',
       orderSummaryDescriptionTextId: 'bluefinch-checkout-ordersummarydescription-text',
       giftCardAvailable: true,
+      belowOrderSummaryComponents: [],
     };
   },
   computed: {
@@ -170,6 +179,7 @@ export default {
     await this.getCustomerInformation();
 
     this.giftCardAvailable = getMagentoSolutionType();
+    this.belowOrderSummaryComponents = Object.keys(belowOrderSummaryExtensions());
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

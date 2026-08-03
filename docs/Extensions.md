@@ -35,6 +35,7 @@ We use [Vue dynamic components](https://vuejs.org/guide/essentials/component-bas
 | Extension Point                 | Usage                                              |
 | ------------------------------- | -------------------------------------------------- |
 | orderSummaryMessagesContainer   | Insert a component after order summary total       |
+| belowOrderSummary               | Insert a component after the complete order summary|
 | footerPaymentIcons              | Insert a component before the footer payment icons |
 ||
 
@@ -231,6 +232,5 @@ You also have two other options for changing styles:
 ## Remove checkout styles from your theme
 
 We recommend that you remove any unused Magento Checkout styles within your custom theme, that are not BlueFinch Checkout related, so they are not generated in the CSS for the rest of your site.
-
 
 
