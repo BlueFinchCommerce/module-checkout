@@ -49,6 +49,11 @@ export default async () => {
     `;
   }
 
+  const [additionalItemFields = ''] = await functionExtension(
+    'getCartItemAdditionalFields',
+    [''],
+  );
+
   // Build the full cart items query string
   const items = `
     items {
@@ -94,6 +99,7 @@ export default async () => {
         }
       }
       quantity
+      ${additionalItemFields}
       errors {
         code
         message
