@@ -18,6 +18,21 @@
             :text="item?.product?.name"
             :data-cy="dataCy ? `product-name-${dataCy}` : 'product-name'"
           />
+          <div
+            v-if="item?.order_summary_messages?.length"
+            class="order-summary-item-messages"
+          >
+            <p
+              v-for="(message, messageIndex) in item.order_summary_messages"
+              :key="message.id || messageIndex"
+              class="order-summary-item-message"
+              :class="[
+                message.className,
+                `order-summary-item-message--${message.type || 'info'}`,
+              ]"
+              v-text="message.text"
+            />
+          </div>
           <ProductOptions
             v-if="item?.configurable_options || item?.customizable_options"
             :item="item"
