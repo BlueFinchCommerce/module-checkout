@@ -45,7 +45,7 @@ export default {
     freeShippingAvailable: 'Your order qualifies for FREE Delivery!',
     couponCodeTitle: 'Spend',
     couponCodeTitleBottom: 'for',
-    couponCodeTitleFreeShipping: 'Free Delivery!',
+    couponCodeTitleFreeShipping: 'FREE Delivery!',
     couponCode: {
       placeholder: 'Enter promotional code',
     },
