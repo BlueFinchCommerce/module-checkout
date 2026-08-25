@@ -44,6 +44,9 @@ export default defineStore('cartStore', {
       items: getCartItems(),
       prices: getCartPrices(),
       is_virtual: getIsVirtual(),
+      shipping_addresses: [],
+      available_payment_methods: [],
+      applied_coupons: [],
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -185,12 +188,12 @@ export default defineStore('cartStore', {
         customerStore.setAddressToStore(cart.billing_address, 'billing');
       }
 
-      if (cart.shipping_addresses.length) {
+      if (cart.shipping_addresses?.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
         shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
-      if (cart.available_payment_methods) {
+      if (cart.available_payment_methods?.length) {
         paymentStore.setPaymentMethods(cart.available_payment_methods);
       }
     },
