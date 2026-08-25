@@ -55,11 +55,13 @@ export default defineStore('paymentStore', {
     },
 
     setPaymentMethods(paymentMethods) {
+      const availableMethods = Array.isArray(paymentMethods) ? paymentMethods : [];
+
       this.setData({
-        availableMethods: paymentMethods,
+        availableMethods,
       });
 
-      this.selectPaymentMethod(paymentMethods[0].code);
+      this.selectPaymentMethod(availableMethods[0]?.code ?? null);
     },
 
     selectPaymentMethod(selectedMethod) {
