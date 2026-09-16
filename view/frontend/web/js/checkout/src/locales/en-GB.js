@@ -21,6 +21,8 @@ export default {
     subtotalTitle: 'Subtotal',
     subtotalTitleExcl: 'Subtotal (excl. tax)',
     subtotalTitleIncl: 'Subtotal (incl. tax)',
+    priceTitleExcl: 'Excl. Tax',
+    priceTitleIncl: 'Incl. Tax',
     shippingStepTitleExcl: 'Shipping (excl. tax)',
     shippingStepTitleIncl: 'Shipping (incl. tax)',
     removeItemButton: 'remove item',
