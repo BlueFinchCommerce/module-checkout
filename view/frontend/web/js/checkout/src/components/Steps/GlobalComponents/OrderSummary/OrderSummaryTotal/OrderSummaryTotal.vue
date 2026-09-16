@@ -13,70 +13,21 @@
   </div>
   <div class="order-total-container">
     <div class="order-total-wrapper">
-      <div class="total__row" v-if="!taxCartDisplaySubtotal">
-        <TextField
-          class="total__text title"
-          :text="$t('orderSummary.subtotalTitle')"
+      <div class="total__row">
+        <p
+          class="total__text title order-summary-total-label"
           :data-cy="dataCy ? `subtotal-title-${dataCy}` : 'subtotal-title'"
-        />
+        >
+          {{ $t('orderSummary.subtotalTitle') }}<span class="order-summary-tax-label">
+            {{ ` (${subtotalTaxLabel})` }}
+          </span>
+        </p>
         <Price
-          v-if="cart?.prices?.subtotal_including_tax"
+          v-if="subtotalValue !== undefined"
           class="total__text"
-          :value="cart.prices.subtotal_including_tax.value"
+          :value="subtotalValue"
           :data-cy="dataCy ? `subtotal-price-${dataCy}` : 'subtotal-price'"
         />
-      </div>
-      <div v-if="taxCartDisplaySubtotal">
-        <div
-          class="total__row"
-          v-if="Number(taxCartDisplaySubtotal) === 1 || Number(taxCartDisplaySubtotal) === 2"
-        >
-          <TextField
-            class="total__text title"
-            :text="$t('orderSummary.subtotalTitle')"
-            :data-cy="dataCy ? `subtotal-title-${dataCy}` : 'subtotal-title'"
-          />
-          <Price
-            v-if="Number(taxCartDisplaySubtotal) === 1"
-            class="total__text"
-            :value="cart.prices.subtotal_excluding_tax.value"
-            :data-cy="dataCy ? `subtotal-ex-tax-${dataCy}` : 'subtotal-ex-tax'"
-          />
-          <Price
-            v-else
-            class="total__text"
-            :value="cart.prices.subtotal_including_tax.value"
-            :data-cy="dataCy ? `subtotal-inc-tax-${dataCy}` : 'subtotal-inc-tax'"
-          />
-        </div>
-        <div v-else-if="Number(taxCartDisplaySubtotal) === 3" class="total__both">
-          <!-- Excl line -->
-          <div class="total__row">
-            <TextField
-              class="total__text title"
-              :text="$t('orderSummary.subtotalTitleExcl')"
-              :data-cy="dataCy ? `subtotal-excl-title-${dataCy}` : 'subtotal-excl-title'"
-            />
-            <Price
-              class="total__text"
-              :value="cart.prices.subtotal_excluding_tax.value"
-              :data-cy="dataCy ? `subtotal-excl-price-${dataCy}` : 'subtotal-excl-price'"
-            />
-          </div>
-          <!-- Incl line -->
-          <div class="total__row">
-            <TextField
-              class="total__text title"
-              :text="$t('orderSummary.subtotalTitleIncl')"
-              :data-cy="dataCy ? `subtotal-incl-title-${dataCy}` : 'subtotal-incl-title'"
-            />
-            <Price
-              class="total__text"
-              :value="cart.prices.subtotal_including_tax.value"
-              :data-cy="dataCy ? `subtotal-incl-price-${dataCy}` : 'subtotal-incl-price'"
-            />
-          </div>
-        </div>
       </div>
       <div v-if="cart?.prices?.applied_taxes?.length">
         <div
@@ -223,11 +174,16 @@
       />
     </div>
     <div class="order-total-grand">
-      <TextField
-        class="title"
-        :text="grandTotalText"
+      <p
+        class="title order-summary-total-label"
         :data-cy="dataCy ? `grand-total-title-${dataCy}` : 'grand-total-title'"
-        />
+      >
+        {{ grandTotalText }}<span
+          class="order-summary-tax-label order-summary-tax-label--grand-total"
+        >
+          {{ ` (${grandTotalTaxLabel})` }}
+        </span>
+      </p>
       <Price
         :value="cartGrandTotal / 100"
         :data-cy="dataCy ? `grand-total-price-${dataCy}` : 'grand-total-price'"
@@ -280,8 +236,37 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cart', 'cartGrandTotal', 'getCartItemsQty', 'getGiftWrappingTotal']),
-    ...mapState(useConfigStore, ['locale', 'taxCartDisplaySubtotal', 'taxCartDisplayShipping']),
+    ...mapState(useConfigStore, [
+      'locale',
+      'taxCartDisplayPrice',
+      'taxCartDisplaySubtotal',
+      'taxCartDisplayShipping',
+    ]),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
+    displayTotalsExcludingTax() {
+      const subtotalDisplayMode = Number(this.taxCartDisplaySubtotal);
+
+      if (subtotalDisplayMode === 1 || subtotalDisplayMode === 2) {
+        return subtotalDisplayMode === 1;
+      }
+
+      return Number(this.taxCartDisplayPrice) === 1;
+    },
+    subtotalValue() {
+      const subtotal = this.displayTotalsExcludingTax
+        ? this.cart?.prices?.subtotal_excluding_tax
+        : this.cart?.prices?.subtotal_including_tax;
+
+      return subtotal?.value;
+    },
+    subtotalTaxLabel() {
+      return this.displayTotalsExcludingTax
+        ? this.$t('orderSummary.priceTitleExcl')
+        : this.$t('orderSummary.priceTitleIncl');
+    },
+    grandTotalTaxLabel() {
+      return this.$t('orderSummary.priceTitleIncl');
+    },
   },
   async created() {
     if (!this.locale) {
@@ -299,4 +284,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "./styles.scss";
+
+.order-summary-total-label {
+  white-space: nowrap;
+}
+
+.order-summary-tax-label {
+  display: var(--tax-label-display, none);
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.order-summary-tax-label--grand-total {
+  display: var(--grand-total-tax-label-display, none);
+}
 </style>

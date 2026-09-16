@@ -39,11 +39,23 @@
             :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
           />
           <div class="product-item-price">
-            <Price v-if="item.__typename !== 'GiftCardCartItem'"
-              :value="item.prices?.row_total_including_tax?.value"
-              :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
-            />
-            <Price v-else
+            <template v-if="item.__typename !== 'GiftCardCartItem'">
+              <div
+                v-for="price in itemPrices(item)"
+                :key="price.taxMode"
+                class="product-item-price-row"
+              >
+                <Price
+                  :value="price.value"
+                  :data-cy="dataCy
+                    ? `product-price-${price.taxMode}-${dataCy}`
+                    : `product-price-${price.taxMode}`"
+                />
+                <span class="product-item-price-tax-label">{{ price.label }}</span>
+              </div>
+            </template>
+            <Price
+              v-else
               :value="item.amount.value"
               :data-cy="dataCy ? `product-price-${dataCy}` : 'product-price'"
             />
@@ -105,6 +117,7 @@
 // store
 import { mapState } from 'pinia';
 import useCartStore from '@/stores/CartStore';
+import useConfigStore from '@/stores/ConfigStores/ConfigStore';
 
 // components
 import TextField from '@/components/Core/ContentComponents/TextField/TextField.vue';
@@ -137,9 +150,56 @@ export default {
   },
   computed: {
     ...mapState(useCartStore, ['cartItems']),
+    ...mapState(useConfigStore, ['taxCartDisplayPrice']),
+  },
+  methods: {
+    itemPrices(item) {
+      const excludingTax = item.prices?.row_total?.value;
+      const includingTax = item.prices?.row_total_including_tax?.value;
+      const displayMode = Number(this.taxCartDisplayPrice);
+      const prices = [];
+
+      if ((displayMode === 1 || displayMode === 3) && excludingTax !== undefined) {
+        prices.push({
+          label: this.$t('orderSummary.priceTitleExcl'),
+          taxMode: 'excluding-tax',
+          value: excludingTax,
+        });
+      }
+
+      if ((displayMode === 2 || displayMode === 3) && includingTax !== undefined) {
+        prices.push({
+          label: this.$t('orderSummary.priceTitleIncl'),
+          taxMode: 'including-tax',
+          value: includingTax,
+        });
+      }
+
+      if (!prices.length) {
+        prices.push({
+          label: this.$t('orderSummary.priceTitleIncl'),
+          taxMode: 'including-tax',
+          value: includingTax ?? excludingTax,
+        });
+      }
+
+      return prices;
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 @import "@/components/Steps/GlobalComponents/OrderSummary/OrderSummaryItem/styles.scss";
+
+.product-item-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--indent__xs);
+}
+
+.product-item-price-tax-label {
+  display: var(--tax-label-display, none);
+  font-size: var(--font__xs);
+  font-weight: var(--font-weight__regular);
+}
 </style>
