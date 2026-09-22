@@ -89,6 +89,24 @@
         </div>
       </div>
       <div
+        v-if="cart?.applied_store_credit?.applied_balance?.value"
+        class="order-total store-credit-total"
+      >
+        <div class="total__row">
+          <TextField
+            class="total__text title"
+            :text="$t('orderSummary.storeCreditTitle')"
+            :data-cy="dataCy ? `store-credit-title-${dataCy}` : 'store-credit-title'"
+          />
+          <Price
+            class="total__text discount"
+            :value="'-' + cart.applied_store_credit.applied_balance.value"
+            :currency="cart.applied_store_credit.applied_balance.currency"
+            :data-cy="dataCy ? `store-credit-price-${dataCy}` : 'store-credit-price'"
+          />
+        </div>
+      </div>
+      <div
         v-if="getGiftWrappingTotal"
         class="total__row"
       >
