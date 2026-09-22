@@ -75,22 +75,7 @@
             class="gift-message"
           >
             <ProductOptions
-              :item="{
-                configurable_options: [
-                  {
-                    option_label: $t('giftMessage.to'),
-                    value_label: item.recipient_name
-                  },
-                  {
-                    option_label: $t('giftMessage.from'),
-                    value_label: item.sender_name
-                  },
-                  {
-                    option_label: $t('giftMessage.message'),
-                    value_label: item.message
-                  },
-                ]
-              }"
+              :item="{ configurable_options: giftCardOptions(item) }"
               :data-cy="dataCy ? `product-options-${dataCy}` : 'product-options'"
             />
           </div>
@@ -153,6 +138,28 @@ export default {
     ...mapState(useConfigStore, ['taxCartDisplayPrice']),
   },
   methods: {
+    giftCardOptions(item) {
+      const options = [
+        {
+          option_label: this.$t('giftMessage.to'),
+          value_label: item.recipient_name,
+        },
+        {
+          option_label: this.$t('giftMessage.from'),
+          value_label: item.sender_name,
+        },
+      ];
+      const message = typeof item.message === 'string' ? item.message.trim() : '';
+
+      if (message) {
+        options.push({
+          option_label: this.$t('giftMessage.message'),
+          value_label: message,
+        });
+      }
+
+      return options;
+    },
     itemPrices(item) {
       const excludingTax = item.prices?.row_total?.value;
       const includingTax = item.prices?.row_total_including_tax?.value;
