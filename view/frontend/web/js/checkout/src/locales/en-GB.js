@@ -29,6 +29,8 @@ export default {
     removeItemButtonLabel: 'remove item',
     minusOneItem: 'minus one item',
     plusOneItem: 'plus one item',
+    decreaseQuantity: 'decrease quantity',
+    increaseQuantity: 'increase quantity',
     couponDiscountTitle: 'Add promo code',
     couponDiscount: {
       title: 'Coupon',
