@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlueFinch\Checkout\Test\Unit\Model\CartItem;
 
 use BlueFinch\Checkout\Model\CartItem\QuantityConstraints;
-use Magento\Catalog\Api\Data\ProductExtensionInterface;
 use Magento\Catalog\Model\Product;
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface;
@@ -81,8 +80,16 @@ class QuantityConstraintsTest extends TestCase
         StockItemInterface $parentStockItem,
         StockItemInterface $selectedStockItem
     ): QuoteItem&MockObject {
-        $parentProduct = $this->createProduct(20, Configurable::TYPE_CODE, $parentStockItem);
-        $selectedProduct = $this->createProduct(21, 'simple', $selectedStockItem);
+        $stockItems = [
+            20 => $parentStockItem,
+            21 => $selectedStockItem,
+        ];
+        $this->stockRegistry->method('getStockItem')->willReturnCallback(
+            static fn (int $productId): StockItemInterface => $stockItems[$productId]
+        );
+
+        $parentProduct = $this->createProduct(20, Configurable::TYPE_CODE);
+        $selectedProduct = $this->createProduct(21, 'simple');
         $option = $this->createMock(Option::class);
         $option->method('getProduct')->willReturn($selectedProduct);
 
@@ -95,16 +102,11 @@ class QuantityConstraintsTest extends TestCase
 
     private function createProduct(
         int $productId,
-        string $productType,
-        StockItemInterface $stockItem
+        string $productType
     ): Product&MockObject {
-        $extensionAttributes = $this->createMock(ProductExtensionInterface::class);
-        $extensionAttributes->method('getStockItem')->willReturn($stockItem);
-
         $product = $this->createMock(Product::class);
         $product->method('getId')->willReturn($productId);
         $product->method('getTypeId')->willReturn($productType);
-        $product->method('getExtensionAttributes')->willReturn($extensionAttributes);
 
         return $product;
     }
