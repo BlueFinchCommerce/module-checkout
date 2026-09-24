@@ -5,9 +5,10 @@
   >
     <MyButton
       :primary="false"
-      :aria-label="$t('orderSummary.minusOneItem')"
+      :aria-label="$t('orderSummary.decreaseQuantity')"
       label=" - "
-      @click="item.quantity === 1 ? false : updateQuantity(item, -1)"
+      :disabled="!canDecrease"
+      @click="changeQuantity(-quantityIncrement)"
       :data-cy="dataCy ? `${dataCy}-decrease` : 'qty-component-decrease'"
     />
     <span>
@@ -22,9 +23,10 @@
     </span>
     <MyButton
       :primary="false"
-      :aria-label="$t('orderSummary.plusOneItem')"
+      :aria-label="$t('orderSummary.increaseQuantity')"
       label=" + "
-      @click="updateQuantity(item, 1)"
+      :disabled="!canIncrease"
+      @click="changeQuantity(quantityIncrement)"
       :data-cy="dataCy ? `${dataCy}-increase` : 'qty-component-increase'"
     />
   </div>
@@ -52,8 +54,35 @@ export default {
       type: String,
     },
   },
+  computed: {
+    minimumQuantity() {
+      return Number(this.item?.quantity_constraints?.minimum) || 1;
+    },
+    maximumQuantity() {
+      const maximum = this.item?.quantity_constraints?.maximum;
+
+      return maximum === null || maximum === undefined ? null : Number(maximum);
+    },
+    quantityIncrement() {
+      return Number(this.item?.quantity_constraints?.increment) || 1;
+    },
+    canDecrease() {
+      return Number(this.item?.quantity) - this.quantityIncrement >= this.minimumQuantity;
+    },
+    canIncrease() {
+      return this.maximumQuantity === null
+        || Number(this.item?.quantity) + this.quantityIncrement <= this.maximumQuantity;
+    },
+  },
   methods: {
     ...mapActions(useCartStore, ['updateQuantity']),
+    changeQuantity(change) {
+      if ((change < 0 && !this.canDecrease) || (change > 0 && !this.canIncrease)) {
+        return;
+      }
+
+      this.updateQuantity(this.item, change);
+    },
   },
 };
 </script>

@@ -137,6 +137,16 @@ type StoreCode @doc(description: "Returns current store code") {
     store_code: String
 }
 
+interface CartItemInterface {
+    quantity_constraints: CartItemQuantityConstraints! @resolver(class: "BlueFinch\\Checkout\\Model\\Resolver\\CartItem\\QuantityConstraints") @doc(description: "The minimum, maximum, and increment allowed when changing the cart item quantity.")
+}
+
+type CartItemQuantityConstraints @doc(description: "The quantity constraints configured for a cart item.") {
+    minimum: Float! @doc(description: "The minimum quantity that can be purchased.")
+    maximum: Float @doc(description: "The maximum quantity that can be purchased, or null when no maximum is configured.")
+    increment: Float! @doc(description: "The increment in which the quantity can be changed.")
+}
+
 type Attribute {
     multiline_count: Int! @doc(description: "The number of lines of the attribute value.") @resolver(class: "BlueFinch\\Checkout\\Model\\Resolver\\MultilineCount")
     validate_rules: [ValidationRule] @doc(description: "The validation rules of the attribute value.") @resolver(class: "BlueFinch\\Checkout\\Model\\Resolver\\ValidateRules")

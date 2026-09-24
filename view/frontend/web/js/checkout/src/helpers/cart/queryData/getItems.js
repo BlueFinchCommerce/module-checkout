@@ -99,6 +99,11 @@ export default async () => {
         }
       }
       quantity
+      quantity_constraints {
+        minimum
+        maximum
+        increment
+      }
       ${additionalItemFields}
       errors {
         code
