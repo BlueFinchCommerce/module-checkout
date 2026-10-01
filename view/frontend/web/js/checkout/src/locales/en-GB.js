@@ -138,7 +138,7 @@ export default {
       },
       addressForm: {
         saveAddressButton: 'Use this address',
-        linkText: 'Enter address manually',
+        linkText: 'Enter your address manually',
         useMyLocation: 'Use My Location',
         collectLocations: 'Where would you like to collect it?',
         closestLocations: 'Nearest Collection Locations',
@@ -154,8 +154,8 @@ export default {
           label: 'Address (line {line})',
         },
         cityField: {
-          label: 'Town',
-          placeholder: 'Town',
+          label: 'City',
+          placeholder: 'City',
         },
         countryField: {
           label: 'Country',
