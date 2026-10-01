@@ -94,7 +94,7 @@
           :options="getRegionOptions(address_type)"
           :error="showFieldError(address_type, 'region')"
           :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-            'regionField.label')"
+            'stateField.label')"
           :required="getRegionRequired(address_type)"
           :data-cy="`${address_type}-state-select`"
           @change="setRegion($event)"
@@ -105,14 +105,20 @@
             v-model="selectedAddressType.postcode"
             :error="showFieldError(address_type, 'postcode')"
             :error-message="showFieldError(address_type, 'postcode')
-              ? `${$t('errorMessages.postCodeErrorMessage')} ${selectedAddressType.country_code}` : ''"
+              ? `${displayState && getRegionOptions(address_type).length
+                ? $t('errorMessages.zipCodeErrorMessage')
+                : $t('errorMessages.postCodeErrorMessage')
+              } ${selectedAddressType.country_code}`
+              : ''"
             :class="{'field-valid': selectedAddressType.postcode && isFieldValid(address_type, 'postcode'),
                      'field-error': !isFieldValid(address_type, 'postcode')}"
             type="text"
-            :placeholder="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'postCodeField.placeholder')"
-            :label="$t('yourDetailsSection.deliverySection.addressForm.' +
-              'postCodeField.label')"
+            :placeholder="displayState && getRegionOptions(address_type).length
+              ? $t('yourDetailsSection.deliverySection.addressForm.' + 'zipCodeField.placeholder')
+              : $t('yourDetailsSection.deliverySection.addressForm.' + 'postCodeField.placeholder')"
+            :label="displayState && getRegionOptions(address_type).length
+              ? $t('yourDetailsSection.deliverySection.addressForm.' + 'zipCodeField.placeholder')
+              : $t('yourDetailsSection.deliverySection.addressForm.' + 'postCodeField.placeholder')"
             autocomplete="postal-code"
             :data-cy="`${address_type}-postcode-input`"
             :required="postcodeRequired(selectedAddressType.country_code)"

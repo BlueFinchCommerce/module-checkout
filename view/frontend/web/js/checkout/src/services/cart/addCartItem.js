@@ -11,20 +11,11 @@ import getEmailField from '@/helpers/cart/queryData/getEmailField';
 export default async (product) => {
   const { maskedId } = useCartStore();
   const request = `
-    mutation {
-      addSimpleProductsToCart(input: {
-        cart_id: "${maskedId}"
-        cart_items: [
-          {
-            data: {
-              sku: "${product.sku}"
-              quantity: "1"
-              selected_options: []
-              entered_options: []
-            }
-          }
-        ]
-      }) {
+    mutation BlueFinchCheckoutCartAdd($cartId: String!, $cartItems: [CartItemInput!]!) {
+      addProductsToCart(
+        cartId: $cartId
+        cartItems: $cartItems
+      ) {
         cart {
           ${await getEmailField()}
 
@@ -38,14 +29,35 @@ export default async (product) => {
 
           ${await getShippingAddresses()}
         }
+        user_errors {
+          code
+          message
+        }
       }
     }`;
-  return graphQlRequest(request, {}, {}, 'BlueFinchCheckoutCartAdd')
+  const cartItem = {
+    sku: product.sku,
+    quantity: product.quantity || 1,
+    selected_options: [],
+    entered_options: [],
+  };
+  if (product.parent_sku) {
+    cartItem.parent_sku = product.parent_sku;
+  }
+
+  return graphQlRequest(request, {
+    cartId: maskedId,
+    cartItems: [cartItem],
+  }, {}, 'BlueFinchCheckoutCartAdd')
     .then((response) => {
       if (response.errors) {
         throw new Error(response.errors[0].message);
       }
+      const userErrors = response.data.addProductsToCart.user_errors;
+      if (userErrors.length) {
+        throw new Error(userErrors[0].message);
+      }
 
-      return response.data.addSimpleProductsToCart.cart;
+      return response.data.addProductsToCart.cart;
     });
 };

@@ -1,7 +1,7 @@
 export default () => {
   const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));
 
-  if (!mageCache.cart) {
+  if (!mageCache?.cart?.items) {
     return [];
   }
   return mageCache.cart.items.map((item) => ({
@@ -19,7 +19,7 @@ export default () => {
       },
       giftMessage: {},
     },
-    configurable_options: item.options.map((option) => ({
+    configurable_options: (item.options || []).map((option) => ({
       options_label: option.label,
       value_label: option.value,
     })),

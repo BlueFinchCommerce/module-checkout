@@ -33,10 +33,12 @@
         :data-cy="`${addressType}-saved-address-active`"
         />
         <TextField
-          v-else-if="addressType ==='shipping'"
+          v-else-if="addressType === 'shipping' || addressType === 'billing'"
           class="ship-here"
-          :data-cy="`${addressType}-saved-address-ship-here`"
-          :text="$t('yourDetailsSection.deliverySection.shipHere')"
+          :data-cy="`${addressType}-saved-address-${addressType === 'shipping' ? 'ship-here' : 'bill-here'}`"
+          :text="addressType === 'shipping'
+            ? $t('yourDetailsSection.deliverySection.shipHere')
+            : $t('yourDetailsSection.deliverySection.billHere')"
         />
 
         {{ item.firstname }} {{ item.lastname }}<br><br>

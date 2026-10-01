@@ -18,6 +18,19 @@ import mapCustomConfigs from '@/helpers/storeConfigs/mapCustomConfigs';
 import handleInitialConfig from '@/helpers/storeConfigs/handleInitialConfig';
 import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
+async function getOptionalBlock(blockId) {
+  try {
+    return await getBlock(blockId);
+  } catch (error) {
+    if (error?.response?.status === 404) {
+      console.warn(`CMS block "${blockId}" could not be loaded.`, error.message);
+      return {};
+    }
+
+    throw error;
+  }
+}
+
 export default defineStore('configStore', {
   state: () => ({
     staticUrl: getFallBackStaticPath(),
@@ -56,10 +69,14 @@ export default defineStore('configStore', {
     taxCartDisplaySubtotal: null,
     taxCartDisplayShipping: false,
     taxCartDisplayFullSummary: false,
+    freeShippingEnabled: false,
+    freeShippingMinimumAmount: 0,
+    freeShippingIncludeTax: false,
     copyrightText: '',
     progressBarVisible: false,
     giftCardBlockVisible: true,
     crosSellsOpened: false,
+    showFreeShippingMessage: true,
     ageCheckRequired: undefined,
     ageCheckerErrors: false,
     companyFieldStatus: false,
@@ -67,7 +84,8 @@ export default defineStore('configStore', {
   }),
   getters: {
     postcodeRequired: (state) => (
-      (countryId) => !state.optionalZipCountries.includes(countryId)
+      (countryId) => !getMagentoSolutionType()
+        || !state.optionalZipCountries.includes(countryId)
     ),
     getCountryByCode: (state) => (
       (countryCode) => state.countries.find(({ id }) => id === countryCode)
@@ -138,10 +156,14 @@ export default defineStore('configStore', {
         'tax_cart_display_subtotal',
         'tax_cart_display_shipping',
         'tax_cart_display_full_summary',
+        'magento_freeshipping_active',
+        'magento_freeshipping_free_shipping_subtotal',
+        'magento_freeshipping_tax_including',
         'bluefinch_checkout_copyright_text',
         'bluefinch_checkout_progress_bar_visible',
         'bluefinch_checkout_gift_card_field_visible',
         'bluefinch_checkout_cros_sells_opened',
+        'bluefinch_checkout_show_free_shipping_message',
         'bluefinch_checkout_loqate_api_key',
         'bluefinch_checkout_loqate_enabled',
         'bluefinch_checkout_click_collect_tabs_enabled',
@@ -208,10 +230,22 @@ export default defineStore('configStore', {
         taxCartDisplaySubtotal: storeConfig.tax_cart_display_subtotal,
         taxCartDisplayShipping: storeConfig.tax_cart_display_shipping,
         taxCartDisplayFullSummary: storeConfig.tax_cart_display_full_summary,
+        freeShippingEnabled: storeConfig.magento_freeshipping_active === true
+          || storeConfig.magento_freeshipping_active === '1'
+          || storeConfig.magento_freeshipping_active === 1,
+        freeShippingMinimumAmount: Number(storeConfig.magento_freeshipping_free_shipping_subtotal) || 0,
+        freeShippingIncludeTax: storeConfig.magento_freeshipping_tax_including === true
+          || storeConfig.magento_freeshipping_tax_including === '1'
+          || storeConfig.magento_freeshipping_tax_including === 1,
         copyrightText: storeConfig.bluefinch_checkout_copyright_text,
         progressBarVisible: storeConfig.bluefinch_checkout_progress_bar_visible === true,
         giftCardBlockVisible: storeConfig.bluefinch_checkout_gift_card_field_visible === true,
         crosSellsOpened: storeConfig.bluefinch_checkout_cros_sells_opened === true,
+        showFreeShippingMessage:
+          storeConfig.bluefinch_checkout_show_free_shipping_message !== false
+          && storeConfig.bluefinch_checkout_show_free_shipping_message !== 0
+          && storeConfig.bluefinch_checkout_show_free_shipping_message !== '0'
+          && storeConfig.bluefinch_checkout_show_free_shipping_message !== 'false',
         addressFinder: {
           enabled: !!+storeConfig.bluefinch_checkout_loqate_enabled,
           loqate: {
@@ -289,7 +323,7 @@ export default defineStore('configStore', {
 
       if (privacyPolicyId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getPrivacyPolicyBlock',
           privacyPolicyId,
         );
@@ -303,7 +337,7 @@ export default defineStore('configStore', {
 
       if (generalTermsServicesId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getGeneralTermsServicesBlock',
           generalTermsServicesId,
         );
@@ -317,7 +351,7 @@ export default defineStore('configStore', {
 
       if (withdrawTermsServicesId) {
         const data = await this.getCachedResponse(
-          getBlock,
+          getOptionalBlock,
           'getWithdrawTermsServicesBlock',
           withdrawTermsServicesId,
         );

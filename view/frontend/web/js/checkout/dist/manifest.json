@@ -19,7 +19,6 @@
       "icon-paypal-white.svg",
       "icon-venmo-white.svg",
       "loader.gif",
-      "promo-icon.svg",
       "icon-applepay-colour.svg",
       "icon-googlepay-colour.svg",
       "icon-amex-colour.svg",
@@ -40,8 +39,7 @@
       "mybank.svg",
       "p24.svg",
       "sepa.svg",
-      "sofort.svg",
-      "paymentIcon.svg"
+      "sofort.svg"
     ],
     "css": [
       "main.css"
@@ -49,10 +47,6 @@
     "file": "main.min.js",
     "isEntry": true,
     "src": "main.js"
-  },
-  "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg": {
-    "file": "promo-icon.svg",
-    "src": "src/components/Steps/GlobalComponents/OrderSummary/PromotionComponent/images/promo-icon.svg"
   },
   "src/components/Steps/PaymentPage/Braintree/DropIn/BraintreeLpm/icons/bancontact.svg": {
     "file": "bancontact.svg",
@@ -97,10 +91,6 @@
   "src/icons/logo.svg": {
     "file": "logo.svg",
     "src": "src/icons/logo.svg"
-  },
-  "src/icons/paymentIcon.svg": {
-    "file": "paymentIcon.svg",
-    "src": "src/icons/paymentIcon.svg"
   },
   "src/icons/payments/colour/icon-amex-colour.svg": {
     "file": "icon-amex-colour.svg",

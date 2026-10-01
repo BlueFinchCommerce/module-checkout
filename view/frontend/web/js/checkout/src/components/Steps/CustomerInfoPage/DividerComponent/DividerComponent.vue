@@ -2,7 +2,7 @@
   <div class="divider">
     <div class="divider-line" />
     <TextField
-      v-if="isExpressPaymentsVisible"
+      v-if="isExpressPaymentsVisible || placeholderExpressMethods.length"
       :text="dividerText"
       :data-cy="'instant-checkout-divider-text'"
     />
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     ...mapState(useConfigStore, ['locale']),
-    ...mapState(usePaymentStore, ['availableMethods', 'isExpressPaymentsVisible']),
+    ...mapState(usePaymentStore, ['availableMethods', 'isExpressPaymentsVisible', 'placeholderExpressMethods']),
   },
   async mounted() {
     if (!this.locale) {

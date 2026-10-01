@@ -6,6 +6,7 @@
   >
     <div
       class="product-options-trigger"
+      :class="{ 'product-options-trigger--static': alwaysOpen }"
       @click="showProductOptions"
       @keydown="showProductOptions"
       :data-cy="dataCy ? `${dataCy}-trigger` : 'product-options-trigger'"
@@ -79,10 +80,32 @@ export default {
   data() {
     return {
       productOptionsVisible: false,
+      alwaysOpen: false,
     };
   },
+  mounted() {
+    const rootElement = document.getElementById('bluefinch-checkout-root') || document.documentElement;
+    const alwaysOpenValue = window
+      .getComputedStyle(rootElement)
+      .getPropertyValue('--order-summary-product-options-always-open')
+      .trim()
+      .toLowerCase();
+
+    this.alwaysOpen = ['1', 'true', 'yes', 'on'].includes(alwaysOpenValue);
+    if (this.alwaysOpen) {
+      this.productOptionsVisible = true;
+    }
+  },
   methods: {
-    showProductOptions() {
+    showProductOptions(event) {
+      if (this.alwaysOpen) {
+        return;
+      }
+
+      if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) {
+        return;
+      }
+
       this.productOptionsVisible = !this.productOptionsVisible;
     },
   },
@@ -90,4 +113,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../styles.scss";
+
+.product-options-trigger--static {
+  cursor: default;
+  text-decoration: none;
+}
 </style>

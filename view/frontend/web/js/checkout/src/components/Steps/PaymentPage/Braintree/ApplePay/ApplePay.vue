@@ -49,6 +49,7 @@ export default {
       applePayLoaded: true,
       shippingMethods: [],
       applePayConfig: null,
+      applePayClickLocked: false,
       key: 'braintreeApplePay',
       method: 'braintree_applepay',
     };
@@ -135,6 +136,11 @@ export default {
 
     async click(event) {
       event.preventDefault();
+
+      if (this.applePayClickLocked) {
+        return;
+      }
+
       this.setErrorMessage('');
       // Check that the agreements (if any) is valid.
       const agreementsValid = this.validateAgreements();
@@ -142,10 +148,13 @@ export default {
       if (!agreementsValid) {
         return;
       }
-      await functionExtension('onPaymentMethodSelected', 'instant checkout - applepay');
-      expressPaymentOnClickDataLayer(this.applePayConfig.code);
+
+      this.applePayClickLocked = true;
 
       try {
+        await functionExtension('onPaymentMethodSelected', 'instant checkout - applepay');
+        expressPaymentOnClickDataLayer(this.applePayConfig.code);
+
         const requiredShippingContactFields = ['name', 'email', 'phone'];
 
         if (!this.cart.is_virtual) {
@@ -172,11 +181,20 @@ export default {
 
         // Event handler for canceling the Apple Pay session
         session.oncancel = () => {
+          this.applePayClickLocked = false;
           this.createNewAddress('shipping');
         };
 
         session.begin();
+
+        // Once the native sheet is open it prevents further interaction with the checkout. The short
+        // delay only protects the period in which a second click could create a competing session.
+        setTimeout(() => {
+          this.applePayClickLocked = false;
+        }, 1000);
       } catch (err) {
+        this.applePayClickLocked = false;
+        console.error('Braintree ApplePay Unable to create ApplePaySession:', err);
         this.setApplePayError();
       }
     },

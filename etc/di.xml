@@ -29,4 +29,8 @@
     <type name="Magento\Quote\Model\Quote">
         <plugin name="checkoutCollectTotals" type="BlueFinch\Checkout\Plugin\Quote" />
     </type>
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator">
+        <plugin name="bluefinch_checkout_validate_configurable_quantity_constraints"
+                type="BlueFinch\Checkout\Plugin\CatalogInventory\Quote\ValidateQuantityConstraints"/>
+    </type>
 </config>

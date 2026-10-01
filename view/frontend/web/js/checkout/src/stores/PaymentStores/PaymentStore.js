@@ -14,6 +14,7 @@ export default defineStore('paymentStore', {
     paymentEmitter: mitt(),
     availableMethods: getCartPaymentMethods(),
     expressMethods: [],
+    placeholderExpressMethods: window.bluefinchCheckout?.placeholderExpressMethods || [],
     hasVaultedMethods: false,
     firstOpenController: 'braintree',
     selectedMethod: null,
@@ -54,11 +55,13 @@ export default defineStore('paymentStore', {
     },
 
     setPaymentMethods(paymentMethods) {
+      const availableMethods = Array.isArray(paymentMethods) ? paymentMethods : [];
+
       this.setData({
-        availableMethods: paymentMethods,
+        availableMethods,
       });
 
-      this.selectPaymentMethod(paymentMethods[0].code);
+      this.selectPaymentMethod(availableMethods[0]?.code ?? null);
     },
 
     selectPaymentMethod(selectedMethod) {
@@ -70,6 +73,8 @@ export default defineStore('paymentStore', {
     addExpressMethod(method) {
       this.setData({
         expressMethods: this.$state.expressMethods.concat([method]),
+        placeholderExpressMethods: this.$state.placeholderExpressMethods
+          .filter((placeholderMethod) => method !== placeholderMethod),
       });
     },
 

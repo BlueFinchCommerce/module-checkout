@@ -5,5 +5,9 @@ export default () => {
     return false;
   }
 
-  return !mageCache.cart.items.some(({ product_type: productType }) => productType !== 'virtual');
+  const virtualProductTypes = ['virtual', 'downloadable'];
+
+  return mageCache.cart.items.every(({ product_type: productType }) => (
+    virtualProductTypes.includes(productType)
+  ));
 };

@@ -6,6 +6,7 @@
             <general>
                 <enable>0</enable>
                 <enable_debug>0</enable_debug>
+                <show_free_shipping_message>1</show_free_shipping_message>
                 <adyen>
                     <auth_token></auth_token>
                 </adyen>

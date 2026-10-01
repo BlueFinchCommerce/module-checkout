@@ -1,7 +1,7 @@
 <template>
   <div class="details-form">
     <div
-      v-show="isExpressPaymentsVisible && isBraintreeEnabled !== '0'"
+      v-show="isInstantPaymentsBlockVisible"
       class="details-form-header"
     >
       <div class="instantCheckout-block">
@@ -25,7 +25,10 @@
         <BraintreePayPal :key="`braintreePayPal-${storedKey}-credit`" :isCredit="paypal.creditActive" />
       </div>
     </div>
-    <div class="details-form-body">
+    <div
+      class="details-form-body"
+      :class="{'no-instant-payments': !isInstantPaymentsBlockVisible}"
+    >
       <DividerComponent />
       <PayWith />
 
@@ -363,6 +366,9 @@ export default {
     ...mapState(useShippingMethodsStore, ['isClickAndCollect']),
     ...mapState(usePaymentStore, ['errorMessage', 'isExpressPaymentsVisible']),
     ...mapState(useBraintreeStore, ['paypal', 'isBraintreeEnabled']),
+    isInstantPaymentsBlockVisible() {
+      return this.isExpressPaymentsVisible && this.isBraintreeEnabled !== '0';
+    },
   },
   created() {
     this.cartEmitter.on('cartUpdated', async () => {

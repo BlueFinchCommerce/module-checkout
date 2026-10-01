@@ -44,6 +44,9 @@ export default defineStore('cartStore', {
       items: getCartItems(),
       prices: getCartPrices(),
       is_virtual: getIsVirtual(),
+      shipping_addresses: [],
+      available_payment_methods: [],
+      applied_coupons: [],
     },
     customer_is_guest: null,
     subtotalInclTax: null,
@@ -173,6 +176,7 @@ export default defineStore('cartStore', {
       this.setData({
         cart,
       });
+      this.calculateFreeShipping(cart, configStore);
 
       const customerStore = useCustomerStore();
       const paymentStore = usePaymentStore();
@@ -184,12 +188,12 @@ export default defineStore('cartStore', {
         customerStore.setAddressToStore(cart.billing_address, 'billing');
       }
 
-      if (cart.shipping_addresses.length) {
+      if (cart.shipping_addresses?.length) {
         customerStore.setAddressToStore(cart.shipping_addresses[0], 'shipping');
         shippingMethodsStore.setShippingDataFromCartData(cart);
       }
 
-      if (cart.available_payment_methods) {
+      if (cart.available_payment_methods?.length) {
         paymentStore.setPaymentMethods(cart.available_payment_methods);
       }
     },
@@ -202,6 +206,7 @@ export default defineStore('cartStore', {
         const cart = await updateCartItemQuantity(updateItem, change);
         this.handleCartData(cart);
         this.emitUpdate();
+        window.dispatchEvent(new CustomEvent('bluefinch-checkout-cart-items-updated'));
       } catch (error) {
         // Add the error message to the cart item.
         const { items } = this.cart;
@@ -244,6 +249,7 @@ export default defineStore('cartStore', {
         const cart = await removeCartItem(product.uid);
         this.handleCartData(cart);
         this.emitUpdate();
+        window.dispatchEvent(new CustomEvent('bluefinch-checkout-cart-items-updated'));
       } catch (error) {
         console.warn('Unable to remove cart item', error.message);
       }
@@ -359,6 +365,7 @@ export default defineStore('cartStore', {
         const cart = await addCartItem(product);
         this.handleCartData(cart);
         this.emitUpdate();
+        window.dispatchEvent(new CustomEvent('bluefinch-checkout-cart-items-updated'));
       } catch (error) {
         console.warn('Unable to add cart item', error.message);
       }
@@ -437,6 +444,24 @@ export default defineStore('cartStore', {
       this.handleCartData(cart);
 
       this.emitUpdate();
+    },
+
+    calculateFreeShipping(cart, configStore) {
+      if (!configStore?.freeShippingEnabled || configStore.freeShippingMinimumAmount <= 0) {
+        this.setData({
+          freeShipping: null,
+        });
+        return;
+      }
+
+      const subtotal = configStore.freeShippingIncludeTax
+        ? Number(cart?.prices?.subtotal_including_tax?.value ?? 0)
+        : Number(cart?.prices?.subtotal_excluding_tax?.value ?? 0);
+      const remaining = configStore.freeShippingMinimumAmount - subtotal;
+
+      this.setData({
+        freeShipping: remaining > 0 ? remaining : 0,
+      });
     },
 
     clearCartItems(cartItemIds) {

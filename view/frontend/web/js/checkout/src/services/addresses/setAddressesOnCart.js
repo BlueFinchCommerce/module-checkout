@@ -6,7 +6,6 @@ import deepClone from '@/helpers/addresses/deepClone';
 import getEmailField from '@/helpers/cart/queryData/getEmailField';
 import getBillingAddress from '@/helpers/cart/queryData/getBillingAddress';
 import getPrices from '@/helpers/cart/queryData/getPrices';
-import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 
 const formatAddress = (address) => {
   if (!address) {
@@ -54,6 +53,44 @@ const formatAddress = (address) => {
 export default async (shippingAddress, billingAddress, email = false) => {
   const { maskedId, cart } = useCartStore();
   const { isLoggedIn } = useCustomerStore();
+  const shippingAddressesSafeQuery = `
+    shipping_addresses {
+      firstname
+      lastname
+      company
+      street
+      city
+      postcode
+      region {
+        code
+        label
+      }
+      country {
+        code
+      }
+      telephone
+      available_shipping_methods {
+        amount {
+          currency
+          value
+        }
+        available
+        carrier_code
+        carrier_title
+        error_message
+        method_code
+        method_title
+        price_excl_tax {
+          value
+          currency
+        }
+        price_incl_tax {
+          value
+          currency
+        }
+      }
+    }
+  `;
 
   const request = `
     mutation SetAddresses(
@@ -91,7 +128,7 @@ export default async (shippingAddress, billingAddress, email = false) => {
 
           ${await getPrices()}
 
-          ${await getShippingAddresses()}
+          ${shippingAddressesSafeQuery}
         }
       }
     }`;

@@ -21,6 +21,8 @@ export default {
     subtotalTitle: ' ',
     subtotalTitleExcl: ' ',
     subtotalTitleIncl: ' ',
+    priceTitleExcl: ' ',
+    priceTitleIncl: ' ',
     shippingStepTitleExcl: ' ',
     shippingStepTitleIncl: ' ',
     removeItemButton: ' ',
@@ -98,6 +100,7 @@ export default {
       title: ' ',
       savedAddressesTitle: ' ',
       shipHere: ' ',
+      billHere: ' ',
       deliveryAddressTitle: ' ',
       billingAddressTitle: ' ',
       selectedBillingAddressTitle: ' ',
@@ -124,11 +127,19 @@ export default {
           placeholder: ' ',
         },
         postCodeField: {
+          label: ' ',
+          placeholder: ' ',
+        },
+        zipCodeField: {
+          label: ' ',
           placeholder: ' ',
         },
         regionField: {
           label: ' ',
           placeholder: ' ',
+        },
+        stateField: {
+          label: ' ',
         },
       },
     },
@@ -146,6 +157,7 @@ export default {
     passwordErrorMessage: ' ',
     addressFormErrorMessage: ' ',
     postCodeErrorMessage: ' ',
+    zipCodeErrorMessage: ' ',
     countryErrorMessage: ' ',
     streetErrorMessage: ' ',
     cityErrorMessage: ' ',
@@ -167,6 +179,7 @@ export default {
   guestButton: ' ',
   continueButton: ' ',
   forgotPass: ' ',
+  passwordRequirementsText: ' ',
   updateButton: ' ',
   billingForm: {
     notSameAddress: ' ',

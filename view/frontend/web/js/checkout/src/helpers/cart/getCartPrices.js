@@ -1,7 +1,7 @@
 export default () => {
   const mageCache = JSON.parse(localStorage.getItem('mage-cache-storage'));
 
-  if (!mageCache.cart) {
+  if (!mageCache?.cart) {
     return {
       subtotalAmount: 0,
       grandTotalAmount: 0,

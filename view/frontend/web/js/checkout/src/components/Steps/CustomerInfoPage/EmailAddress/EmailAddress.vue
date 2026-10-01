@@ -2,28 +2,30 @@
   <section class="customer-form">
     <div class="checkout-section checkout-email">
       <template v-if="emailRegistered !== undefined && !isLoggedIn && !emailEntered">
-        <TextField
-          class="welcome-message-title"
-          :data-cy="'welcome-message-title'"
-          :text="emailRegistered ?
-            $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
-        />
-        <TextField
-          class="welcome-message"
-          :data-cy="'welcome-message'"
-          :text="emailRegistered ?
-            $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
-        />
+        <div class="welcome-message-group">
+          <TextField
+            class="welcome-message-title"
+            :data-cy="'welcome-message-title'"
+            :text="emailRegistered ?
+              $t('welcomeMessages.accountTitle') : $t('welcomeMessages.guestTitle')"
+          />
+          <TextField
+            class="welcome-message"
+            :data-cy="'welcome-message'"
+            :text="emailRegistered ?
+              $t('welcomeMessages.accountBody') : $t('welcomeMessages.guestBody')"
+          />
+        </div>
       </template>
 
       <div :class="{ 'logged-in-email': isLoggedIn }">
         <TextInput
           ref="email"
           v-model="customer.email"
-          :error="emailError"
-          :class="{ 'field-valid': emailValid && !emailEntered && !emailError && !inputsSanitiseError}"
+          :error="emailInputHasError"
+          :class="{ 'field-valid': emailValid && !emailEntered && !emailInputHasError && !inputsSanitiseError }"
           :data-cy="isLoggedIn ? 'logged-in-email' : 'email-input'"
-          :error-message="emailErrorMessage"
+          :error-message="displayedEmailErrorMessage"
           identifier="email"
           :label="$t('yourDetailsSection.emailAddress.label')"
           :placeholder="$t('yourDetailsSection.emailAddress.placeholder')"
@@ -32,10 +34,9 @@
           type="email"
           :disabled="emailEntered"
           @blur="emailAddressBlur"
-          @keyup="emailAddressChange"
-        />
-        <ValidIcon v-if="emailValid && !emailEntered && !emailError && !inputsSanitiseError"/>
-        <ErrorIcon v-if="(emailError || inputsSanitiseError) && !emailEntered"/>
+          @keyup="emailAddressChange" />
+        <ValidIcon v-if="emailValid && !emailEntered && !emailInputHasError && !inputsSanitiseError" />
+        <ErrorIcon v-if="emailInputHasError && !emailEntered" />
 
         <div
           v-if="emailEntered && !isLoggedIn"
@@ -105,6 +106,12 @@
         </div>
 
         <div class="checkout-email__footer">
+          <div class="checkout-email__password-requirements">
+            <TextField
+              :text="$t('passwordRequirementsText')"
+              :data-cy="'password-requirements-text'"
+            />
+          </div>
           <a
             :href="secureBaseLinkUrl + 'customer/account/forgotpassword/'"
             class="forgot-pass"
@@ -261,6 +268,18 @@ export default {
     ...mapState(useCartStore, ['guestCheckoutEnabled']),
     ...mapState(useConfigStore, ['locale', 'storeCode', 'secureBaseLinkUrl']),
     ...mapState(useRecaptchaStore, ['getTypeByPlacement']),
+    emailInputHasError() {
+      return this.emailError || this.emailFieldShouldShowSanitiseAsEmailError;
+    },
+    emailFieldShouldShowSanitiseAsEmailError() {
+      return this.inputsSanitiseError && !this.customer.email;
+    },
+    displayedEmailErrorMessage() {
+      if (this.emailError || this.emailFieldShouldShowSanitiseAsEmailError) {
+        return this.$t('errorMessages.emailErrorMessage');
+      }
+      return '';
+    },
     proceedAsGuestInvalid() {
       return this.emailError || this.customer.email.length === 0;
     },
@@ -406,10 +425,11 @@ export default {
     emailAddressBlur() {
       // On blur validate the email and show error if invalid.
       if (!isEmailValid(this.customer.email.toLowerCase())) {
-        // Set the error messages if the length is greater than 0.
-        this.setEmailErrorState(this.customer.email.length > 0);
+        this.setEmailErrorState(true);
+        this.emailValid = false;
       } else {
         this.emailValid = true;
+        this.setEmailErrorState(false);
 
         // If focus was lost due to a Tab key press and email
         // is valid, and focus hasn't returned to email yet, focus back on the email field

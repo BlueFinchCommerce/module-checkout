@@ -35,6 +35,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Make Crossells block opened by deafult]]></comment>
                 </field>
+                <field id="show_free_shipping_message" translate="label comment" type="select" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Show Free Shipping message</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable or disable the Free Shipping message on checkout.]]></comment>
+                </field>
                 <field id="enable_afd_checkout" translate="label comment" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Enable AFD Postcode Lookup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>

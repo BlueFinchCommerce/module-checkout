@@ -23,7 +23,7 @@
             </div>
             <div class="shipping-method-title">
               <TextField
-                :text="`${cart.shipping_addresses?.[0]?.selected_shipping_method?.method_title}, `"
+                :text="shippingMethodTitle ? `${shippingMethodTitle}, ` : ''"
                 :data-cy="'completed-step-shipping-content-method'"
               />
               <Price
@@ -94,6 +94,16 @@ export default {
     ...mapState(useCartStore, ['cart']),
     ...mapState(useShippingMethodsStore, ['selectedMethod']),
     ...mapState(useConfigStore, ['locale']),
+
+    selectedShippingMethod() {
+      return this.cart.shipping_addresses?.[0]?.selected_shipping_method;
+    },
+
+    shippingMethodTitle() {
+      return this.selectedShippingMethod?.method_title
+        || this.selectedShippingMethod?.carrier_title
+        || '';
+    },
   },
   methods: {
     ...mapActions(useConfigStore, ['getInitialConfig']),

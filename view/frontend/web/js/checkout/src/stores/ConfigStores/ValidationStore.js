@@ -7,7 +7,9 @@ import requiredValid from '@/helpers/validation/requiredValid';
 import minLength from '@/helpers/validation/minLength';
 import maxLength from '@/helpers/validation/maxLength';
 import inputTypeValid from '@/helpers/validation/inputTypeValid';
+import telephoneValid from '@/helpers/validation/telephoneValid';
 import deepClone from '@/helpers/addresses/deepClone';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 /**
  * Validation store
@@ -20,6 +22,7 @@ export default defineStore('ValidationStore', {
       MIN_TEXT_LENGTH: minLength,
       MAX_TEXT_LENGTH: maxLength,
       INPUT_VALIDATION: inputTypeValid,
+      TELEPHONE: telephoneValid,
     },
     attributes: [
       'prefix',
@@ -96,7 +99,44 @@ export default defineStore('ValidationStore', {
         map.country_code = map.country_id;
       }
 
-      this.setData({ validationItems: map });
+      const validationMap = !getMagentoSolutionType()
+        ? this.addOpenSourceValidation(map)
+        : map;
+
+      this.setData({ validationItems: validationMap });
+    },
+
+    addOpenSourceValidation(map) {
+      const telephoneItem = map.telephone?.items?.[0] || {
+        attribute_code: 'telephone',
+        validate_rules: [],
+      };
+      const existingValidateRules = telephoneItem.validate_rules || [];
+      const validateRules = [...existingValidateRules];
+
+      if (!validateRules.some(({ name }) => name === 'TELEPHONE')) {
+        validateRules.push({ name: 'TELEPHONE', value: '3' });
+      }
+
+      const postcodeItem = map.postcode?.items?.[0] || {
+        attribute_code: 'postcode',
+        validate_rules: [],
+      };
+
+      return {
+        ...map,
+        postcode: {
+          items: [postcodeItem],
+        },
+        telephone: {
+          items: [
+            {
+              ...telephoneItem,
+              validate_rules: validateRules,
+            },
+          ],
+        },
+      };
     },
 
     getValidationRules(field) {

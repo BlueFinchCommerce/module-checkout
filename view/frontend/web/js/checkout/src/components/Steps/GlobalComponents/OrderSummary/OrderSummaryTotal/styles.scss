@@ -76,6 +76,10 @@
   }
 }
 
+.store-credit-total {
+  display: var(--store-credit-total-display, block);
+}
+
 //Styles for desktop
 @media screen and (min-width: $screen__m) {
   .order-total {
