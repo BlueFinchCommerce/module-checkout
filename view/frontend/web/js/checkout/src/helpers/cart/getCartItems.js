@@ -20,7 +20,7 @@ export default () => {
       giftMessage: {},
     },
     configurable_options: (item.options || []).map((option) => ({
-      options_label: option.label,
+      option_label: option.label,
       value_label: option.value,
     })),
   })).sort((a, b) => (
