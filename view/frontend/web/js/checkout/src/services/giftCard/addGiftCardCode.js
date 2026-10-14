@@ -1,6 +1,7 @@
 import graphQlRequest from '@/services/graphQlRequest';
 import useCartStore from '@/stores/CartStore';
 
+import getAppliedStoreCredit from '@/helpers/cart/queryData/getAppliedStoreCredit';
 import getGiftCards from '@/helpers/cart/queryData/getGiftCards';
 import getItems from '@/helpers/cart/queryData/getItems';
 import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
@@ -20,6 +21,8 @@ export default async (code) => {
           ${await getEmailField()}
 
           ${await getGiftCards()}
+
+          ${await getAppliedStoreCredit()}
 
           ${await getItems()}
 

@@ -83,7 +83,8 @@
           />
           <Price
             class="total__text discount"
-            :value="'-' + giftCard.current_balance.value"
+            :value="'-' + giftCard.applied_balance.value"
+            :currency="giftCard.applied_balance.currency"
             :data-cy="dataCy ? `applied-gift-card-price-${dataCy}` : 'applied-gift-card-price'"
           />
         </div>
