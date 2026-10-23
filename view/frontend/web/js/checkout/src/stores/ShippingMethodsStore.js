@@ -116,6 +116,7 @@ export default defineStore('shippingMethodsStore', {
       try {
         const response = await setAddressesOnCart(customerStore.selected.shipping, customerStore.selected.billing);
         cartStore.handleCartData(response.cart);
+        cartStore.clearCaches(['getCart']);
         return response;
       } finally {
         setLoadingState(false);
