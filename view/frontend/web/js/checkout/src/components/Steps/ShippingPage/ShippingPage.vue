@@ -2,7 +2,7 @@
   <div class="shipping-step">
     <SavedDeliveryAddress />
     <div class="shipping-form">
-      <ShippingMethod />
+      <ShippingMethod v-if="isCartLoaded" />
     </div>
   </div>
 </template>
@@ -29,6 +29,11 @@ export default {
     SavedDeliveryAddress,
     ShippingMethod,
   },
+  data() {
+    return {
+      isCartLoaded: false,
+    };
+  },
   computed: {
     ...mapState(useConfigStore, ['storeCode']),
     ...mapState(useCartStore, ['cart']),
@@ -36,6 +41,7 @@ export default {
   async created() {
     await this.getInitialConfig();
     await this.getCart();
+    this.isCartLoaded = true;
     this.setLoadingState(true);
     await functionExtension('onShippingMethodMounted', [this.cart]);
 
