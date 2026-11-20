@@ -7,11 +7,20 @@ import getPaymentMethods from '@/helpers/cart/queryData/getPaymentMethods';
 import getPrices from '@/helpers/cart/queryData/getPrices';
 import getShippingAddresses from '@/helpers/cart/queryData/getShippingAddresses';
 import getEmailField from '@/helpers/cart/queryData/getEmailField';
+import getMagentoSolutionType from '@/helpers/getMagentoSolutionType';
 
 import functionExtension from '@/extensions/functionExtension';
 
 export default async (carrierCode, methodCode) => {
   const { maskedId } = useCartStore();
+  let commerceFields = '';
+
+  if (getMagentoSolutionType()) {
+    commerceFields = `
+      ${await getGiftCards()}
+      ${await getAppliedStoreCredit()}
+    `;
+  }
 
   const request = `
     mutation {
@@ -29,9 +38,7 @@ export default async (carrierCode, methodCode) => {
         cart {
           ${await getEmailField()}
 
-          ${await getGiftCards()}
-
-          ${await getAppliedStoreCredit()}
+          ${commerceFields}
 
           ${await getPaymentMethods()}
 
