@@ -52,8 +52,13 @@ export default (paymentMethod) => {
   return beforePaymentRequest()
     .then(() => graphQlRequest(request, variables, customHeaders, 'BlueFinchCheckoutPlaceOrder'))
     .then((response) => {
-      if (response?.errors?.length) {
-        throw new Error(response.errors[0].message);
+      const errors = (response?.errors || []).filter((error) => !(
+        error.path?.length === 1
+        && error.path[0] === 'subscribeEmailToNewsletter'
+        && error.extensions?.category === 'graphql-already-exists'
+      ));
+      if (errors.length) {
+        throw new Error(errors[0].message);
       }
 
       if (response?.data?.placeOrder?.errors?.length) {
