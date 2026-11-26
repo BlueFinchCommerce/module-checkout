@@ -4,6 +4,7 @@
         <sequence>
             <module name="Magento_CatalogInventory"/>
             <module name="Magento_ConfigurableProduct"/>
+            <module name="Magento_ConfigurableProductGraphQl"/>
             <module name="Magento_QuoteGraphQl"/>
         </sequence>
     </module>

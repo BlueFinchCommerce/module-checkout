@@ -8,8 +8,8 @@
       <div class="product-item-container">
         <div class="product-image">
           <img
-            :src="item.product?.thumbnail?.url"
-            :alt="item.product?.thumbnail?.label"
+            :src="itemThumbnail(item)?.url"
+            :alt="itemThumbnail(item)?.label"
             :data-cy="dataCy ? `product-image-${dataCy}` : 'product-image'"
           >
         </div>
@@ -138,6 +138,14 @@ export default {
     ...mapState(useConfigStore, ['taxCartDisplayPrice']),
   },
   methods: {
+    itemThumbnail(item) {
+      const variantThumbnail = item.configured_variant?.thumbnail;
+      if (variantThumbnail?.url && !variantThumbnail.url.includes('/placeholder/')) {
+        return variantThumbnail;
+      }
+
+      return item.product?.thumbnail;
+    },
     giftCardOptions(item) {
       const options = [
         {

@@ -67,6 +67,12 @@ export default async () => {
           option_label
           value_label
         }
+        configured_variant {
+          thumbnail {
+            url
+            label
+          }
+        }
         ${giftWrappingQuery}
       }
       ${giftCardItemQuery}

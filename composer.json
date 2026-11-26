@@ -18,6 +18,7 @@
         "magento/module-checkout": "*",
         "magento/module-checkout-agreements": "*",
         "magento/module-configurable-product": "*",
+        "magento/module-configurable-product-graph-ql": "*",
         "magento/module-quote-graph-ql": "*",
         "magento/module-quote": "*"
     },
