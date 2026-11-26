@@ -234,6 +234,16 @@ export default {
       const { shippingContact, billingContact } = data.payment;
       const email = shippingContact.emailAddress;
       const telephone = shippingContact.phoneNumber;
+      const contactErrors = this.getContactErrors(shippingContact, billingContact);
+
+      if (contactErrors.length) {
+        session.completePayment({
+          status: window.ApplePaySession.STATUS_FAILURE,
+          errors: contactErrors,
+        });
+        return;
+      }
+
       const billingAddress = this.mapAddress(billingContact, email, telephone);
 
       let shippingAddress = null;
@@ -257,34 +267,55 @@ export default {
         }
 
         try {
-          setAddressesOnCart(shippingAddress, billingAddress, email)
-            .then(() => {
-              const payment = {
-                email,
-                paymentMethod: {
-                  method: this.method,
-                  additional_data: {
-                    payment_method_nonce: payload.nonce,
-                    device_data: this.dataCollectorInstance.deviceData,
-                  },
-                  extension_attributes: getPaymentExtensionAttributes(),
-                },
-              };
+          await setAddressesOnCart(shippingAddress, billingAddress, email);
 
-              return createPayment(payment);
-            })
-            .then(async () => {
-              session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
-              await refreshCustomerData(getCartSectionNames());
-              window.location.href = getSuccessPageUrl();
-            });
+          const payment = {
+            email,
+            paymentMethod: {
+              method: this.method,
+              additional_data: {
+                payment_method_nonce: payload.nonce,
+                device_data: this.dataCollectorInstance.deviceData,
+              },
+              extension_attributes: getPaymentExtensionAttributes(),
+            },
+          };
+
+          await createPayment(payment);
+          session.completePayment(window.ApplePaySession.STATUS_SUCCESS);
+          await refreshCustomerData(getCartSectionNames());
+          window.location.href = getSuccessPageUrl();
         } catch (error) {
-          console.log(error);
+          console.error('Error placing Apple Pay order:', error);
           // clear shipping address form
           this.createNewAddress('shipping');
           session.completePayment(window.ApplePaySession.STATUS_FAILURE);
         }
       });
+    },
+
+    getContactErrors(shippingContact, billingContact) {
+      const errors = [];
+      const missingLastNameMessage = 'Please enter both a first name and last name.';
+
+      if (!billingContact.familyName || !billingContact.familyName.trim()) {
+        errors.push(new window.ApplePayError(
+          'billingContactInvalid',
+          'name',
+          missingLastNameMessage,
+        ));
+      }
+
+      if (!this.cart.is_virtual
+        && (!shippingContact.familyName || !shippingContact.familyName.trim())) {
+        errors.push(new window.ApplePayError(
+          'shippingContactInvalid',
+          'name',
+          missingLastNameMessage,
+        ));
+      }
+
+      return errors;
     },
 
     async onShippingContactSelect(data, session) {

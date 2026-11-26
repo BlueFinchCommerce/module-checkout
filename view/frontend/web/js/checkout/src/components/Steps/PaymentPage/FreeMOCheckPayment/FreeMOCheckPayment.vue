@@ -81,6 +81,7 @@ export default {
     return {
       isMethodSelected: false,
       paymentVisible: true,
+      errorMessage: '',
     };
   },
   computed: {
@@ -117,6 +118,8 @@ export default {
       this.selectPaymentMethod(this.paymentType);
     },
     async createPayment() {
+      this.errorMessage = '';
+
       const paymentMethod = {
         code: this.paymentType,
       };
@@ -144,9 +147,7 @@ export default {
         .then(() => refreshCustomerData(['cart']))
         .then(this.redirectToSuccess)
         .catch((error) => {
-          if (error.message) {
-            this.errorMessage = error.message;
-          }
+          this.errorMessage = error?.message || 'Unable to place your order. Please try again.';
           this.setLoadingState(false);
         });
     },

@@ -31,6 +31,10 @@ export default (paymentMethod) => {
         order {
           order_number
         }
+        errors {
+          code
+          message
+        }
       }
     }`;
 
@@ -55,13 +59,21 @@ export default (paymentMethod) => {
       ));
       if (errors.length) {
         throw new Error(errors[0].message);
-      } else if (response?.data?.placeOrder?.errors) {
+      }
+
+      if (response?.data?.placeOrder?.errors?.length) {
         throw new Error(response.data.placeOrder.errors[0].message);
+      }
+
+      const orderNumber = response?.data?.placeOrder?.order?.order_number;
+
+      if (!orderNumber) {
+        throw new Error('Unable to place your order. Please try again.');
       }
 
       // Add tracking in on payment complete.
       paymentComplete();
 
-      return response.data.placeOrder.order.order_number;
+      return orderNumber;
     });
 };
